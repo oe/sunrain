@@ -1,8 +1,9 @@
 ---
-import { useTranslations } from '../i18n/utils';
+import { useTranslations } from '@/i18n/utils';
+import { type Language } from '@/i18n/config';
 
 export interface Props {
-  lang: string;
+  lang: Language;
 }
 
 const { lang } = Astro.props;
@@ -15,8 +16,17 @@ const t = useTranslations(lang);
       <!-- Brand -->
       <div class="space-y-4">
         <div class="flex items-center space-x-2">
-          <svg class="w-8 h-8 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v18m9-9a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          <svg
+            class="w-8 h-8 text-blue-400"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M12 3v18m9-9a9 9 0 11-18 0 9 9 0 0118 0z"></path>
           </svg>
           <span class="text-xl font-bold">SunRain</span>
         </div>
@@ -29,13 +39,22 @@ const t = useTranslations(lang);
       <div class="space-y-4">
         <h3 class="text-lg font-semibold">{t('nav.resources')}</h3>
         <div class="space-y-2 text-sm">
-          <a href="#" class="block text-gray-300 hover:text-white transition-colors">
+          <a
+            href="#"
+            class="block text-gray-300 hover:text-white transition-colors"
+          >
             {t('nav.guide')}
           </a>
-          <a href="#" class="block text-gray-300 hover:text-white transition-colors">
+          <a
+            href="#"
+            class="block text-gray-300 hover:text-white transition-colors"
+          >
             {t('resources.music')}
           </a>
-          <a href="#" class="block text-gray-300 hover:text-white transition-colors">
+          <a
+            href="#"
+            class="block text-gray-300 hover:text-white transition-colors"
+          >
             {t('resources.books')}
           </a>
         </div>
@@ -52,7 +71,9 @@ const t = useTranslations(lang);
       </div>
     </div>
 
-    <div class="border-t border-gray-800 mt-8 pt-8 text-center text-sm text-gray-400">
+    <div
+      class="border-t border-gray-800 mt-8 pt-8 text-center text-sm text-gray-400"
+    >
       <p>{t('footer.copyright')}</p>
     </div>
   </div>

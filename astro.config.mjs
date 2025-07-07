@@ -2,15 +2,15 @@
 import { defineConfig } from 'astro/config';
 
 import react from '@astrojs/react';
-import tailwind from '@astrojs/tailwind';
+import tailwindcss from "@tailwindcss/vite";
+
 import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://sunrain.org',
+  site: 'https://sunrain.me',
   integrations: [
     react(),
-    tailwind(),
     sitemap({
       i18n: {
         defaultLocale: 'en',
@@ -32,5 +32,7 @@ export default defineConfig({
     routing: {
       prefixDefaultLocale: false
     }
-  }
+  },
+  vite: {
+    plugins: [tailwindcss()],}
 });
