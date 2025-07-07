@@ -11,10 +11,10 @@ const { lang } = Astro.props;
 const t = useTranslations(lang);
 
 const navItems = [
-  { key: 'nav.home', href: getRelativeLocaleUrl(lang, '') },
-  { key: 'nav.guide', href: getRelativeLocaleUrl(lang, '/guide') },
-  { key: 'nav.resources', href: getRelativeLocaleUrl(lang, '/resources') },
-  { key: 'nav.about', href: getRelativeLocaleUrl(lang, '/about') }
+  { key: 'nav.home', href: getRelativeLocaleUrl(lang, '/') },
+  { key: 'nav.guide', href: getRelativeLocaleUrl(lang, '/guide/') },
+  { key: 'nav.resources', href: getRelativeLocaleUrl(lang, '/resources/') },
+  { key: 'nav.about', href: getRelativeLocaleUrl(lang, '/about/') }
 ];
 ---
 
@@ -24,7 +24,7 @@ const navItems = [
       <!-- Logo -->
       <div class="flex items-center">
         <a
-          href={getRelativeLocaleUrl(lang, '')}
+          href={getRelativeLocaleUrl(lang, '/')}
           class="flex items-center space-x-2"
         >
           <svg

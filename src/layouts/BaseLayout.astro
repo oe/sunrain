@@ -1,5 +1,6 @@
 ---
-import { getLangFromUrl, useTranslations } from '@/i18n/utils';
+import { getLocale } from 'astro-i18n-aut';
+import { useTranslations } from '@/i18n/utils';
 import { languages, type Language } from '@/i18n/config';
 
 import Header from '@/components/Header.astro';
@@ -13,7 +14,7 @@ export interface Props {
 }
 
 const { title, description, lang } = Astro.props;
-const currentLang = lang || getLangFromUrl(Astro.url);
+const currentLang = lang || getLocale(Astro.url) as Language;
 const t = useTranslations(currentLang);
 
 const pageTitle = title ? `${title} | SunRain` : `SunRain - ${t('hero.title')}`;

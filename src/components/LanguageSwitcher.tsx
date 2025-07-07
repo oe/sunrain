@@ -13,8 +13,7 @@ export default function LanguageSwitcher({ currentLang, currentPath }: Props) {
 
   const getLocalizedPath = (locale: Language) => {
     // Remove current language prefix from path
-    const pathWithoutLang = currentPath.replace(/^\/[a-z]{2}(\/|$)/, '/');
-    return getRelativeLocaleUrl(locale, pathWithoutLang === '/' ? '' : pathWithoutLang);
+    return getRelativeLocaleUrl(locale, '/');
   };
 
   return (
