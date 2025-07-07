@@ -1,9 +1,9 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import { useTranslations } from '../i18n/utils';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { useTranslations } from '../../i18n/utils';
 import { getCollection } from 'astro:content';
 
-const lang = 'en'; // Default language for root page
+const lang = 'en';
 const t = useTranslations(lang);
 
 // Get featured guide content
@@ -11,9 +11,9 @@ const allGuides = await getCollection('guide', ({ id }) => id.startsWith('en/'))
 const featuredGuides = allGuides.filter(guide => guide.data.featured).slice(0, 3);
 
 // Load resources data
-const musicData = await import('../content/resources/music.json');
-const moviesData = await import('../content/resources/movies.json');
-const booksData = await import('../content/resources/books.json');
+const musicData = await import('../../content/resources/music.json');
+const moviesData = await import('../../content/resources/movies.json');
+const booksData = await import('../../content/resources/books.json');
 
 const musicItems = musicData.default.en.items.slice(0, 3);
 const movieItems = moviesData.default.en.items.slice(0, 3);
@@ -35,7 +35,7 @@ const bookItems = booksData.default.en.items.slice(0, 3);
         {t('hero.subtitle')}
       </p>
       <a 
-        href="/guide" 
+        href="/en/guide" 
         class="inline-flex items-center px-8 py-4 bg-blue-600 text-white text-lg font-semibold rounded-lg hover:bg-blue-700 transition-colors shadow-lg"
       >
         {t('hero.cta')}
@@ -77,7 +77,7 @@ const bookItems = booksData.default.en.items.slice(0, 3);
                   })}
                 </span>
                 <a 
-                  href={`/guide/${guide.slug.replace('en/', '')}`}
+                  href={`/en/guide/${guide.slug.replace('en/', '')}`}
                   class="text-blue-600 hover:text-blue-800 font-medium transition-colors"
                 >
                   {t('read.more')} →
@@ -90,7 +90,7 @@ const bookItems = booksData.default.en.items.slice(0, 3);
       
       <div class="text-center mt-8">
         <a 
-          href="/guide" 
+          href="/en/guide" 
           class="inline-flex items-center px-6 py-3 border border-blue-600 text-blue-600 font-medium rounded-lg hover:bg-blue-50 transition-colors"
         >
           View All Guides
@@ -214,7 +214,7 @@ const bookItems = booksData.default.en.items.slice(0, 3);
 
       <div class="text-center mt-8">
         <a 
-          href="/resources" 
+          href="/en/resources" 
           class="inline-flex items-center px-6 py-3 border border-blue-600 text-blue-600 font-medium rounded-lg hover:bg-blue-50 transition-colors"
         >
           View All Resources
@@ -237,13 +237,13 @@ const bookItems = booksData.default.en.items.slice(0, 3);
       </p>
       <div class="flex flex-col sm:flex-row gap-4 justify-center">
         <a 
-          href="/guide" 
+          href="/en/guide" 
           class="inline-flex items-center justify-center px-8 py-4 bg-white text-blue-600 font-semibold rounded-lg hover:bg-gray-50 transition-colors"
         >
           Start with Guides
         </a>
         <a 
-          href="/resources" 
+          href="/en/resources" 
           class="inline-flex items-center justify-center px-8 py-4 border-2 border-white text-white font-semibold rounded-lg hover:bg-white hover:text-blue-600 transition-colors"
         >
           Explore Resources

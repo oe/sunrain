@@ -2,8 +2,35 @@
 import { defineConfig } from 'astro/config';
 
 import react from '@astrojs/react';
+import tailwind from '@astrojs/tailwind';
+import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [react()]
+  site: 'https://sunrain.org',
+  integrations: [
+    react(),
+    tailwind(),
+    sitemap({
+      i18n: {
+        defaultLocale: 'en',
+        locales: {
+          en: 'en-US',
+          zh: 'zh-CN',
+          es: 'es-ES',
+          ja: 'ja-JP',
+          ko: 'ko-KR',
+          hi: 'hi-IN',
+          ar: 'ar-SA'
+        }
+      }
+    })
+  ],
+  i18n: {
+    defaultLocale: 'en',
+    locales: ['en', 'zh', 'es', 'ja', 'ko', 'hi', 'ar'],
+    routing: {
+      prefixDefaultLocale: false
+    }
+  }
 });

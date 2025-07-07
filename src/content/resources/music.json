@@ -1,0 +1,134 @@
+{
+  "en": {
+    "title": "Healing Music",
+    "description": "Carefully curated music for relaxation, mindfulness, and emotional healing",
+    "items": [
+      {
+        "id": "nature-sounds",
+        "title": "Nature Sounds Collection",
+        "artist": "Various Artists",
+        "description": "Peaceful forest, ocean, and rain sounds for deep relaxation and stress relief",
+        "type": "ambient",
+        "duration": "60+ minutes",
+        "benefits": ["Reduces stress", "Improves focus", "Promotes sleep"],
+        "spotifyUrl": "https://open.spotify.com/playlist/nature-sounds",
+        "youtubeUrl": "https://youtube.com/playlist?list=nature-sounds",
+        "image": "/assets/music/nature-sounds.jpg"
+      },
+      {
+        "id": "meditation-music",
+        "title": "Guided Meditation Tracks",
+        "artist": "Mindfulness Academy",
+        "description": "Gentle instrumental music designed specifically for meditation and mindfulness practice",
+        "type": "meditation",
+        "duration": "10-30 minutes each",
+        "benefits": ["Enhances meditation", "Calms anxiety", "Deepens mindfulness"],
+        "spotifyUrl": "https://open.spotify.com/playlist/meditation-music",
+        "youtubeUrl": "https://youtube.com/playlist?list=meditation-music",
+        "image": "/assets/music/meditation.jpg"
+      },
+      {
+        "id": "classical-therapy",
+        "title": "Classical Music for Mental Health",
+        "artist": "Various Classical Composers",
+        "description": "Selected classical pieces known for their therapeutic and mood-enhancing properties",
+        "type": "classical",
+        "duration": "45+ minutes",
+        "benefits": ["Reduces depression", "Improves mood", "Enhances cognitive function"],
+        "spotifyUrl": "https://open.spotify.com/playlist/classical-therapy",
+        "youtubeUrl": "https://youtube.com/playlist?list=classical-therapy",
+        "image": "/assets/music/classical.jpg"
+      },
+      {
+        "id": "binaural-beats",
+        "title": "Binaural Beats for Focus",
+        "artist": "BrainWave Studios",
+        "description": "Scientifically-designed audio frequencies to promote focus, relaxation, and cognitive enhancement",
+        "type": "binaural",
+        "duration": "30-60 minutes",
+        "benefits": ["Improves concentration", "Reduces anxiety", "Enhances learning"],
+        "spotifyUrl": "https://open.spotify.com/playlist/binaural-beats",
+        "youtubeUrl": "https://youtube.com/playlist?list=binaural-beats",
+        "image": "/assets/music/binaural.jpg"
+      },
+      {
+        "id": "uplifting-indie",
+        "title": "Uplifting Indie Collection",
+        "artist": "Various Indie Artists",
+        "description": "Positive, upbeat indie tracks to boost mood and motivation during difficult times",
+        "type": "indie",
+        "duration": "50+ minutes",
+        "benefits": ["Boosts mood", "Increases motivation", "Provides hope"],
+        "spotifyUrl": "https://open.spotify.com/playlist/uplifting-indie",
+        "youtubeUrl": "https://youtube.com/playlist?list=uplifting-indie",
+        "image": "/assets/music/indie.jpg"
+      }
+    ]
+  },
+  "zh": {
+    "title": "疗愈音乐",
+    "description": "精心挑选的音乐，用于放松、正念和情绪治愈",
+    "items": [
+      {
+        "id": "nature-sounds",
+        "title": "自然声音合集",
+        "artist": "多位艺术家",
+        "description": "宁静的森林、海洋和雨声，用于深度放松和压力缓解",
+        "type": "环境音",
+        "duration": "60+分钟",
+        "benefits": ["减少压力", "改善专注力", "促进睡眠"],
+        "spotifyUrl": "https://open.spotify.com/playlist/nature-sounds",
+        "youtubeUrl": "https://youtube.com/playlist?list=nature-sounds",
+        "image": "/assets/music/nature-sounds.jpg"
+      },
+      {
+        "id": "meditation-music",
+        "title": "冥想引导音乐",
+        "artist": "正念学院",
+        "description": "专为冥想和正念练习设计的轻柔器乐",
+        "type": "冥想",
+        "duration": "每首10-30分钟",
+        "benefits": ["增强冥想", "平息焦虑", "加深正念"],
+        "spotifyUrl": "https://open.spotify.com/playlist/meditation-music",
+        "youtubeUrl": "https://youtube.com/playlist?list=meditation-music",
+        "image": "/assets/music/meditation.jpg"
+      },
+      {
+        "id": "classical-therapy",
+        "title": "心理健康古典音乐",
+        "artist": "多位古典作曲家",
+        "description": "精选以治疗和提升情绪特性著称的古典乐曲",
+        "type": "古典",
+        "duration": "45+分钟",
+        "benefits": ["减少抑郁", "改善情绪", "增强认知功能"],
+        "spotifyUrl": "https://open.spotify.com/playlist/classical-therapy",
+        "youtubeUrl": "https://youtube.com/playlist?list=classical-therapy",
+        "image": "/assets/music/classical.jpg"
+      },
+      {
+        "id": "binaural-beats",
+        "title": "专注双耳节拍",
+        "artist": "脑波工作室",
+        "description": "科学设计的音频频率，促进专注、放松和认知增强",
+        "type": "双耳节拍",
+        "duration": "30-60分钟",
+        "benefits": ["改善注意力", "减少焦虑", "增强学习"],
+        "spotifyUrl": "https://open.spotify.com/playlist/binaural-beats",
+        "youtubeUrl": "https://youtube.com/playlist?list=binaural-beats",
+        "image": "/assets/music/binaural.jpg"
+      },
+      {
+        "id": "uplifting-indie",
+        "title": "振奋独立音乐合集",
+        "artist": "多位独立艺术家",
+        "description": "积极向上的独立音乐，在困难时期提升情绪和动力",
+        "type": "独立",
+        "duration": "50+分钟",
+        "benefits": ["提升情绪", "增加动力", "提供希望"],
+        "spotifyUrl": "https://open.spotify.com/playlist/uplifting-indie",
+        "youtubeUrl": "https://youtube.com/playlist?list=uplifting-indie",
+        "image": "/assets/music/indie.jpg"
+      }
+    ]
+  }
+}

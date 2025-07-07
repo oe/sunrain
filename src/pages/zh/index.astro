@@ -1,23 +1,23 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import { useTranslations } from '../i18n/utils';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { useTranslations } from '../../i18n/utils';
 import { getCollection } from 'astro:content';
 
-const lang = 'en'; // Default language for root page
+const lang = 'zh';
 const t = useTranslations(lang);
 
 // Get featured guide content
-const allGuides = await getCollection('guide', ({ id }) => id.startsWith('en/'));
+const allGuides = await getCollection('guide', ({ id }) => id.startsWith('zh/'));
 const featuredGuides = allGuides.filter(guide => guide.data.featured).slice(0, 3);
 
 // Load resources data
-const musicData = await import('../content/resources/music.json');
-const moviesData = await import('../content/resources/movies.json');
-const booksData = await import('../content/resources/books.json');
+const musicData = await import('../../content/resources/music.json');
+const moviesData = await import('../../content/resources/movies.json');
+const booksData = await import('../../content/resources/books.json');
 
-const musicItems = musicData.default.en.items.slice(0, 3);
-const movieItems = moviesData.default.en.items.slice(0, 3);
-const bookItems = booksData.default.en.items.slice(0, 3);
+const musicItems = musicData.default.zh.items.slice(0, 3);
+const movieItems = moviesData.default.zh.items.slice(0, 3);
+const bookItems = booksData.default.zh.items.slice(0, 3);
 ---
 
 <BaseLayout 
@@ -35,7 +35,7 @@ const bookItems = booksData.default.en.items.slice(0, 3);
         {t('hero.subtitle')}
       </p>
       <a 
-        href="/guide" 
+        href="/zh/guide" 
         class="inline-flex items-center px-8 py-4 bg-blue-600 text-white text-lg font-semibold rounded-lg hover:bg-blue-700 transition-colors shadow-lg"
       >
         {t('hero.cta')}
@@ -70,14 +70,14 @@ const bookItems = booksData.default.en.items.slice(0, 3);
               </p>
               <div class="flex items-center justify-between">
                 <span class="text-sm text-gray-500">
-                  {guide.data.publishDate.toLocaleDateString('en-US', { 
+                  {guide.data.publishDate.toLocaleDateString('zh-CN', { 
                     year: 'numeric', 
                     month: 'long', 
                     day: 'numeric' 
                   })}
                 </span>
                 <a 
-                  href={`/guide/${guide.slug.replace('en/', '')}`}
+                  href={`/zh/guide/${guide.slug.replace('zh/', '')}`}
                   class="text-blue-600 hover:text-blue-800 font-medium transition-colors"
                 >
                   {t('read.more')} →
@@ -90,10 +90,10 @@ const bookItems = booksData.default.en.items.slice(0, 3);
       
       <div class="text-center mt-8">
         <a 
-          href="/guide" 
+          href="/zh/guide" 
           class="inline-flex items-center px-6 py-3 border border-blue-600 text-blue-600 font-medium rounded-lg hover:bg-blue-50 transition-colors"
         >
-          View All Guides
+          查看所有指南
           <svg class="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5-5 5M6 12h12"></path>
           </svg>
@@ -180,8 +180,8 @@ const bookItems = booksData.default.en.items.slice(0, 3);
                 ))}
               </div>
               <div class="flex space-x-2">
-                <a href={item.streamingUrl} class="text-blue-600 hover:text-blue-800 text-sm">Watch</a>
-                <a href={item.trailerUrl} class="text-red-600 hover:text-red-800 text-sm">Trailer</a>
+                <a href={item.streamingUrl} class="text-blue-600 hover:text-blue-800 text-sm">观看</a>
+                <a href={item.trailerUrl} class="text-red-600 hover:text-red-800 text-sm">预告片</a>
               </div>
             </div>
           ))}
@@ -214,10 +214,10 @@ const bookItems = booksData.default.en.items.slice(0, 3);
 
       <div class="text-center mt-8">
         <a 
-          href="/resources" 
+          href="/zh/resources" 
           class="inline-flex items-center px-6 py-3 border border-blue-600 text-blue-600 font-medium rounded-lg hover:bg-blue-50 transition-colors"
         >
-          View All Resources
+          查看所有资源
           <svg class="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5-5 5M6 12h12"></path>
           </svg>
@@ -230,23 +230,23 @@ const bookItems = booksData.default.en.items.slice(0, 3);
   <section class="py-16 bg-blue-600">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
       <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">
-        Start Your Healing Journey Today
+        今天开始您的康复之旅
       </h2>
       <p class="text-xl text-blue-100 mb-8">
-        Take the first step towards better mental health with our comprehensive resources and guides.
+        通过我们全面的资源和指南，迈出改善心理健康的第一步。
       </p>
       <div class="flex flex-col sm:flex-row gap-4 justify-center">
         <a 
-          href="/guide" 
+          href="/zh/guide" 
           class="inline-flex items-center justify-center px-8 py-4 bg-white text-blue-600 font-semibold rounded-lg hover:bg-gray-50 transition-colors"
         >
-          Start with Guides
+          从指南开始
         </a>
         <a 
-          href="/resources" 
+          href="/zh/resources" 
           class="inline-flex items-center justify-center px-8 py-4 border-2 border-white text-white font-semibold rounded-lg hover:bg-white hover:text-blue-600 transition-colors"
         >
-          Explore Resources
+          探索资源
         </a>
       </div>
     </div>

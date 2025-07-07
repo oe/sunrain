@@ -1,0 +1,24 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://sunrain.example.com/sitemap-index.xml
+
+# Block admin areas (if any in the future)
+Disallow: /admin/
+Disallow: /.astro/
+Disallow: /node_modules/
+
+# Allow all language versions
+Allow: /en/
+Allow: /zh/
+Allow: /es/
+Allow: /ja/
+Allow: /ko/
+Allow: /ar/
+Allow: /fr/
+Allow: /de/
+Allow: /pt/
+
+# Crawl delay (optional)
+Crawl-delay: 1
