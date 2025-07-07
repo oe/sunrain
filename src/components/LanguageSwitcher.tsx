@@ -13,7 +13,9 @@ export default function LanguageSwitcher({ currentLang, currentPath }: Props) {
 
   const getLocalizedPath = (locale: Language) => {
     // Remove current language prefix from path
-    return getRelativeLocaleUrl(locale, '/');
+    const path = currentPath.replace(`/${currentLang}`, '');
+
+    return getRelativeLocaleUrl(locale, path);
   };
 
   return (
