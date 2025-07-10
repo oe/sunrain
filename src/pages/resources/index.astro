@@ -7,7 +7,7 @@ import { getEntry } from 'astro:content';
 
 const lang = getLocale(Astro.url) as Language;
 
-const t = useTranslations(lang);
+const t = useTranslations(lang, 'resources');
 
 // Load resources data
 const musicData = await getEntry('resources', 'music');
@@ -20,8 +20,8 @@ const books = booksData.data[lang] || booksData.data.en;
 ---
 
 <BaseLayout
-  title={t('nav.resources')}
-  description={t('resources.description')}
+  title={t('page.title')}
+  description={t('page.description')}
   lang={lang}
 >
   <main class="min-h-screen bg-gradient-to-br from-blue-50 to-green-50 py-12">
@@ -29,10 +29,10 @@ const books = booksData.data[lang] || booksData.data.en;
       <!-- Header -->
       <div class="text-center mb-12">
         <h1 class="text-4xl font-bold text-gray-900 mb-4">
-          {t('resources.title')}
+          {t('page.title')}
         </h1>
         <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-          {t('resources.subtitle')}
+          {t('page.subtitle')}
         </p>
       </div>
 
@@ -55,9 +55,9 @@ const books = booksData.data[lang] || booksData.data.en;
                 d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"
               ></path>
             </svg>
-            {t('resources.music.title')}
+            {t('sections.music.title')}
           </h2>
-          <p class="text-gray-600 mb-8">{t('resources.music.description')}</p>
+          <p class="text-gray-600 mb-8">{t('sections.music.description')}</p>
 
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {
@@ -101,9 +101,9 @@ const books = booksData.data[lang] || booksData.data.en;
                 d="M7 4V2a1 1 0 011-1h8a1 1 0 011 1v2h3a1 1 0 011 1v14a1 1 0 01-1 1H4a1 1 0 01-1-1V5a1 1 0 011-1h3zM9 4h6M9 8h6m-6 4h6"
               ></path>
             </svg>
-            {t('resources.movies.title')}
+            {t('sections.movies.title')}
           </h2>
-          <p class="text-gray-600 mb-8">{t('resources.movies.description')}</p>
+          <p class="text-gray-600 mb-8">{t('sections.movies.description')}</p>
 
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {
@@ -149,9 +149,9 @@ const books = booksData.data[lang] || booksData.data.en;
                 d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
               ></path>
             </svg>
-            {t('resources.books.title')}
+            {t('sections.books.title')}
           </h2>
-          <p class="text-gray-600 mb-8">{t('resources.books.description')}</p>
+          <p class="text-gray-600 mb-8">{t('sections.books.description')}</p>
 
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {
@@ -180,13 +180,13 @@ const books = booksData.data[lang] || booksData.data.en;
       <div
         class="text-center bg-gradient-to-r from-blue-600 to-green-600 text-white rounded-lg p-8"
       >
-        <h2 class="text-2xl font-bold mb-4">{t('resources.cta.title')}</h2>
-        <p class="text-lg mb-6">{t('resources.cta.description')}</p>
+        <h2 class="text-2xl font-bold mb-4">{t('cta.title')}</h2>
+        <p class="text-lg mb-6">{t('cta.description')}</p>
         <a
           href={getRelativeLocaleUrl(lang, '/guide/')}
           class="inline-block bg-white text-blue-600 font-semibold px-8 py-3 rounded-lg hover:bg-blue-50 transition-colors"
         >
-          {t('resources.cta.button')}
+          {t('cta.button')}
         </a>
       </div>
     </div>

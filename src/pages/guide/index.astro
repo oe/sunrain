@@ -7,7 +7,7 @@ import { useTranslations, getRelativeLocaleUrl } from '@/i18n/utils';
 
 const lang = getLocale(Astro.url) as Language;
 
-const t = useTranslations(lang);
+const t = useTranslations(lang, 'guide');
 
 // Get all English guides
 const allGuides = await getCollection('guide', ({ id }) =>
@@ -22,18 +22,18 @@ const regularGuides = sortedGuides.filter((guide) => !guide.data.featured);
 ---
 
 <BaseLayout
-  title={t('guide.title')}
-  description={t('guide.subtitle')}
+  title={t('page.title')}
+  description={t('page.subtitle')}
   lang={lang}
 >
   <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
     <!-- Page Header -->
     <div class="text-center mb-12">
       <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-        {t('guide.title')}
+        {t('page.title')}
       </h1>
       <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-        {t('guide.subtitle')}
+        {t('page.subtitle')}
       </p>
     </div>
 
@@ -89,7 +89,7 @@ const regularGuides = sortedGuides.filter((guide) => !guide.data.featured);
                       )}
                       class="text-blue-600 hover:text-blue-800 font-medium transition-colors"
                     >
-                      {t('read.more')} →
+                      {t('actions.readMore')} →
                     </a>
                   </div>
                 </div>

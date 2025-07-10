@@ -6,7 +6,7 @@ import { useTranslations, getRelativeLocaleUrl } from '@/i18n/utils';
 
 const lang = getLocale(Astro.url) as Language;
 
-const t = useTranslations(lang);
+const t = useTranslations(lang, 'guide');
 
 import { getCollection, type CollectionEntry } from 'astro:content';
 
@@ -201,7 +201,7 @@ const { Content } = await guide.render();
               stroke-width="2"
               d="M15 19l-7-7 7-7"></path>
           </svg>
-          {t('back.to')} Guides
+          {t('actions.backTo')} {t('nav.guide')}
         </a>
 
         <div class="flex space-x-4">

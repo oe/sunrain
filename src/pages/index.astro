@@ -7,7 +7,7 @@ import { useTranslations, getRelativeLocaleUrl } from '@/i18n/utils';
 
 const lang = getLocale(Astro.url) as Language;
 
-const t = useTranslations(lang);
+const t = useTranslations(lang, 'home');
 
 // Get featured guide content
 const allGuides = await getCollection('guide', ({ id }) =>
@@ -22,9 +22,11 @@ const musicData = await import('@/content/resources/music.json');
 const moviesData = await import('@/content/resources/movies.json');
 const booksData = await import('@/content/resources/books.json');
 
-const musicItems = musicData.default.en.items.slice(0, 3);
-const movieItems = moviesData.default.en.items.slice(0, 3);
-const bookItems = booksData.default.en.items.slice(0, 3);
+// 根据当前语言选择合适的数据，如果没有则使用英文
+const currentLang = lang === 'zh' ? 'zh' : 'en';
+const musicItems = musicData.default[currentLang]?.items?.slice(0, 3) || musicData.default.en.items.slice(0, 3);
+const movieItems = moviesData.default[currentLang]?.items?.slice(0, 3) || moviesData.default.en.items.slice(0, 3);
+const bookItems = booksData.default[currentLang]?.items?.slice(0, 3) || booksData.default.en.items.slice(0, 3);
 ---
 
 <BaseLayout
@@ -95,7 +97,7 @@ const bookItems = booksData.default.en.items.slice(0, 3);
                     href={getRelativeLocaleUrl(lang, `/guide/${guide.slug.replace('en/', '')}`)}
                     class="text-blue-600 hover:text-blue-800 font-medium transition-colors"
                   >
-                    {t('read.more')} →
+                    {t('actions.readMore')} →
                   </a>
                 </div>
               </div>
@@ -109,7 +111,7 @@ const bookItems = booksData.default.en.items.slice(0, 3);
           href={getRelativeLocaleUrl(lang, '/guide/')}
           class="inline-flex items-center px-6 py-3 border border-blue-600 text-blue-600 font-medium rounded-lg hover:bg-blue-50 transition-colors"
         >
-          View All Guides
+          {t('buttons.viewAllGuides')}
           <svg
             class="ml-2 w-4 h-4"
             fill="none"
@@ -282,7 +284,7 @@ const bookItems = booksData.default.en.items.slice(0, 3);
           href={getRelativeLocaleUrl(lang, '/resources/')}
           class="inline-flex items-center px-6 py-3 border border-blue-600 text-blue-600 font-medium rounded-lg hover:bg-blue-50 transition-colors"
         >
-          View All Resources
+          {t('buttons.viewAllResources')}
           <svg
             class="ml-2 w-4 h-4"
             fill="none"
@@ -304,24 +306,23 @@ const bookItems = booksData.default.en.items.slice(0, 3);
   <section class="py-16 bg-blue-600">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
       <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">
-        Start Your Healing Journey Today
+        {t('cta.title')}
       </h2>
       <p class="text-xl text-blue-100 mb-8">
-        Take the first step towards better mental health with our comprehensive
-        resources and guides.
+        {t('cta.description')}
       </p>
       <div class="flex flex-col sm:flex-row gap-4 justify-center">
         <a
           href={getRelativeLocaleUrl(lang, '/guide/')}
           class="inline-flex items-center justify-center px-8 py-4 bg-white text-blue-600 font-semibold rounded-lg hover:bg-gray-50 transition-colors"
         >
-          Start with Guides
+          {t('cta.guideButton')}
         </a>
         <a
           href={getRelativeLocaleUrl(lang, '/resources/')}
           class="inline-flex items-center justify-center px-8 py-4 border-2 border-white text-white font-semibold rounded-lg hover:bg-white hover:text-blue-600 transition-colors"
         >
-          Explore Resources
+          {t('cta.resourceButton')}
         </a>
       </div>
     </div>
