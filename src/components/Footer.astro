@@ -1,5 +1,5 @@
 ---
-import { useTranslations } from '@/i18n/utils';
+import { useTranslations, getRelativeLocaleUrl } from '@/i18n/utils';
 import { type Language } from '@/i18n/config';
 
 export interface Props {
@@ -10,71 +10,112 @@ const { lang } = Astro.props;
 const t = useTranslations(lang);
 ---
 
-<footer class="bg-gray-900 text-white">
-  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<footer class="bg-white border-t border-gray-200">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
       <!-- Brand -->
-      <div class="space-y-4">
-        <div class="flex items-center space-x-2">
-          <svg
-            class="w-8 h-8 text-blue-400"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M12 3v18m9-9a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-          </svg>
-          <span class="text-xl font-bold">SunRain</span>
+      <div class="col-span-2 md:col-span-1">
+        <div class="flex items-center space-x-2 mb-4">
+          <div class="relative">
+            <span class="text-xl">☀️</span>
+            <span class="text-xs absolute -top-1 -right-1">🌧️</span>
+          </div>
+          <span class="text-lg font-semibold text-gray-900"> Sunrain.me </span>
         </div>
-        <p class="text-gray-300 text-sm leading-relaxed">
+        <p class="text-sm text-gray-600 leading-relaxed">
           {t('footer.mission')}
         </p>
       </div>
 
-      <!-- Links -->
-      <div class="space-y-4">
-        <h3 class="text-lg font-semibold">{t('nav.resources')}</h3>
-        <div class="space-y-2 text-sm">
+      <!-- Quick Links -->
+      <div>
+        <h3 class="text-sm font-semibold text-gray-900 mb-3">{t('footer.quickLinks')}</h3>
+        <div class="space-y-2">
           <a
-            href="#"
-            class="block text-gray-300 hover:text-white transition-colors"
+            href={getRelativeLocaleUrl(lang, '/about/')}
+            class="block text-sm text-gray-600 hover:text-gray-900 transition-colors"
           >
-            {t('nav.guide')}
+            {t('footer.about')}
           </a>
           <a
             href="#"
-            class="block text-gray-300 hover:text-white transition-colors"
+            class="block text-sm text-gray-600 hover:text-gray-900 transition-colors"
           >
-            {t('resources.music')}
+            {t('footer.support')}
           </a>
           <a
             href="#"
-            class="block text-gray-300 hover:text-white transition-colors"
+            class="block text-sm text-gray-600 hover:text-gray-900 transition-colors"
           >
-            {t('resources.books')}
+            {t('footer.privacy')}
           </a>
         </div>
       </div>
 
-      <!-- Contact -->
-      <div class="space-y-4">
-        <h3 class="text-lg font-semibold">{t('nav.about')}</h3>
-        <div class="space-y-2 text-sm text-gray-300">
-          <p>Mental Health Support</p>
-          <p>Global Community</p>
-          <p>24/7 Resources</p>
+      <!-- Community -->
+      <div>
+        <h3 class="text-sm font-semibold text-gray-900 mb-3">{t('footer.community')}</h3>
+        <div class="space-y-2">
+          <a
+            href="#"
+            class="block text-sm text-gray-600 hover:text-gray-900 transition-colors"
+          >
+            {t('footer.submitStory')}
+          </a>
+          <a
+            href="#"
+            class="block text-sm text-gray-600 hover:text-gray-900 transition-colors"
+          >
+            {t('footer.github')}
+          </a>
+          <a
+            href="#"
+            class="block text-sm text-gray-600 hover:text-gray-900 transition-colors"
+          >
+            {t('footer.helpCenter')}
+          </a>
+        </div>
+      </div>
+
+      <!-- Features -->
+      <div>
+        <h3 class="text-sm font-semibold text-gray-900 mb-3">{t('footer.features')}</h3>
+        <div class="space-y-2">
+          <a
+            href="#"
+            class="block text-sm text-gray-600 hover:text-gray-900 transition-colors"
+          >
+            {t('footer.selfCheck')}
+          </a>
+          <a
+            href="#"
+            class="block text-sm text-gray-600 hover:text-gray-900 transition-colors"
+          >
+            {t('footer.healingResources')}
+          </a>
+          <a
+            href="#"
+            class="block text-sm text-gray-600 hover:text-gray-900 transition-colors"
+          >
+            {t('footer.crisisHotline')}
+          </a>
         </div>
       </div>
     </div>
 
-    <div
-      class="border-t border-gray-800 mt-8 pt-8 text-center text-sm text-gray-400"
-    >
-      <p>{t('footer.copyright')}</p>
+    <!-- Bottom section -->
+    <div class="border-t border-gray-200 mt-8 pt-8">
+      <div
+        class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0"
+      >
+        <p class="text-sm text-gray-500">
+          {t('footer.copyright')}
+        </p>
+        <div class="flex items-center space-x-4 text-sm text-gray-500">
+          <span>🌐 {t('footer.multilingual')}</span>
+          <span>🦽 {t('footer.accessibility')}</span>
+        </div>
+      </div>
     </div>
   </div>
 </footer>

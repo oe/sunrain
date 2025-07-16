@@ -19,6 +19,34 @@ export interface ISharedTranslations {
     copyright: string;
     /** 网站使命 */
     mission: string;
+    /** 快捷链接 */
+    quickLinks: string;
+    /** 社区 */
+    community: string;
+    /** 功能 */
+    features: string;
+    /** 关于我们 */
+    about: string;
+    /** 支持 */
+    support: string;
+    /** 隐私政策 */
+    privacy: string;
+    /** 投稿故事 */
+    submitStory: string;
+    /** GitHub */
+    github: string;
+    /** 帮助中心 */
+    helpCenter: string;
+    /** 心理测评 */
+    selfCheck: string;
+    /** 疗愈资源 */
+    healingResources: string;
+    /** 危机热线 */
+    crisisHotline: string;
+    /** 多语言 */
+    multilingual: string;
+    /** 无障碍 */
+    accessibility: string;
   };
   /** 语言切换相关 */
   language: {

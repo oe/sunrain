@@ -78,10 +78,10 @@ const alternateLinks = Object.keys(languages).map((locale) => ({
     <meta name="twitter:description" content={pageDescription} />
   </head>
   <body
-    class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex flex-col"
+    class="min-h-screen bg-white dark:bg-gray-900 flex flex-col font-sans antialiased"
   >
     <Header lang={currentLang} />
-    <main class="flex-1">
+    <main class="flex-1 pt-16">
       <slot />
     </main>
     <Footer lang={currentLang} />
