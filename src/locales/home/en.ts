@@ -17,32 +17,32 @@ export const homeEn: IHomeTranslations = {
     subtitle: 'Six gentle paths to wellness, each designed with care',
     selfCheck: {
       title: 'Self-Check',
-      description: '自我心理测评（压力、焦虑、抑郁、自尊等）',
+      description: 'Self-assessment for mental health (stress, anxiety, depression, self-esteem)',
       button: 'Start Check →',
     },
     dailyPractice: {
       title: 'Daily Practice',
-      description: '正念训练、呼吸练习，构建心理韧性',
+      description: 'Mindfulness training, breathing exercises, building mental resilience',
       button: 'Begin Practice →',
     },
     quickRelief: {
       title: 'Quick Relief',
-      description: '白噪音、放松小游戏、放松呼吸互动',
+      description: 'White noise, relaxation games, interactive breathing exercises',
       button: 'Find Relief →',
     },
     healingLibrary: {
       title: 'Healing Library',
-      description: '音乐、电影、播客、图书推荐（疗愈系）',
+      description: 'Curated music, movies, podcasts, and book recommendations for healing',
       button: 'Explore →',
     },
     psychologyWiki: {
       title: 'Psychology Wiki',
-      description: '心理知识百科，解释各种常见心理问题',
+      description: 'Encyclopedia of psychological knowledge, explaining common mental health issues',
       button: 'Learn More →',
     },
     supportHotline: {
       title: 'Support Hotline',
-      description: '全球心理援助热线、当地咨询资源指引',
+      description: 'Global mental health helplines and local consultation resources',
       button: 'Get Help →',
     },
   },
