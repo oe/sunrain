@@ -14,7 +14,7 @@ export interface Props {
 }
 
 const { title, description, lang } = Astro.props;
-const currentLang = lang || getLocale(Astro.url) as Language;
+const currentLang = lang || (getLocale(Astro.url) as Language);
 const t = useTranslations(currentLang);
 
 const pageTitle = title ? `${title} | SunRain` : `SunRain - ${t('hero.title')}`;
@@ -76,6 +76,26 @@ const alternateLinks = Object.keys(languages).map((locale) => ({
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={pageTitle} />
     <meta name="twitter:description" content={pageDescription} />
+
+    <!-- Theme initialization script (must be in head to prevent flash) -->
+    <script is:inline>
+      (function () {
+        const savedTheme = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia(
+          '(prefers-color-scheme: dark)'
+        ).matches;
+
+        if (
+          savedTheme === 'dark' ||
+          (savedTheme === 'system' && prefersDark) ||
+          (!savedTheme && prefersDark)
+        ) {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
+      })();
+    </script>
   </head>
   <body
     class="min-h-screen bg-white dark:bg-gray-900 flex flex-col font-sans antialiased"
