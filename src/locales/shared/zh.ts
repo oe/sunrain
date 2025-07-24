@@ -30,7 +30,14 @@ export const sharedZh: ISharedTranslations = {
     accessibility: '无障碍'
   },
   language: {
-    current: '语言'
+    current: '语言',
+    switchTo: '切换到'
+  },
+  theme: {
+    toggle: '切换主题',
+    light: '浅色模式',
+    dark: '深色模式',
+    system: '系统默认'
   },
   meta: {
     description:

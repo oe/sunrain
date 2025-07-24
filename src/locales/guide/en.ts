@@ -13,6 +13,9 @@ export const guideEn: IGuideTranslations = {
     viewAll: 'View All Guides',
     noGuides: 'No guides available at the moment.',
     loading: 'Loading guides...',
+    featured: 'Featured Guides',
+    allGuides: 'All Guides',
+    featuredTag: 'Featured',
   },
   detail: {
     publishedOn: 'Published on',
@@ -26,6 +29,22 @@ export const guideEn: IGuideTranslations = {
     previous: 'Previous',
     next: 'Next',
     backToGuides: 'Back to Guides',
+  },
+  actions: {
+    readMore: 'Read More',
+    backTo: 'Back to',
+    print: 'Print',
+    share: 'Share',
+  },
+  help: {
+    needMoreHelp: 'Need More Help?',
+    helpDescription: 'If you\'re dealing with a mental health crisis or need immediate support, please don\'t hesitate to reach out for professional help.',
+    exploreResources: 'Explore Resources',
+    getEmergencyHelp: 'Get Emergency Help',
+  },
+  empty: {
+    noGuidesAvailable: 'No guides available',
+    emptyDescription: 'Check back soon for new mental health guides and resources.',
   },
 };
 

@@ -31,6 +31,13 @@ export const sharedEn: ISharedTranslations = {
   },
   language: {
     current: 'Language',
+    switchTo: 'Switch to',
+  },
+  theme: {
+    toggle: 'Toggle theme',
+    light: 'Light mode',
+    dark: 'Dark mode',
+    system: 'System default',
   },
   meta: {
     description: 'Mental health resources and self-help guides for anxiety, depression, sleep and emotional well-being.',

@@ -30,6 +30,13 @@ export const sharedHi: ISharedTranslations = {
   },
   language: {
     current: 'भाषा',
+    switchTo: 'स्विच करें',
+  },
+  theme: {
+    toggle: 'थीम टॉगल',
+    light: 'लाइट मोड',
+    dark: 'डार्क मोड',
+    system: 'सिस्टम डिफ़ॉल्ट',
   },
   meta: {
     description: 'चिंता, अवसाद, नींद और भावनात्मक कल्याण के लिए मानसिक स्वास्थ्य संसाधन और स्व-सहायता गाइड।',

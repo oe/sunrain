@@ -69,3 +69,24 @@ body {
     color-scheme: dark;
   }
 }
+
+/* Ensure dark mode classes work properly */
+.dark {
+  color-scheme: dark;
+}
+
+/* Theme transition support */
+html {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Dark mode variables */
+:root {
+  --color-bg: #ffffff;
+  --color-text: #1f2937;
+}
+
+.dark {
+  --color-bg: #111827;
+  --color-text: #f9fafb;
+}

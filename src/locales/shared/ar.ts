@@ -30,6 +30,13 @@ export const sharedAr: ISharedTranslations = {
   },
   language: {
     current: 'اللغة',
+    switchTo: 'التبديل إلى',
+  },
+  theme: {
+    toggle: 'تبديل المظهر',
+    light: 'الوضع الفاتح',
+    dark: 'الوضع الداكن',
+    system: 'افتراضي النظام',
   },
   meta: {
     description: 'موارد الصحة النفسية وأدلة المساعدة الذاتية للقلق والاكتئاب والنوم والعافية العاطفية.',

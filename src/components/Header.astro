@@ -1,5 +1,5 @@
 ---
-import { useTranslations, getRelativeLocaleUrl } from '@/i18n/utils';
+import { useSharedTranslations, getRelativeLocaleUrl } from '@/i18n/utils';
 import { type Language } from '@/i18n/config';
 import LanguageSwitcher from './LanguageSwitcher.tsx';
 
@@ -8,7 +8,7 @@ export interface Props {
 }
 
 const { lang } = Astro.props;
-const t = useTranslations(lang);
+const t = useSharedTranslations(lang);
 
 const navItems = [
   { key: 'nav.home', href: getRelativeLocaleUrl(lang, '/') },
@@ -18,32 +18,34 @@ const navItems = [
 ];
 ---
 
-<header class="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-200">
-  <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<header class="fixed top-0 left-0 right-0 z-50 bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm border-b border-gray-200 dark:border-gray-700 transition-all duration-300">
+  <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" role="navigation" aria-label="Main navigation">
     <div class="flex justify-between items-center h-16">
       <!-- Logo -->
       <div class="flex items-center">
         <a
           href={getRelativeLocaleUrl(lang, '/')}
-          class="flex items-center space-x-3 group"
+          class="flex items-center space-x-3 group focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900 rounded-md p-1 -m-1"
+          aria-label="Sunrain.me - Home"
         >
-          <div class="relative">
+          <div class="relative" aria-hidden="true">
             <span class="text-xl">☀️</span>
             <span class="text-xs absolute -top-1 -right-1">🌧️</span>
           </div>
-          <span class="text-xl font-semibold text-gray-900 group-hover:text-blue-600 transition-colors">
+          <span class="text-xl font-semibold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-200">
             Sunrain.me
           </span>
         </a>
       </div>
 
       <!-- Desktop Navigation -->
-      <div class="hidden md:flex items-center space-x-1">
+      <div class="hidden md:flex items-center space-x-1" role="menubar">
         {
           navItems.map(({ key, href }) => (
             <a
               href={href}
-              class="text-gray-700 hover:text-gray-900 px-3 py-2 text-sm font-medium transition-colors rounded-md hover:bg-gray-50"
+              class="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white px-3 py-2 text-sm font-medium transition-all duration-200 rounded-md hover:bg-gray-50 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
+              role="menuitem"
             >
               {t(key)}
             </a>
@@ -60,28 +62,100 @@ const navItems = [
           currentPath={Astro.url.pathname}
         />
 
-        <!-- Dark mode toggle -->
-        <button 
-          id="theme-toggle"
-          class="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-md transition-colors" 
-          aria-label="Toggle theme"
-        >
-          <svg class="w-5 h-5 dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
-          </svg>
-          <svg class="w-5 h-5 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
-          </svg>
-        </button>
+        <!-- Theme selector -->
+        <div class="relative" id="theme-selector">
+          <button 
+            id="theme-toggle"
+            class="p-2 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900 flex items-center space-x-1" 
+            aria-label={t('theme.toggle')}
+            aria-expanded="false"
+            aria-haspopup="listbox"
+            title={t('theme.toggle')}
+          >
+            <!-- System theme icon -->
+            <svg id="theme-system" class="w-5 h-5 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+            </svg>
+            <!-- Light theme icon -->
+            <svg id="theme-light" class="w-5 h-5 hidden transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+            </svg>
+            <!-- Dark theme icon -->
+            <svg id="theme-dark" class="w-5 h-5 hidden transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+            </svg>
+            <svg class="w-3 h-3 transition-transform duration-200 transform" id="theme-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </button>
+
+          <!-- Theme dropdown -->
+          <div 
+            id="theme-dropdown"
+            class="absolute right-0 mt-2 w-40 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-600 z-50 overflow-hidden hidden animate-in fade-in-0 zoom-in-95 duration-200"
+            role="listbox"
+            aria-label="Theme options"
+          >
+            <div class="py-1">
+              <button
+                data-theme="system"
+                class="flex items-center space-x-3 w-full px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-inset"
+                role="option"
+                aria-selected="true"
+              >
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                </svg>
+                <span>{t('theme.system')}</span>
+                <svg class="w-4 h-4 ml-auto text-blue-500 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+              </button>
+              <button
+                data-theme="light"
+                class="flex items-center space-x-3 w-full px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-inset"
+                role="option"
+                aria-selected="false"
+              >
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                </svg>
+                <span>{t('theme.light')}</span>
+                <svg class="w-4 h-4 ml-auto text-blue-500 dark:text-blue-400 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+              </button>
+              <button
+                data-theme="dark"
+                class="flex items-center space-x-3 w-full px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-inset"
+                role="option"
+                aria-selected="false"
+              >
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+                </svg>
+                <span>{t('theme.dark')}</span>
+                <svg class="w-4 h-4 ml-auto text-blue-500 dark:text-blue-400 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
 
         <!-- Mobile menu button -->
         <button
           id="mobile-menu-button"
-          class="md:hidden p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-md transition-colors"
-          aria-label="Toggle menu"
+          class="md:hidden p-2 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
+          aria-label="Toggle navigation menu"
+          aria-expanded="false"
+          aria-controls="mobile-menu"
         >
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg id="menu-icon" class="w-5 h-5 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+          <svg id="close-icon" class="w-5 h-5 hidden transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
           </svg>
         </button>
       </div>
@@ -90,14 +164,17 @@ const navItems = [
     <!-- Mobile Navigation -->
     <div
       id="mobile-menu"
-      class="md:hidden hidden border-t border-gray-200 py-4 bg-white"
+      class="md:hidden hidden border-t border-gray-200 dark:border-gray-700 py-4 bg-white dark:bg-gray-900 transition-all duration-300"
+      role="menu"
+      aria-label="Mobile navigation menu"
     >
       <div class="space-y-1">
         {
           navItems.map(({ key, href }) => (
             <a
               href={href}
-              class="block text-gray-700 hover:text-gray-900 hover:bg-gray-50 px-4 py-2 text-base font-medium transition-colors rounded-md mx-2"
+              class="block text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 px-4 py-3 text-base font-medium transition-all duration-200 rounded-md mx-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
+              role="menuitem"
             >
               {t(key)}
             </a>
@@ -110,38 +187,210 @@ const navItems = [
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
-    const button = document.getElementById('mobile-menu-button');
-    const menu = document.getElementById('mobile-menu');
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const menuIcon = document.getElementById('menu-icon');
+    const closeIcon = document.getElementById('close-icon');
     const themeToggle = document.getElementById('theme-toggle');
 
-    // Mobile menu toggle
-    button?.addEventListener('click', () => {
-      menu?.classList.toggle('hidden');
-    });
-
-    // Theme toggle functionality
-    themeToggle?.addEventListener('click', () => {
-      const html = document.documentElement;
-      const isDark = html.classList.contains('dark');
+    // Mobile menu toggle with improved accessibility
+    mobileMenuButton?.addEventListener('click', () => {
+      const isOpen = !mobileMenu?.classList.contains('hidden');
       
-      if (isDark) {
-        html.classList.remove('dark');
-        localStorage.setItem('theme', 'light');
+      if (isOpen) {
+        // Close menu
+        mobileMenu?.classList.add('hidden');
+        mobileMenuButton.setAttribute('aria-expanded', 'false');
+        menuIcon?.classList.remove('hidden');
+        closeIcon?.classList.add('hidden');
       } else {
-        html.classList.add('dark');
-        localStorage.setItem('theme', 'dark');
+        // Open menu
+        mobileMenu?.classList.remove('hidden');
+        mobileMenuButton.setAttribute('aria-expanded', 'true');
+        menuIcon?.classList.add('hidden');
+        closeIcon?.classList.remove('hidden');
+        
+        // Focus first menu item
+        const firstMenuItem = mobileMenu?.querySelector('a');
+        firstMenuItem?.focus();
       }
     });
 
-    // Initialize theme from localStorage
-    const savedTheme = localStorage.getItem('theme');
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    
-    if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
-      document.documentElement.classList.add('dark');
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', (event) => {
+      const target = event.target as Element;
+      if (!mobileMenuButton?.contains(target) && !mobileMenu?.contains(target)) {
+        mobileMenu?.classList.add('hidden');
+        mobileMenuButton?.setAttribute('aria-expanded', 'false');
+        menuIcon?.classList.remove('hidden');
+        closeIcon?.classList.add('hidden');
+      }
+    });
+
+    // Close mobile menu on escape key
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && !mobileMenu?.classList.contains('hidden')) {
+        mobileMenu?.classList.add('hidden');
+        mobileMenuButton?.setAttribute('aria-expanded', 'false');
+        menuIcon?.classList.remove('hidden');
+        closeIcon?.classList.add('hidden');
+        mobileMenuButton?.focus();
+      }
+    });
+
+    // Enhanced theme selector functionality with three modes
+    const themeDropdown = document.getElementById('theme-dropdown');
+    const themeChevron = document.getElementById('theme-chevron');
+    const themeSystemIcon = document.getElementById('theme-system');
+    const themeLightIcon = document.getElementById('theme-light');
+    const themeDarkIcon = document.getElementById('theme-dark');
+    const themeOptions = document.querySelectorAll('[data-theme]');
+
+    // Theme management functions
+    function applyTheme(theme) {
+      const html = document.documentElement;
+      
+      // Remove existing theme classes
+      html.classList.remove('dark');
+      
+      if (theme === 'dark') {
+        html.classList.add('dark');
+      } else if (theme === 'light') {
+        // Light mode - no dark class needed
+      } else { // system
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (prefersDark) {
+          html.classList.add('dark');
+        }
+      }
+      
+      console.log('Applied theme:', theme, 'Dark class present:', html.classList.contains('dark'));
     }
 
-    // Add scroll effect to header
+    function updateThemeUI(currentTheme) {
+      // Hide all icons first
+      themeSystemIcon?.classList.add('hidden');
+      themeLightIcon?.classList.add('hidden');
+      themeDarkIcon?.classList.add('hidden');
+      
+      // Show current theme icon
+      if (currentTheme === 'light') {
+        themeLightIcon?.classList.remove('hidden');
+      } else if (currentTheme === 'dark') {
+        themeDarkIcon?.classList.remove('hidden');
+      } else {
+        themeSystemIcon?.classList.remove('hidden');
+      }
+      
+      // Update dropdown options
+      themeOptions.forEach(option => {
+        const theme = option.getAttribute('data-theme');
+        const checkIcon = option.querySelector('svg:last-child');
+        
+        if (theme === currentTheme) {
+          option.setAttribute('aria-selected', 'true');
+          checkIcon?.classList.remove('hidden');
+        } else {
+          option.setAttribute('aria-selected', 'false');
+          checkIcon?.classList.add('hidden');
+        }
+      });
+    }
+
+    // Toggle theme dropdown
+    themeToggle?.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      
+      const isOpen = !themeDropdown?.classList.contains('hidden');
+      
+      if (isOpen) {
+        themeDropdown?.classList.add('hidden');
+        themeToggle.setAttribute('aria-expanded', 'false');
+        if (themeChevron) {
+          themeChevron.style.transform = 'rotate(0deg)';
+        }
+      } else {
+        themeDropdown?.classList.remove('hidden');
+        themeToggle.setAttribute('aria-expanded', 'true');
+        if (themeChevron) {
+          themeChevron.style.transform = 'rotate(180deg)';
+        }
+      }
+    });
+
+    // Handle theme selection
+    themeOptions.forEach(option => {
+      option.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        const selectedTheme = option.getAttribute('data-theme');
+        console.log('Theme selected:', selectedTheme);
+        
+        if (selectedTheme) {
+          localStorage.setItem('theme', selectedTheme);
+          applyTheme(selectedTheme);
+          updateThemeUI(selectedTheme);
+          
+          // Close dropdown
+          themeDropdown?.classList.add('hidden');
+          themeToggle?.setAttribute('aria-expanded', 'false');
+          if (themeChevron) {
+            themeChevron.style.transform = 'rotate(0deg)';
+          }
+        }
+      });
+    });
+
+    // Close theme dropdown when clicking outside
+    document.addEventListener('click', (event) => {
+      const target = event.target as Element;
+      const themeSelector = document.getElementById('theme-selector');
+      if (!themeSelector?.contains(target)) {
+        themeDropdown?.classList.add('hidden');
+        themeToggle?.setAttribute('aria-expanded', 'false');
+        if (themeChevron) {
+          themeChevron.style.transform = 'rotate(0deg)';
+        }
+      }
+    });
+
+    // Keyboard navigation for theme dropdown
+    themeToggle?.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') {
+        themeDropdown?.classList.add('hidden');
+        themeToggle.setAttribute('aria-expanded', 'false');
+        if (themeChevron) {
+          themeChevron.style.transform = 'rotate(0deg)';
+        }
+      } else if (event.key === 'ArrowDown' || event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        if (themeDropdown?.classList.contains('hidden')) {
+          themeDropdown?.classList.remove('hidden');
+          themeToggle.setAttribute('aria-expanded', 'true');
+          if (themeChevron) {
+            themeChevron.style.transform = 'rotate(180deg)';
+          }
+          (themeOptions[0] as HTMLElement)?.focus();
+        }
+      }
+    });
+
+    // Initialize theme from localStorage with system preference support
+    const savedTheme = localStorage.getItem('theme') || 'system';
+    applyTheme(savedTheme);
+    updateThemeUI(savedTheme);
+
+    // Listen for system theme changes when using system theme
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+      const currentTheme = localStorage.getItem('theme') || 'system';
+      if (currentTheme === 'system') {
+        applyTheme('system');
+      }
+    });
+
+    // Enhanced scroll effect for header with dark mode support
     const header = document.querySelector('header');
     
     window.addEventListener('scroll', () => {
@@ -149,13 +398,31 @@ const navItems = [
       
       if (currentScrollY > 50) {
         header?.classList.add('shadow-sm');
-        header?.classList.add('bg-white');
-        header?.classList.remove('bg-white/95');
+        header?.classList.add('bg-white/100', 'dark:bg-gray-900/100');
+        header?.classList.remove('bg-white/95', 'dark:bg-gray-900/95');
       } else {
         header?.classList.remove('shadow-sm');
-        header?.classList.remove('bg-white');
-        header?.classList.add('bg-white/95');
+        header?.classList.remove('bg-white/100', 'dark:bg-gray-900/100');
+        header?.classList.add('bg-white/95', 'dark:bg-gray-900/95');
       }
+    });
+
+    // Keyboard navigation support for desktop menu
+    const desktopMenuItems = document.querySelectorAll('[role="menubar"] [role="menuitem"]');
+    desktopMenuItems.forEach((item, index) => {
+      item.addEventListener('keydown', (event) => {
+        const key = event.key;
+        
+        if (key === 'ArrowRight' || key === 'ArrowDown') {
+          event.preventDefault();
+          const nextIndex = (index + 1) % desktopMenuItems.length;
+          (desktopMenuItems[nextIndex] as HTMLElement).focus();
+        } else if (key === 'ArrowLeft' || key === 'ArrowUp') {
+          event.preventDefault();
+          const prevIndex = (index - 1 + desktopMenuItems.length) % desktopMenuItems.length;
+          (desktopMenuItems[prevIndex] as HTMLElement).focus();
+        }
+      });
     });
   });
 </script>

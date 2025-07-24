@@ -13,6 +13,7 @@ export const resourcesZh: IResourcesTranslations = {
     music: '音乐',
     movies: '电影',
     books: '书籍',
+    all: '全部',
   },
   sections: {
     music: {
@@ -27,6 +28,20 @@ export const resourcesZh: IResourcesTranslations = {
       title: '健康书籍',
       description: '为心理健康提供见解、策略和安慰的书籍。',
     },
+  },
+  filters: {
+    title: '筛选资源',
+    searchPlaceholder: '搜索资源...',
+    filterByCategory: '按类别筛选',
+    clearFilters: '清除筛选',
+  },
+  details: {
+    author: '作者',
+    director: '导演',
+    artist: '艺术家',
+    year: '年份',
+    viewDetails: '查看详情',
+    close: '关闭',
   },
   cta: {
     title: '准备好开始您的疗愈之旅了吗？',

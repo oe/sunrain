@@ -93,6 +93,63 @@ export interface IAboutTranslations {
     /** 描述 */
     description: string;
   };
+  /** 团队介绍 */
+  team: {
+    /** 标题 */
+    title: string;
+    /** 描述 */
+    description: string;
+    /** 团队成员 */
+    members: {
+      /** 开发者 */
+      developer: {
+        /** 角色 */
+        role: string;
+        /** 描述 */
+        description: string;
+      };
+      /** 内容策划 */
+      curator: {
+        /** 角色 */
+        role: string;
+        /** 描述 */
+        description: string;
+      };
+      /** 社区 */
+      community: {
+        /** 角色 */
+        role: string;
+        /** 描述 */
+        description: string;
+      };
+    };
+  };
+  /** 信任建立 */
+  trust: {
+    /** 标题 */
+    title: string;
+    /** 隐私 */
+    privacy: {
+      /** 标题 */
+      title: string;
+      /** 描述 */
+      description: string;
+    };
+    /** 开源 */
+    openSource: {
+      /** 标题 */
+      title: string;
+      /** 描述 */
+      description: string;
+    };
+    /** 无广告 */
+    noAds: {
+      /** 标题 */
+      title: string;
+      /** 描述 */
+      description: string;
+    };
+  };
   /** 行动号召 */
   cta: {
     /** 标题 */

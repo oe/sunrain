@@ -52,6 +52,39 @@ export const aboutZh: IAboutTranslations = {
       description: '一个安全的空间，人们可以找到希望、疗愈，并与类似旅程中的其他人建立联系。',
     },
   },
+  team: {
+    title: '我们的团队',
+    description: '晴雨由一支专注的开发者、心理健康倡导者和社区成员团队构建，他们相信让每个人都能获得心理健康支持。',
+    members: {
+      developer: {
+        role: '开发团队',
+        description: '充满热情的开发者，致力于创建一个安全、可访问的心理健康资源平台。',
+      },
+      curator: {
+        role: '内容策划',
+        description: '心理健康专业人士和研究人员，确保我们的内容基于证据且有帮助。',
+      },
+      community: {
+        role: '社区支持',
+        description: '志愿者和倡导者，帮助为所有用户维护一个支持性、温馨的环境。',
+      },
+    },
+  },
+  trust: {
+    title: '为什么信任晴雨',
+    privacy: {
+      title: '隐私优先',
+      description: '我们不跟踪、存储或出售您的个人数据。您的隐私和匿名性是我们的首要任务。',
+    },
+    openSource: {
+      title: '开源',
+      description: '我们的平台是开源的，意味着我们的代码是透明的，任何人都可以审查。',
+    },
+    noAds: {
+      title: '无广告',
+      description: '我们不显示广告或推广产品。我们的重点纯粹是提供有用的心理健康资源。',
+    },
+  },
   disclaimer: {
     title: '重要提醒',
     description: '我们的资源仅用于教育目的，不应替代专业医疗建议。如果您正在经历严重的心理健康症状或自伤念头，请立即寻求专业帮助。',

@@ -13,6 +13,7 @@ export const resourcesEn: IResourcesTranslations = {
     music: 'Music',
     movies: 'Movies',
     books: 'Books',
+    all: 'All',
   },
   sections: {
     music: {
@@ -27,6 +28,20 @@ export const resourcesEn: IResourcesTranslations = {
       title: 'Wellness Books',
       description: 'Books that offer insights, strategies, and comfort for mental health.',
     },
+  },
+  filters: {
+    title: 'Filter Resources',
+    searchPlaceholder: 'Search resources...',
+    filterByCategory: 'Filter by Category',
+    clearFilters: 'Clear Filters',
+  },
+  details: {
+    author: 'Author',
+    director: 'Director',
+    artist: 'Artist',
+    year: 'Year',
+    viewDetails: 'View Details',
+    close: 'Close',
   },
   cta: {
     title: 'Ready to Start Your Healing Journey?',

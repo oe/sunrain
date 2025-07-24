@@ -7,6 +7,11 @@ import type { IGuideTranslations } from './types';
 // 导入所有语言的翻译
 import guideEn from './en';
 import guideZh from './zh';
+import guideEs from './es';
+import guideJa from './ja';
+import guideKo from './ko';
+import guideHi from './hi';
+import guideAr from './ar';
 
 /**
  * 指南页翻译内容映射
@@ -14,6 +19,11 @@ import guideZh from './zh';
 export const guideTranslations = {
   en: guideEn,
   zh: guideZh,
+  es: guideEs,
+  ja: guideJa,
+  ko: guideKo,
+  hi: guideHi,
+  ar: guideAr,
 } as const;
 
 /**
@@ -25,5 +35,5 @@ export function getGuideTranslations(lang: Language): IGuideTranslations {
 
 // 导出类型和所有语言的翻译
 export type { IGuideTranslations } from './types';
-export { guideEn, guideZh };
+export { guideEn, guideZh, guideEs, guideJa, guideKo, guideHi, guideAr };
 export default guideTranslations;

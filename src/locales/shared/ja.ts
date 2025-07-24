@@ -30,6 +30,13 @@ export const sharedJa: ISharedTranslations = {
   },
   language: {
     current: '言語',
+    switchTo: '切り替え',
+  },
+  theme: {
+    toggle: 'テーマ切り替え',
+    light: 'ライトモード',
+    dark: 'ダークモード',
+    system: 'システムデフォルト',
   },
   meta: {
     description: '不安、うつ病、睡眠、感情的な健康のためのメンタルヘルスリソースとセルフヘルプガイド。',

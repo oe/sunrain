@@ -7,6 +7,11 @@ import type { IResourcesTranslations } from './types';
 // 导入所有语言的翻译
 import resourcesEn from './en';
 import resourcesZh from './zh';
+import resourcesEs from './es';
+import resourcesJa from './ja';
+import resourcesKo from './ko';
+import resourcesHi from './hi';
+import resourcesAr from './ar';
 
 /**
  * 资源页翻译内容映射
@@ -14,6 +19,11 @@ import resourcesZh from './zh';
 export const resourcesTranslations = {
   en: resourcesEn,
   zh: resourcesZh,
+  es: resourcesEs,
+  ja: resourcesJa,
+  ko: resourcesKo,
+  hi: resourcesHi,
+  ar: resourcesAr,
 } as const;
 
 /**
@@ -25,5 +35,5 @@ export function getResourcesTranslations(lang: Language): IResourcesTranslations
 
 // 导出类型和所有语言的翻译
 export type { IResourcesTranslations } from './types';
-export { resourcesEn, resourcesZh };
+export { resourcesEn, resourcesZh, resourcesEs, resourcesJa, resourcesKo, resourcesHi, resourcesAr };
 export default resourcesTranslations;

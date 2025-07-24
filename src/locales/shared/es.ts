@@ -30,6 +30,13 @@ export const sharedEs: ISharedTranslations = {
   },
   language: {
     current: 'Idioma',
+    switchTo: 'Cambiar a',
+  },
+  theme: {
+    toggle: 'Cambiar tema',
+    light: 'Modo claro',
+    dark: 'Modo oscuro',
+    system: 'Sistema predeterminado',
   },
   meta: {
     description: 'Recursos de salud mental y guías de autoayuda para ansiedad, depresión, sueño y bienestar emocional.',

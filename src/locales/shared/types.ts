@@ -1,6 +1,9 @@
 /**
  * 共享翻译内容接口类型定义
+ *
+ * @format
  */
+
 export interface ISharedTranslations {
   /** 导航相关文案 */
   nav: {
@@ -52,13 +55,26 @@ export interface ISharedTranslations {
   language: {
     /** 当前语言 */
     current: string;
+    /** 切换到 */
+    switchTo: string;
+  };
+  /** 主题切换相关 */
+  theme: {
+    /** 切换主题 */
+    toggle: string;
+    /** 浅色模式 */
+    light: string;
+    /** 深色模式 */
+    dark: string;
+    /** 系统默认 */
+    system: string;
   };
   resources: {
     /** 音乐资源 */
     music: string;
     /** 书籍资源 */
     books: string;
-  },
+  };
   /** 通用元数据 */
   meta: {
     /** 网站描述 */

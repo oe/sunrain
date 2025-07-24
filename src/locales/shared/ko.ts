@@ -30,6 +30,13 @@ export const sharedKo: ISharedTranslations = {
   },
   language: {
     current: '언어',
+    switchTo: '전환',
+  },
+  theme: {
+    toggle: '테마 전환',
+    light: '라이트 모드',
+    dark: '다크 모드',
+    system: '시스템 기본값',
   },
   meta: {
     description: '불안, 우울증, 수면 및 정서적 웰빙을 위한 정신 건강 리소스 및 자가 도움 가이드.',

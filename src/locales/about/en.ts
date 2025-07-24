@@ -52,6 +52,39 @@ export const aboutEn: IAboutTranslations = {
       description: 'A safe space where people can find hope, healing, and connection with others on similar journeys.',
     },
   },
+  team: {
+    title: 'Our Team',
+    description: 'SunRain is built by a dedicated team of developers, mental health advocates, and community members who believe in making mental health support accessible to everyone.',
+    members: {
+      developer: {
+        role: 'Development Team',
+        description: 'Passionate developers working to create a safe, accessible platform for mental health resources.',
+      },
+      curator: {
+        role: 'Content Curation',
+        description: 'Mental health professionals and researchers who ensure our content is evidence-based and helpful.',
+      },
+      community: {
+        role: 'Community Support',
+        description: 'Volunteers and advocates who help maintain a supportive, welcoming environment for all users.',
+      },
+    },
+  },
+  trust: {
+    title: 'Why Trust SunRain',
+    privacy: {
+      title: 'Privacy First',
+      description: 'We don\'t track, store, or sell your personal data. Your privacy and anonymity are our top priorities.',
+    },
+    openSource: {
+      title: 'Open Source',
+      description: 'Our platform is open source, meaning our code is transparent and can be reviewed by anyone.',
+    },
+    noAds: {
+      title: 'No Advertisements',
+      description: 'We don\'t show ads or promote products. Our focus is purely on providing helpful mental health resources.',
+    },
+  },
   disclaimer: {
     title: 'Important Notice',
     description: 'Our resources are for educational purposes and should not replace professional medical advice. If you are experiencing severe mental health symptoms or thoughts of self-harm, please seek immediate professional help.',

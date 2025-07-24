@@ -7,6 +7,11 @@ import type { IAboutTranslations } from './types';
 // 导入所有语言的翻译
 import aboutEn from './en';
 import aboutZh from './zh';
+import aboutEs from './es';
+import aboutJa from './ja';
+import aboutKo from './ko';
+import aboutHi from './hi';
+import aboutAr from './ar';
 
 /**
  * 关于页翻译内容映射
@@ -14,6 +19,11 @@ import aboutZh from './zh';
 export const aboutTranslations = {
   en: aboutEn,
   zh: aboutZh,
+  es: aboutEs,
+  ja: aboutJa,
+  ko: aboutKo,
+  hi: aboutHi,
+  ar: aboutAr,
 } as const;
 
 /**
@@ -25,5 +35,5 @@ export function getAboutTranslations(lang: Language): IAboutTranslations {
 
 // 导出类型和所有语言的翻译
 export type { IAboutTranslations } from './types';
-export { aboutEn, aboutZh };
+export { aboutEn, aboutZh, aboutEs, aboutJa, aboutKo, aboutHi, aboutAr };
 export default aboutTranslations;

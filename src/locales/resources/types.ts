@@ -19,6 +19,8 @@ export interface IResourcesTranslations {
     movies: string;
     /** 书籍 */
     books: string;
+    /** 全部 */
+    all: string;
   };
   /** 各分类详细信息 */
   sections: {
@@ -43,6 +45,32 @@ export interface IResourcesTranslations {
       /** 描述 */
       description: string;
     };
+  };
+  /** 筛选相关 */
+  filters: {
+    /** 筛选标题 */
+    title: string;
+    /** 搜索占位符 */
+    searchPlaceholder: string;
+    /** 按类别筛选 */
+    filterByCategory: string;
+    /** 清除筛选 */
+    clearFilters: string;
+  };
+  /** 资源详情 */
+  details: {
+    /** 作者 */
+    author: string;
+    /** 导演 */
+    director: string;
+    /** 艺术家 */
+    artist: string;
+    /** 年份 */
+    year: string;
+    /** 查看详情 */
+    viewDetails: string;
+    /** 关闭 */
+    close: string;
   };
   /** 行动号召 */
   cta: {
