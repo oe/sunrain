@@ -108,8 +108,8 @@ export class ContentTranslator {
 
   private async translateText(text: string, targetLang: string): Promise<string> {
     // 如果是默认语言或文本为空，直接返回
-    if (targetLang === this.config.defaultLanguage || !text.trim()) {
-      return text;
+    if (targetLang === this.config.defaultLanguage || !text || !text.trim()) {
+      return text || '';
     }
 
     try {

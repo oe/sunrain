@@ -3,98 +3,98 @@
     "title": "Healing Music",
     "description": "Music playlists and tracks designed for relaxation, meditation, and emotional healing.",
     "items": [
-    {
-      "id": "music-1",
-      "title": "Deep Sleep Meditation Music",
-      "description": "Calming instrumental music designed to promote deep, restful sleep. Features gentle piano melodies, soft nature sounds, and ambient textures that help quiet the mind and prepare the body for sleep. Perfect for bedtime routines and overcoming insomnia.",
-      "artist": "Sleep Music Collective",
-      "type": "Playlist",
-      "spotifyUrl": "https://open.spotify.com/playlist/deep-sleep-meditation",
-      "youtubeUrl": "https://youtube.com/playlist/deep-sleep-music",
-      "image": "https://example.com/music1.jpg",
-      "themes": [
-        "sleep",
-        "meditation",
-        "relaxation",
-        "ambient",
-        "instrumental"
-      ],
-      "benefits": [
-        "better sleep quality",
-        "stress reduction",
-        "mind quieting",
-        "relaxation"
-      ]
-    },
-    {
-      "id": "music-2",
-      "title": "Anxiety Relief & Calm",
-      "description": "Specially curated music collection for anxiety relief and emotional regulation. Combines binaural beats, soft classical music, and nature sounds to help reduce anxiety symptoms and promote a sense of calm. Based on music therapy research for anxiety management.",
-      "artist": "Therapeutic Sounds",
-      "type": "Album",
-      "spotifyUrl": "https://open.spotify.com/album/anxiety-relief-calm",
-      "youtubeUrl": "https://youtube.com/playlist/anxiety-relief",
-      "image": "https://example.com/music2.jpg",
-      "themes": [
-        "anxiety relief",
-        "calm",
-        "binaural beats",
-        "classical",
-        "nature sounds"
-      ],
-      "benefits": [
-        "anxiety reduction",
-        "emotional regulation",
-        "stress relief",
-        "mental clarity"
-      ]
-    },
-    {
-      "id": "music-3",
-      "title": "Mindfulness Meditation Sounds",
-      "description": "A comprehensive collection of sounds for mindfulness meditation practice. Includes guided meditation music, Tibetan singing bowls, rain sounds, and forest ambience. Designed to support various meditation techniques and mindfulness exercises.",
-      "artist": "Mindful Music Studio",
-      "type": "Playlist",
-      "spotifyUrl": "https://open.spotify.com/playlist/mindfulness-meditation",
-      "youtubeUrl": "https://youtube.com/playlist/mindfulness-sounds",
-      "image": "https://example.com/music3.jpg",
-      "themes": [
-        "mindfulness",
-        "meditation",
-        "singing bowls",
-        "nature",
-        "ambient"
-      ],
-      "benefits": [
-        "mindfulness practice",
-        "meditation support",
-        "present moment awareness",
-        "inner peace"
-      ]
-    },
-    {
-      "id": "music-5",
-      "title": "Emotional Healing Journey",
-      "description": "A carefully crafted musical journey for emotional healing and processing. Combines therapeutic frequencies, gentle melodies, and healing sounds to support emotional release and recovery. Suitable for therapy sessions, self-reflection, and emotional wellness practices.",
-      "artist": "Healing Harmonies",
-      "type": "Album",
-      "spotifyUrl": "https://open.spotify.com/album/emotional-healing-journey",
-      "youtubeUrl": "https://youtube.com/playlist/emotional-healing",
-      "image": "https://example.com/music5.jpg",
-      "themes": [
-        "emotional healing",
-        "therapeutic frequencies",
-        "recovery",
-        "self-reflection",
-        "wellness"
-      ],
-      "benefits": [
-        "emotional processing",
-        "healing support",
-        "emotional release",
-        "inner peace"
-      ]
-    }
+      {
+        "id": "music-1",
+        "title": "Deep Sleep Meditation Music",
+        "description": "Calming instrumental music designed to promote deep, restful sleep. Features gentle piano melodies, soft nature sounds, and ambient textures that help quiet the mind and prepare the body for sleep. Perfect for bedtime routines and overcoming insomnia.",
+        "artist": "Sleep Music Collective",
+        "type": "Playlist",
+        "spotifyUrl": "https://open.spotify.com/playlist/deep-sleep-meditation",
+        "youtubeUrl": "https://youtube.com/playlist/deep-sleep-music",
+        "image": "https://example.com/music1.jpg",
+        "themes": [
+          "sleep",
+          "meditation",
+          "relaxation",
+          "ambient",
+          "instrumental"
+        ],
+        "benefits": [
+          "better sleep quality",
+          "stress reduction",
+          "mind quieting",
+          "relaxation"
+        ]
+      },
+      {
+        "id": "music-2",
+        "title": "Anxiety Relief & Calm",
+        "description": "Specially curated music collection for anxiety relief and emotional regulation. Combines binaural beats, soft classical music, and nature sounds to help reduce anxiety symptoms and promote a sense of calm. Based on music therapy research for anxiety management.",
+        "artist": "Therapeutic Sounds",
+        "type": "Album",
+        "spotifyUrl": "https://open.spotify.com/album/anxiety-relief-calm",
+        "youtubeUrl": "https://youtube.com/playlist/anxiety-relief",
+        "image": "https://example.com/music2.jpg",
+        "themes": [
+          "anxiety relief",
+          "calm",
+          "binaural beats",
+          "classical",
+          "nature sounds"
+        ],
+        "benefits": [
+          "anxiety reduction",
+          "emotional regulation",
+          "stress relief",
+          "mental clarity"
+        ]
+      },
+      {
+        "id": "music-3",
+        "title": "Mindfulness Meditation Sounds",
+        "description": "A comprehensive collection of sounds for mindfulness meditation practice. Includes guided meditation music, Tibetan singing bowls, rain sounds, and forest ambience. Designed to support various meditation techniques and mindfulness exercises.",
+        "artist": "Mindful Music Studio",
+        "type": "Playlist",
+        "spotifyUrl": "https://open.spotify.com/playlist/mindfulness-meditation",
+        "youtubeUrl": "https://youtube.com/playlist/mindfulness-sounds",
+        "image": "https://example.com/music3.jpg",
+        "themes": [
+          "mindfulness",
+          "meditation",
+          "singing bowls",
+          "nature",
+          "ambient"
+        ],
+        "benefits": [
+          "mindfulness practice",
+          "meditation support",
+          "present moment awareness",
+          "inner peace"
+        ]
+      },
+      {
+        "id": "music-5",
+        "title": "Emotional Healing Journey",
+        "description": "A carefully crafted musical journey for emotional healing and processing. Combines therapeutic frequencies, gentle melodies, and healing sounds to support emotional release and recovery. Suitable for therapy sessions, self-reflection, and emotional wellness practices.",
+        "artist": "Healing Harmonies",
+        "type": "Album",
+        "spotifyUrl": "https://open.spotify.com/album/emotional-healing-journey",
+        "youtubeUrl": "https://youtube.com/playlist/emotional-healing",
+        "image": "https://example.com/music5.jpg",
+        "themes": [
+          "emotional healing",
+          "therapeutic frequencies",
+          "recovery",
+          "self-reflection",
+          "wellness"
+        ],
+        "benefits": [
+          "emotional processing",
+          "healing support",
+          "emotional release",
+          "inner peace"
+        ]
+      }
     ]
   }
 }

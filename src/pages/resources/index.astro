@@ -48,8 +48,7 @@ const books = booksData.data[lang] || booksData.data.en;
                 stroke-linecap="round"
                 stroke-linejoin="round"
                 stroke-width="2"
-                d="M9 5l7 7-7 7"
-              ></path>
+                d="M9 5l7 7-7 7"></path>
             </svg>
           </li>
           <li class="text-gray-900 font-medium">{t('page.title')}</li>
@@ -68,7 +67,9 @@ const books = booksData.data[lang] || booksData.data.en;
 
       <!-- Filters -->
       <div class="bg-white rounded-lg shadow-md p-6 mb-8">
-        <div class="flex flex-col md:flex-row gap-4 items-center justify-between">
+        <div
+          class="flex flex-col md:flex-row gap-4 items-center justify-between"
+        >
           <div class="flex-1 max-w-md">
             <input
               type="text"
@@ -107,21 +108,47 @@ const books = booksData.data[lang] || booksData.data.en;
       </div>
 
       <!-- Resources Grid -->
-      <div id="resourcesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div
+        id="resourcesGrid"
+        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+      >
         <!-- Music Items -->
         {
           music.items.map((item) => (
-            <div class="resource-card bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow border border-gray-200 overflow-hidden" data-category="music" data-title={item.title.toLowerCase()} data-artist={item.artist?.toLowerCase() || ''}>
+            <div
+              class="resource-card bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow border border-gray-200 overflow-hidden"
+              data-category="music"
+              data-title={item.title.toLowerCase()}
+              data-artist={item.artist?.toLowerCase() || ''}
+            >
               <div class="p-6">
                 <div class="flex items-center mb-3">
-                  <svg class="w-6 h-6 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path>
+                  <svg
+                    class="w-6 h-6 mr-2 text-blue-600"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"
+                    />
                   </svg>
-                  <span class="text-sm font-medium text-blue-600">{t('categories.music')}</span>
+                  <span class="text-sm font-medium text-blue-600">
+                    {t('categories.music')}
+                  </span>
                 </div>
-                <h3 class="text-xl font-semibold text-gray-800 mb-2">{item.title}</h3>
-                <p class="text-gray-600 mb-3">{t('details.artist')}: {item.artist}</p>
-                <p class="text-sm text-gray-500 mb-4 line-clamp-3">{item.description}</p>
+                <h3 class="text-xl font-semibold text-gray-800 mb-2">
+                  {item.title}
+                </h3>
+                <p class="text-gray-600 mb-3">
+                  {t('details.artist')}: {item.artist}
+                </p>
+                <p class="text-sm text-gray-500 mb-4 line-clamp-3">
+                  {item.description}
+                </p>
                 <div class="flex justify-between items-center">
                   <button
                     class="view-details-btn text-blue-600 hover:text-blue-800 font-medium transition-colors"
@@ -149,17 +176,40 @@ const books = booksData.data[lang] || booksData.data.en;
         <!-- Movie Items -->
         {
           movies.items.map((item) => (
-            <div class="resource-card bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow border border-gray-200 overflow-hidden" data-category="movies" data-title={item.title.toLowerCase()} data-director={item.director?.toLowerCase() || ''}>
+            <div
+              class="resource-card bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow border border-gray-200 overflow-hidden"
+              data-category="movies"
+              data-title={item.title.toLowerCase()}
+              data-director={item.director?.toLowerCase() || ''}
+            >
               <div class="p-6">
                 <div class="flex items-center mb-3">
-                  <svg class="w-6 h-6 mr-2 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 4V2a1 1 0 011-1h8a1 1 0 011 1v2h3a1 1 0 011 1v14a1 1 0 01-1 1H4a1 1 0 01-1-1V5a1 1 0 011-1h3zM9 4h6M9 8h6m-6 4h6"></path>
+                  <svg
+                    class="w-6 h-6 mr-2 text-green-600"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M7 4V2a1 1 0 011-1h8a1 1 0 011 1v2h3a1 1 0 011 1v14a1 1 0 01-1 1H4a1 1 0 01-1-1V5a1 1 0 011-1h3zM9 4h6M9 8h6m-6 4h6"
+                    />
                   </svg>
-                  <span class="text-sm font-medium text-green-600">{t('categories.movies')}</span>
+                  <span class="text-sm font-medium text-green-600">
+                    {t('categories.movies')}
+                  </span>
                 </div>
-                <h3 class="text-xl font-semibold text-gray-800 mb-2">{item.title}</h3>
-                <p class="text-gray-600 mb-1">{item.year} • {t('details.director')}: {item.director}</p>
-                <p class="text-sm text-gray-500 mb-4 line-clamp-3">{item.description}</p>
+                <h3 class="text-xl font-semibold text-gray-800 mb-2">
+                  {item.title}
+                </h3>
+                <p class="text-gray-600 mb-1">
+                  {item.year} • {t('details.director')}: {item.director}
+                </p>
+                <p class="text-sm text-gray-500 mb-4 line-clamp-3">
+                  {item.description}
+                </p>
                 <div class="flex justify-between items-center">
                   <button
                     class="view-details-btn text-green-600 hover:text-green-800 font-medium transition-colors"
@@ -187,17 +237,40 @@ const books = booksData.data[lang] || booksData.data.en;
         <!-- Book Items -->
         {
           books.items.map((item) => (
-            <div class="resource-card bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow border border-gray-200 overflow-hidden" data-category="books" data-title={item.title.toLowerCase()} data-author={item.author?.toLowerCase() || ''}>
+            <div
+              class="resource-card bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow border border-gray-200 overflow-hidden"
+              data-category="books"
+              data-title={item.title.toLowerCase()}
+              data-author={item.author?.toLowerCase() || ''}
+            >
               <div class="p-6">
                 <div class="flex items-center mb-3">
-                  <svg class="w-6 h-6 mr-2 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                  <svg
+                    class="w-6 h-6 mr-2 text-purple-600"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
+                    />
                   </svg>
-                  <span class="text-sm font-medium text-purple-600">{t('categories.books')}</span>
+                  <span class="text-sm font-medium text-purple-600">
+                    {t('categories.books')}
+                  </span>
                 </div>
-                <h3 class="text-xl font-semibold text-gray-800 mb-2">{item.title}</h3>
-                <p class="text-gray-600 mb-3">{t('details.author')}: {item.author}</p>
-                <p class="text-sm text-gray-500 mb-4 line-clamp-3">{item.description}</p>
+                <h3 class="text-xl font-semibold text-gray-800 mb-2">
+                  {item.title}
+                </h3>
+                <p class="text-gray-600 mb-3">
+                  {t('details.author')}: {item.author}
+                </p>
+                <p class="text-sm text-gray-500 mb-4 line-clamp-3">
+                  {item.description}
+                </p>
                 <div class="flex justify-between items-center">
                   <button
                     class="view-details-btn text-purple-600 hover:text-purple-800 font-medium transition-colors"
@@ -239,13 +312,35 @@ const books = booksData.data[lang] || booksData.data.en;
     </div>
   </main>
 
-  <!-- Modal -->
-  <div id="detailModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4">
-    <div class="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+  <!-- Modal with translation data -->
+  <div
+    id="detailModal"
+    class="fixed inset-0 bg-black/20 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4 transition-all duration-300 opacity-0"
+    data-translations={JSON.stringify({
+      details: {
+        artist: t('details.artist'),
+        director: t('details.director'),
+        author: t('details.author'),
+        year: t('details.year')
+      },
+      links: {
+        spotify: t('links.spotify'),
+        trailer: t('links.trailer'),
+        amazon: t('links.amazon')
+      }
+    })}
+  >
+    <div
+      id="modalDialog"
+      class="bg-white rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl transform scale-95 transition-all duration-300"
+    >
       <div class="p-6">
         <div class="flex justify-between items-start mb-4">
           <h2 id="modalTitle" class="text-2xl font-bold text-gray-900"></h2>
-          <button id="closeModal" class="text-gray-400 hover:text-gray-600 text-2xl">
+          <button
+            id="closeModal"
+            class="text-gray-400 hover:text-gray-600 text-2xl transition-colors duration-200 hover:bg-gray-100 rounded-full w-8 h-8 flex items-center justify-center"
+          >
             ×
           </button>
         </div>
@@ -260,25 +355,31 @@ const books = booksData.data[lang] || booksData.data.en;
 <script>
   // Filter functionality
   const filterButtons = document.querySelectorAll('.filter-btn');
-  const searchInput = document.getElementById('searchInput') as HTMLInputElement;
+  const searchInput = document.getElementById(
+    'searchInput'
+  ) as HTMLInputElement;
   const resourceCards = document.querySelectorAll('.resource-card');
 
   let currentFilter = 'all';
 
   // Filter by category
-  filterButtons.forEach(button => {
+  filterButtons.forEach((button) => {
     button.addEventListener('click', () => {
       const filter = button.getAttribute('data-filter') || 'all';
       currentFilter = filter;
-      
+
       // Update button styles
-      filterButtons.forEach(btn => {
+      filterButtons.forEach((btn) => {
         btn.classList.remove('bg-blue-600', 'text-white');
         btn.classList.add('bg-gray-200', 'text-gray-700', 'hover:bg-gray-300');
       });
-      button.classList.remove('bg-gray-200', 'text-gray-700', 'hover:bg-gray-300');
+      button.classList.remove(
+        'bg-gray-200',
+        'text-gray-700',
+        'hover:bg-gray-300'
+      );
       button.classList.add('bg-blue-600', 'text-white');
-      
+
       filterResources();
     });
   });
@@ -288,21 +389,23 @@ const books = booksData.data[lang] || booksData.data.en;
 
   function filterResources() {
     const searchTerm = searchInput.value.toLowerCase();
-    
-    resourceCards.forEach(card => {
+
+    resourceCards.forEach((card) => {
       const category = card.getAttribute('data-category');
       const title = card.getAttribute('data-title') || '';
       const artist = card.getAttribute('data-artist') || '';
       const author = card.getAttribute('data-author') || '';
       const director = card.getAttribute('data-director') || '';
-      
-      const matchesCategory = currentFilter === 'all' || category === currentFilter;
-      const matchesSearch = searchTerm === '' || 
-        title.includes(searchTerm) || 
-        artist.includes(searchTerm) || 
-        author.includes(searchTerm) || 
+
+      const matchesCategory =
+        currentFilter === 'all' || category === currentFilter;
+      const matchesSearch =
+        searchTerm === '' ||
+        title.includes(searchTerm) ||
+        artist.includes(searchTerm) ||
+        author.includes(searchTerm) ||
         director.includes(searchTerm);
-      
+
       if (matchesCategory && matchesSearch) {
         (card as HTMLElement).style.display = 'block';
       } else {
@@ -313,53 +416,154 @@ const books = booksData.data[lang] || booksData.data.en;
 
   // Modal functionality
   const modal = document.getElementById('detailModal');
+
+  // Get translation strings from data attribute
+  const translationsData = modal?.getAttribute('data-translations');
+  const translations = translationsData
+    ? JSON.parse(translationsData)
+    : {
+        details: {
+          artist: 'Artist',
+          director: 'Director',
+          author: 'Author',
+          year: 'Year'
+        },
+        links: { spotify: 'Spotify', trailer: 'Trailer', amazon: 'Amazon' }
+      };
+  const modalDialog = document.getElementById('modalDialog');
   const modalTitle = document.getElementById('modalTitle');
   const modalContent = document.getElementById('modalContent');
   const closeModal = document.getElementById('closeModal');
   const viewDetailsButtons = document.querySelectorAll('.view-details-btn');
 
-  viewDetailsButtons.forEach(button => {
-    button.addEventListener('click', () => {
+  // Modal animation functions
+  function showModal() {
+    if (modal && modalDialog) {
+      modal.classList.remove('hidden');
+      // Force reflow
+      modal.offsetHeight;
+      // Add show classes
+      modal.classList.remove('opacity-0');
+      modal.classList.add('opacity-100');
+      modalDialog.classList.remove('scale-95');
+      modalDialog.classList.add('scale-100');
+    }
+  }
+
+  function hideModal() {
+    if (modal && modalDialog) {
+      modal.classList.remove('opacity-100');
+      modal.classList.add('opacity-0');
+      modalDialog.classList.remove('scale-100');
+      modalDialog.classList.add('scale-95');
+
+      // Hide after animation completes
+      setTimeout(() => {
+        modal.classList.add('hidden');
+      }, 300);
+    }
+  }
+
+  viewDetailsButtons.forEach((button) => {
+    button.addEventListener('click', (e) => {
+      e.preventDefault();
       const itemData = JSON.parse(button.getAttribute('data-item') || '{}');
       const itemType = button.getAttribute('data-type');
-      
+
       if (modalTitle && modalContent) {
         modalTitle.textContent = itemData.title;
-        
-        let content = `<p class="text-gray-600 mb-4">${itemData.description}</p>`;
-        
+
+        let content = `<div class="space-y-4">`;
+        content += `<p class="text-gray-600 leading-relaxed">${itemData.description}</p>`;
+
+        // Add details section
+        content += `<div class="border-t pt-4">`;
+
         if (itemType === 'music') {
-          content += `<p><strong>${'{t("details.artist")}'}</strong>: ${itemData.artist}</p>`;
-          if (itemData.spotifyUrl) {
-            content += `<p class="mt-2"><a href="${itemData.spotifyUrl}" target="_blank" class="text-green-600 hover:text-green-800">${'{t("links.spotify")}'}</a></p>`;
+          if (itemData.artist) {
+            content += `<p class="mb-2"><span class="font-semibold text-gray-800">${translations.details.artist}:</span> <span class="text-gray-600">${itemData.artist}</span></p>`;
+          }
+          if (itemData.type) {
+            content += `<p class="mb-2"><span class="font-semibold text-gray-800">Type:</span> <span class="text-gray-600">${itemData.type}</span></p>`;
+          }
+          if (itemData.themes && itemData.themes.length > 0) {
+            content += `<p class="mb-2"><span class="font-semibold text-gray-800">Themes:</span> <span class="text-gray-600">${itemData.themes.join(', ')}</span></p>`;
           }
         } else if (itemType === 'movies') {
-          content += `<p><strong>${'{t("details.director")}'}</strong>: ${itemData.director}</p>`;
-          content += `<p><strong>${'{t("details.year")}'}</strong>: ${itemData.year}</p>`;
-          if (itemData.trailerUrl) {
-            content += `<p class="mt-2"><a href="${itemData.trailerUrl}" target="_blank" class="text-red-600 hover:text-red-800">${'{t("links.trailer")}'}</a></p>`;
+          if (itemData.director) {
+            content += `<p class="mb-2"><span class="font-semibold text-gray-800">${translations.details.director}:</span> <span class="text-gray-600">${itemData.director}</span></p>`;
+          }
+          if (itemData.year) {
+            content += `<p class="mb-2"><span class="font-semibold text-gray-800">${translations.details.year}:</span> <span class="text-gray-600">${itemData.year}</span></p>`;
+          }
+          if (itemData.duration) {
+            content += `<p class="mb-2"><span class="font-semibold text-gray-800">Duration:</span> <span class="text-gray-600">${itemData.duration}</span></p>`;
+          }
+          if (itemData.rating) {
+            content += `<p class="mb-2"><span class="font-semibold text-gray-800">Rating:</span> <span class="text-gray-600">${itemData.rating}</span></p>`;
           }
         } else if (itemType === 'books') {
-          content += `<p><strong>${'{t("details.author")}'}</strong>: ${itemData.author}</p>`;
-          if (itemData.amazonUrl) {
-            content += `<p class="mt-2"><a href="${itemData.amazonUrl}" target="_blank" class="text-orange-600 hover:text-orange-800">${'{t("links.amazon")}'}</a></p>`;
+          if (itemData.author) {
+            content += `<p class="mb-2"><span class="font-semibold text-gray-800">${translations.details.author}:</span> <span class="text-gray-600">${itemData.author}</span></p>`;
+          }
+          if (itemData.year) {
+            content += `<p class="mb-2"><span class="font-semibold text-gray-800">${translations.details.year}:</span> <span class="text-gray-600">${itemData.year}</span></p>`;
+          }
+          if (itemData.genre) {
+            content += `<p class="mb-2"><span class="font-semibold text-gray-800">Genre:</span> <span class="text-gray-600">${itemData.genre}</span></p>`;
+          }
+          if (itemData.pages) {
+            content += `<p class="mb-2"><span class="font-semibold text-gray-800">Pages:</span> <span class="text-gray-600">${itemData.pages}</span></p>`;
           }
         }
-        
+
+        content += `</div>`;
+
+        // Add links section
+        const links = [];
+        if (itemType === 'music' && itemData.spotifyUrl) {
+          links.push(
+            `<a href="${itemData.spotifyUrl}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors duration-200"><svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.42 1.56-.299.421-1.02.599-1.559.3z"/></svg>${translations.links.spotify}</a>`
+          );
+        }
+        if (itemType === 'movies' && itemData.trailerUrl) {
+          links.push(
+            `<a href="${itemData.trailerUrl}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors duration-200"><svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>${translations.links.trailer}</a>`
+          );
+        }
+        if (itemType === 'books' && itemData.amazonUrl) {
+          links.push(
+            `<a href="${itemData.amazonUrl}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center px-4 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition-colors duration-200"><svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M.045 18.02c.072-.116.187-.124.348-.022 3.636 2.11 7.594 3.166 11.87 3.166 2.852 0 5.668-.533 8.447-1.595l.315-.14c.138-.06.234-.1.293-.13.226-.088.39-.046.525.13.12.174.09.336-.12.48-.256.19-.6.41-1.006.654-1.244.743-2.64 1.316-4.185 1.726-1.548.41-3.156.615-4.83.615-2.424 0-4.73-.315-6.914-.946-2.185-.63-4.124-1.568-5.818-2.813-.138-.102-.18-.234-.045-.39l.12-.735zm23.565-4.455c-.315-.243-.618-.243-.906 0l-7.296 5.267c-.28.203-.56.203-.84 0l-7.296-5.267c-.288-.243-.59-.243-.906 0-.315.243-.315.636 0 .88l7.74 5.583c.28.203.7.203.98 0l7.74-5.583c.315-.244.315-.637 0-.88z"/></svg>${translations.links.amazon}</a>`
+          );
+        }
+
+        if (links.length > 0) {
+          content += `<div class="border-t pt-4 mt-4"><div class="flex flex-wrap gap-2">${links.join('')}</div></div>`;
+        }
+
+        content += `</div>`;
+
         modalContent.innerHTML = content;
       }
-      
-      modal?.classList.remove('hidden');
+
+      showModal();
     });
   });
 
   closeModal?.addEventListener('click', () => {
-    modal?.classList.add('hidden');
+    hideModal();
   });
 
   modal?.addEventListener('click', (e) => {
     if (e.target === modal) {
-      modal.classList.add('hidden');
+      hideModal();
+    }
+  });
+
+  // Close modal with Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal && !modal.classList.contains('hidden')) {
+      hideModal();
     }
   });
 </script>
@@ -370,5 +574,74 @@ const books = booksData.data[lang] || booksData.data.en;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
+  }
+
+  /* Modal animations */
+  #detailModal {
+    transition:
+      opacity 300ms ease-in-out,
+      backdrop-filter 300ms ease-in-out;
+  }
+
+  #modalDialog {
+    transition:
+      transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1),
+      opacity 300ms ease-in-out;
+  }
+
+  /* Card hover effects */
+  .resource-card {
+    transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .resource-card:hover {
+    transform: translateY(-2px);
+  }
+
+  /* Button hover effects */
+  .view-details-btn {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .view-details-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.2),
+      transparent
+    );
+    transition: left 0.5s;
+  }
+
+  .view-details-btn:hover::before {
+    left: 100%;
+  }
+
+  /* Smooth scrolling for modal content */
+  #modalContent {
+    scroll-behavior: smooth;
+  }
+
+  /* Focus styles for accessibility */
+  .view-details-btn:focus,
+  #closeModal:focus {
+    outline: 2px solid #3b82f6;
+    outline-offset: 2px;
+  }
+
+  /* Loading animation for images */
+  .resource-card img {
+    transition: opacity 300ms ease-in-out;
+  }
+
+  .resource-card img[loading] {
+    opacity: 0.7;
   }
 </style>

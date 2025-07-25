@@ -54,11 +54,17 @@ export class MultiLanguageSyncManager {
       throw error;
     }
 
+    // 获取默认语言的资源数据
+    const defaultLangData = defaultResource[this.config.defaultLanguage] || defaultResource.en;
+    if (!defaultLangData) {
+      throw new Error(`Default language data not found in ${defaultResourcePath}`);
+    }
+
     // 翻译资源
     const multiLangResource = await this.translator.translateResourceCollection(
-      defaultResource.items,
-      defaultResource.title,
-      defaultResource.description
+      defaultLangData.items,
+      defaultLangData.title,
+      defaultLangData.description
     );
 
     // 验证翻译完整性

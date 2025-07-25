@@ -3,136 +3,136 @@
     "title": "Mental Health Books",
     "description": "A curated collection of books focused on mental health, psychology, and personal wellness.",
     "items": [
-    {
-      "id": "book-1",
-      "title": "The Anxiety and Worry Workbook",
-      "description": "A comprehensive guide to managing anxiety and worry through cognitive behavioral therapy techniques. This workbook provides practical exercises, worksheets, and strategies to help readers understand and overcome anxiety disorders. It includes evidence-based approaches for dealing with generalized anxiety, panic attacks, and worry patterns.",
-      "author": "David A. Clark",
-      "year": 2018,
-      "genre": "Self-Help",
-      "pages": 320,
-      "themes": [
-        "anxiety",
-        "CBT",
-        "mental health",
-        "worry",
-        "therapy"
-      ],
-      "benefits": [
-        "stress reduction",
-        "coping strategies",
-        "anxiety management",
-        "emotional regulation"
-      ],
-      "isbn": "978-1462533091",
-      "amazonUrl": "https://amazon.com/anxiety-worry-workbook",
-      "goodreadsUrl": "https://goodreads.com/book/anxiety-worry-workbook",
-      "image": "https://example.com/book1.jpg"
-    },
-    {
-      "id": "book-2",
-      "title": "Feeling Good: The New Mood Therapy",
-      "description": "A groundbreaking book that introduces cognitive behavioral therapy techniques for treating depression and anxiety. Dr. Burns presents practical methods for changing negative thought patterns and improving mood through scientifically proven approaches. This book has helped millions of people overcome depression and develop healthier thinking patterns.",
-      "author": "David D. Burns",
-      "year": 1980,
-      "genre": "Psychology",
-      "pages": 736,
-      "themes": [
-        "depression",
-        "CBT",
-        "mood therapy",
-        "cognitive therapy",
-        "mental health"
-      ],
-      "benefits": [
-        "mood improvement",
-        "depression recovery",
-        "cognitive restructuring",
-        "emotional wellness"
-      ],
-      "isbn": "978-0380810338",
-      "amazonUrl": "https://amazon.com/feeling-good-mood-therapy",
-      "goodreadsUrl": "https://goodreads.com/book/feeling-good",
-      "image": "https://example.com/book2.jpg"
-    },
-    {
-      "id": "book-3",
-      "title": "The Mindful Way Through Depression",
-      "description": "This book combines mindfulness meditation with cognitive therapy to provide a revolutionary approach to treating depression. The authors present mindfulness-based cognitive therapy (MBCT) techniques that help prevent depression relapse and promote emotional well-being. Includes guided meditations and practical exercises for daily life.",
-      "author": "Mark Williams, John Teasdale, Zindel Segal, Jon Kabat-Zinn",
-      "year": 2007,
-      "genre": "Mindfulness",
-      "pages": 273,
-      "themes": [
-        "mindfulness",
-        "depression",
-        "meditation",
-        "MBCT",
-        "cognitive therapy"
-      ],
-      "benefits": [
-        "depression prevention",
-        "mindfulness practice",
-        "emotional awareness",
-        "stress reduction"
-      ],
-      "isbn": "978-1593851286",
-      "amazonUrl": "https://amazon.com/mindful-way-through-depression",
-      "goodreadsUrl": "https://goodreads.com/book/mindful-depression",
-      "image": "https://example.com/book3.jpg"
-    },
-    {
-      "id": "book-4",
-      "title": "The Body Keeps the Score",
-      "description": "A revolutionary understanding of trauma and its effects on the body and mind. Dr. van der Kolk explores how trauma affects the brain and body, and presents innovative treatments for trauma recovery. This book provides insights into PTSD, childhood trauma, and various therapeutic approaches including EMDR, yoga, and neurofeedback.",
-      "author": "Bessel van der Kolk",
-      "year": 2014,
-      "genre": "Trauma Psychology",
-      "pages": 464,
-      "themes": [
-        "trauma",
-        "PTSD",
-        "neuroscience",
-        "therapy",
-        "recovery"
-      ],
-      "benefits": [
-        "trauma understanding",
-        "healing approaches",
-        "body awareness",
-        "recovery strategies"
-      ],
-      "isbn": "978-0143127741",
-      "amazonUrl": "https://amazon.com/body-keeps-score",
-      "goodreadsUrl": "https://goodreads.com/book/body-keeps-score",
-      "image": "https://example.com/book4.jpg"
-    },
-    {
-      "id": "book-5",
-      "title": "Atomic Habits",
-      "description": "A practical guide to building good habits and breaking bad ones through small, incremental changes. James Clear presents a comprehensive system for habit formation based on scientific research and real-world applications. This book is particularly valuable for mental health as it helps readers develop consistent self-care practices and positive behavioral patterns.",
-      "author": "James Clear",
-      "year": 2018,
-      "genre": "Self-Improvement",
-      "pages": 320,
-      "themes": [
-        "habits",
-        "behavior change",
-        "self-improvement",
-        "psychology",
-        "productivity"
-      ],
-      "benefits": [
-        "habit formation",
-        "behavioral change",
-        "self-discipline",
-        "personal growth"
-      ],
-      "isbn": "978-0735211292",
-      "amazonUrl": "https://amazon.com/atomic-habits",
-      "goodreadsUrl": "https://goodreads.com/book/atomic-habits",
-      "image": "https://example.com/book5.jpg"
-    }
+      {
+        "id": "book-1",
+        "title": "The Anxiety and Worry Workbook",
+        "description": "A comprehensive guide to managing anxiety and worry through cognitive behavioral therapy techniques. This workbook provides practical exercises, worksheets, and strategies to help readers understand and overcome anxiety disorders. It includes evidence-based approaches for dealing with generalized anxiety, panic attacks, and worry patterns.",
+        "author": "David A. Clark",
+        "year": 2018,
+        "genre": "Self-Help",
+        "pages": 320,
+        "themes": [
+          "anxiety",
+          "CBT",
+          "mental health",
+          "worry",
+          "therapy"
+        ],
+        "benefits": [
+          "stress reduction",
+          "coping strategies",
+          "anxiety management",
+          "emotional regulation"
+        ],
+        "isbn": "978-1462533091",
+        "amazonUrl": "https://amazon.com/anxiety-worry-workbook",
+        "goodreadsUrl": "https://goodreads.com/book/anxiety-worry-workbook",
+        "image": "https://example.com/book1.jpg"
+      },
+      {
+        "id": "book-2",
+        "title": "Feeling Good: The New Mood Therapy",
+        "description": "A groundbreaking book that introduces cognitive behavioral therapy techniques for treating depression and anxiety. Dr. Burns presents practical methods for changing negative thought patterns and improving mood through scientifically proven approaches. This book has helped millions of people overcome depression and develop healthier thinking patterns.",
+        "author": "David D. Burns",
+        "year": 1980,
+        "genre": "Psychology",
+        "pages": 736,
+        "themes": [
+          "depression",
+          "CBT",
+          "mood therapy",
+          "cognitive therapy",
+          "mental health"
+        ],
+        "benefits": [
+          "mood improvement",
+          "depression recovery",
+          "cognitive restructuring",
+          "emotional wellness"
+        ],
+        "isbn": "978-0380810338",
+        "amazonUrl": "https://amazon.com/feeling-good-mood-therapy",
+        "goodreadsUrl": "https://goodreads.com/book/feeling-good",
+        "image": "https://example.com/book2.jpg"
+      },
+      {
+        "id": "book-3",
+        "title": "The Mindful Way Through Depression",
+        "description": "This book combines mindfulness meditation with cognitive therapy to provide a revolutionary approach to treating depression. The authors present mindfulness-based cognitive therapy (MBCT) techniques that help prevent depression relapse and promote emotional well-being. Includes guided meditations and practical exercises for daily life.",
+        "author": "Mark Williams, John Teasdale, Zindel Segal, Jon Kabat-Zinn",
+        "year": 2007,
+        "genre": "Mindfulness",
+        "pages": 273,
+        "themes": [
+          "mindfulness",
+          "depression",
+          "meditation",
+          "MBCT",
+          "cognitive therapy"
+        ],
+        "benefits": [
+          "depression prevention",
+          "mindfulness practice",
+          "emotional awareness",
+          "stress reduction"
+        ],
+        "isbn": "978-1593851286",
+        "amazonUrl": "https://amazon.com/mindful-way-through-depression",
+        "goodreadsUrl": "https://goodreads.com/book/mindful-depression",
+        "image": "https://example.com/book3.jpg"
+      },
+      {
+        "id": "book-4",
+        "title": "The Body Keeps the Score",
+        "description": "A revolutionary understanding of trauma and its effects on the body and mind. Dr. van der Kolk explores how trauma affects the brain and body, and presents innovative treatments for trauma recovery. This book provides insights into PTSD, childhood trauma, and various therapeutic approaches including EMDR, yoga, and neurofeedback.",
+        "author": "Bessel van der Kolk",
+        "year": 2014,
+        "genre": "Trauma Psychology",
+        "pages": 464,
+        "themes": [
+          "trauma",
+          "PTSD",
+          "neuroscience",
+          "therapy",
+          "recovery"
+        ],
+        "benefits": [
+          "trauma understanding",
+          "healing approaches",
+          "body awareness",
+          "recovery strategies"
+        ],
+        "isbn": "978-0143127741",
+        "amazonUrl": "https://amazon.com/body-keeps-score",
+        "goodreadsUrl": "https://goodreads.com/book/body-keeps-score",
+        "image": "https://example.com/book4.jpg"
+      },
+      {
+        "id": "book-5",
+        "title": "Atomic Habits",
+        "description": "A practical guide to building good habits and breaking bad ones through small, incremental changes. James Clear presents a comprehensive system for habit formation based on scientific research and real-world applications. This book is particularly valuable for mental health as it helps readers develop consistent self-care practices and positive behavioral patterns.",
+        "author": "James Clear",
+        "year": 2018,
+        "genre": "Self-Improvement",
+        "pages": 320,
+        "themes": [
+          "habits",
+          "behavior change",
+          "self-improvement",
+          "psychology",
+          "productivity"
+        ],
+        "benefits": [
+          "habit formation",
+          "behavioral change",
+          "self-discipline",
+          "personal growth"
+        ],
+        "isbn": "978-0735211292",
+        "amazonUrl": "https://amazon.com/atomic-habits",
+        "goodreadsUrl": "https://goodreads.com/book/atomic-habits",
+        "image": "https://example.com/book5.jpg"
+      }
     ]
   }
 }
