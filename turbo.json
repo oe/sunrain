@@ -1,0 +1,141 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "tasks": {
+    "build": {
+      "dependsOn": [
+        "^build"
+      ],
+      "outputs": [
+        "dist/**",
+        ".astro/**",
+        "build/**"
+      ],
+      "inputs": [
+        "src/**",
+        "public/**",
+        "astro.config.*",
+        "tsconfig.json",
+        "package.json"
+      ],
+      "outputLogs": "new-only"
+    },
+    "dev": {
+      "cache": false,
+      "persistent": true,
+      "dependsOn": [
+        "^build"
+      ]
+    },
+    "preview": {
+      "cache": false,
+      "persistent": true,
+      "dependsOn": [
+        "build"
+      ]
+    },
+    "lint": {
+      "dependsOn": [
+        "^build"
+      ],
+      "inputs": [
+        "src/**",
+        "astro.config.*",
+        "tsconfig.json"
+      ],
+      "outputLogs": "errors-only"
+    },
+    "type-check": {
+      "dependsOn": [
+        "^build"
+      ],
+      "inputs": [
+        "src/**",
+        "tsconfig.json",
+        "package.json"
+      ],
+      "outputLogs": "errors-only"
+    },
+    "clean": {
+      "cache": false,
+      "outputLogs": "new-only"
+    },
+    "fetch:books": {
+      "dependsOn": [
+        "^build"
+      ],
+      "cache": false,
+      "outputs": [
+        "../website/src/content/resources/books.json"
+      ]
+    },
+    "fetch:movies": {
+      "dependsOn": [
+        "^build"
+      ],
+      "cache": false,
+      "outputs": [
+        "../website/src/content/resources/movies.json"
+      ]
+    },
+    "fetch:music": {
+      "dependsOn": [
+        "^build"
+      ],
+      "cache": false,
+      "outputs": [
+        "../website/src/content/resources/music.json"
+      ]
+    },
+    "fetch:all": {
+      "dependsOn": [
+        "^build"
+      ],
+      "cache": false,
+      "outputs": [
+        "../website/src/content/resources/*.json"
+      ]
+    },
+    "i18n:sync": {
+      "dependsOn": [
+        "^build"
+      ],
+      "cache": false,
+      "outputs": [
+        "../website/src/locales/**"
+      ]
+    },
+    "i18n:detect": {
+      "dependsOn": [
+        "^build"
+      ],
+      "cache": false
+    },
+    "i18n:report": {
+      "dependsOn": [
+        "^build"
+      ],
+      "cache": false
+    },
+    "i18n:cleanup": {
+      "dependsOn": [
+        "^build"
+      ],
+      "cache": false
+    },
+    "test:validator": {
+      "dependsOn": [
+        "^build"
+      ],
+      "cache": false
+    }
+  },
+  "globalDependencies": [
+    "package.json",
+    "pnpm-workspace.yaml",
+    "turbo.json"
+  ],
+  "globalEnv": [
+    "NODE_ENV"
+  ],
+  "ui": "tui"
+}

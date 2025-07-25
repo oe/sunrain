@@ -1,0 +1,153 @@
+---
+import { useSharedTranslations, getRelativeLocaleUrl } from '@/i18n/utils';
+import { type Language } from '@sunrain/shared';
+import LanguageSwitcher from './LanguageSwitcher.tsx';
+import ThemeSwitcher from './ThemeSwitcher.tsx';
+import MobileMenuButton from './MobileMenuButton.tsx';
+
+export interface Props {
+  lang: Language;
+}
+
+const { lang } = Astro.props;
+const t = useSharedTranslations(lang);
+
+const navItems = [
+  { key: 'nav.home', href: getRelativeLocaleUrl(lang, '/') },
+  { key: 'nav.guide', href: getRelativeLocaleUrl(lang, '/guide/') },
+  { key: 'nav.resources', href: getRelativeLocaleUrl(lang, '/resources/') },
+  { key: 'nav.about', href: getRelativeLocaleUrl(lang, '/about/') }
+];
+---
+
+<header
+  class="fixed top-0 left-0 right-0 z-50 bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm border-b border-gray-200 dark:border-gray-700 transition-all duration-300"
+>
+  <nav
+    class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
+    role="navigation"
+    aria-label="Main navigation"
+  >
+    <div class="flex justify-between items-center h-16">
+      <!-- Logo -->
+      <div class="flex items-center">
+        <a
+          href={getRelativeLocaleUrl(lang, '/')}
+          class="flex items-center space-x-3 group focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900 rounded-md p-1 -m-1"
+          aria-label="Sunrain.me - Home"
+        >
+          <div class="relative" aria-hidden="true">
+            <span class="text-xl">☀️</span>
+            <span class="text-xs absolute -top-1 -right-1">🌧️</span>
+          </div>
+          <span
+            class="text-xl font-semibold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-200"
+          >
+            Sunrain.me
+          </span>
+        </a>
+      </div>
+
+      <!-- Desktop Navigation -->
+      <div class="hidden md:flex items-center space-x-1" role="menubar">
+        {
+          navItems.map(({ key, href }) => (
+            <a
+              href={href}
+              class="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white px-3 py-2 text-sm font-medium transition-all duration-200 rounded-md hover:bg-gray-50 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
+              role="menuitem"
+            >
+              {t(key)}
+            </a>
+          ))
+        }
+      </div>
+
+      <!-- Right side controls -->
+      <div class="flex items-center space-x-3">
+        <!-- Language Switcher -->
+        <LanguageSwitcher
+          client:load
+          currentLang={lang}
+          currentPath={Astro.url.pathname}
+        />
+
+        <!-- Theme Switcher -->
+        <ThemeSwitcher client:load />
+
+        <!-- Mobile menu button -->
+        <MobileMenuButton client:load />
+      </div>
+    </div>
+
+    <!-- Mobile Navigation -->
+    <div
+      id="mobile-menu"
+      class="md:hidden hidden border-t border-gray-200 dark:border-gray-700 py-4 bg-white dark:bg-gray-900 transition-all duration-300"
+      role="menu"
+      aria-label="Mobile navigation menu"
+    >
+      <div class="space-y-1">
+        {
+          navItems.map(({ key, href }) => (
+            <a
+              href={href}
+              class="block text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 px-4 py-3 text-base font-medium transition-all duration-200 rounded-md mx-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
+              role="menuitem"
+            >
+              {t(key)}
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </nav>
+</header>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    // 移动菜单的事件处理现在完全由 MobileMenuButton React 组件管理
+
+    // Theme switching is now handled by the ThemeSwitcher React component
+
+    // Enhanced scroll effect for header with dark mode support
+    const header = document.querySelector('header');
+
+    window.addEventListener('scroll', () => {
+      const currentScrollY = window.scrollY;
+
+      if (currentScrollY > 50) {
+        header?.classList.add('shadow-sm');
+        header?.classList.add('bg-white/100', 'dark:bg-gray-900/100');
+        header?.classList.remove('bg-white/95', 'dark:bg-gray-900/95');
+      } else {
+        header?.classList.remove('shadow-sm');
+        header?.classList.remove('bg-white/100', 'dark:bg-gray-900/100');
+        header?.classList.add('bg-white/95', 'dark:bg-gray-900/95');
+      }
+    });
+
+    // Keyboard navigation support for desktop menu
+    const desktopMenuItems = document.querySelectorAll(
+      '[role="menubar"] [role="menuitem"]'
+    );
+    desktopMenuItems.forEach((item, index) => {
+      item.addEventListener('keydown', (event) => {
+        const key = (event as KeyboardEvent).key;
+
+        if (key === 'ArrowRight' || key === 'ArrowDown') {
+          event.preventDefault();
+          const nextIndex = (index + 1) % desktopMenuItems.length;
+          (desktopMenuItems[nextIndex] as HTMLElement).focus();
+        } else if (key === 'ArrowLeft' || key === 'ArrowUp') {
+          event.preventDefault();
+          const prevIndex =
+            (index - 1 + desktopMenuItems.length) % desktopMenuItems.length;
+          (desktopMenuItems[prevIndex] as HTMLElement).focus();
+        }
+      });
+    });
+  });
+</script>

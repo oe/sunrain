@@ -2,32 +2,39 @@
   "name": "sunrain",
   "type": "module",
   "version": "0.0.1",
+  "private": true,
+  "packageManager": "pnpm@10.12.1+sha512.f0dda8580f0ee9481c5c79a1d927b9164f2c478e90992ad268bbb2465a736984391d6333d2c327913578b2804af33474ca554ba29c04a8b13060a717675ae3ac",
   "scripts": {
-    "dev": "astro dev",
-    "build": "astro build",
-    "preview": "astro preview",
-    "astro": "astro"
+    "dev": "turbo run dev --parallel",
+    "dev:website": "turbo run dev --filter=@sunrain/website",
+    "dev:content-fetcher": "turbo run dev --filter=@sunrain/content-fetcher",
+    "dev:shared": "turbo run dev --filter=@sunrain/shared",
+    "build": "turbo run build",
+    "build:website": "turbo run build --filter=@sunrain/website",
+    "build:content-fetcher": "turbo run build --filter=@sunrain/content-fetcher",
+    "build:shared": "turbo run build --filter=@sunrain/shared",
+    "build:prod": "turbo run clean && turbo run build",
+    "preview": "turbo run preview",
+    "preview:website": "turbo run preview --filter=@sunrain/website",
+    "lint": "turbo run lint",
+    "lint:fix": "turbo run lint --continue",
+    "type-check": "turbo run type-check",
+    "clean": "turbo run clean",
+    "clean:all": "turbo run clean && rm -rf node_modules/.cache",
+    "fetch:books": "turbo run fetch:books --filter=@sunrain/content-fetcher",
+    "fetch:movies": "turbo run fetch:movies --filter=@sunrain/content-fetcher",
+    "fetch:music": "turbo run fetch:music --filter=@sunrain/content-fetcher",
+    "fetch:all": "turbo run fetch:all --filter=@sunrain/content-fetcher",
+    "i18n:sync": "turbo run i18n:sync --filter=@sunrain/content-fetcher",
+    "i18n:detect": "turbo run i18n:detect --filter=@sunrain/content-fetcher",
+    "i18n:report": "turbo run i18n:report --filter=@sunrain/content-fetcher",
+    "i18n:cleanup": "turbo run i18n:cleanup --filter=@sunrain/content-fetcher",
+    "test:validator": "turbo run test:validator --filter=@sunrain/content-fetcher"
   },
   "dependencies": {
-    "@astrojs/check": "^0.9.4",
-    "@astrojs/sitemap": "^3.4.1",
-    "@tailwindcss/typography": "^0.5.16",
-    "clsx": "^2.1.1",
-    "daisyui": "^5.0.46",
-    "lucide-react": "^0.525.0",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0",
-    "sass": "^1.89.2",
-    "tailwindcss": "^4.1.11",
-    "typescript": "^5.8.3"
+    "@sunrain/shared": "workspace:*"
   },
   "devDependencies": {
-    "@astrojs/react": "^4.3.0",
-    "@tailwindcss/vite": "^4.1.11",
-    "@types/react": "^19.1.8",
-    "@types/react-dom": "^19.1.6",
-    "astro": "^5.11.0",
-    "astro-i18n-aut": "^0.7.3"
-  },
-  "packageManager": "pnpm@10.12.1+sha512.f0dda8580f0ee9481c5c79a1d927b9164f2c478e90992ad268bbb2465a736984391d6333d2c327913578b2804af33474ca554ba29c04a8b13060a717675ae3ac"
+    "turbo": "^2.3.4"
+  }
 }
