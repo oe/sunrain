@@ -1,164 +1,133 @@
 {
   "en": {
-    "title": "Healing Movies",
-    "description": "Inspiring and therapeutic films that offer hope, healing, and positive perspectives on mental health",
+    "title": "Therapeutic Movies",
+    "description": "Movies that explore mental health themes and can provide therapeutic value.",
     "items": [
-      {
-        "id": "inside-out",
-        "title": "Inside Out",
-        "director": "Pete Docter, Ronnie Del Carmen",
-        "year": 2015,
-        "description": "A beautifully animated exploration of emotions and how they shape our experiences and memories",
-        "genre": "Animation, Family, Drama",
-        "duration": "95 minutes",
-        "themes": ["Emotional intelligence", "Mental health awareness", "Growing up"],
-        "benefits": ["Helps understand emotions", "Normalizes sadness", "Promotes emotional literacy"],
-        "rating": "PG",
-        "streamingUrl": "https://www.disneyplus.com/movies/inside-out",
-        "trailerUrl": "https://www.youtube.com/watch?v=yRUAzGQ3nSY",
-        "image": "/assets/movies/inside-out.jpg"
-      },
-      {
-        "id": "a-beautiful-mind",
-        "title": "A Beautiful Mind",
-        "director": "Ron Howard",
-        "year": 2001,
-        "description": "The inspiring true story of mathematician John Nash's struggle with schizophrenia and his journey to recovery",
-        "genre": "Biography, Drama",
-        "duration": "135 minutes",
-        "themes": ["Mental illness", "Resilience", "Love and support"],
-        "benefits": ["Reduces stigma", "Shows recovery is possible", "Highlights importance of support"],
-        "rating": "PG-13",
-        "streamingUrl": "https://www.netflix.com/title/60003445",
-        "trailerUrl": "https://www.youtube.com/watch?v=aS_d0Ayjw4o",
-        "image": "/assets/movies/beautiful-mind.jpg"
-      },
-      {
-        "id": "good-will-hunting",
-        "title": "Good Will Hunting",
-        "director": "Gus Van Sant",
-        "year": 1997,
-        "description": "A brilliant young man overcomes his troubled past through therapy and meaningful relationships",
-        "genre": "Drama",
-        "duration": "126 minutes",
-        "themes": ["Therapy", "Healing trauma", "Self-discovery"],
-        "benefits": ["Shows therapy benefits", "Addresses trauma", "Promotes self-worth"],
-        "rating": "R",
-        "streamingUrl": "https://www.hulu.com/movie/good-will-hunting",
-        "trailerUrl": "https://www.youtube.com/watch?v=PaZVjZEFkRs",
-        "image": "/assets/movies/good-will-hunting.jpg"
-      },
-      {
-        "id": "the-pursuit-of-happyness",
-        "title": "The Pursuit of Happyness",
-        "director": "Gabriele Muccino",
-        "year": 2006,
-        "description": "A father's determination to overcome homelessness and build a better life for his son",
-        "genre": "Biography, Drama",
-        "duration": "117 minutes",
-        "themes": ["Perseverance", "Hope", "Father-son relationship"],
-        "benefits": ["Inspires resilience", "Shows strength in adversity", "Promotes hope"],
-        "rating": "PG-13",
-        "streamingUrl": "https://www.amazon.com/Pursuit-Happyness-Will-Smith/dp/B000MR9QA6",
-        "trailerUrl": "https://www.youtube.com/watch?v=89Kq8SDyvfg",
-        "image": "/assets/movies/pursuit-happyness.jpg"
-      },
-      {
-        "id": "silver-linings-playbook",
-        "title": "Silver Linings Playbook",
-        "director": "David O. Russell",
-        "year": 2012,
-        "description": "Two people dealing with mental health challenges find connection and healing through dance and companionship",
-        "genre": "Comedy, Drama, Romance",
-        "duration": "122 minutes",
-        "themes": ["Bipolar disorder", "Recovery", "Finding love"],
-        "benefits": ["Humanizes mental illness", "Shows life with mental health conditions", "Promotes acceptance"],
-        "rating": "R",
-        "streamingUrl": "https://www.netflix.com/title/70244164",
-        "trailerUrl": "https://www.youtube.com/watch?v=Lj5_FhNjS8M",
-        "image": "/assets/movies/silver-linings.jpg"
-      }
-    ]
-  },
-  "zh": {
-    "title": "疗愈电影",
-    "description": "鼓舞人心的治疗性电影，提供希望、治愈和积极的心理健康视角",
-    "items": [
-      {
-        "id": "inside-out",
-        "title": "头脑特工队",
-        "director": "彼特·道格特, 罗尼·德尔·卡门",
-        "year": 2015,
-        "description": "一部美丽动画，探索情绪如何塑造我们的经历和记忆",
-        "genre": "动画, 家庭, 剧情",
-        "duration": "95分钟",
-        "themes": ["情商", "心理健康意识", "成长"],
-        "benefits": ["帮助理解情绪", "正常化悲伤", "促进情绪素养"],
-        "rating": "PG",
-        "streamingUrl": "https://www.disneyplus.com/movies/inside-out",
-        "trailerUrl": "https://www.youtube.com/watch?v=yRUAzGQ3nSY",
-        "image": "/assets/movies/inside-out.jpg"
-      },
-      {
-        "id": "a-beautiful-mind",
-        "title": "美丽心灵",
-        "director": "朗·霍华德",
-        "year": 2001,
-        "description": "数学家约翰·纳什与精神分裂症斗争及康复之旅的真实励志故事",
-        "genre": "传记, 剧情",
-        "duration": "135分钟",
-        "themes": ["精神疾病", "韧性", "爱与支持"],
-        "benefits": ["减少污名", "展示康复可能", "强调支持重要性"],
-        "rating": "PG-13",
-        "streamingUrl": "https://www.netflix.com/title/60003445",
-        "trailerUrl": "https://www.youtube.com/watch?v=aS_d0Ayjw4o",
-        "image": "/assets/movies/beautiful-mind.jpg"
-      },
-      {
-        "id": "good-will-hunting",
-        "title": "心灵捕手",
-        "director": "格斯·范·桑特",
-        "year": 1997,
-        "description": "一个聪明的年轻人通过治疗和有意义的关系克服困扰的过去",
-        "genre": "剧情",
-        "duration": "126分钟",
-        "themes": ["治疗", "创伤愈合", "自我发现"],
-        "benefits": ["展示治疗好处", "处理创伤", "促进自我价值"],
-        "rating": "R",
-        "streamingUrl": "https://www.hulu.com/movie/good-will-hunting",
-        "trailerUrl": "https://www.youtube.com/watch?v=PaZVjZEFkRs",
-        "image": "/assets/movies/good-will-hunting.jpg"
-      },
-      {
-        "id": "the-pursuit-of-happyness",
-        "title": "当幸福来敲门",
-        "director": "加布里埃莱·穆奇诺",
-        "year": 2006,
-        "description": "一位父亲决心克服无家可归，为儿子建立更好生活的故事",
-        "genre": "传记, 剧情",
-        "duration": "117分钟",
-        "themes": ["坚持不懈", "希望", "父子关系"],
-        "benefits": ["激发韧性", "展示逆境中的力量", "促进希望"],
-        "rating": "PG-13",
-        "streamingUrl": "https://www.amazon.com/Pursuit-Happyness-Will-Smith/dp/B000MR9QA6",
-        "trailerUrl": "https://www.youtube.com/watch?v=89Kq8SDyvfg",
-        "image": "/assets/movies/pursuit-happyness.jpg"
-      },
-      {
-        "id": "silver-linings-playbook",
-        "title": "乌云背后的幸福线",
-        "director": "大卫·O·拉塞尔",
-        "year": 2012,
-        "description": "两个面临心理健康挑战的人通过舞蹈和陪伴找到联系和治愈",
-        "genre": "喜剧, 剧情, 爱情",
-        "duration": "122分钟",
-        "themes": ["双相情感障碍", "康复", "寻找爱情"],
-        "benefits": ["人性化精神疾病", "展示心理健康状况下的生活", "促进接受"],
-        "rating": "R",
-        "streamingUrl": "https://www.netflix.com/title/70244164",
-        "trailerUrl": "https://www.youtube.com/watch?v=Lj5_FhNjS8M",
-        "image": "/assets/movies/silver-linings.jpg"
-      }
+    {
+      "id": "movie-1",
+      "title": "Inside Out",
+      "description": "A beautifully animated exploration of emotions and how they shape our experiences and memories. The film follows Riley, a young girl whose emotions - Joy, Sadness, Anger, Fear, and Disgust - guide her through a difficult transition in her life. This movie provides valuable insights into emotional intelligence and mental health.",
+      "director": "Pete Docter, Ronnie Del Carmen",
+      "year": 2015,
+      "duration": "95 minutes",
+      "rating": "PG",
+      "streamingUrl": "https://www.disneyplus.com/movies/inside-out",
+      "trailerUrl": "https://www.youtube.com/watch?v=yRUAzGQ3nSY",
+      "image": "https://example.com/movie1.jpg",
+      "themes": [
+        "emotional intelligence",
+        "mental health",
+        "psychology",
+        "emotions",
+        "growing up"
+      ],
+      "benefits": [
+        "emotional understanding",
+        "mental health awareness",
+        "emotional processing",
+        "family communication"
+      ]
+    },
+    {
+      "id": "movie-2",
+      "title": "Good Will Hunting",
+      "description": "A powerful drama about a young man with extraordinary mathematical abilities who struggles with emotional trauma and trust issues. Through therapy sessions with a compassionate psychologist, he learns to confront his past and open himself to meaningful relationships. The film beautifully portrays the therapeutic process and healing.",
+      "director": "Gus Van Sant",
+      "year": 1997,
+      "duration": "126 minutes",
+      "rating": "R",
+      "streamingUrl": "https://www.netflix.com/title/good-will-hunting",
+      "trailerUrl": "https://www.youtube.com/watch?v=PaZVjZEFkRs",
+      "image": "https://example.com/movie2.jpg",
+      "themes": [
+        "therapy",
+        "trauma healing",
+        "psychology",
+        "emotional growth",
+        "trust"
+      ],
+      "benefits": [
+        "therapy understanding",
+        "trauma processing",
+        "emotional healing",
+        "relationship building"
+      ]
+    },
+    {
+      "id": "movie-3",
+      "title": "A Beautiful Mind",
+      "description": "The biographical drama tells the story of John Nash, a brilliant mathematician who struggles with schizophrenia. The film provides insight into mental illness, the importance of support systems, and the possibility of living a fulfilling life despite mental health challenges. It reduces stigma and promotes understanding.",
+      "director": "Ron Howard",
+      "year": 2001,
+      "duration": "135 minutes",
+      "rating": "PG-13",
+      "streamingUrl": "https://www.amazon.com/beautiful-mind",
+      "trailerUrl": "https://www.youtube.com/watch?v=YjmkXvGaQQs",
+      "image": "https://example.com/movie3.jpg",
+      "themes": [
+        "mental illness",
+        "schizophrenia",
+        "support systems",
+        "resilience",
+        "stigma reduction"
+      ],
+      "benefits": [
+        "mental health awareness",
+        "stigma reduction",
+        "hope and resilience",
+        "support understanding"
+      ]
+    },
+    {
+      "id": "movie-4",
+      "title": "The Pursuit of Happyness",
+      "description": "An inspiring true story about a father and son facing homelessness while pursuing a better life. The film explores themes of perseverance, hope, and resilience in the face of overwhelming challenges. It demonstrates the importance of mental strength and determination in overcoming adversity.",
+      "director": "Gabriele Muccino",
+      "year": 2006,
+      "duration": "117 minutes",
+      "rating": "PG-13",
+      "streamingUrl": "https://www.netflix.com/title/pursuit-happyness",
+      "trailerUrl": "https://www.youtube.com/watch?v=89Kq8SDyvfg",
+      "image": "https://example.com/movie4.jpg",
+      "themes": [
+        "resilience",
+        "perseverance",
+        "hope",
+        "mental strength",
+        "overcoming adversity"
+      ],
+      "benefits": [
+        "inspiration",
+        "resilience building",
+        "hope cultivation",
+        "mental strength"
+      ]
+    },
+    {
+      "id": "movie-5",
+      "title": "Silver Linings Playbook",
+      "description": "A romantic comedy-drama that sensitively portrays bipolar disorder and depression. The story follows two people with mental health challenges who find healing and hope through their relationship. The film promotes understanding of mental illness while showing that people with mental health conditions can lead fulfilling lives.",
+      "director": "David O. Russell",
+      "year": 2012,
+      "duration": "122 minutes",
+      "rating": "R",
+      "streamingUrl": "https://www.hulu.com/movie/silver-linings-playbook",
+      "trailerUrl": "https://www.youtube.com/watch?v=Lj5_FhLaaQQ",
+      "image": "https://example.com/movie5.jpg",
+      "themes": [
+        "bipolar disorder",
+        "depression",
+        "mental health",
+        "healing",
+        "relationships"
+      ],
+      "benefits": [
+        "mental health understanding",
+        "stigma reduction",
+        "hope and healing",
+        "relationship insights"
+      ]
+    }
     ]
   }
 }

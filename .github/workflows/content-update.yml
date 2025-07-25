@@ -1,0 +1,262 @@
+name: Content Update Automation
+
+on:
+  # 定时任务 - 每周一、三、五的午夜运行
+  schedule:
+    - cron: '0 0 * * 1'  # 每周一午夜 - 书籍更新
+    - cron: '0 0 * * 3'  # 每周三午夜 - 音乐更新  
+    - cron: '0 0 * * 5'  # 每周五午夜 - 电影更新
+  
+  # 手动触发
+  workflow_dispatch:
+    inputs:
+      content_type:
+        description: 'Type of content to update'
+        required: true
+        default: 'all'
+        type: choice
+        options:
+          - all
+          - books
+          - music
+          - movies
+      dry_run:
+        description: 'Run in dry-run mode (no file changes)'
+        required: false
+        default: false
+        type: boolean
+
+# 环境变量
+env:
+  NODE_VERSION: '18'
+  PNPM_VERSION: '8'
+
+jobs:
+  update-content:
+    runs-on: ubuntu-latest
+    
+    permissions:
+      contents: write
+      pull-requests: write
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - name: Install dependencies
+        run: |
+          cd scripts
+          pnpm install
+
+      - name: Determine content type
+        id: content-type
+        run: |
+          if [ "${{ github.event_name }}" = "schedule" ]; then
+            # 根据cron时间确定内容类型
+            case "${{ github.event.schedule }}" in
+              "0 0 * * 1") echo "type=books" >> $GITHUB_OUTPUT ;;
+              "0 0 * * 3") echo "type=music" >> $GITHUB_OUTPUT ;;
+              "0 0 * * 5") echo "type=movies" >> $GITHUB_OUTPUT ;;
+              *) echo "type=all" >> $GITHUB_OUTPUT ;;
+            esac
+          else
+            echo "type=${{ github.event.inputs.content_type || 'all' }}" >> $GITHUB_OUTPUT
+          fi
+          
+          if [ "${{ github.event.inputs.dry_run }}" = "true" ]; then
+            echo "dry_run=--dry-run" >> $GITHUB_OUTPUT
+          else
+            echo "dry_run=" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Create environment file
+        run: |
+          cd scripts
+          cat > .env << EOF
+          GOODREADS_API_KEY=${{ secrets.GOODREADS_API_KEY }}
+          SPOTIFY_CLIENT_ID=${{ secrets.SPOTIFY_CLIENT_ID }}
+          SPOTIFY_CLIENT_SECRET=${{ secrets.SPOTIFY_CLIENT_SECRET }}
+          TMDB_API_KEY=${{ secrets.TMDB_API_KEY }}
+          GOOGLE_BOOKS_API_KEY=${{ secrets.GOOGLE_BOOKS_API_KEY }}
+          NODE_ENV=production
+          EOF
+
+      - name: Update content
+        id: update
+        run: |
+          cd scripts
+          
+          # 设置输出变量
+          echo "changes=false" >> $GITHUB_OUTPUT
+          echo "content_type=${{ steps.content-type.outputs.type }}" >> $GITHUB_OUTPUT
+          
+          # 运行内容更新
+          if npx tsx content-fetcher/cli.ts --type ${{ steps.content-type.outputs.type }} ${{ steps.content-type.outputs.dry_run }} --verbose; then
+            echo "Content update completed successfully"
+            
+            # 检查是否有文件变更（仅在非dry-run模式下）
+            if [ "${{ steps.content-type.outputs.dry_run }}" = "" ]; then
+              if git diff --quiet HEAD -- ../src/content/resources/; then
+                echo "No changes detected"
+              else
+                echo "changes=true" >> $GITHUB_OUTPUT
+                echo "Changes detected in resource files"
+              fi
+            fi
+          else
+            echo "Content update failed"
+            exit 1
+          fi
+
+      - name: Commit and create PR
+        if: steps.update.outputs.changes == 'true'
+        run: |
+          # 配置git
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          
+          # 创建新分支
+          BRANCH_NAME="content-update-${{ steps.update.outputs.content_type }}-$(date +%Y%m%d-%H%M%S)"
+          git checkout -b $BRANCH_NAME
+          
+          # 添加变更
+          git add src/content/resources/
+          
+          # 提交变更
+          COMMIT_MSG="🤖 Auto-update ${{ steps.update.outputs.content_type }} content resources
+          
+          - Updated via GitHub Actions workflow
+          - Content type: ${{ steps.update.outputs.content_type }}
+          - Timestamp: $(date -u +"%Y-%m-%d %H:%M:%S UTC")
+          
+          This is an automated update of mental health resources."
+          
+          git commit -m "$COMMIT_MSG"
+          
+          # 推送分支
+          git push origin $BRANCH_NAME
+          
+          # 创建Pull Request
+          gh pr create \
+            --title "🤖 Auto-update ${{ steps.update.outputs.content_type }} content resources" \
+            --body "## Automated Content Update
+
+          This PR contains automatically updated mental health resources.
+
+          **Content Type:** ${{ steps.update.outputs.content_type }}
+          **Update Time:** $(date -u +"%Y-%m-%d %H:%M:%S UTC")
+          **Workflow:** ${{ github.workflow }}
+
+          ### Changes
+          - Updated resource files in \`src/content/resources/\`
+          - Content fetched from configured APIs
+          - All content validated for mental health relevance
+
+          ### Review Notes
+          - Please review the updated content for accuracy
+          - Verify that all resources are appropriate for mental health context
+          - Check for any formatting or data quality issues
+
+          This PR will be automatically merged if all checks pass and no manual review is required." \
+            --head $BRANCH_NAME \
+            --base main \
+            --label "automated,content-update"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Auto-merge PR (optional)
+        if: steps.update.outputs.changes == 'true' && github.event.inputs.content_type != 'all'
+        run: |
+          # 等待PR创建完成
+          sleep 10
+          
+          # 获取最新的PR
+          PR_NUMBER=$(gh pr list --head content-update-${{ steps.update.outputs.content_type }}-* --json number --jq '.[0].number')
+          
+          if [ ! -z "$PR_NUMBER" ]; then
+            echo "Found PR #$PR_NUMBER, attempting auto-merge..."
+            
+            # 启用自动合并（需要通过所有检查）
+            gh pr merge $PR_NUMBER --auto --squash --delete-branch
+            
+            echo "Auto-merge enabled for PR #$PR_NUMBER"
+          else
+            echo "No PR found for auto-merge"
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Notify on failure
+        if: failure()
+        run: |
+          echo "Content update workflow failed!"
+          
+          # 可以在这里添加通知逻辑，比如发送邮件或Slack消息
+          # 示例：发送到webhook
+          if [ ! -z "${{ secrets.WEBHOOK_URL }}" ]; then
+            curl -X POST "${{ secrets.WEBHOOK_URL }}" \
+              -H "Content-Type: application/json" \
+              -d '{
+                "text": "🚨 Content Update Failed",
+                "attachments": [{
+                  "color": "danger",
+                  "fields": [{
+                    "title": "Workflow",
+                    "value": "${{ github.workflow }}",
+                    "short": true
+                  }, {
+                    "title": "Content Type", 
+                    "value": "${{ steps.content-type.outputs.type }}",
+                    "short": true
+                  }, {
+                    "title": "Repository",
+                    "value": "${{ github.repository }}",
+                    "short": true
+                  }, {
+                    "title": "Run URL",
+                    "value": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",
+                    "short": false
+                  }]
+                }]
+              }'
+          fi
+
+  # 清理旧的分支和PR（可选）
+  cleanup:
+    runs-on: ubuntu-latest
+    if: always()
+    needs: update-content
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+
+      - name: Clean up old branches
+        run: |
+          # 删除超过7天的content-update分支
+          git for-each-ref --format='%(refname:short) %(committerdate)' refs/remotes/origin/content-update-* | \
+          while read branch date; do
+            if [[ $(date -d "$date" +%s) -lt $(date -d "7 days ago" +%s) ]]; then
+              branch_name=${branch#origin/}
+              echo "Deleting old branch: $branch_name"
+              git push origin --delete $branch_name || true
+            fi
+          done
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -1,164 +1,138 @@
 {
   "en": {
-    "title": "Healing Books",
-    "description": "Carefully selected books on mental health, self-help, and personal growth",
+    "title": "Mental Health Books",
+    "description": "A curated collection of books focused on mental health, psychology, and personal wellness.",
     "items": [
-      {
-        "id": "feeling-good",
-        "title": "Feeling Good: The New Mood Therapy",
-        "author": "David D. Burns, M.D.",
-        "year": 1980,
-        "description": "A pioneering guide to cognitive behavioral therapy techniques for overcoming depression and anxiety",
-        "genre": "Self-Help, Psychology",
-        "pages": 736,
-        "themes": ["Cognitive Behavioral Therapy", "Depression", "Anxiety", "Mood disorders"],
-        "benefits": ["Learn CBT techniques", "Overcome negative thinking", "Practical exercises"],
-        "isbn": "978-0380810338",
-        "amazonUrl": "https://www.amazon.com/Feeling-Good-New-Mood-Therapy/dp/0380810336",
-        "goodreadsUrl": "https://www.goodreads.com/book/show/46674.Feeling_Good",
-        "image": "/assets/books/feeling-good.jpg"
-      },
-      {
-        "id": "mindfulness-anxiety",
-        "title": "The Mindful Way Through Anxiety",
-        "author": "Susan M. Orsillo, Lizabeth Roemer",
-        "year": 2011,
-        "description": "A guide to breaking free from chronic worry and reclaiming your life through mindfulness",
-        "genre": "Self-Help, Mindfulness",
-        "pages": 264,
-        "themes": ["Mindfulness", "Anxiety management", "Acceptance", "Present moment awareness"],
-        "benefits": ["Reduce worry", "Develop mindfulness skills", "Accept difficult emotions"],
-        "isbn": "978-1462508709",
-        "amazonUrl": "https://www.amazon.com/Mindful-Way-Through-Anxiety-Reclaiming/dp/1462508707",
-        "goodreadsUrl": "https://www.goodreads.com/book/show/13155542-the-mindful-way-through-anxiety",
-        "image": "/assets/books/mindful-anxiety.jpg"
-      },
-      {
-        "id": "body-keeps-score",
-        "title": "The Body Keeps the Score",
-        "author": "Bessel van der Kolk",
-        "year": 2014,
-        "description": "Groundbreaking insights into how trauma affects the brain and body, and pathways to recovery",
-        "genre": "Psychology, Trauma",
-        "pages": 464,
-        "themes": ["Trauma", "PTSD", "Healing", "Neuroscience"],
-        "benefits": ["Understand trauma", "Learn healing approaches", "Scientific insights"],
-        "isbn": "978-0143127741",
-        "amazonUrl": "https://www.amazon.com/Body-Keeps-Score-Healing-Trauma/dp/0143127748",
-        "goodreadsUrl": "https://www.goodreads.com/book/show/18693771-the-body-keeps-the-score",
-        "image": "/assets/books/body-keeps-score.jpg"
-      },
-      {
-        "id": "mans-search-meaning",
-        "title": "Man's Search for Meaning",
-        "author": "Viktor E. Frankl",
-        "year": 1946,
-        "description": "A Holocaust survivor's account of finding purpose and meaning even in the most difficult circumstances",
-        "genre": "Philosophy, Psychology, Memoir",
-        "pages": 165,
-        "themes": ["Meaning", "Purpose", "Resilience", "Existential psychology"],
-        "benefits": ["Find purpose", "Build resilience", "Philosophical insights"],
-        "isbn": "978-0807014295",
-        "amazonUrl": "https://www.amazon.com/Mans-Search-Meaning-Viktor-Frankl/dp/0807014296",
-        "goodreadsUrl": "https://www.goodreads.com/book/show/4069.Man_s_Search_for_Meaning",
-        "image": "/assets/books/mans-search-meaning.jpg"
-      },
-      {
-        "id": "self-compassion",
-        "title": "Self-Compassion: The Proven Power of Being Kind to Yourself",
-        "author": "Kristin Neff",
-        "year": 2011,
-        "description": "Learn to treat yourself with the same kindness you'd show a good friend",
-        "genre": "Self-Help, Psychology",
-        "pages": 320,
-        "themes": ["Self-compassion", "Self-criticism", "Mindfulness", "Emotional healing"],
-        "benefits": ["Reduce self-criticism", "Increase self-acceptance", "Improve well-being"],
-        "isbn": "978-0061733529",
-        "amazonUrl": "https://www.amazon.com/Self-Compassion-Proven-Power-Being-Yourself/dp/0061733520",
-        "goodreadsUrl": "https://www.goodreads.com/book/show/10127008-self-compassion",
-        "image": "/assets/books/self-compassion.jpg"
-      }
-    ]
-  },
-  "zh": {
-    "title": "疗愈书籍",
-    "description": "精心挑选的心理健康、自助和个人成长书籍",
-    "items": [
-      {
-        "id": "feeling-good",
-        "title": "感受良好：新情绪疗法",
-        "author": "大卫·D·伯恩斯医学博士",
-        "year": 1980,
-        "description": "认知行为疗法技术的开创性指南，用于克服抑郁和焦虑",
-        "genre": "自助, 心理学",
-        "pages": 736,
-        "themes": ["认知行为疗法", "抑郁", "焦虑", "情绪障碍"],
-        "benefits": ["学习CBT技术", "克服消极思维", "实用练习"],
-        "isbn": "978-0380810338",
-        "amazonUrl": "https://www.amazon.com/Feeling-Good-New-Mood-Therapy/dp/0380810336",
-        "goodreadsUrl": "https://www.goodreads.com/book/show/46674.Feeling_Good",
-        "image": "/assets/books/feeling-good.jpg"
-      },
-      {
-        "id": "mindfulness-anxiety",
-        "title": "正念之路克服焦虑",
-        "author": "苏珊·M·奥西洛, 伊丽莎白·罗默",
-        "year": 2011,
-        "description": "通过正念摆脱慢性担忧，重新获得生活的指南",
-        "genre": "自助, 正念",
-        "pages": 264,
-        "themes": ["正念", "焦虑管理", "接受", "当下意识"],
-        "benefits": ["减少担忧", "发展正念技能", "接受困难情绪"],
-        "isbn": "978-1462508709",
-        "amazonUrl": "https://www.amazon.com/Mindful-Way-Through-Anxiety-Reclaiming/dp/1462508707",
-        "goodreadsUrl": "https://www.goodreads.com/book/show/13155542-the-mindful-way-through-anxiety",
-        "image": "/assets/books/mindful-anxiety.jpg"
-      },
-      {
-        "id": "body-keeps-score",
-        "title": "身体从未忘记",
-        "author": "贝塞尔·范德科尔克",
-        "year": 2014,
-        "description": "关于创伤如何影响大脑和身体的突破性见解，以及康复途径",
-        "genre": "心理学, 创伤",
-        "pages": 464,
-        "themes": ["创伤", "PTSD", "治愈", "神经科学"],
-        "benefits": ["理解创伤", "学习治愈方法", "科学见解"],
-        "isbn": "978-0143127741",
-        "amazonUrl": "https://www.amazon.com/Body-Keeps-Score-Healing-Trauma/dp/0143127748",
-        "goodreadsUrl": "https://www.goodreads.com/book/show/18693771-the-body-keeps-the-score",
-        "image": "/assets/books/body-keeps-score.jpg"
-      },
-      {
-        "id": "mans-search-meaning",
-        "title": "活出生命的意义",
-        "author": "维克多·E·弗兰克尔",
-        "year": 1946,
-        "description": "一位大屠杀幸存者在最困难的环境中寻找目的和意义的记述",
-        "genre": "哲学, 心理学, 回忆录",
-        "pages": 165,
-        "themes": ["意义", "目的", "韧性", "存在主义心理学"],
-        "benefits": ["找到目的", "建立韧性", "哲学洞察"],
-        "isbn": "978-0807014295",
-        "amazonUrl": "https://www.amazon.com/Mans-Search-Meaning-Viktor-Frankl/dp/0807014296",
-        "goodreadsUrl": "https://www.goodreads.com/book/show/4069.Man_s_Search_for_Meaning",
-        "image": "/assets/books/mans-search-meaning.jpg"
-      },
-      {
-        "id": "self-compassion",
-        "title": "自我关怀：善待自己的经过验证的力量",
-        "author": "克里斯汀·内夫",
-        "year": 2011,
-        "description": "学会用对待好朋友的同样善意对待自己",
-        "genre": "自助, 心理学",
-        "pages": 320,
-        "themes": ["自我关怀", "自我批评", "正念", "情绪治愈"],
-        "benefits": ["减少自我批评", "增加自我接受", "改善幸福感"],
-        "isbn": "978-0061733529",
-        "amazonUrl": "https://www.amazon.com/Self-Compassion-Proven-Power-Being-Yourself/dp/0061733520",
-        "goodreadsUrl": "https://www.goodreads.com/book/show/10127008-self-compassion",
-        "image": "/assets/books/self-compassion.jpg"
-      }
+    {
+      "id": "book-1",
+      "title": "The Anxiety and Worry Workbook",
+      "description": "A comprehensive guide to managing anxiety and worry through cognitive behavioral therapy techniques. This workbook provides practical exercises, worksheets, and strategies to help readers understand and overcome anxiety disorders. It includes evidence-based approaches for dealing with generalized anxiety, panic attacks, and worry patterns.",
+      "author": "David A. Clark",
+      "year": 2018,
+      "genre": "Self-Help",
+      "pages": 320,
+      "themes": [
+        "anxiety",
+        "CBT",
+        "mental health",
+        "worry",
+        "therapy"
+      ],
+      "benefits": [
+        "stress reduction",
+        "coping strategies",
+        "anxiety management",
+        "emotional regulation"
+      ],
+      "isbn": "978-1462533091",
+      "amazonUrl": "https://amazon.com/anxiety-worry-workbook",
+      "goodreadsUrl": "https://goodreads.com/book/anxiety-worry-workbook",
+      "image": "https://example.com/book1.jpg"
+    },
+    {
+      "id": "book-2",
+      "title": "Feeling Good: The New Mood Therapy",
+      "description": "A groundbreaking book that introduces cognitive behavioral therapy techniques for treating depression and anxiety. Dr. Burns presents practical methods for changing negative thought patterns and improving mood through scientifically proven approaches. This book has helped millions of people overcome depression and develop healthier thinking patterns.",
+      "author": "David D. Burns",
+      "year": 1980,
+      "genre": "Psychology",
+      "pages": 736,
+      "themes": [
+        "depression",
+        "CBT",
+        "mood therapy",
+        "cognitive therapy",
+        "mental health"
+      ],
+      "benefits": [
+        "mood improvement",
+        "depression recovery",
+        "cognitive restructuring",
+        "emotional wellness"
+      ],
+      "isbn": "978-0380810338",
+      "amazonUrl": "https://amazon.com/feeling-good-mood-therapy",
+      "goodreadsUrl": "https://goodreads.com/book/feeling-good",
+      "image": "https://example.com/book2.jpg"
+    },
+    {
+      "id": "book-3",
+      "title": "The Mindful Way Through Depression",
+      "description": "This book combines mindfulness meditation with cognitive therapy to provide a revolutionary approach to treating depression. The authors present mindfulness-based cognitive therapy (MBCT) techniques that help prevent depression relapse and promote emotional well-being. Includes guided meditations and practical exercises for daily life.",
+      "author": "Mark Williams, John Teasdale, Zindel Segal, Jon Kabat-Zinn",
+      "year": 2007,
+      "genre": "Mindfulness",
+      "pages": 273,
+      "themes": [
+        "mindfulness",
+        "depression",
+        "meditation",
+        "MBCT",
+        "cognitive therapy"
+      ],
+      "benefits": [
+        "depression prevention",
+        "mindfulness practice",
+        "emotional awareness",
+        "stress reduction"
+      ],
+      "isbn": "978-1593851286",
+      "amazonUrl": "https://amazon.com/mindful-way-through-depression",
+      "goodreadsUrl": "https://goodreads.com/book/mindful-depression",
+      "image": "https://example.com/book3.jpg"
+    },
+    {
+      "id": "book-4",
+      "title": "The Body Keeps the Score",
+      "description": "A revolutionary understanding of trauma and its effects on the body and mind. Dr. van der Kolk explores how trauma affects the brain and body, and presents innovative treatments for trauma recovery. This book provides insights into PTSD, childhood trauma, and various therapeutic approaches including EMDR, yoga, and neurofeedback.",
+      "author": "Bessel van der Kolk",
+      "year": 2014,
+      "genre": "Trauma Psychology",
+      "pages": 464,
+      "themes": [
+        "trauma",
+        "PTSD",
+        "neuroscience",
+        "therapy",
+        "recovery"
+      ],
+      "benefits": [
+        "trauma understanding",
+        "healing approaches",
+        "body awareness",
+        "recovery strategies"
+      ],
+      "isbn": "978-0143127741",
+      "amazonUrl": "https://amazon.com/body-keeps-score",
+      "goodreadsUrl": "https://goodreads.com/book/body-keeps-score",
+      "image": "https://example.com/book4.jpg"
+    },
+    {
+      "id": "book-5",
+      "title": "Atomic Habits",
+      "description": "A practical guide to building good habits and breaking bad ones through small, incremental changes. James Clear presents a comprehensive system for habit formation based on scientific research and real-world applications. This book is particularly valuable for mental health as it helps readers develop consistent self-care practices and positive behavioral patterns.",
+      "author": "James Clear",
+      "year": 2018,
+      "genre": "Self-Improvement",
+      "pages": 320,
+      "themes": [
+        "habits",
+        "behavior change",
+        "self-improvement",
+        "psychology",
+        "productivity"
+      ],
+      "benefits": [
+        "habit formation",
+        "behavioral change",
+        "self-discipline",
+        "personal growth"
+      ],
+      "isbn": "978-0735211292",
+      "amazonUrl": "https://amazon.com/atomic-habits",
+      "goodreadsUrl": "https://goodreads.com/book/atomic-habits",
+      "image": "https://example.com/book5.jpg"
+    }
     ]
   }
 }
