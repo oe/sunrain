@@ -35,20 +35,20 @@ const testimonials = [
 >
   <!-- Hero Section -->
   <section
-    class="relative min-h-screen bg-gradient-to-br from-pink-50 via-orange-50 to-yellow-50 overflow-hidden"
+    class="relative min-h-screen bg-gradient-to-br from-pink-50 via-orange-50 to-yellow-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 overflow-hidden"
   >
     <!-- Decorative elements -->
-    <div class="absolute inset-0 opacity-20">
+    <div class="absolute inset-0 opacity-20 dark:opacity-10">
       <div
-        class="absolute top-20 left-10 w-32 h-32 bg-yellow-300 rounded-full blur-xl"
+        class="absolute top-20 left-10 w-32 h-32 bg-yellow-300 dark:bg-yellow-600 rounded-full blur-xl"
       >
       </div>
       <div
-        class="absolute top-40 right-20 w-24 h-24 bg-pink-300 rounded-full blur-lg"
+        class="absolute top-40 right-20 w-24 h-24 bg-pink-300 dark:bg-pink-600 rounded-full blur-lg"
       >
       </div>
       <div
-        class="absolute bottom-32 left-1/4 w-20 h-20 bg-orange-300 rounded-full blur-lg"
+        class="absolute bottom-32 left-1/4 w-20 h-20 bg-orange-300 dark:bg-orange-600 rounded-full blur-lg"
       >
       </div>
     </div>
@@ -59,36 +59,36 @@ const testimonials = [
       <!-- Hand-drawn sun and rain illustration placeholder -->
       <div class="mb-8 relative">
         <div class="text-8xl mb-4">☀️</div>
-        <div class="text-4xl text-blue-400 absolute -top-2 -right-4">🌧️</div>
+        <div class="text-4xl text-blue-400 dark:text-blue-300 absolute -top-2 -right-4">🌧️</div>
         <div
-          class="text-2xl text-green-500 absolute -bottom-4 left-1/2 transform -translate-x-1/2"
+          class="text-2xl text-green-500 dark:text-green-400 absolute -bottom-4 left-1/2 transform -translate-x-1/2"
         >
           🌱
         </div>
       </div>
 
       <h1
-        class="text-5xl md:text-7xl font-bold text-gray-800 mb-6 leading-tight"
+        class="text-5xl md:text-7xl font-bold text-gray-800 dark:text-white mb-6 leading-tight"
       >
         <span
-          class="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-pink-400"
+          class="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-pink-400 dark:from-orange-300 dark:to-pink-300"
         >
           {t('hero.tagline')}
         </span>
       </h1>
 
-      <p class="text-xl md:text-2xl text-gray-600 mb-12 max-w-2xl font-light">
+      <p class="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-12 max-w-2xl font-light">
         {t('hero.description')}
       </p>
 
       <div class="flex flex-col sm:flex-row gap-4">
         <button
-          class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+          class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
         >
           {t('hero.selfCheckButton')}
         </button>
         <button
-          class="bg-white hover:bg-gray-50 text-gray-900 border border-gray-300 hover:border-gray-400 px-8 py-4 rounded-lg font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
+          class="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-900 dark:text-white border border-gray-300 dark:border-gray-600 hover:border-gray-400 dark:hover:border-gray-500 px-8 py-4 rounded-lg font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
         >
           {t('hero.quickRelaxButton')}
         </button>
@@ -97,13 +97,13 @@ const testimonials = [
   </section>
 
   <!-- Core Features Section -->
-  <section class="py-24 bg-white">
+  <section class="py-24 bg-white dark:bg-gray-900">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center mb-16">
-        <h2 class="text-3xl md:text-4xl font-semibold text-gray-900 mb-4">
+        <h2 class="text-3xl md:text-4xl font-semibold text-gray-900 dark:text-white mb-4">
           {t('features.title')}
         </h2>
-        <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+        <p class="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
           {t('features.subtitle')}
         </p>
       </div>
@@ -111,25 +111,25 @@ const testimonials = [
       <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
         <!-- Self-Check Module -->
         <div
-          class="group bg-white border border-gray-200 rounded-xl p-6 hover:border-blue-300 hover:shadow-sm transition-all duration-200"
+          class="group bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-6 hover:border-blue-300 dark:hover:border-blue-600 hover:shadow-sm transition-all duration-200"
         >
           <div class="flex items-start space-x-4">
             <div class="flex-shrink-0">
               <div
-                class="w-12 h-12 bg-blue-50 rounded-lg flex items-center justify-center text-xl"
+                class="w-12 h-12 bg-blue-50 dark:bg-blue-900/30 rounded-lg flex items-center justify-center text-xl"
               >
                 🧠
               </div>
             </div>
             <div class="flex-1 min-w-0">
-              <h3 class="text-lg font-semibold text-gray-900 mb-2">
+              <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">
                 {t('features.selfCheck.title')}
               </h3>
-              <p class="text-sm text-gray-600 mb-4">
+              <p class="text-sm text-gray-600 dark:text-gray-300 mb-4">
                 {t('features.selfCheck.description')}
               </p>
               <button
-                class="text-sm text-blue-600 hover:text-blue-700 font-medium"
+                class="text-sm text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium"
               >
                 {t('features.selfCheck.button')}
               </button>
@@ -139,25 +139,25 @@ const testimonials = [
 
         <!-- Daily Practice Module -->
         <div
-          class="group bg-white border border-gray-200 rounded-xl p-6 hover:border-green-300 hover:shadow-sm transition-all duration-200"
+          class="group bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-6 hover:border-green-300 dark:hover:border-green-600 hover:shadow-sm transition-all duration-200"
         >
           <div class="flex items-start space-x-4">
             <div class="flex-shrink-0">
               <div
-                class="w-12 h-12 bg-green-50 rounded-lg flex items-center justify-center text-xl"
+                class="w-12 h-12 bg-green-50 dark:bg-green-900/30 rounded-lg flex items-center justify-center text-xl"
               >
                 🧘
               </div>
             </div>
             <div class="flex-1 min-w-0">
-              <h3 class="text-lg font-semibold text-gray-900 mb-2">
+              <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">
                 {t('features.dailyPractice.title')}
               </h3>
-              <p class="text-sm text-gray-600 mb-4">
+              <p class="text-sm text-gray-600 dark:text-gray-300 mb-4">
                 {t('features.dailyPractice.description')}
               </p>
               <button
-                class="text-sm text-green-600 hover:text-green-700 font-medium"
+                class="text-sm text-green-600 dark:text-green-400 hover:text-green-700 dark:hover:text-green-300 font-medium"
               >
                 {t('features.dailyPractice.button')}
               </button>
@@ -167,25 +167,25 @@ const testimonials = [
 
         <!-- Quick Relief Module -->
         <div
-          class="group bg-white border border-gray-200 rounded-xl p-6 hover:border-purple-300 hover:shadow-sm transition-all duration-200"
+          class="group bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-6 hover:border-purple-300 dark:hover:border-purple-600 hover:shadow-sm transition-all duration-200"
         >
           <div class="flex items-start space-x-4">
             <div class="flex-shrink-0">
               <div
-                class="w-12 h-12 bg-purple-50 rounded-lg flex items-center justify-center text-xl"
+                class="w-12 h-12 bg-purple-50 dark:bg-purple-900/30 rounded-lg flex items-center justify-center text-xl"
               >
                 🎧
               </div>
             </div>
             <div class="flex-1 min-w-0">
-              <h3 class="text-lg font-semibold text-gray-900 mb-2">
+              <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">
                 {t('features.quickRelief.title')}
               </h3>
-              <p class="text-sm text-gray-600 mb-4">
+              <p class="text-sm text-gray-600 dark:text-gray-300 mb-4">
                 {t('features.quickRelief.description')}
               </p>
               <button
-                class="text-sm text-purple-600 hover:text-purple-700 font-medium"
+                class="text-sm text-purple-600 dark:text-purple-400 hover:text-purple-700 dark:hover:text-purple-300 font-medium"
               >
                 {t('features.quickRelief.button')}
               </button>
@@ -195,25 +195,25 @@ const testimonials = [
 
         <!-- Healing Library Module -->
         <div
-          class="group bg-white border border-gray-200 rounded-xl p-6 hover:border-pink-300 hover:shadow-sm transition-all duration-200"
+          class="group bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-6 hover:border-pink-300 dark:hover:border-pink-600 hover:shadow-sm transition-all duration-200"
         >
           <div class="flex items-start space-x-4">
             <div class="flex-shrink-0">
               <div
-                class="w-12 h-12 bg-pink-50 rounded-lg flex items-center justify-center text-xl"
+                class="w-12 h-12 bg-pink-50 dark:bg-pink-900/30 rounded-lg flex items-center justify-center text-xl"
               >
                 📚
               </div>
             </div>
             <div class="flex-1 min-w-0">
-              <h3 class="text-lg font-semibold text-gray-900 mb-2">
+              <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">
                 {t('features.healingLibrary.title')}
               </h3>
-              <p class="text-sm text-gray-600 mb-4">
+              <p class="text-sm text-gray-600 dark:text-gray-300 mb-4">
                 {t('features.healingLibrary.description')}
               </p>
               <button
-                class="text-sm text-pink-600 hover:text-pink-700 font-medium"
+                class="text-sm text-pink-600 dark:text-pink-400 hover:text-pink-700 dark:hover:text-pink-300 font-medium"
               >
                 {t('features.healingLibrary.button')}
               </button>
@@ -223,25 +223,25 @@ const testimonials = [
 
         <!-- Psychology Wiki Module -->
         <div
-          class="group bg-white border border-gray-200 rounded-xl p-6 hover:border-orange-300 hover:shadow-sm transition-all duration-200"
+          class="group bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-6 hover:border-orange-300 dark:hover:border-orange-600 hover:shadow-sm transition-all duration-200"
         >
           <div class="flex items-start space-x-4">
             <div class="flex-shrink-0">
               <div
-                class="w-12 h-12 bg-orange-50 rounded-lg flex items-center justify-center text-xl"
+                class="w-12 h-12 bg-orange-50 dark:bg-orange-900/30 rounded-lg flex items-center justify-center text-xl"
               >
                 🌐
               </div>
             </div>
             <div class="flex-1 min-w-0">
-              <h3 class="text-lg font-semibold text-gray-900 mb-2">
+              <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">
                 {t('features.psychologyWiki.title')}
               </h3>
-              <p class="text-sm text-gray-600 mb-4">
+              <p class="text-sm text-gray-600 dark:text-gray-300 mb-4">
                 {t('features.psychologyWiki.description')}
               </p>
               <button
-                class="text-sm text-orange-600 hover:text-orange-700 font-medium"
+                class="text-sm text-orange-600 dark:text-orange-400 hover:text-orange-700 dark:hover:text-orange-300 font-medium"
               >
                 {t('features.psychologyWiki.button')}
               </button>
@@ -251,25 +251,25 @@ const testimonials = [
 
         <!-- Support Hotline Module -->
         <div
-          class="group bg-white border border-gray-200 rounded-xl p-6 hover:border-red-300 hover:shadow-sm transition-all duration-200"
+          class="group bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-6 hover:border-red-300 dark:hover:border-red-600 hover:shadow-sm transition-all duration-200"
         >
           <div class="flex items-start space-x-4">
             <div class="flex-shrink-0">
               <div
-                class="w-12 h-12 bg-red-50 rounded-lg flex items-center justify-center text-xl"
+                class="w-12 h-12 bg-red-50 dark:bg-red-900/30 rounded-lg flex items-center justify-center text-xl"
               >
                 ☎️
               </div>
             </div>
             <div class="flex-1 min-w-0">
-              <h3 class="text-lg font-semibold text-gray-900 mb-2">
+              <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">
                 {t('features.supportHotline.title')}
               </h3>
-              <p class="text-sm text-gray-600 mb-4">
+              <p class="text-sm text-gray-600 dark:text-gray-300 mb-4">
                 {t('features.supportHotline.description')}
               </p>
               <button
-                class="text-sm text-red-600 hover:text-red-700 font-medium"
+                class="text-sm text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 font-medium"
               >
                 {t('features.supportHotline.button')}
               </button>
@@ -281,13 +281,13 @@ const testimonials = [
   </section>
 
   <!-- User Voices Section -->
-  <section class="py-24 bg-gray-50">
+  <section class="py-24 bg-gray-50 dark:bg-gray-800">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center mb-16">
-        <h2 class="text-3xl md:text-4xl font-semibold text-gray-900 mb-4">
+        <h2 class="text-3xl md:text-4xl font-semibold text-gray-900 dark:text-white mb-4">
           {t('userVoices.title')}
         </h2>
-        <p class="text-lg text-gray-600">
+        <p class="text-lg text-gray-600 dark:text-gray-300">
           {t('userVoices.subtitle')}
         </p>
       </div>
@@ -295,15 +295,15 @@ const testimonials = [
       <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
         {
           testimonials.map((testimonial, index) => (
-            <div class="bg-white rounded-lg p-6 border border-gray-200">
-              <blockquote class="text-gray-700 mb-4 text-sm leading-relaxed">
+            <div class="bg-white dark:bg-gray-700 rounded-lg p-6 border border-gray-200 dark:border-gray-600 shadow-sm">
+              <blockquote class="text-gray-700 dark:text-gray-300 mb-4 text-sm leading-relaxed">
                 "{testimonial.text}"
               </blockquote>
               <div class="flex items-center justify-between">
-                <cite class="text-xs text-gray-500">
+                <cite class="text-xs text-gray-500 dark:text-gray-400">
                   — {testimonial.author}
                 </cite>
-                <button class="text-xs text-blue-600 hover:text-blue-700 font-medium">
+                <button class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium">
                   {t('userVoices.feelSameButton')}
                 </button>
               </div>
@@ -316,10 +316,10 @@ const testimonials = [
 
   <!-- Call to Action Section -->
   <section
-    class="py-20 bg-gradient-to-br from-orange-100 to-pink-100 relative overflow-hidden"
+    class="py-20 bg-gradient-to-br from-orange-100 to-pink-100 dark:from-gray-800 dark:to-gray-700 relative overflow-hidden"
   >
     <!-- Decorative elements -->
-    <div class="absolute inset-0 opacity-10">
+    <div class="absolute inset-0 opacity-10 dark:opacity-5">
       <div class="absolute top-10 left-10 text-6xl">✉️</div>
       <div class="absolute bottom-10 right-10 text-6xl">🌱</div>
       <div class="absolute top-1/2 left-1/4 text-4xl">💌</div>
@@ -327,21 +327,21 @@ const testimonials = [
 
     <div class="relative z-10 max-w-4xl mx-auto px-4 text-center">
       <div class="text-6xl mb-8">🌱</div>
-      <h2 class="text-4xl md:text-5xl font-bold text-gray-800 mb-6">
+      <h2 class="text-4xl md:text-5xl font-bold text-gray-800 dark:text-white mb-6">
         {t('cta.title')}
       </h2>
-      <p class="text-xl text-gray-600 mb-12 max-w-2xl mx-auto">
+      <p class="text-xl text-gray-600 dark:text-gray-300 mb-12 max-w-2xl mx-auto">
         {t('cta.description')}
       </p>
 
       <div class="flex flex-col sm:flex-row gap-4 justify-center">
         <button
-          class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+          class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800"
         >
           {t('cta.submitStoryButton')}
         </button>
         <button
-          class="bg-white hover:bg-gray-50 text-gray-900 border border-gray-300 hover:border-gray-400 px-8 py-4 rounded-lg font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
+          class="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-900 dark:text-white border border-gray-300 dark:border-gray-600 hover:border-gray-400 dark:hover:border-gray-500 px-8 py-4 rounded-lg font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800"
         >
           {t('cta.mindfulnessButton')}
         </button>
