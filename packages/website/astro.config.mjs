@@ -2,7 +2,7 @@
 import { defineConfig } from 'astro/config';
 
 import react from '@astrojs/react';
-import tailwindcss from "@tailwindcss/vite";
+import tailwind from '@astrojs/tailwind';
 import { i18n, filterSitemapByDefaultLocale } from "astro-i18n-aut/integration";
 import sitemap from '@astrojs/sitemap';
 
@@ -26,6 +26,7 @@ export default defineConfig({
   },
   integrations: [
     react(),
+    tailwind(),
     i18n({
       locales,
       defaultLocale,
@@ -37,8 +38,5 @@ export default defineConfig({
       },
       filter: filterSitemapByDefaultLocale({ defaultLocale }),
     }),
-  ],
-  vite: {
-    plugins: [tailwindcss()],
-  }
+  ]
 });

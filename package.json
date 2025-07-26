@@ -3,7 +3,12 @@
   "type": "module",
   "version": "0.0.1",
   "private": true,
+  "description": "Mental health resources platform - monorepo",
   "packageManager": "pnpm@10.12.1+sha512.f0dda8580f0ee9481c5c79a1d927b9164f2c478e90992ad268bbb2465a736984391d6333d2c327913578b2804af33474ca554ba29c04a8b13060a717675ae3ac",
+  "engines": {
+    "node": ">=18.0.0",
+    "pnpm": ">=8.0.0"
+  },
   "scripts": {
     "dev": "turbo run dev --parallel",
     "dev:website": "turbo run dev --filter=@sunrain/website",
@@ -31,10 +36,25 @@
     "i18n:cleanup": "turbo run i18n:cleanup --filter=@sunrain/content-fetcher",
     "test:validator": "turbo run test:validator --filter=@sunrain/content-fetcher"
   },
+  "workspaces": [
+    "packages/*"
+  ],
   "dependencies": {
     "@sunrain/shared": "workspace:*"
   },
   "devDependencies": {
     "turbo": "^2.3.4"
-  }
+  },
+  "keywords": [
+    "mental-health",
+    "resources",
+    "astro",
+    "monorepo",
+    "typescript"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sunrain/sunrain.git"
+  },
+  "license": "MIT"
 }
