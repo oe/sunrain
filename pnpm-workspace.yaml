@@ -26,3 +26,6 @@ catalog:
   sass: ^1.83.0
   jsonwebtoken: ^9.0.2
   "@types/jsonwebtoken": ^9.0.5
+  vitest: ^2.1.0
+  "@vitest/ui": ^2.1.0
+  jsdom: ^25.0.0

@@ -22,7 +22,7 @@ export interface ResourceItem {
   author?: string;
   creator?: string;
   publishDate?: Date;
-  duration?: number; // in seconds for audio/video
+  duration?: string; // Duration as string (e.g., "PT4M13S" for YouTube)
   tags: string[];
   categories: string[];
 
@@ -85,6 +85,74 @@ export interface ResourceCollection {
   title: string;
   description: string;
   items: ResourceItem[];
+}
+
+/**
+ * YouTube video metadata interface
+ */
+export interface YouTubeVideoMetadata {
+  id: string;
+  title: string;
+  description: string;
+  channelTitle: string;
+  publishedAt: Date;
+  duration: string;
+  viewCount: number;
+  likeCount: number;
+  thumbnails: {
+    default?: string;
+    medium?: string;
+    high?: string;
+  };
+  tags: string[];
+  categoryId: string;
+}
+
+/**
+ * RSS feed item interface
+ */
+export interface RSSFeedItem {
+  title: string;
+  description: string;
+  link: string;
+  pubDate: Date;
+  author?: string;
+  categories: string[];
+  content?: string;
+}
+
+/**
+ * Quality assessment result interface
+ */
+export interface QualityAssessment {
+  score: number;
+  factors: {
+    relevance: number;
+    authority: number;
+    freshness: number;
+    engagement: number;
+  };
+  mentalHealthRelevance: boolean;
+  recommendations: string[];
+}
+
+/**
+ * Content processing result interface
+ */
+export interface ContentProcessingResult {
+  processed: ResourceItem[];
+  filtered: ResourceItem[];
+  duplicates: ResourceItem[];
+  errors: Array<{
+    item: Partial<ResourceItem>;
+    error: string;
+  }>;
+  statistics: {
+    totalProcessed: number;
+    validItems: number;
+    duplicatesRemoved: number;
+    qualityFiltered: number;
+  };
 }
 
 /**
@@ -222,74 +290,6 @@ export interface FetchResult {
   data?: ResourceItem[];
   error?: string;
   timestamp: Date;
-}
-
-/**
- * Quality assessment result interface
- */
-export interface QualityAssessment {
-  score: number;
-  factors: {
-    relevance: number;
-    authority: number;
-    freshness: number;
-    engagement: number;
-  };
-  mentalHealthRelevance: boolean;
-  recommendations: string[];
-}
-
-/**
- * Content processing result interface
- */
-export interface ContentProcessingResult {
-  processed: ResourceItem[];
-  filtered: ResourceItem[];
-  duplicates: ResourceItem[];
-  errors: Array<{
-    item: Partial<ResourceItem>;
-    error: string;
-  }>;
-  statistics: {
-    totalProcessed: number;
-    validItems: number;
-    duplicatesRemoved: number;
-    qualityFiltered: number;
-  };
-}
-
-/**
- * RSS feed item interface
- */
-export interface RSSFeedItem {
-  title: string;
-  description: string;
-  link: string;
-  pubDate: Date;
-  author?: string;
-  categories: string[];
-  content?: string;
-}
-
-/**
- * YouTube video metadata interface
- */
-export interface YouTubeVideoMetadata {
-  id: string;
-  title: string;
-  description: string;
-  channelTitle: string;
-  publishedAt: Date;
-  duration: string;
-  viewCount: number;
-  likeCount: number;
-  thumbnails: {
-    default: string;
-    medium: string;
-    high: string;
-  };
-  tags: string[];
-  categoryId: string;
 }
 
 /**
