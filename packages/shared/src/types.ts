@@ -136,6 +136,7 @@ export interface ContentFetcherConfig {
     videos: string;
     articles: string;
     podcasts: string;
+    quotes: string;
   };
   contentValidation: {
     minDescriptionLength: number;
@@ -162,6 +163,7 @@ export interface ContentFetcherConfig {
     videosPath: string;
     articlesPath: string;
     podcastsPath: string;
+    quotesPath: string;
   };
   monetization?: {
     amazon?: {
@@ -193,6 +195,7 @@ export interface ContentFetcher {
   fetchVideos(): Promise<ResourceItem[]>;
   fetchArticles(): Promise<ResourceItem[]>;
   fetchPodcasts(): Promise<ResourceItem[]>;
+  fetchQuotes(): Promise<ResourceItem[]>;
 
   // Content validation and quality assessment
   validateContent(content: ResourceItem): boolean;
@@ -207,6 +210,7 @@ export interface ContentFetcher {
     videos?: ResourceItem[];
     articles?: ResourceItem[];
     podcasts?: ResourceItem[];
+    quotes?: ResourceItem[];
   }): Promise<void>;
 }
 

@@ -4,6 +4,7 @@ import { loadConfig } from './config';
 import { logger } from './logger';
 import { UnifiedResourceFetcher } from './fetchers/unified-resource-fetcher';
 import { HotlineFetcher } from './fetchers/hotline-fetcher';
+import { QuoteFetcher } from './fetchers/quote-fetcher';
 import { handleError } from './errors';
 import { URLGenerator, MonetizationConfig } from './utils/url-generator';
 import { ResourceItem } from '@sunrain/shared';
@@ -11,7 +12,7 @@ import fs from 'fs/promises';
 import path from 'path';
 
 interface CLIOptions {
-  type: 'books' | 'movies' | 'music' | 'videos' | 'articles' | 'podcasts' | 'hotlines' | 'all';
+  type: 'books' | 'movies' | 'music' | 'videos' | 'articles' | 'podcasts' | 'hotlines' | 'quotes' | 'all';
   dryRun?: boolean;
   verbose?: boolean;
   validateLinks?: boolean;
@@ -31,10 +32,10 @@ function parseArgs(): CLIOptions {
       case '--type':
       case '-t':
         const type = args[++i];
-        if (['books', 'movies', 'music', 'videos', 'articles', 'podcasts', 'hotlines', 'all'].includes(type)) {
+        if (['books', 'movies', 'music', 'videos', 'articles', 'podcasts', 'hotlines', 'quotes', 'all'].includes(type)) {
           options.type = type as CLIOptions['type'];
         } else {
-          console.error(`Invalid type: ${type}. Must be one of: books, movies, music, videos, articles, podcasts, hotlines, all`);
+          console.error(`Invalid type: ${type}. Must be one of: books, movies, music, videos, articles, podcasts, hotlines, quotes, all`);
           process.exit(1);
         }
         break;
@@ -77,7 +78,7 @@ Mental Health Content Fetcher CLI
 Usage: tsx cli.ts [options]
 
 Options:
-  -t, --type <type>     Type of content to fetch (books|movies|music|videos|articles|podcasts|hotlines|all) [default: all]
+  -t, --type <type>     Type of content to fetch (books|movies|music|videos|articles|podcasts|hotlines|quotes|all) [default: all]
   -d, --dry-run         Run without updating files
   -v, --verbose         Enable verbose logging
   --validate-links      Validate existing Amazon links
@@ -284,6 +285,7 @@ async function main(): Promise<void> {
 
     const fetcher = new UnifiedResourceFetcher(config);
     const hotlineFetcher = new HotlineFetcher(config);
+    const quoteFetcher = new QuoteFetcher(config, logger);
 
     // Handle link validation/repair operations
     if (options.validateLinks) {
@@ -376,6 +378,21 @@ async function main(): Promise<void> {
         const hotlineStats = await hotlineFetcher.getHotlineStatistics();
         logger.info(`Updated ${hotlineStats.total} hotlines across ${Object.keys(hotlineStats.byCountry).length} countries`);
         break;
+      case 'quotes':
+        const quotes = await quoteFetcher.fetchQuotes();
+        if (!options.dryRun) {
+          // Save quotes to the configured output path
+          const quotesPath = path.resolve(config.output.quotesPath);
+          await fs.writeFile(quotesPath, JSON.stringify({
+            title: '心理健康语录集合',
+            description: '经过质量评估和分类的心理健康语录',
+            generatedAt: new Date().toISOString(),
+            totalQuotes: quotes.length,
+            quotes: quotes
+          }, null, 2));
+        }
+        logger.info(`Fetched ${quotes.length} quotes`);
+        break;
       case 'all':
         const allBooks = await fetcher.fetchBooks();
         const allMusic = await fetcher.fetchMusic();
@@ -383,6 +400,7 @@ async function main(): Promise<void> {
         const allVideos = await fetcher.fetchVideos();
         const allArticles = await fetcher.fetchArticles();
         const allPodcasts = await fetcher.fetchPodcasts();
+        const allQuotes = await quoteFetcher.fetchQuotes();
 
         if (!options.dryRun) {
           await fetcher.updateResourceFiles({
@@ -395,10 +413,20 @@ async function main(): Promise<void> {
           });
 
           await hotlineFetcher.updateHotlineFiles();
+
+          // Save quotes
+          const quotesPath = path.resolve(config.output.quotesPath);
+          await fs.writeFile(quotesPath, JSON.stringify({
+            title: '心理健康语录集合',
+            description: '经过质量评估和分类的心理健康语录',
+            generatedAt: new Date().toISOString(),
+            totalQuotes: allQuotes.length,
+            quotes: allQuotes
+          }, null, 2));
         }
 
         const allHotlineStats = await hotlineFetcher.getHotlineStatistics();
-        logger.info(`Fetched all resources: ${allBooks.length} books, ${allMusic.length} music, ${allMovies.length} movies, ${allVideos.length} videos, ${allArticles.length} articles, ${allPodcasts.length} podcasts, ${allHotlineStats.total} hotlines`);
+        logger.info(`Fetched all resources: ${allBooks.length} books, ${allMusic.length} music, ${allMovies.length} movies, ${allVideos.length} videos, ${allArticles.length} articles, ${allPodcasts.length} podcasts, ${allQuotes.length} quotes, ${allHotlineStats.total} hotlines`);
         break;
     }
 

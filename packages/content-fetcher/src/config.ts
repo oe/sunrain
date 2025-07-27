@@ -42,6 +42,13 @@ export const defaultConfig: ContentFetcherConfig = {
         'https://www.mayoclinic.org/rss/diseases-conditions',
         'https://www.nimh.nih.gov/rss/all-news.xml'
       ]
+    },
+    zenQuotes: {
+      apiKey: process.env.ZENQUOTES_API_KEY || '',
+      baseUrl: 'https://zenquotes.io/api'
+    },
+    quotable: {
+      baseUrl: 'https://api.quotable.io'
     }
   },
   updateFrequency: {
@@ -50,7 +57,8 @@ export const defaultConfig: ContentFetcherConfig = {
     movies: '0 0 * * 5', // 每周五午夜
     videos: '0 2 * * *', // 每日凌晨2点
     articles: '0 4 * * *', // 每日凌晨4点
-    podcasts: '0 0 * * 2' // 每周二午夜
+    podcasts: '0 0 * * 2', // 每周二午夜
+    quotes: '0 6 * * *' // 每日凌晨6点
   },
   contentValidation: {
     minDescriptionLength: 50,
@@ -145,7 +153,8 @@ export const defaultConfig: ContentFetcherConfig = {
     moviesPath: '../website/src/content/resources/movies.json',
     videosPath: '../website/src/content/resources/videos.json',
     articlesPath: '../website/src/content/resources/articles.json',
-    podcastsPath: '../website/src/content/resources/podcasts.json'
+    podcastsPath: '../website/src/content/resources/podcasts.json',
+    quotesPath: '../website/src/content/quotes/quotes.json'
   },
   monetization: {
     amazon: {
