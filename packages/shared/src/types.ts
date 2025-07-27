@@ -5,7 +5,7 @@ export interface ResourceItem {
   id: string;
   title: string;
   description: string;
-  
+
   // Book-specific fields
   author?: string;
   year?: number;
@@ -16,21 +16,21 @@ export interface ResourceItem {
   isbn?: string;
   amazonUrl?: string;
   goodreadsUrl?: string;
-  
+
   // Movie-specific fields
   director?: string;
   duration?: string;
   rating?: string;
   streamingUrl?: string;
   trailerUrl?: string;
-  
+
   // Music-specific fields
   artist?: string;
   type?: string;
   spotifyUrl?: string;
   appleMusicUrl?: string;
   youtubeUrl?: string;
-  
+
   // Common fields
   image?: string;
 }
@@ -86,8 +86,10 @@ export interface ContentFetcherConfig {
   };
   monetization?: {
     amazon?: {
-      affiliateTag: string;
+      affiliateTag: string | Record<string, string>;
       regions: Record<string, string>;
+      apiKey?: string;
+      apiSecret?: string;
     };
     spotify?: {
       partnerCode: string;
