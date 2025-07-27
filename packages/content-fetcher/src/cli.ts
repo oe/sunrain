@@ -1,16 +1,17 @@
 #!/usr/bin/env node
 
-import { loadConfig } from './config.js';
-import { logger } from './logger.js';
-import { handleError } from './errors.js';
-import { UnifiedContentFetcher } from './unified-fetcher.js';
-import { URLGenerator, MonetizationConfig } from './utils/url-generator.js';
+import { loadConfig } from './config';
+import { logger } from './logger';
+import { UnifiedResourceFetcher } from './fetchers/unified-resource-fetcher';
+import { HotlineFetcher } from './fetchers/hotline-fetcher';
+import { handleError } from './errors';
+import { URLGenerator, MonetizationConfig } from './utils/url-generator';
 import { ResourceItem } from '@sunrain/shared';
 import fs from 'fs/promises';
 import path from 'path';
 
 interface CLIOptions {
-  type: 'books' | 'movies' | 'music' | 'all';
+  type: 'books' | 'movies' | 'music' | 'videos' | 'articles' | 'podcasts' | 'hotlines' | 'all';
   dryRun?: boolean;
   verbose?: boolean;
   validateLinks?: boolean;
@@ -30,10 +31,10 @@ function parseArgs(): CLIOptions {
       case '--type':
       case '-t':
         const type = args[++i];
-        if (['books', 'movies', 'music', 'all'].includes(type)) {
+        if (['books', 'movies', 'music', 'videos', 'articles', 'podcasts', 'hotlines', 'all'].includes(type)) {
           options.type = type as CLIOptions['type'];
         } else {
-          console.error(`Invalid type: ${type}. Must be one of: books, movies, music, all`);
+          console.error(`Invalid type: ${type}. Must be one of: books, movies, music, videos, articles, podcasts, hotlines, all`);
           process.exit(1);
         }
         break;
@@ -76,7 +77,7 @@ Mental Health Content Fetcher CLI
 Usage: tsx cli.ts [options]
 
 Options:
-  -t, --type <type>     Type of content to fetch (books|movies|music|all) [default: all]
+  -t, --type <type>     Type of content to fetch (books|movies|music|videos|articles|podcasts|hotlines|all) [default: all]
   -d, --dry-run         Run without updating files
   -v, --verbose         Enable verbose logging
   --validate-links      Validate existing Amazon links
@@ -146,7 +147,7 @@ async function validateAmazonLinks(config: any): Promise<void> {
     }
 
   } catch (error) {
-    logger.error('Failed to validate Amazon links', { error: error.message });
+    logger.error('Failed to validate Amazon links', { error: error instanceof Error ? error.message : String(error) });
     throw error;
   }
 }
@@ -192,7 +193,7 @@ async function testAffiliateLinks(config: any): Promise<void> {
         }
 
       } catch (error) {
-        logger.error(`Failed to generate URL for ${isbn} in ${region}`, { error: error.message });
+        logger.error(`Failed to generate URL for ${isbn} in ${region}`, { error: error instanceof Error ? error.message : String(error) });
       }
     }
   }
@@ -237,7 +238,7 @@ async function repairAmazonLinks(config: any): Promise<void> {
             repairedCount++;
           }
         } catch (error) {
-          logger.warn(`Failed to repair URL for "${book.title}": ${error.message}`);
+          logger.warn(`Failed to repair URL for "${book.title}": ${error instanceof Error ? error.message : String(error)}`);
         }
       }
     }
@@ -251,7 +252,7 @@ async function repairAmazonLinks(config: any): Promise<void> {
     }
 
   } catch (error) {
-    logger.error('Failed to repair Amazon links', { error: error.message });
+    logger.error('Failed to repair Amazon links', { error: error instanceof Error ? error.message : String(error) });
     throw error;
   }
 }
@@ -281,7 +282,8 @@ async function main(): Promise<void> {
       logger.warn('TMDB API key not configured, skipping movies');
     }
 
-    const fetcher = new UnifiedContentFetcher(config);
+    const fetcher = new UnifiedResourceFetcher(config);
+    const hotlineFetcher = new HotlineFetcher(config);
 
     // Handle link validation/repair operations
     if (options.validateLinks) {
@@ -308,8 +310,16 @@ async function main(): Promise<void> {
       logger.info('Running in dry-run mode - no files will be modified');
 
       // 执行健康检查
-      const healthCheck = await fetcher.healthCheck();
-      logger.info('Health check results', healthCheck);
+      logger.info('Health check results', {
+        apis: {
+          goodreads: !!config.apis.goodreads?.apiKey,
+          spotify: !!config.apis.spotify?.clientId,
+          tmdb: !!config.apis.tmdb?.apiKey,
+          youtube: !!config.apis.youtube?.apiKey,
+          newsApi: !!config.apis.newsApi?.apiKey,
+          googleBooks: !!config.apis.googleBooks?.apiKey
+        }
+      });
 
       logger.info('Dry run completed - no files were modified');
       return;
@@ -318,16 +328,77 @@ async function main(): Promise<void> {
     // 根据类型执行相应的更新
     switch (options.type) {
       case 'books':
-        await fetcher.updateSpecificResource('books');
+        const books = await fetcher.fetchBooks();
+        if (!options.dryRun) {
+          await fetcher.updateResourceFiles({ books });
+        }
+        logger.info(`Fetched ${books.length} books`);
         break;
       case 'music':
-        await fetcher.updateSpecificResource('music');
+        const music = await fetcher.fetchMusic();
+        if (!options.dryRun) {
+          await fetcher.updateResourceFiles({ music });
+        }
+        logger.info(`Fetched ${music.length} music items`);
         break;
       case 'movies':
-        await fetcher.updateSpecificResource('movies');
+        const movies = await fetcher.fetchMovies();
+        if (!options.dryRun) {
+          await fetcher.updateResourceFiles({ movies });
+        }
+        logger.info(`Fetched ${movies.length} movies`);
+        break;
+      case 'videos':
+        const videos = await fetcher.fetchVideos();
+        if (!options.dryRun) {
+          await fetcher.updateResourceFiles({ videos });
+        }
+        logger.info(`Fetched ${videos.length} videos`);
+        break;
+      case 'articles':
+        const articles = await fetcher.fetchArticles();
+        if (!options.dryRun) {
+          await fetcher.updateResourceFiles({ articles });
+        }
+        logger.info(`Fetched ${articles.length} articles`);
+        break;
+      case 'podcasts':
+        const podcasts = await fetcher.fetchPodcasts();
+        if (!options.dryRun) {
+          await fetcher.updateResourceFiles({ podcasts });
+        }
+        logger.info(`Fetched ${podcasts.length} podcasts`);
+        break;
+      case 'hotlines':
+        if (!options.dryRun) {
+          await hotlineFetcher.updateHotlineFiles();
+        }
+        const hotlineStats = await hotlineFetcher.getHotlineStatistics();
+        logger.info(`Updated ${hotlineStats.total} hotlines across ${Object.keys(hotlineStats.byCountry).length} countries`);
         break;
       case 'all':
-        await fetcher.updateAllResources();
+        const allBooks = await fetcher.fetchBooks();
+        const allMusic = await fetcher.fetchMusic();
+        const allMovies = await fetcher.fetchMovies();
+        const allVideos = await fetcher.fetchVideos();
+        const allArticles = await fetcher.fetchArticles();
+        const allPodcasts = await fetcher.fetchPodcasts();
+
+        if (!options.dryRun) {
+          await fetcher.updateResourceFiles({
+            books: allBooks,
+            music: allMusic,
+            movies: allMovies,
+            videos: allVideos,
+            articles: allArticles,
+            podcasts: allPodcasts
+          });
+
+          await hotlineFetcher.updateHotlineFiles();
+        }
+
+        const allHotlineStats = await hotlineFetcher.getHotlineStatistics();
+        logger.info(`Fetched all resources: ${allBooks.length} books, ${allMusic.length} music, ${allMovies.length} movies, ${allVideos.length} videos, ${allArticles.length} articles, ${allPodcasts.length} podcasts, ${allHotlineStats.total} hotlines`);
         break;
     }
 

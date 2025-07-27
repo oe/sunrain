@@ -22,16 +22,41 @@ export const defaultConfig: ContentFetcherConfig = {
       teamId: process.env.APPLE_MUSIC_TEAM_ID || '',
       keyId: process.env.APPLE_MUSIC_KEY_ID || '',
       baseUrl: 'https://api.music.apple.com/v1'
+    },
+    youtube: {
+      apiKey: process.env.YOUTUBE_API_KEY || '',
+      baseUrl: 'https://www.googleapis.com/youtube/v3'
+    },
+    newsApi: {
+      apiKey: process.env.NEWS_API_KEY || '',
+      baseUrl: 'https://newsapi.org/v2'
+    },
+    googleBooks: {
+      apiKey: process.env.GOOGLE_BOOKS_API_KEY || '',
+      baseUrl: 'https://www.googleapis.com/books/v1'
+    },
+    rssFeeds: {
+      sources: [
+        'https://www.psychologytoday.com/us/rss/blog/all',
+        'https://feeds.feedburner.com/apa-monitor',
+        'https://www.mayoclinic.org/rss/diseases-conditions',
+        'https://www.nimh.nih.gov/rss/all-news.xml'
+      ]
     }
   },
   updateFrequency: {
     books: '0 0 * * 1', // 每周一午夜
     music: '0 0 * * 3', // 每周三午夜
-    movies: '0 0 * * 5' // 每周五午夜
+    movies: '0 0 * * 5', // 每周五午夜
+    videos: '0 2 * * *', // 每日凌晨2点
+    articles: '0 4 * * *', // 每日凌晨4点
+    podcasts: '0 0 * * 2' // 每周二午夜
   },
   contentValidation: {
     minDescriptionLength: 50,
-    requiredFields: ['title', 'description'],
+    requiredFields: ['title', 'description', 'type'],
+    qualityThreshold: 0.6,
+    languageSupport: ['en', 'zh', 'ja', 'ko', 'es', 'fr', 'de'],
     mentalHealthKeywords: [
       'mental health',
       'psychology',
@@ -48,6 +73,11 @@ export const defaultConfig: ContentFetcherConfig = {
       'recovery',
       'resilience',
       'coping',
+      'therapeutic',
+      'counseling',
+      'psychiatry',
+      'psychotherapy',
+      'wellbeing',
       '心理健康',
       '心理学',
       '治疗',
@@ -62,13 +92,60 @@ export const defaultConfig: ContentFetcherConfig = {
       '治愈',
       '康复',
       '韧性',
-      '应对'
+      '应对',
+      '心理咨询',
+      '精神科',
+      '心理治疗'
+    ]
+  },
+  qualityAssessment: {
+    enabled: true,
+    factors: {
+      relevanceWeight: 0.4,
+      authorityWeight: 0.3,
+      freshnessWeight: 0.2,
+      engagementWeight: 0.1
+    },
+    mentalHealthRelevanceKeywords: [
+      'mental health',
+      'psychology',
+      'therapy',
+      'mindfulness',
+      'meditation',
+      'anxiety',
+      'depression',
+      'stress',
+      'wellness',
+      'therapeutic',
+      'counseling',
+      'psychiatry',
+      'psychotherapy',
+      'wellbeing',
+      'emotional regulation',
+      'coping strategies',
+      'resilience',
+      'self-care'
+    ],
+    trustedSources: [
+      'mayoclinic.org',
+      'psychologytoday.com',
+      'apa.org',
+      'nimh.nih.gov',
+      'who.int',
+      'harvard.edu',
+      'stanford.edu',
+      'yale.edu',
+      'webmd.com',
+      'healthline.com'
     ]
   },
   output: {
     booksPath: '../website/src/content/resources/books.json',
     musicPath: '../website/src/content/resources/music.json',
-    moviesPath: '../website/src/content/resources/movies.json'
+    moviesPath: '../website/src/content/resources/movies.json',
+    videosPath: '../website/src/content/resources/videos.json',
+    articlesPath: '../website/src/content/resources/articles.json',
+    podcastsPath: '../website/src/content/resources/podcasts.json'
   },
   monetization: {
     amazon: {
@@ -86,6 +163,9 @@ export const defaultConfig: ContentFetcherConfig = {
     },
     appleMusic: {
       affiliateToken: process.env.APPLE_MUSIC_AFFILIATE_TOKEN || '', // Apple Music联盟令牌
+    },
+    youtube: {
+      partnerCode: process.env.YOUTUBE_PARTNER_CODE || '', // YouTube合作伙伴代码
     }
   }
 };

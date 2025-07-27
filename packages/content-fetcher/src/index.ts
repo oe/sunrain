@@ -5,8 +5,19 @@ export * from './errors.js';
 export * from './validator.js';
 export * from './base-fetcher.js';
 
-// 主要的内容获取器类将在后续子任务中实现
-export { BaseContentFetcher } from './base-fetcher.js';
-export { loadConfig, defaultConfig } from './config.js';
-export { logger } from './logger.js';
-export { ContentValidator } from './validator.js';
+// Content fetchers
+export { BaseContentFetcher } from './base-fetcher';
+export { UnifiedResourceFetcher } from './fetchers/unified-resource-fetcher';
+export { WikiContentFetcher } from './fetchers/wiki-content-fetcher';
+export { HotlineFetcher } from './fetchers/hotline-fetcher';
+
+// Scheduler
+export { ContentUpdateScheduler } from './scheduler/content-update-scheduler';
+
+// Quality assurance
+export { ContentQualitySystem } from './quality/content-quality-system';
+
+// Configuration and utilities
+export { loadConfig, defaultConfig } from './config';
+export { logger } from './logger';
+export { ContentValidator } from './validator';

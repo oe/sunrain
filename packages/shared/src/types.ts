@@ -1,13 +1,58 @@
 /**
+ * Resource types supported by the platform
+ */
+export type ResourceType = 'book' | 'music' | 'video' | 'article' | 'podcast';
+
+/**
+ * Mood categories for therapeutic resources
+ */
+export type MoodCategory = 'anxiety' | 'depression' | 'stress' | 'relaxation' | 'motivation' | 'sleep' | 'focus' | 'healing';
+
+/**
  * Common resource item interface used across the application
  */
 export interface ResourceItem {
   id: string;
   title: string;
   description: string;
+  type: ResourceType;
+  language: string;
 
-  // Book-specific fields
+  // Metadata
   author?: string;
+  creator?: string;
+  publishDate?: Date;
+  duration?: number; // in seconds for audio/video
+  tags: string[];
+  categories: string[];
+
+  // Therapeutic properties
+  therapeuticBenefits: string[];
+  moodCategories: MoodCategory[];
+  targetAudience: string[];
+  difficultyLevel?: 'beginner' | 'intermediate' | 'advanced';
+
+  // Access information
+  sourceUrl: string;
+  affiliateLinks?: Record<string, string>;
+  availability: {
+    free: boolean;
+    regions: string[];
+    platforms: string[];
+  };
+
+  // Media
+  imageUrl?: string;
+  thumbnailUrl?: string;
+  previewUrl?: string;
+
+  // Quality metrics
+  qualityScore: number;
+  userRating?: number;
+  reviewCount?: number;
+
+  // Legacy fields for backward compatibility
+  // Book-specific
   year?: number;
   genre?: string;
   pages?: number;
@@ -17,21 +62,19 @@ export interface ResourceItem {
   amazonUrl?: string;
   goodreadsUrl?: string;
 
-  // Movie-specific fields
+  // Movie-specific
   director?: string;
-  duration?: string;
   rating?: string;
   streamingUrl?: string;
   trailerUrl?: string;
 
-  // Music-specific fields
+  // Music-specific
   artist?: string;
-  type?: string;
   spotifyUrl?: string;
   appleMusicUrl?: string;
   youtubeUrl?: string;
 
-  // Common fields
+  // Common legacy
   image?: string;
 }
 
@@ -49,6 +92,7 @@ export interface ResourceCollection {
  */
 export interface ContentFetcherConfig {
   apis: {
+    // Existing APIs
     goodreads?: {
       apiKey: string;
       baseUrl: string;
@@ -68,21 +112,56 @@ export interface ContentFetcherConfig {
       keyId: string;
       baseUrl: string;
     };
+    // New APIs for comprehensive content
+    youtube?: {
+      apiKey: string;
+      baseUrl: string;
+    };
+    newsApi?: {
+      apiKey: string;
+      baseUrl: string;
+    };
+    rssFeeds?: {
+      sources: string[];
+    };
+    googleBooks?: {
+      apiKey: string;
+      baseUrl: string;
+    };
   };
   updateFrequency: {
     books: string; // cron expression
     music: string;
     movies: string;
+    videos: string;
+    articles: string;
+    podcasts: string;
   };
   contentValidation: {
     minDescriptionLength: number;
     requiredFields: string[];
     mentalHealthKeywords: string[];
+    qualityThreshold: number;
+    languageSupport: string[];
+  };
+  qualityAssessment: {
+    enabled: boolean;
+    factors: {
+      relevanceWeight: number;
+      authorityWeight: number;
+      freshnessWeight: number;
+      engagementWeight: number;
+    };
+    mentalHealthRelevanceKeywords: string[];
+    trustedSources: string[];
   };
   output: {
     booksPath: string;
     musicPath: string;
     moviesPath: string;
+    videosPath: string;
+    articlesPath: string;
+    podcastsPath: string;
   };
   monetization?: {
     amazon?: {
@@ -97,6 +176,9 @@ export interface ContentFetcherConfig {
     appleMusic?: {
       affiliateToken: string;
     };
+    youtube?: {
+      partnerCode: string;
+    };
   };
 }
 
@@ -104,11 +186,28 @@ export interface ContentFetcherConfig {
  * Content fetcher interface
  */
 export interface ContentFetcher {
+  // Core fetching methods
   fetchBooks(): Promise<ResourceItem[]>;
   fetchMovies(): Promise<ResourceItem[]>;
   fetchMusic(): Promise<ResourceItem[]>;
+  fetchVideos(): Promise<ResourceItem[]>;
+  fetchArticles(): Promise<ResourceItem[]>;
+  fetchPodcasts(): Promise<ResourceItem[]>;
+
+  // Content validation and quality assessment
   validateContent(content: ResourceItem): boolean;
-  updateResourceFiles(resources: { books?: ResourceItem[]; movies?: ResourceItem[]; music?: ResourceItem[] }): Promise<void>;
+  assessContentQuality(content: ResourceItem): number;
+  filterMentalHealthRelevant(content: ResourceItem[]): ResourceItem[];
+
+  // File management
+  updateResourceFiles(resources: {
+    books?: ResourceItem[];
+    movies?: ResourceItem[];
+    music?: ResourceItem[];
+    videos?: ResourceItem[];
+    articles?: ResourceItem[];
+    podcasts?: ResourceItem[];
+  }): Promise<void>;
 }
 
 /**
@@ -119,6 +218,74 @@ export interface FetchResult {
   data?: ResourceItem[];
   error?: string;
   timestamp: Date;
+}
+
+/**
+ * Quality assessment result interface
+ */
+export interface QualityAssessment {
+  score: number;
+  factors: {
+    relevance: number;
+    authority: number;
+    freshness: number;
+    engagement: number;
+  };
+  mentalHealthRelevance: boolean;
+  recommendations: string[];
+}
+
+/**
+ * Content processing result interface
+ */
+export interface ContentProcessingResult {
+  processed: ResourceItem[];
+  filtered: ResourceItem[];
+  duplicates: ResourceItem[];
+  errors: Array<{
+    item: Partial<ResourceItem>;
+    error: string;
+  }>;
+  statistics: {
+    totalProcessed: number;
+    validItems: number;
+    duplicatesRemoved: number;
+    qualityFiltered: number;
+  };
+}
+
+/**
+ * RSS feed item interface
+ */
+export interface RSSFeedItem {
+  title: string;
+  description: string;
+  link: string;
+  pubDate: Date;
+  author?: string;
+  categories: string[];
+  content?: string;
+}
+
+/**
+ * YouTube video metadata interface
+ */
+export interface YouTubeVideoMetadata {
+  id: string;
+  title: string;
+  description: string;
+  channelTitle: string;
+  publishedAt: Date;
+  duration: string;
+  viewCount: number;
+  likeCount: number;
+  thumbnails: {
+    default: string;
+    medium: string;
+    high: string;
+  };
+  tags: string[];
+  categoryId: string;
 }
 
 /**
