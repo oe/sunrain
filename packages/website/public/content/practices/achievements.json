@@ -1,0 +1,156 @@
+{
+  "achievements": [
+    {
+      "id": "first_session",
+      "name": "First Steps",
+      "description": "Complete your first practice session",
+      "icon": "🌱",
+      "category": "milestone",
+      "criteria": {
+        "type": "sessions_count",
+        "threshold": 1,
+        "timeframe": "all_time"
+      },
+      "points": 10,
+      "unlockMessage": "Congratulations on taking your first step towards mindfulness!",
+      "rarity": "common"
+    },
+    {
+      "id": "week_streak",
+      "name": "Week Warrior",
+      "description": "Practice for 7 consecutive days",
+      "icon": "🔥",
+      "category": "consistency",
+      "criteria": {
+        "type": "streak_days",
+        "threshold": 7,
+        "timeframe": "all_time"
+      },
+      "points": 50,
+      "unlockMessage": "Amazing! You've built a solid practice habit!",
+      "rarity": "uncommon"
+    },
+    {
+      "id": "hundred_minutes",
+      "name": "Century Club",
+      "description": "Complete 100 minutes of practice",
+      "icon": "💯",
+      "category": "duration",
+      "criteria": {
+        "type": "total_minutes",
+        "threshold": 100,
+        "timeframe": "all_time"
+      },
+      "points": 30,
+      "unlockMessage": "You've dedicated significant time to your wellbeing!",
+      "rarity": "common"
+    },
+    {
+      "id": "month_streak",
+      "name": "Monthly Master",
+      "description": "Practice for 30 consecutive days",
+      "icon": "🏆",
+      "category": "consistency",
+      "criteria": {
+        "type": "streak_days",
+        "threshold": 30,
+        "timeframe": "all_time"
+      },
+      "points": 100,
+      "unlockMessage": "Incredible dedication! You're a true mindfulness master!",
+      "rarity": "rare"
+    },
+    {
+      "id": "variety_explorer",
+      "name": "Practice Explorer",
+      "description": "Try practices from 3 different categories",
+      "icon": "🧭",
+      "category": "variety",
+      "criteria": {
+        "type": "category_variety",
+        "threshold": 3,
+        "timeframe": "all_time"
+      },
+      "points": 25,
+      "unlockMessage": "You're exploring the full spectrum of mindfulness!",
+      "rarity": "uncommon"
+    },
+    {
+      "id": "mood_improver",
+      "name": "Mood Booster",
+      "description": "Achieve an average mood improvement of 2+ points",
+      "icon": "😊",
+      "category": "improvement",
+      "criteria": {
+        "type": "mood_improvement",
+        "threshold": 2,
+        "timeframe": "monthly"
+      },
+      "points": 40,
+      "unlockMessage": "Your practice is making a real difference in your mood!",
+      "rarity": "uncommon"
+    },
+    {
+      "id": "five_star_practitioner",
+      "name": "Five Star Practitioner",
+      "description": "Maintain an average rating of 4.5+ stars",
+      "icon": "⭐",
+      "category": "improvement",
+      "criteria": {
+        "type": "rating_average",
+        "threshold": 4.5,
+        "timeframe": "monthly"
+      },
+      "points": 35,
+      "unlockMessage": "You're getting the most out of your practice sessions!",
+      "rarity": "uncommon"
+    },
+    {
+      "id": "thousand_minutes",
+      "name": "Mindfulness Marathon",
+      "description": "Complete 1000 minutes of practice",
+      "icon": "🏃‍♀️",
+      "category": "duration",
+      "criteria": {
+        "type": "total_minutes",
+        "threshold": 1000,
+        "timeframe": "all_time"
+      },
+      "points": 150,
+      "unlockMessage": "You've completed a mindfulness marathon! Incredible commitment!",
+      "rarity": "epic"
+    },
+    {
+      "id": "hundred_sessions",
+      "name": "Centurion",
+      "description": "Complete 100 practice sessions",
+      "icon": "🎯",
+      "category": "milestone",
+      "criteria": {
+        "type": "sessions_count",
+        "threshold": 100,
+        "timeframe": "all_time"
+      },
+      "points": 200,
+      "unlockMessage": "100 sessions! You're a true mindfulness centurion!",
+      "rarity": "epic"
+    },
+    {
+      "id": "year_streak",
+      "name": "Mindfulness Legend",
+      "description": "Practice for 365 consecutive days",
+      "icon": "👑",
+      "category": "consistency",
+      "criteria": {
+        "type": "streak_days",
+        "threshold": 365,
+        "timeframe": "all_time"
+      },
+      "points": 500,
+      "unlockMessage": "Legendary! A full year of consistent practice!",
+      "rarity": "legendary"
+    }
+  ],
+  "lastUpdated": "2024-01-01T00:00:00Z",
+  "version": "1.0.0"
+}

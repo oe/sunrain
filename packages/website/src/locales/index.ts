@@ -13,6 +13,7 @@ import homeTranslations, { getHomeTranslations } from './home';
 import guideTranslations, { getGuideTranslations } from './guide';
 import resourcesTranslations, { getResourcesTranslations } from './resources';
 import aboutTranslations, { getAboutTranslations } from './about';
+import { getAssessmentTranslations } from './assessment';
 
 // 导出翻译映射
 export {
@@ -29,7 +30,8 @@ export {
   getHomeTranslations,
   getGuideTranslations,
   getResourcesTranslations,
-  getAboutTranslations
+  getAboutTranslations,
+  getAssessmentTranslations
 };
 
 // 类型导出
@@ -38,3 +40,4 @@ export type { IHomeTranslations } from './home';
 export type { IGuideTranslations } from './guide';
 export type { IResourcesTranslations } from './resources';
 export type { IAboutTranslations } from './about';
+export type { IAssessmentTranslations } from './assessment';
