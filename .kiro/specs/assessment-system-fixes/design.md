@@ -15,31 +15,47 @@
 
 ```mermaid
 graph TB
-    subgraph "服务端渲染 (SSR)"
+    subgraph "静态站点生成 (SSG)"
         INDEX[评测首页 - index.astro]
+        TAKE_PAGE[问卷执行页面 - take/[id].astro]
+        RESULTS_PAGE[结果页面 - results/index.astro]
         STATIC_DATA[静态问卷数据]
         QUESTION_BANK[问卷题库管理器]
     end
     
     subgraph "客户端渲染 (CSR)"
         REACT_COMPONENT[问卷React组件]
+        RESULTS_COMPONENT[结果React组件]
         ASSESSMENT_ENGINE[评测引擎 - TypeScript]
         LOCAL_STORAGE[本地存储管理]
         STATE_MANAGER[状态管理]
-    end
-    
-    subgraph "混合页面"
-        TAKE_PAGE[问卷执行页面 - take/[id].astro]
+        CLIENT_ROUTER[客户端路由管理]
     end
     
     INDEX --> QUESTION_BANK
     INDEX --> TAKE_PAGE
     TAKE_PAGE --> REACT_COMPONENT
+    RESULTS_PAGE --> RESULTS_COMPONENT
     REACT_COMPONENT --> ASSESSMENT_ENGINE
+    RESULTS_COMPONENT --> ASSESSMENT_ENGINE
     ASSESSMENT_ENGINE --> LOCAL_STORAGE
     REACT_COMPONENT --> STATE_MANAGER
+    RESULTS_COMPONENT --> CLIENT_ROUTER
     QUESTION_BANK --> STATIC_DATA
 ```
+
+### 纯 SSG 架构原则
+
+**所有页面必须支持静态生成：**
+- 评测首页：完全静态生成，包含问卷列表
+- 问卷执行页面：通过 `getStaticPaths()` 预生成所有问卷类型的页面
+- 结果页面：单一静态页面，通过客户端渲染动态内容
+- 历史记录页面：静态页面，客户端加载本地数据
+
+**客户端数据管理：**
+- 所有评测数据存储在浏览器 localStorage
+- 结果通过 URL hash 或查询参数传递 ID
+- 客户端路由管理结果页面的不同状态
 
 ## 组件设计
 
@@ -299,8 +315,8 @@ export const AssessmentTaker: React.FC<AssessmentTakerProps> = ({
       // 分析结果
       const result = await resultsAnalyzer.analyzeSession(session);
       if (result) {
-        // 跳转到结果页面
-        window.location.href = `/assessment/results/${result.id}/`;
+        // 跳转到结果页面，使用 hash 传递结果 ID
+        window.location.href = `/assessment/results/#${result.id}`;
       }
     } catch (err) {
       setError('分析结果失败');
@@ -358,7 +374,7 @@ export const AssessmentTaker: React.FC<AssessmentTakerProps> = ({
 
 ```astro
 ---
-// take/[id].astro - 混合渲染页面
+// take/[id].astro - 静态生成页面
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { questionBankManager } from '@/lib/assessment/QuestionBankManager';
 import { getLocale } from 'astro-i18n-aut';
@@ -389,6 +405,468 @@ const t = getAssessmentTranslations(currentLang);
     />
   </main>
 </BaseLayout>
+```
+
+#### 结果页面 SSG 设计
+
+```astro
+---
+// results/index.astro - 静态生成的结果页面
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { getLocale } from 'astro-i18n-aut';
+import { getAssessmentTranslations } from '@/locales/assessment';
+import ResultsDisplay from '@/components/assessment/ResultsDisplay';
+
+const currentLang = getLocale(Astro.url);
+const t = getAssessmentTranslations(currentLang);
+
+// SEO 元数据
+const pageTitle = `${t.results.title} - ${t.common.title}`;
+const pageDescription = t.results.description;
+---
+
+<BaseLayout title={pageTitle} description={pageDescription}>
+  <main class="container mx-auto px-4 py-8">
+    <!-- 完全客户端渲染的结果组件 -->
+    <ResultsDisplay 
+      client:load
+      language={currentLang}
+    />
+  </main>
+</BaseLayout>
+```
+
+### 4. 结果页面客户端渲染设计
+
+#### ResultsDisplay 组件设计
+
+```typescript
+// @/components/assessment/ResultsDisplay.tsx
+import React, { useState, useEffect } from 'react';
+import { useTranslations } from '@/hooks/useTranslations';
+import { resultsAnalyzer } from '@/lib/assessment/ResultsAnalyzer';
+import { resourceRecommendationEngine } from '@/lib/assessment/ResourceRecommendationEngine';
+import { questionBankManager } from '@/lib/assessment/QuestionBankManager';
+import type { AssessmentResult, AssessmentType } from '@/types/assessment';
+
+interface ResultsDisplayProps {
+  language: string;
+}
+
+export default function ResultsDisplay({ language }: ResultsDisplayProps) {
+  const { t, isLoading: translationsLoading } = useTranslations('assessment');
+  const [resultId, setResultId] = useState<string | null>(null);
+  const [result, setResult] = useState<AssessmentResult | null>(null);
+  const [assessmentType, setAssessmentType] = useState<AssessmentType | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    // 从 URL hash 获取结果 ID
+    const hash = window.location.hash.substring(1);
+    if (hash) {
+      setResultId(hash);
+      loadResult(hash);
+    } else {
+      // 如果没有 hash，尝试从 URL 参数获取
+      const urlParams = new URLSearchParams(window.location.search);
+      const id = urlParams.get('id');
+      if (id) {
+        setResultId(id);
+        loadResult(id);
+      } else {
+        setError(t('results.errors.noResultId'));
+        setIsLoading(false);
+      }
+    }
+
+    // 监听 hash 变化
+    const handleHashChange = () => {
+      const newHash = window.location.hash.substring(1);
+      if (newHash && newHash !== resultId) {
+        setResultId(newHash);
+        loadResult(newHash);
+      }
+    };
+
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
+
+  const loadResult = async (id: string) => {
+    try {
+      setIsLoading(true);
+      setError(null);
+
+      // 从本地存储加载结果
+      const loadedResult = resultsAnalyzer.getResult(id);
+      if (!loadedResult) {
+        throw new Error(t('results.errors.resultNotFound'));
+      }
+
+      setResult(loadedResult);
+
+      // 获取评测类型信息
+      const assessmentTypeData = questionBankManager.getAssessmentType(loadedResult.assessmentTypeId);
+      if (!assessmentTypeData) {
+        throw new Error(t('results.errors.assessmentTypeNotFound'));
+      }
+
+      setAssessmentType(assessmentTypeData);
+
+    } catch (err) {
+      console.error('Failed to load result:', err);
+      setError(err instanceof Error ? err.message : t('results.errors.loadFailed'));
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const shareResults = async () => {
+    if (!result || !assessmentType) return;
+
+    const shareData = {
+      title: `${assessmentType.name} - ${t('results.title')}`,
+      text: t('results.shareText', { assessmentName: assessmentType.name }),
+      url: window.location.href
+    };
+
+    if (navigator.share) {
+      try {
+        await navigator.share(shareData);
+      } catch (err) {
+        // 用户取消分享或不支持
+        console.log('Share cancelled or not supported');
+      }
+    } else {
+      // 回退到复制链接
+      try {
+        await navigator.clipboard.writeText(window.location.href);
+        // 显示复制成功提示
+        showNotification(t('results.linkCopied'));
+      } catch (err) {
+        console.error('Failed to copy link:', err);
+      }
+    }
+  };
+
+  const saveToPDF = () => {
+    // 简单实现：使用浏览器打印功能
+    window.print();
+  };
+
+  const showNotification = (message: string) => {
+    // 简单的通知实现
+    const notification = document.createElement('div');
+    notification.className = 'fixed top-4 right-4 bg-green-600 text-white px-4 py-2 rounded-lg shadow-lg z-50';
+    notification.textContent = message;
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+      document.body.removeChild(notification);
+    }, 3000);
+  };
+
+  if (translationsLoading || isLoading) {
+    return (
+      <div className="flex items-center justify-center py-12">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+        <p className="ml-4 text-gray-600 dark:text-gray-300">
+          {t('results.loading')}
+        </p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="max-w-2xl mx-auto text-center py-12">
+        <svg className="w-16 h-16 text-red-600 dark:text-red-400 mx-auto mb-4" fill="currentColor" viewBox="0 0 20 20">
+          <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+        </svg>
+        <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+          {t('results.errors.title')}
+        </h2>
+        <p className="text-gray-600 dark:text-gray-300 mb-6">
+          {error}
+        </p>
+        <div className="space-x-4">
+          <button
+            onClick={() => window.location.href = '/assessment/'}
+            className="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+          >
+            {t('results.actions.backToAssessments')}
+          </button>
+          <button
+            onClick={() => window.location.href = '/assessment/history/'}
+            className="px-6 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+          >
+            {t('results.actions.viewHistory')}
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  if (!result || !assessmentType) {
+    return (
+      <div className="text-center py-12">
+        <p className="text-gray-600 dark:text-gray-300">
+          {t('results.errors.noData')}
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="max-w-6xl mx-auto">
+      {/* 结果标题和基本信息 */}
+      <div className="text-center mb-8">
+        <div className="mb-4">
+          <svg className="w-16 h-16 text-green-600 dark:text-green-400 mx-auto mb-4" fill="currentColor" viewBox="0 0 20 20">
+            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+          </svg>
+        </div>
+        <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+          {assessmentType.name}
+        </h1>
+        <p className="text-gray-600 dark:text-gray-300">
+          {t('results.completedAt')}: {new Date(result.completedAt).toLocaleString()} |
+          {t('results.duration')}: {Math.round(result.totalTimeSpent / 60)} {t('results.minutes')}
+        </p>
+      </div>
+
+      {/* 风险提醒 */}
+      {result.riskLevel && result.riskLevel !== 'low' && (
+        <div className={`mb-8 p-4 rounded-lg border ${
+          result.riskLevel === 'high' 
+            ? 'bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-800'
+            : 'bg-yellow-50 dark:bg-yellow-900/20 border-yellow-200 dark:border-yellow-800'
+        }`}>
+          <div className="flex items-center">
+            <svg className="w-6 h-6 mr-3" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+            </svg>
+            <div>
+              <h3 className="font-semibold">
+                {result.riskLevel === 'high' ? t('results.risk.high.title') : t('results.risk.medium.title')}
+              </h3>
+              <p className="text-sm mt-1">
+                {result.riskLevel === 'high' ? t('results.risk.high.message') : t('results.risk.medium.message')}
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* 主要结果网格 */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+        {/* 分数摘要 */}
+        <div className="lg:col-span-2">
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 p-6">
+            <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-6">
+              {t('results.scores.title')}
+            </h2>
+            <div className="space-y-4">
+              {Object.entries(result.scores).map(([scoreId, scoreData]) => (
+                <div key={scoreId} className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                  <div>
+                    <h4 className="font-medium text-gray-900 dark:text-white">{scoreId}</h4>
+                    <p className="text-sm text-gray-600 dark:text-gray-300">{(scoreData as any).description}</p>
+                  </div>
+                  <div className="text-right">
+                    <span className={`text-2xl font-bold ${getRiskLevelColor((scoreData as any).riskLevel)}`}>
+                      {(scoreData as any).value}
+                    </span>
+                    <span className="block text-sm text-gray-600 dark:text-gray-300">
+                      {(scoreData as any).label}
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* 快速操作 */}
+        <div className="space-y-6">
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 p-6">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+              {t('results.actions.title')}
+            </h3>
+            <div className="space-y-3">
+              <button
+                onClick={shareResults}
+                className="w-full px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+              >
+                {t('results.actions.share')}
+              </button>
+              <button
+                onClick={saveToPDF}
+                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+              >
+                {t('results.actions.savePDF')}
+              </button>
+              <a
+                href="/assessment/history/"
+                className="block w-full px-4 py-2 text-center border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+              >
+                {t('results.actions.viewHistory')}
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* 详细解释 */}
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 p-6 mb-8">
+        <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+          {t('results.interpretation.title')}
+        </h2>
+        <div className="prose dark:prose-invert max-w-none">
+          <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+            {result.interpretation}
+          </p>
+        </div>
+      </div>
+
+      {/* 个性化建议 */}
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 p-6 mb-8">
+        <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-6">
+          {t('results.recommendations.title')}
+        </h2>
+        <div className="space-y-4">
+          {result.recommendations.map((recommendation, index) => (
+            <div key={index} className="flex items-start p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
+              <div className="flex-shrink-0 w-6 h-6 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-medium mr-3 mt-0.5">
+                {index + 1}
+              </div>
+              <p className="text-gray-700 dark:text-gray-300">{recommendation}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* 资源推荐 */}
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 p-6 mb-8">
+        <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-6">
+          {t('results.resources.title')}
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {resourceRecommendationEngine.getRecommendations(result, 6).map((rec, index) => (
+            <div key={index} className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 hover:shadow-md transition-shadow">
+              <div className="flex items-start justify-between mb-3">
+                <span className="text-sm font-medium text-gray-900 dark:text-white">{rec.title}</span>
+                <span className={`px-2 py-1 text-xs font-medium rounded-full ${getPriorityColor(rec.priority)}`}>
+                  {rec.priority === 'high' ? t('results.resources.priority.high') : 
+                   rec.priority === 'medium' ? t('results.resources.priority.medium') : 
+                   t('results.resources.priority.low')}
+                </span>
+              </div>
+              <p className="text-sm text-gray-600 dark:text-gray-300 mb-3">{rec.description}</p>
+              <div className="flex items-center justify-between">
+                <span className="text-xs text-gray-500 dark:text-gray-400">
+                  {rec.estimatedTimeCommitment || t('results.resources.timeFlexible')}
+                </span>
+                <button
+                  onClick={() => window.open(rec.resourceLinks[0]?.url || '#', '_blank')}
+                  className="text-sm text-blue-600 dark:text-blue-400 hover:underline"
+                >
+                  {t('results.resources.viewDetails')}
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* 下一步行动 */}
+      <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-lg p-6 border border-blue-200 dark:border-blue-800 mb-8">
+        <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+          {t('results.nextSteps.title')}
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <a href="/assessment/" className="flex items-center p-4 bg-white dark:bg-gray-800 rounded-lg shadow hover:shadow-md transition-shadow">
+            <svg className="w-8 h-8 text-blue-600 dark:text-blue-400 mr-3" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
+            </svg>
+            <div>
+              <h3 className="font-medium text-gray-900 dark:text-white">
+                {t('results.nextSteps.moreAssessments')}
+              </h3>
+              <p className="text-sm text-gray-600 dark:text-gray-300">
+                {t('results.nextSteps.exploreOther')}
+              </p>
+            </div>
+          </a>
+
+          <a href="/practice" className="flex items-center p-4 bg-white dark:bg-gray-800 rounded-lg shadow hover:shadow-md transition-shadow">
+            <svg className="w-8 h-8 text-green-600 dark:text-green-400 mr-3" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
+            </svg>
+            <div>
+              <h3 className="font-medium text-gray-900 dark:text-white">
+                {t('results.nextSteps.startPractice')}
+              </h3>
+              <p className="text-sm text-gray-600 dark:text-gray-300">
+                {t('results.nextSteps.tryExercises')}
+              </p>
+            </div>
+          </a>
+
+          <a href="/resources" className="flex items-center p-4 bg-white dark:bg-gray-800 rounded-lg shadow hover:shadow-md transition-shadow">
+            <svg className="w-8 h-8 text-purple-600 dark:text-purple-400 mr-3" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
+            </svg>
+            <div>
+              <h3 className="font-medium text-gray-900 dark:text-white">
+                {t('results.nextSteps.browseResources')}
+              </h3>
+              <p className="text-sm text-gray-600 dark:text-gray-300">
+                {t('results.nextSteps.viewLibrary')}
+              </p>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      {/* 免责声明 */}
+      <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-4">
+        <div className="flex">
+          <svg className="w-5 h-5 text-yellow-600 dark:text-yellow-400 mr-3 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+            <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+          </svg>
+          <div>
+            <h3 className="text-sm font-medium text-yellow-800 dark:text-yellow-200">
+              {t('results.disclaimer.title')}
+            </h3>
+            <p className="text-sm text-yellow-700 dark:text-yellow-300 mt-1">
+              {t('results.disclaimer.message')}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
+  function getRiskLevelColor(riskLevel: string) {
+    switch (riskLevel) {
+      case 'high': return 'text-red-600 dark:text-red-400';
+      case 'medium': return 'text-yellow-600 dark:text-yellow-400';
+      case 'low': return 'text-green-600 dark:text-green-400';
+      default: return 'text-gray-600 dark:text-gray-400';
+    }
+  }
+
+  function getPriorityColor(priority: string) {
+    switch (priority) {
+      case 'high': return 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200';
+      case 'medium': return 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200';
+      case 'low': return 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200';
+      default: return 'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200';
+    }
+  }
+}
 ```
 
 ## 客户端多语言支持设计
