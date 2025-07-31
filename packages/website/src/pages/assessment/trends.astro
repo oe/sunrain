@@ -1,8 +1,8 @@
 ---
 // Assessment trends and visualization page
-import BaseLayout from '../../layouts/BaseLayout.astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
 import { getLocale } from 'astro-i18n-aut';
-import { getAssessmentTranslations } from '../../locales/assessment';
+import { getAssessmentTranslations } from '@/locales/assessment';
 import type { Language } from '@sunrain/shared';
 
 const currentLang = getLocale(Astro.url) as Language;
@@ -164,10 +164,13 @@ const t = getAssessmentTranslations(currentLang);
   </main>
 
   <script>
-    import { resultsAnalyzer } from '../../lib/assessment/ResultsAnalyzer.ts';
-    import { questionBankManager } from '../../lib/assessment/QuestionBankManager.ts';
+    import { resultsAnalyzer } from '@/lib/assessment/ResultsAnalyzer';
+    import { questionBankManager } from '@/lib/assessment/QuestionBankManager';
 
     class TrendsAnalysis {
+      currentRange: number | null;
+      results: any[];
+
       constructor() {
         this.currentRange = 365; // Default to 1 year
         this.results = [];
@@ -202,12 +205,14 @@ const t = getAssessmentTranslations(currentLang);
         // Time range buttons
         document.querySelectorAll('.time-range-btn').forEach(btn => {
           btn.addEventListener('click', (e) => {
+            const target = e.target as HTMLElement;
+
             // Update active state
             document.querySelectorAll('.time-range-btn').forEach(b => b.classList.remove('active'));
-            e.target.classList.add('active');
+            target.classList.add('active');
 
             // Update range and re-render
-            this.currentRange = e.target.dataset.range === 'all' ? null : parseInt(e.target.dataset.range);
+            this.currentRange = target.dataset.range === 'all' ? null : parseInt(target.dataset.range || '365');
             this.renderTrends();
           });
         });
@@ -286,8 +291,8 @@ const t = getAssessmentTranslations(currentLang);
         chartDiv.className = 'space-y-2';
 
         Object.entries(monthlyFrequency).forEach(([month, count]) => {
-          const maxCount = Math.max(...Object.values(monthlyFrequency));
-          const percentage = (count / maxCount) * 100;
+          const maxCount = Math.max(...Object.values(monthlyFrequency) as number[]);
+          const percentage = ((count as number) / maxCount) * 100;
 
           const barDiv = document.createElement('div');
           barDiv.innerHTML = `
@@ -350,7 +355,7 @@ const t = getAssessmentTranslations(currentLang);
         chartDiv.className = 'space-y-2';
 
         Object.entries(categoryPerformance).forEach(([category, avgScore]) => {
-          const percentage = Math.min(avgScore * 10, 100);
+          const percentage = Math.min((avgScore as number) * 10, 100);
           const categoryName = category === 'mental_health' ? '心理健康' :
                               category === 'personality' ? '性格特质' :
                               category === 'stress' ? '压力管理' :
@@ -360,7 +365,7 @@ const t = getAssessmentTranslations(currentLang);
           barDiv.innerHTML = `
             <div class="flex items-center justify-between mb-1">
               <span class="text-sm text-gray-600 dark:text-gray-300">${categoryName}</span>
-              <span class="text-sm font-medium text-gray-900 dark:text-white">${avgScore.toFixed(1)}</span>
+              <span class="text-sm font-medium text-gray-900 dark:text-white">${(avgScore as number).toFixed(1)}</span>
             </div>
             <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
               <div class="h-2 rounded-full bg-purple-600" style="width: ${percentage}%"></div>
@@ -430,7 +435,7 @@ const t = getAssessmentTranslations(currentLang);
         if (results.length === 0) return 0;
         const totalScore = results.reduce((sum, result) => {
           const scores = Object.values(result.scores);
-          const avgScore = scores.reduce((s, score) => s + score.value, 0) / scores.length;
+          const avgScore = (scores as any[]).reduce((s: number, score: any) => s + score.value, 0) / scores.length;
           return sum + avgScore;
         }, 0);
         return totalScore / results.length;
@@ -452,13 +457,13 @@ const t = getAssessmentTranslations(currentLang);
 
         Object.values(monthlyData).forEach(monthResults => {
           const riskCounts = { low: 0, medium: 0, high: 0 };
-          monthResults.forEach(result => {
+          (monthResults as any[]).forEach(result => {
             if (result.riskLevel) {
               riskCounts[result.riskLevel]++;
             }
           });
 
-          const total = monthResults.length;
+          const total = (monthResults as any[]).length;
           if (total > 0) {
             trends.low.push((riskCounts.low / total) * 100);
             trends.medium.push((riskCounts.medium / total) * 100);
@@ -478,7 +483,7 @@ const t = getAssessmentTranslations(currentLang);
             if (!performance[category]) performance[category] = [];
 
             const scores = Object.values(result.scores);
-            const avgScore = scores.reduce((sum, score) => sum + score.value, 0) / scores.length;
+            const avgScore = (scores as any[]).reduce((sum: number, score: any) => sum + score.value, 0) / scores.length;
             performance[category].push(avgScore);
           }
         });

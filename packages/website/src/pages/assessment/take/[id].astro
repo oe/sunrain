@@ -1,9 +1,10 @@
 ---
-// Assessment execution interface with progress display
-import BaseLayout from '../../../layouts/BaseLayout.astro';
+// Assessment execution interface with React components
+import BaseLayout from '@/layouts/BaseLayout.astro';
 import { getLocale } from 'astro-i18n-aut';
-import { getAssessmentTranslations } from '../../../locales/assessment';
-import { questionBankManager } from '../../../lib/assessment/QuestionBankManager';
+import { getAssessmentTranslations } from '@/locales/assessment';
+import { questionBankManager } from '@/lib/assessment/QuestionBankManager';
+import AssessmentTaker from '@/components/assessment/AssessmentTaker';
 import type { Language } from '@sunrain/shared';
 
 export async function getStaticPaths() {
@@ -20,176 +21,83 @@ const { assessment } = Astro.props;
 const currentLang = getLocale(Astro.url) as Language;
 const t = getAssessmentTranslations(currentLang);
 
-// This page will be handled by client-side JavaScript
-// The assessment execution logic is complex and requires real-time interaction
+// SEO metadata
+const pageTitle = `${assessment.name} - ${t.common.title}`;
+const pageDescription = assessment.description || `完成${assessment.name}心理健康评测，获得专业的分析报告和建议。`;
+const canonicalUrl = `${Astro.site}assessment/take/${assessment.id}/`;
+
+// Structured data for assessment
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": assessment.name,
+  "description": pageDescription,
+  "url": canonicalUrl,
+  "applicationCategory": "HealthApplication",
+  "operatingSystem": "Web Browser",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "CNY"
+  },
+  "author": {
+    "@type": "Organization",
+    "name": "Sunrain Mental Health",
+    "url": Astro.site
+  }
+};
 ---
 
-<BaseLayout title={t.execution.loading}>
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+>
+  <!-- SEO and meta tags -->
+  <meta slot="head" name="robots" content="noindex, nofollow" />
+  <link slot="head" rel="canonical" href={canonicalUrl} />
+
+  <!-- Open Graph meta tags -->
+  <meta slot="head" property="og:title" content={pageTitle} />
+  <meta slot="head" property="og:description" content={pageDescription} />
+  <meta slot="head" property="og:type" content="website" />
+  <meta slot="head" property="og:url" content={canonicalUrl} />
+  <meta slot="head" property="og:site_name" content="Sunrain Mental Health" />
+  <meta slot="head" property="og:locale" content={currentLang === 'zh' ? 'zh_CN' : 'en_US'} />
+
+  <!-- Twitter Card meta tags -->
+  <meta slot="head" name="twitter:card" content="summary" />
+  <meta slot="head" name="twitter:title" content={pageTitle} />
+  <meta slot="head" name="twitter:description" content={pageDescription} />
+
+  <!-- Assessment specific meta tags -->
+  <meta slot="head" name="assessment:id" content={assessment.id} />
+  <meta slot="head" name="assessment:type" content={assessment.category || 'psychological'} />
+  <meta slot="head" name="assessment:duration" content={String(assessment.duration) || '10-15'} />
+  <meta slot="head" name="assessment:questions" content={String(assessment.questions?.length || 0)} />
+
+  <!-- Structured data -->
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+
+  <!-- Security headers -->
+  <meta slot="head" http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta slot="head" http-equiv="X-Frame-Options" content="DENY" />
+  <meta slot="head" http-equiv="X-XSS-Protection" content="1; mode=block" />
+
+  <!-- Viewport and mobile optimization -->
+  <meta slot="head" name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta slot="head" name="format-detection" content="telephone=no" />
+
+  <!-- Theme color for mobile browsers -->
+  <meta slot="head" name="theme-color" content="#2563eb" />
+  <meta slot="head" name="msapplication-TileColor" content="#2563eb" />
+
   <main class="container mx-auto px-4 py-8">
-    <div class="max-w-4xl mx-auto">
-      <!-- Loading State -->
-      <div id="loading-state" class="text-center py-12">
-        <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-        <p class="text-gray-600 dark:text-gray-300">{t.execution.loading}</p>
-      </div>
-
-      <!-- Assessment Interface -->
-      <div id="assessment-interface" class="hidden">
-        <!-- Progress Bar -->
-        <div class="mb-8">
-          <div class="flex items-center justify-between mb-2">
-            <h1 id="assessment-title" class="text-2xl font-bold text-gray-900 dark:text-white"></h1>
-            <div class="flex items-center space-x-4">
-              <span id="progress-text" class="text-sm text-gray-600 dark:text-gray-300"></span>
-              <button
-                id="pause-btn"
-                class="px-3 py-1 text-sm bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
-              >
-                暂停
-              </button>
-            </div>
-          </div>
-          <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-            <div id="progress-bar" class="bg-blue-600 h-2 rounded-full transition-all duration-300" style="width: 0%"></div>
-          </div>
-          <div class="flex justify-between text-xs text-gray-500 dark:text-gray-400 mt-1">
-            <span>开始</span>
-            <span id="time-spent">用时: 0:00</span>
-            <span>完成</span>
-          </div>
-        </div>
-
-        <!-- Question Card -->
-        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 p-8 mb-6">
-          <div class="mb-6">
-            <div class="flex items-center justify-between mb-4">
-              <span id="question-number" class="text-sm font-medium text-blue-600 dark:text-blue-400"></span>
-              <span id="question-required" class="text-sm text-red-500 hidden">* 必答</span>
-            </div>
-            <h2 id="question-text" class="text-xl font-medium text-gray-900 dark:text-white mb-6"></h2>
-          </div>
-
-          <!-- Answer Options -->
-          <div id="answer-options" class="space-y-3">
-            <!-- Options will be dynamically inserted here -->
-          </div>
-
-          <!-- Scale Question -->
-          <div id="scale-question" class="hidden">
-            <div class="flex items-center justify-between mb-4">
-              <span id="scale-min-label" class="text-sm text-gray-600 dark:text-gray-300"></span>
-              <span id="scale-max-label" class="text-sm text-gray-600 dark:text-gray-300"></span>
-            </div>
-            <div class="flex items-center space-x-2">
-              <span id="scale-min-value" class="text-sm text-gray-500 dark:text-gray-400"></span>
-              <input
-                type="range"
-                id="scale-input"
-                class="flex-1 h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer"
-                min="0"
-                max="10"
-                value="5"
-              >
-              <span id="scale-max-value" class="text-sm text-gray-500 dark:text-gray-400"></span>
-            </div>
-            <div class="text-center mt-2">
-              <span id="scale-current-value" class="text-lg font-medium text-blue-600 dark:text-blue-400">5</span>
-            </div>
-          </div>
-
-          <!-- Text Question -->
-          <div id="text-question" class="hidden">
-            <textarea
-              id="text-input"
-              rows="4"
-              class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
-              placeholder="请输入您的回答..."
-            ></textarea>
-          </div>
-
-          <!-- Error Message -->
-          <div id="error-message" class="hidden mt-4 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-md">
-            <p class="text-sm text-red-600 dark:text-red-400"></p>
-          </div>
-        </div>
-
-        <!-- Navigation Buttons -->
-        <div class="flex items-center justify-between">
-          <button
-            id="prev-btn"
-            class="px-6 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-            disabled
-          >
-            <svg class="w-4 h-4 mr-2 inline" fill="currentColor" viewBox="0 0 20 20">
-              <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"></path>
-            </svg>
-            上一题
-          </button>
-
-          <div class="flex space-x-3">
-            <button
-              id="save-btn"
-              class="px-6 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
-            >
-              保存进度
-            </button>
-            <button
-              id="next-btn"
-              class="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              下一题
-              <svg class="w-4 h-4 ml-2 inline" fill="currentColor" viewBox="0 0 20 20">
-                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
-              </svg>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Completion State -->
-      <div id="completion-state" class="hidden text-center py-12">
-        <div class="mb-6">
-          <svg class="w-16 h-16 text-green-600 dark:text-green-400 mx-auto mb-4" fill="currentColor" viewBox="0 0 20 20">
-            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-          </svg>
-          <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">评测完成！</h2>
-          <p class="text-gray-600 dark:text-gray-300 mb-6">正在分析您的结果...</p>
-        </div>
-        <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div>
-      </div>
-
-      <!-- Pause Modal -->
-      <div id="pause-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-        <div class="bg-white dark:bg-gray-800 rounded-lg p-6 max-w-md w-full mx-4">
-          <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">暂停评测</h3>
-          <p class="text-gray-600 dark:text-gray-300 mb-6">
-            您的进度已自动保存。您可以稍后继续完成评测。
-          </p>
-          <div class="flex space-x-3">
-            <button
-              id="continue-btn"
-              class="flex-1 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
-            >
-              继续评测
-            </button>
-            <button
-              id="exit-btn"
-              class="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
-            >
-              退出
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
+    <!-- Use the new React AssessmentTaker component with client:load directive -->
+    <AssessmentTaker
+      client:load
+      assessmentId={assessment.id}
+      assessmentData={assessment}
+      language={currentLang}
+    />
   </main>
-
-  <script define:vars={{ assessmentId: assessment.id, assessmentData: assessment }} type="module">
-    import { AssessmentInterface } from '../../../scripts/assessment-interface.js';
-
-    // Initialize when page loads
-    document.addEventListener('DOMContentLoaded', () => {
-      new AssessmentInterface(assessmentId, assessmentData);
-    });
-  </script>
 </BaseLayout>

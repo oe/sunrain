@@ -1,6 +1,6 @@
 // Assessment system type definitions
 
-export type QuestionType = 'single_choice' | 'multiple_choice' | 'scale' | 'text';
+export type QuestionType = 'single_choice' | 'multiple_choice' | 'scale' | 'text' | 'number' | 'date';
 export type AssessmentCategory = 'personality' | 'mental_health' | 'stress' | 'mood';
 export type RiskLevel = 'low' | 'medium' | 'high';
 export type MoodLevel = 1 | 2 | 3 | 4 | 5;
@@ -21,10 +21,22 @@ export interface Question {
   weight?: number;
   scaleMin?: number;
   scaleMax?: number;
+  scaleStep?: number;
   scaleLabels?: {
     min: string;
     max: string;
   };
+  minSelections?: number;
+  maxSelections?: number;
+  minLength?: number;
+  maxLength?: number;
+  min?: number;
+  max?: number;
+  integer?: boolean;
+  pattern?: string;
+  patternMessage?: string;
+  minDate?: string;
+  maxDate?: string;
   translations?: Record<string, {
     text: string;
     options?: Record<string, string>;

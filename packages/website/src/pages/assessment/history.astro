@@ -1,8 +1,8 @@
 ---
 // Assessment history and trend visualization interface
-import BaseLayout from '../../layouts/BaseLayout.astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
 import { getLocale } from 'astro-i18n-aut';
-import { getAssessmentTranslations } from '../../locales/assessment';
+import { getAssessmentTranslations } from '@/locales/assessment';
 import type { Language } from '@sunrain/shared';
 
 const currentLang = getLocale(Astro.url) as Language;
@@ -189,10 +189,15 @@ const t = getAssessmentTranslations(currentLang);
   </main>
 
   <script>
-    import { resultsAnalyzer } from '../../lib/assessment/ResultsAnalyzer.ts';
-    import { questionBankManager } from '../../lib/assessment/QuestionBankManager.ts';
+    import { resultsAnalyzer } from '@/lib/assessment/ResultsAnalyzer';
+    import { questionBankManager } from '@/lib/assessment/QuestionBankManager';
 
     class AssessmentHistory {
+      allResults: any[];
+      filteredResults: any[];
+      currentPage: number;
+      itemsPerPage: number;
+
       constructor() {
         this.allResults = [];
         this.filteredResults = [];
@@ -236,8 +241,8 @@ const t = getAssessmentTranslations(currentLang);
       updateStatistics() {
         const stats = resultsAnalyzer.getAssessmentStatistics();
 
-        document.getElementById('total-assessments').textContent = stats.totalResults;
-        document.getElementById('completed-assessments').textContent = stats.totalResults;
+        document.getElementById('total-assessments').textContent = String(stats.totalResults);
+        document.getElementById('completed-assessments').textContent = String(stats.totalResults);
         document.getElementById('average-time').textContent = `${Math.round(stats.averageCompletionTime / 60)}分钟`;
 
         // Last assessment
@@ -336,11 +341,11 @@ const t = getAssessmentTranslations(currentLang);
             <div class="mt-4 grid grid-cols-2 md:grid-cols-4 gap-4">
               ${Object.entries(result.scores).slice(0, 4).map(([scoreId, scoreData]) => `
                 <div class="text-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
-                  <div class="text-lg font-semibold ${this.getRiskLevelColor(scoreData.riskLevel)}">
-                    ${scoreData.value}
+                  <div class="text-lg font-semibold ${this.getRiskLevelColor((scoreData as any).riskLevel)}">
+                    ${(scoreData as any).value}
                   </div>
                   <div class="text-xs text-gray-600 dark:text-gray-400">
-                    ${scoreData.label}
+                    ${(scoreData as any).label}
                   </div>
                 </div>
               `).join('')}
@@ -383,15 +388,15 @@ const t = getAssessmentTranslations(currentLang);
         const startIndex = (this.currentPage - 1) * this.itemsPerPage;
         const endIndex = Math.min(startIndex + this.itemsPerPage, this.filteredResults.length);
 
-        document.getElementById('page-start').textContent = startIndex + 1;
-        document.getElementById('page-end').textContent = endIndex;
-        document.getElementById('total-results').textContent = this.filteredResults.length;
+        document.getElementById('page-start').textContent = String(startIndex + 1);
+        document.getElementById('page-end').textContent = String(endIndex);
+        document.getElementById('total-results').textContent = String(this.filteredResults.length);
 
         const prevBtn = document.getElementById('prev-page-btn');
         const nextBtn = document.getElementById('next-page-btn');
 
-        prevBtn.disabled = this.currentPage === 1;
-        nextBtn.disabled = this.currentPage === totalPages || totalPages === 0;
+        (prevBtn as HTMLButtonElement).disabled = this.currentPage === 1;
+        (nextBtn as HTMLButtonElement).disabled = this.currentPage === totalPages || totalPages === 0;
       }
 
       setupEventListeners() {
@@ -421,14 +426,14 @@ const t = getAssessmentTranslations(currentLang);
         document.getElementById('export-btn').addEventListener('click', () => this.exportData());
 
         // Global methods for inline event handlers
-        window.shareResult = (resultId) => this.shareResult(resultId);
-        window.deleteResult = (resultId) => this.deleteResult(resultId);
+        (window as any).shareResult = (resultId: any) => this.shareResult(resultId);
+        (window as any).deleteResult = (resultId: any) => this.deleteResult(resultId);
       }
 
       applyFilters() {
-        const typeFilter = document.getElementById('assessment-type-filter').value;
-        const timeFilter = document.getElementById('time-range-filter').value;
-        const riskFilter = document.getElementById('risk-level-filter').value;
+        const typeFilter = (document.getElementById('assessment-type-filter') as HTMLSelectElement).value;
+        const timeFilter = (document.getElementById('time-range-filter') as HTMLSelectElement).value;
+        const riskFilter = (document.getElementById('risk-level-filter') as HTMLSelectElement).value;
 
         this.filteredResults = this.allResults.filter(result => {
           // Type filter
@@ -460,9 +465,9 @@ const t = getAssessmentTranslations(currentLang);
       }
 
       clearFilters() {
-        document.getElementById('assessment-type-filter').value = '';
-        document.getElementById('time-range-filter').value = '';
-        document.getElementById('risk-level-filter').value = '';
+        (document.getElementById('assessment-type-filter') as HTMLSelectElement).value = '';
+        (document.getElementById('time-range-filter') as HTMLSelectElement).value = '';
+        (document.getElementById('risk-level-filter') as HTMLSelectElement).value = '';
 
         this.filteredResults = [...this.allResults];
         this.currentPage = 1;

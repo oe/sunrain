@@ -29,6 +29,8 @@ export const assessmentZh: IAssessmentTranslations = {
       title: "您有 {count} 个未完成的评测",
       message: "点击继续完成评测",
       continueLink: "点击继续完成评测",
+      lastActivity: "最后活动",
+      progress: "进度",
     },
     quickActions: {
       title: "快速操作",
@@ -265,8 +267,11 @@ export const assessmentZh: IAssessmentTranslations = {
       sessionStartFailed: "无法启动评测会话",
       initializationFailed: "初始化失败",
       submitFailed: "提交答案失败，请重试",
-      analysiseFailed: "分析结果失败",
+      analysisFailed: "分析结果失败",
       noData: "评测数据加载失败",
+      invalidScale: "请选择 {min} 到 {max} 之间的值",
+      textTooLong: "文本长度不能超过1000个字符",
+      unsupportedQuestionType: "不支持的问题类型: {type}",
     },
     actions: {
       retry: "重试",
@@ -282,6 +287,12 @@ export const assessmentZh: IAssessmentTranslations = {
     question: {
       number: "第 {current} 题 / 共 {total} 题",
       required: "* 必答",
+      selectedCount: "已选择 {count} 项",
+      selectedValue: "当前选择: {value}",
+      textPlaceholder: "请在此输入您的回答...",
+      characterCount: "已输入 {count} 个字符",
+      textEntered: "回答已输入",
+      answered: "已回答",
     },
   },
 

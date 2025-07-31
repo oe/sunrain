@@ -1,7 +1,6 @@
 import type {
   AssessmentSession,
-  AssessmentResult,
-  AssessmentAnswer
+  AssessmentResult
 } from '../../types/assessment';
 
 /**
@@ -48,7 +47,7 @@ export class AssessmentDataManager {
     }
   }
 
-  private safeRemoveItem(key: string): boolean {
+  private _safeRemoveItem(key: string): boolean {
     if (!this.isStorageAvailable()) return false;
     try {
       localStorage.removeItem(key);

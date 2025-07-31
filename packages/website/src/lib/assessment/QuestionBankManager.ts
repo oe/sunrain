@@ -1,9 +1,7 @@
 import type {
   AssessmentType,
   Question,
-  QuestionType,
-  AssessmentCategory,
-  ScoringRule
+  AssessmentCategory
 } from '../../types/assessment';
 
 /**

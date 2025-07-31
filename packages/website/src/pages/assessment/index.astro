@@ -1,9 +1,10 @@
 ---
 // Assessment list and category display page
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import { questionBankManager } from '../../lib/assessment/QuestionBankManager';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { questionBankManager } from '@/lib/assessment/QuestionBankManager';
 import { getLocale } from 'astro-i18n-aut';
-import { getAssessmentTranslations } from '../../locales/assessment';
+import { getAssessmentTranslations } from '@/locales/assessment';
+import ContinueAssessmentWidget from '@/components/assessment/ContinueAssessmentWidget';
 import type { Language } from '@sunrain/shared';
 
 const currentLang = getLocale(Astro.url) as Language;
@@ -20,8 +21,6 @@ const assessmentsByCategory = categories.reduce(
   },
   {} as Record<string, any[]>
 );
-
-// Active sessions will be loaded on the client side to avoid SSR issues
 ---
 
 <BaseLayout title={t.list.title}>
@@ -37,46 +36,14 @@ const assessmentsByCategory = categories.reduce(
         </p>
       </div>
 
-      <!-- Active Sessions Alert (loaded client-side) -->
-      <div
-        id="active-sessions-alert"
-        class="hidden bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4 mb-8"
-      >
-        <div class="flex items-center">
-          <svg
-            class="w-5 h-5 text-blue-600 dark:text-blue-400 mr-3"
-            fill="currentColor"
-            viewBox="0 0 20 20"
-          >
-            <path
-              fill-rule="evenodd"
-              d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
-              clip-rule="evenodd"></path>
-          </svg>
-          <div>
-            <h3
-              id="active-sessions-title"
-              class="text-sm font-medium text-blue-800 dark:text-blue-200"
-            >
-              <!-- Title will be set by JavaScript -->
-            </h3>
-            <p class="text-sm text-blue-700 dark:text-blue-300 mt-1">
-              <a
-                href="/assessment/continue/"
-                class="underline hover:no-underline"
-              >
-                {t.list.activeSessions.continueLink}
-              </a>
-            </p>
-          </div>
-        </div>
-      </div>
+      <!-- Continue Assessment Widget - Client-side rendered -->
+      <ContinueAssessmentWidget client:load />
 
       <!-- Assessment Categories -->
       <div class="space-y-12">
         {
           categories.map((category) => (
-            <section key={category}>
+            <section>
               <div class="mb-6">
                 <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mb-2">
                   {
@@ -96,10 +63,7 @@ const assessmentsByCategory = categories.reduce(
 
               <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {assessmentsByCategory[category].map((assessment) => (
-                  <div
-                    key={assessment.id}
-                    class="bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 border border-gray-200 dark:border-gray-700"
-                  >
+                  <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 border border-gray-200 dark:border-gray-700">
                     <div class="p-6">
                       <div class="flex items-start justify-between mb-4">
                         <div class="flex-1">
@@ -269,45 +233,5 @@ const assessmentsByCategory = categories.reduce(
     </div>
   </main>
 
-  <script type="module">
-    import { assessmentEngine } from '../../lib/assessment/AssessmentEngine.js';
 
-    // Handle assessment start buttons and load active sessions
-    document.addEventListener('DOMContentLoaded', async () => {
-      // Load active sessions on client side
-      try {
-        const activeSessions = assessmentEngine.getActiveSessions();
-        if (activeSessions.length > 0) {
-          const alertDiv = document.getElementById('active-sessions-alert');
-          const titleElement = document.getElementById('active-sessions-title');
-
-          if (alertDiv && titleElement) {
-            // Set the title with session count
-            const titleTemplate = '您有 {count} 个未完成的评测';
-            titleElement.textContent = titleTemplate.replace(
-              '{count}',
-              activeSessions.length.toString()
-            );
-
-            // Show the alert
-            alertDiv.classList.remove('hidden');
-          }
-        }
-      } catch (error) {
-        console.error('Failed to load active sessions:', error);
-      }
-
-      // Handle assessment start buttons
-      const startButtons = document.querySelectorAll('.assessment-start-btn');
-
-      startButtons.forEach((button) => {
-        button.addEventListener('click', (e) => {
-          const assessmentId = button.getAttribute('data-assessment-id');
-          if (assessmentId) {
-            window.location.href = `/assessment/take/${assessmentId}/`;
-          }
-        });
-      });
-    });
-  </script>
 </BaseLayout>

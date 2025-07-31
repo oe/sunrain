@@ -1,6 +1,6 @@
-import { assessmentEngine } from '../lib/assessment/AssessmentEngine.js';
-import { questionBankManager } from '../lib/assessment/QuestionBankManager.js';
-import { resultsAnalyzer } from '../lib/assessment/ResultsAnalyzer.js';
+import { assessmentEngine } from '@/lib/assessment/AssessmentEngine.js';
+import { questionBankManager } from '@/lib/assessment/QuestionBankManager.js';
+import { resultsAnalyzer } from '@/lib/assessment/ResultsAnalyzer.js';
 
 export class AssessmentInterface {
   constructor(assessmentId, assessmentData) {

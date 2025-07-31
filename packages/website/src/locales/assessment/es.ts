@@ -27,7 +27,9 @@ export const assessmentEs: IAssessmentTranslations = {
     activeSessions: {
       title: 'Tienes {count} evaluaciones incompletas',
       message: 'Haz clic para continuar tus evaluaciones',
-      continueLink: 'Continuar evaluaciones'
+      continueLink: 'Continuar evaluaciones',
+      lastActivity: 'Última actividad',
+      progress: 'Progreso'
     },
     quickActions: {
       title: 'Acciones Rápidas',
@@ -248,7 +250,49 @@ export const assessmentEs: IAssessmentTranslations = {
     }
   },
 
+  // Traducciones específicas para componentes del cliente
+  client: {
+    loading: {
+      assessment: 'Cargando evaluación...',
+      translations: 'Cargando traducciones...',
+      question: 'Cargando pregunta...'
+    },
+    errors: {
+      title: 'Error Ocurrido',
+      sessionStartFailed: 'No se pudo iniciar la sesión de evaluación',
+      initializationFailed: 'Error de inicialización',
+      submitFailed: 'Error al enviar respuesta',
+      analysisFailed: 'Error en el análisis',
+      noData: 'No hay datos disponibles',
+      invalidScale: 'Por favor selecciona un valor entre {min} y {max}',
+      textTooLong: 'El texto no puede exceder 1000 caracteres',
+      unsupportedQuestionType: 'Tipo de pregunta no soportado: {type}'
+    },
+    actions: {
+      retry: 'Reintentar',
+      previous: 'Anterior',
+      next: 'Siguiente',
+      complete: 'Completar',
+      save: 'Guardar',
+      saved: 'Guardado'
+    },
+    progress: {
+      text: 'Progreso: {current} de {total}'
+    },
+    question: {
+      number: 'Pregunta {number}',
+      required: 'Requerido',
+      selectedCount: '{count} elementos seleccionados',
+      selectedValue: 'Selección actual: {value}',
+      textPlaceholder: 'Por favor ingresa tu respuesta aquí...',
+      characterCount: '{count} caracteres ingresados',
+      textEntered: 'Respuesta ingresada',
+      answered: 'Respondido'
+    }
+  },
+
   common: {
+    title: 'Título',
     loading: 'Cargando...',
     error: 'Error',
     success: 'Éxito',

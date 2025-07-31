@@ -4,6 +4,12 @@ export { PracticeSessionManager, practiceSessionManager } from './PracticeSessio
 export { PracticeDataManager, practiceDataManager } from './PracticeDataManager';
 export { AudioManager, audioManager } from './AudioManager';
 
+// Import for internal use
+import { practiceContentManager } from './PracticeContentManager';
+import { practiceSessionManager } from './PracticeSessionManager';
+import { practiceDataManager } from './PracticeDataManager';
+import { audioManager } from './AudioManager';
+
 // Re-export types
 export type {
   PracticeType,

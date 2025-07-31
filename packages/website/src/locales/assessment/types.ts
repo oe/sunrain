@@ -36,6 +36,8 @@ export interface IAssessmentTranslations {
       title: string;
       message: string;
       continueLink: string;
+      lastActivity: string;
+      progress: string;
     };
     /** 快速操作 */
     quickActions: {
@@ -327,8 +329,11 @@ export interface IAssessmentTranslations {
       sessionStartFailed: string;
       initializationFailed: string;
       submitFailed: string;
-      analysiseFailed: string;
+      analysisFailed: string;
       noData: string;
+      invalidScale: string;
+      textTooLong: string;
+      unsupportedQuestionType: string;
     };
     /** 操作按钮 */
     actions: {
@@ -347,6 +352,12 @@ export interface IAssessmentTranslations {
     question: {
       number: string;
       required: string;
+      selectedCount: string;
+      selectedValue: string;
+      textPlaceholder: string;
+      characterCount: string;
+      textEntered: string;
+      answered: string;
     };
   };
 

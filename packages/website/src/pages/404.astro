@@ -1,8 +1,8 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
 ---
 
-<BaseLayout 
+<BaseLayout
   title="404 - Page Not Found"
   description="The page you're looking for doesn't exist."
   lang="en"
@@ -26,20 +26,20 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
         <!-- Navigation Options -->
         <div class="space-y-4">
-          <a 
+          <a
             href="/"
             class="inline-block w-full bg-blue-600 text-white font-semibold px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors"
           >
             Go Home
           </a>
           <div class="grid grid-cols-2 gap-4">
-            <a 
+            <a
               href="/en/guide/"
               class="inline-block bg-gray-100 text-gray-700 font-medium px-4 py-2 rounded-lg hover:bg-gray-200 transition-colors text-sm"
             >
               Self-Help Guides
             </a>
-            <a 
+            <a
               href="/en/resources/"
               class="inline-block bg-gray-100 text-gray-700 font-medium px-4 py-2 rounded-lg hover:bg-gray-200 transition-colors text-sm"
             >
@@ -51,8 +51,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <!-- Helpful Message -->
         <div class="mt-8 p-4 bg-blue-50 rounded-lg">
           <p class="text-sm text-blue-800">
-            If you need support or have questions, please visit our 
-            <a href="/en/about/" class="font-medium underline hover:no-underline">About page</a> 
+            If you need support or have questions, please visit our
+            <a href="/en/about/" class="font-medium underline hover:no-underline">About page</a>
             for more information.
           </p>
         </div>

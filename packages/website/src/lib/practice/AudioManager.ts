@@ -1,4 +1,4 @@
-import type { AudioTrack, MediaPlaylist, PracticeSettings } from '../../types/practice';
+import type { AudioTrack, MediaPlaylist, PracticeSettings } from '@/types/practice';
 
 /**
  * Manages audio playback for practice sessions

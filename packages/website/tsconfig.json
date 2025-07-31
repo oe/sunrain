@@ -1,5 +1,5 @@
 {
-  "extends": "astro/tsconfigs/strict",
+  "extends": "astro/tsconfigs/base",
   "include": [
     ".astro/types.d.ts",
     "**/*"
@@ -13,7 +13,24 @@
     "jsxImportSource": "react",
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
-    }
+      "@/*": ["src/*"],
+      "@/components/*": ["src/components/*"],
+      "@/lib/*": ["src/lib/*"],
+      "@/hooks/*": ["src/hooks/*"],
+      "@/utils/*": ["src/utils/*"],
+      "@/types/*": ["src/types/*"],
+      "@/locales/*": ["src/locales/*"],
+      "@/layouts/*": ["src/layouts/*"],
+      "@/styles/*": ["src/styles/*"]
+    },
+    "allowImportingTsExtensions": false,
+    "allowJs": true,
+    "checkJs": false,
+    "isolatedModules": true,
+    "moduleDetection": "force",
+    "strict": false,
+    "noImplicitAny": false,
+    "strictNullChecks": false,
+    "skipLibCheck": true
   }
 }

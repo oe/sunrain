@@ -27,7 +27,9 @@ export const assessmentAr: IAssessmentTranslations = {
     activeSessions: {
       title: 'لديك {count} تقييمات غير مكتملة',
       message: 'انقر لمتابعة تقييماتك',
-      continueLink: 'متابعة التقييمات'
+      continueLink: 'متابعة التقييمات',
+      lastActivity: 'آخر نشاط',
+      progress: 'التقدم'
     },
     quickActions: {
       title: 'إجراءات سريعة',
@@ -248,7 +250,49 @@ export const assessmentAr: IAssessmentTranslations = {
     }
   },
 
+  // ترجمات خاصة بمكونات العميل
+  client: {
+    loading: {
+      assessment: 'جاري تحميل التقييم...',
+      translations: 'جاري تحميل الترجمات...',
+      question: 'جاري تحميل السؤال...'
+    },
+    errors: {
+      title: 'حدث خطأ',
+      sessionStartFailed: 'لا يمكن بدء جلسة التقييم',
+      initializationFailed: 'خطأ في التهيئة',
+      submitFailed: 'فشل في إرسال الإجابة',
+      analysisFailed: 'خطأ في التحليل',
+      noData: 'لا توجد بيانات متاحة',
+      invalidScale: 'يرجى اختيار قيمة بين {min} و {max}',
+      textTooLong: 'النص لا يمكن أن يتجاوز 1000 حرف',
+      unsupportedQuestionType: 'نوع سؤال غير مدعوم: {type}'
+    },
+    actions: {
+      retry: 'إعادة المحاولة',
+      previous: 'السابق',
+      next: 'التالي',
+      complete: 'إكمال',
+      save: 'حفظ',
+      saved: 'تم الحفظ'
+    },
+    progress: {
+      text: 'التقدم: {current} من {total}'
+    },
+    question: {
+      number: 'السؤال {number}',
+      required: 'مطلوب',
+      selectedCount: '{count} عناصر محددة',
+      selectedValue: 'الاختيار الحالي: {value}',
+      textPlaceholder: 'يرجى إدخال إجابتك هنا...',
+      characterCount: '{count} حرف مدخل',
+      textEntered: 'تم إدخال الإجابة',
+      answered: 'تمت الإجابة'
+    }
+  },
+
   common: {
+    title: 'العنوان',
     loading: 'جاري التحميل...',
     error: 'خطأ',
     success: 'نجح',

@@ -27,7 +27,9 @@ export const assessmentJa: IAssessmentTranslations = {
     activeSessions: {
       title: '{count}つの未完了の評価があります',
       message: 'クリックして評価を続行してください',
-      continueLink: '評価を続行'
+      continueLink: '評価を続行',
+      lastActivity: '最後のアクティビティ',
+      progress: '進捗'
     },
     quickActions: {
       title: 'クイックアクション',
@@ -248,7 +250,49 @@ export const assessmentJa: IAssessmentTranslations = {
     }
   },
 
+  // クライアントコンポーネント専用翻訳
+  client: {
+    loading: {
+      assessment: '評価を読み込み中...',
+      translations: '翻訳を読み込み中...',
+      question: '質問を読み込み中...'
+    },
+    errors: {
+      title: 'エラーが発生しました',
+      sessionStartFailed: '評価セッションを開始できません',
+      initializationFailed: '初期化エラー',
+      submitFailed: '回答の送信に失敗しました',
+      analysisFailed: '分析エラー',
+      noData: 'データがありません',
+      invalidScale: '{min}から{max}の間の値を選択してください',
+      textTooLong: 'テキストは1000文字を超えることはできません',
+      unsupportedQuestionType: 'サポートされていない質問タイプ: {type}'
+    },
+    actions: {
+      retry: '再試行',
+      previous: '前へ',
+      next: '次へ',
+      complete: '完了',
+      save: '保存',
+      saved: '保存済み'
+    },
+    progress: {
+      text: '進行状況: {current} / {total}'
+    },
+    question: {
+      number: '質問 {number}',
+      required: '必須',
+      selectedCount: '{count}項目が選択されました',
+      selectedValue: '現在の選択: {value}',
+      textPlaceholder: 'こちらに回答を入力してください...',
+      characterCount: '{count}文字入力されました',
+      textEntered: '回答が入力されました',
+      answered: '回答済み'
+    }
+  },
+
   common: {
+    title: 'タイトル',
     loading: '読み込み中...',
     error: 'エラー',
     success: '成功',

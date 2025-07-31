@@ -11,8 +11,6 @@ export interface Quote extends ResourceItem {
   source?: string;
   category: QuoteCategory;
   mood: MoodCategory;
-  therapeuticBenefit: string[];
-  targetAudience: string[];
   shareCount: number;
   viewCount: number;
   backgroundImage?: string;
@@ -48,8 +46,8 @@ export class QuoteFetcher extends BaseContentFetcher {
   private readonly MAX_QUOTE_LENGTH = 280;
   private readonly MIN_QUOTE_LENGTH = 10;
 
-  constructor(config: ContentFetcherConfig, logger: Logger) {
-    super(config, logger);
+  constructor(config: ContentFetcherConfig) {
+    super(config);
     this.quoteSources = this.initializeQuoteSources();
   }
 
@@ -90,27 +88,27 @@ export class QuoteFetcher extends BaseContentFetcher {
    * 主要的语录抓取方法
    */
   async fetchQuotes(): Promise<Quote[]> {
-    this.logger.info('开始抓取心理健康语录...');
+    logger.info('开始抓取心理健康语录...');
 
     const allQuotes: Quote[] = [];
 
     for (const source of this.quoteSources) {
       try {
-        this.logger.info(`从 ${source.name} 抓取语录...`);
+        logger.info(`从 ${source.name} 抓取语录...`);
         const quotes = await this.fetchFromSource(source);
         allQuotes.push(...quotes);
 
         // 遵守速率限制
         await this.delay(1000 / source.rateLimit * 1000);
       } catch (error) {
-        this.logger.error(`从 ${source.name} 抓取语录失败:`, error);
+        logger.error(`从 ${source.name} 抓取语录失败:`, error);
       }
     }
 
     // 处理和过滤语录
     const processedQuotes = await this.processQuotes(allQuotes);
 
-    this.logger.info(`成功抓取并处理了 ${processedQuotes.length} 条语录`);
+    logger.info(`成功抓取并处理了 ${processedQuotes.length} 条语录`);
     return processedQuotes;
   }
 
@@ -155,7 +153,7 @@ export class QuoteFetcher extends BaseContentFetcher {
         const parsedQuotes = await this.parseGoodreadsQuotes(response, topic);
         quotes.push(...parsedQuotes);
       } catch (error) {
-        this.logger.warn(`从Goodreads抓取主题 ${topic} 失败:`, error);
+        logger.warn(`从Goodreads抓取主题 ${topic} 失败:`, error);
       }
     }
 
@@ -176,7 +174,7 @@ export class QuoteFetcher extends BaseContentFetcher {
         const parsedQuotes = await this.parseBrainyQuotes(response, topic);
         quotes.push(...parsedQuotes);
       } catch (error) {
-        this.logger.warn(`从BrainyQuote抓取主题 ${topic} 失败:`, error);
+        logger.warn(`从BrainyQuote抓取主题 ${topic} 失败:`, error);
       }
     }
 
@@ -197,7 +195,7 @@ export class QuoteFetcher extends BaseContentFetcher {
         const parsedQuotes = await this.parseQuoteGardenQuotes(response, category);
         quotes.push(...parsedQuotes);
       } catch (error) {
-        this.logger.warn(`从QuoteGarden抓取分类 ${category} 失败:`, error);
+        logger.warn(`从QuoteGarden抓取分类 ${category} 失败:`, error);
       }
     }
 

@@ -2,8 +2,19 @@ import type {
   AssessmentSession,
   AssessmentAnswer,
   Question,
-} from "../../types/assessment";
-import { questionBankManager } from "./QuestionBankManager";
+} from "@/types/assessment";
+import { questionBankManager } from "@/lib/assessment/QuestionBankManager";
+import { localStorageManager } from "@/lib/assessment/LocalStorageManager";
+import {
+  AssessmentError,
+  AssessmentErrorType,
+  AssessmentErrorFactory,
+  errorRecoveryManager,
+} from "@/lib/assessment/AssessmentErrors";
+import { assessmentLogger } from "@/lib/assessment/AssessmentLogger";
+import { questionCache } from "@/lib/assessment/QuestionCache";
+import { cacheManager, CacheManager } from "@/lib/assessment/CacheManager";
+import { memoryOptimizer } from "@/utils/MemoryOptimizer";
 
 /**
  * Assessment Execution Engine
@@ -11,22 +22,201 @@ import { questionBankManager } from "./QuestionBankManager";
  */
 export class AssessmentEngine {
   private sessions: Map<string, AssessmentSession> = new Map();
-  private sessionTimers: Map<string, NodeJS.Timeout> = new Map();
-  private reminderTimers: Map<string, NodeJS.Timeout> = new Map();
+  private sessionTimers: Map<string, number> = new Map();
+  private reminderTimers: Map<string, number> = new Map();
   private autoSaveInterval: number = 30000; // 30 seconds
   private sessionTimeout: number = 1800000; // 30 minutes
 
   private periodicSaveStarted = false;
+  private isClientSide: boolean = false;
 
   constructor() {
-    this.loadSessionsFromStorage();
+    this.isClientSide = this.checkClientSideEnvironment();
+
+    assessmentLogger.info("ENGINE", "AssessmentEngine initializing", {
+      isClientSide: this.isClientSide,
+    });
+
+    if (this.isClientSide) {
+      this.loadSessionsFromStorage();
+      this.initializeCaching();
+    } else {
+      assessmentLogger.warn(
+        "ENGINE",
+        "AssessmentEngine initialized in server-side environment"
+      );
+    }
+  }
+
+  /**
+   * Initialize caching system
+   */
+  private initializeCaching(): void {
+    try {
+      // 注册内存清理回调
+      memoryOptimizer.registerCleanupCallback(() => {
+        this.cleanupInactiveSessionData();
+      });
+
+      // 预加载常用评测数据
+      this.preloadCommonAssessments();
+
+      assessmentLogger.info("ENGINE", "Caching system initialized");
+    } catch (error) {
+      assessmentLogger.warn("ENGINE", "Failed to initialize caching", error);
+    }
+  }
+
+  /**
+   * 预加载常用评测数据
+   */
+  private async preloadCommonAssessments(): Promise<void> {
+    try {
+      const commonAssessments = [
+        "anxiety",
+        "depression",
+        "stress",
+        "wellbeing",
+      ];
+      await questionCache.preloadCommonAssessments(commonAssessments);
+
+      assessmentLogger.info("ENGINE", "Common assessments preloaded", {
+        assessments: commonAssessments,
+      });
+    } catch (error) {
+      assessmentLogger.warn(
+        "ENGINE",
+        "Failed to preload common assessments",
+        error
+      );
+    }
+  }
+
+  /**
+   * 清理非活跃会话的数据
+   */
+  private cleanupInactiveSessionData(): void {
+    const now = Date.now();
+    const inactiveThreshold = 60 * 60 * 1000; // 1小时
+
+    for (const [sessionId, session] of this.sessions.entries()) {
+      const lastActivity = session.lastActivityAt?.getTime() || 0;
+
+      if (now - lastActivity > inactiveThreshold) {
+        // 清理会话相关的缓存数据
+        const cacheKey = CacheManager.getCacheKey(
+          "session_questions",
+          sessionId
+        );
+        cacheManager.delete(cacheKey);
+
+        assessmentLogger.info("ENGINE", "Cleaned up inactive session data", {
+          sessionId,
+        });
+      }
+    }
+  }
+
+  /**
+   * 获取问题（带缓存）
+   */
+  private async getQuestionWithCache(
+    questionId: string,
+    language: string = "zh"
+  ): Promise<Question | null> {
+    try {
+      // 首先尝试从缓存获取
+      let question = questionCache.getQuestion(questionId, language);
+
+      if (!question) {
+        // 从问卷管理器获取并缓存
+        // 注意：这里需要实现从所有评测类型中查找特定问题的逻辑
+        const allAssessments = questionBankManager.getAssessmentTypes();
+        for (const assessment of allAssessments) {
+          const foundQuestion = assessment.questions.find(
+            (q) => q.id === questionId
+          );
+          if (foundQuestion) {
+            question = foundQuestion;
+            break;
+          }
+        }
+
+        if (question) {
+          questionCache.cacheQuestion(question, language);
+        }
+      }
+
+      return question;
+    } catch (error) {
+      assessmentLogger.error(
+        "ENGINE",
+        `Failed to get question with cache: ${questionId}, language: ${language}`,
+        error
+      );
+      return null;
+    }
+  }
+
+  /**
+   * 缓存会话问题数据
+   */
+  private cacheSessionQuestions(
+    sessionId: string,
+    questions: Question[]
+  ): void {
+    try {
+      const cacheKey = CacheManager.getCacheKey("session_questions", sessionId);
+      cacheManager.set(cacheKey, questions, 30 * 60 * 1000); // 30分钟缓存
+
+      // 同时缓存单个问题
+      questions.forEach((question) => {
+        questionCache.cacheQuestion(question);
+      });
+    } catch (error) {
+      assessmentLogger.warn(
+        "ENGINE",
+        "Failed to cache session questions",
+        error,
+        sessionId
+      );
+    }
+  }
+
+  /**
+   * 获取缓存的会话问题
+   */
+  private getCachedSessionQuestions(sessionId: string): Question[] | null {
+    try {
+      const cacheKey = CacheManager.getCacheKey("session_questions", sessionId);
+      return cacheManager.get<Question[]>(cacheKey);
+    } catch (error) {
+      assessmentLogger.warn(
+        "ENGINE",
+        "Failed to get cached session questions",
+        error,
+        sessionId
+      );
+      return null;
+    }
+  }
+
+  /**
+   * Check if we're running in a client-side environment
+   */
+  private checkClientSideEnvironment(): boolean {
+    return (
+      typeof window !== "undefined" &&
+      typeof localStorage !== "undefined" &&
+      typeof document !== "undefined"
+    );
   }
 
   /**
    * Initialize periodic save (call this when first using the engine in browser)
    */
   private ensurePeriodicSaveStarted(): void {
-    if (!this.periodicSaveStarted && typeof window !== "undefined") {
+    if (!this.periodicSaveStarted && this.isClientSide) {
       this.startPeriodicSave();
       this.periodicSaveStarted = true;
     }
@@ -40,59 +230,163 @@ export class AssessmentEngine {
     language: string = "en",
     culturalContext?: string
   ): AssessmentSession | null {
-    this.ensurePeriodicSaveStarted();
+    try {
+      if (!this.isClientSide) {
+        const error = AssessmentErrorFactory.createSessionError(
+          AssessmentErrorType.ENVIRONMENT_NOT_SUPPORTED,
+          "Cannot start assessment in server-side environment"
+        );
+        assessmentLogger.error("ENGINE", "Failed to start assessment", error);
+        throw error;
+      }
 
-    const assessmentType =
-      questionBankManager.getAssessmentType(assessmentTypeId);
-    if (!assessmentType) {
-      console.error(`Assessment type ${assessmentTypeId} not found`);
-      return null;
+      assessmentLogger.info("ENGINE", "Starting new assessment", {
+        assessmentTypeId,
+        language,
+        culturalContext,
+      });
+
+      this.ensurePeriodicSaveStarted();
+
+      const assessmentType =
+        questionBankManager.getAssessmentType(assessmentTypeId);
+      if (!assessmentType) {
+        const error = AssessmentErrorFactory.createSessionError(
+          AssessmentErrorType.ASSESSMENT_TYPE_NOT_FOUND,
+          `Assessment type ${assessmentTypeId} not found`,
+          undefined
+        );
+        assessmentLogger.error("ENGINE", "Assessment type not found", error);
+        throw error;
+      }
+
+      const sessionId = this.generateSessionId();
+      const session: AssessmentSession = {
+        id: sessionId,
+        assessmentTypeId,
+        startedAt: new Date(),
+        currentQuestionIndex: 0,
+        answers: [],
+        status: "active",
+        language,
+        culturalContext,
+        timeSpent: 0,
+        lastActivityAt: new Date(),
+      };
+
+      this.sessions.set(sessionId, session);
+      this.startSessionTimer(sessionId);
+      this.saveSessionsToStorage();
+
+      assessmentLogger.logSessionEvent("started", sessionId, {
+        assessmentTypeId,
+        language,
+        culturalContext,
+      });
+
+      return session;
+    } catch (error) {
+      if (error instanceof AssessmentError) {
+        throw error;
+      }
+
+      const assessmentError = AssessmentErrorFactory.fromGenericError(
+        error as Error,
+        {
+          assessmentTypeId,
+        }
+      );
+      assessmentLogger.error(
+        "ENGINE",
+        "Unexpected error starting assessment",
+        assessmentError
+      );
+      throw assessmentError;
     }
-
-    const sessionId = this.generateSessionId();
-    const session: AssessmentSession = {
-      id: sessionId,
-      assessmentTypeId,
-      startedAt: new Date(),
-      currentQuestionIndex: 0,
-      answers: [],
-      status: "active",
-      language,
-      culturalContext,
-      timeSpent: 0,
-      lastActivityAt: new Date(),
-    };
-
-    this.sessions.set(sessionId, session);
-    this.startSessionTimer(sessionId);
-    this.saveSessionsToStorage();
-
-    return session;
   }
 
   /**
    * Resume an existing assessment session
    */
   resumeAssessment(sessionId: string): AssessmentSession | null {
-    this.ensurePeriodicSaveStarted();
+    try {
+      if (!this.isClientSide) {
+        const error = AssessmentErrorFactory.createSessionError(
+          AssessmentErrorType.ENVIRONMENT_NOT_SUPPORTED,
+          "Cannot resume assessment in server-side environment",
+          sessionId
+        );
+        assessmentLogger.error(
+          "ENGINE",
+          "Failed to resume assessment",
+          error,
+          sessionId
+        );
+        throw error;
+      }
 
-    const session = this.sessions.get(sessionId);
-    if (!session) {
-      console.error(`Session ${sessionId} not found`);
-      return null;
+      assessmentLogger.info(
+        "ENGINE",
+        "Resuming assessment",
+        { sessionId },
+        sessionId
+      );
+
+      this.ensurePeriodicSaveStarted();
+
+      const session = this.sessions.get(sessionId);
+      if (!session) {
+        const error = AssessmentErrorFactory.createSessionError(
+          AssessmentErrorType.SESSION_NOT_FOUND,
+          `Session ${sessionId} not found`,
+          sessionId
+        );
+        assessmentLogger.error("ENGINE", "Session not found", error, sessionId);
+        throw error;
+      }
+
+      if (session.status === "completed") {
+        const error = AssessmentErrorFactory.createSessionError(
+          AssessmentErrorType.SESSION_ALREADY_COMPLETED,
+          `Session ${sessionId} is already completed`,
+          sessionId
+        );
+        assessmentLogger.error(
+          "ENGINE",
+          "Session already completed",
+          error,
+          sessionId
+        );
+        throw error;
+      }
+
+      session.status = "active";
+      session.lastActivityAt = new Date();
+      this.startSessionTimer(sessionId);
+      this.saveSessionsToStorage();
+
+      assessmentLogger.logSessionEvent("resumed", sessionId);
+
+      return session;
+    } catch (error) {
+      if (error instanceof AssessmentError) {
+        throw error;
+      }
+
+      const assessmentError = AssessmentErrorFactory.fromGenericError(
+        error as Error,
+        {
+          sessionId,
+        }
+      );
+      assessmentLogger.error(
+        "ENGINE",
+        "Unexpected error resuming assessment",
+        assessmentError,
+        sessionId
+      );
+      throw assessmentError;
     }
-
-    if (session.status === "completed") {
-      console.error(`Session ${sessionId} is already completed`);
-      return null;
-    }
-
-    session.status = "active";
-    session.lastActivityAt = new Date();
-    this.startSessionTimer(sessionId);
-    this.saveSessionsToStorage();
-
-    return session;
   }
 
   /**
@@ -355,19 +649,26 @@ export class AssessmentEngine {
    * Set reminder for paused sessions
    */
   setReminder(sessionId: string, reminderTime: number): boolean {
+    if (!this.isClientSide) return false;
+
     const session = this.sessions.get(sessionId);
     if (!session || session.status !== "paused") return false;
 
     // Clear existing reminder
     this.stopReminderTimer(sessionId);
 
-    // Set new reminder
-    const timer = setTimeout(() => {
-      this.sendReminder(sessionId);
-    }, reminderTime);
+    try {
+      // Set new reminder
+      const timer = window.setTimeout(() => {
+        this.sendReminder(sessionId);
+      }, reminderTime);
 
-    this.reminderTimers.set(sessionId, timer);
-    return true;
+      this.reminderTimers.set(sessionId, timer);
+      return true;
+    } catch (error) {
+      console.error("Failed to set reminder:", error);
+      return false;
+    }
   }
 
   /**
@@ -457,19 +758,25 @@ export class AssessmentEngine {
    * Start session timer for timeout management
    */
   private startSessionTimer(sessionId: string): void {
+    if (!this.isClientSide) return;
+
     this.stopSessionTimer(sessionId);
 
-    const timer = setTimeout(() => {
-      const session = this.sessions.get(sessionId);
-      if (session && session.status === "active") {
-        session.status = "paused";
-        session.lastActivityAt = new Date();
-        this.saveSessionsToStorage();
-        console.log(`Session ${sessionId} timed out and was paused`);
-      }
-    }, this.sessionTimeout);
+    try {
+      const timer = window.setTimeout(() => {
+        const session = this.sessions.get(sessionId);
+        if (session && session.status === "active") {
+          session.status = "paused";
+          session.lastActivityAt = new Date();
+          this.saveSessionsToStorage();
+          console.log(`Session ${sessionId} timed out and was paused`);
+        }
+      }, this.sessionTimeout);
 
-    this.sessionTimers.set(sessionId, timer);
+      this.sessionTimers.set(sessionId, timer);
+    } catch (error) {
+      console.error("Failed to start session timer:", error);
+    }
   }
 
   /**
@@ -477,9 +784,13 @@ export class AssessmentEngine {
    */
   private stopSessionTimer(sessionId: string): void {
     const timer = this.sessionTimers.get(sessionId);
-    if (timer) {
-      clearTimeout(timer);
-      this.sessionTimers.delete(sessionId);
+    if (timer && this.isClientSide) {
+      try {
+        window.clearTimeout(timer);
+        this.sessionTimers.delete(sessionId);
+      } catch (error) {
+        console.error("Failed to stop session timer:", error);
+      }
     }
   }
 
@@ -488,9 +799,13 @@ export class AssessmentEngine {
    */
   private stopReminderTimer(sessionId: string): void {
     const timer = this.reminderTimers.get(sessionId);
-    if (timer) {
-      clearTimeout(timer);
-      this.reminderTimers.delete(sessionId);
+    if (timer && this.isClientSide) {
+      try {
+        window.clearTimeout(timer);
+        this.reminderTimers.delete(sessionId);
+      } catch (error) {
+        console.error("Failed to stop reminder timer:", error);
+      }
     }
   }
 
@@ -521,51 +836,144 @@ export class AssessmentEngine {
    * Start periodic auto-save
    */
   private startPeriodicSave(): void {
-    // Only create the interval if we're in a browser environment
-    if (typeof window === "undefined" || typeof localStorage === "undefined") {
+    if (!this.isClientSide) {
       return;
     }
 
-    setInterval(() => {
-      // Double-check browser environment in the interval callback
-      if (typeof window === "undefined" || typeof localStorage === "undefined") {
-        return;
-      }
+    try {
+      setInterval(() => {
+        // Double-check client-side environment in the interval callback
+        if (!this.isClientSide) {
+          return;
+        }
 
-      // Update time spent for all active sessions
-      for (const sessionId of this.sessions.keys()) {
-        this.updateSessionTime(sessionId);
-      }
-      this.saveSessionsToStorage();
-    }, this.autoSaveInterval);
+        // Update time spent for all active sessions
+        for (const sessionId of this.sessions.keys()) {
+          this.updateSessionTime(sessionId);
+        }
+        this.saveSessionsToStorage();
+      }, this.autoSaveInterval);
+    } catch (error) {
+      console.error("Failed to start periodic save:", error);
+    }
   }
 
   /**
    * Save sessions to localStorage
    */
-  private saveSessionsToStorage(): void {
-    // Check if we're in a browser environment
-    if (typeof window === "undefined" || typeof localStorage === "undefined") {
+  private async saveSessionsToStorage(): Promise<void> {
+    if (!this.isClientSide) {
       return;
     }
 
     try {
-      const sessionsData = Array.from(this.sessions.entries()).map(
-        ([sessionId, session]) => ({
-          ...session,
-          id: sessionId,
-          startedAt: session.startedAt.toISOString(),
-          lastActivityAt: session.lastActivityAt.toISOString(),
-          answers: session.answers.map((answer) => ({
-            ...answer,
-            answeredAt: answer.answeredAt.toISOString(),
-          })),
-        })
-      );
+      const sessions = Array.from(this.sessions.values());
+      const success = await localStorageManager.saveSessions(sessions);
 
-      localStorage.setItem("assessment_sessions", JSON.stringify(sessionsData));
+      if (!success) {
+        console.error("Failed to save sessions to storage");
+        this.handleStorageError(new Error("Save operation failed"));
+      }
     } catch (error) {
       console.error("Failed to save sessions to storage:", error);
+      this.handleStorageError(error);
+    }
+  }
+
+  /**
+   * Handle localStorage errors with recovery strategies
+   */
+  private async handleStorageError(error: any): Promise<void> {
+    if (!this.isClientSide) return;
+
+    let assessmentError: AssessmentError;
+
+    if (error instanceof AssessmentError) {
+      assessmentError = error;
+    } else if (error.name === "QuotaExceededError" || error.code === 22) {
+      assessmentError = AssessmentErrorFactory.createStorageError(
+        AssessmentErrorType.STORAGE_QUOTA_EXCEEDED,
+        "localStorage quota exceeded",
+        error
+      );
+    } else {
+      assessmentError = AssessmentErrorFactory.createStorageError(
+        AssessmentErrorType.STORAGE_SAVE_FAILED,
+        "Failed to save to localStorage",
+        error
+      );
+    }
+
+    assessmentLogger.error(
+      "STORAGE",
+      "Storage error occurred",
+      assessmentError
+    );
+
+    // 尝试使用错误恢复管理器
+    const recoveryResult = await errorRecoveryManager.attemptRecovery(
+      assessmentError
+    );
+
+    if (recoveryResult.recovered) {
+      assessmentLogger.info("STORAGE", "Storage error recovered", {
+        strategy: recoveryResult.strategy?.getDescription(),
+        message: recoveryResult.message,
+      });
+    } else {
+      assessmentLogger.warn("STORAGE", "Failed to recover from storage error", {
+        message: recoveryResult.message,
+      });
+
+      // 最后的备用方案：检查localStorage是否可用
+      try {
+        const testKey = "__storage_test__";
+        localStorage.setItem(testKey, "test");
+        localStorage.removeItem(testKey);
+      } catch (storageError) {
+        const criticalError = AssessmentErrorFactory.createStorageError(
+          AssessmentErrorType.STORAGE_NOT_AVAILABLE,
+          "localStorage is not available",
+          storageError
+        );
+        assessmentLogger.critical(
+          "STORAGE",
+          "localStorage completely unavailable",
+          criticalError
+        );
+      }
+    }
+  }
+
+  /**
+   * Clear old completed or abandoned sessions to free up storage space
+   */
+  private async _clearOldSessions(): Promise<void> {
+    if (!this.isClientSide) return;
+
+    try {
+      const cutoffDate = new Date();
+      cutoffDate.setDate(cutoffDate.getDate() - 7); // Keep sessions from last 7 days
+
+      const sessionsToKeep = Array.from(this.sessions.entries()).filter(
+        ([_, session]) => {
+          return (
+            session.status === "active" ||
+            session.status === "paused" ||
+            session.lastActivityAt > cutoffDate
+          );
+        }
+      );
+
+      this.sessions.clear();
+      sessionsToKeep.forEach(([sessionId, session]) => {
+        this.sessions.set(sessionId, session);
+      });
+
+      // Try to save again
+      await this.saveSessionsToStorage();
+    } catch (error) {
+      console.error("Failed to clear old sessions:", error);
     }
   }
 
@@ -573,32 +981,27 @@ export class AssessmentEngine {
    * Load sessions from localStorage
    */
   private loadSessionsFromStorage(): void {
-    // Check if we're in a browser environment
-    if (typeof window === "undefined" || typeof localStorage === "undefined") {
+    if (!this.isClientSide) {
       return;
     }
 
     try {
-      const stored = localStorage.getItem("assessment_sessions");
-      if (!stored) return;
+      const sessions = localStorageManager.loadSessions();
 
-      const sessionsData = JSON.parse(stored);
-      for (const sessionData of sessionsData) {
-        const session: AssessmentSession = {
-          ...sessionData,
-          startedAt: new Date(sessionData.startedAt),
-          lastActivityAt: new Date(sessionData.lastActivityAt),
-          answers: sessionData.answers.map((answer: any) => ({
-            ...answer,
-            answeredAt: new Date(answer.answeredAt),
-          })),
-        };
-
+      for (const session of sessions) {
         this.sessions.set(session.id, session);
 
-        // Resume timers for active sessions
+        // Resume timers for active sessions, but check if they haven't timed out
         if (session.status === "active") {
-          this.startSessionTimer(session.id);
+          const timeSinceLastActivity =
+            Date.now() - session.lastActivityAt.getTime();
+          if (timeSinceLastActivity > this.sessionTimeout) {
+            // Session has timed out, mark as paused
+            session.status = "paused";
+            this.saveSessionsToStorage();
+          } else {
+            this.startSessionTimer(session.id);
+          }
         }
       }
     } catch (error) {
@@ -620,10 +1023,9 @@ export class AssessmentEngine {
     this.sessionTimers.clear();
     this.reminderTimers.clear();
 
-    // Check if we're in a browser environment
-    if (typeof window !== "undefined" && typeof localStorage !== "undefined") {
+    if (this.isClientSide) {
       try {
-        localStorage.removeItem("assessment_sessions");
+        localStorageManager.clearSessions();
       } catch (error) {
         console.error("Failed to clear sessions from storage:", error);
       }
@@ -660,6 +1062,139 @@ export class AssessmentEngine {
       averageCompletionTime: Math.round(averageCompletionTime),
     };
   }
+
+  /**
+   * Get environment information for debugging
+   */
+  async getEnvironmentInfo(): Promise<{
+    isClientSide: boolean;
+    hasLocalStorage: boolean;
+    hasSessionStorage: boolean;
+    storageQuota?: number;
+    storageUsed?: number;
+    storageStatistics?: any;
+  }> {
+    const info = {
+      isClientSide: this.isClientSide,
+      hasLocalStorage: false,
+      hasSessionStorage: false,
+      storageQuota: undefined as number | undefined,
+      storageUsed: undefined as number | undefined,
+      storageStatistics: undefined as any,
+    };
+
+    if (this.isClientSide) {
+      try {
+        // Test localStorage
+        const testKey = "__test_storage__";
+        localStorage.setItem(testKey, "test");
+        localStorage.removeItem(testKey);
+        info.hasLocalStorage = true;
+      } catch (error) {
+        info.hasLocalStorage = false;
+      }
+
+      try {
+        // Test sessionStorage
+        const testKey = "__test_session_storage__";
+        sessionStorage.setItem(testKey, "test");
+        sessionStorage.removeItem(testKey);
+        info.hasSessionStorage = true;
+      } catch (error) {
+        info.hasSessionStorage = false;
+      }
+
+      // Get storage quota information if available
+      try {
+        const quota = await localStorageManager.getStorageQuota();
+        info.storageQuota = quota.quota;
+        info.storageUsed = quota.usage;
+      } catch (error) {
+        console.error("Failed to get storage quota:", error);
+      }
+
+      // Get storage statistics
+      try {
+        info.storageStatistics =
+          await localStorageManager.getStorageStatistics();
+      } catch (error) {
+        console.error("Failed to get storage statistics:", error);
+      }
+    }
+
+    return info;
+  }
+
+  /**
+   * Perform health check on the assessment engine
+   */
+  async performHealthCheck(): Promise<{
+    status: "healthy" | "warning" | "error";
+    issues: string[];
+    recommendations: string[];
+  }> {
+    const issues: string[] = [];
+    const recommendations: string[] = [];
+
+    // Check environment
+    if (!this.isClientSide) {
+      issues.push("Running in server-side environment");
+      recommendations.push(
+        "AssessmentEngine should only be used in client-side environment"
+      );
+    }
+
+    // Check storage availability
+    const envInfo = await this.getEnvironmentInfo();
+    if (!envInfo.hasLocalStorage) {
+      issues.push("localStorage is not available");
+      recommendations.push(
+        "Enable localStorage or use alternative storage solution"
+      );
+    }
+
+    // Check for too many sessions
+    const stats = this.getSessionStatistics();
+    if (stats.total > 50) {
+      issues.push(`Too many sessions stored (${stats.total})`);
+      recommendations.push(
+        "Consider clearing old sessions to improve performance"
+      );
+    }
+
+    // Check for stale active sessions
+    const staleActiveSessions = Array.from(this.sessions.values()).filter(
+      (session) => {
+        if (session.status !== "active") return false;
+        const timeSinceLastActivity =
+          Date.now() - session.lastActivityAt.getTime();
+        return timeSinceLastActivity > this.sessionTimeout;
+      }
+    );
+
+    if (staleActiveSessions.length > 0) {
+      issues.push(
+        `${staleActiveSessions.length} stale active sessions detected`
+      );
+      recommendations.push("Clean up stale sessions or adjust session timeout");
+    }
+
+    const status =
+      issues.length === 0
+        ? "healthy"
+        : issues.some(
+            (issue) =>
+              issue.includes("server-side") || issue.includes("localStorage")
+          )
+        ? "error"
+        : "warning";
+
+    return {
+      status,
+      issues,
+      recommendations,
+    };
+  }
 }
 
 // Lazy singleton instance - only create when actually needed in browser
@@ -674,8 +1209,16 @@ export const assessmentEngine = {
   },
 
   // Proxy all public methods to the singleton instance
-  startAssessment(assessmentTypeId: string, language: string = 'en', culturalContext?: string) {
-    return this.getInstance().startAssessment(assessmentTypeId, language, culturalContext);
+  startAssessment(
+    assessmentTypeId: string,
+    language: string = "en",
+    culturalContext?: string
+  ) {
+    return this.getInstance().startAssessment(
+      assessmentTypeId,
+      language,
+      culturalContext
+    );
   },
 
   resumeAssessment(sessionId: string) {
@@ -740,5 +1283,13 @@ export const assessmentEngine = {
 
   getSessionStatistics() {
     return this.getInstance().getSessionStatistics();
-  }
+  },
+
+  getEnvironmentInfo() {
+    return this.getInstance().getEnvironmentInfo();
+  },
+
+  performHealthCheck() {
+    return this.getInstance().performHealthCheck();
+  },
 };

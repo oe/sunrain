@@ -27,7 +27,9 @@ export const assessmentEn: IAssessmentTranslations = {
     activeSessions: {
       title: 'You have {count} incomplete assessments',
       message: 'Click to continue your assessments',
-      continueLink: 'Continue assessments'
+      continueLink: 'Continue assessments',
+      lastActivity: 'Last activity',
+      progress: 'Progress',
     },
     quickActions: {
       title: 'Quick Actions',
@@ -260,8 +262,11 @@ export const assessmentEn: IAssessmentTranslations = {
       sessionStartFailed: 'Unable to start assessment session',
       initializationFailed: 'Initialization failed',
       submitFailed: 'Failed to submit answer, please try again',
-      analysiseFailed: 'Failed to analyze results',
+      analysisFailed: 'Failed to analyze results',
       noData: 'Assessment data failed to load',
+      invalidScale: 'Please select a value between {min} and {max}',
+      textTooLong: 'Text cannot exceed 1000 characters',
+      unsupportedQuestionType: 'Unsupported question type: {type}',
     },
     actions: {
       retry: 'Retry',
@@ -277,6 +282,12 @@ export const assessmentEn: IAssessmentTranslations = {
     question: {
       number: 'Question {current} of {total}',
       required: '* Required',
+      selectedCount: '{count} items selected',
+      selectedValue: 'Current selection: {value}',
+      textPlaceholder: 'Please enter your answer here...',
+      characterCount: '{count} characters entered',
+      textEntered: 'Answer entered',
+      answered: 'Answered',
     },
   },
 

@@ -27,7 +27,9 @@ export const assessmentHi: IAssessmentTranslations = {
     activeSessions: {
       title: 'आपके पास {count} अधूरे मूल्यांकन हैं',
       message: 'अपने मूल्यांकन जारी रखने के लिए क्लिक करें',
-      continueLink: 'मूल्यांकन जारी रखें'
+      continueLink: 'मूल्यांकन जारी रखें',
+      lastActivity: 'अंतिम गतिविधि',
+      progress: 'प्रगति'
     },
     quickActions: {
       title: 'त्वरित कार्य',
@@ -248,7 +250,49 @@ export const assessmentHi: IAssessmentTranslations = {
     }
   },
 
+  // क्लाइंट कंपोनेंट विशिष्ट अनुवाद
+  client: {
+    loading: {
+      assessment: 'मूल्यांकन लोड हो रहा है...',
+      translations: 'अनुवाद लोड हो रहे हैं...',
+      question: 'प्रश्न लोड हो रहा है...'
+    },
+    errors: {
+      title: 'त्रुटि हुई',
+      sessionStartFailed: 'मूल्यांकन सत्र शुरू नहीं हो सका',
+      initializationFailed: 'प्रारंभिकरण त्रुटि',
+      submitFailed: 'उत्तर जमा करने में विफल',
+      analysisFailed: 'विश्लेषण त्रुटि',
+      noData: 'कोई डेटा उपलब्ध नहीं',
+      invalidScale: 'कृपया {min} और {max} के बीच एक मान चुनें',
+      textTooLong: 'पाठ 1000 वर्णों से अधिक नहीं हो सकता',
+      unsupportedQuestionType: 'असमर्थित प्रश्न प्रकार: {type}'
+    },
+    actions: {
+      retry: 'पुनः प्रयास',
+      previous: 'पिछला',
+      next: 'अगला',
+      complete: 'पूर्ण',
+      save: 'सहेजें',
+      saved: 'सहेजा गया'
+    },
+    progress: {
+      text: 'प्रगति: {current} का {total}'
+    },
+    question: {
+      number: 'प्रश्न {number}',
+      required: 'आवश्यक',
+      selectedCount: '{count} आइटम चयनित',
+      selectedValue: 'वर्तमान चयन: {value}',
+      textPlaceholder: 'कृपया यहाँ अपना उत्तर दर्ज करें...',
+      characterCount: '{count} वर्ण दर्ज किए गए',
+      textEntered: 'उत्तर दर्ज किया गया',
+      answered: 'उत्तर दिया गया'
+    }
+  },
+
   common: {
+    title: 'शीर्षक',
     loading: 'लोड हो रहा है...',
     error: 'त्रुटि',
     success: 'सफलता',

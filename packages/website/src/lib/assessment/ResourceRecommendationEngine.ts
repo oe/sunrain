@@ -330,7 +330,7 @@ export class ResourceRecommendationEngine {
   /**
    * Generate action items for a resource
    */
-  private generateActionItems(resource: ResourceItem, result: AssessmentResult): string[] {
+  private generateActionItems(resource: ResourceItem, _result: AssessmentResult): string[] {
     const actionItems: string[] = [];
 
     switch (resource.type) {

@@ -4,8 +4,7 @@ import type {
   AssessmentReport,
   AssessmentType,
   ScoringRule,
-  RiskLevel,
-  Recommendation
+  RiskLevel
 } from '../../types/assessment';
 import { questionBankManager } from './QuestionBankManager';
 
@@ -185,7 +184,7 @@ export class ResultsAnalyzer {
   /**
    * Generate recommendations based on scores
    */
-  private generateRecommendations(scores: Record<string, any>, assessmentType: AssessmentType): string[] {
+  private generateRecommendations(scores: Record<string, any>, _assessmentType: AssessmentType): string[] {
     const recommendations: string[] = [];
 
     // Generate recommendations based on risk levels and scores

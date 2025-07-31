@@ -27,7 +27,9 @@ export const assessmentKo: IAssessmentTranslations = {
     activeSessions: {
       title: '{count}개의 미완료 평가가 있습니다',
       message: '클릭하여 평가를 계속하세요',
-      continueLink: '평가 계속하기'
+      continueLink: '평가 계속하기',
+      lastActivity: '마지막 활동',
+      progress: '진행률'
     },
     quickActions: {
       title: '빠른 작업',
@@ -248,7 +250,49 @@ export const assessmentKo: IAssessmentTranslations = {
     }
   },
 
+  // 클라이언트 컴포넌트 전용 번역
+  client: {
+    loading: {
+      assessment: '평가 로딩 중...',
+      translations: '번역 로딩 중...',
+      question: '질문 로딩 중...'
+    },
+    errors: {
+      title: '오류 발생',
+      sessionStartFailed: '평가 세션을 시작할 수 없습니다',
+      initializationFailed: '초기화 오류',
+      submitFailed: '답변 제출 실패',
+      analysisFailed: '분석 오류',
+      noData: '데이터가 없습니다',
+      invalidScale: '{min}과 {max} 사이의 값을 선택해주세요',
+      textTooLong: '텍스트는 1000자를 초과할 수 없습니다',
+      unsupportedQuestionType: '지원되지 않는 질문 유형: {type}'
+    },
+    actions: {
+      retry: '다시 시도',
+      previous: '이전',
+      next: '다음',
+      complete: '완료',
+      save: '저장',
+      saved: '저장됨'
+    },
+    progress: {
+      text: '진행률: {current} / {total}'
+    },
+    question: {
+      number: '질문 {number}',
+      required: '필수',
+      selectedCount: '{count}개 항목 선택됨',
+      selectedValue: '현재 선택: {value}',
+      textPlaceholder: '여기에 답변을 입력해주세요...',
+      characterCount: '{count}자 입력됨',
+      textEntered: '답변 입력됨',
+      answered: '답변 완료'
+    }
+  },
+
   common: {
+    title: '제목',
     loading: '로딩 중...',
     error: '오류',
     success: '성공',
