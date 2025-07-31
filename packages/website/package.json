@@ -10,7 +10,9 @@
     "preview": "astro preview",
     "astro": "astro",
     "lint": "astro check",
-    "type-check": "astro check"
+    "type-check": "astro check",
+    "check-translations": "pnpm tsx scripts/check-translations.ts",
+    "check-translations:report": "pnpm tsx scripts/check-translations.ts --output=reports/translation-report.json"
   },
   "dependencies": {
     "astro": "catalog:",
@@ -32,6 +34,7 @@
     "@astrojs/check": "catalog:",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
-    "typescript": "catalog:"
+    "typescript": "catalog:",
+    "tsx": "catalog:"
   }
 }

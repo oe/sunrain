@@ -11,6 +11,7 @@ build/
 packages/*/dist/
 packages/*/build/
 packages/*/.astro/
+packages/website/reports
 
 # Temporary i18n pages (astro-i18n-aut)
 packages/website/src/astro_tmp_pages_*/

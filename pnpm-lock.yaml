@@ -204,6 +204,9 @@ importers:
       '@types/react-dom':
         specifier: 'catalog:'
         version: 19.1.6(@types/react@19.1.8)
+      tsx:
+        specifier: 'catalog:'
+        version: 4.20.3
       typescript:
         specifier: 'catalog:'
         version: 5.8.3
