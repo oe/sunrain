@@ -282,7 +282,7 @@ export const assessmentZh: IAssessmentTranslations = {
       saved: "已保存",
     },
     progress: {
-      text: "{current} / {total}",
+      text: "第 {current} 题 / 共 {total} 题",
     },
     question: {
       number: "第 {current} 题 / 共 {total} 题",

@@ -8,6 +8,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { TERMINOLOGY_DICTIONARY } from './terminology-dictionary.js';
 
 // 支持的语言列表
 const SUPPORTED_LANGUAGES = ['en', 'zh', 'es', 'ja', 'ko', 'hi', 'ar'];
@@ -189,16 +190,34 @@ async function checkModuleTranslations(moduleName: string): Promise<{
         moduleStats.missing++;
       } else if (typeof defaultValue === 'string' && typeof targetValue === 'string') {
         if (defaultValue === targetValue) {
-          // 可能未翻译的内容
-          issues.push({
-            type: 'untranslated',
-            module: moduleName,
-            language,
-            key: keyPath,
-            value: targetValue,
-            message: `Possibly untranslated text: ${keyPath} = "${targetValue}"`
+          // 检查是否是应该保持不变的术语
+          const isKnownTerm = Object.keys(TERMINOLOGY_DICTIONARY).some(term =>
+            targetValue.includes(term) && !TERMINOLOGY_DICTIONARY[term].shouldTranslate
+          );
+
+          // 检查是否是术语词典中定义的标准翻译（即使和英文相同）
+          const isStandardTranslation = Object.keys(TERMINOLOGY_DICTIONARY).some(term => {
+            const entry = TERMINOLOGY_DICTIONARY[term];
+            return targetValue.includes(term) &&
+                   entry.shouldTranslate &&
+                   entry.translations &&
+                   entry.translations[language] === targetValue;
           });
-          moduleStats.untranslated++;
+
+          if (!isKnownTerm && !isStandardTranslation) {
+            // 可能未翻译的内容
+            issues.push({
+              type: 'untranslated',
+              module: moduleName,
+              language,
+              key: keyPath,
+              value: targetValue,
+              message: `Possibly untranslated text: ${keyPath} = "${targetValue}"`
+            });
+            moduleStats.untranslated++;
+          } else {
+            moduleStats.translated++;
+          }
         } else {
           moduleStats.translated++;
         }
@@ -282,31 +301,31 @@ async function generateValidationReport(): Promise<ValidationReport> {
  */
 function printConsoleReport(report: ValidationReport) {
   console.log('\n' + '='.repeat(60));
-  console.log('📊 TRANSLATION COMPLETENESS REPORT');
+  console.log('📊 翻译完整性报告');
   console.log('='.repeat(60));
 
   // 总体统计
-  console.log(`\n📈 Overall Statistics:`);
-  console.log(`  Total Modules: ${report.summary.totalModules}`);
-  console.log(`  Total Languages: ${report.summary.totalLanguages}`);
-  console.log(`  Total Issues: ${report.summary.totalIssues}`);
-  console.log(`  Overall Completeness: ${report.summary.overallPercentage}%`);
+  console.log(`\n📈 总体统计:`);
+  console.log(`  总模块数: ${report.summary.totalModules}`);
+  console.log(`  总语言数: ${report.summary.totalLanguages}`);
+  console.log(`  总问题数: ${report.summary.totalIssues}`);
+  console.log(`  总体完整性: ${report.summary.overallPercentage}%`);
 
   // 按语言统计
-  console.log(`\n🌍 By Language:`);
+  console.log(`\n🌍 按语言统计:`);
   for (const [language, stats] of Object.entries(report.byLanguage)) {
     const status = stats.percentage >= 90 ? '✅' : stats.percentage >= 70 ? '⚠️' : '❌';
     console.log(`  ${status} ${language.toUpperCase()}: ${stats.percentage}% (${stats.translated}/${stats.total})`);
     if (stats.missing > 0) {
-      console.log(`    Missing: ${stats.missing} keys`);
+      console.log(`    缺失: ${stats.missing} 个键`);
     }
     if (stats.untranslated > 0) {
-      console.log(`    Untranslated: ${stats.untranslated} keys`);
+      console.log(`    未翻译: ${stats.untranslated} 个键`);
     }
   }
 
   // 按模块统计
-  console.log(`\n📦 By Module:`);
+  console.log(`\n📦 按模块统计:`);
   for (const [moduleName, moduleStats] of Object.entries(report.byModule)) {
     console.log(`  ${moduleName}:`);
     for (const [language, stats] of Object.entries(moduleStats)) {
@@ -318,11 +337,11 @@ function printConsoleReport(report: ValidationReport) {
 
   // 问题详情
   if (report.issues.length > 0) {
-    console.log(`\n❌ Issues Found:`);
+    console.log(`\n❌ 发现的问题:`);
 
     const missingFiles = report.issues.filter(issue => issue.type === 'file_missing');
     if (missingFiles.length > 0) {
-      console.log(`\n  Missing Files (${missingFiles.length}):`);
+      console.log(`\n  缺失文件 (${missingFiles.length}):`);
       missingFiles.forEach(issue => {
         console.log(`    ${issue.module}/${issue.language}.ts`);
       });
@@ -330,7 +349,7 @@ function printConsoleReport(report: ValidationReport) {
 
     const missingKeys = report.issues.filter(issue => issue.type === 'missing_key');
     if (missingKeys.length > 0) {
-      console.log(`\n  Missing Keys (${missingKeys.length}):`);
+      console.log(`\n  缺失键值 (${missingKeys.length}):`);
       const groupedByModule = missingKeys.reduce((acc, issue) => {
         if (!acc[issue.module]) acc[issue.module] = {};
         if (!acc[issue.module][issue.language]) acc[issue.module][issue.language] = [];
@@ -341,12 +360,12 @@ function printConsoleReport(report: ValidationReport) {
       for (const [module, languages] of Object.entries(groupedByModule)) {
         console.log(`    ${module}:`);
         for (const [language, keys] of Object.entries(languages)) {
-          console.log(`      ${language}: ${keys.length} keys`);
+          console.log(`      ${language}: ${keys.length} 个键`);
           if (keys.length <= 5) {
             keys.forEach(key => console.log(`        - ${key}`));
           } else {
             keys.slice(0, 3).forEach(key => console.log(`        - ${key}`));
-            console.log(`        ... and ${keys.length - 3} more`);
+            console.log(`        ... 还有 ${keys.length - 3} 个`);
           }
         }
       }
@@ -354,7 +373,7 @@ function printConsoleReport(report: ValidationReport) {
 
     const untranslated = report.issues.filter(issue => issue.type === 'untranslated');
     if (untranslated.length > 0) {
-      console.log(`\n  Possibly Untranslated (${untranslated.length}):`);
+      console.log(`\n  可能未翻译 (${untranslated.length}):`);
       const groupedByModule = untranslated.reduce((acc, issue) => {
         if (!acc[issue.module]) acc[issue.module] = {};
         if (!acc[issue.module][issue.language]) acc[issue.module][issue.language] = 0;
@@ -365,12 +384,12 @@ function printConsoleReport(report: ValidationReport) {
       for (const [module, languages] of Object.entries(groupedByModule)) {
         console.log(`    ${module}:`);
         for (const [language, count] of Object.entries(languages)) {
-          console.log(`      ${language}: ${count} items`);
+          console.log(`      ${language}: ${count} 项`);
         }
       }
     }
   } else {
-    console.log(`\n✅ No issues found! All translations are complete.`);
+    console.log(`\n✅ 未发现问题！所有翻译都已完成。`);
   }
 }
 
@@ -379,10 +398,14 @@ function printConsoleReport(report: ValidationReport) {
  */
 async function saveJsonReport(report: ValidationReport, outputPath: string) {
   try {
+    // 确保输出目录存在
+    const outputDir = path.dirname(outputPath);
+    await fs.promises.mkdir(outputDir, { recursive: true });
+
     await fs.promises.writeFile(outputPath, JSON.stringify(report, null, 2), 'utf-8');
-    console.log(`\n📄 Detailed report saved to: ${outputPath}`);
+    console.log(`\n📄 详细报告已保存至: ${outputPath}`);
   } catch (error) {
-    console.error(`Failed to save report: ${error}`);
+    console.error(`保存报告失败: ${error}`);
   }
 }
 
@@ -391,7 +414,6 @@ async function saveJsonReport(report: ValidationReport, outputPath: string) {
  */
 async function main() {
   const args = process.argv.slice(2);
-  const outputPath = args.find(arg => arg.startsWith('--output='))?.split('=')[1] || 'translation-report.json';
   const showHelp = args.includes('--help') || args.includes('-h');
 
   if (showHelp) {
@@ -399,36 +421,33 @@ async function main() {
 Usage: tsx scripts/check-translations.ts [options]
 
 Options:
-  --output=<path>    Output JSON report file (default: translation-report.json)
   --help, -h         Show this help message
 
 Examples:
   tsx scripts/check-translations.ts
-  tsx scripts/check-translations.ts --output=reports/translations.json
 `);
     return;
   }
 
-  console.log('🔍 Starting translation completeness check...');
-  console.log(`📁 Scanning directory: ${LOCALES_DIR}`);
-  console.log(`🌍 Languages: ${SUPPORTED_LANGUAGES.join(', ')}`);
-  console.log(`📦 Modules: ${TRANSLATION_MODULES.join(', ')}`);
+  console.log('🔍 开始翻译完整性检查...');
+  console.log(`📁 扫描目录: ${LOCALES_DIR}`);
+  console.log(`🌍 支持语言: ${SUPPORTED_LANGUAGES.join(', ')}`);
+  console.log(`📦 检查模块: ${TRANSLATION_MODULES.join(', ')}`);
 
   try {
     const report = await generateValidationReport();
 
     printConsoleReport(report);
 
-    if (outputPath) {
-      await saveJsonReport(report, outputPath);
-    }
+    // 自动保存报告到固定位置
+    await saveJsonReport(report, 'reports/translation-report.json');
 
     // 设置退出码
     const hasErrors = report.issues.some(issue => issue.type === 'missing_key' || issue.type === 'file_missing');
     process.exit(hasErrors ? 1 : 0);
 
   } catch (error) {
-    console.error('❌ Error during translation check:', error);
+    console.error('❌ 翻译检查过程中出现错误:', error);
     process.exit(1);
   }
 }

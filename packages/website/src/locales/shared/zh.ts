@@ -9,7 +9,8 @@ export const sharedZh: ISharedTranslations = {
     home: '首页',
     guide: '自助手册',
     resources: '疗愈资源',
-    about: '关于我们'
+    about: '关于我们',
+    assessment: '心理测评'
   },
   footer: {
     copyright: '© 2025 Sunrain. 保留所有权利.',

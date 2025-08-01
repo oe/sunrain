@@ -12,7 +12,7 @@
     "lint": "astro check",
     "type-check": "astro check",
     "check-translations": "pnpm tsx scripts/check-translations.ts",
-    "check-translations:report": "pnpm tsx scripts/check-translations.ts --output=reports/translation-report.json"
+    "validate-translations": "pnpm tsx scripts/validate-translation-quality.ts --output=reports/translation-quality-report.json"
   },
   "dependencies": {
     "astro": "catalog:",

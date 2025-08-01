@@ -9,6 +9,7 @@ export const sharedHi: ISharedTranslations = {
     guide: 'स्व-सहायता गाइड',
     resources: 'संसाधन',
     about: 'के बारे में',
+    assessment: 'मूल्यांकन',
   },
   footer: {
     copyright: '© 2025 Sunrain. सभी अधिकार सुरक्षित.',

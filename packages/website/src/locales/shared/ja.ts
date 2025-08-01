@@ -9,6 +9,7 @@ export const sharedJa: ISharedTranslations = {
     guide: 'セルフヘルプガイド',
     resources: 'リソース',
     about: '私たちについて',
+    assessment: 'アセスメント',
   },
   footer: {
     copyright: '© 2025 Sunrain. 全著作権所有.',

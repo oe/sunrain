@@ -280,7 +280,7 @@ export const assessmentHi: IAssessmentTranslations = {
       text: 'प्रगति: {current} का {total}'
     },
     question: {
-      number: 'प्रश्न {number}',
+      number: 'प्रश्न {current} / {total}',
       required: 'आवश्यक',
       selectedCount: '{count} आइटम चयनित',
       selectedValue: 'वर्तमान चयन: {value}',

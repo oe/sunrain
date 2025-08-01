@@ -9,6 +9,7 @@ export const sharedKo: ISharedTranslations = {
     guide: '자가 도움 가이드',
     resources: '리소스',
     about: '소개',
+    assessment: '평가',
   },
   footer: {
     copyright: '© 2025 Sunrain. 모든 권리 보유.',

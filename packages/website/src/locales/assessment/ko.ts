@@ -280,7 +280,7 @@ export const assessmentKo: IAssessmentTranslations = {
       text: '진행률: {current} / {total}'
     },
     question: {
-      number: '질문 {number}',
+      number: '질문 {current} / {total}',
       required: '필수',
       selectedCount: '{count}개 항목 선택됨',
       selectedValue: '현재 선택: {value}',

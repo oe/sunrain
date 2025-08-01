@@ -280,7 +280,7 @@ export const assessmentEs: IAssessmentTranslations = {
       text: 'Progreso: {current} de {total}'
     },
     question: {
-      number: 'Pregunta {number}',
+      number: 'Pregunta {current} de {total}',
       required: 'Requerido',
       selectedCount: '{count} elementos seleccionados',
       selectedValue: 'Selección actual: {value}',

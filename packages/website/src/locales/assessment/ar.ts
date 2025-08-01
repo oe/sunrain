@@ -280,7 +280,7 @@ export const assessmentAr: IAssessmentTranslations = {
       text: 'التقدم: {current} من {total}'
     },
     question: {
-      number: 'السؤال {number}',
+      number: 'السؤال {current} من {total}',
       required: 'مطلوب',
       selectedCount: '{count} عناصر محددة',
       selectedValue: 'الاختيار الحالي: {value}',

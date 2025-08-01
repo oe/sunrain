@@ -280,7 +280,7 @@ export const assessmentJa: IAssessmentTranslations = {
       text: '進行状況: {current} / {total}'
     },
     question: {
-      number: '質問 {number}',
+      number: '質問 {current} / {total}',
       required: '必須',
       selectedCount: '{count}項目が選択されました',
       selectedValue: '現在の選択: {value}',

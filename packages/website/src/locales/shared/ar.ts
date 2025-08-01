@@ -9,6 +9,7 @@ export const sharedAr: ISharedTranslations = {
     guide: 'دليل المساعدة الذاتية',
     resources: 'الموارد',
     about: 'حول',
+    assessment: 'التقييم',
   },
   footer: {
     copyright: '© 2025 Sunrain. جميع الحقوق محفوظة.',
