@@ -8,6 +8,8 @@ interface ProgressBarProps {
   timeSpent?: number;
   onPause?: () => void;
   showPauseButton?: boolean;
+  isPaused?: boolean;
+  isCompleted?: boolean;
   t: (key: string, params?: Record<string, any>) => string;
 }
 
@@ -19,6 +21,8 @@ export default memo(function ProgressBar({
   timeSpent,
   onPause,
   showPauseButton = true,
+  isPaused,
+  isCompleted,
   t
 }: ProgressBarProps) {
   const formatTime = (seconds: number): string => {

@@ -256,6 +256,7 @@ export const assessmentEn: IAssessmentTranslations = {
       assessment: 'Loading assessment...',
       translations: 'Loading language pack...',
       question: 'Loading question...',
+      default: 'Loading...',
     },
     errors: {
       title: 'Error Occurred',

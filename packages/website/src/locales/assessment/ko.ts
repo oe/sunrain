@@ -255,7 +255,8 @@ export const assessmentKo: IAssessmentTranslations = {
     loading: {
       assessment: '평가 로딩 중...',
       translations: '번역 로딩 중...',
-      question: '질문 로딩 중...'
+      question: '질문 로딩 중...',
+      default: '로딩 중...'
     },
     errors: {
       title: '오류 발생',

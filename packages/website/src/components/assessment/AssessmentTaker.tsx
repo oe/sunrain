@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useRef, memo } from 'react';
-import { useTranslations } from '@/hooks/useTranslations';
+import { useCSRTranslations } from '@/hooks/useTranslations';
 import QuestionCard from './QuestionCard';
 import ProgressBar from './ProgressBar';
 import NavigationControls from './NavigationControls';
@@ -57,7 +57,7 @@ const AssessmentTaker = memo(function AssessmentTaker({
   onComplete,
   onError
 }: AssessmentTakerProps) {
-  const { t, isLoading: translationsLoading } = useTranslations('assessment');
+  const { t, isLoading: translationsLoading } = useCSRTranslations('assessment');
 
   // 缓存常用翻译，避免重复调用
   const translations = useRef({

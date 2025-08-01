@@ -255,7 +255,8 @@ export const assessmentJa: IAssessmentTranslations = {
     loading: {
       assessment: '評価を読み込み中...',
       translations: '翻訳を読み込み中...',
-      question: '質問を読み込み中...'
+      question: '質問を読み込み中...',
+      default: '読み込み中...'
     },
     errors: {
       title: 'エラーが発生しました',

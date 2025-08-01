@@ -10,6 +10,7 @@ export const sharedEn: ISharedTranslations = {
     guide: 'Self-Help Guide',
     resources: 'Resources',
     about: 'About',
+    assessment: 'Assessment',
   },
   footer: {
     copyright: '© 2025 Sunrain. All rights reserved.',

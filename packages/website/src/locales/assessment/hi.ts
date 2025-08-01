@@ -255,7 +255,8 @@ export const assessmentHi: IAssessmentTranslations = {
     loading: {
       assessment: 'मूल्यांकन लोड हो रहा है...',
       translations: 'अनुवाद लोड हो रहे हैं...',
-      question: 'प्रश्न लोड हो रहा है...'
+      question: 'प्रश्न लोड हो रहा है...',
+      default: 'लोड हो रहा है...'
     },
     errors: {
       title: 'त्रुटि हुई',

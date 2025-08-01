@@ -255,7 +255,8 @@ export const assessmentAr: IAssessmentTranslations = {
     loading: {
       assessment: 'جاري تحميل التقييم...',
       translations: 'جاري تحميل الترجمات...',
-      question: 'جاري تحميل السؤال...'
+      question: 'جاري تحميل السؤال...',
+      default: 'جاري التحميل...'
     },
     errors: {
       title: 'حدث خطأ',

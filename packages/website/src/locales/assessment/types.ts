@@ -322,6 +322,7 @@ export interface IAssessmentTranslations {
       assessment: string;
       translations: string;
       question: string;
+      default: string;
     };
     /** 错误信息 */
     errors: {

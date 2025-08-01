@@ -15,6 +15,8 @@ export interface ISharedTranslations {
     resources: string;
     /** 关于我们 */
     about: string;
+    /** 心理测评 */
+    assessment: string;
   };
   /** 页脚相关文案 */
   footer: {

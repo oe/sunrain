@@ -1,0 +1,35 @@
+---
+// Test page for CSR translations
+import CSRTranslationTest from '../components/test/CSRTranslationTest';
+import CSRModuleTest from '../components/test/CSRModuleTest';
+import CSRManagerTest from '../components/test/CSRManagerTest';
+import DirectImportTest from '../components/test/DirectImportTest';
+---
+
+<html lang="zh">
+<head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>CSR Translation Test</title>
+</head>
+<body>
+    <div id="app">
+        <h1>CSR Translation Test</h1>
+        <div id="csr-test-container"></div>
+    </div>
+
+    <DirectImportTest client:load />
+    <hr style="margin: 40px 0;" />
+    <CSRManagerTest client:load />
+    <hr style="margin: 40px 0;" />
+    <CSRModuleTest client:load />
+    <hr style="margin: 40px 0;" />
+    <CSRTranslationTest client:load />
+
+    <script>
+        // Additional client-side testing can be added here
+    </script>
+</body>
+</html>

@@ -261,6 +261,7 @@ export const assessmentZh: IAssessmentTranslations = {
       assessment: "正在加载评测...",
       translations: "正在加载语言包...",
       question: "正在加载问题...",
+      default: "正在加载...",
     },
     errors: {
       title: "出现错误",

@@ -30,33 +30,33 @@
   - 测试不同语言环境下的用户体验
   - _需求: 2.1, 2.2_
 
-- [ ] 2. 创建CSR翻译系统
+- [x] 2. 创建CSR翻译系统
   - 为客户端组件创建独立的翻译系统
   - 从现有SSG翻译中提取客户端相关内容
   - 确保CSR翻译的完整性
   - _需求: 4.1, 4.2, 6.1, 6.2_
 
-- [ ] 2.1 创建CSR翻译类型定义
+- [x] 2.1 创建CSR翻译类型定义
   - 在 `packages/website/src/client-locales/shared/types.ts` 中定义CSR翻译接口
   - 创建客户端特定的翻译结构（client、interactive、actions等）
   - 确保与现有SSG类型的兼容性
   - _需求: 4.1, 4.3_
 
-- [ ] 2.2 分析并创建assessment模块的CSR翻译
+- [x] 2.2 分析并创建assessment模块的CSR翻译
   - 检查assessment模块中的客户端组件翻译需求
   - 在 `packages/website/src/client-locales/assessment/` 创建目录结构
   - 从SSG翻译中提取客户端相关内容（client、errors、loading、actions等）
   - 为所有支持的语言创建对应的CSR翻译文件
   - _需求: 4.1, 4.2, 6.1_
 
-- [ ] 2.3 创建CSR翻译管理器
+- [x] 2.3 创建CSR翻译管理器
   - 创建 `packages/website/src/utils/csr-translation-manager.ts`
   - 实现客户端动态翻译加载（从client-locales目录）
   - 添加预加载和智能缓存机制
   - 实现语言切换和状态管理
   - _需求: 3.1, 5.1, 5.3_
 
-- [ ] 2.4 优化现有的useTranslations Hook
+- [x] 2.4 优化现有的useTranslations Hook
   - 修改 `packages/website/src/hooks/useTranslations.ts` 支持CSR翻译加载
   - 保持向后兼容性，不影响现有功能
   - 优化性能和内存使用
