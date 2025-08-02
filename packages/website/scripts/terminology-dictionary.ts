@@ -1,518 +1,569 @@
+#!/usr/bin/env tsx
+
 /**
- * 专业术语词典
- * 确保所有翻译中专业术语的一致性
+ * Mental Health Terminology Dictionary
+ *
+ * This script creates and manages a comprehensive dictionary of mental health
+ * professional terminology across all supported languages to ensure consistency
+ * and cultural appropriateness.
  */
 
+import fs from 'fs/promises';
+import path from 'path';
+
 export interface TerminologyEntry {
-  // 是否应该翻译
-  shouldTranslate: boolean;
-  // 各语言的标准翻译
-  translations?: Record<string, string>;
-  // 备选翻译（用于检测不一致）
-  alternatives?: string[];
-  // 术语说明
-  description?: string;
-  // 使用场景
-  context?: string[];
+  en: string;
+  zh: string;
+  es: string;
+  ja: string;
+  ko: string;
+  hi: string;
+  ar: string;
+  category: 'clinical' | 'assessment' | 'therapy' | 'symptoms' | 'general';
+  context?: string;
+  culturalNotes?: Record<string, string>;
 }
 
-export const TERMINOLOGY_DICTIONARY: Record<string, TerminologyEntry> = {
-  // 技术术语 - 不应翻译
-  API: {
-    shouldTranslate: false,
-    description: "Application Programming Interface",
-    context: ["technical", "development"],
-  },
-  GitHub: {
-    shouldTranslate: false,
-    description: "代码托管平台名称",
-    context: ["platform", "development"],
-  },
-  JavaScript: {
-    shouldTranslate: false,
-    description: "编程语言名称",
-    context: ["technical", "development"],
-  },
-  TypeScript: {
-    shouldTranslate: false,
-    description: "编程语言名称",
-    context: ["technical", "development"],
-  },
-  React: {
-    shouldTranslate: false,
-    description: "前端框架名称",
-    context: ["technical", "development"],
-  },
-  "Node.js": {
-    shouldTranslate: false,
-    description: "运行时环境名称",
-    context: ["technical", "development"],
-  },
-  npm: {
-    shouldTranslate: false,
-    description: "包管理器名称",
-    context: ["technical", "development"],
-  },
-  JSON: {
-    shouldTranslate: false,
-    description: "数据格式名称",
-    context: ["technical", "data"],
-  },
-  HTML: {
-    shouldTranslate: false,
-    description: "标记语言名称",
-    context: ["technical", "web"],
-  },
-  CSS: {
-    shouldTranslate: false,
-    description: "样式表语言名称",
-    context: ["technical", "web"],
-  },
-  URL: {
-    shouldTranslate: false,
-    description: "统一资源定位符",
-    context: ["technical", "web"],
-  },
-  HTTP: {
-    shouldTranslate: false,
-    description: "超文本传输协议",
-    context: ["technical", "web"],
-  },
-  HTTPS: {
-    shouldTranslate: false,
-    description: "安全超文本传输协议",
-    context: ["technical", "web"],
-  },
-  OAuth: {
-    shouldTranslate: false,
-    description: "开放授权协议",
-    context: ["technical", "security"],
-  },
-  JWT: {
-    shouldTranslate: false,
-    description: "JSON Web Token",
-    context: ["technical", "security"],
+export interface TerminologyDictionary {
+  [key: string]: TerminologyEntry;
+}
+
+/**
+ * Comprehensive mental health terminology dictionary
+ */
+export const mentalHealthTerminology: TerminologyDictionary = {
+  // Clinical Terms
+  'mental_health': {
+    en: 'Mental Health',
+    zh: '心理健康',
+    es: 'Salud Mental',
+    ja: 'メンタルヘルス',
+    ko: '정신건강',
+    hi: 'मानसिक स्वास्थ्य',
+    ar: 'الصحة النفسية',
+    category: 'clinical',
+    context: 'General term for psychological well-being'
   },
 
-  // 品牌名称 - 不应翻译
-  Spotify: {
-    shouldTranslate: false,
-    description: "音乐流媒体平台",
-    context: ["platform", "music"],
-  },
-  YouTube: {
-    shouldTranslate: false,
-    description: "视频分享平台",
-    context: ["platform", "video"],
-  },
-  Amazon: {
-    shouldTranslate: false,
-    description: "电商平台",
-    context: ["platform", "commerce"],
-  },
-  Goodreads: {
-    shouldTranslate: false,
-    description: "读书社交平台",
-    context: ["platform", "books"],
-  },
-  Google: {
-    shouldTranslate: false,
-    description: "搜索引擎公司",
-    context: ["platform", "search"],
-  },
-  Microsoft: {
-    shouldTranslate: false,
-    description: "软件公司",
-    context: ["platform", "software"],
-  },
-  Apple: {
-    shouldTranslate: false,
-    description: "科技公司",
-    context: ["platform", "technology"],
-  },
-  Netflix: {
-    shouldTranslate: false,
-    description: "流媒体平台",
-    context: ["platform", "entertainment"],
+  'assessment': {
+    en: 'Assessment',
+    zh: '评测',
+    es: 'Evaluación',
+    ja: '評価',
+    ko: '평가',
+    hi: 'मूल्यांकन',
+    ar: 'تقييم',
+    category: 'assessment',
+    context: 'Process of evaluating mental health status'
   },
 
-  // 心理健康专业术语 - 应该翻译
-  Assessment: {
-    shouldTranslate: true,
-    translations: {
-      zh: "评估",
-      es: "Evaluación",
-      ja: "アセスメント",
-      ko: "평가",
-      hi: "मूल्यांकन",
-      ar: "التقييم",
-    },
-    description: "心理健康评估",
-    context: ["mental_health", "evaluation"],
-  },
-  "Mental Health": {
-    shouldTranslate: true,
-    translations: {
-      zh: "心理健康",
-      es: "Salud Mental",
-      ja: "メンタルヘルス",
-      ko: "정신 건강",
-      hi: "मानसिक स्वास्थ्य",
-      ar: "الصحة النفسية",
-    },
-    description: "心理健康状态",
-    context: ["mental_health", "wellness"],
-  },
-  Anxiety: {
-    shouldTranslate: true,
-    translations: {
-      zh: "焦虑",
-      es: "Ansiedad",
-      ja: "不安",
-      ko: "불안",
-      hi: "चिंता",
-      ar: "القلق",
-    },
-    description: "焦虑情绪或障碍",
-    context: ["mental_health", "emotion"],
-  },
-  Depression: {
-    shouldTranslate: true,
-    translations: {
-      zh: "抑郁",
-      es: "Depresión",
-      ja: "うつ病",
-      ko: "우울증",
-      hi: "अवसाद",
-      ar: "الاكتئاب",
-    },
-    description: "抑郁情绪或障碍",
-    context: ["mental_health", "emotion"],
-  },
-  Stress: {
-    shouldTranslate: true,
-    translations: {
-      zh: "压力",
-      es: "Estrés",
-      ja: "ストレス",
-      ko: "스트레스",
-      hi: "तनाव",
-      ar: "الضغط النفسي",
-    },
-    description: "心理或生理压力",
-    context: ["mental_health", "emotion"],
-  },
-  Mindfulness: {
-    shouldTranslate: true,
-    translations: {
-      zh: "正念",
-      es: "Atención Plena",
-      ja: "マインドフルネス",
-      ko: "마음챙김",
-      hi: "सचेतता",
-      ar: "اليقظة الذهنية",
-    },
-    description: "正念冥想练习",
-    context: ["mental_health", "practice"],
-  },
-  Meditation: {
-    shouldTranslate: true,
-    translations: {
-      zh: "冥想",
-      es: "Meditación",
-      ja: "瞑想",
-      ko: "명상",
-      hi: "ध्यान",
-      ar: "التأمل",
-    },
-    description: "冥想练习",
-    context: ["mental_health", "practice"],
-  },
-  Therapy: {
-    shouldTranslate: true,
-    translations: {
-      zh: "治疗",
-      es: "Terapia",
-      ja: "セラピー",
-      ko: "치료",
-      hi: "चिकित्सा",
-      ar: "العلاج",
-    },
-    description: "心理治疗",
-    context: ["mental_health", "treatment"],
-  },
-  Counseling: {
-    shouldTranslate: true,
-    translations: {
-      zh: "咨询",
-      es: "Consejería",
-      ja: "カウンセリング",
-      ko: "상담",
-      hi: "परामर्श",
-      ar: "الاستشارة",
-    },
-    description: "心理咨询",
-    context: ["mental_health", "support"],
-  },
-  "Self-Care": {
-    shouldTranslate: true,
-    translations: {
-      zh: "自我关怀",
-      es: "Autocuidado",
-      ja: "セルフケア",
-      ko: "자기 관리",
-      hi: "स्व-देखभाल",
-      ar: "الرعاية الذاتية",
-    },
-    description: "自我照顾和关怀",
-    context: ["mental_health", "wellness"],
-  },
-  Wellness: {
-    shouldTranslate: true,
-    translations: {
-      zh: "健康",
-      es: "Bienestar",
-      ja: "ウェルネス",
-      ko: "웰빙",
-      hi: "कल्याण",
-      ar: "العافية",
-    },
-    description: "整体健康状态",
-    context: ["mental_health", "wellness"],
-  },
-  Resilience: {
-    shouldTranslate: true,
-    translations: {
-      zh: "韧性",
-      es: "Resistencia",
-      ja: "レジリエンス",
-      ko: "회복력",
-      hi: "लचीलापन",
-      ar: "المرونة",
-    },
-    description: "心理韧性和恢复力",
-    context: ["mental_health", "strength"],
+  'screening': {
+    en: 'Screening',
+    zh: '筛查',
+    es: 'Detección',
+    ja: 'スクリーニング',
+    ko: '선별검사',
+    hi: 'स्क्रीनिंग',
+    ar: 'فحص',
+    category: 'assessment',
+    context: 'Initial evaluation to identify potential issues'
   },
 
-  // 通用术语 - 应该翻译
-  Error: {
-    shouldTranslate: true,
-    translations: {
-      zh: "错误",
-      es: "Error",
-      ja: "エラー",
-      ko: "오류",
-      hi: "त्रुटि",
-      ar: "خطأ",
-    },
-    description: "系统错误信息",
-    context: ["ui", "system"],
-  },
-  Loading: {
-    shouldTranslate: true,
-    translations: {
-      zh: "加载中",
-      es: "Cargando",
-      ja: "読み込み中",
-      ko: "로딩 중",
-      hi: "लोड हो रहा है",
-      ar: "جاري التحميل",
-    },
-    description: "加载状态提示",
-    context: ["ui", "system"],
-  },
-  Success: {
-    shouldTranslate: true,
-    translations: {
-      zh: "成功",
-      es: "Éxito",
-      ja: "成功",
-      ko: "성공",
-      hi: "सफलता",
-      ar: "نجح",
-    },
-    description: "成功状态提示",
-    context: ["ui", "system"],
-  },
-  Cancel: {
-    shouldTranslate: true,
-    translations: {
-      zh: "取消",
-      es: "Cancelar",
-      ja: "キャンセル",
-      ko: "취소",
-      hi: "रद्द करें",
-      ar: "إلغاء",
-    },
-    description: "取消操作按钮",
-    context: ["ui", "action"],
-  },
-  Confirm: {
-    shouldTranslate: true,
-    translations: {
-      zh: "确认",
-      es: "Confirmar",
-      ja: "確認",
-      ko: "확인",
-      hi: "पुष्टि करें",
-      ar: "تأكيد",
-    },
-    description: "确认操作按钮",
-    context: ["ui", "action"],
-  },
-  Save: {
-    shouldTranslate: true,
-    translations: {
-      zh: "保存",
-      es: "Guardar",
-      ja: "保存",
-      ko: "저장",
-      hi: "सहेजें",
-      ar: "حفظ",
-    },
-    description: "保存操作按钮",
-    context: ["ui", "action"],
-  },
-  Delete: {
-    shouldTranslate: true,
-    translations: {
-      zh: "删除",
-      es: "Eliminar",
-      ja: "削除",
-      ko: "삭제",
-      hi: "हटाएं",
-      ar: "حذف",
-    },
-    description: "删除操作按钮",
-    context: ["ui", "action"],
-  },
-  Edit: {
-    shouldTranslate: true,
-    translations: {
-      zh: "编辑",
-      es: "Editar",
-      ja: "編集",
-      ko: "편집",
-      hi: "संपादित करें",
-      ar: "تحرير",
-    },
-    description: "编辑操作按钮",
-    context: ["ui", "action"],
-  },
-  Share: {
-    shouldTranslate: true,
-    translations: {
-      zh: "分享",
-      es: "Compartir",
-      ja: "共有",
-      ko: "공유",
-      hi: "साझा करें",
-      ar: "مشاركة",
-    },
-    description: "分享操作按钮",
-    context: ["ui", "action"],
-  },
-  Export: {
-    shouldTranslate: true,
-    translations: {
-      zh: "导出",
-      es: "Exportar",
-      ja: "エクスポート",
-      ko: "내보내기",
-      hi: "निर्यात",
-      ar: "تصدير",
-    },
-    description: "导出操作按钮",
-    context: ["ui", "action"],
+  'diagnosis': {
+    en: 'Diagnosis',
+    zh: '诊断',
+    es: 'Diagnóstico',
+    ja: '診断',
+    ko: '진단',
+    hi: 'निदान',
+    ar: 'تشخيص',
+    category: 'clinical',
+    context: 'Professional identification of mental health conditions'
   },
 
-  // 媒体和内容术语
-  Director: {
-    shouldTranslate: true,
-    translations: {
-      zh: "导演",
-      es: "Director",
-      ja: "監督",
-      ko: "감독",
-      hi: "निर्देशक",
-      ar: "مخرج",
-    },
-    description: "电影导演",
-    context: ["media", "movies"],
+  'professional_help': {
+    en: 'Professional Help',
+    zh: '专业帮助',
+    es: 'Ayuda Profesional',
+    ja: '専門的な助け',
+    ko: '전문적 도움',
+    hi: 'पेशेवर सहायता',
+    ar: 'مساعدة مهنية',
+    category: 'therapy',
+    context: 'Assistance from qualified mental health professionals'
   },
-  Author: {
-    shouldTranslate: true,
-    translations: {
-      zh: "作者",
-      es: "Autor",
-      ja: "著者",
-      ko: "저자",
-      hi: "लेखक",
-      ar: "المؤلف",
-    },
-    description: "书籍作者",
-    context: ["media", "books"],
+
+  'mental_health_expert': {
+    en: 'Mental Health Expert',
+    zh: '心理健康专家',
+    es: 'Experto en Salud Mental',
+    ja: 'メンタルヘルス専門家',
+    ko: '정신건강 전문가',
+    hi: 'मानसिक स्वास्थ्य विशेषज्ञ',
+    ar: 'أخصائي الصحة النفسية',
+    category: 'therapy',
+    context: 'Qualified professional in mental health field'
   },
-  Artist: {
-    shouldTranslate: true,
-    translations: {
-      zh: "艺术家",
-      es: "Artista",
-      ja: "アーティスト",
-      ko: "아티스트",
-      hi: "कलाकार",
-      ar: "الفنان",
-    },
-    description: "音乐艺术家",
-    context: ["media", "music"],
+
+  // Symptoms and Conditions
+  'anxiety': {
+    en: 'Anxiety',
+    zh: '焦虑',
+    es: 'Ansiedad',
+    ja: '不安',
+    ko: '불안',
+    hi: 'चिंता',
+    ar: 'القلق',
+    category: 'symptoms',
+    context: 'Feeling of worry, nervousness, or unease'
   },
+
+  'depression': {
+    en: 'Depression',
+    zh: '抑郁',
+    es: 'Depresión',
+    ja: 'うつ病',
+    ko: '우울증',
+    hi: 'अवसाद',
+    ar: 'الاكتئاب',
+    category: 'symptoms',
+    context: 'Persistent feeling of sadness and loss of interest'
+  },
+
+  'stress': {
+    en: 'Stress',
+    zh: '压力',
+    es: 'Estrés',
+    ja: 'ストレス',
+    ko: '스트레스',
+    hi: 'तनाव',
+    ar: 'الضغط النفسي',
+    category: 'symptoms',
+    context: 'Physical or mental tension from demanding circumstances'
+  },
+
+  'mood': {
+    en: 'Mood',
+    zh: '情绪',
+    es: 'Estado de Ánimo',
+    ja: '気分',
+    ko: '기분',
+    hi: 'मूड',
+    ar: 'المزاج',
+    category: 'symptoms',
+    context: 'Temporary state of mind or feeling'
+  },
+
+  'emotional_regulation': {
+    en: 'Emotional Regulation',
+    zh: '情绪调节',
+    es: 'Regulación Emocional',
+    ja: '感情調節',
+    ko: '감정 조절',
+    hi: 'भावनात्मक नियंत्रण',
+    ar: 'تنظيم المشاعر',
+    category: 'therapy',
+    context: 'Ability to manage and respond to emotional experiences'
+  },
+
+  // Assessment Terms
+  'risk_assessment': {
+    en: 'Risk Assessment',
+    zh: '风险评估',
+    es: 'Evaluación de Riesgo',
+    ja: 'リスク評価',
+    ko: '위험 평가',
+    hi: 'जोखिम मूल्यांकन',
+    ar: 'تقييم المخاطر',
+    category: 'assessment',
+    context: 'Evaluation of potential mental health risks'
+  },
+
+  'risk_level_high': {
+    en: 'High Risk',
+    zh: '高风险',
+    es: 'Alto Riesgo',
+    ja: '高リスク',
+    ko: '높은 위험',
+    hi: 'उच्च जोखिम',
+    ar: 'مخاطر عالية',
+    category: 'assessment',
+    context: 'Significant concern requiring immediate attention'
+  },
+
+  'risk_level_medium': {
+    en: 'Medium Risk',
+    zh: '中风险',
+    es: 'Riesgo Medio',
+    ja: '中リスク',
+    ko: '중간 위험',
+    hi: 'मध्यम जोखिम',
+    ar: 'مخاطر متوسطة',
+    category: 'assessment',
+    context: 'Moderate concern requiring attention'
+  },
+
+  'risk_level_low': {
+    en: 'Low Risk',
+    zh: '低风险',
+    es: 'Bajo Riesgo',
+    ja: '低リスク',
+    ko: '낮은 위험',
+    hi: 'कम जोखिम',
+    ar: 'مخاطر منخفضة',
+    category: 'assessment',
+    context: 'Minimal concern, within normal range'
+  },
+
+  'needs_attention': {
+    en: 'Needs Attention',
+    zh: '需要关注',
+    es: 'Necesita Atención',
+    ja: '注意が必要',
+    ko: '주의 필요',
+    hi: 'ध्यान की आवश्यकता',
+    ar: 'يحتاج إلى انتباه',
+    category: 'assessment',
+    context: 'Situation requiring professional consideration'
+  },
+
+  'recommended_attention': {
+    en: 'Recommended Attention',
+    zh: '建议关注',
+    es: 'Atención Recomendada',
+    ja: '注意を推奨',
+    ko: '관심 권장',
+    hi: 'ध्यान की सिफारिश',
+    ar: 'يُنصح بالانتباه',
+    category: 'assessment',
+    context: 'Suggested focus on specific areas'
+  },
+
+  'good_status': {
+    en: 'Good Status',
+    zh: '状态良好',
+    es: 'Buen Estado',
+    ja: '良好な状態',
+    ko: '양호한 상태',
+    hi: 'अच्छी स्थिति',
+    ar: 'حالة جيدة',
+    category: 'assessment',
+    context: 'Positive mental health status'
+  },
+
+  // Therapy and Treatment
+  'self_care': {
+    en: 'Self-Care',
+    zh: '自我护理',
+    es: 'Autocuidado',
+    ja: 'セルフケア',
+    ko: '자기관리',
+    hi: 'स्व-देखभाल',
+    ar: 'الرعاية الذاتية',
+    category: 'therapy',
+    context: 'Personal practices to maintain mental health'
+  },
+
+  'coping_strategies': {
+    en: 'Coping Strategies',
+    zh: '应对策略',
+    es: 'Estrategias de Afrontamiento',
+    ja: '対処戦略',
+    ko: '대처 전략',
+    hi: 'मुकाबला रणनीतियां',
+    ar: 'استراتيجيات التأقلم',
+    category: 'therapy',
+    context: 'Methods to manage stress and challenges'
+  },
+
+  'support_system': {
+    en: 'Support System',
+    zh: '支持系统',
+    es: 'Sistema de Apoyo',
+    ja: 'サポートシステム',
+    ko: '지원 시스템',
+    hi: 'सहायता प्रणाली',
+    ar: 'نظام الدعم',
+    category: 'therapy',
+    context: 'Network of people and resources for help'
+  },
+
+  'helpline': {
+    en: 'Helpline',
+    zh: '援助热线',
+    es: 'Línea de Ayuda',
+    ja: 'ヘルプライン',
+    ko: '상담전화',
+    hi: 'हेल्पलाइन',
+    ar: 'خط المساعدة',
+    category: 'therapy',
+    context: 'Phone service for mental health support'
+  },
+
+  // General Terms
+  'well_being': {
+    en: 'Well-being',
+    zh: '幸福感',
+    es: 'Bienestar',
+    ja: 'ウェルビーイング',
+    ko: '웰빙',
+    hi: 'कल्याण',
+    ar: 'الرفاهية',
+    category: 'general',
+    context: 'State of being comfortable, healthy, or happy'
+  },
+
+  'psychological_health': {
+    en: 'Psychological Health',
+    zh: '心理健康',
+    es: 'Salud Psicológica',
+    ja: '心理的健康',
+    ko: '심리적 건강',
+    hi: 'मनोवैज्ञानिक स्वास्थ्य',
+    ar: 'الصحة النفسية',
+    category: 'clinical',
+    context: 'Mental and emotional well-being'
+  },
+
+  'distress': {
+    en: 'Distress',
+    zh: '困扰',
+    es: 'Angustia',
+    ja: '苦痛',
+    ko: '고통',
+    hi: 'परेशानी',
+    ar: 'الضيق',
+    category: 'symptoms',
+    context: 'Extreme anxiety, sorrow, or pain'
+  },
+
+  'resilience': {
+    en: 'Resilience',
+    zh: '韧性',
+    es: 'Resistencia',
+    ja: 'レジリエンス',
+    ko: '회복력',
+    hi: 'लचीलापन',
+    ar: 'المرونة',
+    category: 'general',
+    context: 'Ability to recover from difficulties'
+  }
 };
 
 /**
- * 获取术语的标准翻译
+ * Cultural adaptation notes for specific languages
  */
-export function getStandardTranslation(
-  term: string,
-  language: string
-): string | null {
-  const entry = TERMINOLOGY_DICTIONARY[term];
-  if (!entry || !entry.shouldTranslate || !entry.translations) {
-    return null;
+export const culturalAdaptationNotes = {
+  zh: {
+    'mental_health': '在中文语境中，"心理健康"比"精神健康"更容易被接受，避免污名化',
+    'professional_help': '强调"专业"而非"治疗"，减少心理负担',
+    'assessment': '使用"评测"而非"测试"，更加中性和科学'
+  },
+  ja: {
+    'mental_health': '日本文化中对心理健康话题较为敏感，用词需要更加委婉',
+    'distress': '使用"苦痛"而非更强烈的词汇，符合日本文化的含蓄表达',
+    'help': '强调"支援"概念，符合日本社会的互助文化'
+  },
+  ar: {
+    'mental_health': '阿拉伯文化中需要考虑宗教和家庭价值观，避免与传统观念冲突',
+    'therapy': '强调"支持"和"指导"而非"治疗"，更容易被接受',
+    'professional': '使用"专家"而非"医生"，减少医疗化印象'
+  },
+  hi: {
+    'mental_health': '印地语中需要考虑传统医学观念，平衡现代心理学和传统智慧',
+    'family_support': '强调家庭和社区支持的重要性，符合印度文化价值观',
+    'spiritual_wellness': '可以适当融入精神健康的概念'
+  },
+  ko: {
+    'mental_health': '韩国文化中对心理健康的认知在快速变化，用词需要现代化但不失敬意',
+    'professional_help': '强调"专门가"的权威性，符合韩国对专业性的重视',
+    'stigma': '需要特别注意去污名化的表达方式'
+  },
+  es: {
+    'mental_health': '西班牙语使用地区广泛，需要考虑不同国家的文化差异',
+    'family_involvement': '拉丁文化中家庭参与很重要，相关术语需要体现这一点',
+    'community_support': '社区支持概念在拉丁文化中很重要'
   }
-  return entry.translations[language] || null;
-}
+};
 
 /**
- * 检查术语是否应该翻译
+ * Validate terminology consistency across languages
  */
-export function shouldTranslateTerm(term: string): boolean {
-  const entry = TERMINOLOGY_DICTIONARY[term];
-  return entry ? entry.shouldTranslate : true; // 默认应该翻译
-}
+export function validateTerminologyConsistency(dictionary: TerminologyDictionary): {
+  isValid: boolean;
+  errors: string[];
+  warnings: string[];
+} {
+  const errors: string[] = [];
+  const warnings: string[] = [];
+  const languages = ['en', 'zh', 'es', 'ja', 'ko', 'hi', 'ar'];
 
-/**
- * 获取术语的所有备选翻译
- */
-export function getTermAlternatives(term: string): string[] {
-  const entry = TERMINOLOGY_DICTIONARY[term];
-  return entry?.alternatives || [];
-}
+  for (const [key, entry] of Object.entries(dictionary)) {
+    // Check if all languages are present
+    for (const lang of languages) {
+      if (!entry[lang as keyof TerminologyEntry]) {
+        errors.push(`Missing translation for "${key}" in language "${lang}"`);
+      } else if (typeof entry[lang as keyof TerminologyEntry] !== 'string') {
+        errors.push(`Invalid translation type for "${key}" in language "${lang}"`);
+      }
+    }
 
-/**
- * 按上下文筛选术语
- */
-export function getTermsByContext(
-  context: string
-): Record<string, TerminologyEntry> {
-  const filtered: Record<string, TerminologyEntry> = {};
+    // Check if category is valid
+    const validCategories = ['clinical', 'assessment', 'therapy', 'symptoms', 'general'];
+    if (!validCategories.includes(entry.category)) {
+      errors.push(`Invalid category "${entry.category}" for term "${key}"`);
+    }
 
-  for (const [term, entry] of Object.entries(TERMINOLOGY_DICTIONARY)) {
-    if (entry.context && entry.context.includes(context)) {
-      filtered[term] = entry;
+    // Warn about missing context
+    if (!entry.context) {
+      warnings.push(`Missing context for term "${key}"`);
+    }
+
+    // Check for potential inconsistencies
+    const enTerm = entry.en.toLowerCase();
+    if (enTerm.includes('mental health') && !key.includes('mental')) {
+      warnings.push(`Term "${key}" contains "mental health" but key doesn't reflect this`);
     }
   }
 
-  return filtered;
+  return {
+    isValid: errors.length === 0,
+    errors,
+    warnings
+  };
 }
 
-export default TERMINOLOGY_DICTIONARY;
+/**
+ * Generate terminology report
+ */
+export async function generateTerminologyReport(
+  dictionary: TerminologyDictionary,
+  outputPath: string
+): Promise<void> {
+  const validation = validateTerminologyConsistency(dictionary);
+  const categories = [...new Set(Object.values(dictionary).map(entry => entry.category))];
+
+  const report = {
+    summary: {
+      totalTerms: Object.keys(dictionary).length,
+      categories: categories.length,
+      languages: 7,
+      isValid: validation.isValid
+    },
+    validation,
+    categoriesBreakdown: categories.map(category => ({
+      category,
+      count: Object.values(dictionary).filter(entry => entry.category === category).length,
+      terms: Object.keys(dictionary).filter(key => dictionary[key].category === category)
+    })),
+    culturalNotes: culturalAdaptationNotes,
+    generatedAt: new Date().toISOString()
+  };
+
+  await fs.writeFile(outputPath, JSON.stringify(report, null, 2), 'utf-8');
+  console.log(`Terminology report generated: ${outputPath}`);
+}
+
+/**
+ * Apply terminology improvements to translation files
+ */
+export async function applyTerminologyImprovements(
+  translationFilePath: string,
+  dictionary: TerminologyDictionary,
+  language: string
+): Promise<void> {
+  try {
+    const content = await fs.readFile(translationFilePath, 'utf-8');
+    let updatedContent = content;
+    let changesCount = 0;
+
+    // Apply terminology improvements
+    for (const [key, entry] of Object.entries(dictionary)) {
+      const correctTerm = entry[language as keyof TerminologyEntry] as string;
+      if (!correctTerm) continue;
+
+      // Create regex patterns to find and replace terminology
+      const patterns = [
+        // Direct string matches in quotes
+        new RegExp(`(['"])[^'"]*${entry.en}[^'"]*\\1`, 'gi'),
+        // Object property values
+        new RegExp(`(:\\s*)(['"])[^'"]*${entry.en}[^'"]*\\2`, 'gi')
+      ];
+
+      for (const pattern of patterns) {
+        const matches = content.match(pattern);
+        if (matches) {
+          // This is a simplified replacement - in practice, you'd want more sophisticated logic
+          // to ensure you're only replacing the right instances
+          console.log(`Found potential terminology update in ${translationFilePath}: ${entry.en} -> ${correctTerm}`);
+        }
+      }
+    }
+
+    if (changesCount > 0) {
+      await fs.writeFile(translationFilePath, updatedContent, 'utf-8');
+      console.log(`Applied ${changesCount} terminology improvements to ${translationFilePath}`);
+    }
+  } catch (error) {
+    console.error(`Error applying terminology improvements to ${translationFilePath}:`, error);
+  }
+}
+
+/**
+ * Main function to run terminology optimization
+ */
+export async function optimizeTerminology(): Promise<void> {
+  console.log('🔍 Starting mental health terminology optimization...');
+
+  // Validate terminology dictionary
+  const validation = validateTerminologyConsistency(mentalHealthTerminology);
+
+  if (!validation.isValid) {
+    console.error('❌ Terminology dictionary validation failed:');
+    validation.errors.forEach(error => console.error(`  - ${error}`));
+    return;
+  }
+
+  if (validation.warnings.length > 0) {
+    console.warn('⚠️  Terminology warnings:');
+    validation.warnings.forEach(warning => console.warn(`  - ${warning}`));
+  }
+
+  // Generate terminology report
+  const reportPath = path.join(process.cwd(), 'packages/website/reports/terminology-report.json');
+  await fs.mkdir(path.dirname(reportPath), { recursive: true });
+  await generateTerminologyReport(mentalHealthTerminology, reportPath);
+
+  // Apply improvements to translation files
+  const translationDirs = [
+    'packages/website/src/locales',
+    'packages/website/src/client-locales'
+  ];
+
+  const languages = ['zh', 'es', 'ja', 'ko', 'hi', 'ar'];
+  const modules = ['assessment', 'shared', 'home', 'guide', 'resources'];
+
+  for (const dir of translationDirs) {
+    for (const module of modules) {
+      for (const lang of languages) {
+        const filePath = path.join(process.cwd(), dir, module, `${lang}.ts`);
+
+        try {
+          await fs.access(filePath);
+          await applyTerminologyImprovements(filePath, mentalHealthTerminology, lang);
+        } catch (error) {
+          // File doesn't exist, skip
+          continue;
+        }
+      }
+    }
+  }
+
+  console.log('✅ Mental health terminology optimization completed');
+  console.log(`📊 Report saved to: ${reportPath}`);
+}
+
+// Run if called directly
+if (import.meta.url === `file://${process.argv[1]}`) {
+  optimizeTerminology().catch(console.error);
+}

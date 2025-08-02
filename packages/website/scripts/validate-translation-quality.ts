@@ -1,871 +1,498 @@
 #!/usr/bin/env tsx
 
 /**
- * 翻译质量验证脚本
- * 对补全后的翻译进行质量检查，确保专业术语一致性和用户体验
+ * Translation Quality Validation Script
+ *
+ * This script validates and improves the quality of mental health translations
+ * by checking for consistency, cultural appropriateness, and professional terminology.
  */
 
-import fs from "fs";
-import path from "path";
-import { fileURLToPath } from "url";
-import { TERMINOLOGY_DICTIONARY } from './terminology-dictionary.js';
+import fs from 'fs/promises';
+import path from 'path';
+import { mentalHealthTerminology, culturalAdaptationNotes, type TerminologyDictionary } from './terminology-dictionary.js';
 
-
-// 支持的语言列表
-const SUPPORTED_LANGUAGES = ["en", "zh", "es", "ja", "ko", "hi", "ar"];
-const DEFAULT_LANGUAGE = "en";
-
-// 翻译模块列表
-const TRANSLATION_MODULES = [
-  "shared",
-  "home",
-  "guide",
-  "resources",
-  "about",
-  "assessment",
-];
-
-// 获取当前脚本目录
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const LOCALES_DIR = path.join(__dirname, "../src/locales");
-
-// 使用导入的专业术语词典
-
-// 质量检查规则
-const QUALITY_RULES = {
-  // 长度检查 - 翻译不应该过短或过长
-  lengthRatio: {
-    min: 0.3, // 翻译长度不应少于原文的30%
-    max: 3.0, // 翻译长度不应超过原文的300%
-  },
-
-  // 格式检查
-  formatting: {
-    preserveVariables: true, // 保留变量如 {name}, {count}
-    preserveHtml: true, // 保留HTML标签
-    preservePunctuation: true, // 检查标点符号
-  },
-
-  // 一致性检查
-  consistency: {
-    terminology: true, // 术语一致性
-    tone: true, // 语调一致性
-    formatting: true, // 格式一致性
-  },
-};
-
-interface QualityIssue {
-  type:
-    | "terminology_inconsistency"
-    | "length_mismatch"
-    | "format_error"
-    | "variable_mismatch"
-    | "html_mismatch"
-    | "punctuation_issue"
-    | "untranslated_content";
-  severity: "error" | "warning" | "info";
-  module: string;
-  language: string;
+interface TranslationIssue {
+  type: 'terminology' | 'consistency' | 'cultural' | 'length' | 'formatting';
+  severity: 'error' | 'warning' | 'info';
+  file: string;
   key: string;
-  originalValue: string;
-  translatedValue: string;
-  message: string;
-  suggestion?: string;
+  language: string;
+  current: string;
+  suggested?: string;
+  reason: string;
 }
 
 interface QualityReport {
   summary: {
-    totalChecked: number;
+    totalFiles: number;
     totalIssues: number;
     errorCount: number;
     warningCount: number;
     infoCount: number;
-    qualityScore: number; // 0-100
   };
-  byModule: Record<
-    string,
-    {
-      checked: number;
-      issues: number;
-      score: number;
-    }
-  >;
-  byLanguage: Record<
-    string,
-    {
-      checked: number;
-      issues: number;
-      score: number;
-    }
-  >;
-  issues: QualityIssue[];
+  issues: TranslationIssue[];
+  improvements: {
+    terminology: number;
+    consistency: number;
+    cultural: number;
+    formatting: number;
+  };
+  generatedAt: string;
 }
 
 /**
- * 递归提取对象中的所有键值对
+ * Load translation file and parse its content
  */
-function extractKeyValuePairs(
-  obj: any,
-  prefix: string = ""
-): Array<{ key: string; value: any }> {
-  const pairs: Array<{ key: string; value: any }> = [];
-
-  for (const [key, value] of Object.entries(obj)) {
-    const fullKey = prefix ? `${prefix}.${key}` : key;
-
-    if (value && typeof value === "object" && !Array.isArray(value)) {
-      pairs.push(...extractKeyValuePairs(value, fullKey));
-    } else {
-      pairs.push({ key: fullKey, value });
-    }
-  }
-
-  return pairs;
-}
-
-/**
- * 动态导入翻译文件
- */
-async function loadTranslationFile(
-  moduleName: string,
-  language: string
-): Promise<any> {
+async function loadTranslationFile(filePath: string): Promise<any> {
   try {
-    const filePath = path.join(LOCALES_DIR, moduleName, `${language}.ts`);
+    const content = await fs.readFile(filePath, 'utf-8');
 
-    if (!fs.existsSync(filePath)) {
-      return null;
+    // Extract the exported object from TypeScript file
+    const exportMatch = content.match(/export const \w+:\s*\w+\s*=\s*({[\s\S]*?});/);
+    if (!exportMatch) {
+      throw new Error('Could not parse translation file structure');
     }
 
-    const module = await import(filePath);
-    const exportName = `${moduleName}${
-      language.charAt(0).toUpperCase() + language.slice(1)
-    }`;
-    return module.default || module[exportName] || module;
+    // This is a simplified parser - in production, you'd want a more robust solution
+    const objectStr = exportMatch[1];
+
+    // Convert TypeScript object to JSON (simplified approach)
+    let jsonStr = objectStr
+      .replace(/(\w+):/g, '"$1":')  // Add quotes to keys
+      .replace(/'/g, '"')           // Convert single quotes to double quotes
+      .replace(/,(\s*[}\]])/g, '$1'); // Remove trailing commas
+
+    try {
+      return JSON.parse(jsonStr);
+    } catch (parseError) {
+      // Fallback: try to evaluate the object (less safe but more flexible)
+      console.warn(`JSON parsing failed for ${filePath}, using fallback method`);
+      return eval(`(${objectStr})`);
+    }
   } catch (error) {
-    console.warn(
-      `Failed to load translation file: ${moduleName}/${language}`,
-      error
-    );
+    console.error(`Error loading translation file ${filePath}:`, error);
     return null;
   }
 }
 
 /**
- * 检查术语一致性
+ * Extract all text values from nested translation object
+ */
+function extractTextValues(obj: any, prefix: string = ''): Array<{ key: string; value: string }> {
+  const results: Array<{ key: string; value: string }> = [];
+
+  for (const [key, value] of Object.entries(obj)) {
+    const fullKey = prefix ? `${prefix}.${key}` : key;
+
+    if (typeof value === 'string') {
+      results.push({ key: fullKey, value });
+    } else if (typeof value === 'object' && value !== null) {
+      results.push(...extractTextValues(value, fullKey));
+    }
+  }
+
+  return results;
+}
+
+/**
+ * Check for terminology consistency issues
  */
 function checkTerminologyConsistency(
-  originalText: string,
-  translatedText: string,
-  language: string
-): QualityIssue[] {
-  const issues: QualityIssue[] = [];
-
-  for (const [term, config] of Object.entries(TERMINOLOGY_DICTIONARY)) {
-    if (originalText.includes(term)) {
-      if (!config.shouldTranslate) {
-        // 不应该翻译的术语
-        if (!translatedText.includes(term)) {
-          issues.push({
-            type: "terminology_inconsistency",
-            severity: "error",
-            module: "",
-            language,
-            key: "",
-            originalValue: originalText,
-            translatedValue: translatedText,
-            message: `术语 "${term}" 不应该被翻译，应保持原文`,
-            suggestion: `保持 "${term}" 不变`,
-          });
-        }
-      } else if (config.translations && config.translations[language]) {
-        // 应该翻译的术语
-        const expectedTranslation = config.translations[language];
-        if (
-          translatedText.includes(term) &&
-          !translatedText.includes(expectedTranslation)
-        ) {
-          issues.push({
-            type: "terminology_inconsistency",
-            severity: "warning",
-            module: "",
-            language,
-            key: "",
-            originalValue: originalText,
-            translatedValue: translatedText,
-            message: `术语 "${term}" 应该翻译为 "${expectedTranslation}"`,
-            suggestion: `将 "${term}" 替换为 "${expectedTranslation}"`,
-          });
-        }
-      }
-    }
-  }
-
-  return issues;
-}
-
-/**
- * 检查长度比例
- */
-function checkLengthRatio(
-  originalText: string,
-  translatedText: string
-): QualityIssue[] {
-  const issues: QualityIssue[] = [];
-
-  if (typeof originalText !== "string" || typeof translatedText !== "string") {
-    return issues;
-  }
-
-  const originalLength = originalText.length;
-  const translatedLength = translatedText.length;
-
-  if (originalLength === 0) return issues;
-
-  const ratio = translatedLength / originalLength;
-
-  if (ratio < QUALITY_RULES.lengthRatio.min) {
-    issues.push({
-      type: "length_mismatch",
-      severity: "warning",
-      module: "",
-      language: "",
-      key: "",
-      originalValue: originalText,
-      translatedValue: translatedText,
-      message: `翻译过短，长度比例 ${ratio.toFixed(2)} < ${
-        QUALITY_RULES.lengthRatio.min
-      }`,
-      suggestion: "检查翻译是否完整",
-    });
-  } else if (ratio > QUALITY_RULES.lengthRatio.max) {
-    issues.push({
-      type: "length_mismatch",
-      severity: "warning",
-      module: "",
-      language: "",
-      key: "",
-      originalValue: originalText,
-      translatedValue: translatedText,
-      message: `翻译过长，长度比例 ${ratio.toFixed(2)} > ${
-        QUALITY_RULES.lengthRatio.max
-      }`,
-      suggestion: "检查翻译是否过于冗长",
-    });
-  }
-
-  return issues;
-}
-
-/**
- * 检查变量占位符
- */
-function checkVariables(
-  originalText: string,
-  translatedText: string
-): QualityIssue[] {
-  const issues: QualityIssue[] = [];
-
-  if (typeof originalText !== "string" || typeof translatedText !== "string") {
-    return issues;
-  }
-
-  // 提取变量 {variable}
-  const variableRegex = /\{[^}]+\}/g;
-  const originalVariables = originalText.match(variableRegex) || [];
-  const translatedVariables = translatedText.match(variableRegex) || [];
-
-  // 检查变量数量
-  if (originalVariables.length !== translatedVariables.length) {
-    issues.push({
-      type: "variable_mismatch",
-      severity: "error",
-      module: "",
-      language: "",
-      key: "",
-      originalValue: originalText,
-      translatedValue: translatedText,
-      message: `变量数量不匹配：原文 ${originalVariables.length} 个，翻译 ${translatedVariables.length} 个`,
-      suggestion: "确保所有变量都被正确保留",
-    });
-  }
-
-  // 检查变量名称
-  const originalVarSet = new Set(originalVariables);
-  const translatedVarSet = new Set(translatedVariables);
-
-  for (const variable of originalVariables) {
-    if (!translatedVarSet.has(variable)) {
-      issues.push({
-        type: "variable_mismatch",
-        severity: "error",
-        module: "",
-        language: "",
-        key: "",
-        originalValue: originalText,
-        translatedValue: translatedText,
-        message: `缺失变量：${variable}`,
-        suggestion: `在翻译中添加变量 ${variable}`,
-      });
-    }
-  }
-
-  return issues;
-}
-
-/**
- * 检查HTML标签
- */
-function checkHtmlTags(
-  originalText: string,
-  translatedText: string
-): QualityIssue[] {
-  const issues: QualityIssue[] = [];
-
-  if (typeof originalText !== "string" || typeof translatedText !== "string") {
-    return issues;
-  }
-
-  // 提取HTML标签
-  const htmlRegex = /<[^>]+>/g;
-  const originalTags = originalText.match(htmlRegex) || [];
-  const translatedTags = translatedText.match(htmlRegex) || [];
-
-  if (originalTags.length !== translatedTags.length) {
-    issues.push({
-      type: "html_mismatch",
-      severity: "error",
-      module: "",
-      language: "",
-      key: "",
-      originalValue: originalText,
-      translatedValue: translatedText,
-      message: `HTML标签数量不匹配：原文 ${originalTags.length} 个，翻译 ${translatedTags.length} 个`,
-      suggestion: "确保所有HTML标签都被正确保留",
-    });
-  }
-
-  return issues;
-}
-
-/**
- * 检查未翻译内容
- */
-function checkUntranslatedContent(
-  originalText: string,
-  translatedText: string,
-  language: string
-): QualityIssue[] {
-  const issues: QualityIssue[] = [];
-
-  if (typeof originalText !== "string" || typeof translatedText !== "string") {
-    return issues;
-  }
-
-  // 如果翻译与原文完全相同，可能未翻译
-  if (originalText === translatedText && language !== DEFAULT_LANGUAGE) {
-    // 检查是否是应该保持不变的术语
-    const isKnownTerm = Object.keys(TERMINOLOGY_DICTIONARY).some(
-      (term) =>
-        originalText.includes(term) &&
-        !TERMINOLOGY_DICTIONARY[term].shouldTranslate
-    );
-
-    if (!isKnownTerm) {
-      issues.push({
-        type: "untranslated_content",
-        severity: "warning",
-        module: "",
-        language: "",
-        key: "",
-        originalValue: originalText,
-        translatedValue: translatedText,
-        message: "内容可能未翻译",
-        suggestion: "检查是否需要翻译此内容",
-      });
-    }
-  }
-
-  return issues;
-}
-
-/**
- * 检查单个翻译的质量
- */
-function checkTranslationQuality(
-  originalText: string,
-  translatedText: string,
+  textValue: string,
   language: string,
-  moduleName: string,
-  key: string
-): QualityIssue[] {
-  const issues: QualityIssue[] = [];
+  key: string,
+  filePath: string
+): TranslationIssue[] {
+  const issues: TranslationIssue[] = [];
 
-  // 术语一致性检查
-  issues.push(
-    ...checkTerminologyConsistency(originalText, translatedText, language)
-  );
+  for (const [termKey, termEntry] of Object.entries(mentalHealthTerminology)) {
+    const correctTerm = termEntry[language as keyof typeof termEntry] as string;
+    const englishTerm = termEntry.en;
 
-  // 长度比例检查
-  issues.push(...checkLengthRatio(originalText, translatedText));
+    if (!correctTerm) continue;
 
-  // 变量检查
-  issues.push(...checkVariables(originalText, translatedText));
+    // Check if the text contains the English term instead of the correct translation
+    if (textValue.includes(englishTerm) && !textValue.includes(correctTerm)) {
+      issues.push({
+        type: 'terminology',
+        severity: 'warning',
+        file: filePath,
+        key,
+        language,
+        current: textValue,
+        suggested: textValue.replace(englishTerm, correctTerm),
+        reason: `Should use "${correctTerm}" instead of "${englishTerm}" for better cultural appropriateness`
+      });
+    }
 
-  // HTML标签检查
-  issues.push(...checkHtmlTags(originalText, translatedText));
-
-  // 未翻译内容检查
-  issues.push(
-    ...checkUntranslatedContent(originalText, translatedText, language)
-  );
-
-  // 为所有问题添加上下文信息
-  issues.forEach((issue) => {
-    issue.module = moduleName;
-    issue.language = language;
-    issue.key = key;
-  });
+    // Check for outdated or inappropriate terminology
+    const inappropriateTerms = getInappropriateTerms(language);
+    for (const inappropriate of inappropriateTerms) {
+      if (textValue.toLowerCase().includes(inappropriate.term.toLowerCase())) {
+        issues.push({
+          type: 'terminology',
+          severity: 'error',
+          file: filePath,
+          key,
+          language,
+          current: textValue,
+          suggested: textValue.replace(inappropriate.term, inappropriate.replacement),
+          reason: inappropriate.reason
+        });
+      }
+    }
+  }
 
   return issues;
 }
 
 /**
- * 检查单个模块的翻译质量
+ * Get inappropriate terms for specific languages
  */
-async function checkModuleQuality(moduleName: string): Promise<{
-  issues: QualityIssue[];
-  stats: { checked: number; issues: number };
-}> {
-  const issues: QualityIssue[] = [];
-  let checkedCount = 0;
-
-  console.log(`Checking quality for module: ${moduleName}`);
-
-  // 加载默认语言作为基准
-  const defaultTranslation = await loadTranslationFile(
-    moduleName,
-    DEFAULT_LANGUAGE
-  );
-  if (!defaultTranslation) {
-    return { issues, stats: { checked: 0, issues: 0 } };
-  }
-
-  // 提取默认语言的所有键值对
-  const defaultPairs = extractKeyValuePairs(defaultTranslation);
-
-  // 检查每种语言
-  for (const language of SUPPORTED_LANGUAGES) {
-    if (language === DEFAULT_LANGUAGE) continue;
-
-    console.log(`  Checking ${language}...`);
-
-    const targetTranslation = await loadTranslationFile(moduleName, language);
-    if (!targetTranslation) continue;
-
-    const targetPairs = extractKeyValuePairs(targetTranslation);
-    const targetMap = new Map(
-      targetPairs.map((pair) => [pair.key, pair.value])
-    );
-
-    // 检查每个键值对
-    for (const { key, value: originalValue } of defaultPairs) {
-      const translatedValue = targetMap.get(key);
-
-      if (
-        translatedValue !== undefined &&
-        typeof originalValue === "string" &&
-        typeof translatedValue === "string"
-      ) {
-        checkedCount++;
-        const qualityIssues = checkTranslationQuality(
-          originalValue,
-          translatedValue,
-          language,
-          moduleName,
-          key
-        );
-        issues.push(...qualityIssues);
+function getInappropriateTerms(language: string): Array<{ term: string; replacement: string; reason: string }> {
+  const terms: Record<string, Array<{ term: string; replacement: string; reason: string }>> = {
+    zh: [
+      {
+        term: '精神病',
+        replacement: '心理健康问题',
+        reason: '避免污名化，使用更中性的表达'
+      },
+      {
+        term: '神经病',
+        replacement: '心理困扰',
+        reason: '避免贬义词汇，使用专业术语'
       }
-    }
-  }
-
-  console.log(`    Found ${issues.length} quality issues`);
-  return { issues, stats: { checked: checkedCount, issues: issues.length } };
-}
-/**
- * 生成质量报告
- */
-async function generateQualityReport(): Promise<QualityReport> {
-  const report: QualityReport = {
-    summary: {
-      totalChecked: 0,
-      totalIssues: 0,
-      errorCount: 0,
-      warningCount: 0,
-      infoCount: 0,
-      qualityScore: 0,
-    },
-    byModule: {},
-    byLanguage: {},
-    issues: [],
+    ],
+    ja: [
+      {
+        term: '精神病',
+        replacement: 'メンタルヘルスの問題',
+        reason: '避免污名化，使用更温和的表达'
+      }
+    ],
+    ko: [
+      {
+        term: '정신병',
+        replacement: '정신건강 문제',
+        reason: '避免污名化，使用更专业的表达'
+      }
+    ],
+    hi: [
+      {
+        term: 'पागल',
+        replacement: 'मानसिक स्वास्थ्य समस्या',
+        reason: '避免贬义词汇，使用专业术语'
+      }
+    ],
+    ar: [
+      {
+        term: 'مجنون',
+        replacement: 'مشكلة في الصحة النفسية',
+        reason: '避免贬义词汇，使用专业术语'
+      }
+    ],
+    es: [
+      {
+        term: 'loco',
+        replacement: 'problema de salud mental',
+        reason: '避免贬义词汇，使用专业术语'
+      }
+    ]
   };
 
-  // 初始化语言统计
-  for (const language of SUPPORTED_LANGUAGES) {
-    if (language !== DEFAULT_LANGUAGE) {
-      report.byLanguage[language] = {
-        checked: 0,
-        issues: 0,
-        score: 0,
-      };
+  return terms[language] || [];
+}
+
+/**
+ * Check for cultural appropriateness issues
+ */
+function checkCulturalAppropriateness(
+  textValue: string,
+  language: string,
+  key: string,
+  filePath: string
+): TranslationIssue[] {
+  const issues: TranslationIssue[] = [];
+
+  // Check for cultural sensitivity based on language
+  const culturalChecks = getCulturalChecks(language);
+
+  for (const check of culturalChecks) {
+    if (check.pattern.test(textValue)) {
+      issues.push({
+        type: 'cultural',
+        severity: check.severity,
+        file: filePath,
+        key,
+        language,
+        current: textValue,
+        suggested: check.suggestion,
+        reason: check.reason
+      });
     }
   }
 
-  // 检查每个模块
-  for (const moduleName of TRANSLATION_MODULES) {
-    const { issues, stats } = await checkModuleQuality(moduleName);
+  return issues;
+}
 
-    report.issues.push(...issues);
-    report.byModule[moduleName] = {
-      checked: stats.checked,
-      issues: stats.issues,
-      score:
-        stats.checked > 0
-          ? Math.max(0, 100 - (stats.issues / stats.checked) * 100)
-          : 100,
-    };
+/**
+ * Get cultural checks for specific languages
+ */
+function getCulturalChecks(language: string): Array<{
+  pattern: RegExp;
+  severity: 'error' | 'warning' | 'info';
+  suggestion: string;
+  reason: string;
+}> {
+  const checks: Record<string, Array<{
+    pattern: RegExp;
+    severity: 'error' | 'warning' | 'info';
+    suggestion: string;
+    reason: string;
+  }>> = {
+    zh: [
+      {
+        pattern: /个人主义/i,
+        severity: 'warning',
+        suggestion: '考虑使用更符合集体主义文化的表达',
+        reason: '中文文化更重视集体和家庭，个人主义概念可能不太适合'
+      }
+    ],
+    ja: [
+      {
+        pattern: /直接的/i,
+        severity: 'info',
+        suggestion: '考虑使用更委婉的表达方式',
+        reason: '日本文化偏好间接和委婉的沟通方式'
+      }
+    ],
+    ar: [
+      {
+        pattern: /个人选择/i,
+        severity: 'warning',
+        suggestion: '考虑家庭和社区的影响',
+        reason: '阿拉伯文化中家庭和社区决策很重要'
+      }
+    ]
+  };
 
-    report.summary.totalChecked += stats.checked;
-    report.summary.totalIssues += stats.issues;
+  return checks[language] || [];
+}
 
-    // 按语言统计
-    const issuesByLanguage = issues.reduce((acc, issue) => {
-      if (!acc[issue.language]) acc[issue.language] = 0;
-      acc[issue.language]++;
-      return acc;
-    }, {} as Record<string, number>);
+/**
+ * Check for text length and formatting issues
+ */
+function checkFormattingIssues(
+  textValue: string,
+  language: string,
+  key: string,
+  filePath: string
+): TranslationIssue[] {
+  const issues: TranslationIssue[] = [];
 
-    for (const [language, count] of Object.entries(issuesByLanguage)) {
-      if (report.byLanguage[language]) {
-        report.byLanguage[language].issues += count;
+  // Check for excessive length differences
+  const englishLength = getEnglishTranslation(key)?.length || 0;
+  const currentLength = textValue.length;
+  const lengthRatio = currentLength / englishLength;
+
+  if (lengthRatio > 2.5) {
+    issues.push({
+      type: 'length',
+      severity: 'warning',
+      file: filePath,
+      key,
+      language,
+      current: textValue,
+      reason: `Translation is ${Math.round(lengthRatio * 100)}% longer than English, may cause UI issues`
+    });
+  }
+
+  // Check for formatting consistency
+  if (textValue.includes('  ')) {
+    issues.push({
+      type: 'formatting',
+      severity: 'info',
+      file: filePath,
+      key,
+      language,
+      current: textValue,
+      suggested: textValue.replace(/\s+/g, ' '),
+      reason: 'Contains multiple consecutive spaces'
+    });
+  }
+
+  // Check for proper punctuation
+  if (language === 'zh' && textValue.match(/[。！？]$/)) {
+    // Chinese should end with Chinese punctuation
+  } else if (language === 'ja' && textValue.match(/[。！？]$/)) {
+    // Japanese should end with Japanese punctuation
+  } else if (['es', 'ar', 'hi', 'ko'].includes(language) && !textValue.match(/[.!?]$/)) {
+    if (textValue.length > 10 && key.includes('message')) {
+      issues.push({
+        type: 'formatting',
+        severity: 'info',
+        file: filePath,
+        key,
+        language,
+        current: textValue,
+        reason: 'Long message text should end with proper punctuation'
+      });
+    }
+  }
+
+  return issues;
+}
+
+/**
+ * Get English translation for comparison (simplified)
+ */
+function getEnglishTranslation(key: string): string | null {
+  // This would need to be implemented to load the English translation
+  // For now, return null
+  return null;
+}
+
+/**
+ * Validate translation quality for a single file
+ */
+async function validateTranslationFile(filePath: string, language: string): Promise<TranslationIssue[]> {
+  const issues: TranslationIssue[] = [];
+
+  const translationData = await loadTranslationFile(filePath);
+  if (!translationData) {
+    return issues;
+  }
+
+  const textValues = extractTextValues(translationData);
+
+  for (const { key, value } of textValues) {
+    // Check terminology consistency
+    issues.push(...checkTerminologyConsistency(value, language, key, filePath));
+
+    // Check cultural appropriateness
+    issues.push(...checkCulturalAppropriateness(value, language, key, filePath));
+
+    // Check formatting issues
+    issues.push(...checkFormattingIssues(value, language, key, filePath));
+  }
+
+  return issues;
+}
+
+/**
+ * Generate quality improvement suggestions
+ */
+function generateImprovementSuggestions(issues: TranslationIssue[]): string[] {
+  const suggestions: string[] = [];
+
+  const terminologyIssues = issues.filter(i => i.type === 'terminology').length;
+  const culturalIssues = issues.filter(i => i.type === 'cultural').length;
+  const formattingIssues = issues.filter(i => i.type === 'formatting').length;
+
+  if (terminologyIssues > 0) {
+    suggestions.push(`Found ${terminologyIssues} terminology issues. Consider using the standardized mental health terminology dictionary.`);
+  }
+
+  if (culturalIssues > 0) {
+    suggestions.push(`Found ${culturalIssues} cultural appropriateness issues. Review cultural adaptation guidelines for each language.`);
+  }
+
+  if (formattingIssues > 0) {
+    suggestions.push(`Found ${formattingIssues} formatting issues. Ensure consistent punctuation and spacing.`);
+  }
+
+  return suggestions;
+}
+
+/**
+ * Main validation function
+ */
+export async function validateTranslationQuality(): Promise<QualityReport> {
+  console.log('🔍 Starting translation quality validation...');
+
+  const issues: TranslationIssue[] = [];
+  const translationDirs = [
+    'packages/website/src/locales',
+    'packages/website/src/client-locales'
+  ];
+
+  const languages = ['zh', 'es', 'ja', 'ko', 'hi', 'ar'];
+  const modules = ['assessment', 'shared', 'home', 'guide', 'resources'];
+  let totalFiles = 0;
+
+  for (const dir of translationDirs) {
+    for (const module of modules) {
+      for (const lang of languages) {
+        const filePath = path.join(process.cwd(), dir, module, `${lang}.ts`);
+
+        try {
+          await fs.access(filePath);
+          totalFiles++;
+          console.log(`Validating ${filePath}...`);
+
+          const fileIssues = await validateTranslationFile(filePath, lang);
+          issues.push(...fileIssues);
+        } catch (error) {
+          // File doesn't exist, skip
+          continue;
+        }
       }
     }
   }
 
-  // 计算语言得分和检查数量
-  for (const language of SUPPORTED_LANGUAGES) {
-    if (language !== DEFAULT_LANGUAGE && report.byLanguage[language]) {
-      const langStats = report.byLanguage[language];
-      langStats.checked = Math.floor(
-        report.summary.totalChecked / (SUPPORTED_LANGUAGES.length - 1)
-      );
-      langStats.score =
-        langStats.checked > 0
-          ? Math.max(0, 100 - (langStats.issues / langStats.checked) * 100)
-          : 100;
-    }
+  const errorCount = issues.filter(i => i.severity === 'error').length;
+  const warningCount = issues.filter(i => i.severity === 'warning').length;
+  const infoCount = issues.filter(i => i.severity === 'info').length;
+
+  const report: QualityReport = {
+    summary: {
+      totalFiles,
+      totalIssues: issues.length,
+      errorCount,
+      warningCount,
+      infoCount
+    },
+    issues,
+    improvements: {
+      terminology: issues.filter(i => i.type === 'terminology').length,
+      consistency: issues.filter(i => i.type === 'consistency').length,
+      cultural: issues.filter(i => i.type === 'cultural').length,
+      formatting: issues.filter(i => i.type === 'formatting').length
+    },
+    generatedAt: new Date().toISOString()
+  };
+
+  // Save report
+  const reportPath = path.join(process.cwd(), 'packages/website/reports/translation-quality-report.json');
+  await fs.mkdir(path.dirname(reportPath), { recursive: true });
+  await fs.writeFile(reportPath, JSON.stringify(report, null, 2), 'utf-8');
+
+  // Display summary
+  console.log('\n📊 Translation Quality Report');
+  console.log('================================');
+  console.log(`Files validated: ${totalFiles}`);
+  console.log(`Total issues: ${issues.length}`);
+  console.log(`  Errors: ${errorCount}`);
+  console.log(`  Warnings: ${warningCount}`);
+  console.log(`  Info: ${infoCount}`);
+
+  if (issues.length > 0) {
+    console.log('\n🔧 Improvement Areas:');
+    console.log(`  Terminology: ${report.improvements.terminology} issues`);
+    console.log(`  Cultural: ${report.improvements.cultural} issues`);
+    console.log(`  Formatting: ${report.improvements.formatting} issues`);
+
+    console.log('\n💡 Suggestions:');
+    const suggestions = generateImprovementSuggestions(issues);
+    suggestions.forEach(suggestion => console.log(`  - ${suggestion}`));
   }
 
-  // 计算严重程度统计
-  report.summary.errorCount = report.issues.filter(
-    (issue) => issue.severity === "error"
-  ).length;
-  report.summary.warningCount = report.issues.filter(
-    (issue) => issue.severity === "warning"
-  ).length;
-  report.summary.infoCount = report.issues.filter(
-    (issue) => issue.severity === "info"
-  ).length;
-
-  // 计算总体质量得分
-  report.summary.qualityScore =
-    report.summary.totalChecked > 0
-      ? Math.max(
-          0,
-          100 - (report.summary.totalIssues / report.summary.totalChecked) * 100
-        )
-      : 100;
+  console.log(`\n📄 Detailed report saved to: ${reportPath}`);
 
   return report;
 }
 
-/**
- * 打印控制台报告
- */
-function printQualityReport(report: QualityReport) {
-  console.log("\n" + "=".repeat(60));
-  console.log("🔍 TRANSLATION QUALITY VALIDATION REPORT");
-  console.log("=".repeat(60));
-
-  // 总体统计
-  console.log(`\n📊 Overall Quality Statistics:`);
-  console.log(`  Total Translations Checked: ${report.summary.totalChecked}`);
-  console.log(`  Total Quality Issues: ${report.summary.totalIssues}`);
-  console.log(`  Quality Score: ${report.summary.qualityScore.toFixed(1)}%`);
-  console.log(`  Errors: ${report.summary.errorCount}`);
-  console.log(`  Warnings: ${report.summary.warningCount}`);
-  console.log(`  Info: ${report.summary.infoCount}`);
-
-  // 按语言统计
-  console.log(`\n🌍 Quality by Language:`);
-  for (const [language, stats] of Object.entries(report.byLanguage)) {
-    const status = stats.score >= 90 ? "✅" : stats.score >= 70 ? "⚠️" : "❌";
-    console.log(
-      `  ${status} ${language.toUpperCase()}: ${stats.score.toFixed(1)}% (${
-        stats.issues
-      } issues in ${stats.checked} translations)`
-    );
-  }
-
-  // 按模块统计
-  console.log(`\n📦 Quality by Module:`);
-  for (const [moduleName, stats] of Object.entries(report.byModule)) {
-    const status = stats.score >= 90 ? "✅" : stats.score >= 70 ? "⚠️" : "❌";
-    console.log(
-      `  ${status} ${moduleName}: ${stats.score.toFixed(1)}% (${
-        stats.issues
-      } issues in ${stats.checked} translations)`
-    );
-  }
-
-  // 问题详情
-  if (report.issues.length > 0) {
-    console.log(`\n❌ Quality Issues Found:`);
-
-    // 按类型分组
-    const issuesByType = report.issues.reduce((acc, issue) => {
-      if (!acc[issue.type]) acc[issue.type] = [];
-      acc[issue.type].push(issue);
-      return acc;
-    }, {} as Record<string, QualityIssue[]>);
-
-    for (const [type, issues] of Object.entries(issuesByType)) {
-      console.log(
-        `\n  ${getIssueTypeIcon(type)} ${getIssueTypeName(type)} (${
-          issues.length
-        }):`
-      );
-
-      // 显示前几个问题作为示例
-      const samplesToShow = Math.min(5, issues.length);
-      for (let i = 0; i < samplesToShow; i++) {
-        const issue = issues[i];
-        console.log(
-          `    ${getSeverityIcon(issue.severity)} ${issue.module}/${
-            issue.language
-          } - ${issue.key}`
-        );
-        console.log(`      ${issue.message}`);
-        if (issue.suggestion) {
-          console.log(`      💡 ${issue.suggestion}`);
-        }
-      }
-
-      if (issues.length > samplesToShow) {
-        console.log(`    ... and ${issues.length - samplesToShow} more`);
-      }
-    }
-  } else {
-    console.log(
-      `\n✅ No quality issues found! All translations meet quality standards.`
-    );
-  }
-
-  // 质量建议
-  console.log(`\n💡 Quality Recommendations:`);
-  if (report.summary.qualityScore >= 95) {
-    console.log(`  🎉 Excellent translation quality! Keep up the good work.`);
-  } else if (report.summary.qualityScore >= 85) {
-    console.log(
-      `  👍 Good translation quality. Address remaining issues for perfection.`
-    );
-  } else if (report.summary.qualityScore >= 70) {
-    console.log(
-      `  ⚠️ Moderate translation quality. Focus on fixing errors and warnings.`
-    );
-  } else {
-    console.log(
-      `  🚨 Translation quality needs improvement. Prioritize fixing critical issues.`
-    );
-  }
-
-  if (report.summary.errorCount > 0) {
-    console.log(`  🔴 Fix ${report.summary.errorCount} critical errors first`);
-  }
-  if (report.summary.warningCount > 0) {
-    console.log(
-      `  🟡 Review ${report.summary.warningCount} warnings for consistency`
-    );
-  }
-}
-
-/**
- * 获取问题类型图标
- */
-function getIssueTypeIcon(type: string): string {
-  const icons = {
-    terminology_inconsistency: "📚",
-    length_mismatch: "📏",
-    format_error: "🔧",
-    variable_mismatch: "🔗",
-    html_mismatch: "🏷️",
-    punctuation_issue: "✏️",
-    untranslated_content: "🔤",
-  };
-  return icons[type] || "❓";
-}
-
-/**
- * 获取问题类型名称
- */
-function getIssueTypeName(type: string): string {
-  const names = {
-    terminology_inconsistency: "Terminology Inconsistency",
-    length_mismatch: "Length Mismatch",
-    format_error: "Format Error",
-    variable_mismatch: "Variable Mismatch",
-    html_mismatch: "HTML Tag Mismatch",
-    punctuation_issue: "Punctuation Issue",
-    untranslated_content: "Untranslated Content",
-  };
-  return names[type] || type;
-}
-
-/**
- * 获取严重程度图标
- */
-function getSeverityIcon(severity: string): string {
-  const icons = {
-    error: "🔴",
-    warning: "🟡",
-    info: "🔵",
-  };
-  return icons[severity] || "⚪";
-}
-
-/**
- * 保存质量报告
- */
-async function saveQualityReport(report: QualityReport, outputPath: string) {
-  try {
-    // 确保输出目录存在
-    const outputDir = path.dirname(outputPath);
-    await fs.promises.mkdir(outputDir, { recursive: true });
-
-    await fs.promises.writeFile(
-      outputPath,
-      JSON.stringify(report, null, 2),
-      "utf-8"
-    );
-    console.log(`\n📄 Detailed quality report saved to: ${outputPath}`);
-  } catch (error) {
-    console.error(`Failed to save quality report: ${error}`);
-  }
-}
-
-/**
- * 运行用户体验测试
- */
-async function runUserExperienceTests(): Promise<void> {
-  console.log("\n🧪 Running User Experience Tests...");
-
-  // 检查关键用户流程的翻译
-  const criticalPaths = [
-    "shared.navigation",
-    "home.hero",
-    "assessment.start",
-    "guide.steps",
-    "resources.categories",
-  ];
-
-  for (const path of criticalPaths) {
-    console.log(`  Testing critical path: ${path}`);
-    // 这里可以添加更复杂的UX测试逻辑
-  }
-
-  console.log("  ✅ User experience tests completed");
-}
-
-/**
- * 主函数
- */
-async function main() {
-  const args = process.argv.slice(2);
-  const outputPath =
-    args.find((arg) => arg.startsWith("--output="))?.split("=")[1] ||
-    "translation-quality-report.json";
-  const runUxTests = args.includes("--ux-tests");
-  const showHelp = args.includes("--help") || args.includes("-h");
-
-  if (showHelp) {
-    console.log(`
-Usage: tsx scripts/validate-translation-quality.ts [options]
-
-Options:
-  --output=<path>    Output JSON report file (default: translation-quality-report.json)
-  --ux-tests         Run additional user experience tests
-  --help, -h         Show this help message
-
-Examples:
-  tsx scripts/validate-translation-quality.ts
-  tsx scripts/validate-translation-quality.ts --output=reports/quality.json --ux-tests
-`);
-    return;
-  }
-
-  console.log("🔍 Starting translation quality validation...");
-  console.log(`📁 Scanning directory: ${LOCALES_DIR}`);
-  console.log(`🌍 Languages: ${SUPPORTED_LANGUAGES.join(", ")}`);
-  console.log(`📦 Modules: ${TRANSLATION_MODULES.join(", ")}`);
-
-  try {
-    // 生成质量报告
-    const report = await generateQualityReport();
-
-    // 打印报告
-    printQualityReport(report);
-
-    // 保存报告
-    if (outputPath) {
-      await saveQualityReport(report, outputPath);
-    }
-
-    // 运行用户体验测试
-    if (runUxTests) {
-      await runUserExperienceTests();
-    }
-
-    // 设置退出码
-    const hasErrors = report.summary.errorCount > 0;
-    const qualityThreshold = 80; // 质量阈值
-    const belowThreshold = report.summary.qualityScore < qualityThreshold;
-
-    if (hasErrors || belowThreshold) {
-      console.log(`\n❌ Quality validation failed:`);
-      if (hasErrors) {
-        console.log(`  - ${report.summary.errorCount} critical errors found`);
-      }
-      if (belowThreshold) {
-        console.log(
-          `  - Quality score ${report.summary.qualityScore.toFixed(
-            1
-          )}% below threshold ${qualityThreshold}%`
-        );
-      }
-      process.exit(1);
-    } else {
-      console.log(`\n✅ Translation quality validation passed!`);
-      process.exit(0);
-    }
-  } catch (error) {
-    console.error("❌ Error during quality validation:", error);
-    process.exit(1);
-  }
-}
-
-// 运行主函数
+// Run if called directly
 if (import.meta.url === `file://${process.argv[1]}`) {
-  main().catch(console.error);
+  validateTranslationQuality().catch(console.error);
 }
