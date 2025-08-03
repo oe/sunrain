@@ -22,9 +22,9 @@ export default memo(function ErrorDisplay({
   // 默认翻译函数
   const defaultT = (key: string) => {
     const translations: Record<string, string> = {
-      'client.errors.title': '错误',
-      'client.errors.retry': '重试',
-      'client.errors.goBack': '返回'
+      'errors.title': '错误',
+      'errors.retry': '重试',
+      'errors.goBack': '返回'
     };
     return translations[key] || key;
   };
@@ -35,7 +35,7 @@ export default memo(function ErrorDisplay({
       </svg>
 
       <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-        {title || (t || defaultT)('client.errors.title')}
+        {title || (t || defaultT)('errors.title')}
       </h2>
 
       <p className="text-gray-600 dark:text-gray-300 mb-6">
@@ -48,7 +48,7 @@ export default memo(function ErrorDisplay({
             onClick={onRetry}
             className="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
           >
-            {(t || defaultT)('client.errors.retry')}
+            {(t || defaultT)('errors.retry')}
           </button>
         )}
 
@@ -57,7 +57,7 @@ export default memo(function ErrorDisplay({
             onClick={onGoBack}
             className="px-6 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
           >
-            {(t || defaultT)('client.errors.goBack')}
+            {(t || defaultT)('errors.goBack')}
           </button>
         )}
       </div>

@@ -37,6 +37,24 @@ export const sharedAr: ISharedCSRTranslations = {
       confirm: "تأكيد",
       /** 关闭 */
       close: "إغلاق",
+      /** 上一题 */
+      previous: "السابق",
+      /** 下一题 */
+      next: "التالي",
+      /** 完成 */
+      complete: "إكمال",
+      /** 保存 */
+      save: "حفظ",
+      /** 已保存 */
+      saved: "تم الحفظ",
+      /** 暂停 */
+      pause: "إيقاف مؤقت",
+      /** 继续 */
+      continue: "متابعة",
+      /** 退出 */
+      exit: "خروج",
+      /** 开始新评测 */
+      startNew: "بدء جديد",
     },
   },
   /** 交互式组件 */

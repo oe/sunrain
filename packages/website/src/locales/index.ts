@@ -5,8 +5,6 @@
  * @format
  */
 
-import type { Language } from '@sunrain/shared';
-
 // 导入各页面翻译模块
 import sharedTranslations, { getSharedTranslations } from './shared';
 import homeTranslations, { getHomeTranslations } from './home';

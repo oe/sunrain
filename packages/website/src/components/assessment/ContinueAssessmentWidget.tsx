@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useTranslations } from '@/hooks/useTranslations';
+import { useAssessmentTranslations } from '@/hooks/useCSRTranslations';
 import type { AssessmentSession } from '@/types/assessment';
 
 // Import the assessment engine - we'll use the singleton instance
@@ -22,7 +22,7 @@ export default function ContinueAssessmentWidget({ className = '' }: ContinueAss
   const [activeSessions, setActiveSessions] = useState<AssessmentSession[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const { t, isLoading: translationsLoading } = useTranslations('assessment');
+  const { t, isLoading: translationsLoading } = useAssessmentTranslations();
 
   useEffect(() => {
     loadActiveSessions();

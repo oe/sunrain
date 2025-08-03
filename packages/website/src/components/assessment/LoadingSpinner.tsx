@@ -13,10 +13,11 @@ export default memo(function LoadingSpinner({
 }: LoadingSpinnerProps) {
   // 默认翻译函数
   const defaultT = (key: string) => {
-    const translations: Record<string, string> = {
-      'client.loading.default': '正在加载...',
-      'client.loading.assessment': '正在加载评测...'
-    };
+    // const translations: Record<string, string> = {
+    //   'loading.default': '正在加载...',
+    //   'loading.assessment': '正在加载评测...'
+    // };
+    const translations = {};
     return translations[key] || key;
   };
   const sizeClasses = {
@@ -35,7 +36,7 @@ export default memo(function LoadingSpinner({
     <div className={`flex flex-col items-center justify-center ${containerClasses[size]}`}>
       <div className={`animate-spin rounded-full border-b-2 border-blue-600 ${sizeClasses[size]} mb-4`}></div>
       <p className="text-gray-600 dark:text-gray-300 text-center">
-        {message || (t || defaultT)('client.loading.default')}
+        {message || (t || defaultT)('loading.default')}
       </p>
     </div>
   );

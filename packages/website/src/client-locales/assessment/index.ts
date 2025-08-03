@@ -12,4 +12,4 @@ export { default as assessmentKo } from './ko';
 export { default as assessmentHi } from './hi';
 export { default as assessmentAr } from './ar';
 
-export type { IAssessmentCSRTranslations } from './types';
+export type { IAssessmentTranslations } from './types';

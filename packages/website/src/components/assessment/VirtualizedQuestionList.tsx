@@ -74,10 +74,10 @@ export default memo(function VirtualizedQuestionList({
     <div className="bg-white dark:bg-gray-800 rounded-lg shadow border border-gray-200 dark:border-gray-700">
       <div className="p-4 border-b border-gray-200 dark:border-gray-700">
         <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-          {t('client.questionList.title')}
+          {t('questionList.title')}
         </h3>
         <p className="text-sm text-gray-600 dark:text-gray-400">
-          {t('client.questionList.progress', {
+          {t('questionList.progress', {
             current: currentIndex + 1,
             total: questions.length
           })}
@@ -116,7 +116,7 @@ export default memo(function VirtualizedQuestionList({
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between">
                       <span className="text-sm font-medium text-gray-900 dark:text-white">
-                        {t('client.questionList.questionNumber', { number: index + 1 })}
+                        {t('questionList.questionNumber', { number: index + 1 })}
                       </span>
                       <span className="text-xs text-gray-500 dark:text-gray-400">
                         {question.type}
@@ -140,10 +140,10 @@ export default memo(function VirtualizedQuestionList({
       <div className="p-4 border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800">
         <div className="flex items-center justify-between text-sm">
           <span className="text-gray-600 dark:text-gray-400">
-            {t('client.questionList.completed')}: {currentIndex}
+            {t('questionList.completed')}: {currentIndex}
           </span>
           <span className="text-gray-600 dark:text-gray-400">
-            {t('client.questionList.remaining')}: {questions.length - currentIndex}
+            {t('questionList.remaining')}: {questions.length - currentIndex}
           </span>
         </div>
 

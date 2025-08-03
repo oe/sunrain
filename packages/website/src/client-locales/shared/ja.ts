@@ -37,6 +37,24 @@ export const sharedJa: ISharedCSRTranslations = {
       confirm: '確認',
       /** 关闭 */
       close: '閉じる',
+      /** 上一题 */
+      previous: '前へ',
+      /** 下一题 */
+      next: '次へ',
+      /** 完成 */
+      complete: '完了',
+      /** 保存 */
+      save: '保存',
+      /** 已保存 */
+      saved: '保存済み',
+      /** 暂停 */
+      pause: '一時停止',
+      /** 继续 */
+      continue: '続行',
+      /** 退出 */
+      exit: '終了',
+      /** 开始新评测 */
+      startNew: '新規開始',
     },
   },
   /** 交互式组件 */

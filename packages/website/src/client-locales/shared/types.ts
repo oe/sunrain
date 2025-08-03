@@ -75,6 +75,24 @@ export interface ISharedCSRTranslations extends CSRTranslations {
       confirm: string;
       /** 关闭 */
       close: string;
+      /** 上一题 */
+      previous: string;
+      /** 下一题 */
+      next: string;
+      /** 完成 */
+      complete: string;
+      /** 保存 */
+      save: string;
+      /** 已保存 */
+      saved: string;
+      /** 暂停 */
+      pause: string;
+      /** 继续 */
+      continue: string;
+      /** 退出 */
+      exit: string;
+      /** 开始新评测 */
+      startNew: string;
     };
   };
   /** 交互式组件 */

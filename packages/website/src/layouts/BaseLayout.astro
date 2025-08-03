@@ -1,6 +1,6 @@
 ---
 import { getLocale } from 'astro-i18n-aut';
-import { useTranslations } from '@/i18n/utils';
+import { createSSGTranslations } from '@/i18n/utils';
 import { languages, type Language } from '@sunrain/shared';
 
 import Header from '@/components/Header.astro';
@@ -15,7 +15,7 @@ export interface Props {
 
 const { title, description, lang } = Astro.props;
 const currentLang = lang || (getLocale(Astro.url) as Language);
-const t = useTranslations(currentLang);
+const t = createSSGTranslations(currentLang);
 
 const pageTitle = title ? `${title} | SunRain` : `SunRain - ${t('hero.title')}`;
 const pageDescription = description || t('meta.description');

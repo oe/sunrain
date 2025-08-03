@@ -37,6 +37,24 @@ export const sharedZh: ISharedCSRTranslations = {
       confirm: '确认',
       /** 关闭 */
       close: '关闭',
+      /** 上一题 */
+      previous: '上一题',
+      /** 下一题 */
+      next: '下一题',
+      /** 完成 */
+      complete: '完成',
+      /** 保存 */
+      save: '保存',
+      /** 已保存 */
+      saved: '已保存',
+      /** 暂停 */
+      pause: '暂停',
+      /** 继续 */
+      continue: '继续',
+      /** 退出 */
+      exit: '退出',
+      /** 开始新评测 */
+      startNew: '开始新评测',
     },
   },
   /** 交互式组件 */

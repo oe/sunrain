@@ -1,32 +1,13 @@
 /**
  * Assessment 系统CSR翻译类型定义
- * 简化结构，只包含实际使用的翻译键
+ * 匹配实际使用的翻译键结构，包含client前缀
  */
 
 export interface IAssessmentTranslations {
-  /** 继续评测页面 */
-  continue: {
-    loading: string;
-  };
-
-  /** 评测列表页面 */
-  list: {
-    activeSessions: {
-      title: string;
-      continueLink: string;
-      lastActivity: string;
-      progress: string;
-    };
-  };
-
+  /** 客户端特定翻译内容 */
   /** 评测相关 */
   assessment: {
     title: string;
-  };
-
-  /** 进度相关 */
-  progress: {
-    text: string;
   };
 
   /** 加载状态 */
@@ -71,6 +52,26 @@ export interface IAssessmentTranslations {
     questionNumber: string;
     completed: string;
     remaining: string;
+  };
+
+  /** 继续评测页面 */
+  continue: {
+    loading: string;
+  };
+
+  /** 评测列表页面 */
+  list: {
+    activeSessions: {
+      title: string;
+      continueLink: string;
+      lastActivity: string;
+      progress: string;
+    };
+  };
+
+  /** 进度相关 */
+  progress: {
+    text: string;
   };
 
   /** 验证相关 */

@@ -2,12 +2,12 @@
 import { getLocale } from 'astro-i18n-aut';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { type Language } from '@sunrain/shared';
-import { useResourcesTranslations, getRelativeLocaleUrl } from '@/i18n/utils';
+import { createSSGTranslations, getRelativeLocaleUrl } from '@/i18n/utils';
 import { getEntry } from 'astro:content';
 
 const lang = getLocale(Astro.url) as Language;
 
-const t = useResourcesTranslations(lang);
+const t = createSSGTranslations(lang, 'resources');
 
 // Load resources data
 const musicData = await getEntry('resources', 'music');

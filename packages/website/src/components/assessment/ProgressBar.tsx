@@ -36,11 +36,11 @@ export default memo(function ProgressBar({
       {/* Header with title and controls */}
       <div className="flex items-center justify-between mb-2">
         <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
-          {assessmentName || t('client.assessment.title')}
+          {assessmentName || t('assessment.title')}
         </h1>
         <div className="flex items-center space-x-4">
           <span className="text-sm text-gray-600 dark:text-gray-300">
-            {t('client.progress.text', {
+            {t('progress.text', {
               current: current + 1,
               total: total
             })}

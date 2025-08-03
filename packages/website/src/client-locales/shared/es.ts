@@ -37,6 +37,24 @@ export const sharedEs: ISharedCSRTranslations = {
       confirm: 'Confirmar',
       /** 关闭 */
       close: 'Cerrar',
+      /** 上一题 */
+      previous: 'Anterior',
+      /** 下一题 */
+      next: 'Siguiente',
+      /** 完成 */
+      complete: 'Completar',
+      /** 保存 */
+      save: 'Guardar',
+      /** 已保存 */
+      saved: 'Guardado',
+      /** 暂停 */
+      pause: 'Pausar',
+      /** 继续 */
+      continue: 'Continuar',
+      /** 退出 */
+      exit: 'Salir',
+      /** 开始新评测 */
+      startNew: 'Comenzar Nuevo',
     },
   },
   /** 交互式组件 */

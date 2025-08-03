@@ -5,12 +5,12 @@
  * 与SSG翻译系统分离，提供独立的客户端翻译解决方案
  */
 
-import type { Language } from '@sunrain/shared';
+import type { Language } from "@sunrain/shared";
 import type {
   CSRTranslations,
   CSRTranslationConfig,
-  TranslationLoadState
-} from '@/client-locales/shared/types';
+  TranslationLoadState,
+} from "@/client-locales/shared/types";
 
 /**
  * 翻译缓存条目接口
@@ -44,7 +44,7 @@ export class CSRTranslationManager {
   private translationCache = new Map<string, CacheEntry>();
   private loadingPromises = new Map<string, LoadingPromise>();
   private config: CSRTranslationConfig;
-  private currentLanguage: Language = 'zh';
+  private currentLanguage: Language = "en";
   private loadStates = new Map<string, TranslationLoadState>();
 
   /**
@@ -52,37 +52,36 @@ export class CSRTranslationManager {
    */
   private constructor(config?: Partial<CSRTranslationConfig>) {
     this.config = {
-      supportedLanguages: ['en', 'zh', 'es', 'ja', 'ko', 'hi', 'ar'],
-      defaultLanguage: 'zh',
-      translationPath: '/client-locales',
+      supportedLanguages: ["en", "zh", "es", "ja", "ko", "hi", "ar"],
+      defaultLanguage: "en",
+      translationPath: "/client-locales",
       cache: {
         enabled: true,
         ttl: 30 * 60 * 1000, // 30分钟
-        maxEntries: 50
+        maxEntries: 50,
       },
       preload: {
-        enabled: true,
-        namespaces: ['assessment', 'shared'],
-        languages: ['en', 'zh']
+        enabled: false, // 默认禁用自动预加载，改为按需预加载
+        namespaces: ["assessment", "shared"],
+        languages: ["en"], // 只预加载英文作为默认
       },
-      ...config
+      ...config,
     };
-
-    // 初始化预加载
-    if (this.config.preload.enabled) {
-      this.initializePreload();
-    }
 
     // 设置缓存清理定时器
     if (this.config.cache.enabled) {
       this.setupCacheCleanup();
     }
+
+    // 不再自动初始化预加载，改为按需调用
   }
 
   /**
    * 获取单例实例
    */
-  static getInstance(config?: Partial<CSRTranslationConfig>): CSRTranslationManager {
+  static getInstance(
+    config?: Partial<CSRTranslationConfig>
+  ): CSRTranslationManager {
     if (!CSRTranslationManager.instance) {
       CSRTranslationManager.instance = new CSRTranslationManager(config);
     }
@@ -94,10 +93,50 @@ export class CSRTranslationManager {
    */
   setCurrentLanguage(language: Language): void {
     if (this.config.supportedLanguages.includes(language)) {
+      const previousLanguage = this.currentLanguage;
       this.currentLanguage = language;
+
+      // 记录语言使用历史
+      this.recordLanguageUsage(language);
+
+      // 当语言改变时，清除其他语言的预加载缓存，避免混乱
+      if (previousLanguage !== language) {
+        this.clearOtherLanguageCaches(language);
+      }
     } else {
-      console.warn(`Unsupported language: ${language}, falling back to ${this.config.defaultLanguage}`);
+      console.warn(
+        `Unsupported language: ${language}, falling back to ${this.config.defaultLanguage}`
+      );
       this.currentLanguage = this.config.defaultLanguage;
+    }
+  }
+
+  /**
+   * 记录语言使用历史
+   */
+  private recordLanguageUsage(language: Language): void {
+    if (typeof window === "undefined") return;
+
+    try {
+      const storage = window.localStorage;
+      const key = "previous-languages";
+      const existing = storage?.getItem(key);
+
+      let languages: Language[] = [];
+      if (existing) {
+        languages = JSON.parse(existing);
+      }
+
+      // 将当前语言移到最前面
+      languages = languages.filter((lang) => lang !== language);
+      languages.unshift(language);
+
+      // 只保留最近的3种语言
+      languages = languages.slice(0, 3);
+
+      storage?.setItem(key, JSON.stringify(languages));
+    } catch (error) {
+      // 忽略存储错误
     }
   }
 
@@ -111,7 +150,10 @@ export class CSRTranslationManager {
   /**
    * 加载翻译内容
    */
-  async loadTranslations(namespace: string, language?: Language): Promise<CSRTranslations> {
+  async loadTranslations(
+    namespace: string,
+    language?: Language
+  ): Promise<CSRTranslations> {
     const targetLanguage = language || this.currentLanguage;
     const cacheKey = `${namespace}:${targetLanguage}`;
 
@@ -133,7 +175,8 @@ export class CSRTranslationManager {
       if (existingPromise) {
         // 检查是否超时
         const elapsed = Date.now() - existingPromise.startTime;
-        if (elapsed < 10000) { // 10秒超时
+        if (elapsed < 10000) {
+          // 10秒超时
           return await existingPromise.promise;
         } else {
           // 清除超时的Promise
@@ -145,7 +188,7 @@ export class CSRTranslationManager {
       const loadingPromise = this.performLoad(namespace, targetLanguage);
       this.loadingPromises.set(cacheKey, {
         promise: loadingPromise,
-        startTime: Date.now()
+        startTime: Date.now(),
       });
 
       try {
@@ -156,11 +199,12 @@ export class CSRTranslationManager {
         this.loadingPromises.delete(cacheKey);
       }
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      const errorMessage =
+        error instanceof Error ? error.message : "Unknown error";
       this.updateLoadState(cacheKey, {
         loading: false,
         loaded: false,
-        error: errorMessage
+        error: errorMessage,
       });
       throw error;
     }
@@ -169,26 +213,29 @@ export class CSRTranslationManager {
   /**
    * 执行实际的翻译加载
    */
-  private async performLoad(namespace: string, language: Language): Promise<CSRTranslations> {
+  private async performLoad(
+    namespace: string,
+    language: Language
+  ): Promise<CSRTranslations> {
     const cacheKey = `${namespace}:${language}`;
 
     try {
       // 使用显式的动态导入映射，让构建工具能够分析依赖
       const moduleMap: Record<string, () => Promise<any>> = {
-        'assessment:en': () => import('../client-locales/assessment/en'),
-        'assessment:zh': () => import('../client-locales/assessment/zh'),
-        'assessment:es': () => import('../client-locales/assessment/es'),
-        'assessment:ja': () => import('../client-locales/assessment/ja'),
-        'assessment:ko': () => import('../client-locales/assessment/ko'),
-        'assessment:hi': () => import('../client-locales/assessment/hi'),
-        'assessment:ar': () => import('../client-locales/assessment/ar'),
-        'shared:en': () => import('../client-locales/shared/en'),
-        'shared:zh': () => import('../client-locales/shared/zh'),
-        'shared:es': () => import('../client-locales/shared/es'),
-        'shared:ja': () => import('../client-locales/shared/ja'),
-        'shared:ko': () => import('../client-locales/shared/ko'),
-        'shared:hi': () => import('../client-locales/shared/hi'),
-        'shared:ar': () => import('../client-locales/shared/ar'),
+        "assessment:en": () => import("../client-locales/assessment/en"),
+        "assessment:zh": () => import("../client-locales/assessment/zh"),
+        "assessment:es": () => import("../client-locales/assessment/es"),
+        "assessment:ja": () => import("../client-locales/assessment/ja"),
+        "assessment:ko": () => import("../client-locales/assessment/ko"),
+        "assessment:hi": () => import("../client-locales/assessment/hi"),
+        "assessment:ar": () => import("../client-locales/assessment/ar"),
+        "shared:en": () => import("../client-locales/shared/en"),
+        "shared:zh": () => import("../client-locales/shared/zh"),
+        "shared:es": () => import("../client-locales/shared/es"),
+        "shared:ja": () => import("../client-locales/shared/ja"),
+        "shared:ko": () => import("../client-locales/shared/ko"),
+        "shared:hi": () => import("../client-locales/shared/hi"),
+        "shared:ar": () => import("../client-locales/shared/ar"),
       };
 
       const moduleKey = `${namespace}:${language}`;
@@ -199,44 +246,70 @@ export class CSRTranslationManager {
       }
 
       const module = await moduleLoader();
-      console.log(`Loading CSR translations for ${moduleKey}:`, module);
-      console.log(`Available exports:`, Object.keys(module));
+      if (process.env.NODE_ENV === "development") {
+        console.log(`Loading CSR translations for ${moduleKey}:`, module);
+        console.log(`Available exports:`, Object.keys(module));
+      }
 
       // 尝试多种导出方式
       let translations = module.default;
 
       if (!translations) {
         // 尝试命名导出
-        const namedExportKey = `${namespace}${language.charAt(0).toUpperCase() + language.slice(1)}`;
+        const namedExportKey = `${namespace}${
+          language.charAt(0).toUpperCase() + language.slice(1)
+        }`;
         translations = module[namedExportKey];
-        console.log(`Trying named export: ${namedExportKey}`, !!translations);
-      }
-
-      if (!translations) {
-        // 尝试其他可能的导出名称
-        const possibleKeys = Object.keys(module).filter(key =>
-          key !== 'default' && typeof module[key] === 'object'
-        );
-
-        if (possibleKeys.length > 0) {
-          translations = module[possibleKeys[0]];
-          console.log(`Using fallback export: ${possibleKeys[0]}`, !!translations);
+        if (process.env.NODE_ENV === "development") {
+          console.log(`Trying named export: ${namedExportKey}`, !!translations);
         }
       }
 
       if (!translations) {
-        console.error(`Translation not found for ${moduleKey}. Available exports:`, Object.keys(module));
-        console.error(`Tried: default, ${namespace}${language.charAt(0).toUpperCase() + language.slice(1)}`);
+        // 尝试其他可能的导出名称
+        const possibleKeys = Object.keys(module).filter(
+          (key) => key !== "default" && typeof module[key] === "object"
+        );
+
+        if (possibleKeys.length > 0) {
+          translations = module[possibleKeys[0]];
+          if (process.env.NODE_ENV === "development") {
+            console.log(
+              `Using fallback export: ${possibleKeys[0]}`,
+              !!translations
+            );
+          }
+        }
+      }
+
+      if (!translations) {
+        console.error(
+          `Translation not found for ${moduleKey}. Available exports:`,
+          Object.keys(module)
+        );
+        console.error(
+          `Tried: default, ${namespace}${
+            language.charAt(0).toUpperCase() + language.slice(1)
+          }`
+        );
         throw new Error(`Translation not found: ${namespace}:${language}`);
       }
 
-      console.log(`Successfully loaded CSR translations for ${moduleKey}:`, Object.keys(translations));
+      if (process.env.NODE_ENV === "development") {
+        console.log(
+          `Successfully loaded CSR translations for ${moduleKey}:`,
+          Object.keys(translations)
+        );
+      }
 
       // 验证翻译结构（仅警告，不阻止加载）
       try {
         this.validateTranslations(translations, namespace, language);
       } catch (validationError) {
-        console.warn(`Translation validation failed for ${moduleKey}:`, validationError);
+        console.warn(
+          `Translation validation failed for ${moduleKey}:`,
+          validationError
+        );
         // 继续加载，不抛出错误
       }
 
@@ -249,10 +322,19 @@ export class CSRTranslationManager {
     } catch (error) {
       console.error(`Failed to load CSR translations for ${cacheKey}:`, error);
 
-      // 尝试回退到默认语言
+      // 优雅降级：尝试加载默认语言
       if (language !== this.config.defaultLanguage) {
-        console.log(`Falling back to default language: ${this.config.defaultLanguage}`);
-        return this.performLoad(namespace, this.config.defaultLanguage);
+        console.warn(
+          `Falling back to default language ${this.config.defaultLanguage} for ${namespace}`
+        );
+        try {
+          return await this.performLoad(namespace, this.config.defaultLanguage);
+        } catch (fallbackError) {
+          console.error(
+            `Failed to load fallback translations for ${namespace}:${this.config.defaultLanguage}`,
+            fallbackError
+          );
+        }
       }
 
       throw error;
@@ -262,18 +344,36 @@ export class CSRTranslationManager {
   /**
    * 验证翻译结构
    */
-  private validateTranslations(translations: any, namespace: string, language: Language): void {
-    if (!translations || typeof translations !== 'object') {
-      throw new Error(`Invalid translation structure for ${namespace}:${language}`);
+  private validateTranslations(
+    translations: any,
+    namespace: string,
+    language: Language
+  ): void {
+    if (!translations || typeof translations !== "object") {
+      throw new Error(
+        `Invalid translation structure for ${namespace}:${language}`
+      );
     }
 
     // 检查必需的客户端翻译结构
-    if (!translations.client || typeof translations.client !== 'object') {
+    if (!translations.client || typeof translations.client !== "object") {
       console.warn(`Missing client translations for ${namespace}:${language}`);
     }
 
-    if (!translations.interactive || typeof translations.interactive !== 'object') {
-      console.warn(`Missing interactive translations for ${namespace}:${language}`);
+    // 检查基本的翻译结构
+    const requiredKeys = [
+      "continue",
+      "list",
+      "progress",
+      "validation",
+      "execution",
+    ];
+    for (const key of requiredKeys) {
+      if (!translations[key]) {
+        console.warn(
+          `Missing ${key} translations for ${namespace}:${language}`
+        );
+      }
     }
   }
 
@@ -301,7 +401,10 @@ export class CSRTranslationManager {
   /**
    * 缓存翻译
    */
-  private cacheTranslation(cacheKey: string, translations: CSRTranslations): void {
+  private cacheTranslation(
+    cacheKey: string,
+    translations: CSRTranslations
+  ): void {
     // 检查缓存大小限制
     if (this.translationCache.size >= this.config.cache.maxEntries) {
       this.evictLeastRecentlyUsed();
@@ -312,7 +415,7 @@ export class CSRTranslationManager {
       translations,
       timestamp: now,
       accessCount: 1,
-      lastAccessed: now
+      lastAccessed: now,
     });
   }
 
@@ -320,7 +423,7 @@ export class CSRTranslationManager {
    * 清除最少使用的缓存条目
    */
   private evictLeastRecentlyUsed(): void {
-    let oldestKey = '';
+    let oldestKey = "";
     let oldestTime = Date.now();
 
     for (const [key, entry] of this.translationCache.entries()) {
@@ -338,10 +441,13 @@ export class CSRTranslationManager {
   /**
    * 更新加载状态
    */
-  private updateLoadState(cacheKey: string, state: Partial<TranslationLoadState>): void {
+  private updateLoadState(
+    cacheKey: string,
+    state: Partial<TranslationLoadState>
+  ): void {
     const currentState = this.loadStates.get(cacheKey) || {
       loading: false,
-      loaded: false
+      loaded: false,
     };
 
     this.loadStates.set(cacheKey, { ...currentState, ...state });
@@ -353,45 +459,114 @@ export class CSRTranslationManager {
   getLoadState(namespace: string, language?: Language): TranslationLoadState {
     const targetLanguage = language || this.currentLanguage;
     const cacheKey = `${namespace}:${targetLanguage}`;
-    return this.loadStates.get(cacheKey) || {
-      loading: false,
-      loaded: false
-    };
+    return (
+      this.loadStates.get(cacheKey) || {
+        loading: false,
+        loaded: false,
+      }
+    );
   }
 
   /**
-   * 预加载翻译
+   * 智能预加载翻译 - 基于用户行为和偏好
    */
-  async preloadTranslations(namespaces?: string[], languages?: Language[]): Promise<void> {
+  async preloadTranslations(
+    namespaces?: string[],
+    languages?: Language[]
+  ): Promise<void> {
     const targetNamespaces = namespaces || this.config.preload.namespaces;
-    const targetLanguages = languages || this.config.preload.languages;
+
+    // 智能确定要预加载的语言
+    const targetLanguages = languages || this.getSmartPreloadLanguages();
 
     const promises: Promise<void>[] = [];
 
     for (const namespace of targetNamespaces) {
       for (const language of targetLanguages) {
-        promises.push(
-          this.loadTranslations(namespace, language)
-            .then(() => {})
-            .catch(error => {
-              console.warn(`Failed to preload ${namespace}:${language}`, error);
-            })
-        );
+        // 避免重复加载已缓存的翻译
+        const cacheKey = `${namespace}:${language}`;
+        if (!this.translationCache.has(cacheKey)) {
+          promises.push(
+            this.loadTranslations(namespace, language)
+              .then(() => {
+                if (process.env.NODE_ENV === "development") {
+                  console.log(
+                    `Preloaded CSR translation: ${namespace}:${language}`
+                  );
+                }
+              })
+              .catch((error) => {
+                console.warn(
+                  `Failed to preload CSR translation ${namespace}:${language}`,
+                  error
+                );
+              })
+          );
+        }
       }
     }
 
-    await Promise.all(promises);
+    if (promises.length > 0) {
+      await Promise.all(promises);
+    }
   }
 
   /**
-   * 初始化预加载
+   * 获取智能预加载语言列表
+   */
+  private getSmartPreloadLanguages(): Language[] {
+    const currentLang = this.getCurrentLanguage();
+    const languages: Language[] = [currentLang];
+
+    // 只在用户明确表示需要其他语言时才预加载
+    // 例如：用户之前使用过其他语言，或者浏览器语言与当前语言不同
+    if (typeof window !== "undefined") {
+      const storage = window.localStorage;
+      const previousLanguages = storage?.getItem("previous-languages");
+
+      if (previousLanguages) {
+        try {
+          const prevLangs = JSON.parse(previousLanguages) as Language[];
+          // 只预加载最近使用的1个其他语言
+          const otherLang = prevLangs.find((lang) => lang !== currentLang);
+          if (otherLang && this.config.supportedLanguages.includes(otherLang)) {
+            languages.push(otherLang);
+          }
+        } catch (error) {
+          // 忽略解析错误
+        }
+      }
+
+      // 如果浏览器语言与当前语言不同，也预加载浏览器语言
+      const browserLang = navigator.language.split("-")[0] as Language;
+      if (
+        browserLang !== currentLang &&
+        this.config.supportedLanguages.includes(browserLang) &&
+        !languages.includes(browserLang)
+      ) {
+        languages.push(browserLang);
+      }
+    }
+
+    return languages.slice(0, 2); // 最多预加载2种语言
+  }
+
+  /**
+   * 初始化预加载 - 只预加载当前语言，避免不必要的预加载
    */
   private async initializePreload(): Promise<void> {
     try {
-      await this.preloadTranslations();
-      console.log('CSR translations preloaded successfully');
+      // 只预加载当前语言，避免显示其他语言的预加载信息
+      const currentLang = this.getCurrentLanguage();
+      await this.preloadTranslations(this.config.preload.namespaces, [
+        currentLang,
+      ]);
+
+      if (process.env.NODE_ENV === "development") {
+        console.log(`CSR translations preloaded for language: ${currentLang}`);
+      }
     } catch (error) {
-      console.warn('Failed to preload CSR translations:', error);
+      console.warn("Failed to preload CSR translations:", error);
     }
   }
 
@@ -399,8 +574,8 @@ export class CSRTranslationManager {
    * 格式化消息
    */
   formatMessage(template: string, params: Record<string, any> = {}): string {
-    if (!template || typeof template !== 'string') {
-      return template || '';
+    if (!template || typeof template !== "string") {
+      return template || "";
     }
 
     return template.replace(/\{(\w+)\}/g, (match, key) => {
@@ -416,18 +591,18 @@ export class CSRTranslationManager {
     translations: T,
     keyPath: string
   ): string | undefined {
-    const keys = keyPath.split('.');
+    const keys = keyPath.split(".");
     let current: any = translations;
 
     for (const key of keys) {
-      if (current && typeof current === 'object' && key in current) {
+      if (current && typeof current === "object" && key in current) {
         current = current[key];
       } else {
         return undefined;
       }
     }
 
-    return typeof current === 'string' ? current : undefined;
+    return typeof current === "string" ? current : undefined;
   }
 
   /**
@@ -445,13 +620,40 @@ export class CSRTranslationManager {
 
       if (!template) {
         console.warn(`Translation key not found: ${namespace}.${keyPath}`);
-        return keyPath; // 返回键名作为回退
+        return keyPath;
       }
 
       return this.formatMessage(template, params);
     } catch (error) {
-      console.error(`Failed to get translation text: ${namespace}.${keyPath}`, error);
-      return keyPath; // 返回键名作为回退
+      console.error(
+        `Failed to get translation text: ${namespace}.${keyPath}`,
+        error
+      );
+      return keyPath;
+    }
+  }
+
+  /**
+   * 清除其他语言的缓存，只保留当前语言
+   */
+  private clearOtherLanguageCaches(currentLanguage: Language): void {
+    const keysToDelete: string[] = [];
+
+    for (const key of this.translationCache.keys()) {
+      if (!key.endsWith(`:${currentLanguage}`)) {
+        keysToDelete.push(key);
+      }
+    }
+
+    for (const key of keysToDelete) {
+      this.translationCache.delete(key);
+      this.loadStates.delete(key);
+    }
+
+    if (process.env.NODE_ENV === "development" && keysToDelete.length > 0) {
+      console.log(
+        `Cleared ${keysToDelete.length} cached translations for other languages`
+      );
     }
   }
 
@@ -499,8 +701,10 @@ export class CSRTranslationManager {
         this.loadStates.delete(key);
       }
 
-      if (expiredKeys.length > 0) {
-        console.log(`Cleaned up ${expiredKeys.length} expired translation cache entries`);
+      if (expiredKeys.length > 0 && process.env.NODE_ENV === "development") {
+        console.log(
+          `Cleaned up ${expiredKeys.length} expired CSR translation cache entries`
+        );
       }
     }, 10 * 60 * 1000); // 10分钟
   }
@@ -519,21 +723,27 @@ export class CSRTranslationManager {
       lastAccessed: number;
     }>;
   } {
-    const entries = Array.from(this.translationCache.entries()).map(([key, entry]) => ({
-      key,
-      timestamp: entry.timestamp,
-      accessCount: entry.accessCount,
-      lastAccessed: entry.lastAccessed
-    }));
+    const entries = Array.from(this.translationCache.entries()).map(
+      ([key, entry]) => ({
+        key,
+        timestamp: entry.timestamp,
+        accessCount: entry.accessCount,
+        lastAccessed: entry.lastAccessed,
+      })
+    );
 
-    const totalAccess = entries.reduce((sum, entry) => sum + entry.accessCount, 0);
-    const hitRate = totalAccess > 0 ? (totalAccess - entries.length) / totalAccess : 0;
+    const totalAccess = entries.reduce(
+      (sum, entry) => sum + entry.accessCount,
+      0
+    );
+    const hitRate =
+      totalAccess > 0 ? (totalAccess - entries.length) / totalAccess : 0;
 
     return {
       size: this.translationCache.size,
       maxSize: this.config.cache.maxEntries,
       hitRate: Math.round(hitRate * 100) / 100,
-      entries
+      entries,
     };
   }
 
@@ -550,7 +760,9 @@ export class CSRTranslationManager {
 /**
  * 创建CSR翻译管理器实例的便捷函数
  */
-export function createCSRTranslationManager(config?: Partial<CSRTranslationConfig>): CSRTranslationManager {
+export function createCSRTranslationManager(
+  config?: Partial<CSRTranslationConfig>
+): CSRTranslationManager {
   return CSRTranslationManager.getInstance(config);
 }
 

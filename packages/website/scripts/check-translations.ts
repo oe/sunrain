@@ -8,7 +8,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { TERMINOLOGY_DICTIONARY } from './terminology-dictionary.js';
+import { TerminologyDictionary } from './terminology-dictionary';
 
 // 支持的语言列表
 const SUPPORTED_LANGUAGES = ['en', 'zh', 'es', 'ja', 'ko', 'hi', 'ar'];
@@ -191,13 +191,13 @@ async function checkModuleTranslations(moduleName: string): Promise<{
       } else if (typeof defaultValue === 'string' && typeof targetValue === 'string') {
         if (defaultValue === targetValue) {
           // 检查是否是应该保持不变的术语
-          const isKnownTerm = Object.keys(TERMINOLOGY_DICTIONARY).some(term =>
-            targetValue.includes(term) && !TERMINOLOGY_DICTIONARY[term].shouldTranslate
+          const isKnownTerm = Object.keys(TerminologyDictionary).some(term =>
+            targetValue.includes(term) && !TerminologyDictionary[term].shouldTranslate
           );
 
           // 检查是否是术语词典中定义的标准翻译（即使和英文相同）
-          const isStandardTranslation = Object.keys(TERMINOLOGY_DICTIONARY).some(term => {
-            const entry = TERMINOLOGY_DICTIONARY[term];
+          const isStandardTranslation = Object.keys(TerminologyDictionary).some(term => {
+            const entry = TerminologyDictionary[term];
             return targetValue.includes(term) &&
                    entry.shouldTranslate &&
                    entry.translations &&

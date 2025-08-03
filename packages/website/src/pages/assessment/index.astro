@@ -3,12 +3,13 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { questionBankManager } from '@/lib/assessment/QuestionBankManager';
 import { getLocale } from 'astro-i18n-aut';
-import { getAssessmentTranslations } from '@/locales/assessment';
+import { createSSGTranslations } from '@/i18n/utils';
 import ContinueAssessmentWidget from '@/components/assessment/ContinueAssessmentWidget';
 import type { Language } from '@sunrain/shared';
 
 const currentLang = getLocale(Astro.url) as Language;
-const t = getAssessmentTranslations(currentLang);
+// 使用新的SSG翻译系统，不使用React hooks
+const t = createSSGTranslations(currentLang, 'assessment');
 
 const assessmentTypes = questionBankManager.getAssessmentTypes();
 const categories = [...new Set(assessmentTypes.map((a) => a.category))];
@@ -23,21 +24,21 @@ const assessmentsByCategory = categories.reduce(
 );
 ---
 
-<BaseLayout title={t.list.title}>
+<BaseLayout title={t('list.title')}>
   <main class="container mx-auto px-4 py-8">
     <div class="max-w-6xl mx-auto">
       <!-- Header -->
       <div class="text-center mb-12">
         <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-4">
-          {t.list.title}
+          {t('list.title')}
         </h1>
         <p class="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-          {t.list.subtitle}
+          {t('list.subtitle')}
         </p>
       </div>
 
       <!-- Continue Assessment Widget - Client-side rendered -->
-      <ContinueAssessmentWidget client:load />
+      <ContinueAssessmentWidget client:only="react" />
 
       <!-- Assessment Categories -->
       <div class="space-y-12">
@@ -47,15 +48,15 @@ const assessmentsByCategory = categories.reduce(
               <div class="mb-6">
                 <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mb-2">
                   {
-                    t.list.categories[
-                      category as keyof typeof t.list.categories
+                    t('list.categories')[
+                      category
                     ]
                   }
                 </h2>
                 <p class="text-gray-600 dark:text-gray-300">
                   {
-                    t.list.categoryDescriptions[
-                      category as keyof typeof t.list.categoryDescriptions
+                    t('list.categoryDescriptions')[
+                      category
                     ]
                   }
                 </p>
@@ -76,7 +77,7 @@ const assessmentsByCategory = categories.reduce(
                         </div>
                         <div class="ml-4 flex-shrink-0">
                           <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
-                            {assessment.duration} {t.list.minutes}
+                            {assessment.duration} {t('list.minutes')}
                           </span>
                         </div>
                       </div>
@@ -94,13 +95,13 @@ const assessmentsByCategory = categories.reduce(
                               clip-rule="evenodd"
                             />
                           </svg>
-                          {assessment.questions.length} {t.list.questions}
+                          {assessment.questions.length} {t('list.questions')}
                         </div>
                         <a
                           href={`/assessment/take/${assessment.id}/`}
                           class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200"
                         >
-                          {t.list.startButton}
+                          {t('list.startButton')}
                           <svg
                             class="ml-2 -mr-1 w-4 h-4"
                             fill="currentColor"
@@ -126,7 +127,7 @@ const assessmentsByCategory = categories.reduce(
       <!-- Quick Actions -->
       <div class="mt-12 bg-gray-50 dark:bg-gray-800 rounded-lg p-6">
         <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-          {t.list.quickActions.title}
+          {t('list.quickActions.title')}
         </h3>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
           <a
@@ -145,10 +146,10 @@ const assessmentsByCategory = categories.reduce(
             </svg>
             <div>
               <h4 class="font-medium text-gray-900 dark:text-white">
-                {t.list.quickActions.history.title}
+                {t('list.quickActions.history.title')}
               </h4>
               <p class="text-sm text-gray-600 dark:text-gray-300">
-                {t.list.quickActions.history.description}
+                {t('list.quickActions.history.description')}
               </p>
             </div>
           </a>
@@ -169,10 +170,10 @@ const assessmentsByCategory = categories.reduce(
             </svg>
             <div>
               <h4 class="font-medium text-gray-900 dark:text-white">
-                {t.list.quickActions.trends.title}
+                {t('list.quickActions.trends.title')}
               </h4>
               <p class="text-sm text-gray-600 dark:text-gray-300">
-                {t.list.quickActions.trends.description}
+                {t('list.quickActions.trends.description')}
               </p>
             </div>
           </a>
@@ -193,10 +194,10 @@ const assessmentsByCategory = categories.reduce(
             </svg>
             <div>
               <h4 class="font-medium text-gray-900 dark:text-white">
-                {t.list.quickActions.continue.title}
+                {t('list.quickActions.continue.title')}
               </h4>
               <p class="text-sm text-gray-600 dark:text-gray-300">
-                {t.list.quickActions.continue.description}
+                {t('list.quickActions.continue.description')}
               </p>
             </div>
           </a>
@@ -222,10 +223,10 @@ const assessmentsByCategory = categories.reduce(
             <h3
               class="text-sm font-medium text-yellow-800 dark:text-yellow-200"
             >
-              {t.list.disclaimer.title}
+              {t('list.disclaimer.title')}
             </h3>
             <p class="text-sm text-yellow-700 dark:text-yellow-300 mt-1">
-              {t.list.disclaimer.message}
+              {t('list.disclaimer.message')}
             </p>
           </div>
         </div>

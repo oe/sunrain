@@ -2,7 +2,7 @@
 // Assessment execution interface with React components
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { getLocale } from 'astro-i18n-aut';
-import { getAssessmentTranslations } from '@/locales/assessment';
+import { createSSGTranslations } from '@/i18n/utils';
 import { questionBankManager } from '@/lib/assessment/QuestionBankManager';
 import AssessmentTaker from '@/components/assessment/AssessmentTaker';
 import type { Language } from '@sunrain/shared';
@@ -19,10 +19,12 @@ export async function getStaticPaths() {
 
 const { assessment } = Astro.props;
 const currentLang = getLocale(Astro.url) as Language;
-const t = getAssessmentTranslations(currentLang);
+
+// 使用新的SSG翻译系统，不使用React hooks
+const t = createSSGTranslations(currentLang, 'assessment');
 
 // SEO metadata
-const pageTitle = `${assessment.name} - ${t.common.title}`;
+const pageTitle = `${assessment.name} - ${t('common.title')}`;
 const pageDescription = assessment.description || `完成${assessment.name}心理健康评测，获得专业的分析报告和建议。`;
 const canonicalUrl = `${Astro.site}assessment/take/${assessment.id}/`;
 
@@ -92,9 +94,9 @@ const structuredData = {
   <meta slot="head" name="msapplication-TileColor" content="#2563eb" />
 
   <main class="container mx-auto px-4 py-8">
-    <!-- Use the new React AssessmentTaker component with client:load directive -->
+    <!-- Use the new React AssessmentTaker component with client:only directive -->
     <AssessmentTaker
-      client:load
+      client:only="react"
       assessmentId={assessment.id}
       assessmentData={assessment}
       language={currentLang}

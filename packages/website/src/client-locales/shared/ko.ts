@@ -37,6 +37,24 @@ export const sharedKo: ISharedCSRTranslations = {
       confirm: '확인',
       /** 关闭 */
       close: '닫기',
+      /** 上一题 */
+      previous: '이전',
+      /** 下一题 */
+      next: '다음',
+      /** 完成 */
+      complete: '완료',
+      /** 保存 */
+      save: '저장',
+      /** 已保存 */
+      saved: '저장됨',
+      /** 暂停 */
+      pause: '일시정지',
+      /** 继续 */
+      continue: '계속',
+      /** 退出 */
+      exit: '종료',
+      /** 开始新评测 */
+      startNew: '새로 시작',
     },
   },
   /** 交互式组件 */

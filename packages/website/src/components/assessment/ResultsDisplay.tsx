@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useTranslations } from '@/hooks/useTranslations';
+import { useAssessmentTranslations } from '@/hooks/useCSRTranslations';
 import { resultsAnalyzer } from '@/lib/assessment/ResultsAnalyzer';
 import { resourceRecommendationEngine } from '@/lib/assessment/ResourceRecommendationEngine';
 import { questionBankManager } from '@/lib/assessment/QuestionBankManager';
@@ -12,7 +12,7 @@ interface ResultsDisplayProps {
 }
 
 export default function ResultsDisplay({ language: _language }: ResultsDisplayProps) {
-  const { isLoading: translationsLoading } = useTranslations('assessment');
+  const { isLoading: translationsLoading } = useAssessmentTranslations();
   const [resultId, setResultId] = useState<string | null>(null);
   const [result, setResult] = useState<AssessmentResult | null>(null);
   const [assessmentType, setAssessmentType] = useState<AssessmentType | null>(null);

@@ -1,6 +1,6 @@
 ---
-import { useSharedTranslations, getRelativeLocaleUrl } from '@/i18n/utils';
-import { type Language } from '@sunrain/shared';
+import { createSSGTranslations } from '@/i18n/utils';
+import { type Language, getRelativeLocaleUrl } from '@sunrain/shared';
 import LanguageSwitcher from './LanguageSwitcher';
 import ThemeSwitcher from './ThemeSwitcher';
 import MobileMenuButton from './MobileMenuButton';
@@ -10,7 +10,8 @@ export interface Props {
 }
 
 const { lang } = Astro.props;
-const t = useSharedTranslations(lang);
+// 使用新的SSG翻译系统，不使用React hooks
+const t = createSSGTranslations(lang);
 
 const navItems = [
   { key: 'nav.home', href: getRelativeLocaleUrl(lang, '/') },
@@ -67,16 +68,16 @@ const navItems = [
       <div class="flex items-center space-x-3">
         <!-- Language Switcher -->
         <LanguageSwitcher
-          client:load
+          client:only="react"
           currentLang={lang}
           currentPath={Astro.url.pathname}
         />
 
         <!-- Theme Switcher -->
-        <ThemeSwitcher client:load />
+        <ThemeSwitcher client:only="react" />
 
         <!-- Mobile menu button -->
-        <MobileMenuButton client:load />
+        <MobileMenuButton client:only="react" />
       </div>
     </div>
 

@@ -68,11 +68,11 @@ export default class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBo
       // 默认翻译函数
       const defaultT = (key: string) => {
         const translations: Record<string, string> = {
-          'client.errors.boundary.title': '应用程序错误',
-          'client.errors.boundary.message': '抱歉，应用程序遇到了一个错误。',
-          'client.errors.boundary.details': '错误详情',
-          'client.errors.boundary.retry': '重试',
-          'client.errors.boundary.goHome': '返回首页'
+          'errors.boundary.title': '应用程序错误',
+          'errors.boundary.message': '抱歉，应用程序遇到了一个错误。',
+          'errors.boundary.details': '错误详情',
+          'errors.boundary.retry': '重试',
+          'errors.boundary.goHome': '返回首页'
         };
         return translations[key] || key;
       };
@@ -85,17 +85,17 @@ export default class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBo
           </svg>
 
           <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-            {t('client.errors.boundary.title')}
+            {t('errors.boundary.title')}
           </h2>
 
           <p className="text-gray-600 dark:text-gray-300 mb-6">
-            {t('client.errors.boundary.message')}
+            {t('errors.boundary.message')}
           </p>
 
           {process.env.NODE_ENV === 'development' && this.state.error && (
             <details className="mb-6 text-left bg-gray-100 dark:bg-gray-800 p-4 rounded-lg">
               <summary className="cursor-pointer font-medium text-gray-900 dark:text-white mb-2">
-                {t('client.errors.boundary.details')}
+                {t('errors.boundary.details')}
               </summary>
               <pre className="text-sm text-red-600 dark:text-red-400 whitespace-pre-wrap">
                 {this.state.error.toString()}
@@ -109,14 +109,14 @@ export default class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBo
               onClick={this.handleRetry}
               className="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
             >
-              {t('client.errors.boundary.retry')}
+              {t('errors.boundary.retry')}
             </button>
 
             <button
               onClick={() => window.location.href = '/assessment/'}
               className="px-6 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
             >
-              {t('client.errors.boundary.goHome')}
+              {t('errors.boundary.goHome')}
             </button>
           </div>
         </div>

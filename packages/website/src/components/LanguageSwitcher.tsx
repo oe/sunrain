@@ -1,6 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { languages, type Language } from '@sunrain/shared';
-import { getRelativeLocaleUrl } from '@/i18n/utils';
+import { getRelativeLocaleUrl, languages, type Language } from '@sunrain/shared';
 
 interface Props {
   currentLang: Language;
@@ -20,7 +19,7 @@ const languageEmojis: Record<Language, string> = {
 const languageNames: Record<Language, string> = {
   en: 'English',
   zh: '中文',
-  es: 'Español', 
+  es: 'Español',
   ja: '日本語',
   ko: '한국어',
   hi: 'हिन्दी',
@@ -128,7 +127,7 @@ export default function LanguageSwitcher({ currentLang, currentPath }: Props) {
       </button>
 
       {isOpen && (
-        <div 
+        <div
           className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-600 z-50 overflow-hidden animate-in fade-in-0 zoom-in-95 duration-200"
           role="listbox"
           aria-label="Language options"
@@ -159,10 +158,10 @@ export default function LanguageSwitcher({ currentLang, currentPath }: Props) {
                 <span className="text-base" aria-hidden="true">{languageEmojis[code]}</span>
                 <span className="flex-1">{languageNames[code]}</span>
                 {code === currentLang && (
-                  <svg 
-                    className="w-4 h-4 text-blue-500 dark:text-blue-400" 
-                    fill="none" 
-                    stroke="currentColor" 
+                  <svg
+                    className="w-4 h-4 text-blue-500 dark:text-blue-400"
+                    fill="none"
+                    stroke="currentColor"
                     viewBox="0 0 24 24"
                     aria-label="Current language"
                   >

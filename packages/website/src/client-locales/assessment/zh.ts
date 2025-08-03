@@ -1,29 +1,12 @@
 /**
  * Assessment 系统中文翻译内容 (CSR)
- * 只包含实际使用的翻译键，去掉不必要的client前缀
+ * 包含实际使用的翻译键，匹配组件中的client前缀结构
  */
 import type { IAssessmentTranslations } from './types';
 
 export const assessmentZh: IAssessmentTranslations = {
-  continue: {
-    loading: '正在加载未完成的评测...',
-  },
-
-  list: {
-    activeSessions: {
-      title: '您有 {count} 个未完成的评测',
-      continueLink: '点击继续完成评测',
-      lastActivity: '最后活动',
-      progress: '进度',
-    },
-  },
-
   assessment: {
     title: '心理健康评测',
-  },
-
-  progress: {
-    text: '{current} / {total}',
   },
 
   loading: {
@@ -64,6 +47,23 @@ export const assessmentZh: IAssessmentTranslations = {
     questionNumber: '问题 {number}',
     completed: '已完成',
     remaining: '剩余',
+  },
+
+  continue: {
+    loading: '正在加载未完成的评测...',
+  },
+
+  list: {
+    activeSessions: {
+      title: '您有 {count} 个未完成的评测',
+      continueLink: '点击继续完成评测',
+      lastActivity: '最后活动',
+      progress: '进度',
+    },
+  },
+
+  progress: {
+    text: '{current} / {total}',
   },
 
   validation: {

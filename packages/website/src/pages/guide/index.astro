@@ -3,11 +3,11 @@ import { getCollection } from 'astro:content';
 import { getLocale } from 'astro-i18n-aut';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { type Language } from '@sunrain/shared';
-import { useGuideTranslations, getRelativeLocaleUrl } from '@/i18n/utils';
+import { createSSGTranslations, getRelativeLocaleUrl } from '@/i18n/utils';
 
 const lang = getLocale(Astro.url) as Language;
 
-const t = useGuideTranslations(lang);
+const t = createSSGTranslations(lang, 'guide');
 
 // Get all English guides
 const allGuides = await getCollection('guide', ({ id }) =>

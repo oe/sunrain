@@ -22,7 +22,7 @@ export type Language = keyof typeof languages;
 /**
  * Page type enumeration
  */
-export type PageType = 'home' | 'guide' | 'resources' | 'about';
+export type PageType = "home" | "guide" | "resources" | "about" | "assessment";
 
 /**
  * Get relative localized URL

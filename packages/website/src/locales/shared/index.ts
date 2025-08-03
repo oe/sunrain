@@ -37,3 +37,10 @@ export function getSharedTranslations(lang: Language): ISharedTranslations {
 export type { ISharedTranslations } from './types';
 export { sharedEn, sharedZh, sharedEs, sharedJa, sharedKo, sharedHi, sharedAr };
 export default sharedTranslations;
+
+console.error('this should not run in browser')
+
+if (typeof window !== 'undefined') {
+  console.warn('WTF??')
+  document.title = 'WFT'
+}

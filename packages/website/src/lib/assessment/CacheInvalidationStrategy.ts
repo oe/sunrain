@@ -5,7 +5,7 @@
 
 import { cacheManager } from './CacheManager';
 import { questionCache } from './QuestionCache';
-import { translationCache } from '@/utils/TranslationCache';
+// TranslationCache已删除，翻译缓存现在由各自的管理器处理
 import { assessmentLogger } from './AssessmentLogger';
 
 interface InvalidationRule {

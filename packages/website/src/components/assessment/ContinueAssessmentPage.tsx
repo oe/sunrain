@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useTranslations } from '@/hooks/useTranslations';
+import { useAssessmentTranslations } from '@/hooks/useCSRTranslations';
 import type { AssessmentSession } from '@/types/assessment';
 
 // Import the assessment engine - we'll use the singleton instance
@@ -25,7 +25,7 @@ export default function ContinueAssessmentPage({ className = '' }: ContinueAsses
   const [activeSessions, setActiveSessions] = useState<AssessmentSession[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const { t, isLoading: translationsLoading } = useTranslations('assessment');
+  const { t, isLoading: translationsLoading } = useAssessmentTranslations();
 
   useEffect(() => {
     initializeInterface();
@@ -288,7 +288,7 @@ export default function ContinueAssessmentPage({ className = '' }: ContinueAsses
               <div className="mb-4">
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                    进度: {progress?.current || 0} / {progress?.total || 0} 题
+                    {t('list.progress', { current: progress?.current || 0, total: progress?.total || 0 })}
                   </span>
                   <span className="text-sm text-gray-600 dark:text-gray-400">
                     {progress?.percentage || 0}%

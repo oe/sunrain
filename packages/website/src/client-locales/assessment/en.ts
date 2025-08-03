@@ -1,29 +1,12 @@
 /**
  * Assessment 系统英文翻译内容 (CSR)
- * 只包含实际使用的翻译键，去掉不必要的client前缀
+ * 包含实际使用的翻译键，匹配组件中的client前缀结构
  */
 import type { IAssessmentTranslations } from './types';
 
 export const assessmentEn: IAssessmentTranslations = {
-  continue: {
-    loading: 'Loading incomplete assessments...',
-  },
-
-  list: {
-    activeSessions: {
-      title: 'You have {count} incomplete assessments',
-      continueLink: 'Continue assessments',
-      lastActivity: 'Last activity',
-      progress: 'Progress',
-    },
-  },
-
   assessment: {
     title: 'Mental Health Assessment',
-  },
-
-  progress: {
-    text: '{current} of {total}',
   },
 
   loading: {
@@ -64,6 +47,23 @@ export const assessmentEn: IAssessmentTranslations = {
     questionNumber: 'Question {number}',
     completed: 'Completed',
     remaining: 'Remaining',
+  },
+
+  continue: {
+    loading: 'Loading incomplete assessments...',
+  },
+
+  list: {
+    activeSessions: {
+      title: 'You have {count} incomplete assessments',
+      continueLink: 'Continue assessments',
+      lastActivity: 'Last activity',
+      progress: 'Progress',
+    },
+  },
+
+  progress: {
+    text: '{current} of {total}',
   },
 
   validation: {

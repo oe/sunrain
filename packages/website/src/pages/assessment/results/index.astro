@@ -2,15 +2,16 @@
 // Static results page - uses client-side rendering for dynamic content
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { getLocale } from 'astro-i18n-aut';
-import { getAssessmentTranslations } from '@/locales/assessment';
+import { createSSGTranslations } from '@/i18n/utils';
 import ResultsDisplay from '@/components/assessment/ResultsDisplay';
 import type { Language } from '@sunrain/shared';
 
 const currentLang = getLocale(Astro.url) as Language;
-const t = getAssessmentTranslations(currentLang);
+// 使用新的SSG翻译系统，不使用React hooks
+const t = createSSGTranslations(currentLang, 'assessment');
 
 // SEO metadata
-const pageTitle = `评测结果 - ${t.common.title}`;
+const pageTitle = `评测结果 - ${t('common.title')}`;
 const pageDescription = '查看您的心理健康评测结果，获得个性化建议和资源推荐。';
 ---
 
@@ -18,7 +19,7 @@ const pageDescription = '查看您的心理健康评测结果，获得个性化�
   <main class="container mx-auto px-4 py-8">
     <!-- Client-side rendered results component -->
     <ResultsDisplay
-      client:load
+      client:only="react"
       language={currentLang}
     />
   </main>
