@@ -184,12 +184,25 @@ const AssessmentTaker = memo(function AssessmentTaker({
         answeredAt: new Date()
       };
 
+      console.log('Saving answer:', {
+        sessionId: sessionState.session.id,
+        questionId: sessionState.currentQuestion.id,
+        questionType: sessionState.currentQuestion.type,
+        answer: currentAnswer,
+        required: sessionState.currentQuestion.required
+      });
+
       const result = engine.submitAnswer(sessionState.session.id, answer);
+
+      console.log('Submit result:', result);
+
       if (result.success) {
         setSessionState(prev => ({
           ...prev,
           answers: [...prev.answers.filter(a => a.questionId !== answer.questionId), answer]
         }));
+      } else {
+        console.error('Submit failed - validation or other error');
       }
 
       return result.success;
@@ -375,105 +388,105 @@ const AssessmentTaker = memo(function AssessmentTaker({
   return (
     <ErrorBoundary t={t}>
       <div className="max-w-4xl mx-auto">
-      {/* Progress Bar Component */}
-      <ProgressBar
-        current={sessionState.currentQuestionIndex}
-        total={sessionState.totalQuestions}
-        percentage={getProgressPercentage()}
-        assessmentName={assessmentData.name}
-        isPaused={modalState.isPaused}
-        isCompleted={uiState.isCompleted}
-        onPause={handlePause}
-        showPauseButton={true}
-        t={t}
-      />
+        {/* Progress Bar Component */}
+        <ProgressBar
+          current={sessionState.currentQuestionIndex}
+          total={sessionState.totalQuestions}
+          percentage={getProgressPercentage()}
+          assessmentName={assessmentData.name}
+          isPaused={modalState.isPaused}
+          isCompleted={uiState.isCompleted}
+          onPause={handlePause}
+          showPauseButton={true}
+          t={t}
+        />
 
-      {/* Question Card */}
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 p-8 mb-6">
-        <div className="mb-6">
-          <div className="flex items-center justify-between mb-4">
-            <span className="text-sm font-medium text-blue-600 dark:text-blue-400">
-              {t('question.number', { number: sessionState.currentQuestionIndex + 1 })}
-            </span>
-            {sessionState.currentQuestion.required && (
-              <span className="text-sm text-red-500">
-                * {t('question.number')}
+        {/* Question Card */}
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 p-8 mb-6">
+          <div className="mb-6">
+            <div className="flex items-center justify-between mb-4">
+              <span className="text-sm font-medium text-blue-600 dark:text-blue-400">
+                {t('question.number', { number: sessionState.currentQuestionIndex + 1 })}
               </span>
-            )}
+              {sessionState.currentQuestion.required && (
+                <span className="text-sm text-red-500">
+                  * {t('question.required')}
+                </span>
+              )}
+            </div>
+            <h2 className="text-xl font-medium text-gray-900 dark:text-white mb-6">
+              {sessionState.currentQuestion.text}
+            </h2>
           </div>
-          <h2 className="text-xl font-medium text-gray-900 dark:text-white mb-6">
-            {sessionState.currentQuestion.text}
-          </h2>
+
+          {/* Question Card Component */}
+          <div className="mb-4">
+            <QuestionCard
+              question={sessionState.currentQuestion}
+              answer={currentAnswer}
+              onAnswerChange={handleAnswerChange}
+              onValidationChange={(isValid, error) => {
+                if (!isValid && error) {
+                  setValidationError(Array.isArray(error) ? error.join(', ') : error);
+                } else {
+                  setValidationError(null);
+                }
+              }}
+              disabled={uiState.isSubmitting}
+              showValidation={true}
+              t={t}
+            />
+          </div>
+
+          {/* Validation Error */}
+          {validationError && (
+            <div className="mt-4 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-md">
+              <p className="text-sm text-red-600 dark:text-red-400">{validationError}</p>
+            </div>
+          )}
         </div>
 
-        {/* Question Card Component */}
-        <div className="mb-4">
-          <QuestionCard
-            question={sessionState.currentQuestion}
-            answer={currentAnswer}
-            onAnswerChange={handleAnswerChange}
-            onValidationChange={(isValid, error) => {
-              if (!isValid && error) {
-                setValidationError(Array.isArray(error) ? error.join(', ') : error);
-              } else {
-                setValidationError(null);
-              }
-            }}
-            disabled={uiState.isSubmitting}
-            showValidation={true}
-            t={t}
-          />
-        </div>
+        {/* Navigation Controls Component */}
+        <NavigationControls
+          canGoBack={sessionState.currentQuestionIndex > 0}
+          canGoNext={currentAnswer !== null && currentAnswer !== undefined && currentAnswer !== ''}
+          isLastQuestion={sessionState.currentQuestionIndex === sessionState.totalQuestions - 1}
+          isSubmitting={uiState.isSubmitting}
+          onPrevious={handlePrevious}
+          onNext={handleNext}
+          onSave={handleSave}
+          showSaveButton={true}
+          t={t}
+        />
 
-        {/* Validation Error */}
-        {validationError && (
-          <div className="mt-4 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-md">
-            <p className="text-sm text-red-600 dark:text-red-400">{validationError}</p>
+        {/* Pause Modal */}
+        {modalState.showPauseModal && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div className="bg-white dark:bg-gray-800 rounded-lg p-6 max-w-md w-full mx-4">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+                {t('execution.pauseModal.title')}
+              </h3>
+              <p className="text-gray-600 dark:text-gray-300 mb-6">
+                {t('execution.pauseModal.message')}
+              </p>
+              <div className="flex space-x-3">
+                <button
+                  onClick={handleContinue}
+                  className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+                >
+                  {t('execution.pauseModal.continue')}
+                </button>
+                <button
+                  onClick={handleExit}
+                  className="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+                >
+                  {t('execution.pauseModal.exit')}
+                </button>
+              </div>
+            </div>
           </div>
         )}
       </div>
-
-      {/* Navigation Controls Component */}
-      <NavigationControls
-        canGoBack={sessionState.currentQuestionIndex > 0}
-        canGoNext={currentAnswer !== null && currentAnswer !== undefined && currentAnswer !== ''}
-        isLastQuestion={sessionState.currentQuestionIndex === sessionState.totalQuestions - 1}
-        isSubmitting={uiState.isSubmitting}
-        onPrevious={handlePrevious}
-        onNext={handleNext}
-        onSave={handleSave}
-        showSaveButton={true}
-        t={t}
-      />
-
-      {/* Pause Modal */}
-      {modalState.showPauseModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white dark:bg-gray-800 rounded-lg p-6 max-w-md w-full mx-4">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-              {t('execution.pauseModal.title')}
-            </h3>
-            <p className="text-gray-600 dark:text-gray-300 mb-6">
-              {t('execution.pauseModal.message')}
-            </p>
-            <div className="flex space-x-3">
-              <button
-                onClick={handleContinue}
-                className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
-              >
-                {t('execution.pauseModal.continue')}
-              </button>
-              <button
-                onClick={handleExit}
-                className="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
-              >
-                {t('execution.pauseModal.exit')}
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-    </div>
     </ErrorBoundary>
   );
 });

@@ -2,8 +2,8 @@
 import { getCollection } from 'astro:content';
 import { getLocale } from 'astro-i18n-aut';
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import { type Language } from '@sunrain/shared';
-import { createSSGTranslations, getRelativeLocaleUrl } from '@/i18n/utils';
+import { type Language, getRelativeLocaleUrl } from '@sunrain/shared';
+import { createSSGTranslations } from '@/i18n/utils';
 
 const lang = getLocale(Astro.url) as Language;
 
@@ -26,11 +26,15 @@ const regularGuides = sortedGuides.filter((guide) => !guide.data.featured);
   description={t('page.subtitle')}
   lang={lang}
 >
-  <div class="min-h-screen bg-gradient-to-br from-blue-50 to-green-50 dark:from-gray-900 dark:to-gray-800">
+  <div
+    class="min-h-screen bg-gradient-to-br from-blue-50 to-green-50 dark:from-gray-900 dark:to-gray-800"
+  >
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <!-- Breadcrumb -->
       <nav class="mb-8">
-        <ol class="flex items-center space-x-2 text-sm text-gray-500 dark:text-gray-400">
+        <ol
+          class="flex items-center space-x-2 text-sm text-gray-500 dark:text-gray-400"
+        >
           <li>
             <a
               href={getRelativeLocaleUrl(lang)}
@@ -50,17 +54,20 @@ const regularGuides = sortedGuides.filter((guide) => !guide.data.featured);
                 stroke-linecap="round"
                 stroke-linejoin="round"
                 stroke-width="2"
-                d="M9 5l7 7-7 7"
-              ></path>
+                d="M9 5l7 7-7 7"></path>
             </svg>
           </li>
-          <li class="text-gray-900 dark:text-white font-medium">{t('page.title')}</li>
+          <li class="text-gray-900 dark:text-white font-medium">
+            {t('page.title')}
+          </li>
         </ol>
       </nav>
 
       <!-- Page Header -->
       <div class="text-center mb-12">
-        <h1 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
+        <h1
+          class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4"
+        >
           {t('page.title')}
         </h1>
         <p class="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
@@ -72,7 +79,9 @@ const regularGuides = sortedGuides.filter((guide) => !guide.data.featured);
       {
         featuredGuides.length > 0 && (
           <section class="mb-16">
-            <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-8">{t('list.featured')}</h2>
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-8">
+              {t('list.featured')}
+            </h2>
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {featuredGuides.map((guide) => (
                 <article class="bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow border border-gray-200 dark:border-gray-700 overflow-hidden">
@@ -93,7 +102,9 @@ const regularGuides = sortedGuides.filter((guide) => !guide.data.featured);
                         {guide.data.title}
                       </a>
                     </h3>
-                    <p class="text-gray-600 dark:text-gray-300 mb-4">{guide.data.description}</p>
+                    <p class="text-gray-600 dark:text-gray-300 mb-4">
+                      {guide.data.description}
+                    </p>
 
                     {guide.data.tags && guide.data.tags.length > 0 && (
                       <div class="flex flex-wrap gap-2 mb-4">
@@ -133,7 +144,9 @@ const regularGuides = sortedGuides.filter((guide) => !guide.data.featured);
 
       <!-- All Guides -->
       <section>
-        <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-8">{t('list.allGuides')}</h2>
+        <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-8">
+          {t('list.allGuides')}
+        </h2>
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {
             regularGuides.map((guide) => (
@@ -219,8 +232,12 @@ const regularGuides = sortedGuides.filter((guide) => !guide.data.featured);
       }
 
       <!-- Call to Action -->
-      <section class="mt-16 bg-blue-50 dark:bg-blue-900/20 rounded-xl p-8 text-center border border-blue-100 dark:border-blue-800">
-        <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">{t('help.needMoreHelp')}</h2>
+      <section
+        class="mt-16 bg-blue-50 dark:bg-blue-900/20 rounded-xl p-8 text-center border border-blue-100 dark:border-blue-800"
+      >
+        <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+          {t('help.needMoreHelp')}
+        </h2>
         <p class="text-gray-600 dark:text-gray-300 mb-6 max-w-2xl mx-auto">
           {t('help.helpDescription')}
         </p>

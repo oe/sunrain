@@ -72,7 +72,7 @@ export const assessmentEn: IAssessmentTranslations = {
 
   execution: {
     errors: {
-      submitFailed: 'Submission failed',
+      submitFailed: 'Save failed, please try again',
       required: 'This field is required',
     },
     completion: {
@@ -88,9 +88,9 @@ export const assessmentEn: IAssessmentTranslations = {
     navigation: {
       previous: 'Previous',
       next: 'Next',
-      submit: 'Submit',
-      save: 'Save',
-      submitting: 'Submitting...',
+      submit: 'Complete Assessment',
+      save: 'Save Progress',
+      submitting: 'Completing...',
     },
     pause: 'Pause',
     questionNumber: 'Question {number}',

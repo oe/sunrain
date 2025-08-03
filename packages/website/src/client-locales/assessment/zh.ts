@@ -72,7 +72,7 @@ export const assessmentZh: IAssessmentTranslations = {
 
   execution: {
     errors: {
-      submitFailed: '提交失败',
+      submitFailed: '保存失败，请重试',
       required: '此项为必填项',
     },
     completion: {
@@ -88,9 +88,9 @@ export const assessmentZh: IAssessmentTranslations = {
     navigation: {
       previous: '上一题',
       next: '下一题',
-      submit: '提交',
-      save: '保存',
-      submitting: '提交中...',
+      submit: '完成评测',
+      save: '保存进度',
+      submitting: '正在完成...',
     },
     pause: '暂停',
     questionNumber: '问题 {number}',
