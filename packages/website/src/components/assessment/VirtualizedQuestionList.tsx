@@ -1,4 +1,4 @@
-import { memo, useMemo } from 'react';
+import { memo } from 'react';
 import { useVirtualList } from '@/utils/RenderOptimizer';
 import type { Question } from '@/types/assessment';
 

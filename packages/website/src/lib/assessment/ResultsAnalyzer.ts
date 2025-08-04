@@ -220,7 +220,7 @@ export class ResultsAnalyzer {
     const recommendations: string[] = [];
 
     // Generate recommendations based on risk levels and scores
-    for (const [scoreId, scoreData] of Object.entries(scores)) {
+    for (const [, scoreData] of Object.entries(scores)) {
       const riskLevel = scoreData.riskLevel;
 
       if (riskLevel === 'high') {
@@ -298,7 +298,7 @@ export class ResultsAnalyzer {
     const visualizations = [];
 
     // Bar chart for scores
-    const scoreData = Object.entries(result.scores).map(([key, data]) => ({
+    const scoreData = Object.entries(result.scores).map(([, data]) => ({
       label: data.label,
       value: data.value
     }));
@@ -539,7 +539,7 @@ export class ResultsAnalyzer {
    * Generate unique result ID
    */
   private generateResultId(): string {
-    return `result_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+    return `result_${Date.now()}_${Math.random().toString(36).substring(2, 11)}`;
   }
 
   /**

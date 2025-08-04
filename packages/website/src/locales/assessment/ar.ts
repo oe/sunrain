@@ -46,6 +46,16 @@ export const assessmentAr: IAssessmentTranslations = {
         description: 'إكمال التقييمات غير المكتملة'
       }
     },
+    existingSession: {
+      title: "تقييم غير مكتمل",
+      message: "لديك تقييم غير مكتمل. يمكنك المتابعة من حيث توقفت، أو البدء من جديد.",
+      progress: "التقدم",
+      lastActivity: "آخر نشاط",
+      questionsAnswered: "تم الإجابة عليها",
+      continue: "متابعة التقييم",
+      restart: "البدء من جديد",
+      restartWarning: "البدء من جديد سيحذف جميع إجاباتك السابقة."
+    },
     disclaimer: {
       title: 'إشعار مهم',
       message: 'هذه أدوات التقييم مخصصة للفحص والفهم الذاتي فقط ولا يمكنها أن تحل محل التشخيص المهني للصحة النفسية. إذا كنت تشعر بالضيق أو تحتاج إلى مساعدة، يرجى استشارة أخصائي صحة نفسية مهني.'
@@ -247,48 +257,6 @@ export const assessmentAr: IAssessmentTranslations = {
     actions: {
       exportReport: 'تصدير تقرير الاتجاهات',
       newAssessment: 'تقييم جديد'
-    }
-  },
-
-  // ترجمات خاصة بمكونات العميل
-  client: {
-    loading: {
-      assessment: 'جاري تحميل التقييم...',
-      translations: 'جاري تحميل الترجمات...',
-      question: 'جاري تحميل السؤال...',
-      default: 'جاري التحميل...'
-    },
-    errors: {
-      title: 'حدث خطأ',
-      sessionStartFailed: 'لا يمكن بدء جلسة التقييم',
-      initializationFailed: 'خطأ في التهيئة',
-      submitFailed: 'فشل في إرسال الإجابة',
-      analysisFailed: 'خطأ في التحليل',
-      noData: 'لا توجد بيانات متاحة',
-      invalidScale: 'يرجى اختيار قيمة بين {min} و {max}',
-      textTooLong: 'النص لا يمكن أن يتجاوز 1000 حرف',
-      unsupportedQuestionType: 'نوع سؤال غير مدعوم: {type}'
-    },
-    actions: {
-      retry: 'إعادة المحاولة',
-      previous: 'السابق',
-      next: 'التالي',
-      complete: 'إكمال',
-      save: 'حفظ',
-      saved: 'تم الحفظ'
-    },
-    progress: {
-      text: 'التقدم: {current} من {total}'
-    },
-    question: {
-      number: 'السؤال {current} من {total}',
-      required: 'مطلوب',
-      selectedCount: '{count} عناصر محددة',
-      selectedValue: 'الاختيار الحالي: {value}',
-      textPlaceholder: 'يرجى إدخال إجابتك هنا...',
-      characterCount: '{count} حرف مدخل',
-      textEntered: 'تم إدخال الإجابة',
-      answered: 'تمت الإجابة'
     }
   },
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useAssessmentTranslations } from '@/hooks/useCSRTranslations';
 import { resultsAnalyzer } from '@/lib/assessment/ResultsAnalyzer';
 import { resourceRecommendationEngine } from '@/lib/assessment/ResourceRecommendationEngine';

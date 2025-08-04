@@ -117,89 +117,9 @@ export class AssessmentEngine {
     }
   }
 
-  /**
-   * 获取问题（带缓存）
-   */
-  private async getQuestionWithCache(
-    questionId: string,
-    language: string = "zh"
-  ): Promise<Question | null> {
-    try {
-      // 首先尝试从缓存获取
-      let question = questionCache.getQuestion(questionId, language);
 
-      if (!question) {
-        // 从问卷管理器获取并缓存
-        // 注意：这里需要实现从所有评测类型中查找特定问题的逻辑
-        const allAssessments = questionBankManager.getAssessmentTypes();
-        for (const assessment of allAssessments) {
-          const foundQuestion = assessment.questions.find(
-            (q) => q.id === questionId
-          );
-          if (foundQuestion) {
-            question = foundQuestion;
-            break;
-          }
-        }
 
-        if (question) {
-          questionCache.cacheQuestion(question, language);
-        }
-      }
 
-      return question;
-    } catch (error) {
-      assessmentLogger.error(
-        "ENGINE",
-        `Failed to get question with cache: ${questionId}, language: ${language}`,
-        error
-      );
-      return null;
-    }
-  }
-
-  /**
-   * 缓存会话问题数据
-   */
-  private cacheSessionQuestions(
-    sessionId: string,
-    questions: Question[]
-  ): void {
-    try {
-      const cacheKey = CacheManager.getCacheKey("session_questions", sessionId);
-      cacheManager.set(cacheKey, questions, 30 * 60 * 1000); // 30分钟缓存
-
-      // 同时缓存单个问题
-      questions.forEach((question) => {
-        questionCache.cacheQuestion(question);
-      });
-    } catch (error) {
-      assessmentLogger.warn(
-        "ENGINE",
-        "Failed to cache session questions",
-        error,
-        sessionId
-      );
-    }
-  }
-
-  /**
-   * 获取缓存的会话问题
-   */
-  private getCachedSessionQuestions(sessionId: string): Question[] | null {
-    try {
-      const cacheKey = CacheManager.getCacheKey("session_questions", sessionId);
-      return cacheManager.get<Question[]>(cacheKey);
-    } catch (error) {
-      assessmentLogger.warn(
-        "ENGINE",
-        "Failed to get cached session questions",
-        error,
-        sessionId
-      );
-      return null;
-    }
-  }
 
   /**
    * Check if we're running in a client-side environment
@@ -1061,37 +981,7 @@ export class AssessmentEngine {
     }
   }
 
-  /**
-   * Clear old completed or abandoned sessions to free up storage space
-   */
-  private async _clearOldSessions(): Promise<void> {
-    if (!this.isClientSide) return;
 
-    try {
-      const cutoffDate = new Date();
-      cutoffDate.setDate(cutoffDate.getDate() - 7); // Keep sessions from last 7 days
-
-      const sessionsToKeep = Array.from(this.sessions.entries()).filter(
-        ([_, session]) => {
-          return (
-            session.status === "active" ||
-            session.status === "paused" ||
-            session.lastActivityAt > cutoffDate
-          );
-        }
-      );
-
-      this.sessions.clear();
-      sessionsToKeep.forEach(([sessionId, session]) => {
-        this.sessions.set(sessionId, session);
-      });
-
-      // Try to save again
-      await this.saveSessionsToStorage();
-    } catch (error) {
-      console.error("Failed to clear old sessions:", error);
-    }
-  }
 
   /**
    * Load sessions from localStorage

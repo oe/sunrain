@@ -21,8 +21,6 @@ export default memo(function ProgressBar({
   timeSpent,
   onPause,
   showPauseButton = true,
-  isPaused,
-  isCompleted,
   t
 }: ProgressBarProps) {
   const formatTime = (seconds: number): string => {

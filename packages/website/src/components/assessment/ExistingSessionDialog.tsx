@@ -20,19 +20,19 @@ export default function ExistingSessionDialog({
   const { t } = useAssessmentTranslations();
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleContinue = async () => {
+  const handleContinue = () => {
     setIsLoading(true);
     try {
-      await onContinue();
+      onContinue();
     } finally {
       setIsLoading(false);
     }
   };
 
-  const handleRestart = async () => {
+  const handleRestart = () => {
     setIsLoading(true);
     try {
-      await onRestart();
+      onRestart();
     } finally {
       setIsLoading(false);
     }

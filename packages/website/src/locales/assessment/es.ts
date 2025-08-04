@@ -46,6 +46,16 @@ export const assessmentEs: IAssessmentTranslations = {
         description: 'Completar evaluaciones sin terminar'
       }
     },
+    existingSession: {
+      title: "Evaluación Sin Terminar",
+      message: "Tienes una evaluación sin terminar. Puedes continuar desde donde lo dejaste, o empezar de nuevo.",
+      progress: "Progreso",
+      lastActivity: "Última actividad",
+      questionsAnswered: "Respondidas",
+      continue: "Continuar Evaluación",
+      restart: "Empezar de Nuevo",
+      restartWarning: "Empezar de nuevo eliminará todas tus respuestas anteriores."
+    },
     disclaimer: {
       title: 'Aviso Importante',
       message: 'Estas herramientas de evaluación son solo para detección y autocomprensión y no pueden reemplazar el diagnóstico profesional de salud mental. Si se siente angustiado o necesita ayuda, consulte a un experto profesional en salud mental.'
@@ -247,48 +257,6 @@ export const assessmentEs: IAssessmentTranslations = {
     actions: {
       exportReport: 'Exportar Reporte de Tendencias',
       newAssessment: 'Nueva Evaluación'
-    }
-  },
-
-  // Traducciones específicas para componentes del cliente
-  client: {
-    loading: {
-      assessment: 'Cargando evaluación...',
-      translations: 'Cargando traducciones...',
-      question: 'Cargando pregunta...',
-      default: 'Cargando...'
-    },
-    errors: {
-      title: 'Error Ocurrido',
-      sessionStartFailed: 'No se pudo iniciar la sesión de evaluación',
-      initializationFailed: 'Error de inicialización',
-      submitFailed: 'Error al enviar respuesta',
-      analysisFailed: 'Error en el análisis',
-      noData: 'No hay datos disponibles',
-      invalidScale: 'Por favor selecciona un valor entre {min} y {max}',
-      textTooLong: 'El texto no puede exceder 1000 caracteres',
-      unsupportedQuestionType: 'Tipo de pregunta no soportado: {type}'
-    },
-    actions: {
-      retry: 'Reintentar',
-      previous: 'Anterior',
-      next: 'Siguiente',
-      complete: 'Completar',
-      save: 'Guardar',
-      saved: 'Guardado'
-    },
-    progress: {
-      text: 'Progreso: {current} de {total}'
-    },
-    question: {
-      number: 'Pregunta {current} de {total}',
-      required: 'Requerido',
-      selectedCount: '{count} elementos seleccionados',
-      selectedValue: 'Selección actual: {value}',
-      textPlaceholder: 'Por favor ingresa tu respuesta aquí...',
-      characterCount: '{count} caracteres ingresados',
-      textEntered: 'Respuesta ingresada',
-      answered: 'Respondido'
     }
   },
 

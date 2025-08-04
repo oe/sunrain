@@ -355,19 +355,20 @@ export class CSRTranslationManager {
       );
     }
 
-    // 检查必需的客户端翻译结构
-    if (!translations.client || typeof translations.client !== "object") {
-      console.warn(`Missing client translations for ${namespace}:${language}`);
+    // 检查必需的客户端翻译结构（可选）
+    if (translations.client && typeof translations.client !== "object") {
+      console.warn(`Invalid client translations structure for ${namespace}:${language}`);
     }
 
-    // 检查基本的翻译结构
-    const requiredKeys = [
-      "continue",
-      "list",
-      "progress",
-      "validation",
-      "execution",
-    ];
+    // 检查基本的翻译结构（根据命名空间调整）
+    let requiredKeys: string[] = [];
+
+    if (namespace === 'assessment') {
+      requiredKeys = ["list", "execution", "results", "history", "continue", "trends", "common"];
+    } else {
+      requiredKeys = ["continue", "list", "progress", "validation", "execution"];
+    }
+
     for (const key of requiredKeys) {
       if (!translations[key]) {
         console.warn(

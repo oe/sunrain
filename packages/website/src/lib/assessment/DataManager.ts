@@ -47,16 +47,7 @@ export class AssessmentDataManager {
     }
   }
 
-  private _safeRemoveItem(key: string): boolean {
-    if (!this.isStorageAvailable()) return false;
-    try {
-      localStorage.removeItem(key);
-      return true;
-    } catch (error) {
-      console.error('Failed to remove localStorage item:', error);
-      return false;
-    }
-  }
+
 
   /**
    * Initialize encryption system

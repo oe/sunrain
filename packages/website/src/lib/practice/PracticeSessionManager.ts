@@ -561,14 +561,14 @@ export class PracticeSessionManager {
    * Generate unique session ID
    */
   private generateSessionId(): string {
-    return `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+    return `session_${Date.now()}_${Math.random().toString(36).substring(2, 11)}`;
   }
 
   /**
    * Generate unique record ID
    */
   private generateRecordId(): string {
-    return `record_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+    return `record_${Date.now()}_${Math.random().toString(36).substring(2, 11)}`;
   }
 
   /**

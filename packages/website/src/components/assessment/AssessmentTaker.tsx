@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useRef, memo } from 'react';
+import { useState, useEffect, useCallback, memo } from 'react';
 import { useAssessmentTranslations } from '@/hooks/useCSRTranslations';
 import QuestionCard from './QuestionCard';
 import ProgressBar from './ProgressBar';
