@@ -38,14 +38,8 @@ export class QuestionBankManager {
         {
           id: 'phq9-1',
           text: 'Little interest or pleasure in doing things',
-          type: 'scale',
+          type: 'single_choice',
           required: true,
-          scaleMin: 0,
-          scaleMax: 3,
-          scaleLabels: {
-            min: 'Not at all',
-            max: 'Nearly every day'
-          },
           options: [
             { id: 'phq9-1-0', text: 'Not at all', value: 0 },
             { id: 'phq9-1-1', text: 'Several days', value: 1 },
@@ -71,14 +65,8 @@ export class QuestionBankManager {
         {
           id: 'phq9-2',
           text: 'Feeling down, depressed, or hopeless',
-          type: 'scale',
+          type: 'single_choice',
           required: true,
-          scaleMin: 0,
-          scaleMax: 3,
-          scaleLabels: {
-            min: 'Not at all',
-            max: 'Nearly every day'
-          },
           options: [
             { id: 'phq9-2-0', text: 'Not at all', value: 0 },
             { id: 'phq9-2-1', text: 'Several days', value: 1 },

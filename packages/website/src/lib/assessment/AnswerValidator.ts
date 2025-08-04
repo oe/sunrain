@@ -112,8 +112,11 @@ export class SingleChoiceRule implements ValidationRule {
       };
     }
 
-    const validOptions = question.options.map(opt => opt.id);
-    if (!validOptions.includes(value)) {
+    // Check if value matches either option.id or option.value
+    const validOptionIds = question.options.map(opt => opt.id);
+    const validOptionValues = question.options.map(opt => opt.value);
+
+    if (!validOptionIds.includes(value) && !validOptionValues.includes(value)) {
       return {
         code: 'SINGLE_CHOICE_INVALID_OPTION',
         message: '选择的选项无效',
@@ -157,8 +160,12 @@ export class MultipleChoiceRule implements ValidationRule {
       };
     }
 
-    const validOptions = question.options.map(opt => opt.id);
-    const invalidOptions = value.filter(v => !validOptions.includes(v));
+    // Check if values match either option.id or option.value
+    const validOptionIds = question.options.map(opt => opt.id);
+    const validOptionValues = question.options.map(opt => opt.value);
+    const invalidOptions = value.filter(v =>
+      !validOptionIds.includes(v) && !validOptionValues.includes(v)
+    );
 
     if (invalidOptions.length > 0) {
       return {

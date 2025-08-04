@@ -97,6 +97,65 @@ export const assessmentAr: IAssessmentTranslations = {
     timeSpent: 'الوقت المستغرق',
     complete: 'مكتمل',
   },
+
+  results: {
+    loading: 'جاري تحميل نتائج التقييم...',
+    completedAt: 'تم الإكمال في',
+    timeSpent: 'الوقت المستغرق',
+    overallAssessment: 'التقييم العام',
+    detailedInterpretation: 'التفسير المفصل',
+    scoreDistribution: 'توزيع النقاط',
+    riskAssessment: 'تقييم المخاطر',
+    personalizedRecommendations: 'التوصيات الشخصية',
+    recommendedResources: 'الموارد الموصى بها',
+    nextSteps: {
+      title: 'الخطوات التالية',
+      moreAssessments: {
+        title: 'المزيد من التقييمات',
+        description: 'استكشاف أدوات التقييم الأخرى'
+      },
+      startPractice: {
+        title: 'بدء الممارسة',
+        description: 'تجربة ممارسات الصحة النفسية ذات الصلة'
+      },
+      browseResources: {
+        title: 'تصفح الموارد',
+        description: 'عرض مكتبة موارد الشفاء'
+      }
+    },
+    actions: {
+      share: 'مشاركة النتائج',
+      savePdf: 'حفظ كـ PDF',
+      viewHistory: 'عرض التاريخ',
+      backToAssessments: 'العودة إلى التقييمات'
+    },
+    riskLevels: {
+      high: {
+        title: 'يحتاج إلى انتباه',
+        message: 'تشير نتائج التقييم إلى أنك قد تحتاج إلى مساعدة مهنية. فكر في استشارة خبير الصحة النفسية.'
+      },
+      medium: {
+        title: 'انتباه موصى به',
+        message: 'تظهر نتائج التقييم بعض المجالات التي تحتاج إلى انتباه. فكر في تنفيذ تدابير الرعاية الذاتية.'
+      },
+      low: {
+        title: 'حالة جيدة',
+        message: 'نتائج التقييم ضمن النطاق الطبيعي. استمر في الحفاظ على العادات الصحية.'
+      }
+    },
+    disclaimer: {
+      title: 'إشعار مهم',
+      message: 'نتائج هذا التقييم للمرجع فقط ولا يمكن أن تحل محل التشخيص المهني للصحة النفسية.'
+    },
+    quickActions: 'الإجراءات السريعة',
+    noResultFound: 'لم يتم العثور على نتيجة التقييم',
+    noResultData: 'لم يتم العثور على بيانات التقييم'
+  },
+
+  actions: {
+    retry: 'إعادة المحاولة',
+    goBack: 'العودة',
+  },
 };
 
 export default assessmentAr;

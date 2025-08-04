@@ -11,8 +11,15 @@ interface ResultsDisplayProps {
   language: string;
 }
 
-export default function ResultsDisplay({ language: _language }: ResultsDisplayProps) {
-  const { isLoading: translationsLoading } = useAssessmentTranslations();
+export default function ResultsDisplay({ language }: ResultsDisplayProps) {
+  const { t, isLoading: translationsLoading, changeLanguage } = useAssessmentTranslations();
+
+  // 设置正确的语言
+  useEffect(() => {
+    if (language && changeLanguage) {
+      changeLanguage(language as any);
+    }
+  }, [language, changeLanguage]);
   const [resultId, setResultId] = useState<string | null>(null);
   const [result, setResult] = useState<AssessmentResult | null>(null);
   const [assessmentType, setAssessmentType] = useState<AssessmentType | null>(null);
@@ -20,21 +27,78 @@ export default function ResultsDisplay({ language: _language }: ResultsDisplayPr
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    console.log('🔍 ResultsDisplay: Starting result loading process');
+    console.log('📍 Current URL:', window.location.href);
+
     // Get result ID from URL hash
     const hash = window.location.hash.substring(1);
+    console.log('🔗 URL hash:', hash);
+
     if (hash) {
+      console.log('✅ Using result ID from hash:', hash);
       setResultId(hash);
       loadResult(hash);
     } else {
       // Try to get from URL search params as fallback
       const urlParams = new URLSearchParams(window.location.search);
       const id = urlParams.get('id');
+      const sessionId = urlParams.get('session');
+      console.log('🔗 URL params - id:', id, 'session:', sessionId);
+
       if (id) {
+        console.log('✅ Using result ID from URL params:', id);
         setResultId(id);
         loadResult(id);
+      } else if (sessionId) {
+        console.log('✅ Using session ID from URL params:', sessionId);
+        // Try to find result by session ID
+        loadResultBySessionId(sessionId);
       } else {
-        setError('未找到结果ID');
-        setIsLoading(false);
+        console.log('🔍 No URL params, checking storage...');
+
+        // Try to get the latest result from session storage
+        let latestResultId = sessionStorage.getItem('latest_assessment_result');
+        console.log('💾 SessionStorage result ID:', latestResultId);
+
+        // Fallback to localStorage backup
+        if (!latestResultId) {
+          try {
+            latestResultId = localStorage.getItem('latest_assessment_result_backup');
+            console.log('💾 LocalStorage backup result ID:', latestResultId);
+          } catch (error) {
+            console.warn('⚠️ Failed to get result ID from localStorage backup:', error);
+          }
+        }
+
+        // Final fallback: get the most recent result
+        if (!latestResultId) {
+          console.log('🔍 No stored result ID, checking all results...');
+          try {
+            const allResults = resultsAnalyzer.getAllResults();
+            console.log('📊 All results count:', allResults.length);
+
+            if (allResults.length > 0) {
+              // Sort by completion date and get the most recent
+              const sortedResults = allResults.sort((a, b) =>
+                b.completedAt.getTime() - a.completedAt.getTime()
+              );
+              latestResultId = sortedResults[0].id;
+              console.log('✅ Using most recent result as fallback:', latestResultId);
+            }
+          } catch (error) {
+            console.warn('⚠️ Failed to get most recent result:', error);
+          }
+        }
+
+        if (latestResultId) {
+          console.log('✅ Found result ID, loading:', latestResultId);
+          setResultId(latestResultId);
+          loadResult(latestResultId);
+        } else {
+          console.error('❌ No result ID found anywhere');
+          setError('NO_RESULT_ID');
+          setIsLoading(false);
+        }
       }
     }
 
@@ -56,10 +120,46 @@ export default function ResultsDisplay({ language: _language }: ResultsDisplayPr
       setIsLoading(true);
       setError(null);
 
+      console.log('🔄 Loading result with ID:', id);
+
       // Load result from local storage
       const loadedResult = resultsAnalyzer.getResult(id);
+      console.log('📊 Result found in analyzer:', !!loadedResult);
+
+      if (loadedResult) {
+        console.log('✅ Result details:', {
+          id: loadedResult.id,
+          sessionId: loadedResult.sessionId,
+          assessmentTypeId: loadedResult.assessmentTypeId,
+          completedAt: loadedResult.completedAt,
+          scoresCount: Object.keys(loadedResult.scores).length
+        });
+      }
+
       if (!loadedResult) {
-        throw new Error('未找到评测结果');
+        // Try to reload from localStorage and search again
+        try {
+          resultsAnalyzer.reloadResultsFromStorage();
+          const reloadedResult = resultsAnalyzer.getResult(id);
+          console.log('🔍 Found result after reload:', !!reloadedResult);
+
+          if (reloadedResult) {
+            setResult(reloadedResult);
+
+            // Get assessment type information
+            const assessmentTypeData = questionBankManager.getAssessmentType(reloadedResult.assessmentTypeId);
+            if (!assessmentTypeData) {
+              throw new Error('ASSESSMENT_TYPE_NOT_FOUND');
+            }
+
+            setAssessmentType(assessmentTypeData);
+            return;
+          }
+        } catch (storageError) {
+          console.error('Failed to reload from storage:', storageError);
+        }
+
+        throw new Error('RESULT_NOT_FOUND');
       }
 
       setResult(loadedResult);
@@ -67,14 +167,64 @@ export default function ResultsDisplay({ language: _language }: ResultsDisplayPr
       // Get assessment type information
       const assessmentTypeData = questionBankManager.getAssessmentType(loadedResult.assessmentTypeId);
       if (!assessmentTypeData) {
-        throw new Error('未找到评测类型信息');
+        throw new Error('ASSESSMENT_TYPE_NOT_FOUND');
       }
 
       setAssessmentType(assessmentTypeData);
 
     } catch (err) {
       console.error('Failed to load result:', err);
-      setError(err instanceof Error ? err.message : '加载结果失败');
+      setError(err instanceof Error ? err.message : 'LOAD_FAILED');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const loadResultBySessionId = async (sessionId: string) => {
+    try {
+      setIsLoading(true);
+      setError(null);
+
+      console.log('Loading result by session ID:', sessionId);
+
+      // First try to get from memory
+      let allResults = resultsAnalyzer.getAllResults();
+
+      // If no results in memory, try to reload from localStorage
+      if (allResults.length === 0) {
+        try {
+          resultsAnalyzer.reloadResultsFromStorage();
+          allResults = resultsAnalyzer.getAllResults();
+          console.log('📊 Reloaded results from storage:', allResults.length);
+        } catch (storageError) {
+          console.error('⚠️ Failed to reload results from storage:', storageError);
+        }
+      }
+
+      const loadedResult = allResults.find(r => r.sessionId === sessionId);
+      console.log('Found result by session ID:', !!loadedResult, loadedResult?.id);
+
+      if (!loadedResult) {
+        throw new Error('RESULT_NOT_FOUND');
+      }
+
+      setResult(loadedResult);
+      setResultId(loadedResult.id);
+
+      // Update URL to use result ID
+      window.history.replaceState(null, '', `/assessment/results/#${loadedResult.id}`);
+
+      // Get assessment type information
+      const assessmentTypeData = questionBankManager.getAssessmentType(loadedResult.assessmentTypeId);
+      if (!assessmentTypeData) {
+        throw new Error('ASSESSMENT_TYPE_NOT_FOUND');
+      }
+
+      setAssessmentType(assessmentTypeData);
+
+    } catch (err) {
+      console.error('Failed to load result by session ID:', err);
+      setError(err instanceof Error ? err.message : 'LOAD_FAILED');
     } finally {
       setIsLoading(false);
     }
@@ -84,8 +234,8 @@ export default function ResultsDisplay({ language: _language }: ResultsDisplayPr
     if (!result || !assessmentType) return;
 
     const shareData = {
-      title: `${assessmentType.name} - 评测结果`,
-      text: `我刚完成了${assessmentType.name}，查看我的结果！`,
+      title: `${assessmentType.name} - ${t('results.overallAssessment')}`,
+      text: `I just completed ${assessmentType.name}, check out my results!`,
       url: window.location.href
     };
 
@@ -100,7 +250,7 @@ export default function ResultsDisplay({ language: _language }: ResultsDisplayPr
       // Fallback to copy link
       try {
         await navigator.clipboard.writeText(window.location.href);
-        showNotification('链接已复制到剪贴板');
+        showNotification('Link copied to clipboard');
       } catch (err) {
         console.error('Failed to copy link:', err);
       }
@@ -177,7 +327,8 @@ export default function ResultsDisplay({ language: _language }: ResultsDisplayPr
   };
 
   const formatDate = (date: Date) => {
-    return new Date(date).toLocaleString('zh-CN', {
+    const locale = language === 'zh' ? 'zh-CN' : 'en-US';
+    return new Date(date).toLocaleString(locale, {
       year: 'numeric',
       month: 'long',
       day: 'numeric',
@@ -189,7 +340,11 @@ export default function ResultsDisplay({ language: _language }: ResultsDisplayPr
   const formatDuration = (seconds: number) => {
     const minutes = Math.floor(seconds / 60);
     const remainingSeconds = seconds % 60;
-    return `${minutes}分${remainingSeconds}秒`;
+    if (language === 'zh') {
+      return `${minutes}分${remainingSeconds}秒`;
+    } else {
+      return `${minutes}m ${remainingSeconds}s`;
+    }
   };
 
   if (translationsLoading || isLoading) {
@@ -197,35 +352,47 @@ export default function ResultsDisplay({ language: _language }: ResultsDisplayPr
       <div className="flex items-center justify-center py-12">
         <LoadingSpinner />
         <p className="ml-4 text-gray-600 dark:text-gray-300">
-          正在加载评测结果...
+          {t('results.loading')}
         </p>
       </div>
     );
   }
 
+  // 错误代码到翻译键的映射
+  const getErrorMessage = (errorCode: string) => {
+    const errorMap: Record<string, string> = {
+      'NO_RESULT_ID': 'results.noResultFound',
+      'RESULT_NOT_FOUND': 'results.noResultFound',
+      'ASSESSMENT_TYPE_NOT_FOUND': 'errors.noData',
+      'LOAD_FAILED': 'results.loading'
+    };
+    return t(errorMap[errorCode] || 'errors.title');
+  };
+
   if (error) {
     return (
       <div className="max-w-2xl mx-auto text-center py-12">
         <ErrorDisplay
-          message={error}
+          message={getErrorMessage(error)}
           onRetry={() => {
             if (resultId) {
               loadResult(resultId);
             }
           }}
+          t={t}
         />
         <div className="mt-6 space-x-4">
           <button
             onClick={() => window.location.href = '/assessment/'}
             className="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
           >
-            返回评测首页
+            {t('results.actions.backToAssessments')}
           </button>
           <button
             onClick={() => window.location.href = '/assessment/history/'}
             className="px-6 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
           >
-            查看历史记录
+            {t('results.actions.viewHistory')}
           </button>
         </div>
       </div>
@@ -236,7 +403,7 @@ export default function ResultsDisplay({ language: _language }: ResultsDisplayPr
     return (
       <div className="text-center py-12">
         <p className="text-gray-600 dark:text-gray-300">
-          没有找到评测数据
+          {t('results.noResultData')}
         </p>
       </div>
     );
@@ -255,31 +422,27 @@ export default function ResultsDisplay({ language: _language }: ResultsDisplayPr
           {assessmentType.name}
         </h1>
         <p className="text-gray-600 dark:text-gray-300">
-          完成时间: {formatDate(result.completedAt)} |
-          用时: {formatDuration(result.totalTimeSpent)}
+          {t('results.completedAt')}: {formatDate(result.completedAt)} |
+          {t('results.timeSpent')}: {formatDuration(result.totalTimeSpent)}
         </p>
       </div>
 
       {/* Risk Alert */}
       {result.riskLevel && result.riskLevel !== 'low' && (
-        <div className={`mb-8 p-4 rounded-lg border ${
-          result.riskLevel === 'high'
-            ? 'bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-800'
-            : 'bg-yellow-50 dark:bg-yellow-900/20 border-yellow-200 dark:border-yellow-800'
-        }`}>
+        <div className={`mb-8 p-4 rounded-lg border ${result.riskLevel === 'high'
+          ? 'bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-800'
+          : 'bg-yellow-50 dark:bg-yellow-900/20 border-yellow-200 dark:border-yellow-800'
+          }`}>
           <div className="flex items-center">
             <svg className="w-6 h-6 mr-3" fill="currentColor" viewBox="0 0 20 20">
               <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
             </svg>
             <div>
               <h3 className="font-semibold">
-                {result.riskLevel === 'high' ? '需要关注' : '建议关注'}
+                {t(`results.riskLevels.${result.riskLevel}.title`)}
               </h3>
               <p className="text-sm mt-1">
-                {result.riskLevel === 'high'
-                  ? '您的评测结果显示可能需要专业帮助。建议咨询心理健康专家或拨打心理援助热线。'
-                  : '您的评测结果显示有一些需要关注的方面。建议采取一些自我护理措施或考虑寻求支持。'
-                }
+                {t(`results.riskLevels.${result.riskLevel}.message`)}
               </p>
             </div>
           </div>
@@ -292,7 +455,7 @@ export default function ResultsDisplay({ language: _language }: ResultsDisplayPr
         <div className="lg:col-span-2">
           <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 p-6">
             <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-6">
-              评测结果
+              {t('results.overallAssessment')}
             </h2>
             <div className="space-y-4">
               {Object.entries(result.scores).map(([scoreId, scoreData]) => (
@@ -319,26 +482,26 @@ export default function ResultsDisplay({ language: _language }: ResultsDisplayPr
         <div className="space-y-6">
           <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 p-6">
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-              快速操作
+              {t('results.quickActions')}
             </h3>
             <div className="space-y-3">
               <button
                 onClick={shareResults}
                 className="w-full px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
               >
-                分享结果
+                {t('results.actions.share')}
               </button>
               <button
                 onClick={saveToPDF}
                 className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
               >
-                保存为PDF
+                {t('results.actions.savePdf')}
               </button>
               <a
                 href="/assessment/history/"
                 className="block w-full px-4 py-2 text-center border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
               >
-                查看历史
+                {t('results.actions.viewHistory')}
               </a>
             </div>
           </div>
@@ -348,7 +511,7 @@ export default function ResultsDisplay({ language: _language }: ResultsDisplayPr
       {/* Detailed Interpretation */}
       <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 p-6 mb-8">
         <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
-          详细解释
+          {t('results.detailedInterpretation')}
         </h2>
         <div className="prose dark:prose-invert max-w-none">
           <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
@@ -360,7 +523,7 @@ export default function ResultsDisplay({ language: _language }: ResultsDisplayPr
       {/* Personalized Recommendations */}
       <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 p-6 mb-8">
         <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-6">
-          个性化建议
+          {t('results.personalizedRecommendations')}
         </h2>
         <div className="space-y-4">
           {result.recommendations.map((recommendation, index) => (
@@ -377,7 +540,7 @@ export default function ResultsDisplay({ language: _language }: ResultsDisplayPr
       {/* Resource Recommendations */}
       <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 p-6 mb-8">
         <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-6">
-          推荐资源
+          {t('results.recommendedResources')}
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {resourceRecommendationEngine.getRecommendations(result, 6).map((rec, index) => (
@@ -388,21 +551,21 @@ export default function ResultsDisplay({ language: _language }: ResultsDisplayPr
                   <span className="ml-2 text-sm font-medium text-gray-900 dark:text-white">{rec.title}</span>
                 </div>
                 <span className={`px-2 py-1 text-xs font-medium rounded-full ${getPriorityColor(rec.priority)}`}>
-                  {rec.priority === 'high' ? '高优先级' :
-                   rec.priority === 'medium' ? '中优先级' :
-                   '低优先级'}
+                  {rec.priority === 'high' ? (language === 'zh' ? '高优先级' : 'High Priority') :
+                    rec.priority === 'medium' ? (language === 'zh' ? '中优先级' : 'Medium Priority') :
+                      (language === 'zh' ? '低优先级' : 'Low Priority')}
                 </span>
               </div>
               <p className="text-sm text-gray-600 dark:text-gray-300 mb-3">{rec.description}</p>
               <div className="flex items-center justify-between">
                 <span className="text-xs text-gray-500 dark:text-gray-400">
-                  {rec.estimatedTimeCommitment || '时间不定'}
+                  {rec.estimatedTimeCommitment || (language === 'zh' ? '时间不定' : 'Time varies')}
                 </span>
                 <button
                   onClick={() => window.open(rec.resourceLinks[0]?.url || '#', '_blank')}
                   className="text-sm text-blue-600 dark:text-blue-400 hover:underline"
                 >
-                  查看详情
+                  {language === 'zh' ? '查看详情' : 'View Details'}
                 </button>
               </div>
             </div>
@@ -413,7 +576,7 @@ export default function ResultsDisplay({ language: _language }: ResultsDisplayPr
       {/* Next Steps */}
       <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-lg p-6 border border-blue-200 dark:border-blue-800 mb-8">
         <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
-          下一步行动
+          {t('results.nextSteps.title')}
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <a href="/assessment/" className="flex items-center p-4 bg-white dark:bg-gray-800 rounded-lg shadow hover:shadow-md transition-shadow">
@@ -422,10 +585,10 @@ export default function ResultsDisplay({ language: _language }: ResultsDisplayPr
             </svg>
             <div>
               <h3 className="font-medium text-gray-900 dark:text-white">
-                更多评测
+                {t('results.nextSteps.moreAssessments.title')}
               </h3>
               <p className="text-sm text-gray-600 dark:text-gray-300">
-                探索其他评测工具
+                {t('results.nextSteps.moreAssessments.description')}
               </p>
             </div>
           </a>
@@ -436,10 +599,10 @@ export default function ResultsDisplay({ language: _language }: ResultsDisplayPr
             </svg>
             <div>
               <h3 className="font-medium text-gray-900 dark:text-white">
-                开始练习
+                {t('results.nextSteps.startPractice.title')}
               </h3>
               <p className="text-sm text-gray-600 dark:text-gray-300">
-                尝试相关的心理练习
+                {t('results.nextSteps.startPractice.description')}
               </p>
             </div>
           </a>
@@ -450,10 +613,10 @@ export default function ResultsDisplay({ language: _language }: ResultsDisplayPr
             </svg>
             <div>
               <h3 className="font-medium text-gray-900 dark:text-white">
-                浏览资源
+                {t('results.nextSteps.browseResources.title')}
               </h3>
               <p className="text-sm text-gray-600 dark:text-gray-300">
-                查看疗愈资源库
+                {t('results.nextSteps.browseResources.description')}
               </p>
             </div>
           </a>
@@ -468,10 +631,10 @@ export default function ResultsDisplay({ language: _language }: ResultsDisplayPr
           </svg>
           <div>
             <h3 className="text-sm font-medium text-yellow-800 dark:text-yellow-200">
-              重要提醒
+              {t('results.disclaimer.title')}
             </h3>
             <p className="text-sm text-yellow-700 dark:text-yellow-300 mt-1">
-              此评测结果仅供参考，不能替代专业的心理健康诊断。如果您感到困扰或需要帮助，请咨询专业的心理健康专家。
+              {t('results.disclaimer.message')}
             </p>
           </div>
         </div>

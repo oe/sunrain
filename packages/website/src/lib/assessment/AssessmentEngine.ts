@@ -240,6 +240,21 @@ export class AssessmentEngine {
         throw error;
       }
 
+      // Check for existing active sessions for this assessment type
+      const existingActiveSession = this.getActiveSessions().find(
+        session => session.assessmentTypeId === assessmentTypeId
+      );
+
+      if (existingActiveSession) {
+        const error = AssessmentErrorFactory.createSessionError(
+          AssessmentErrorType.SESSION_ALREADY_EXISTS,
+          `An active session already exists for assessment type ${assessmentTypeId}`,
+          existingActiveSession.id
+        );
+        assessmentLogger.warn("ENGINE", "Active session already exists", error);
+        throw error;
+      }
+
       assessmentLogger.info("ENGINE", "Starting new assessment", {
         assessmentTypeId,
         language,
@@ -411,11 +426,15 @@ export class AssessmentEngine {
     const session = this.sessions.get(sessionId);
     if (!session) return null;
 
+    // First try to get the base assessment type (which should have complete data)
+    const baseAssessmentType = questionBankManager.getAssessmentType(session.assessmentTypeId);
+    if (!baseAssessmentType) return null;
+
+    // Then get localized version if needed
     const assessmentType = questionBankManager.getLocalizedAssessmentType(
       session.assessmentTypeId,
       session.language
     );
-    if (!assessmentType) return null;
 
     const culturallyAdapted =
       questionBankManager.getCulturallyAdaptedAssessmentType(
@@ -423,22 +442,34 @@ export class AssessmentEngine {
         session.culturalContext
       );
 
-    const questions = culturallyAdapted?.questions || assessmentType.questions;
+    const questions = culturallyAdapted?.questions || assessmentType?.questions || baseAssessmentType.questions;
 
     if (session.currentQuestionIndex >= questions.length) {
       return null;
     }
 
-    return questions[session.currentQuestionIndex];
+    const currentQuestion = questions[session.currentQuestionIndex];
+
+    console.log('AssessmentEngine getCurrentQuestion:', {
+      sessionId,
+      questionIndex: session.currentQuestionIndex,
+      questionId: currentQuestion?.id,
+      questionType: currentQuestion?.type,
+      hasOptions: !!currentQuestion?.options,
+      optionsCount: currentQuestion?.options?.length,
+      language: session.language
+    });
+
+    return currentQuestion;
   }
 
   /**
    * Submit an answer for the current question
    */
-  submitAnswer(
+  async submitAnswer(
     sessionId: string,
     answer: any
-  ): { success: boolean; nextQuestion?: Question; completed?: boolean } {
+  ): Promise<{ success: boolean; nextQuestion?: Question; completed?: boolean }> {
     const session = this.sessions.get(sessionId);
     if (!session || session.status !== "active") {
       return { success: false };
@@ -483,6 +514,64 @@ export class AssessmentEngine {
     if (session.currentQuestionIndex >= assessmentType.questions.length) {
       session.status = "completed";
       this.stopSessionTimer(sessionId);
+
+      // Generate and save assessment result
+      try {
+        console.log('🔄 Starting result generation for session:', sessionId);
+        console.log('📊 Session data:', {
+          id: session.id,
+          assessmentTypeId: session.assessmentTypeId,
+          answersCount: session.answers.length,
+          status: session.status
+        });
+
+        const { resultsAnalyzer } = await import('./ResultsAnalyzer');
+        const result = resultsAnalyzer.analyzeSession(session);
+
+        if (result) {
+          console.log('✅ Assessment result generated successfully:', {
+            resultId: result.id,
+            sessionId: result.sessionId,
+            assessmentTypeId: result.assessmentTypeId,
+            scoresCount: Object.keys(result.scores).length
+          });
+
+          // Store the result ID in session storage for easy retrieval
+          sessionStorage.setItem('latest_assessment_result', result.id);
+          console.log('💾 Stored result ID in sessionStorage:', result.id);
+
+          // Also store in localStorage as backup
+          try {
+            localStorage.setItem('latest_assessment_result_backup', result.id);
+            console.log('💾 Stored result ID backup in localStorage:', result.id);
+          } catch (storageError) {
+            console.warn('⚠️ Failed to store result ID backup:', storageError);
+          }
+
+          // Verify the result was actually saved
+          setTimeout(() => {
+            try {
+              const { resultsAnalyzer: verifyAnalyzer } = require('./ResultsAnalyzer');
+              const savedResult = verifyAnalyzer.getResult(result.id);
+              console.log('🔍 Verification - Result found in analyzer:', !!savedResult);
+
+              if (savedResult) {
+                console.log('✅ Result verification successful');
+              } else {
+                console.error('❌ Result verification failed - result not found in analyzer');
+              }
+            } catch (verifyError) {
+              console.error('❌ Result verification error:', verifyError);
+            }
+          }, 100);
+
+        } else {
+          console.error('❌ Failed to generate assessment result - analyzeSession returned null');
+        }
+      } catch (error) {
+        console.error('💥 Error generating assessment result:', error);
+      }
+
       this.saveSessionsToStorage();
       return { success: true, completed: true };
     }
@@ -678,20 +767,44 @@ export class AssessmentEngine {
     question: Question,
     answer: any
   ): { valid: boolean; error?: string } {
+    console.log('AssessmentEngine validateAnswer:', {
+      questionId: question.id,
+      questionType: question.type,
+      answer: answer,
+      answerType: typeof answer,
+      required: question.required,
+      options: question.options
+    });
+
     if (
       question.required &&
       (answer === null || answer === undefined || answer === "")
     ) {
+      console.log('Validation failed: Answer is required');
       return { valid: false, error: "Answer is required" };
     }
 
     switch (question.type) {
       case "single_choice":
-        if (
-          question.options &&
-          !question.options.some((opt) => opt.id === answer)
-        ) {
-          return { valid: false, error: "Invalid option selected" };
+        if (question.options) {
+          // Check if answer matches either option.id or option.value
+          const validOptionIds = question.options.map(opt => opt.id);
+          const validOptionValues = question.options.map(opt => opt.value);
+          const isValidOption = question.options.some((opt) =>
+            opt.id === answer || opt.value === answer
+          );
+
+          console.log('Single choice validation:', {
+            validOptionIds,
+            validOptionValues,
+            answer,
+            isValidOption
+          });
+
+          if (!isValidOption) {
+            console.log('Validation failed: Invalid option selected');
+            return { valid: false, error: "Invalid option selected" };
+          }
         }
         break;
 
@@ -703,9 +816,12 @@ export class AssessmentEngine {
           };
         }
         if (question.options) {
-          const validOptions = question.options.map((opt) => opt.id);
+          // Create arrays of valid option IDs and values
+          const validOptionIds = question.options.map((opt) => opt.id);
+          const validOptionValues = question.options.map((opt) => opt.value);
+
           const invalidAnswers = answer.filter(
-            (a) => !validOptions.includes(a)
+            (a) => !validOptionIds.includes(a) && !validOptionValues.includes(a)
           );
           if (invalidAnswers.length > 0) {
             return { valid: false, error: "Invalid options selected" };
@@ -1233,8 +1349,8 @@ export const assessmentEngine = {
     return this.getInstance().getCurrentQuestion(sessionId);
   },
 
-  submitAnswer(sessionId: string, answer: any) {
-    return this.getInstance().submitAnswer(sessionId, answer);
+  async submitAnswer(sessionId: string, answer: any) {
+    return await this.getInstance().submitAnswer(sessionId, answer);
   },
 
   goToPreviousQuestion(sessionId: string) {

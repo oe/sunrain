@@ -1,4 +1,5 @@
 import { memo } from 'react';
+import { useAssessmentTranslations } from '@/hooks/useCSRTranslations';
 
 interface ErrorDisplayProps {
   title?: string;
@@ -17,17 +18,12 @@ export default memo(function ErrorDisplay({
   onGoBack,
   showRetry = false,
   showGoBack = false,
-  t
+  t: externalT
 }: ErrorDisplayProps) {
-  // 默认翻译函数
-  const defaultT = (key: string) => {
-    const translations: Record<string, string> = {
-      'errors.title': '错误',
-      'errors.retry': '重试',
-      'errors.goBack': '返回'
-    };
-    return translations[key] || key;
-  };
+  const { t: internalT } = useAssessmentTranslations();
+
+  // 使用传入的翻译函数或内部翻译函数
+  const t = externalT || internalT;
   return (
     <div className="max-w-2xl mx-auto text-center py-12">
       <svg className="w-16 h-16 text-red-600 dark:text-red-400 mx-auto mb-4" fill="currentColor" viewBox="0 0 20 20">
@@ -35,7 +31,7 @@ export default memo(function ErrorDisplay({
       </svg>
 
       <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-        {title || (t || defaultT)('errors.title')}
+        {title || t('errors.title')}
       </h2>
 
       <p className="text-gray-600 dark:text-gray-300 mb-6">
@@ -48,7 +44,7 @@ export default memo(function ErrorDisplay({
             onClick={onRetry}
             className="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
           >
-            {(t || defaultT)('errors.retry')}
+            {t('actions.retry')}
           </button>
         )}
 
@@ -57,7 +53,7 @@ export default memo(function ErrorDisplay({
             onClick={onGoBack}
             className="px-6 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
           >
-            {(t || defaultT)('errors.goBack')}
+            {t('actions.goBack')}
           </button>
         )}
       </div>

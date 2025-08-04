@@ -98,6 +98,65 @@ export const assessmentEs: IAssessmentTranslations = {
     complete: 'completo',
   },
 
+  results: {
+    loading: 'Cargando resultados de evaluación...',
+    completedAt: 'Completado en',
+    timeSpent: 'Tiempo transcurrido',
+    overallAssessment: 'Evaluación General',
+    detailedInterpretation: 'Interpretación Detallada',
+    scoreDistribution: 'Distribución de Puntuación',
+    riskAssessment: 'Evaluación de Riesgo',
+    personalizedRecommendations: 'Recomendaciones Personalizadas',
+    recommendedResources: 'Recursos Recomendados',
+    nextSteps: {
+      title: 'Próximos Pasos',
+      moreAssessments: {
+        title: 'Más Evaluaciones',
+        description: 'Explorar otras herramientas de evaluación'
+      },
+      startPractice: {
+        title: 'Comenzar Práctica',
+        description: 'Probar prácticas relacionadas de salud mental'
+      },
+      browseResources: {
+        title: 'Explorar Recursos',
+        description: 'Ver biblioteca de recursos de sanación'
+      }
+    },
+    actions: {
+      share: 'Compartir Resultados',
+      savePdf: 'Guardar como PDF',
+      viewHistory: 'Ver Historial',
+      backToAssessments: 'Volver a Evaluaciones'
+    },
+    riskLevels: {
+      high: {
+        title: 'Necesita Atención',
+        message: 'Sus resultados de evaluación indican que puede necesitar ayuda profesional. Considere consultar a un experto en salud mental.'
+      },
+      medium: {
+        title: 'Atención Recomendada',
+        message: 'Sus resultados de evaluación muestran algunas áreas que necesitan atención. Considere implementar medidas de autocuidado.'
+      },
+      low: {
+        title: 'Buen Estado',
+        message: 'Sus resultados de evaluación están dentro del rango normal. Continúe manteniendo hábitos saludables.'
+      }
+    },
+    disclaimer: {
+      title: 'Aviso Importante',
+      message: 'Estos resultados de evaluación son solo para referencia y no pueden reemplazar el diagnóstico profesional de salud mental.'
+    },
+    quickActions: 'Acciones Rápidas',
+    noResultFound: 'Resultado de evaluación no encontrado',
+    noResultData: 'No se encontraron datos de evaluación'
+  },
+
+  actions: {
+    retry: 'Reintentar',
+    goBack: 'Volver',
+  },
+
 };
 
 export default assessmentEs;

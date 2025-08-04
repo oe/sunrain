@@ -97,6 +97,65 @@ export const assessmentZh: IAssessmentTranslations = {
     timeSpent: '用时',
     complete: '完成',
   },
+
+  results: {
+    loading: '正在加载评测结果...',
+    completedAt: '完成时间',
+    timeSpent: '用时',
+    overallAssessment: '总体评估',
+    detailedInterpretation: '详细解释',
+    scoreDistribution: '分数分布',
+    riskAssessment: '风险评估',
+    personalizedRecommendations: '个性化建议',
+    recommendedResources: '推荐资源',
+    nextSteps: {
+      title: '下一步行动',
+      moreAssessments: {
+        title: '更多评测',
+        description: '探索其他评测工具'
+      },
+      startPractice: {
+        title: '开始练习',
+        description: '尝试相关的心理练习'
+      },
+      browseResources: {
+        title: '浏览资源',
+        description: '查看疗愈资源库'
+      }
+    },
+    actions: {
+      share: '分享结果',
+      savePdf: '保存为PDF',
+      viewHistory: '查看历史',
+      backToAssessments: '返回评测首页'
+    },
+    riskLevels: {
+      high: {
+        title: '需要关注',
+        message: '您的评测结果显示可能需要专业帮助。建议咨询心理健康专家或拨打心理援助热线。'
+      },
+      medium: {
+        title: '建议关注',
+        message: '您的评测结果显示有一些需要关注的方面。建议采取一些自我护理措施或考虑寻求支持。'
+      },
+      low: {
+        title: '状态良好',
+        message: '您的评测结果在正常范围内。继续保持健康的生活习惯。'
+      }
+    },
+    disclaimer: {
+      title: '重要提醒',
+      message: '此评测结果仅供参考，不能替代专业的心理健康诊断。如果您感到困扰或需要帮助，请咨询专业的心理健康专家。'
+    },
+    quickActions: '快速操作',
+    noResultFound: '未找到评测结果',
+    noResultData: '没有找到评测数据'
+  },
+
+  actions: {
+    retry: '重试',
+    goBack: '返回',
+  },
 };
 
 export default assessmentZh;

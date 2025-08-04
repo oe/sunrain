@@ -47,6 +47,16 @@ export const assessmentZh: IAssessmentTranslations = {
         description: "完成未完成的评测",
       },
     },
+    existingSession: {
+      title: "未完成的评测",
+      message: "您有一个未完成的评测。您可以继续之前的进度，或者重新开始。",
+      progress: "进度",
+      lastActivity: "最后活动",
+      questionsAnswered: "已回答",
+      continue: "继续评测",
+      restart: "重新开始",
+      restartWarning: "重新开始将删除您之前的所有答案。"
+    },
     disclaimer: {
       title: "重要提醒",
       message:
@@ -252,48 +262,6 @@ export const assessmentZh: IAssessmentTranslations = {
     actions: {
       exportReport: "导出趋势报告",
       newAssessment: "进行新评测",
-    },
-  },
-
-  // 客户端组件专用翻译
-  client: {
-    loading: {
-      assessment: "正在加载评测...",
-      translations: "正在加载语言包...",
-      question: "正在加载问题...",
-      default: "正在加载...",
-    },
-    errors: {
-      title: "出现错误",
-      sessionStartFailed: "无法启动评测会话",
-      initializationFailed: "初始化失败",
-      submitFailed: "提交答案失败，请重试",
-      analysisFailed: "分析结果失败",
-      noData: "评测数据加载失败",
-      invalidScale: "请选择 {min} 到 {max} 之间的值",
-      textTooLong: "文本长度不能超过1000个字符",
-      unsupportedQuestionType: "不支持的问题类型: {type}",
-    },
-    actions: {
-      retry: "重试",
-      previous: "上一题",
-      next: "下一题",
-      complete: "完成评测",
-      save: "保存进度",
-      saved: "已保存",
-    },
-    progress: {
-      text: "第 {current} 题 / 共 {total} 题",
-    },
-    question: {
-      number: "第 {current} 题 / 共 {total} 题",
-      required: "* 必答",
-      selectedCount: "已选择 {count} 项",
-      selectedValue: "当前选择: {value}",
-      textPlaceholder: "请在此输入您的回答...",
-      characterCount: "已输入 {count} 个字符",
-      textEntered: "回答已输入",
-      answered: "已回答",
     },
   },
 

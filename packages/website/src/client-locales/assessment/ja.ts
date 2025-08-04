@@ -97,6 +97,65 @@ export const assessmentJa: IAssessmentTranslations = {
     timeSpent: '経過時間',
     complete: '完了',
   },
+
+  results: {
+    loading: '評価結果を読み込み中...',
+    completedAt: '完了時刻',
+    timeSpent: '経過時間',
+    overallAssessment: '総合評価',
+    detailedInterpretation: '詳細な解釈',
+    scoreDistribution: 'スコア分布',
+    riskAssessment: 'リスク評価',
+    personalizedRecommendations: '個別推奨事項',
+    recommendedResources: '推奨リソース',
+    nextSteps: {
+      title: '次のステップ',
+      moreAssessments: {
+        title: 'その他の評価',
+        description: '他の評価ツールを探索'
+      },
+      startPractice: {
+        title: '練習を開始',
+        description: '関連するメンタルヘルス実践を試す'
+      },
+      browseResources: {
+        title: 'リソースを閲覧',
+        description: 'ヒーリングリソースライブラリを表示'
+      }
+    },
+    actions: {
+      share: '結果を共有',
+      savePdf: 'PDFとして保存',
+      viewHistory: '履歴を表示',
+      backToAssessments: '評価に戻る'
+    },
+    riskLevels: {
+      high: {
+        title: '注意が必要',
+        message: '評価結果は専門的な支援が必要である可能性を示しています。メンタルヘルス専門家への相談をご検討ください。'
+      },
+      medium: {
+        title: '注意推奨',
+        message: '評価結果は注意が必要な領域があることを示しています。セルフケア対策の実施をご検討ください。'
+      },
+      low: {
+        title: '良好な状態',
+        message: '評価結果は正常範囲内です。健康的な習慣を継続してください。'
+      }
+    },
+    disclaimer: {
+      title: '重要なお知らせ',
+      message: 'この評価結果は参考のためのものであり、専門的なメンタルヘルス診断に代わるものではありません。'
+    },
+    quickActions: 'クイックアクション',
+    noResultFound: '評価結果が見つかりません',
+    noResultData: '評価データが見つかりません'
+  },
+
+  actions: {
+    retry: '再試行',
+    goBack: '戻る',
+  },
 };
 
 export default assessmentJa;

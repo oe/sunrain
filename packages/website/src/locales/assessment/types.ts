@@ -55,6 +55,17 @@ export interface IAssessmentTranslations {
         description: string;
       };
     };
+    /** 现有会话对话框 */
+    existingSession: {
+      title: string;
+      message: string;
+      progress: string;
+      lastActivity: string;
+      questionsAnswered: string;
+      continue: string;
+      restart: string;
+      restartWarning: string;
+    };
     /** 免责声明 */
     disclaimer: {
       title: string;
@@ -312,53 +323,6 @@ export interface IAssessmentTranslations {
     actions: {
       exportReport: string;
       newAssessment: string;
-    };
-  };
-
-  /** 客户端组件专用翻译 */
-  client: {
-    /** 加载状态 */
-    loading: {
-      assessment: string;
-      translations: string;
-      question: string;
-      default: string;
-    };
-    /** 错误信息 */
-    errors: {
-      title: string;
-      sessionStartFailed: string;
-      initializationFailed: string;
-      submitFailed: string;
-      analysisFailed: string;
-      noData: string;
-      invalidScale: string;
-      textTooLong: string;
-      unsupportedQuestionType: string;
-    };
-    /** 操作按钮 */
-    actions: {
-      retry: string;
-      previous: string;
-      next: string;
-      complete: string;
-      save: string;
-      saved: string;
-    };
-    /** 进度显示 */
-    progress: {
-      text: string;
-    };
-    /** 问题显示 */
-    question: {
-      number: string;
-      required: string;
-      selectedCount: string;
-      selectedValue: string;
-      textPlaceholder: string;
-      characterCount: string;
-      textEntered: string;
-      answered: string;
     };
   };
 

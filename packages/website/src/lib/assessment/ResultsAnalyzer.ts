@@ -18,23 +18,41 @@ export class ResultsAnalyzer {
 
   constructor() {
     this.initializeInterpretationTemplates();
-    this.loadResultsFromStorage();
+    if (typeof window !== 'undefined') {
+      this.loadResultsFromStorage();
+    }
   }
+
+
 
   /**
    * Analyze assessment session and generate results
    */
   analyzeSession(session: AssessmentSession): AssessmentResult | null {
+    console.log('🔬 Starting session analysis:', {
+      sessionId: session.id,
+      status: session.status,
+      assessmentTypeId: session.assessmentTypeId,
+      answersCount: session.answers.length
+    });
+
     if (session.status !== 'completed') {
-      console.error('Cannot analyze incomplete session');
+      console.error('❌ Cannot analyze incomplete session - status:', session.status);
       return null;
     }
 
     const assessmentType = questionBankManager.getAssessmentType(session.assessmentTypeId);
     if (!assessmentType) {
-      console.error(`Assessment type ${session.assessmentTypeId} not found`);
+      console.error(`❌ Assessment type ${session.assessmentTypeId} not found`);
       return null;
     }
+
+    console.log('✅ Assessment type found:', {
+      id: assessmentType.id,
+      name: assessmentType.name,
+      questionsCount: assessmentType.questions.length,
+      scoringRulesCount: assessmentType.scoringRules.length
+    });
 
     // Calculate scores using scoring rules
     const scores = this.calculateScores(session, assessmentType);
@@ -59,12 +77,26 @@ export class ResultsAnalyzer {
       riskLevel,
       language: session.language,
       culturalContext: session.culturalContext,
-      totalTimeSpent: session.timeSpent,
+      totalTimeSpent: session.timeSpent || 0,
       answers: [...session.answers]
     };
 
+    // Store in memory
     this.results.set(result.id, result);
+
+    // Save to localStorage
     this.saveResultsToStorage();
+
+    console.log('✅ Result analysis completed:', {
+      id: result.id,
+      sessionId: result.sessionId,
+      assessmentTypeId: result.assessmentTypeId,
+      scoresCount: Object.keys(result.scores).length,
+      answersCount: result.answers.length,
+      interpretation: result.interpretation.substring(0, 100) + '...',
+      recommendationsCount: result.recommendations.length,
+      riskLevel: result.riskLevel
+    });
 
     return result;
   }
@@ -417,7 +449,41 @@ export class ResultsAnalyzer {
    * Get result by ID
    */
   getResult(resultId: string): AssessmentResult | undefined {
-    return this.results.get(resultId);
+    // First check in-memory cache
+    let result = this.results.get(resultId);
+
+    // If not found in memory, try to load from localStorage
+    if (!result && typeof window !== 'undefined') {
+      try {
+        // Force reload from storage
+        this.loadResultsFromStorage();
+        result = this.results.get(resultId);
+      } catch (error) {
+        console.error('Failed to load result from storage:', error);
+      }
+    }
+
+    return result;
+  }
+
+
+
+  /**
+   * Save result using LocalStorageManager
+   */
+  async saveResult(result: AssessmentResult): Promise<boolean> {
+    try {
+      // Save to in-memory cache
+      this.results.set(result.id, result);
+
+      // Save to localStorage
+      this.saveResultsToStorage();
+
+      return true;
+    } catch (error) {
+      console.error('Failed to save result:', error);
+      return false;
+    }
   }
 
   /**
@@ -477,7 +543,7 @@ export class ResultsAnalyzer {
   }
 
   /**
-   * Save results to localStorage
+   * Save results to localStorage using LocalStorageManager
    */
   private saveResultsToStorage(): void {
     // Check if we're in a browser environment
@@ -503,7 +569,14 @@ export class ResultsAnalyzer {
   }
 
   /**
-   * Load results from localStorage
+   * Force reload results from localStorage (public method)
+   */
+  reloadResultsFromStorage(): void {
+    this.loadResultsFromStorage();
+  }
+
+  /**
+   * Load results from localStorage using LocalStorageManager
    */
   private loadResultsFromStorage(): void {
     // Check if we're in a browser environment
@@ -516,20 +589,38 @@ export class ResultsAnalyzer {
       if (!stored) return;
 
       const resultsData = JSON.parse(stored);
-      for (const resultData of resultsData) {
-        const result: AssessmentResult = {
-          ...resultData,
-          completedAt: new Date(resultData.completedAt),
-          answers: resultData.answers.map((answer: any) => ({
-            ...answer,
-            answeredAt: new Date(answer.answeredAt)
-          }))
-        };
 
-        this.results.set(result.id, result);
+      // Validate that resultsData is an array
+      if (!Array.isArray(resultsData)) {
+        console.warn('Invalid results data format, clearing storage');
+        localStorage.removeItem('assessment_results');
+        return;
+      }
+
+      for (const resultData of resultsData) {
+        try {
+          const result: AssessmentResult = {
+            ...resultData,
+            completedAt: new Date(resultData.completedAt),
+            answers: resultData.answers?.map((answer: any) => ({
+              ...answer,
+              answeredAt: new Date(answer.answeredAt)
+            })) || []
+          };
+
+          this.results.set(result.id, result);
+        } catch (resultError) {
+          console.error('Failed to load individual result:', resultError);
+        }
       }
     } catch (error) {
       console.error('Failed to load results from storage:', error);
+      // Clear corrupted data
+      try {
+        localStorage.removeItem('assessment_results');
+      } catch (clearError) {
+        console.error('Failed to clear corrupted data:', clearError);
+      }
     }
   }
 

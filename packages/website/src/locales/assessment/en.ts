@@ -46,6 +46,16 @@ export const assessmentEn: IAssessmentTranslations = {
         description: 'Complete unfinished assessments'
       }
     },
+    existingSession: {
+      title: "Unfinished Assessment",
+      message: "You have an unfinished assessment. You can continue from where you left off, or start over.",
+      progress: "Progress",
+      lastActivity: "Last activity",
+      questionsAnswered: "Answered",
+      continue: "Continue Assessment",
+      restart: "Start Over",
+      restartWarning: "Starting over will delete all your previous answers."
+    },
     disclaimer: {
       title: 'Important Notice',
       message: 'These assessment tools are for screening and self-understanding only and cannot replace professional mental health diagnosis. If you feel distressed or need help, please consult a professional mental health expert.'
@@ -250,47 +260,6 @@ export const assessmentEn: IAssessmentTranslations = {
     }
   },
 
-  // Client component specific translations
-  client: {
-    loading: {
-      assessment: 'Loading assessment...',
-      translations: 'Loading language pack...',
-      question: 'Loading question...',
-      default: 'Loading...',
-    },
-    errors: {
-      title: 'Error Occurred',
-      sessionStartFailed: 'Unable to start assessment session',
-      initializationFailed: 'Initialization failed',
-      submitFailed: 'Failed to submit answer, please try again',
-      analysisFailed: 'Failed to analyze results',
-      noData: 'Assessment data failed to load',
-      invalidScale: 'Please select a value between {min} and {max}',
-      textTooLong: 'Text cannot exceed 1000 characters',
-      unsupportedQuestionType: 'Unsupported question type: {type}',
-    },
-    actions: {
-      retry: 'Retry',
-      previous: 'Previous',
-      next: 'Next',
-      complete: 'Complete Assessment',
-      save: 'Save Progress',
-      saved: 'Saved',
-    },
-    progress: {
-      text: '{current} / {total}',
-    },
-    question: {
-      number: 'Question {current} of {total}',
-      required: '* Required',
-      selectedCount: '{count} items selected',
-      selectedValue: 'Current selection: {value}',
-      textPlaceholder: 'Please enter your answer here...',
-      characterCount: '{count} characters entered',
-      textEntered: 'Answer entered',
-      answered: 'Answered',
-    },
-  },
 
   common: {
     title: 'Mental Health Assessment',

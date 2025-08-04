@@ -57,7 +57,14 @@ const AssessmentTaker = memo(function AssessmentTaker({
   onComplete,
   onError
 }: AssessmentTakerProps) {
-  const { t, isLoading: translationsLoading } = useAssessmentTranslations();
+  const { t, isLoading: translationsLoading, changeLanguage } = useAssessmentTranslations();
+
+  // 设置正确的语言
+  useEffect(() => {
+    if (language && changeLanguage) {
+      changeLanguage(language);
+    }
+  }, [language, changeLanguage]);
 
   // 使用分离的状态管理，避免不必要的重渲染
   const [sessionState, setSessionState] = useState<AssessmentSessionState>({
@@ -99,26 +106,66 @@ const AssessmentTaker = memo(function AssessmentTaker({
         throw new Error(t('errors.initializationFailed'));
       }
 
-      // Try to resume existing session first
+      // Check for existing active session
       const activeSessions = engine.getActiveSessions();
-
       const existingSession = activeSessions.find((s: AssessmentSession) =>
         s.assessmentTypeId === assessmentId
       );
 
       let session: AssessmentSession;
       if (existingSession) {
+        // Resume existing session
         session = engine.resumeAssessment(existingSession.id);
       } else {
-        session = engine.startAssessment(assessmentId, language || 'zh');
+        // Start new session
+        try {
+          session = engine.startAssessment(assessmentId, language || 'zh');
+        } catch (error: any) {
+          if (error.type === 'SESSION_ALREADY_EXISTS') {
+            // This shouldn't happen since we checked above, but handle it gracefully
+            const activeSession = engine.getActiveSessions().find((s: AssessmentSession) =>
+              s.assessmentTypeId === assessmentId
+            );
+            if (activeSession) {
+              session = engine.resumeAssessment(activeSession.id);
+            } else {
+              throw error;
+            }
+          } else {
+            throw error;
+          }
+        }
       }
 
       if (!session) {
         throw new Error(t('errors.sessionStartFailed'));
       }
 
-      const questions = assessmentData.questions;
+      // Import questionBankManager to get consistent question data
+      const { questionBankManager } = await import('@/lib/assessment/QuestionBankManager');
+      const assessmentType = questionBankManager.getAssessmentType(assessmentId);
+      const allAssessmentTypes = questionBankManager.getAssessmentTypes();
+
+      console.log('QuestionBankManager debug:', {
+        assessmentId,
+        assessmentType: assessmentType,
+        allAssessmentTypes: allAssessmentTypes.map(a => ({ id: a.id, name: a.name, questionCount: a.questions?.length })),
+        firstQuestionFromManager: assessmentType?.questions?.[0],
+        firstQuestionFromProps: assessmentData.questions?.[0]
+      });
+
+      const questions = assessmentType?.questions || assessmentData.questions;
       const currentQuestion = questions[session.currentQuestionIndex];
+
+      console.log('Initializing assessment:', {
+        assessmentId,
+        sessionIndex: session.currentQuestionIndex,
+        totalQuestions: questions.length,
+        currentQuestion: currentQuestion,
+        questionOptions: currentQuestion?.options,
+        usingEngineData: !!assessmentType,
+        assessmentDataQuestions: assessmentData.questions?.length
+      });
 
       setSessionState({
         session,
@@ -158,6 +205,17 @@ const AssessmentTaker = memo(function AssessmentTaker({
         return false;
       }
 
+      // Additional validation for single_choice questions
+      if (sessionState.currentQuestion.type === 'single_choice' && sessionState.currentQuestion.options) {
+        const validOptionIds = sessionState.currentQuestion.options.map(opt => opt.id);
+        const validOptionValues = sessionState.currentQuestion.options.map(opt => opt.value);
+
+        if (!validOptionIds.includes(currentAnswer) && !validOptionValues.includes(currentAnswer)) {
+          setValidationError(t('execution.errors.required'));
+          return false;
+        }
+      }
+
       // Additional validation for different question types
       if (sessionState.currentQuestion.type === 'scale') {
         const numValue = Number(currentAnswer);
@@ -169,7 +227,7 @@ const AssessmentTaker = memo(function AssessmentTaker({
     }
 
     return true;
-  }, [sessionState.currentQuestion, currentAnswer]);
+  }, [sessionState.currentQuestion, currentAnswer, t]);
 
   const saveAnswer = useCallback(async () => {
     if (!sessionState.session || !sessionState.currentQuestion) return false;
@@ -178,21 +236,29 @@ const AssessmentTaker = memo(function AssessmentTaker({
       const engine = await loadAssessmentEngine();
       if (!engine) throw new Error('Assessment engine not available');
 
+      // Get the complete question data from questionBankManager
+      const { questionBankManager } = await import('@/lib/assessment/QuestionBankManager');
+      const assessmentType = questionBankManager.getAssessmentType(assessmentId);
+      const completeQuestion = assessmentType?.questions?.find(q => q.id === sessionState.currentQuestion.id) || sessionState.currentQuestion;
+
       const answer: AssessmentAnswer = {
-        questionId: sessionState.currentQuestion.id,
+        questionId: completeQuestion.id,
         value: currentAnswer,
         answeredAt: new Date()
       };
 
-      console.log('Saving answer:', {
+      console.log('Saving answer with complete question data:', {
         sessionId: sessionState.session.id,
-        questionId: sessionState.currentQuestion.id,
-        questionType: sessionState.currentQuestion.type,
+        questionId: completeQuestion.id,
+        questionType: completeQuestion.type,
         answer: currentAnswer,
-        required: sessionState.currentQuestion.required
+        required: completeQuestion.required,
+        options: completeQuestion.options,
+        originalQuestionHadOptions: !!sessionState.currentQuestion.options,
+        completeQuestionHasOptions: !!completeQuestion.options
       });
 
-      const result = engine.submitAnswer(sessionState.session.id, answer);
+      const result = await engine.submitAnswer(sessionState.session.id, currentAnswer);
 
       console.log('Submit result:', result);
 
@@ -202,7 +268,7 @@ const AssessmentTaker = memo(function AssessmentTaker({
           answers: [...prev.answers.filter(a => a.questionId !== answer.questionId), answer]
         }));
       } else {
-        console.error('Submit failed - validation or other error');
+        console.error('Submit failed - validation or other error. Answer:', currentAnswer, 'Complete question options:', completeQuestion.options);
       }
 
       return result.success;
@@ -210,7 +276,7 @@ const AssessmentTaker = memo(function AssessmentTaker({
       console.error('Failed to save answer:', error);
       return false;
     }
-  }, [sessionState.session, sessionState.currentQuestion, currentAnswer]);
+  }, [sessionState.session, sessionState.currentQuestion, currentAnswer, assessmentId]);
 
   const handleNext = useCallback(async () => {
     if (!validateAnswer()) return;
@@ -227,8 +293,12 @@ const AssessmentTaker = memo(function AssessmentTaker({
       // Assessment is completed - the engine should have marked it as completed
       await handleComplete();
     } else {
-      // Move to next question
-      const nextQuestion = assessmentData.questions[nextIndex];
+      // Move to next question - use consistent data source
+      const { questionBankManager } = await import('@/lib/assessment/QuestionBankManager');
+      const assessmentType = questionBankManager.getAssessmentType(assessmentId);
+      const questions = assessmentType?.questions || assessmentData.questions;
+      const nextQuestion = questions[nextIndex];
+
       setSessionState(prev => ({
         ...prev,
         currentQuestion: nextQuestion,
@@ -249,7 +319,11 @@ const AssessmentTaker = memo(function AssessmentTaker({
     await saveAnswer();
 
     const prevIndex = sessionState.currentQuestionIndex - 1;
-    const prevQuestion = assessmentData.questions[prevIndex];
+    // Use consistent data source
+    const { questionBankManager } = await import('@/lib/assessment/QuestionBankManager');
+    const assessmentType = questionBankManager.getAssessmentType(assessmentId);
+    const questions = assessmentType?.questions || assessmentData.questions;
+    const prevQuestion = questions[prevIndex];
 
     setSessionState(prev => ({
       ...prev,
@@ -307,20 +381,54 @@ const AssessmentTaker = memo(function AssessmentTaker({
       if (!engine) throw new Error('Assessment engine not available');
 
       // The assessment should already be completed by the last submitAnswer call
-      // Just mark it as completed in our state
+      // Wait a moment for the result to be processed and saved
+      await new Promise(resolve => setTimeout(resolve, 500));
+
+      // Try multiple methods to get the result ID
+      let resultId = sessionStorage.getItem('latest_assessment_result');
+
+      if (!resultId) {
+        try {
+          resultId = localStorage.getItem('latest_assessment_result_backup');
+        } catch (error) {
+          console.warn('Failed to get backup result ID:', error);
+        }
+      }
+
+      // If still no result ID, try to find by session
+      if (!resultId) {
+        try {
+          const { resultsAnalyzer } = await import('@/lib/assessment/ResultsAnalyzer');
+          const allResults = resultsAnalyzer.getAllResults();
+          const sessionResult = allResults.find(r => r.sessionId === sessionState.session.id);
+          if (sessionResult) {
+            resultId = sessionResult.id;
+            console.log('Found result by session ID:', resultId);
+          }
+        } catch (error) {
+          console.warn('Failed to find result by session:', error);
+        }
+      }
+
       setUIState(prev => ({ ...prev, isCompleted: true }));
       onComplete?.(sessionState.session.id);
 
-      // Navigate to results page after a short delay
+      // Navigate to results page
       setTimeout(() => {
-        window.location.href = `/assessment/results/#${sessionState.session.id}`;
-      }, 2000);
+        if (resultId) {
+          console.log('Navigating to results with ID:', resultId);
+          window.location.href = `/assessment/results/#${resultId}`;
+        } else {
+          console.log('Navigating to results with session fallback');
+          window.location.href = `/assessment/results/?session=${sessionState.session.id}`;
+        }
+      }, 1500);
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : t('execution.errors.submitFailed');
       setUIState(prev => ({ ...prev, error: errorMessage, isSubmitting: false }));
       onError?.(error instanceof Error ? error : new Error(errorMessage));
     }
-  }, [sessionState.session, onComplete, onError]);
+  }, [sessionState.session, onComplete, onError, t]);
 
 
 
@@ -425,15 +533,12 @@ const AssessmentTaker = memo(function AssessmentTaker({
               question={sessionState.currentQuestion}
               answer={currentAnswer}
               onAnswerChange={handleAnswerChange}
-              onValidationChange={(isValid, error) => {
-                if (!isValid && error) {
-                  setValidationError(Array.isArray(error) ? error.join(', ') : error);
-                } else {
-                  setValidationError(null);
-                }
+              onValidationChange={() => {
+                // Disable QuestionCard validation, use AssessmentTaker validation instead
               }}
               disabled={uiState.isSubmitting}
-              showValidation={true}
+              showValidation={false}
+              enableRealtimeValidation={false}
               t={t}
             />
           </div>
