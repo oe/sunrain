@@ -1,0 +1,31 @@
+{
+  "id": "phq-9",
+  "titleKey": "questionnaires.phq9.title",
+  "descriptionKey": "questionnaires.phq9.description",
+  "introductionKey": "questionnaires.phq9.introduction",
+  "purposeKey": "questionnaires.phq9.purpose",
+  "categoryId": "depression",
+  "tags": ["validated", "screening", "quick"],
+  "estimatedMinutes": 4,
+  "questionCount": 9,
+  "difficulty": "beginner",
+  "validatedScoring": true,
+  "professionalBacking": {
+    "source": "Kroenke, K., Spitzer, R. L., & Williams, J. B.",
+    "reference": "The PHQ-9: validity of a brief depression severity measure. Journal of general internal medicine, 16(9), 606-613.",
+    "validationStudies": [
+      "Kroenke et al. (2001) - Original validation study",
+      "Manea et al. (2012) - Systematic review and meta-analysis"
+    ],
+    "reliability": 0.89,
+    "validity": "Construct validity confirmed through factor analysis"
+  },
+  "instructions": "Please read each statement carefully and select the response that best describes how you have been feeling over the past 2 weeks.",
+  "disclaimer": "This questionnaire is for screening purposes only and does not constitute a medical diagnosis.",
+  "isFeatured": true,
+  "isActive": true,
+  "requiresAuth": false,
+  "version": "1.0.0",
+  "createdAt": "2024-01-01T00:00:00Z",
+  "updatedAt": "2024-01-01T00:00:00Z"
+}

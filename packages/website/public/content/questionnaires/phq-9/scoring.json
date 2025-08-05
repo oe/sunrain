@@ -1,0 +1,48 @@
+{
+  "scoringRules": [
+    {
+      "id": "total_score",
+      "name": "PHQ-9 Total Score",
+      "description": "Sum of all item scores",
+      "calculation": "sum",
+      "questionIds": ["q1", "q2", "q3", "q4", "q5", "q6", "q7", "q8", "q9"],
+      "ranges": [
+        {
+          "min": 0,
+          "max": 4,
+          "label": "Minimal",
+          "description": "Minimal depression",
+          "riskLevel": "low"
+        },
+        {
+          "min": 5,
+          "max": 9,
+          "label": "Mild",
+          "description": "Mild depression",
+          "riskLevel": "low"
+        },
+        {
+          "min": 10,
+          "max": 14,
+          "label": "Moderate",
+          "description": "Moderate depression",
+          "riskLevel": "medium"
+        },
+        {
+          "min": 15,
+          "max": 19,
+          "label": "Moderately Severe",
+          "description": "Moderately severe depression",
+          "riskLevel": "high"
+        },
+        {
+          "min": 20,
+          "max": 27,
+          "label": "Severe",
+          "description": "Severe depression",
+          "riskLevel": "high"
+        }
+      ]
+    }
+  ]
+}

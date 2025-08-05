@@ -175,3 +175,15 @@ export interface Recommendation {
   }[];
   estimatedTimeCommitment?: string;
 }
+// 重新导出questionnaire类型以保持兼容性
+export type {
+  Questionnaire,
+  QuestionnaireCategory,
+  QuestionnaireTag,
+  QuestionnaireFilter,
+  QuestionnaireSortOption,
+  QuestionnaireListItem,
+  DifficultyLevel,
+  ResultInterpretation,
+  ProfessionalBacking
+} from './questionnaire';
