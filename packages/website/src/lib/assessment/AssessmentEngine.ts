@@ -469,9 +469,9 @@ export class AssessmentEngine {
           }
 
           // Verify the result was actually saved
-          setTimeout(() => {
+          setTimeout(async () => {
             try {
-              const { resultsAnalyzer: verifyAnalyzer } = require('./ResultsAnalyzer');
+              const { resultsAnalyzer: verifyAnalyzer } = await import('./ResultsAnalyzer');
               const savedResult = verifyAnalyzer.getResult(result.id);
               console.log('🔍 Verification - Result found in analyzer:', !!savedResult);
 

@@ -3,6 +3,7 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { getLocale } from 'astro-i18n-aut';
 import { getAssessmentTranslations } from '@/locales/assessment';
+import AssessmentTrendsClient from '@/components/assessment/AssessmentTrendsClient';
 import type { Language } from '@sunrain/shared';
 
 const currentLang = getLocale(Astro.url) as Language;
@@ -32,16 +33,16 @@ const t = getAssessmentTranslations(currentLang);
             <h2 class="text-lg font-semibold text-gray-900 dark:text-white">{t.trends.timeRange.title}</h2>
             <div class="flex space-x-2">
               <button class="time-range-btn px-4 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors" data-range="30">
-                最近30天
+                {t.trends.timeRange.last30Days}
               </button>
               <button class="time-range-btn px-4 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors" data-range="90">
-                最近3个月
+                {t.trends.timeRange.last3Months}
               </button>
               <button class="time-range-btn px-4 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors active" data-range="365">
-                最近一年
+                {t.trends.timeRange.lastYear}
               </button>
               <button class="time-range-btn px-4 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors" data-range="all">
-                全部时间
+                {t.trends.timeRange.allTime}
               </button>
             </div>
           </div>
@@ -51,7 +52,7 @@ const t = getAssessmentTranslations(currentLang);
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
           <!-- Overall Trend Chart -->
           <div class="bg-white dark:bg-gray-800 rounded-lg shadow border border-gray-200 dark:border-gray-700 p-6">
-            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">整体趋势</h3>
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">{t.trends.charts.overallTrend}</h3>
             <div id="overall-trend-chart" class="h-64">
               <!-- Chart will be rendered here -->
             </div>
@@ -59,7 +60,7 @@ const t = getAssessmentTranslations(currentLang);
 
           <!-- Assessment Frequency -->
           <div class="bg-white dark:bg-gray-800 rounded-lg shadow border border-gray-200 dark:border-gray-700 p-6">
-            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">评测频率</h3>
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">{t.trends.charts.frequency}</h3>
             <div id="frequency-chart" class="h-64">
               <!-- Chart will be rendered here -->
             </div>
@@ -67,7 +68,7 @@ const t = getAssessmentTranslations(currentLang);
 
           <!-- Risk Level Trends -->
           <div class="bg-white dark:bg-gray-800 rounded-lg shadow border border-gray-200 dark:border-gray-700 p-6">
-            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">风险等级变化</h3>
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">{t.trends.charts.riskTrend}</h3>
             <div id="risk-trend-chart" class="h-64">
               <!-- Chart will be rendered here -->
             </div>
@@ -75,7 +76,7 @@ const t = getAssessmentTranslations(currentLang);
 
           <!-- Category Performance -->
           <div class="bg-white dark:bg-gray-800 rounded-lg shadow border border-gray-200 dark:border-gray-700 p-6">
-            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">各维度表现</h3>
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">{t.trends.charts.categoryPerformance}</h3>
             <div id="category-performance-chart" class="h-64">
               <!-- Chart will be rendered here -->
             </div>
@@ -84,7 +85,7 @@ const t = getAssessmentTranslations(currentLang);
 
         <!-- Insights and Recommendations -->
         <div class="bg-white dark:bg-gray-800 rounded-lg shadow border border-gray-200 dark:border-gray-700 p-6 mb-8">
-          <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">趋势洞察</h3>
+          <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">{t.trends.insights.title}</h3>
           <div id="insights-container" class="space-y-4">
             <!-- Insights will be dynamically generated -->
           </div>
@@ -100,7 +101,7 @@ const t = getAssessmentTranslations(currentLang);
                 </svg>
               </div>
               <div class="ml-4">
-                <p class="text-sm font-medium text-gray-600 dark:text-gray-400">改善趋势</p>
+                <p class="text-sm font-medium text-gray-600 dark:text-gray-400">{t.trends.statistics.improvementTrend}</p>
                 <p id="improvement-trend" class="text-2xl font-semibold text-gray-900 dark:text-white">-</p>
               </div>
             </div>
@@ -114,7 +115,7 @@ const t = getAssessmentTranslations(currentLang);
                 </svg>
               </div>
               <div class="ml-4">
-                <p class="text-sm font-medium text-gray-600 dark:text-gray-400">稳定维度</p>
+                <p class="text-sm font-medium text-gray-600 dark:text-gray-400">{t.trends.statistics.stableDimensions}</p>
                 <p id="stable-dimensions" class="text-2xl font-semibold text-gray-900 dark:text-white">-</p>
               </div>
             </div>
@@ -128,7 +129,7 @@ const t = getAssessmentTranslations(currentLang);
                 </svg>
               </div>
               <div class="ml-4">
-                <p class="text-sm font-medium text-gray-600 dark:text-gray-400">需要关注</p>
+                <p class="text-sm font-medium text-gray-600 dark:text-gray-400">{t.trends.statistics.attentionNeeded}</p>
                 <p id="attention-needed" class="text-2xl font-semibold text-gray-900 dark:text-white">-</p>
               </div>
             </div>
@@ -138,10 +139,10 @@ const t = getAssessmentTranslations(currentLang);
         <!-- Export and Actions -->
         <div class="flex justify-center space-x-4">
           <button id="export-trends-btn" class="px-6 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
-            导出趋势报告
+            {t.trends.actions.exportReport}
           </button>
           <a href="/assessment/" class="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors">
-            进行新评测
+            {t.trends.actions.newAssessment}
           </a>
         </div>
       </div>
@@ -151,10 +152,10 @@ const t = getAssessmentTranslations(currentLang);
         <svg class="w-16 h-16 text-gray-400 dark:text-gray-600 mx-auto mb-4" fill="currentColor" viewBox="0 0 20 20">
           <path fill-rule="evenodd" d="M3 3a1 1 0 000 2v8a2 2 0 002 2h2.586l-1.293 1.293a1 1 0 101.414 1.414L10 15.414l2.293 2.293a1 1 0 001.414-1.414L12.414 15H15a2 2 0 002-2V5a1 1 0 100-2H3zm11.707 4.707a1 1 0 00-1.414-1.414L10 9.586 8.707 8.293a1 1 0 00-1.414 0l-2 2a1 1 0 001.414 1.414L8 10.414l1.293 1.293a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
         </svg>
-        <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">暂无趋势数据</h2>
-        <p class="text-gray-600 dark:text-gray-300 mb-6">您需要完成至少2次评测才能查看趋势分析</p>
+        <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">{t.trends.noData.title}</h2>
+        <p class="text-gray-600 dark:text-gray-300 mb-6">{t.trends.noData.message}</p>
         <a href="/assessment/" class="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors">
-          开始评测
+          {t.trends.noData.startAssessment}
           <svg class="ml-2 w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
             <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>
           </svg>
@@ -163,506 +164,5 @@ const t = getAssessmentTranslations(currentLang);
     </div>
   </main>
 
-  <script>
-    import { resultsAnalyzer } from '@/lib/assessment/ResultsAnalyzer';
-    import { questionBankManager } from '@/lib/assessment/QuestionBankManager';
-
-    class TrendsAnalysis {
-      currentRange: number | null;
-      results: any[];
-
-      constructor() {
-        this.currentRange = 365; // Default to 1 year
-        this.results = [];
-        this.initializeInterface();
-      }
-
-      async initializeInterface() {
-        try {
-          // Load all results
-          this.results = resultsAnalyzer.getAllResults();
-
-          // Hide loading
-          document.getElementById('trends-loading').classList.add('hidden');
-
-          if (this.results.length < 2) {
-            document.getElementById('no-data-state').classList.remove('hidden');
-            return;
-          }
-
-          // Show interface and render trends
-          document.getElementById('trends-interface').classList.remove('hidden');
-          this.setupEventListeners();
-          this.renderTrends();
-
-        } catch (error) {
-          console.error('Failed to load trends:', error);
-          this.showError();
-        }
-      }
-
-      setupEventListeners() {
-        // Time range buttons
-        document.querySelectorAll('.time-range-btn').forEach(btn => {
-          btn.addEventListener('click', (e) => {
-            const target = e.target as HTMLElement;
-
-            // Update active state
-            document.querySelectorAll('.time-range-btn').forEach(b => b.classList.remove('active'));
-            target.classList.add('active');
-
-            // Update range and re-render
-            this.currentRange = target.dataset.range === 'all' ? null : parseInt(target.dataset.range || '365');
-            this.renderTrends();
-          });
-        });
-
-        // Export button
-        document.getElementById('export-trends-btn').addEventListener('click', () => {
-          this.exportTrendsReport();
-        });
-      }
-
-      renderTrends() {
-        const filteredResults = this.getFilteredResults();
-
-        this.renderOverallTrend(filteredResults);
-        this.renderFrequencyChart(filteredResults);
-        this.renderRiskTrendChart(filteredResults);
-        this.renderCategoryPerformance(filteredResults);
-        this.generateInsights(filteredResults);
-        this.updateStatistics(filteredResults);
-      }
-
-      getFilteredResults() {
-        if (!this.currentRange) return this.results;
-
-        const cutoffDate = new Date();
-        cutoffDate.setDate(cutoffDate.getDate() - this.currentRange);
-
-        return this.results.filter(result =>
-          new Date(result.completedAt) >= cutoffDate
-        );
-      }
-
-      renderOverallTrend(results: any[]) {
-        const container = document.getElementById('overall-trend-chart');
-        container.innerHTML = '';
-
-        if (results.length === 0) {
-          container.innerHTML = '<p class="text-center text-gray-500 dark:text-gray-400 py-8">暂无数据</p>';
-          return;
-        }
-
-        // Group results by month
-        const monthlyData = this.groupResultsByMonth(results);
-
-        // Simple line chart representation
-        const chartDiv = document.createElement('div');
-        chartDiv.className = 'space-y-2';
-
-        Object.entries(monthlyData).forEach(([month, monthResults]) => {
-          const avgScore = this.calculateAverageScore(monthResults as any[]);
-          const percentage = Math.min(avgScore * 10, 100); // Assuming max score of 10
-
-          const barDiv = document.createElement('div');
-          barDiv.innerHTML = `
-            <div class="flex items-center justify-between mb-1">
-              <span class="text-sm text-gray-600 dark:text-gray-300">${month}</span>
-              <span class="text-sm font-medium text-gray-900 dark:text-white">${avgScore.toFixed(1)}</span>
-            </div>
-            <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-              <div class="h-2 rounded-full bg-blue-600" style="width: ${percentage}%"></div>
-            </div>
-          `;
-          chartDiv.appendChild(barDiv);
-        });
-
-        container.appendChild(chartDiv);
-      }
-
-      renderFrequencyChart(results: any[]) {
-        const container = document.getElementById('frequency-chart');
-        container.innerHTML = '';
-
-        const monthlyFrequency = this.getMonthlyFrequency(results);
-
-        const chartDiv = document.createElement('div');
-        chartDiv.className = 'space-y-2';
-
-        Object.entries(monthlyFrequency).forEach(([month, count]) => {
-          const maxCount = Math.max(...Object.values(monthlyFrequency) as number[]);
-          const percentage = ((count as number) / maxCount) * 100;
-
-          const barDiv = document.createElement('div');
-          barDiv.innerHTML = `
-            <div class="flex items-center justify-between mb-1">
-              <span class="text-sm text-gray-600 dark:text-gray-300">${month}</span>
-              <span class="text-sm font-medium text-gray-900 dark:text-white">${count} 次</span>
-            </div>
-            <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-              <div class="h-2 rounded-full bg-green-600" style="width: ${percentage}%"></div>
-            </div>
-          `;
-          chartDiv.appendChild(barDiv);
-        });
-
-        container.appendChild(chartDiv);
-      }
-
-      renderRiskTrendChart(results: any[]) {
-        const container = document.getElementById('risk-trend-chart');
-        container.innerHTML = '';
-
-        const riskTrends = this.getRiskTrends(results);
-
-        const chartDiv = document.createElement('div');
-        chartDiv.className = 'space-y-4';
-
-        ['low', 'medium', 'high'].forEach(riskLevel => {
-          const data = riskTrends[riskLevel] || [];
-          const avgPercentage = data.length > 0 ?
-            data.reduce((sum: number, val: number) => sum + val, 0) / data.length : 0;
-
-          const color = riskLevel === 'low' ? 'green' :
-                       riskLevel === 'medium' ? 'yellow' : 'red';
-
-          const barDiv = document.createElement('div');
-          barDiv.innerHTML = `
-            <div class="flex items-center justify-between mb-1">
-              <span class="text-sm text-gray-600 dark:text-gray-300">
-                ${riskLevel === 'low' ? '低风险' : riskLevel === 'medium' ? '中风险' : '高风险'}
-              </span>
-              <span class="text-sm font-medium text-gray-900 dark:text-white">${avgPercentage.toFixed(1)}%</span>
-            </div>
-            <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-              <div class="h-2 rounded-full bg-${color}-600" style="width: ${avgPercentage}%"></div>
-            </div>
-          `;
-          chartDiv.appendChild(barDiv);
-        });
-
-        container.appendChild(chartDiv);
-      }
-
-      renderCategoryPerformance(results: any[]) {
-        const container = document.getElementById('category-performance-chart');
-        container.innerHTML = '';
-
-        const categoryPerformance = this.getCategoryPerformance(results);
-
-        const chartDiv = document.createElement('div');
-        chartDiv.className = 'space-y-2';
-
-        Object.entries(categoryPerformance).forEach(([category, avgScore]) => {
-          const percentage = Math.min((avgScore as number) * 10, 100);
-          const categoryName = category === 'mental_health' ? '心理健康' :
-                              category === 'personality' ? '性格特质' :
-                              category === 'stress' ? '压力管理' :
-                              category === 'mood' ? '情绪状态' : category;
-
-          const barDiv = document.createElement('div');
-          barDiv.innerHTML = `
-            <div class="flex items-center justify-between mb-1">
-              <span class="text-sm text-gray-600 dark:text-gray-300">${categoryName}</span>
-              <span class="text-sm font-medium text-gray-900 dark:text-white">${(avgScore as number).toFixed(1)}</span>
-            </div>
-            <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-              <div class="h-2 rounded-full bg-purple-600" style="width: ${percentage}%"></div>
-            </div>
-          `;
-          chartDiv.appendChild(barDiv);
-        });
-
-        container.appendChild(chartDiv);
-      }
-
-      generateInsights(results: any[]) {
-        const container = document.getElementById('insights-container');
-        container.innerHTML = '';
-
-        const insights = this.analyzeInsights(results);
-
-        insights.forEach(insight => {
-          const insightDiv = document.createElement('div');
-          insightDiv.className = `p-4 rounded-lg border ${insight.type === 'positive' ? 'bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-800' :
-                                                        insight.type === 'warning' ? 'bg-yellow-50 dark:bg-yellow-900/20 border-yellow-200 dark:border-yellow-800' :
-                                                        'bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800'}`;
-
-          insightDiv.innerHTML = `
-            <div class="flex items-start">
-              <svg class="w-5 h-5 ${insight.type === 'positive' ? 'text-green-600 dark:text-green-400' :
-                                   insight.type === 'warning' ? 'text-yellow-600 dark:text-yellow-400' :
-                                   'text-blue-600 dark:text-blue-400'} mr-3 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
-              </svg>
-              <div>
-                <h4 class="font-medium ${insight.type === 'positive' ? 'text-green-800 dark:text-green-200' :
-                                       insight.type === 'warning' ? 'text-yellow-800 dark:text-yellow-200' :
-                                       'text-blue-800 dark:text-blue-200'}">${insight.title}</h4>
-                <p class="text-sm ${insight.type === 'positive' ? 'text-green-700 dark:text-green-300' :
-                                   insight.type === 'warning' ? 'text-yellow-700 dark:text-yellow-300' :
-                                   'text-blue-700 dark:text-blue-300'} mt-1">${insight.message}</p>
-              </div>
-            </div>
-          `;
-
-          container.appendChild(insightDiv);
-        });
-      }
-
-      updateStatistics(results: any[]) {
-        const trends = this.calculateTrendStatistics(results);
-
-        document.getElementById('improvement-trend').textContent = trends.improvement;
-        document.getElementById('stable-dimensions').textContent = trends.stable;
-        document.getElementById('attention-needed').textContent = trends.attention;
-      }
-
-      // Helper methods for data processing
-      groupResultsByMonth(results: any[]) {
-        const grouped = {};
-        results.forEach((result: any) => {
-          const date = new Date(result.completedAt);
-          const monthKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
-          if (!grouped[monthKey]) grouped[monthKey] = [];
-          grouped[monthKey].push(result);
-        });
-        return grouped;
-      }
-
-      calculateAverageScore(results: any[]) {
-        if (results.length === 0) return 0;
-        const totalScore = results.reduce((sum: number, result: any) => {
-          const scores = Object.values(result.scores);
-          const avgScore = (scores as any[]).reduce((s: number, score: any) => s + score.value, 0) / scores.length;
-          return sum + avgScore;
-        }, 0);
-        return totalScore / results.length;
-      }
-
-      getMonthlyFrequency(results: any[]) {
-        const frequency = {};
-        results.forEach((result: any) => {
-          const date = new Date(result.completedAt);
-          const monthKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
-          frequency[monthKey] = (frequency[monthKey] || 0) + 1;
-        });
-        return frequency;
-      }
-
-      getRiskTrends(results: any[]) {
-        const trends = { low: [], medium: [], high: [] };
-        const monthlyData = this.groupResultsByMonth(results);
-
-        Object.values(monthlyData).forEach(monthResults => {
-          const riskCounts = { low: 0, medium: 0, high: 0 };
-          (monthResults as any[]).forEach(result => {
-            if (result.riskLevel) {
-              riskCounts[result.riskLevel]++;
-            }
-          });
-
-          const total = (monthResults as any[]).length;
-          if (total > 0) {
-            trends.low.push((riskCounts.low / total) * 100);
-            trends.medium.push((riskCounts.medium / total) * 100);
-            trends.high.push((riskCounts.high / total) * 100);
-          }
-        });
-
-        return trends;
-      }
-
-      getCategoryPerformance(results: any[]) {
-        const performance = {};
-        results.forEach((result: any) => {
-          const assessmentType = questionBankManager.getAssessmentType(result.assessmentTypeId);
-          if (assessmentType) {
-            const category = assessmentType.category;
-            if (!performance[category]) performance[category] = [];
-
-            const scores = Object.values(result.scores);
-            const avgScore = (scores as any[]).reduce((sum: number, score: any) => sum + score.value, 0) / scores.length;
-            performance[category].push(avgScore);
-          }
-        });
-
-        // Calculate averages
-        Object.keys(performance).forEach(category => {
-          const scores = performance[category];
-          performance[category] = scores.reduce((sum: number, score: any) => sum + score, 0) / scores.length;
-        });
-
-        return performance;
-      }
-
-      analyzeInsights(results: any[]) {
-        const insights = [];
-
-        if (results.length >= 3) {
-          const recent = results.slice(-3);
-          const older = results.slice(0, -3);
-
-          const recentAvg = this.calculateAverageScore(recent);
-          const olderAvg = this.calculateAverageScore(older);
-
-          if (recentAvg > olderAvg * 1.1) {
-            insights.push({
-              type: 'positive',
-              title: '积极趋势',
-              message: '您的心理健康状态在最近的评测中显示出改善趋势，继续保持！'
-            });
-          } else if (recentAvg < olderAvg * 0.9) {
-            insights.push({
-              type: 'warning',
-              title: '需要关注',
-              message: '最近的评测结果显示有所下降，建议关注心理健康状态并考虑寻求支持。'
-            });
-          } else {
-            insights.push({
-              type: 'info',
-              title: '保持稳定',
-              message: '您的心理健康状态保持相对稳定，继续维持良好的生活习惯。'
-            });
-          }
-        }
-
-        // Assessment frequency insight
-        const daysSinceFirst = (Date.now() - new Date(results[0].completedAt).getTime()) / (1000 * 60 * 60 * 24);
-        const frequency = results.length / (daysSinceFirst / 30); // assessments per month
-
-        if (frequency > 2) {
-          insights.push({
-            type: 'positive',
-            title: '评测频率良好',
-            message: '您定期进行心理健康评测，这有助于及时了解自己的状态变化。'
-          });
-        } else if (frequency < 0.5) {
-          insights.push({
-            type: 'info',
-            title: '建议增加评测频率',
-            message: '定期评测有助于更好地了解心理健康趋势，建议每月至少进行一次评测。'
-          });
-        }
-
-        return insights;
-      }
-
-      calculateTrendStatistics(results: any[]) {
-        if (results.length < 2) {
-          return { improvement: '-', stable: '-', attention: '-' };
-        }
-
-        const recent = results.slice(-Math.ceil(results.length / 2));
-        const older = results.slice(0, Math.floor(results.length / 2));
-
-        let improving = 0, stable = 0, declining = 0;
-
-        // Compare categories
-        const categories = ['mental_health', 'personality', 'stress', 'mood'];
-        categories.forEach(category => {
-          const recentCat = recent.filter((r: any) => {
-            const type = questionBankManager.getAssessmentType(r.assessmentTypeId);
-            return type && type.category === category;
-          });
-          const olderCat = older.filter((r: any) => {
-            const type = questionBankManager.getAssessmentType(r.assessmentTypeId);
-            return type && type.category === category;
-          });
-
-          if (recentCat.length > 0 && olderCat.length > 0) {
-            const recentAvg = this.calculateAverageScore(recentCat);
-            const olderAvg = this.calculateAverageScore(olderCat);
-
-            if (recentAvg > olderAvg * 1.05) improving++;
-            else if (recentAvg < olderAvg * 0.95) declining++;
-            else stable++;
-          }
-        });
-
-        return {
-          improvement: improving > 0 ? `${improving} 个维度` : '暂无',
-          stable: stable > 0 ? `${stable} 个维度` : '暂无',
-          attention: declining > 0 ? `${declining} 个维度` : '暂无'
-        };
-      }
-
-      exportTrendsReport() {
-        try {
-          const filteredResults = this.getFilteredResults();
-          const report = {
-            generatedAt: new Date().toISOString(),
-            timeRange: this.currentRange ? `${this.currentRange} days` : 'all time',
-            totalAssessments: filteredResults.length,
-            trends: {
-              overall: this.calculateAverageScore(filteredResults),
-              categoryPerformance: this.getCategoryPerformance(filteredResults),
-              riskTrends: this.getRiskTrends(filteredResults),
-              insights: this.analyzeInsights(filteredResults)
-            },
-            rawData: filteredResults
-          };
-
-          const blob = new Blob([JSON.stringify(report, null, 2)], { type: 'application/json' });
-          const url = URL.createObjectURL(blob);
-
-          const a = document.createElement('a');
-          a.href = url;
-          a.download = `mental-health-trends-${new Date().toISOString().split('T')[0]}.json`;
-          document.body.appendChild(a);
-          a.click();
-          document.body.removeChild(a);
-          URL.revokeObjectURL(url);
-
-          this.showMessage('趋势报告导出成功', 'success');
-        } catch (error) {
-          console.error('Export failed:', error);
-          this.showMessage('导出失败，请重试', 'error');
-        }
-      }
-
-      showMessage(message: string, type: string = 'info') {
-        const toast = document.createElement('div');
-        toast.className = `fixed top-4 right-4 px-4 py-2 rounded-md shadow-lg z-50 ${
-          type === 'success' ? 'bg-green-600 text-white' :
-          type === 'error' ? 'bg-red-600 text-white' :
-          'bg-blue-600 text-white'
-        }`;
-        toast.textContent = message;
-
-        document.body.appendChild(toast);
-
-        setTimeout(() => {
-          if (document.body.contains(toast)) {
-            document.body.removeChild(toast);
-          }
-        }, 3000);
-      }
-
-      showError() {
-        document.getElementById('trends-loading').classList.add('hidden');
-
-        const errorDiv = document.createElement('div');
-        errorDiv.className = 'text-center py-12';
-        errorDiv.innerHTML = `
-          <svg class="w-16 h-16 text-red-400 dark:text-red-600 mx-auto mb-4" fill="currentColor" viewBox="0 0 20 20">
-            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
-          </svg>
-          <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">加载失败</h2>
-          <p class="text-gray-600 dark:text-gray-300 mb-6">无法加载趋势数据，请刷新页面重试</p>
-          <button onclick="window.location.reload()" class="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors">
-            刷新页面
-          </button>
-        `;
-
-        document.querySelector('main .max-w-6xl').appendChild(errorDiv);
-      }
-    }
-
-    // Initialize when page loads
-    document.addEventListener('DOMContentLoaded', () => {
-      new TrendsAnalysis();
-    });
-  </script>
+  <AssessmentTrendsClient client:only="react" initialLang={currentLang} />
 </BaseLayout>
