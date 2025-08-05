@@ -9,7 +9,7 @@
 
 import fs from 'fs/promises';
 import path from 'path';
-import { mentalHealthTerminology, culturalAdaptationNotes, type TerminologyDictionary } from './terminology-dictionary.js';
+import { mentalHealthTerminology } from './terminology-dictionary.js';
 
 interface TranslationIssue {
   type: 'terminology' | 'consistency' | 'cultural' | 'length' | 'formatting';
@@ -105,7 +105,7 @@ function checkTerminologyConsistency(
 ): TranslationIssue[] {
   const issues: TranslationIssue[] = [];
 
-  for (const [termKey, termEntry] of Object.entries(mentalHealthTerminology)) {
+  for (const [, termEntry] of Object.entries(mentalHealthTerminology)) {
     const correctTerm = termEntry[language as keyof typeof termEntry] as string;
     const englishTerm = termEntry.en;
 
@@ -346,7 +346,7 @@ function checkFormattingIssues(
 /**
  * Get English translation for comparison (simplified)
  */
-function getEnglishTranslation(key: string): string | null {
+function getEnglishTranslation(_key: string): string | null {
   // This would need to be implemented to load the English translation
   // For now, return null
   return null;

@@ -552,24 +552,6 @@ export class CSRTranslationManager {
     return languages.slice(0, 2); // 最多预加载2种语言
   }
 
-  /**
-   * 初始化预加载 - 只预加载当前语言，避免不必要的预加载
-   */
-  private async initializePreload(): Promise<void> {
-    try {
-      // 只预加载当前语言，避免显示其他语言的预加载信息
-      const currentLang = this.getCurrentLanguage();
-      await this.preloadTranslations(this.config.preload.namespaces, [
-        currentLang,
-      ]);
-
-      if (process.env.NODE_ENV === "development") {
-        console.log(`CSR translations preloaded for language: ${currentLang}`);
-      }
-    } catch (error) {
-      console.warn("Failed to preload CSR translations:", error);
-    }
-  }
 
   /**
    * 格式化消息

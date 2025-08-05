@@ -478,7 +478,7 @@ export async function applyTerminologyImprovements(
     let changesCount = 0;
 
     // Apply terminology improvements
-    for (const [key, entry] of Object.entries(dictionary)) {
+    for (const [, entry] of Object.entries(dictionary)) {
       const correctTerm = entry[language as keyof TerminologyEntry] as string;
       if (!correctTerm) continue;
 

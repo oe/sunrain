@@ -274,7 +274,7 @@ const t = getAssessmentTranslations(currentLang);
         this.updatePagination();
       }
 
-      createResultItem(result) {
+      createResultItem(result: any) {
         const assessmentType = questionBankManager.getAssessmentType(result.assessmentTypeId);
         const resultDiv = document.createElement('div');
         resultDiv.className = 'border-b border-gray-200 dark:border-gray-700 last:border-b-0';
@@ -339,7 +339,7 @@ const t = getAssessmentTranslations(currentLang);
 
             <!-- Score Summary -->
             <div class="mt-4 grid grid-cols-2 md:grid-cols-4 gap-4">
-              ${Object.entries(result.scores).slice(0, 4).map(([scoreId, scoreData]) => `
+              ${Object.entries(result.scores).slice(0, 4).map(([, scoreData]) => `
                 <div class="text-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
                   <div class="text-lg font-semibold ${this.getRiskLevelColor((scoreData as any).riskLevel)}">
                     ${(scoreData as any).value}
@@ -356,7 +356,7 @@ const t = getAssessmentTranslations(currentLang);
         return resultDiv;
       }
 
-      getRiskLevelClass(riskLevel) {
+      getRiskLevelClass(riskLevel: string) {
         switch (riskLevel) {
           case 'high': return 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200';
           case 'medium': return 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200';
@@ -365,7 +365,7 @@ const t = getAssessmentTranslations(currentLang);
         }
       }
 
-      getRiskLevelText(riskLevel) {
+      getRiskLevelText(riskLevel: string) {
         switch (riskLevel) {
           case 'high': return '高风险';
           case 'medium': return '中风险';
@@ -374,7 +374,7 @@ const t = getAssessmentTranslations(currentLang);
         }
       }
 
-      getRiskLevelColor(riskLevel) {
+      getRiskLevelColor(riskLevel: string) {
         switch (riskLevel) {
           case 'high': return 'text-red-600 dark:text-red-400';
           case 'medium': return 'text-yellow-600 dark:text-yellow-400';
@@ -474,7 +474,7 @@ const t = getAssessmentTranslations(currentLang);
         this.displayResults();
       }
 
-      shareResult(resultId) {
+      shareResult(resultId: string) {
         const url = `${window.location.origin}/assessment/results/${resultId}`;
 
         if (navigator.share) {
@@ -490,7 +490,7 @@ const t = getAssessmentTranslations(currentLang);
         }
       }
 
-      deleteResult(resultId) {
+      deleteResult(resultId: string) {
         if (confirm('确定要删除这个评测结果吗？此操作无法撤销。')) {
           const success = resultsAnalyzer.deleteResult(resultId);
           if (success) {
@@ -528,7 +528,7 @@ const t = getAssessmentTranslations(currentLang);
         }
       }
 
-      formatDate(date) {
+      formatDate(date: string | Date) {
         return new Date(date).toLocaleDateString('zh-CN', {
           year: 'numeric',
           month: 'short',
@@ -538,7 +538,7 @@ const t = getAssessmentTranslations(currentLang);
         });
       }
 
-      formatDuration(seconds) {
+      formatDuration(seconds: number) {
         const minutes = Math.floor(seconds / 60);
         const remainingSeconds = seconds % 60;
         if (minutes > 0) {
@@ -547,7 +547,7 @@ const t = getAssessmentTranslations(currentLang);
         return `${remainingSeconds}秒`;
       }
 
-      showMessage(message, type = 'info') {
+      showMessage(message: string, type: string = 'info') {
         // Simple toast notification
         const toast = document.createElement('div');
         toast.className = `fixed top-4 right-4 px-4 py-2 rounded-md shadow-lg z-50 ${

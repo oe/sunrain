@@ -23,8 +23,6 @@ export class AudioManager {
   private currentVoiceTrack: AudioTrack | null = null;
   private currentMusicTrack: AudioTrack | null = null;
   private isPaused = false;
-  private startTime = 0;
-  private pauseTime = 0;
 
   // Settings
   private settings: PracticeSettings = {
@@ -316,7 +314,6 @@ export class AudioManager {
 
       // Schedule next track if crossfading is enabled
       if (playlist.crossfade && currentTrackIndex < tracks.length - 1) {
-        const nextTrack = tracks[currentTrackIndex + 1];
         const crossfadeTime = 3; // 3 seconds crossfade
         const scheduleTime = (track.duration - crossfadeTime) * 1000;
 
@@ -380,7 +377,6 @@ export class AudioManager {
    */
   pause(): void {
     if (this.audioContext && !this.isPaused) {
-      this.pauseTime = this.audioContext.currentTime;
       this.audioContext.suspend();
       this.isPaused = true;
     }

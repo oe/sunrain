@@ -65,40 +65,6 @@ const AssessmentLoadingFallback: React.FC = () => (
   </div>
 );
 
-// 错误回退组件
-const AssessmentErrorFallback: React.FC<{ error: Error; retry: () => void }> = ({ error, retry }) => (
-  <div className="max-w-4xl mx-auto">
-    <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-6">
-      <div className="flex items-center">
-        <svg className="w-6 h-6 text-red-600 dark:text-red-400 mr-3" fill="currentColor" viewBox="0 0 20 20">
-          <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
-        </svg>
-        <div className="flex-1">
-          <h3 className="text-sm font-medium text-red-800 dark:text-red-200">
-            评测组件加载失败
-          </h3>
-          <p className="text-sm text-red-700 dark:text-red-300 mt-1">
-            {error.message || '组件加载时出现错误，请重试'}
-          </p>
-          <div className="mt-4 flex space-x-3">
-            <button
-              onClick={retry}
-              className="text-sm bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition-colors"
-            >
-              重新加载
-            </button>
-            <button
-              onClick={() => window.location.reload()}
-              className="text-sm bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 transition-colors"
-            >
-              刷新页面
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-);
 
 // 懒加载包装组件
 const LazyAssessmentTaker: React.FC<AssessmentTakerProps> = (props) => {

@@ -1,8 +1,6 @@
 import type {
-  PracticeType,
   PracticeSession,
   PracticeSettings,
-  PracticeStatus,
   MoodLevel,
   PracticeRecord
 } from '../../types/practice';
@@ -137,7 +135,7 @@ export class PracticeSessionManager {
     this.lastPauseStart = Date.now();
 
     // Pause audio
-    await audioManager.pause();
+    audioManager.pause();
 
     // Clear timers
     this.clearTimers();
@@ -258,7 +256,6 @@ export class PracticeSessionManager {
     this.emitEvent('session_completed', { session: this.currentSession, record });
 
     // Clear current session
-    const completedSession = this.currentSession;
     this.currentSession = null;
 
     return record;

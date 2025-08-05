@@ -245,7 +245,7 @@ const t = getAssessmentTranslations(currentLang);
         );
       }
 
-      renderOverallTrend(results) {
+      renderOverallTrend(results: any[]) {
         const container = document.getElementById('overall-trend-chart');
         container.innerHTML = '';
 
@@ -262,7 +262,7 @@ const t = getAssessmentTranslations(currentLang);
         chartDiv.className = 'space-y-2';
 
         Object.entries(monthlyData).forEach(([month, monthResults]) => {
-          const avgScore = this.calculateAverageScore(monthResults);
+          const avgScore = this.calculateAverageScore(monthResults as any[]);
           const percentage = Math.min(avgScore * 10, 100); // Assuming max score of 10
 
           const barDiv = document.createElement('div');
@@ -281,7 +281,7 @@ const t = getAssessmentTranslations(currentLang);
         container.appendChild(chartDiv);
       }
 
-      renderFrequencyChart(results) {
+      renderFrequencyChart(results: any[]) {
         const container = document.getElementById('frequency-chart');
         container.innerHTML = '';
 
@@ -310,7 +310,7 @@ const t = getAssessmentTranslations(currentLang);
         container.appendChild(chartDiv);
       }
 
-      renderRiskTrendChart(results) {
+      renderRiskTrendChart(results: any[]) {
         const container = document.getElementById('risk-trend-chart');
         container.innerHTML = '';
 
@@ -322,7 +322,7 @@ const t = getAssessmentTranslations(currentLang);
         ['low', 'medium', 'high'].forEach(riskLevel => {
           const data = riskTrends[riskLevel] || [];
           const avgPercentage = data.length > 0 ?
-            data.reduce((sum, val) => sum + val, 0) / data.length : 0;
+            data.reduce((sum: number, val: number) => sum + val, 0) / data.length : 0;
 
           const color = riskLevel === 'low' ? 'green' :
                        riskLevel === 'medium' ? 'yellow' : 'red';
@@ -345,7 +345,7 @@ const t = getAssessmentTranslations(currentLang);
         container.appendChild(chartDiv);
       }
 
-      renderCategoryPerformance(results) {
+      renderCategoryPerformance(results: any[]) {
         const container = document.getElementById('category-performance-chart');
         container.innerHTML = '';
 
@@ -377,7 +377,7 @@ const t = getAssessmentTranslations(currentLang);
         container.appendChild(chartDiv);
       }
 
-      generateInsights(results) {
+      generateInsights(results: any[]) {
         const container = document.getElementById('insights-container');
         container.innerHTML = '';
 
@@ -411,7 +411,7 @@ const t = getAssessmentTranslations(currentLang);
         });
       }
 
-      updateStatistics(results) {
+      updateStatistics(results: any[]) {
         const trends = this.calculateTrendStatistics(results);
 
         document.getElementById('improvement-trend').textContent = trends.improvement;
@@ -420,9 +420,9 @@ const t = getAssessmentTranslations(currentLang);
       }
 
       // Helper methods for data processing
-      groupResultsByMonth(results) {
+      groupResultsByMonth(results: any[]) {
         const grouped = {};
-        results.forEach(result => {
+        results.forEach((result: any) => {
           const date = new Date(result.completedAt);
           const monthKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
           if (!grouped[monthKey]) grouped[monthKey] = [];
@@ -431,9 +431,9 @@ const t = getAssessmentTranslations(currentLang);
         return grouped;
       }
 
-      calculateAverageScore(results) {
+      calculateAverageScore(results: any[]) {
         if (results.length === 0) return 0;
-        const totalScore = results.reduce((sum, result) => {
+        const totalScore = results.reduce((sum: number, result: any) => {
           const scores = Object.values(result.scores);
           const avgScore = (scores as any[]).reduce((s: number, score: any) => s + score.value, 0) / scores.length;
           return sum + avgScore;
@@ -441,9 +441,9 @@ const t = getAssessmentTranslations(currentLang);
         return totalScore / results.length;
       }
 
-      getMonthlyFrequency(results) {
+      getMonthlyFrequency(results: any[]) {
         const frequency = {};
-        results.forEach(result => {
+        results.forEach((result: any) => {
           const date = new Date(result.completedAt);
           const monthKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
           frequency[monthKey] = (frequency[monthKey] || 0) + 1;
@@ -451,7 +451,7 @@ const t = getAssessmentTranslations(currentLang);
         return frequency;
       }
 
-      getRiskTrends(results) {
+      getRiskTrends(results: any[]) {
         const trends = { low: [], medium: [], high: [] };
         const monthlyData = this.groupResultsByMonth(results);
 
@@ -474,9 +474,9 @@ const t = getAssessmentTranslations(currentLang);
         return trends;
       }
 
-      getCategoryPerformance(results) {
+      getCategoryPerformance(results: any[]) {
         const performance = {};
-        results.forEach(result => {
+        results.forEach((result: any) => {
           const assessmentType = questionBankManager.getAssessmentType(result.assessmentTypeId);
           if (assessmentType) {
             const category = assessmentType.category;
@@ -491,13 +491,13 @@ const t = getAssessmentTranslations(currentLang);
         // Calculate averages
         Object.keys(performance).forEach(category => {
           const scores = performance[category];
-          performance[category] = scores.reduce((sum, score) => sum + score, 0) / scores.length;
+          performance[category] = scores.reduce((sum: number, score: any) => sum + score, 0) / scores.length;
         });
 
         return performance;
       }
 
-      analyzeInsights(results) {
+      analyzeInsights(results: any[]) {
         const insights = [];
 
         if (results.length >= 3) {
@@ -549,7 +549,7 @@ const t = getAssessmentTranslations(currentLang);
         return insights;
       }
 
-      calculateTrendStatistics(results) {
+      calculateTrendStatistics(results: any[]) {
         if (results.length < 2) {
           return { improvement: '-', stable: '-', attention: '-' };
         }
@@ -562,11 +562,11 @@ const t = getAssessmentTranslations(currentLang);
         // Compare categories
         const categories = ['mental_health', 'personality', 'stress', 'mood'];
         categories.forEach(category => {
-          const recentCat = recent.filter(r => {
+          const recentCat = recent.filter((r: any) => {
             const type = questionBankManager.getAssessmentType(r.assessmentTypeId);
             return type && type.category === category;
           });
-          const olderCat = older.filter(r => {
+          const olderCat = older.filter((r: any) => {
             const type = questionBankManager.getAssessmentType(r.assessmentTypeId);
             return type && type.category === category;
           });
@@ -622,7 +622,7 @@ const t = getAssessmentTranslations(currentLang);
         }
       }
 
-      showMessage(message, type = 'info') {
+      showMessage(message: string, type: string = 'info') {
         const toast = document.createElement('div');
         toast.className = `fixed top-4 right-4 px-4 py-2 rounded-md shadow-lg z-50 ${
           type === 'success' ? 'bg-green-600 text-white' :

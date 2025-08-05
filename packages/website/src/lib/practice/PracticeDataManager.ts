@@ -1,9 +1,7 @@
 import type {
   PracticeRecord,
   PracticeStatistics,
-  Achievement,
-  PracticeCategory,
-  PracticeSession
+  PracticeCategory
 } from '../../types/practice';
 
 /**

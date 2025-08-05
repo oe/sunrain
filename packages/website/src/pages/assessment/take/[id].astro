@@ -78,7 +78,7 @@ const structuredData = {
   <meta slot="head" name="assessment:questions" content={String(assessment.questions?.length || 0)} />
 
   <!-- Structured data -->
-  <script slot="head" type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(structuredData)} is:inline />
 
   <!-- Security headers -->
   <meta slot="head" http-equiv="X-Content-Type-Options" content="nosniff" />

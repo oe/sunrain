@@ -8,7 +8,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { type TerminologyDictionary, mentalHealthTerminology } from './terminology-dictionary';
+import { mentalHealthTerminology } from './terminology-dictionary';
 
 // 支持的语言列表
 const SUPPORTED_LANGUAGES = ['en', 'zh', 'es', 'ja', 'ko', 'hi', 'ar'];

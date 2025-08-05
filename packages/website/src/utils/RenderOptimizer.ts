@@ -220,8 +220,7 @@ export function useAsyncState<T>(
  * 组件懒加载工具
  */
 export function createLazyComponent<T extends (props: any) => any>(
-  importFunction: () => Promise<{ default: T }>,
-  fallback?: (props: any) => any
+  importFunction: () => Promise<{ default: T }>
 ) {
   // This function would need to be implemented in a React context
   // For now, we'll return a placeholder that can be used with React.lazy
