@@ -156,6 +156,78 @@ export const assessmentAr: IAssessmentTranslations = {
     retry: 'إعادة المحاولة',
     goBack: 'العودة',
   },
+
+  questionnaireInfo: {
+    description: 'الوصف',
+    purpose: 'الغرض',
+    whatToExpect: 'ما يمكن توقعه',
+    professionalBackground: 'الخلفية المهنية',
+    tags: 'العلامات',
+    questions: 'الأسئلة',
+    minutes: 'دقائق',
+    timeEstimate: {
+      lessThanMinute: 'أقل من دقيقة',
+      oneMinute: 'دقيقة واحدة',
+      minutes: '{minutes} دقائق',
+    },
+    difficulty: {
+      beginner: 'مبتدئ',
+      intermediate: 'متوسط',
+      advanced: 'متقدم',
+    },
+    steps: {
+      step1: 'أجب على {count} أسئلة بصدق (يستغرق حوالي {time} دقائق)',
+      step2: 'سيتم تحليل إجاباتك باستخدام طرق تسجيل معتمدة',
+      step3: 'احصل على نتائج وتوصيات شخصية',
+    },
+    validated: 'تقييم معتمد سريرياً',
+    mentalHealthAssessment: 'تقييم الصحة النفسية',
+    purposeDescription: 'يساعد هذا التقييم في تحديد الأعراض وتقديم رؤى يمكن أن توجه فهمك لحالتك النفسية.',
+    validatedDescription: 'يستخدم هذا التقييم طرق وأنظمة تسجيل معتمدة علمياً.',
+    privacy: {
+      title: 'الخصوصية وأمان البيانات',
+      message: 'يتم تخزين إجاباتك محلياً على جهازك ولا تتم مشاركتها مع أطراف ثالثة.',
+    },
+    startAssessment: 'بدء التقييم',
+    starting: 'جاري البدء...',
+  },
+
+  questionnaireCard: {
+    featured: 'مميز',
+    minutes: 'دقيقة',
+    questions: 'أسئلة',
+    difficulty: {
+      beginner: 'مبتدئ',
+      intermediate: 'متوسط',
+      advanced: 'متقدم',
+    },
+    validated: 'معتمد',
+    viewHistory: 'عرض التاريخ',
+    startAssessment: 'بدء التقييم',
+  },
+
+  existingSession: {
+    title: 'تقييم غير مكتمل',
+    progress: 'التقدم',
+    lastActivity: 'آخر نشاط',
+    questionsAnswered: 'تمت الإجابة',
+    message: 'لديك تقييم غير مكتمل. يمكنك المتابعة من حيث توقفت، أو البدء من جديد.',
+    continue: 'متابعة التقييم',
+    restart: 'البدء من جديد',
+    restartWarning: 'البدء من جديد سيحذف جميع إجاباتك السابقة.',
+  },
+
+  common: {
+    loading: 'جاري التحميل...',
+    cancel: 'إلغاء',
+    close: 'إغلاق',
+    save: 'حفظ',
+    delete: 'حذف',
+    edit: 'تعديل',
+    confirm: 'تأكيد',
+    yes: 'نعم',
+    no: 'لا',
+  },
 };
 
 export default assessmentAr;

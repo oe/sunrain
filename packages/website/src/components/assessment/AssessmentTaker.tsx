@@ -57,14 +57,8 @@ const AssessmentTaker = memo(function AssessmentTaker({
   onComplete,
   onError
 }: AssessmentTakerProps) {
-  const { t, isLoading: translationsLoading, changeLanguage } = useAssessmentTranslations();
+  const { t, isLoading: translationsLoading } = useAssessmentTranslations(language);
 
-  // 设置正确的语言
-  useEffect(() => {
-    if (language && changeLanguage) {
-      changeLanguage(language);
-    }
-  }, [language, changeLanguage]);
 
   // 使用分离的状态管理，避免不必要的重渲染
   const [sessionState, setSessionState] = useState<AssessmentSessionState>({

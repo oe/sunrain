@@ -156,6 +156,78 @@ export const assessmentZh: IAssessmentTranslations = {
     retry: '重试',
     goBack: '返回',
   },
+
+  questionnaireInfo: {
+    description: '描述',
+    purpose: '目的',
+    whatToExpect: '评测流程',
+    professionalBackground: '专业背景',
+    tags: '标签',
+    questions: '题目',
+    minutes: '分钟',
+    timeEstimate: {
+      lessThanMinute: '不到1分钟',
+      oneMinute: '1分钟',
+      minutes: '{minutes}分钟',
+    },
+    difficulty: {
+      beginner: '初级',
+      intermediate: '中级',
+      advanced: '高级',
+    },
+    steps: {
+      step1: '诚实回答{count}道题目（大约需要{time}分钟）',
+      step2: '您的回答将使用经过验证的评分方法进行分析',
+      step3: '获得个性化的结果和建议',
+    },
+    validated: '临床验证评测',
+    mentalHealthAssessment: '心理健康评测',
+    purposeDescription: '此评测有助于识别症状并提供见解，可以指导您了解自己的心理健康状况。',
+    validatedDescription: '此评测使用经过科学验证的方法和评分系统。',
+    privacy: {
+      title: '隐私与数据安全',
+      message: '您的回答存储在您的设备本地，不会与第三方共享。',
+    },
+    startAssessment: '开始评测',
+    starting: '正在启动...',
+  },
+
+  questionnaireCard: {
+    featured: '推荐',
+    minutes: '分钟',
+    questions: '题目',
+    difficulty: {
+      beginner: '初级',
+      intermediate: '中级',
+      advanced: '高级',
+    },
+    validated: '已验证',
+    viewHistory: '查看历史',
+    startAssessment: '开始评测',
+  },
+
+  existingSession: {
+    title: '未完成的评测',
+    progress: '进度',
+    lastActivity: '最后活动',
+    questionsAnswered: '已回答',
+    message: '您有一个未完成的评测。您可以继续之前的进度，或者重新开始。',
+    continue: '继续评测',
+    restart: '重新开始',
+    restartWarning: '重新开始将删除您之前的所有答案。',
+  },
+
+  common: {
+    loading: '加载中...',
+    cancel: '取消',
+    close: '关闭',
+    save: '保存',
+    delete: '删除',
+    edit: '编辑',
+    confirm: '确认',
+    yes: '是',
+    no: '否',
+  },
 };
 
 export default assessmentZh;

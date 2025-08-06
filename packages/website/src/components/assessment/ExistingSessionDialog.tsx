@@ -5,6 +5,7 @@ import type { AssessmentSession } from '@/types/assessment';
 interface ExistingSessionDialogProps {
   existingSession: AssessmentSession;
   assessmentName: string;
+  language: string;
   onContinue: () => void;
   onRestart: () => void;
   onCancel: () => void;
@@ -13,11 +14,12 @@ interface ExistingSessionDialogProps {
 export default function ExistingSessionDialog({
   existingSession,
   assessmentName,
+  language,
   onContinue,
   onRestart,
   onCancel
 }: ExistingSessionDialogProps) {
-  const { t } = useAssessmentTranslations();
+  const { t } = useAssessmentTranslations(language as any);
   const [isLoading, setIsLoading] = useState(false);
 
   const handleContinue = () => {

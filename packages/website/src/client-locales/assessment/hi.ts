@@ -156,6 +156,78 @@ export const assessmentHi: IAssessmentTranslations = {
     retry: 'पुनः प्रयास करें',
     goBack: 'वापस जाएं',
   },
+
+  questionnaireInfo: {
+    description: 'विवरण',
+    purpose: 'उद्देश्य',
+    whatToExpect: 'क्या अपेक्षा करें',
+    professionalBackground: 'व्यावसायिक पृष्ठभूमि',
+    tags: 'टैग',
+    questions: 'प्रश्न',
+    minutes: 'मिनट',
+    timeEstimate: {
+      lessThanMinute: '1 मिनट से कम',
+      oneMinute: '1 मिनट',
+      minutes: '{minutes} मिनट',
+    },
+    difficulty: {
+      beginner: 'शुरुआती',
+      intermediate: 'मध्यम',
+      advanced: 'उन्नत',
+    },
+    steps: {
+      step1: '{count} प्रश्नों का ईमानदारी से उत्तर दें (लगभग {time} मिनट लगेंगे)',
+      step2: 'आपके उत्तरों का विश्वसनीय स्कोरिंग विधियों का उपयोग करके विश्लेषण किया जाएगा',
+      step3: 'व्यक्तिगत परिणाम और सिफारिशें प्राप्त करें',
+    },
+    validated: 'नैदानिक रूप से सत्यापित मूल्यांकन',
+    mentalHealthAssessment: 'मानसिक स्वास्थ्य मूल्यांकन',
+    purposeDescription: 'यह मूल्यांकन लक्षणों की पहचान करने और अंतर्दृष्टि प्रदान करने में मदद करता है जो आपकी मानसिक स्वास्थ्य स्थिति की समझ का मार्गदर्शन कर सकती है।',
+    validatedDescription: 'यह मूल्यांकन वैज्ञानिक रूप से सत्यापित विधियों और स्कोरिंग सिस्टम का उपयोग करता है।',
+    privacy: {
+      title: 'गोपनीयता और डेटा सुरक्षा',
+      message: 'आपके उत्तर आपके डिवाइस पर स्थानीय रूप से संग्रहीत होते हैं और तीसरे पक्ष के साथ साझा नहीं किए जाते।',
+    },
+    startAssessment: 'मूल्यांकन शुरू करें',
+    starting: 'शुरू हो रहा है...',
+  },
+
+  questionnaireCard: {
+    featured: 'विशेष',
+    minutes: 'मिनट',
+    questions: 'प्रश्न',
+    difficulty: {
+      beginner: 'शुरुआती',
+      intermediate: 'मध्यम',
+      advanced: 'उन्नत',
+    },
+    validated: 'सत्यापित',
+    viewHistory: 'इतिहास देखें',
+    startAssessment: 'मूल्यांकन शुरू करें',
+  },
+
+  existingSession: {
+    title: 'अधूरा मूल्यांकन',
+    progress: 'प्रगति',
+    lastActivity: 'अंतिम गतिविधि',
+    questionsAnswered: 'उत्तर दिए गए',
+    message: 'आपका एक अधूरा मूल्यांकन है। आप जहां छोड़ा था वहां से जारी रख सकते हैं, या फिर से शुरू कर सकते हैं।',
+    continue: 'मूल्यांकन जारी रखें',
+    restart: 'फिर से शुरू करें',
+    restartWarning: 'फिर से शुरू करने से आपके सभी पिछले उत्तर हट जाएंगे।',
+  },
+
+  common: {
+    loading: 'लोड हो रहा है...',
+    cancel: 'रद्द करें',
+    close: 'बंद करें',
+    save: 'सहेजें',
+    delete: 'हटाएं',
+    edit: 'संपादित करें',
+    confirm: 'पुष्टि करें',
+    yes: 'हां',
+    no: 'नहीं',
+  },
 };
 
 export default assessmentHi;

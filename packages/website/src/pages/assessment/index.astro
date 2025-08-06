@@ -5,6 +5,8 @@ import { questionBankManager } from '@/lib/assessment/QuestionBankManager';
 import { getLocale } from 'astro-i18n-aut';
 import { createSSGTranslations } from '@/i18n/utils';
 import ContinueAssessmentWidget from '@/components/assessment/ContinueAssessmentWidget';
+import QuestionnaireInfoButton from '@/components/assessment/QuestionnaireInfoButton';
+import StartAssessmentButton from '@/components/assessment/StartAssessmentButton';
 import type { Language } from '@sunrain/shared';
 
 const currentLang = getLocale(Astro.url) as Language;
@@ -38,7 +40,7 @@ const assessmentsByCategory = categories.reduce(
       </div>
 
       <!-- Continue Assessment Widget - Client-side rendered -->
-      <ContinueAssessmentWidget client:only="react" />
+      <ContinueAssessmentWidget language={currentLang} client:only="react" />
 
       <!-- Assessment Categories -->
       <div class="space-y-12">
@@ -47,18 +49,10 @@ const assessmentsByCategory = categories.reduce(
             <section>
               <div class="mb-6">
                 <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mb-2">
-                  {
-                    t('list.categories')[
-                      category
-                    ]
-                  }
+                  {t('list.categories')[category]}
                 </h2>
                 <p class="text-gray-600 dark:text-gray-300">
-                  {
-                    t('list.categoryDescriptions')[
-                      category
-                    ]
-                  }
+                  {t('list.categoryDescriptions')[category]}
                 </p>
               </div>
 
@@ -66,7 +60,7 @@ const assessmentsByCategory = categories.reduce(
                 {assessmentsByCategory[category].map((assessment) => (
                   <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600 overflow-hidden min-h-[320px] flex flex-col">
                     {/* Category color accent */}
-                    <div class="h-1.5 w-full bg-blue-500"></div>
+                    <div class="h-1.5 w-full bg-blue-500" />
 
                     <div class="p-7 flex-1 flex flex-col">
                       {/* Header section with more space */}
@@ -90,30 +84,47 @@ const assessmentsByCategory = categories.reduce(
                       <div class="mb-6">
                         <div class="flex items-center gap-6 p-4 bg-gray-50 dark:bg-gray-700/30 rounded-xl">
                           <div class="flex items-center gap-2 text-gray-600 dark:text-gray-300">
-                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                              <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd" />
+                            <svg
+                              class="w-5 h-5"
+                              fill="currentColor"
+                              viewBox="0 0 20 20"
+                            >
+                              <path
+                                fill-rule="evenodd"
+                                d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                                clip-rule="evenodd"
+                              />
                             </svg>
-                            <span class="font-semibold text-lg">{assessment.questions.length}</span>
+                            <span class="font-semibold text-lg">
+                              {assessment.questions.length}
+                            </span>
                             <span class="text-sm">{t('list.questions')}</span>
                           </div>
                         </div>
                       </div>
 
                       {/* Spacer to push button to bottom */}
-                      <div class="flex-grow"></div>
+                      <div class="flex-grow" />
 
-                      {/* Action button with full width and better spacing */}
+                      {/* Action buttons */}
                       <div class="mt-auto">
-                        <button
-                          data-assessment-id={assessment.id}
-                          data-assessment-name={assessment.name}
-                          class="start-assessment-btn w-full inline-flex items-center justify-center px-8 py-4 border border-transparent text-lg font-semibold rounded-xl text-white bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
-                        >
-                          <svg class="w-6 h-6 mr-3" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd" />
-                          </svg>
-                          {t('list.startButton')}
-                        </button>
+                        {/* Info button - React component with CSR */}
+                        <div class="mb-3">
+                          <QuestionnaireInfoButton
+                            assessment={assessment}
+                            language={currentLang}
+                            buttonText={t('list.infoButton')}
+                            client:idle
+                          />
+                        </div>
+
+                        {/* Start button - React component with CSR */}
+                        <StartAssessmentButton
+                          assessment={assessment}
+                          buttonText={t('list.startButton')}
+                          language={currentLang}
+                          client:idle
+                        />
                       </div>
                     </div>
                   </div>
@@ -233,178 +244,4 @@ const assessmentsByCategory = categories.reduce(
       </div>
     </div>
   </main>
-
-  <!-- Client-side script for handling assessment start -->
-  <script>
-    import { assessmentEngine } from '@/lib/assessment/AssessmentEngine';
-
-    // Handle assessment start buttons
-    document.addEventListener('DOMContentLoaded', () => {
-      const startButtons = document.querySelectorAll('.start-assessment-btn');
-
-      startButtons.forEach(button => {
-        button.addEventListener('click', async (e) => {
-          e.preventDefault();
-
-          const assessmentId = button.getAttribute('data-assessment-id');
-          const assessmentName = button.getAttribute('data-assessment-name');
-
-          if (!assessmentId) return;
-
-          try {
-            // Check for existing active sessions
-            const activeSessions = assessmentEngine.getActiveSessions();
-            const existingSession = activeSessions.find((session: any) =>
-              session.assessmentTypeId === assessmentId
-            );
-
-            if (existingSession) {
-              // Show existing session dialog
-              showExistingSessionDialog(existingSession, assessmentName, assessmentId);
-            } else {
-              // Navigate directly to assessment
-              window.location.href = `/assessment/take/${assessmentId}/`;
-            }
-          } catch (error) {
-            console.error('Error checking for existing sessions:', error);
-            // Fallback to direct navigation
-            window.location.href = `/assessment/take/${assessmentId}/`;
-          }
-        });
-      });
-    });
-
-    function showExistingSessionDialog(existingSession: any, assessmentName: string, assessmentId: string) {
-      // Create modal HTML
-      const modalHTML = `
-        <div id="existing-session-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-md w-full p-6">
-            <div class="flex items-center mb-4">
-              <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mr-4">
-                <svg class="w-6 h-6 text-blue-600 dark:text-blue-400" fill="currentColor" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
-                </svg>
-              </div>
-              <div>
-                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
-                  未完成的评测
-                </h3>
-                <p class="text-sm text-gray-600 dark:text-gray-300">
-                  ${assessmentName}
-                </p>
-              </div>
-            </div>
-
-            <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 mb-6">
-              <div class="flex items-center justify-between mb-2">
-                <span class="text-sm font-medium text-gray-700 dark:text-gray-300">
-                  进度
-                </span>
-                <span class="text-sm text-gray-600 dark:text-gray-400">
-                  ${Math.round((existingSession.currentQuestionIndex / (existingSession.answers.length + 10)) * 100)}%
-                </span>
-              </div>
-              <div class="w-full bg-gray-200 dark:bg-gray-600 rounded-full h-2 mb-3">
-                <div
-                  class="bg-blue-600 h-2 rounded-full transition-all duration-300"
-                  style="width: ${Math.round((existingSession.currentQuestionIndex / (existingSession.answers.length + 10)) * 100)}%"
-                ></div>
-              </div>
-              <div class="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
-                <span>
-                  最后活动: ${new Intl.DateTimeFormat('zh-CN', {
-                    month: 'short',
-                    day: 'numeric',
-                    hour: '2-digit',
-                    minute: '2-digit'
-                  }).format(new Date(existingSession.lastActivityAt))}
-                </span>
-                <span>
-                  已回答: ${existingSession.answers.length} 题
-                </span>
-              </div>
-            </div>
-
-            <p class="text-gray-700 dark:text-gray-300 mb-6">
-              您有一个未完成的评测。您可以继续之前的进度，或者重新开始。
-            </p>
-
-            <div class="flex flex-col sm:flex-row gap-3">
-              <button
-                id="continue-btn"
-                class="flex-1 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors"
-              >
-                继续评测
-              </button>
-
-              <button
-                id="restart-btn"
-                class="flex-1 px-4 py-2 border border-orange-300 dark:border-orange-600 text-orange-700 dark:text-orange-300 rounded-md hover:bg-orange-50 dark:hover:bg-orange-900/20 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 transition-colors"
-              >
-                重新开始
-              </button>
-
-              <button
-                id="cancel-btn"
-                class="px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition-colors"
-              >
-                取消
-              </button>
-            </div>
-
-            <div class="mt-4 p-3 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg">
-              <div class="flex">
-                <svg class="w-5 h-5 text-yellow-600 dark:text-yellow-400 mr-2 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
-                </svg>
-                <p class="text-sm text-yellow-700 dark:text-yellow-300">
-                  重新开始将删除您之前的所有答案。
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      `;
-
-      // Add modal to DOM
-      document.body.insertAdjacentHTML('beforeend', modalHTML);
-
-      const modal = document.getElementById('existing-session-modal');
-      const continueBtn = document.getElementById('continue-btn');
-      const restartBtn = document.getElementById('restart-btn');
-      const cancelBtn = document.getElementById('cancel-btn');
-
-      // Handle continue
-      continueBtn.addEventListener('click', () => {
-        modal.remove();
-        window.location.href = `/assessment/take/${assessmentId}/`;
-      });
-
-      // Handle restart
-      restartBtn.addEventListener('click', async () => {
-        try {
-          // Delete existing session
-          assessmentEngine.deleteSession(existingSession.id);
-          modal.remove();
-          window.location.href = `/assessment/take/${assessmentId}/`;
-        } catch (error) {
-          console.error('Error restarting assessment:', error);
-          modal.remove();
-          window.location.href = `/assessment/take/${assessmentId}/`;
-        }
-      });
-
-      // Handle cancel
-      cancelBtn.addEventListener('click', () => {
-        modal.remove();
-      });
-
-      // Handle click outside modal
-      modal.addEventListener('click', (e) => {
-        if (e.target === modal) {
-          modal.remove();
-        }
-      });
-    }
-  </script>
 </BaseLayout>

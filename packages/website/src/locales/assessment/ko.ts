@@ -22,6 +22,7 @@ export const assessmentKo: IAssessmentTranslations = {
       mood: '감정 상태와 변화 추이를 모니터링하세요'
     },
     startButton: '평가 시작',
+    infoButton: '자세히 보기',
     minutes: '분',
     questions: '문항',
     activeSessions: {

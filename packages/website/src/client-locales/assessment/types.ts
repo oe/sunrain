@@ -168,4 +168,80 @@ export interface IAssessmentTranslations {
     retry: string;
     goBack: string;
   };
+
+  /** 问卷信息模态框 */
+  questionnaireInfo: {
+    description: string;
+    purpose: string;
+    whatToExpect: string;
+    professionalBackground: string;
+    tags: string;
+    questions: string;
+    minutes: string;
+    timeEstimate: {
+      lessThanMinute: string;
+      oneMinute: string;
+      minutes: string;
+    };
+    difficulty: {
+      beginner: string;
+      intermediate: string;
+      advanced: string;
+    };
+    steps: {
+      step1: string;
+      step2: string;
+      step3: string;
+    };
+    validated: string;
+    mentalHealthAssessment: string;
+    purposeDescription: string;
+    validatedDescription: string;
+    privacy: {
+      title: string;
+      message: string;
+    };
+    startAssessment: string;
+    starting: string;
+  };
+
+  /** 问卷卡片 */
+  questionnaireCard: {
+    featured: string;
+    minutes: string;
+    questions: string;
+    difficulty: {
+      beginner: string;
+      intermediate: string;
+      advanced: string;
+    };
+    validated: string;
+    viewHistory: string;
+    startAssessment: string;
+  };
+
+  /** 现有会话对话框 */
+  existingSession: {
+    title: string;
+    progress: string;
+    lastActivity: string;
+    questionsAnswered: string;
+    message: string;
+    continue: string;
+    restart: string;
+    restartWarning: string;
+  };
+
+  /** 通用文本 */
+  common: {
+    loading: string;
+    cancel: string;
+    close: string;
+    save: string;
+    delete: string;
+    edit: string;
+    confirm: string;
+    yes: string;
+    no: string;
+  };
 }

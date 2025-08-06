@@ -27,6 +27,8 @@ export interface IAssessmentTranslations {
     };
     /** 开始按钮 */
     startButton: string;
+    /** 了解详情按钮 */
+    infoButton: string;
     /** 时间单位 */
     minutes: string;
     /** 题目单位 */

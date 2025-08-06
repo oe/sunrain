@@ -23,6 +23,7 @@ export const assessmentZh: IAssessmentTranslations = {
       mood: "监测您的情绪状态和变化趋势",
     },
     startButton: "开始评测",
+    infoButton: "了解详情",
     minutes: "分钟",
     questions: "题",
     activeSessions: {

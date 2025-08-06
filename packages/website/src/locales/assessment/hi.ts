@@ -22,6 +22,7 @@ export const assessmentHi: IAssessmentTranslations = {
       mood: 'अपनी भावनात्मक स्थितियों और रुझानों की निगरानी करें'
     },
     startButton: 'मूल्यांकन शुरू करें',
+    infoButton: 'और जानें',
     minutes: 'मिनट',
     questions: 'प्रश्न',
     activeSessions: {

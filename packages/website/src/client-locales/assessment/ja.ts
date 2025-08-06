@@ -156,6 +156,78 @@ export const assessmentJa: IAssessmentTranslations = {
     retry: '再試行',
     goBack: '戻る',
   },
+
+  questionnaireInfo: {
+    description: '説明',
+    purpose: '目的',
+    whatToExpect: '期待できること',
+    professionalBackground: '専門的背景',
+    tags: 'タグ',
+    questions: '質問',
+    minutes: '分',
+    timeEstimate: {
+      lessThanMinute: '1分未満',
+      oneMinute: '1分',
+      minutes: '{minutes}分',
+    },
+    difficulty: {
+      beginner: '初級',
+      intermediate: '中級',
+      advanced: '上級',
+    },
+    steps: {
+      step1: '{count}の質問に正直に答えてください（約{time}分かかります）',
+      step2: 'あなたの回答は検証済みの採点方法を使用して分析されます',
+      step3: '個人化された結果と推奨事項を受け取ります',
+    },
+    validated: '臨床的に検証された評価',
+    mentalHealthAssessment: 'メンタルヘルス評価',
+    purposeDescription: 'この評価は症状を特定し、あなたのメンタルヘルス状態の理解を導く洞察を提供するのに役立ちます。',
+    validatedDescription: 'この評価は科学的に検証された方法と採点システムを使用しています。',
+    privacy: {
+      title: 'プライバシーとデータセキュリティ',
+      message: 'あなたの回答はデバイスにローカルに保存され、第三者と共有されることはありません。',
+    },
+    startAssessment: '評価を開始',
+    starting: '開始中...',
+  },
+
+  questionnaireCard: {
+    featured: '注目',
+    minutes: '分',
+    questions: '質問',
+    difficulty: {
+      beginner: '初級',
+      intermediate: '中級',
+      advanced: '上級',
+    },
+    validated: '検証済み',
+    viewHistory: '履歴を表示',
+    startAssessment: '評価を開始',
+  },
+
+  existingSession: {
+    title: '未完了の評価',
+    progress: '進捗',
+    lastActivity: '最後のアクティビティ',
+    questionsAnswered: '回答済み',
+    message: '未完了の評価があります。中断したところから続けるか、最初からやり直すことができます。',
+    continue: '評価を続ける',
+    restart: '最初からやり直す',
+    restartWarning: '最初からやり直すと、以前の回答がすべて削除されます。',
+  },
+
+  common: {
+    loading: '読み込み中...',
+    cancel: 'キャンセル',
+    close: '閉じる',
+    save: '保存',
+    delete: '削除',
+    edit: '編集',
+    confirm: '確認',
+    yes: 'はい',
+    no: 'いいえ',
+  },
 };
 
 export default assessmentJa;

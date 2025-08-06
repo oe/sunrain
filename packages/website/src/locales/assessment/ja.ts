@@ -22,6 +22,7 @@ export const assessmentJa: IAssessmentTranslations = {
       mood: '感情状態と傾向を監視する'
     },
     startButton: '評価を開始',
+    infoButton: '詳細を見る',
     minutes: '分',
     questions: '問',
     activeSessions: {

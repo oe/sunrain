@@ -22,6 +22,7 @@ export const assessmentAr: IAssessmentTranslations = {
       mood: 'مراقبة حالاتك العاطفية واتجاهاتها'
     },
     startButton: 'بدء التقييم',
+    infoButton: 'معرفة المزيد',
     minutes: 'دقائق',
     questions: 'أسئلة',
     activeSessions: {

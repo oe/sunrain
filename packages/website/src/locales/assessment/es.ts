@@ -22,6 +22,7 @@ export const assessmentEs: IAssessmentTranslations = {
       mood: 'Monitoree sus estados emocionales y tendencias'
     },
     startButton: 'Comenzar Evaluación',
+    infoButton: 'Más Información',
     minutes: 'minutos',
     questions: 'preguntas',
     activeSessions: {

@@ -8,6 +8,7 @@ interface ErrorDisplayProps {
   onGoBack?: () => void;
   showRetry?: boolean;
   showGoBack?: boolean;
+  language?: string;
   t?: (key: string, params?: Record<string, any>) => string;
 }
 
@@ -18,9 +19,10 @@ export default memo(function ErrorDisplay({
   onGoBack,
   showRetry = false,
   showGoBack = false,
+  language = 'en',
   t: externalT
 }: ErrorDisplayProps) {
-  const { t: internalT } = useAssessmentTranslations();
+  const { t: internalT } = useAssessmentTranslations(language as any);
 
   // 使用传入的翻译函数或内部翻译函数
   const t = externalT || internalT;
