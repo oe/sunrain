@@ -38,7 +38,10 @@ export class AssessmentEngine {
     });
 
     if (this.isClientSide) {
-      this.loadSessionsFromStorage();
+      // 异步加载会话，不阻塞构造函数
+      this.loadSessionsFromStorage().catch(error => {
+        console.error('Failed to load sessions during initialization:', error);
+      });
       this.initializeCaching();
     } else {
       assessmentLogger.warn(
@@ -986,13 +989,13 @@ export class AssessmentEngine {
   /**
    * Load sessions from localStorage
    */
-  private loadSessionsFromStorage(): void {
+  private async loadSessionsFromStorage(): Promise<void> {
     if (!this.isClientSide) {
       return;
     }
 
     try {
-      const sessions = localStorageManager.loadSessions();
+      const sessions = await localStorageManager.loadSessionsAsync();
 
       for (const session of sessions) {
         this.sessions.set(session.id, session);
@@ -1004,7 +1007,7 @@ export class AssessmentEngine {
           if (timeSinceLastActivity > this.sessionTimeout) {
             // Session has timed out, mark as paused
             session.status = "paused";
-            this.saveSessionsToStorage();
+            await this.saveSessionsToStorage();
           } else {
             this.startSessionTimer(session.id);
           }
@@ -1018,7 +1021,7 @@ export class AssessmentEngine {
   /**
    * Clear all session data (for testing or reset)
    */
-  clearAllSessions(): void {
+  async clearAllSessions(): Promise<void> {
     // Stop all timers
     for (const sessionId of this.sessions.keys()) {
       this.stopSessionTimer(sessionId);
@@ -1031,7 +1034,7 @@ export class AssessmentEngine {
 
     if (this.isClientSide) {
       try {
-        localStorageManager.clearSessions();
+        await localStorageManager.clearSessions();
       } catch (error) {
         console.error("Failed to clear sessions from storage:", error);
       }
@@ -1283,7 +1286,7 @@ export const assessmentEngine = {
     return this.getInstance().setReminder(sessionId, reminderTime);
   },
 
-  clearAllSessions() {
+  async clearAllSessions() {
     return this.getInstance().clearAllSessions();
   },
 

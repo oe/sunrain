@@ -288,7 +288,8 @@ export class StorageQuotaRecoveryStrategy implements ErrorRecoveryStrategy {
   async recover(_error: AssessmentError): Promise<boolean> {
     try {
       // 尝试清理旧数据
-      const { localStorageManager } = await import('./LocalStorageManager');
+      const LocalStorageManagerModule = await import('./LocalStorageManager');
+      const localStorageManager = LocalStorageManagerModule.localStorageManager;
 
       // 获取存储统计信息
       const stats = await localStorageManager.getStorageStatistics();
@@ -324,8 +325,9 @@ export class SessionRecoveryStrategy implements ErrorRecoveryStrategy {
   async recover(error: AssessmentError): Promise<boolean> {
     try {
       // 尝试从本地存储恢复会话
-      const { localStorageManager } = await import('./LocalStorageManager');
-      const sessions = localStorageManager.loadSessions();
+      const LocalStorageManagerModule = await import('./LocalStorageManager');
+      const localStorageManager = LocalStorageManagerModule.localStorageManager;
+      const sessions = await localStorageManager.loadSessionsAsync();
 
       if (error.context.sessionId) {
         const session = sessions.find((s: any) => s.id === error.context.sessionId);

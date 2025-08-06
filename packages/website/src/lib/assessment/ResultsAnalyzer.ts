@@ -477,7 +477,7 @@ export class ResultsAnalyzer {
       this.results.set(result.id, result);
 
       // Save to localStorage
-      this.saveResultsToStorage();
+      await this.saveResultsToStorage();
 
       return true;
     } catch (error) {
@@ -504,10 +504,10 @@ export class ResultsAnalyzer {
   /**
    * Delete a result
    */
-  deleteResult(resultId: string): boolean {
+  async deleteResult(resultId: string): Promise<boolean> {
     const deleted = this.results.delete(resultId);
     if (deleted) {
-      this.saveResultsToStorage();
+      await this.saveResultsToStorage();
     }
     return deleted;
   }
@@ -545,24 +545,20 @@ export class ResultsAnalyzer {
   /**
    * Save results to localStorage using LocalStorageManager
    */
-  private saveResultsToStorage(): void {
+  private async saveResultsToStorage(): Promise<void> {
     // Check if we're in a browser environment
-    if (typeof window === 'undefined' || typeof localStorage === 'undefined') {
+    if (typeof window === 'undefined') {
       return;
     }
 
     try {
-      const resultsData = Array.from(this.results.entries()).map(([id, result]) => ({
-        id,
-        ...result,
-        completedAt: result.completedAt.toISOString(),
-        answers: result.answers.map(answer => ({
-          ...answer,
-          answeredAt: answer.answeredAt.toISOString()
-        }))
-      }));
+      // 使用新的 LocalStorageManager 保存每个结果
+      const LocalStorageManagerModule = await import('./LocalStorageManager');
+      const localStorageManager = LocalStorageManagerModule.localStorageManager;
 
-      localStorage.setItem('assessment_results', JSON.stringify(resultsData));
+      for (const result of this.results.values()) {
+        await localStorageManager.saveResult(result);
+      }
     } catch (error) {
       console.error('Failed to save results to storage:', error);
     }
@@ -571,47 +567,28 @@ export class ResultsAnalyzer {
   /**
    * Force reload results from localStorage (public method)
    */
-  reloadResultsFromStorage(): void {
-    this.loadResultsFromStorage();
+  async reloadResultsFromStorage(): Promise<void> {
+    await this.loadResultsFromStorage();
   }
 
   /**
    * Load results from localStorage using LocalStorageManager
    */
-  private loadResultsFromStorage(): void {
+  private async loadResultsFromStorage(): Promise<void> {
     // Check if we're in a browser environment
-    if (typeof window === 'undefined' || typeof localStorage === 'undefined') {
+    if (typeof window === 'undefined') {
       return;
     }
 
     try {
-      const stored = localStorage.getItem('assessment_results');
-      if (!stored) return;
+      const LocalStorageManagerModule = await import('./LocalStorageManager');
+      const localStorageManager = LocalStorageManagerModule.localStorageManager;
+      const results = await localStorageManager.loadResultsAsync();
 
-      const resultsData = JSON.parse(stored);
-
-      // Validate that resultsData is an array
-      if (!Array.isArray(resultsData)) {
-        console.warn('Invalid results data format, clearing storage');
-        localStorage.removeItem('assessment_results');
-        return;
-      }
-
-      for (const resultData of resultsData) {
-        try {
-          const result: AssessmentResult = {
-            ...resultData,
-            completedAt: new Date(resultData.completedAt),
-            answers: resultData.answers?.map((answer: any) => ({
-              ...answer,
-              answeredAt: new Date(answer.answeredAt)
-            })) || []
-          };
-
-          this.results.set(result.id, result);
-        } catch (resultError) {
-          console.error('Failed to load individual result:', resultError);
-        }
+      // 清空现有结果并加载新的
+      this.results.clear();
+      for (const result of results) {
+        this.results.set(result.id, result);
       }
     } catch (error) {
       console.error('Failed to load results from storage:', error);
