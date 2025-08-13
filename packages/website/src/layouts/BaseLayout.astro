@@ -96,6 +96,11 @@ const alternateLinks = Object.keys(languages).map((locale) => ({
         }
       })();
     </script>
+
+    <!-- Global language injection for CSR components -->
+    <script is:inline define:vars={{ currentLang }}>
+      window.__ASTRO_LANGUAGE__ = currentLang;
+    </script>
   </head>
   <body
     class="min-h-screen bg-white dark:bg-gray-900 flex flex-col font-sans antialiased"

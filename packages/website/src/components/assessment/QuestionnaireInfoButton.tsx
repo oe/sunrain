@@ -6,17 +6,15 @@ import type { AssessmentType } from '@/types/assessment';
 interface QuestionnaireInfoButtonProps {
   assessment: AssessmentType;
   buttonText: string;
-  language: string;
   onStartAssessment?: (assessmentId: string) => void;
 }
 
 export default function QuestionnaireInfoButton({
   assessment,
   buttonText,
-  language,
   onStartAssessment
 }: QuestionnaireInfoButtonProps) {
-  const { t } = useAssessmentTranslations(language as any);
+  const { t } = useAssessmentTranslations();
   const [showModal, setShowModal] = useState(false);
 
   const handleStartAssessment = () => {

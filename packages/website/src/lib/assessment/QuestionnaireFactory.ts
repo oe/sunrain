@@ -6,8 +6,6 @@
 
 import type {
   Questionnaire,
-  QuestionnaireCategory,
-  QuestionnaireTag,
   DifficultyLevel,
   ProfessionalBacking,
   ResultInterpretation

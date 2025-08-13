@@ -1,6 +1,4 @@
-import React, { Suspense, lazy } from 'react';
-import LoadingSpinner from './LoadingSpinner';
-import ErrorBoundary from './ErrorBoundary';
+import { lazy } from 'react';
 
 // 懒加载的评测相关组件
 export const LazyAssessmentTaker = lazy(() => import('./AssessmentTaker'));
@@ -8,28 +6,8 @@ export const LazyQuestionCard = lazy(() => import('./QuestionCard'));
 export const LazyResultsDisplay = lazy(() => import('./ResultsDisplay'));
 export const LazyContinueAssessmentWidget = lazy(() => import('./ContinueAssessmentWidget'));
 
-// 通用的懒加载包装器
-interface LazyWrapperProps {
-  children: React.ReactNode;
-  fallback?: React.ReactNode;
-  errorFallback?: React.ComponentType<{ error: Error; retry: () => void }>;
-  onError?: (error: Error, errorInfo: React.ErrorInfo) => void;
-}
-
-export const LazyWrapper: React.FC<LazyWrapperProps> = ({
-  children,
-  fallback = <LoadingSpinner />,
-  errorFallback,
-  onError
-}) => {
-  return (
-    <ErrorBoundary fallback={errorFallback ? React.createElement(errorFallback, { error: new Error('Component loading failed'), retry: () => window.location.reload() }) : undefined} onError={onError}>
-      <Suspense fallback={fallback}>
-        {children}
-      </Suspense>
-    </ErrorBoundary>
-  );
-};
+// Re-export the unified LazyWrapper
+export { default as LazyWrapper, LazyAssessmentWrapper } from './LazyWrapper';
 
 // 预加载函数
 export const preloadAssessmentComponents = () => {

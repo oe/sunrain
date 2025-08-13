@@ -150,7 +150,7 @@ export class LocalStorageManager {
   /**
    * 保存文档到数据库
    */
-  private async saveDocument(collection: string, doc: any): Promise<string> {
+  private async saveDocument(_collection: string, doc: any): Promise<string> {
     await this.ensureInitialized();
 
     const id = doc._id || this.generateId();
@@ -173,28 +173,6 @@ export class LocalStorageManager {
     } catch (error) {
       console.error("Failed to save document:", error);
       throw error;
-    }
-  }
-
-  /**
-   * 从数据库获取文档
-   */
-  private async getDocument(id: string): Promise<any | null> {
-    await this.ensureInitialized();
-
-    try {
-      if (this.storageType === "pouchdb" || this.storageType === "memory") {
-        const doc = await this.db.get(id);
-        return doc;
-      } else {
-        return this.db.get(id) || null;
-      }
-    } catch (error) {
-      if (error.name === "not_found") {
-        return null;
-      }
-      console.error("Failed to get document:", error);
-      return null;
     }
   }
 

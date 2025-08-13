@@ -45,7 +45,6 @@ async function validateQuestionnaire(questionnaireId: string) {
     const validation = questionnaireValidator.validateTranslations(
       questionnaireId,
       translations,
-      locale as SupportedLocale
     );
 
     console.log(`\n📋 ${locale.toUpperCase()} Validation:`);

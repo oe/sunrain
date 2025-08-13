@@ -15,15 +15,14 @@ const loadAssessmentEngine = async () => {
 };
 
 interface ContinueAssessmentWidgetProps {
-  language: string;
   className?: string;
 }
 
-export default function ContinueAssessmentWidget({ language, className = '' }: ContinueAssessmentWidgetProps) {
+export default function ContinueAssessmentWidget({ className = '' }: ContinueAssessmentWidgetProps) {
   const [activeSessions, setActiveSessions] = useState<AssessmentSession[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const { t, isLoading: translationsLoading } = useAssessmentTranslations(language as any);
+  const { t, isLoading: translationsLoading } = useAssessmentTranslations();
 
   useEffect(() => {
     loadActiveSessions();

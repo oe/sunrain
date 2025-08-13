@@ -14,12 +14,11 @@ interface ExistingSessionDialogProps {
 export default function ExistingSessionDialog({
   existingSession,
   assessmentName,
-  language,
   onContinue,
   onRestart,
   onCancel
 }: ExistingSessionDialogProps) {
-  const { t } = useAssessmentTranslations(language as any);
+  const { t } = useAssessmentTranslations();
   const [isLoading, setIsLoading] = useState(false);
 
   const handleContinue = () => {

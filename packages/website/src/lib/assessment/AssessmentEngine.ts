@@ -4,7 +4,6 @@ import type {
   Question,
 } from "@/types/assessment";
 import { questionBankManager } from "@/lib/assessment/QuestionBankManager";
-import { localStorageManager } from "@/lib/assessment/LocalStorageManager";
 import {
   AssessmentError,
   AssessmentErrorType,
@@ -12,9 +11,7 @@ import {
   errorRecoveryManager,
 } from "@/lib/assessment/AssessmentErrors";
 import { assessmentLogger } from "@/lib/assessment/AssessmentLogger";
-import { questionCache } from "@/lib/assessment/QuestionCache";
-import { cacheManager, CacheManager } from "@/lib/assessment/CacheManager";
-import { memoryOptimizer } from "@/utils/MemoryOptimizer";
+import { localStorageManager } from "@/lib/assessment/LocalStorageManager";
 
 /**
  * Assessment Execution Engine
@@ -33,92 +30,15 @@ export class AssessmentEngine {
   constructor() {
     this.isClientSide = this.checkClientSideEnvironment();
 
-    assessmentLogger.info("ENGINE", "AssessmentEngine initializing", {
-      isClientSide: this.isClientSide,
-    });
-
     if (this.isClientSide) {
       // 异步加载会话，不阻塞构造函数
       this.loadSessionsFromStorage().catch(error => {
         console.error('Failed to load sessions during initialization:', error);
       });
-      this.initializeCaching();
-    } else {
-      assessmentLogger.warn(
-        "ENGINE",
-        "AssessmentEngine initialized in server-side environment"
-      );
     }
   }
 
-  /**
-   * Initialize caching system
-   */
-  private initializeCaching(): void {
-    try {
-      // 注册内存清理回调
-      memoryOptimizer.registerCleanupCallback(() => {
-        this.cleanupInactiveSessionData();
-      });
 
-      // 预加载常用评测数据
-      this.preloadCommonAssessments();
-
-      assessmentLogger.info("ENGINE", "Caching system initialized");
-    } catch (error) {
-      assessmentLogger.warn("ENGINE", "Failed to initialize caching", error);
-    }
-  }
-
-  /**
-   * 预加载常用评测数据
-   */
-  private async preloadCommonAssessments(): Promise<void> {
-    try {
-      const commonAssessments = [
-        "anxiety",
-        "depression",
-        "stress",
-        "wellbeing",
-      ];
-      await questionCache.preloadCommonAssessments(commonAssessments);
-
-      assessmentLogger.info("ENGINE", "Common assessments preloaded", {
-        assessments: commonAssessments,
-      });
-    } catch (error) {
-      assessmentLogger.warn(
-        "ENGINE",
-        "Failed to preload common assessments",
-        error
-      );
-    }
-  }
-
-  /**
-   * 清理非活跃会话的数据
-   */
-  private cleanupInactiveSessionData(): void {
-    const now = Date.now();
-    const inactiveThreshold = 60 * 60 * 1000; // 1小时
-
-    for (const [sessionId, session] of this.sessions.entries()) {
-      const lastActivity = session.lastActivityAt?.getTime() || 0;
-
-      if (now - lastActivity > inactiveThreshold) {
-        // 清理会话相关的缓存数据
-        const cacheKey = CacheManager.getCacheKey(
-          "session_questions",
-          sessionId
-        );
-        cacheManager.delete(cacheKey);
-
-        assessmentLogger.info("ENGINE", "Cleaned up inactive session data", {
-          sessionId,
-        });
-      }
-    }
-  }
 
 
 
@@ -907,7 +827,7 @@ export class AssessmentEngine {
 
     try {
       const sessions = Array.from(this.sessions.values());
-      const success = await localStorageManager.saveSessions(sessions);
+      const success = await localStorageManager.getInstance().saveSessions(sessions);
 
       if (!success) {
         console.error("Failed to save sessions to storage");
@@ -995,7 +915,7 @@ export class AssessmentEngine {
     }
 
     try {
-      const sessions = await localStorageManager.loadSessionsAsync();
+      const sessions = await localStorageManager.getInstance().loadSessionsAsync();
 
       for (const session of sessions) {
         this.sessions.set(session.id, session);
@@ -1034,7 +954,7 @@ export class AssessmentEngine {
 
     if (this.isClientSide) {
       try {
-        await localStorageManager.clearSessions();
+        await localStorageManager.getInstance().clearSessions();
       } catch (error) {
         console.error("Failed to clear sessions from storage:", error);
       }
@@ -1115,7 +1035,7 @@ export class AssessmentEngine {
 
       // Get storage quota information if available
       try {
-        const quota = await localStorageManager.getStorageQuota();
+        const quota = await localStorageManager.getInstance().getStorageQuota();
         info.storageQuota = quota.quota;
         info.storageUsed = quota.usage;
       } catch (error) {
@@ -1125,7 +1045,7 @@ export class AssessmentEngine {
       // Get storage statistics
       try {
         info.storageStatistics =
-          await localStorageManager.getStorageStatistics();
+          await localStorageManager.getInstance().getStorageStatistics();
       } catch (error) {
         console.error("Failed to get storage statistics:", error);
       }

@@ -1,25 +1,16 @@
 import { useState, useEffect } from 'react';
 import { useAssessmentTranslations } from '@/hooks/useCSRTranslations';
+import { getDateLocale } from '@/utils/language';
 import { resultsAnalyzer } from '@/lib/assessment/ResultsAnalyzer';
 import { resourceRecommendationEngine } from '@/lib/assessment/ResourceRecommendationEngine';
 import { questionBankManager } from '@/lib/assessment/QuestionBankManager';
 import type { AssessmentResult, AssessmentType } from '@/types/assessment';
-import LoadingSpinner from './LoadingSpinner';
-import ErrorDisplay from './ErrorDisplay';
+import ErrorHandler from './ErrorHandler';
 
-interface ResultsDisplayProps {
-  language: string;
-}
 
-export default function ResultsDisplay({ language }: ResultsDisplayProps) {
-  const { t, isLoading: translationsLoading, changeLanguage } = useAssessmentTranslations();
 
-  // 设置正确的语言
-  useEffect(() => {
-    if (language && changeLanguage) {
-      changeLanguage(language as any);
-    }
-  }, [language, changeLanguage]);
+export default function ResultsDisplay() {
+  const { t, isLoading: translationsLoading } = useAssessmentTranslations();
   const [resultId, setResultId] = useState<string | null>(null);
   const [result, setResult] = useState<AssessmentResult | null>(null);
   const [assessmentType, setAssessmentType] = useState<AssessmentType | null>(null);
@@ -327,7 +318,7 @@ export default function ResultsDisplay({ language }: ResultsDisplayProps) {
   };
 
   const formatDate = (date: Date) => {
-    const locale = language === 'zh' ? 'zh-CN' : 'en-US';
+    const locale = getDateLocale();
     return new Date(date).toLocaleString(locale, {
       year: 'numeric',
       month: 'long',
@@ -340,18 +331,14 @@ export default function ResultsDisplay({ language }: ResultsDisplayProps) {
   const formatDuration = (seconds: number) => {
     const minutes = Math.floor(seconds / 60);
     const remainingSeconds = seconds % 60;
-    if (language === 'zh') {
-      return `${minutes}分${remainingSeconds}秒`;
-    } else {
-      return `${minutes}m ${remainingSeconds}s`;
-    }
+    return t('time.minutesSeconds', { minutes, seconds: remainingSeconds });
   };
 
   if (translationsLoading || isLoading) {
     return (
-      <div className="flex items-center justify-center py-12">
-        <LoadingSpinner />
-        <p className="ml-4 text-gray-600 dark:text-gray-300">
+      <div className="flex flex-col items-center justify-center py-12">
+        <span className="loading loading-spinner loading-lg mb-4"></span>
+        <p className="text-gray-600 dark:text-gray-300">
           {t('results.loading')}
         </p>
       </div>
@@ -372,8 +359,8 @@ export default function ResultsDisplay({ language }: ResultsDisplayProps) {
   if (error) {
     return (
       <div className="max-w-2xl mx-auto text-center py-12">
-        <ErrorDisplay
-          message={getErrorMessage(error)}
+        <ErrorHandler
+          error={new Error(getErrorMessage(error))}
           onRetry={() => {
             if (resultId) {
               loadResult(resultId);
@@ -551,21 +538,19 @@ export default function ResultsDisplay({ language }: ResultsDisplayProps) {
                   <span className="ml-2 text-sm font-medium text-gray-900 dark:text-white">{rec.title}</span>
                 </div>
                 <span className={`px-2 py-1 text-xs font-medium rounded-full ${getPriorityColor(rec.priority)}`}>
-                  {rec.priority === 'high' ? (language === 'zh' ? '高优先级' : 'High Priority') :
-                    rec.priority === 'medium' ? (language === 'zh' ? '中优先级' : 'Medium Priority') :
-                      (language === 'zh' ? '低优先级' : 'Low Priority')}
+                  {t(`priority.${rec.priority}`)}
                 </span>
               </div>
               <p className="text-sm text-gray-600 dark:text-gray-300 mb-3">{rec.description}</p>
               <div className="flex items-center justify-between">
                 <span className="text-xs text-gray-500 dark:text-gray-400">
-                  {rec.estimatedTimeCommitment || (language === 'zh' ? '时间不定' : 'Time varies')}
+                  {rec.estimatedTimeCommitment || t('time.varies')}
                 </span>
                 <button
                   onClick={() => window.open(rec.resourceLinks[0]?.url || '#', '_blank')}
                   className="text-sm text-blue-600 dark:text-blue-400 hover:underline"
                 >
-                  {language === 'zh' ? '查看详情' : 'View Details'}
+                  {t('actions.viewDetails')}
                 </button>
               </div>
             </div>

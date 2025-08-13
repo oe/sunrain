@@ -68,16 +68,16 @@ export default function ContinueAssessmentPage({ className = '' }: ContinueAsses
         // Redirect to assessment page
         window.location.href = `/assessment/take/${session.assessmentTypeId}/`;
       } else {
-        showMessage('无法继续评测，请重试', 'error');
+        showMessage(t('errors.cannotContinue'), 'error');
       }
     } catch (error) {
       console.error('Failed to continue session:', error);
-      showMessage('继续评测失败，请重试', 'error');
+      showMessage(t('errors.continueFailed'), 'error');
     }
   };
 
   const deleteSession = async (sessionId: string) => {
-    if (confirm('确定要删除这个未完成的评测吗？所有进度将丢失。')) {
+    if (confirm(t('actions.confirmDelete'))) {
       try {
         const { assessmentEngine: engine } = await loadModules();
         if (!engine) throw new Error('Assessment engine not available');
@@ -86,19 +86,19 @@ export default function ContinueAssessmentPage({ className = '' }: ContinueAsses
         if (success) {
           // Remove from local array
           setActiveSessions(prev => prev.filter(s => s.id !== sessionId));
-          showMessage('评测已删除', 'success');
+          showMessage(t('messages.deleted'), 'success');
         } else {
-          showMessage('删除失败，请重试', 'error');
+          showMessage(t('errors.deleteFailed'), 'error');
         }
       } catch (error) {
         console.error('Failed to delete session:', error);
-        showMessage('删除失败，请重试', 'error');
+        showMessage(t('errors.deleteFailed'), 'error');
       }
     }
   };
 
   const clearAllSessions = async () => {
-    if (confirm('确定要清除所有未完成的评测吗？所有进度将丢失。')) {
+    if (confirm(t('actions.confirmClearAll'))) {
       try {
         const { assessmentEngine: engine } = await loadModules();
         if (!engine) throw new Error('Assessment engine not available');
@@ -112,13 +112,13 @@ export default function ContinueAssessmentPage({ className = '' }: ContinueAsses
 
         if (deletedCount > 0) {
           setActiveSessions([]);
-          showMessage(`已清除 ${deletedCount} 个未完成的评测`, 'success');
+          showMessage(t('messages.clearedCount', { count: deletedCount }), 'success');
         } else {
-          showMessage('清除失败，请重试', 'error');
+          showMessage(t('errors.clearFailed'), 'error');
         }
       } catch (error) {
         console.error('Failed to clear all sessions:', error);
-        showMessage('清除失败，请重试', 'error');
+        showMessage(t('errors.clearFailed'), 'error');
       }
     }
   };
@@ -136,21 +136,20 @@ export default function ContinueAssessmentPage({ className = '' }: ContinueAsses
     const minutes = Math.floor(seconds / 60);
     const remainingSeconds = seconds % 60;
     if (minutes > 0) {
-      return `${minutes}分${remainingSeconds}秒`;
+      return t('time.minutesSeconds', { minutes, seconds: remainingSeconds });
     }
-    return `${remainingSeconds}秒`;
+    return t('time.seconds', { seconds: remainingSeconds });
   };
 
   const showMessage = (message: string, type: 'success' | 'error' | 'info' = 'info') => {
     // Simple toast notification
     const toast = document.createElement('div');
-    toast.className = `fixed top-4 right-4 px-4 py-2 rounded-md shadow-lg z-50 ${
-      type === 'success'
-        ? 'bg-green-600 text-white'
-        : type === 'error'
-          ? 'bg-red-600 text-white'
-          : 'bg-blue-600 text-white'
-    }`;
+    toast.className = `fixed top-4 right-4 px-4 py-2 rounded-md shadow-lg z-50 ${type === 'success'
+      ? 'bg-green-600 text-white'
+      : type === 'error'
+        ? 'bg-red-600 text-white'
+        : 'bg-blue-600 text-white'
+      }`;
     toast.textContent = message;
 
     document.body.appendChild(toast);
@@ -184,13 +183,13 @@ export default function ContinueAssessmentPage({ className = '' }: ContinueAsses
         <svg className="w-16 h-16 text-red-400 dark:text-red-600 mx-auto mb-4" fill="currentColor" viewBox="0 0 20 20">
           <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd"></path>
         </svg>
-        <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">加载失败</h2>
-        <p className="text-gray-600 dark:text-gray-300 mb-6">无法加载未完成的评测，请刷新页面重试</p>
+        <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">{t('errors.loadFailed')}</h2>
+        <p className="text-gray-600 dark:text-gray-300 mb-6">{t('errors.loadFailedMessage')}</p>
         <button
           onClick={() => window.location.reload()}
           className="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
         >
-          刷新页面
+          {t('actions.refresh')}
         </button>
       </div>
     );
@@ -204,16 +203,16 @@ export default function ContinueAssessmentPage({ className = '' }: ContinueAsses
           <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"></path>
         </svg>
         <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-          没有未完成的评测
+          {t('messages.noActiveSessions')}
         </h2>
         <p className="text-gray-600 dark:text-gray-300 mb-6">
-          您目前没有需要继续的评测
+          {t('messages.noActiveSessionsMessage')}
         </p>
         <a
           href="/assessment/"
           className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
         >
-          开始新评测
+          {t('actions.startNew')}
           <svg className="ml-2 w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
             <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd"></path>
           </svg>
@@ -233,7 +232,7 @@ export default function ContinueAssessmentPage({ className = '' }: ContinueAsses
           const statusClass = session.status === 'active'
             ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
             : 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200';
-          const statusText = session.status === 'active' ? '进行中' : '已暂停';
+          const statusText = session.status === 'active' ? t('status.active') : t('status.paused');
 
           return (
             <div key={session.id} className="bg-white dark:bg-gray-800 rounded-lg shadow border border-gray-200 dark:border-gray-700 p-6">
@@ -241,7 +240,7 @@ export default function ContinueAssessmentPage({ className = '' }: ContinueAsses
                 <div className="flex-1">
                   <div className="flex items-center space-x-3 mb-2">
                     <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-                      {assessmentType?.name || '未知评测'}
+                      {assessmentType?.name || t('labels.unknownAssessment')}
                     </h3>
                     <span className={`px-2 py-1 text-xs font-medium rounded-full ${statusClass}`}>
                       {statusText}
@@ -255,13 +254,13 @@ export default function ContinueAssessmentPage({ className = '' }: ContinueAsses
                       <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clipRule="evenodd"></path>
                       </svg>
-                      开始时间: {formatDate(session.startedAt)}
+                      {t('labels.startTime')}: {formatDate(session.startedAt)}
                     </div>
                     <div className="flex items-center">
                       <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd"></path>
                       </svg>
-                      已用时: {formatDuration(session.timeSpent)}
+                      {t('labels.timeSpent')}: {formatDuration(session.timeSpent)}
                     </div>
                   </div>
                 </div>
@@ -270,7 +269,7 @@ export default function ContinueAssessmentPage({ className = '' }: ContinueAsses
                     className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
                     onClick={() => continueSession(session.id)}
                   >
-                    继续评测
+                    {t('actions.continue')}
                   </button>
                   <button
                     className="px-3 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-md transition-colors"
@@ -304,10 +303,10 @@ export default function ContinueAssessmentPage({ className = '' }: ContinueAsses
 
               {/* Answers Summary */}
               <div className="text-sm text-gray-600 dark:text-gray-300">
-                <span className="font-medium">已回答:</span> {session.answers.length} 题
+                <span className="font-medium">{t('labels.answered')}:</span> {session.answers.length} {t('labels.questions')}
                 {progress?.estimatedTimeRemaining && (
                   <span className="ml-4">
-                    <span className="font-medium">预计剩余:</span> {Math.round(progress.estimatedTimeRemaining / 60)} 分钟
+                    <span className="font-medium">{t('labels.estimatedRemaining')}:</span> {Math.round(progress.estimatedTimeRemaining / 60)} {t('time.minutes')}
                   </span>
                 )}
               </div>
@@ -323,13 +322,13 @@ export default function ContinueAssessmentPage({ className = '' }: ContinueAsses
             href="/assessment/"
             className="px-6 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
           >
-            开始新评测
+            {t('actions.startNew')}
           </a>
           <button
             onClick={clearAllSessions}
             className="px-6 py-2 text-red-600 dark:text-red-400 border border-red-300 dark:border-red-600 rounded-md hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
           >
-            清除所有未完成评测
+            {t('actions.clearAll')}
           </button>
         </div>
       </div>

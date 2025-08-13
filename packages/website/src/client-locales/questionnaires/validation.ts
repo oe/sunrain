@@ -19,7 +19,6 @@ export class QuestionnaireTranslationValidator {
   validateTranslations(
     questionnaireId: string,
     translations: QuestionnaireTranslations,
-    locale: SupportedLocale
   ): ValidationResult {
     const errors: string[] = [];
     const warnings: string[] = [];
@@ -78,7 +77,6 @@ export class QuestionnaireTranslationValidator {
 
     // 比较解读范围
     const baseInterpretations = Object.keys(baseTranslations.interpretations);
-    const targetInterpretations = Object.keys(targetTranslations.interpretations);
 
     for (const range of baseInterpretations) {
       if (!targetTranslations.interpretations[range]) {

@@ -40,7 +40,7 @@ const assessmentsByCategory = categories.reduce(
       </div>
 
       <!-- Continue Assessment Widget - Client-side rendered -->
-      <ContinueAssessmentWidget language={currentLang} client:only="react" />
+      <ContinueAssessmentWidget client:only="react" />
 
       <!-- Assessment Categories -->
       <div class="space-y-12">
@@ -112,7 +112,6 @@ const assessmentsByCategory = categories.reduce(
                         <div class="mb-3">
                           <QuestionnaireInfoButton
                             assessment={assessment}
-                            language={currentLang}
                             buttonText={t('list.infoButton')}
                             client:idle
                           />

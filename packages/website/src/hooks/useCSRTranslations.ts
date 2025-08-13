@@ -9,6 +9,12 @@ import { getCSRTranslationManager } from '@/utils/csr-translation-manager';
 import type { CSRTranslations } from '@/client-locales/shared/types';
 import { isClientSide } from '@/utils/environment';
 
+declare global {
+  interface Window {
+    __ASTRO_LANGUAGE__?: Language;
+  }
+}
+
 interface UseCSRTranslationsReturn {
   t: (key: string, params?: Record<string, any>) => string;
   isLoading: boolean;
@@ -91,10 +97,22 @@ export function useCSRTranslations(
 }
 
 /**
- * 专门用于assessment命名空间的CSR翻译Hook
+ * 获取全局语言设置
  */
-export function useAssessmentTranslations(language: Language) {
-  return useCSRTranslations('assessment', language);
+function getGlobalLanguage(): Language {
+  if (typeof window !== 'undefined' && window.__ASTRO_LANGUAGE__) {
+    return window.__ASTRO_LANGUAGE__;
+  }
+  return 'zh'; // 默认中文
+}
+
+/**
+ * 专门用于assessment命名空间的CSR翻译Hook
+ * 自动从全局变量获取语言，无需传递参数
+ */
+export function useAssessmentTranslations(language?: Language) {
+  const currentLanguage = language || getGlobalLanguage();
+  return useCSRTranslations('assessment', currentLanguage);
 }
 
 /**

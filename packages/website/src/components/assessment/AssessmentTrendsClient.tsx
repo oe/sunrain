@@ -1,14 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useAssessmentTranslations } from '@/hooks/useCSRTranslations';
 import { resultsAnalyzer } from '@/lib/assessment/ResultsAnalyzer';
 import { questionBankManager } from '@/lib/assessment/QuestionBankManager';
-import type { Language } from '@sunrain/shared';
 
-interface AssessmentTrendsClientProps {
-  initialLang: Language;
-}
 
-export default function AssessmentTrendsClient({ initialLang }: AssessmentTrendsClientProps) {
+export default function AssessmentTrendsClient() {
   const { t, isLoading: translationsLoading } = useAssessmentTranslations();
   const [currentRange, setCurrentRange] = useState<number | null>(365); // Default to 1 year
   const [results, setResults] = useState<any[]>([]);
@@ -136,7 +132,7 @@ export default function AssessmentTrendsClient({ initialLang }: AssessmentTrends
       barDiv.innerHTML = `
         <div class="flex items-center justify-between mb-1">
           <span class="text-sm text-gray-600 dark:text-gray-300">${month}</span>
-          <span class="text-sm font-medium text-gray-900 dark:text-white">${count} ${initialLang === 'zh' ? '次' : 'times'}</span>
+          <span class="text-sm font-medium text-gray-900 dark:text-white">${count} ${t('stats.times')}</span>
         </div>
         <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
           <div class="h-2 rounded-full bg-green-600" style="width: ${percentage}%"></div>

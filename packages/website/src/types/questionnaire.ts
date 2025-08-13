@@ -4,7 +4,7 @@
  * 基于现有的assessment.ts，添加分类、标签、专业背景等新字段
  */
 
-import type { AssessmentType, ScoringRule, Question, RiskLevel } from './assessment';
+import type { AssessmentType, RiskLevel } from './assessment';
 
 export type DifficultyLevel = 'beginner' | 'intermediate' | 'advanced';
 
