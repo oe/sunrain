@@ -279,13 +279,7 @@ export class AssessmentEngine {
       session.language
     );
 
-    const culturallyAdapted =
-      questionBankManager.getCulturallyAdaptedAssessmentType(
-        session.assessmentTypeId,
-        session.culturalContext
-      );
-
-    const questions = culturallyAdapted?.questions || assessmentType?.questions || baseAssessmentType.questions;
+    const questions = assessmentType?.questions || baseAssessmentType.questions;
 
     if (session.currentQuestionIndex >= questions.length) {
       return null;
@@ -1054,76 +1048,7 @@ export class AssessmentEngine {
     return info;
   }
 
-  /**
-   * Perform health check on the assessment engine
-   */
-  async performHealthCheck(): Promise<{
-    status: "healthy" | "warning" | "error";
-    issues: string[];
-    recommendations: string[];
-  }> {
-    const issues: string[] = [];
-    const recommendations: string[] = [];
 
-    // Check environment
-    if (!this.isClientSide) {
-      issues.push("Running in server-side environment");
-      recommendations.push(
-        "AssessmentEngine should only be used in client-side environment"
-      );
-    }
-
-    // Check storage availability
-    const envInfo = await this.getEnvironmentInfo();
-    if (!envInfo.hasLocalStorage) {
-      issues.push("localStorage is not available");
-      recommendations.push(
-        "Enable localStorage or use alternative storage solution"
-      );
-    }
-
-    // Check for too many sessions
-    const stats = this.getSessionStatistics();
-    if (stats.total > 50) {
-      issues.push(`Too many sessions stored (${stats.total})`);
-      recommendations.push(
-        "Consider clearing old sessions to improve performance"
-      );
-    }
-
-    // Check for stale active sessions
-    const staleActiveSessions = Array.from(this.sessions.values()).filter(
-      (session) => {
-        if (session.status !== "active") return false;
-        const timeSinceLastActivity =
-          Date.now() - session.lastActivityAt.getTime();
-        return timeSinceLastActivity > this.sessionTimeout;
-      }
-    );
-
-    if (staleActiveSessions.length > 0) {
-      issues.push(
-        `${staleActiveSessions.length} stale active sessions detected`
-      );
-      recommendations.push("Clean up stale sessions or adjust session timeout");
-    }
-
-    const status =
-      issues.length === 0
-        ? "healthy"
-        : issues.some(
-            (issue) =>
-              issue.includes("server-side") || issue.includes("localStorage")
-          )
-        ? "error"
-        : "warning";
-
-    return {
-      status,
-      issues,
-      recommendations,
-    };
-  }
 }
 
 // Lazy singleton instance - only create when actually needed in browser
@@ -1218,7 +1143,5 @@ export const assessmentEngine = {
     return this.getInstance().getEnvironmentInfo();
   },
 
-  performHealthCheck() {
-    return this.getInstance().performHealthCheck();
-  },
+
 };

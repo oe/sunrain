@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback, memo } from 'react';
+import { CheckCircle } from 'lucide-react';
 import { useAssessmentTranslations } from '@/hooks/useCSRTranslations';
 import QuestionCard from './QuestionCard';
 import ProgressBar from './ProgressBar';
@@ -451,9 +452,7 @@ const AssessmentTaker = memo(function AssessmentTaker({
       <div className="text-center py-12">
         <div className="mb-6">
           <div className="w-16 h-16 bg-green-100 dark:bg-green-900/20 rounded-full flex items-center justify-center mx-auto mb-4">
-            <svg className="w-8 h-8 text-green-600 dark:text-green-400" fill="currentColor" viewBox="0 0 20 20">
-              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-            </svg>
+            <CheckCircle className="w-8 h-8 text-green-600 dark:text-green-400" />
           </div>
           <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">{t('execution.completion.title')}</h2>
           <p className="text-gray-600 dark:text-gray-300 mb-6">{t('execution.completion.message')}</p>

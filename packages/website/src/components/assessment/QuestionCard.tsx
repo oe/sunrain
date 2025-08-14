@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback, useMemo, memo } from 'react';
+import { CheckCircle, Check, AlertCircle, AlertTriangle } from 'lucide-react';
 import type { Question } from '@/types/assessment';
 import { answerValidator, type ValidationResult as ValidatorResult } from '@/lib/assessment/AnswerValidator';
 import { createMemoComparison } from '@/utils/RenderOptimizer';
@@ -118,18 +119,18 @@ export default memo(function QuestionCard({
           <label
             key={option.id}
             className={`
-              flex items-center p-4 border rounded-lg cursor-pointer transition-all duration-200
-              ${disabled ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-50 dark:hover:bg-gray-700'}
+              card card-compact cursor-pointer transition-all duration-200
+              ${disabled ? 'opacity-50 cursor-not-allowed' : 'hover:bg-base-200'}
               ${answer === option.value
-                ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20 ring-2 ring-blue-200 dark:ring-blue-800'
-                : 'border-gray-200 dark:border-gray-600'
+                ? 'border-primary bg-primary/10 border-2'
+                : 'border border-base-300'
               }
               ${validationState.hasErrors && hasInteracted && showValidation
-                ? 'border-red-300 dark:border-red-600'
+                ? 'border-error'
                 : ''
               }
               ${validationState.hasWarnings && hasInteracted && showValidation
-                ? 'border-yellow-300 dark:border-yellow-600'
+                ? 'border-warning'
                 : ''
               }
             `}
@@ -143,27 +144,20 @@ export default memo(function QuestionCard({
               disabled={disabled}
               className="sr-only"
             />
-            <div className={`
-              w-4 h-4 rounded-full border-2 mr-3 flex items-center justify-center
-              ${answer === option.value
-                ? 'border-blue-500 bg-blue-500'
-                : 'border-gray-300 dark:border-gray-600'
-              }
-            `}>
+            <div className="card-body flex-row items-center p-4">
+              <div className={`
+                radio radio-primary mr-3
+                ${answer === option.value ? 'radio-checked' : ''}
+              `}></div>
+              <div className="flex-1">
+                <span className="font-medium">
+                  {option.text}
+                </span>
+              </div>
               {answer === option.value && (
-                <div className="w-2 h-2 rounded-full bg-white"></div>
+                <CheckCircle className="w-5 h-5 text-primary" />
               )}
             </div>
-            <div className="flex-1">
-              <span className="text-gray-900 dark:text-white font-medium">
-                {option.text}
-              </span>
-            </div>
-            {answer === option.value && (
-              <svg className="w-5 h-5 text-blue-500 ml-2" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-              </svg>
-            )}
           </label>
         ))}
       </div>
@@ -194,18 +188,18 @@ export default memo(function QuestionCard({
             <label
               key={option.id}
               className={`
-                flex items-center p-4 border rounded-lg cursor-pointer transition-all duration-200
-                ${disabled ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-50 dark:hover:bg-gray-700'}
+                card card-compact cursor-pointer transition-all duration-200
+                ${disabled ? 'opacity-50 cursor-not-allowed' : 'hover:bg-base-200'}
                 ${isSelected
-                  ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20 ring-2 ring-blue-200 dark:ring-blue-800'
-                  : 'border-gray-200 dark:border-gray-600'
+                  ? 'border-primary bg-primary/10 border-2'
+                  : 'border border-base-300'
                 }
                 ${validationState.hasErrors && hasInteracted && showValidation
-                  ? 'border-red-300 dark:border-red-600'
+                  ? 'border-error'
                   : ''
                 }
                 ${validationState.hasWarnings && hasInteracted && showValidation
-                  ? 'border-yellow-300 dark:border-yellow-600'
+                  ? 'border-warning'
                   : ''
                 }
               `}
@@ -217,36 +211,31 @@ export default memo(function QuestionCard({
                 disabled={disabled}
                 className="sr-only"
               />
-              <div className={`
-                w-4 h-4 rounded border-2 mr-3 flex items-center justify-center
-                ${isSelected
-                  ? 'border-blue-500 bg-blue-500'
-                  : 'border-gray-300 dark:border-gray-600'
-                }
-              `}>
+              <div className="card-body flex-row items-center p-4">
+                <div className={`
+                  checkbox checkbox-primary mr-3
+                  ${isSelected ? 'checkbox-checked' : ''}
+                `}>
+                  {isSelected && (
+                    <Check className="w-3 h-3 text-white" />
+                  )}
+                </div>
+                <div className="flex-1">
+                  <span className="font-medium">
+                    {option.text}
+                  </span>
+                </div>
                 {isSelected && (
-                  <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                  </svg>
+                  <CheckCircle className="w-5 h-5 text-primary" />
                 )}
               </div>
-              <div className="flex-1">
-                <span className="text-gray-900 dark:text-white font-medium">
-                  {option.text}
-                </span>
-              </div>
-              {isSelected && (
-                <svg className="w-5 h-5 text-blue-500 ml-2" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                </svg>
-              )}
             </label>
           );
         })}
 
         {/* Show selection count */}
         {selectedValues.length > 0 && (
-          <div className="mt-3 text-sm text-gray-600 dark:text-gray-400">
+          <div className="mt-3 text-sm opacity-70">
             {t('question.selectedCount', { count: selectedValues.length })}
           </div>
         )}
@@ -268,7 +257,7 @@ export default memo(function QuestionCard({
       <div className="space-y-4">
         {/* Scale labels */}
         {question.scaleLabels && (
-          <div className="flex justify-between text-sm text-gray-600 dark:text-gray-400">
+          <div className="flex justify-between text-sm opacity-70">
             <span>{question.scaleLabels.min}</span>
             <span>{question.scaleLabels.max}</span>
           </div>
@@ -283,18 +272,17 @@ export default memo(function QuestionCard({
               onClick={() => handleAnswerChange(value)}
               disabled={disabled}
               className={`
-                flex-1 h-12 rounded-lg border-2 font-semibold transition-all duration-200
-                ${disabled ? 'opacity-50 cursor-not-allowed' : 'hover:scale-105'}
+                btn flex-1 h-12 font-semibold
                 ${currentValue === value
-                  ? 'border-blue-500 bg-blue-500 text-white shadow-lg'
-                  : 'border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:border-blue-300 dark:hover:border-blue-500'
+                  ? 'btn-primary'
+                  : 'btn-outline'
                 }
                 ${validationState.hasErrors && hasInteracted && showValidation
-                  ? 'border-red-300 dark:border-red-600'
+                  ? 'btn-error'
                   : ''
                 }
                 ${validationState.hasWarnings && hasInteracted && showValidation
-                  ? 'border-yellow-300 dark:border-yellow-600'
+                  ? 'btn-warning'
                   : ''
                 }
               `}
@@ -307,31 +295,28 @@ export default memo(function QuestionCard({
         {/* Current selection indicator */}
         {currentValue !== null && (
           <div className="text-center">
-            <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-200">
+            <div className="badge badge-primary">
               {t('question.selectedValue', { value: currentValue })}
-            </span>
+            </div>
           </div>
         )}
 
         {/* Visual scale representation */}
         <div className="relative">
-          <div className="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-full">
-            {currentValue !== null && (
-              <div
-                className="h-2 bg-blue-500 rounded-full transition-all duration-300"
-                style={{ width: `${((currentValue - min) / (max - min)) * 100}%` }}
-              />
-            )}
-          </div>
+          <progress
+            className="progress progress-primary w-full"
+            value={currentValue !== null ? ((currentValue - min) / (max - min)) * 100 : 0}
+            max="100"
+          ></progress>
           <div className="flex justify-between mt-1">
             {scaleOptions.map((value) => (
               <div
                 key={value}
                 className={`
-                  w-3 h-3 rounded-full border-2 transition-all duration-200
+                  w-3 h-3 rounded-full transition-all duration-200
                   ${currentValue === value
-                    ? 'border-blue-500 bg-blue-500'
-                    : 'border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800'
+                    ? 'bg-primary'
+                    : 'bg-base-300'
                   }
                 `}
               />
@@ -355,21 +340,18 @@ export default memo(function QuestionCard({
           rows={4}
           maxLength={1000}
           className={`
-            w-full px-4 py-3 border rounded-lg resize-none transition-all duration-200
-            ${disabled ? 'opacity-50 cursor-not-allowed bg-gray-100 dark:bg-gray-800' : ''}
+            textarea textarea-bordered w-full resize-none
             ${validationState.hasErrors && hasInteracted && showValidation
-              ? 'border-red-300 dark:border-red-600 focus:ring-red-200 dark:focus:ring-red-800'
+              ? 'textarea-error'
               : validationState.hasWarnings && hasInteracted && showValidation
-              ? 'border-yellow-300 dark:border-yellow-600 focus:ring-yellow-200 dark:focus:ring-yellow-800'
-              : 'border-gray-300 dark:border-gray-600 focus:ring-blue-200 dark:focus:ring-blue-800 focus:border-blue-500'
+              ? 'textarea-warning'
+              : 'textarea-primary'
             }
-            bg-white dark:bg-gray-700 text-gray-900 dark:text-white
-            focus:outline-none focus:ring-2
           `}
         />
 
         {/* Character count */}
-        <div className="flex justify-between text-sm text-gray-500 dark:text-gray-400">
+        <div className="flex justify-between text-sm opacity-60">
           <span>
             {textValue.length > 0 && t('question.characterCount', { count: textValue.length })}
           </span>
@@ -378,10 +360,8 @@ export default memo(function QuestionCard({
 
         {/* Text input feedback */}
         {textValue.length > 0 && (
-          <div className="flex items-center text-sm text-green-600 dark:text-green-400">
-            <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-            </svg>
+          <div className="flex items-center text-sm text-success">
+            <CheckCircle className="w-4 h-4 mr-1" />
             {t('question.textEntered')}
           </div>
         )}
@@ -401,7 +381,7 @@ export default memo(function QuestionCard({
         return renderTextInput();
       default:
         return (
-          <div className="text-center py-8 text-gray-500 dark:text-gray-400">
+          <div className="text-center py-8 opacity-60">
             {t('errors.unsupportedQuestionType', { type: question.type })}
           </div>
         );
@@ -422,15 +402,9 @@ export default memo(function QuestionCard({
           {validationState.hasErrors && (
             <div className="space-y-2">
               {validationState.errors.map((error, index) => (
-                <div key={index} className="flex items-start p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-md">
-                  <svg className="w-5 h-5 text-red-600 dark:text-red-400 mr-2 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
-                  </svg>
-                  <div className="flex-1">
-                    <p className="text-sm text-red-600 dark:text-red-400">
-                      {error}
-                    </p>
-                  </div>
+                <div key={index} className="alert alert-error">
+                  <AlertCircle className="w-5 h-5" />
+                  <span className="text-sm">{error}</span>
                 </div>
               ))}
             </div>
@@ -440,15 +414,9 @@ export default memo(function QuestionCard({
           {validationState.hasWarnings && (
             <div className="space-y-2">
               {validationState.warnings.map((warning, index) => (
-                <div key={index} className="flex items-start p-3 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-md">
-                  <svg className="w-5 h-5 text-yellow-600 dark:text-yellow-400 mr-2 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
-                  </svg>
-                  <div className="flex-1">
-                    <p className="text-sm text-yellow-600 dark:text-yellow-400">
-                      {warning}
-                    </p>
-                  </div>
+                <div key={index} className="alert alert-warning">
+                  <AlertTriangle className="w-5 h-5" />
+                  <span className="text-sm">{warning}</span>
                 </div>
               ))}
             </div>
@@ -456,11 +424,8 @@ export default memo(function QuestionCard({
 
           {/* Validation in progress indicator */}
           {isValidating && (
-            <div className="flex items-center p-2 text-sm text-gray-600 dark:text-gray-400">
-              <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-gray-600 dark:text-gray-400" fill="none" viewBox="0 0 24 24">
-                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-              </svg>
+            <div className="flex items-center p-2 text-sm opacity-70">
+              <span className="loading loading-spinner loading-sm mr-2"></span>
               {t('validation.checking')}
             </div>
           )}
@@ -469,13 +434,11 @@ export default memo(function QuestionCard({
 
       {/* Answer status indicator */}
       {validationState.isValid && hasInteracted && answer !== null && answer !== undefined && !isValidating && (
-        <div className="flex items-center text-sm text-green-600 dark:text-green-400">
-          <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
-            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-          </svg>
+        <div className="flex items-center text-sm text-success">
+          <CheckCircle className="w-4 h-4 mr-2" />
           {t('question.answered')}
           {validationState.hasWarnings && (
-            <span className="ml-2 text-yellow-600 dark:text-yellow-400">
+            <span className="ml-2 text-warning">
               ({t('validation.withWarnings')})
             </span>
           )}

@@ -4,7 +4,7 @@ import { lazy } from 'react';
 export const LazyAssessmentTaker = lazy(() => import('./AssessmentTaker'));
 export const LazyQuestionCard = lazy(() => import('./QuestionCard'));
 export const LazyResultsDisplay = lazy(() => import('./ResultsDisplay'));
-export const LazyContinueAssessmentWidget = lazy(() => import('./ContinueAssessmentWidget'));
+export const LazyContinueAssessmentPage = lazy(() => import('./ContinueAssessmentPage'));
 
 // Re-export the unified LazyWrapper
 export { default as LazyWrapper, LazyAssessmentWrapper } from './LazyWrapper';
@@ -21,13 +21,13 @@ export const preloadAssessmentComponents = () => {
     if ('requestIdleCallback' in window) {
       window.requestIdleCallback(() => {
         LazyResultsDisplay;
-        LazyContinueAssessmentWidget;
+        LazyContinueAssessmentPage;
       });
     } else {
       // 回退到setTimeout
       setTimeout(() => {
         LazyResultsDisplay;
-        LazyContinueAssessmentWidget;
+        LazyContinueAssessmentPage;
       }, 1000);
     }
   }

@@ -720,40 +720,7 @@ export class AnswerValidator {
     );
   }
 
-  /**
-   * 检查验证器健康状态
-   */
-  getHealthStatus(): {
-    status: "healthy" | "warning" | "error";
-    ruleCount: number;
-    customRuleCount: number;
-    issues: string[];
-  } {
-    const issues: string[] = [];
 
-    if (this.rules.length === 0) {
-      issues.push("No validation rules registered");
-    }
-
-    const requiredRule = this.rules.find((rule) => rule.name === "required");
-    if (!requiredRule) {
-      issues.push("Required field validation rule is missing");
-    }
-
-    const status =
-      issues.length === 0
-        ? "healthy"
-        : issues.some((issue) => issue.includes("missing"))
-        ? "error"
-        : "warning";
-
-    return {
-      status,
-      ruleCount: this.rules.length,
-      customRuleCount: this.customRules.length,
-      issues,
-    };
-  }
 }
 
 // 导出单例实例
@@ -788,7 +755,5 @@ export const answerValidator = {
     return this.getInstance().removeRule(ruleName);
   },
 
-  getHealthStatus() {
-    return this.getInstance().getHealthStatus();
-  },
+
 };

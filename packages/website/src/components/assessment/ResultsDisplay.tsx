@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { CheckCircle, AlertTriangle, AlertCircle, Clock, List, Play, Info } from 'lucide-react';
 import { useAssessmentTranslations } from '@/hooks/useCSRTranslations';
 import { getDateLocale } from '@/utils/language';
 import { resultsAnalyzer } from '@/lib/assessment/ResultsAnalyzer';
@@ -291,29 +292,13 @@ export default function ResultsDisplay() {
     const iconClass = 'w-4 h-4';
     switch (type) {
       case 'immediate':
-        return (
-          <svg className={`${iconClass} text-red-600`} fill="currentColor" viewBox="0 0 20 20">
-            <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
-          </svg>
-        );
+        return <AlertCircle className={`${iconClass} text-red-600`} />;
       case 'short_term':
-        return (
-          <svg className={`${iconClass} text-yellow-600`} fill="currentColor" viewBox="0 0 20 20">
-            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd" />
-          </svg>
-        );
+        return <Clock className={`${iconClass} text-yellow-600`} />;
       case 'long_term':
-        return (
-          <svg className={`${iconClass} text-green-600`} fill="currentColor" viewBox="0 0 20 20">
-            <path fillRule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
-          </svg>
-        );
+        return <List className={`${iconClass} text-green-600`} />;
       default:
-        return (
-          <svg className={`${iconClass} text-gray-600`} fill="currentColor" viewBox="0 0 20 20">
-            <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
-          </svg>
-        );
+        return <Info className={`${iconClass} text-gray-600`} />;
     }
   };
 
@@ -401,9 +386,7 @@ export default function ResultsDisplay() {
       {/* Result Header */}
       <div className="text-center mb-8">
         <div className="mb-4">
-          <svg className="w-16 h-16 text-green-600 dark:text-green-400 mx-auto mb-4" fill="currentColor" viewBox="0 0 20 20">
-            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-          </svg>
+          <CheckCircle className="w-16 h-16 text-green-600 dark:text-green-400 mx-auto mb-4" />
         </div>
         <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
           {assessmentType.name}
@@ -421,9 +404,7 @@ export default function ResultsDisplay() {
           : 'bg-yellow-50 dark:bg-yellow-900/20 border-yellow-200 dark:border-yellow-800'
           }`}>
           <div className="flex items-center">
-            <svg className="w-6 h-6 mr-3" fill="currentColor" viewBox="0 0 20 20">
-              <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
-            </svg>
+            <AlertTriangle className="w-6 h-6 mr-3" />
             <div>
               <h3 className="font-semibold">
                 {t(`results.riskLevels.${result.riskLevel}.title`)}
@@ -565,9 +546,7 @@ export default function ResultsDisplay() {
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <a href="/assessment/" className="flex items-center p-4 bg-white dark:bg-gray-800 rounded-lg shadow hover:shadow-md transition-shadow">
-            <svg className="w-8 h-8 text-blue-600 dark:text-blue-400 mr-3" fill="currentColor" viewBox="0 0 20 20">
-              <path fillRule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
-            </svg>
+            <List className="w-8 h-8 text-blue-600 dark:text-blue-400 mr-3" />
             <div>
               <h3 className="font-medium text-gray-900 dark:text-white">
                 {t('results.nextSteps.moreAssessments.title')}
@@ -579,9 +558,7 @@ export default function ResultsDisplay() {
           </a>
 
           <a href="/practice" className="flex items-center p-4 bg-white dark:bg-gray-800 rounded-lg shadow hover:shadow-md transition-shadow">
-            <svg className="w-8 h-8 text-green-600 dark:text-green-400 mr-3" fill="currentColor" viewBox="0 0 20 20">
-              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
-            </svg>
+            <Play className="w-8 h-8 text-green-600 dark:text-green-400 mr-3" />
             <div>
               <h3 className="font-medium text-gray-900 dark:text-white">
                 {t('results.nextSteps.startPractice.title')}
@@ -593,9 +570,7 @@ export default function ResultsDisplay() {
           </a>
 
           <a href="/resources" className="flex items-center p-4 bg-white dark:bg-gray-800 rounded-lg shadow hover:shadow-md transition-shadow">
-            <svg className="w-8 h-8 text-purple-600 dark:text-purple-400 mr-3" fill="currentColor" viewBox="0 0 20 20">
-              <path fillRule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
-            </svg>
+            <List className="w-8 h-8 text-purple-600 dark:text-purple-400 mr-3" />
             <div>
               <h3 className="font-medium text-gray-900 dark:text-white">
                 {t('results.nextSteps.browseResources.title')}
@@ -611,9 +586,7 @@ export default function ResultsDisplay() {
       {/* Disclaimer */}
       <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-4">
         <div className="flex">
-          <svg className="w-5 h-5 text-yellow-600 dark:text-yellow-400 mr-3 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-            <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
-          </svg>
+          <AlertTriangle className="w-5 h-5 text-yellow-600 dark:text-yellow-400 mr-3 mt-0.5" />
           <div>
             <h3 className="text-sm font-medium text-yellow-800 dark:text-yellow-200">
               {t('results.disclaimer.title')}

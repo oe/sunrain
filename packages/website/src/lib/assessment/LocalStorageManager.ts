@@ -568,69 +568,7 @@ export class LocalStorageManager {
     }
   }
 
-  /**
-   * 导出数据
-   */
-  async exportData(): Promise<{
-    version: string;
-    exportedAt: Date;
-    sessions: AssessmentSession[];
-    results: AssessmentResult[];
-    storageType: string;
-  }> {
-    if (!this.isClientSide) {
-      throw new Error("Cannot export data in server-side environment");
-    }
 
-    try {
-      await this.ensureInitialized();
-      const sessions = await this.loadSessionsAsync();
-      const results = await this.loadResultsAsync();
-
-      return {
-        version: "2.0",
-        exportedAt: new Date(),
-        sessions,
-        results,
-        storageType: this.storageType,
-      };
-    } catch (error) {
-      console.error("Failed to export data:", error);
-      throw error;
-    }
-  }
-
-  /**
-   * 导入数据
-   */
-  async importData(data: {
-    sessions?: AssessmentSession[];
-    results?: AssessmentResult[];
-  }): Promise<boolean> {
-    if (!this.isClientSide) {
-      console.warn("Cannot import data in server-side environment");
-      return false;
-    }
-
-    try {
-      await this.ensureInitialized();
-
-      if (data.sessions) {
-        await this.saveSessions(data.sessions);
-      }
-
-      if (data.results) {
-        for (const result of data.results) {
-          await this.saveResult(result);
-        }
-      }
-
-      return true;
-    } catch (error) {
-      console.error("Failed to import data:", error);
-      return false;
-    }
-  }
 
   /**
    * 获取兼容性信息
@@ -653,83 +591,7 @@ export class LocalStorageManager {
     };
   }
 
-  /**
-   * 执行存储健康检查
-   */
-  async performHealthCheck(): Promise<{
-    status: "healthy" | "warning" | "error";
-    issues: string[];
-    recommendations: string[];
-  }> {
-    const issues: string[] = [];
-    const recommendations: string[] = [];
 
-    // 检查环境
-    if (!this.isClientSide) {
-      issues.push("Running in server-side environment");
-      recommendations.push(
-        "LocalStorageManager should only be used in client-side environment"
-      );
-    }
-
-    // 检查存储初始化状态
-    try {
-      await this.ensureInitialized();
-    } catch (error) {
-      issues.push("Failed to initialize storage");
-      recommendations.push(
-        "Check browser compatibility and storage permissions"
-      );
-    }
-
-    // 检查存储类型和兼容性
-    if (this.storageType === "memory") {
-      issues.push("Using memory storage - data will not persist");
-      recommendations.push("Upgrade browser for persistent storage support");
-    } else if (this.storageType === "fallback") {
-      issues.push("Using fallback storage - limited functionality");
-      recommendations.push("Use a modern browser for full functionality");
-    }
-
-    // 检查存储配额
-    const quota = await this.getStorageQuota();
-    if (quota.usagePercentage && quota.usagePercentage > 80) {
-      issues.push(`Storage usage is high (${quota.usagePercentage}%)`);
-      recommendations.push(
-        "Consider clearing old data or increasing storage quota"
-      );
-    }
-
-    // 检查数据完整性
-    try {
-      const stats = await this.getStorageStatistics();
-      if (stats.sessionCount === 0 && stats.resultCount === 0) {
-        // 这可能是正常的，不算问题
-      }
-    } catch (error) {
-      issues.push("Failed to access stored data");
-      recommendations.push("Check data integrity and storage permissions");
-    }
-
-    // 确定整体状态
-    let status: "healthy" | "warning" | "error" = "healthy";
-    if (issues.length > 0) {
-      status = issues.some(
-        (issue) =>
-          issue.includes("server-side") ||
-          issue.includes("Failed to initialize") ||
-          issue.includes("Failed to access")
-      )
-        ? "error"
-        : "warning";
-    }
-
-    return {
-      status,
-      issues,
-      recommendations,
-    };
-  }
 }
 
 // 单例实例
@@ -792,17 +654,9 @@ export const localStorageManager = {
     return this.getInstance().getStorageStatistics();
   },
 
-  async performHealthCheck() {
-    return this.getInstance().performHealthCheck();
-  },
 
-  async exportData() {
-    return this.getInstance().exportData();
-  },
 
-  async importData(data: any) {
-    return this.getInstance().importData(data);
-  },
+
 
   getCompatibilityInfo() {
     return this.getInstance().getCompatibilityInfo();

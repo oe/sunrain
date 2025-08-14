@@ -4,7 +4,7 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import { questionBankManager } from '@/lib/assessment/QuestionBankManager';
 import { getLocale } from 'astro-i18n-aut';
 import { createSSGTranslations } from '@/i18n/utils';
-import ContinueAssessmentWidget from '@/components/assessment/ContinueAssessmentWidget';
+import ContinueAssessmentPage from '@/components/assessment/ContinueAssessmentPage';
 import QuestionnaireInfoButton from '@/components/assessment/QuestionnaireInfoButton';
 import StartAssessmentButton from '@/components/assessment/StartAssessmentButton';
 import type { Language } from '@sunrain/shared';
@@ -40,7 +40,7 @@ const assessmentsByCategory = categories.reduce(
       </div>
 
       <!-- Continue Assessment Widget - Client-side rendered -->
-      <ContinueAssessmentWidget client:only="react" />
+      <ContinueAssessmentPage asWidget={true} client:only="react" />
 
       <!-- Assessment Categories -->
       <div class="space-y-12">

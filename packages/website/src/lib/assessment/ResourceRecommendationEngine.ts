@@ -534,51 +534,7 @@ export class ResourceRecommendationEngine {
     };
   }
 
-  /**
-   * Export resources to JSON
-   */
-  exportResources(): string {
-    const resources = Array.from(this.resources.values());
-    return JSON.stringify(resources, null, 2);
-  }
 
-  /**
-   * Import resources from JSON
-   */
-  importResources(jsonData: string): { success: boolean; errors: string[]; imported: number } {
-    try {
-      const resources: ResourceItem[] = JSON.parse(jsonData);
-      const errors: string[] = [];
-      let imported = 0;
-
-      for (const resource of resources) {
-        try {
-          // Validate resource structure
-          if (!resource.id || !resource.type || !resource.title) {
-            errors.push(`Invalid resource structure: ${resource.id || 'unknown'}`);
-            continue;
-          }
-
-          this.resources.set(resource.id, resource);
-          imported++;
-        } catch (error) {
-          errors.push(`Failed to import resource ${resource.id}: ${error}`);
-        }
-      }
-
-      return {
-        success: errors.length === 0,
-        errors,
-        imported
-      };
-    } catch (error) {
-      return {
-        success: false,
-        errors: ['Invalid JSON format'],
-        imported: 0
-      };
-    }
-  }
 }
 
 // Singleton instance

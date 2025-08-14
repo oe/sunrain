@@ -1,9 +1,12 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback, useMemo, memo } from 'react';
 import { useAssessmentTranslations } from '@/hooks/useCSRTranslations';
-import { getDateLocale } from '@/utils/language';
 import { resultsAnalyzer } from '@/lib/assessment/ResultsAnalyzer';
 import { questionBankManager } from '@/lib/assessment/QuestionBankManager';
-import { Calendar, Clock, BarChart3, Eye, Share2, Trash2, Download, X } from 'lucide-react';
+import { BarChart3 } from 'lucide-react';
+import AssessmentHistoryItem from './AssessmentHistoryItem';
+import AssessmentStatistics from './AssessmentStatistics';
+import AssessmentFilters from './AssessmentFilters';
+import AssessmentPagination from './AssessmentPagination';
 
 import type { AssessmentResult } from '@/types/assessment';
 
@@ -15,7 +18,7 @@ interface FilterState {
   riskLevel: string;
 }
 
-export default function AssessmentHistoryClient() {
+function AssessmentHistoryClient() {
   const { t, isLoading: translationsLoading } = useAssessmentTranslations();
   const [allResults, setAllResults] = useState<AssessmentResult[]>([]);
   const [filteredResults, setFilteredResults] = useState<AssessmentResult[]>([]);
@@ -39,7 +42,7 @@ export default function AssessmentHistoryClient() {
     applyFilters();
   }, [allResults, filters]);
 
-  const loadResults = async () => {
+  const loadResults = useCallback(async () => {
     try {
       setIsLoading(true);
       const results = resultsAnalyzer.getAllResults();
@@ -51,9 +54,9 @@ export default function AssessmentHistoryClient() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, []);
 
-  const getStatistics = () => {
+  const statistics = useMemo(() => {
     const stats = resultsAnalyzer.getAssessmentStatistics();
     const lastResult = allResults.length > 0
       ? allResults.sort((a, b) => {
@@ -72,9 +75,9 @@ export default function AssessmentHistoryClient() {
       averageTime: Math.round(stats.averageCompletionTime / 60),
       lastAssessment: lastResult ? (daysSince === 0 ? t('history.list.today') : `${daysSince}${t('history.list.daysAgo')}`) : '-'
     };
-  };
+  }, [allResults, t]);
 
-  const applyFilters = () => {
+  const applyFilters = useCallback(() => {
     const filtered = allResults.filter(result => {
       // Type filter
       if (filters.type) {
@@ -103,25 +106,29 @@ export default function AssessmentHistoryClient() {
 
     setFilteredResults(filtered);
     setCurrentPage(1);
-  };
+  }, [allResults, filters]);
 
-  const clearFilters = () => {
+  const handleFiltersChange = useCallback((newFilters: FilterState) => {
+    setFilters(newFilters);
+  }, []);
+
+  const clearFilters = useCallback(() => {
     setFilters({ type: '', timeRange: '', riskLevel: '' });
-  };
+  }, []);
 
-  const getPaginatedResults = () => {
+  const paginatedResults = useMemo(() => {
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = Math.min(startIndex + itemsPerPage, filteredResults.length);
     return filteredResults.slice(startIndex, endIndex);
-  };
+  }, [filteredResults, currentPage, itemsPerPage]);
 
-  const totalPages = Math.ceil(filteredResults.length / itemsPerPage);
+  const totalPages = useMemo(() => Math.ceil(filteredResults.length / itemsPerPage), [filteredResults.length, itemsPerPage]);
 
-  const handleViewDetails = (resultId: string) => {
+  const handleViewDetails = useCallback((resultId: string) => {
     window.location.href = `/assessment/results/${resultId}/`;
-  };
+  }, []);
 
-  const handleShare = async (resultId: string) => {
+  const handleShare = useCallback(async (resultId: string) => {
     const url = `${window.location.origin}/assessment/results/${resultId}`;
 
     try {
@@ -139,9 +146,9 @@ export default function AssessmentHistoryClient() {
       console.error('Share failed:', error);
       setShowMessage({ text: t('common.error'), type: 'error' });
     }
-  };
+  }, [t]);
 
-  const handleDelete = (resultId: string) => {
+  const handleDelete = useCallback((resultId: string) => {
     if (confirm(t('history.list.delete'))) {
       const success = resultsAnalyzer.deleteResult(resultId);
       if (success) {
@@ -151,9 +158,9 @@ export default function AssessmentHistoryClient() {
         setShowMessage({ text: t('common.error'), type: 'error' });
       }
     }
-  };
+  }, [t, loadResults]);
 
-  const handleExport = () => {
+  const handleExport = useCallback(() => {
     try {
       const data = resultsAnalyzer.exportResults();
       const blob = new Blob([data], { type: 'application/json' });
@@ -172,54 +179,9 @@ export default function AssessmentHistoryClient() {
       console.error('Export failed:', error);
       setShowMessage({ text: t('common.error'), type: 'error' });
     }
-  };
+  }, [t]);
 
-  const getRiskLevelClass = (riskLevel: string) => {
-    switch (riskLevel) {
-      case 'high': return 'badge-error';
-      case 'medium': return 'badge-warning';
-      case 'low': return 'badge-success';
-      default: return 'badge-neutral';
-    }
-  };
 
-  const getRiskLevelText = (riskLevel: string) => {
-    switch (riskLevel) {
-      case 'high': return t('common.riskLevels.high');
-      case 'medium': return t('common.riskLevels.medium');
-      case 'low': return t('common.riskLevels.low');
-      default: return t('common.error');
-    }
-  };
-
-  const getRiskLevelColor = (riskLevel: string) => {
-    switch (riskLevel) {
-      case 'high': return 'text-error';
-      case 'medium': return 'text-warning';
-      case 'low': return 'text-success';
-      default: return 'text-neutral';
-    }
-  };
-
-  const formatDate = (date: string | Date) => {
-    const dateObj = date instanceof Date ? date : new Date(date);
-    return dateObj.toLocaleDateString(getDateLocale(), {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit'
-    });
-  };
-
-  const formatDuration = (seconds: number) => {
-    const minutes = Math.floor(seconds / 60);
-    const remainingSeconds = seconds % 60;
-    if (minutes > 0) {
-      return `${minutes}${t('common.timeUnits.minutes')}${remainingSeconds}${t('common.timeUnits.seconds')}`;
-    }
-    return `${remainingSeconds}${t('common.timeUnits.seconds')}`;
-  };
 
   // Auto-hide message after 3 seconds
   useEffect(() => {
@@ -255,10 +217,9 @@ export default function AssessmentHistoryClient() {
     );
   }
 
-  const statistics = getStatistics();
-  const paginatedResults = getPaginatedResults();
-  const startIndex = (currentPage - 1) * itemsPerPage + 1;
-  const endIndex = Math.min(startIndex + itemsPerPage - 1, filteredResults.length);
+  const handlePageChange = useCallback((page: number) => {
+    setCurrentPage(page);
+  }, []);
 
   return (
     <div className="space-y-6">
@@ -272,94 +233,19 @@ export default function AssessmentHistoryClient() {
       )}
 
       {/* Statistics Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="card bg-base-100 shadow-sm">
-          <div className="card-body">
-            <div className="stat">
-              <div className="stat-title">{t('history.stats.total')}</div>
-              <div className="stat-value text-primary">{statistics.totalResults}</div>
-            </div>
-          </div>
-        </div>
-        <div className="card bg-base-100 shadow-sm">
-          <div className="card-body">
-            <div className="stat">
-              <div className="stat-title">{t('history.stats.averageTime')}</div>
-              <div className="stat-value text-secondary">{statistics.averageTime}{t('common.timeUnits.minutes')}</div>
-            </div>
-          </div>
-        </div>
-        <div className="card bg-base-100 shadow-sm">
-          <div className="card-body">
-            <div className="stat">
-              <div className="stat-title">{t('history.stats.lastAssessment')}</div>
-              <div className="stat-value text-accent">{statistics.lastAssessment}</div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <AssessmentStatistics
+        totalResults={statistics.totalResults}
+        averageTime={statistics.averageTime}
+        lastAssessment={statistics.lastAssessment}
+      />
 
       {/* Filters */}
-      <div className="card bg-base-100 shadow-sm">
-        <div className="card-body">
-          <div className="flex flex-wrap gap-4 items-end">
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">{t('history.filters.type')}</span>
-              </label>
-              <select
-                className="select select-bordered select-sm"
-                value={filters.type}
-                onChange={(e) => setFilters(prev => ({ ...prev, type: e.target.value }))}
-              >
-                <option value="">{t('common.all')}</option>
-                <option value="mental-health">{t('assessments.categories.mentalHealth')}</option>
-                <option value="personality">{t('assessments.categories.personality')}</option>
-              </select>
-            </div>
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">{t('history.filters.timeRange')}</span>
-              </label>
-              <select
-                className="select select-bordered select-sm"
-                value={filters.timeRange}
-                onChange={(e) => setFilters(prev => ({ ...prev, timeRange: e.target.value }))}
-              >
-                <option value="">{t('common.all')}</option>
-                <option value="7">{t('history.filters.lastWeek')}</option>
-                <option value="30">{t('history.filters.lastMonth')}</option>
-                <option value="90">{t('history.filters.lastQuarter')}</option>
-              </select>
-            </div>
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">{t('history.filters.riskLevel')}</span>
-              </label>
-              <select
-                className="select select-bordered select-sm"
-                value={filters.riskLevel}
-                onChange={(e) => setFilters(prev => ({ ...prev, riskLevel: e.target.value }))}
-              >
-                <option value="">{t('common.all')}</option>
-                <option value="low">{t('common.riskLevels.low')}</option>
-                <option value="medium">{t('common.riskLevels.medium')}</option>
-                <option value="high">{t('common.riskLevels.high')}</option>
-              </select>
-            </div>
-            <div className="flex gap-2">
-              <button className="btn btn-outline btn-sm" onClick={clearFilters}>
-                <X className="w-4 h-4" />
-                {t('common.clear')}
-              </button>
-              <button className="btn btn-primary btn-sm" onClick={handleExport}>
-                <Download className="w-4 h-4" />
-                {t('common.export')}
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
+      <AssessmentFilters
+        filters={filters}
+        onFiltersChange={handleFiltersChange}
+        onClearFilters={clearFilters}
+        onExport={handleExport}
+      />
 
       {/* Results List */}
       {allResults.length === 0 ? (
@@ -373,109 +259,29 @@ export default function AssessmentHistoryClient() {
       ) : (
         <>
           <div className="space-y-4">
-            {paginatedResults.map((result) => {
-              const assessmentType = questionBankManager.getAssessmentType(result.assessmentTypeId);
-              return (
-                <div key={result.id} className="card bg-base-100 shadow-sm">
-                  <div className="card-body">
-                    <div className="flex items-center justify-between">
-                      <div className="flex-1">
-                        <div className="flex items-center gap-3 mb-2">
-                          <h3 className="text-lg font-medium">
-                            {assessmentType?.name || t('common.error')}
-                          </h3>
-                          <div className={`badge ${getRiskLevelClass(result.riskLevel)}`}>
-                            {getRiskLevelText(result.riskLevel)}
-                          </div>
-                        </div>
-                        <div className="flex items-center gap-6 text-sm text-base-content/60">
-                          <div className="flex items-center gap-1">
-                            <Calendar className="w-4 h-4" />
-                            {formatDate(result.completedAt)}
-                          </div>
-                          <div className="flex items-center gap-1">
-                            <Clock className="w-4 h-4" />
-                            {t('execution.timeSpent')} {formatDuration(result.totalTimeSpent)}
-                          </div>
-                          <div className="flex items-center gap-1">
-                            <BarChart3 className="w-4 h-4" />
-                            {Object.keys(result.scores).length} {t('history.list.dimensions')}
-                          </div>
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <button
-                          className="btn btn-primary btn-sm"
-                          onClick={() => handleViewDetails(result.id)}
-                        >
-                          <Eye className="w-4 h-4" />
-                          {t('history.list.viewDetails')}
-                        </button>
-                        <button
-                          className="btn btn-ghost btn-sm"
-                          onClick={() => handleShare(result.id)}
-                        >
-                          <Share2 className="w-4 h-4" />
-                          {t('history.list.share')}
-                        </button>
-                        <button
-                          className="btn btn-error btn-sm"
-                          onClick={() => handleDelete(result.id)}
-                        >
-                          <Trash2 className="w-4 h-4" />
-                          {t('history.list.delete')}
-                        </button>
-                      </div>
-                    </div>
-
-                    {/* Score Summary */}
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
-                      {Object.entries(result.scores).slice(0, 4).map(([key, scoreData]: [string, any]) => (
-                        <div key={key} className="stat bg-base-200 rounded-lg">
-                          <div className={`stat-value text-sm ${getRiskLevelColor(scoreData.riskLevel)}`}>
-                            {scoreData.value}
-                          </div>
-                          <div className="stat-desc text-xs">
-                            {scoreData.label}
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
+            {paginatedResults.map((result) => (
+              <AssessmentHistoryItem
+                key={result.id}
+                result={result}
+                onViewDetails={handleViewDetails}
+                onShare={handleShare}
+                onDelete={handleDelete}
+              />
+            ))}
           </div>
 
           {/* Pagination */}
-          {totalPages > 1 && (
-            <div className="flex justify-between items-center">
-              <div className="text-sm text-base-content/60">
-                {t('common.showing')} {startIndex} {t('common.to')} {endIndex} {t('common.of')} {filteredResults.length} {t('common.results')}
-              </div>
-              <div className="join">
-                <button
-                  className="join-item btn btn-sm"
-                  disabled={currentPage === 1}
-                  onClick={() => setCurrentPage(currentPage - 1)}
-                >
-                  {t('common.previous')}
-                </button>
-                <button className="join-item btn btn-sm btn-active">
-                  {currentPage}
-                </button>
-                <button
-                  className="join-item btn btn-sm"
-                  disabled={currentPage === totalPages}
-                  onClick={() => setCurrentPage(currentPage + 1)}
-                >
-                  {t('common.next')}
-                </button>
-              </div>
-            </div>
-          )}
+          <AssessmentPagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            totalResults={filteredResults.length}
+            itemsPerPage={itemsPerPage}
+            onPageChange={handlePageChange}
+          />
         </>
       )}
     </div>
   );
 }
+
+export default memo(AssessmentHistoryClient);

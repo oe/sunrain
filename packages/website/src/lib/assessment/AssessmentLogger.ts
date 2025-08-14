@@ -150,80 +150,7 @@ export class LocalStorageLogOutput implements LogOutput {
   }
 }
 
-/**
- * 远程日志输出（用于生产环境错误报告）
- */
-export class RemoteLogOutput implements LogOutput {
-  private endpoint: string;
-  private apiKey?: string;
-  private batchSize = 10;
-  private batch: LogEntry[] = [];
-  private flushTimer?: number;
 
-  constructor(endpoint: string, apiKey?: string) {
-    this.endpoint = endpoint;
-    this.apiKey = apiKey;
-  }
-
-  async write(entry: LogEntry): Promise<void> {
-    // 只发送警告级别以上的日志到远程
-    if (entry.level < LogLevel.WARN) return;
-
-    this.batch.push(entry);
-
-    if (this.batch.length >= this.batchSize) {
-      await this.flush();
-    } else {
-      // 设置定时器，确保日志最终会被发送
-      this.scheduleFlush();
-    }
-  }
-
-  async flush(): Promise<void> {
-    if (this.batch.length === 0) return;
-
-    const logsToSend = [...this.batch];
-    this.batch = [];
-
-    if (this.flushTimer) {
-      clearTimeout(this.flushTimer);
-      this.flushTimer = undefined;
-    }
-
-    try {
-      const headers: Record<string, string> = {
-        'Content-Type': 'application/json'
-      };
-
-      if (this.apiKey) {
-        headers['Authorization'] = `Bearer ${this.apiKey}`;
-      }
-
-      await fetch(this.endpoint, {
-        method: 'POST',
-        headers,
-        body: JSON.stringify({
-          logs: logsToSend.map(entry => ({
-            ...entry,
-            timestamp: entry.timestamp.toISOString()
-          }))
-        })
-      });
-    } catch (error) {
-      console.error('Failed to send logs to remote endpoint:', error);
-      // 将失败的日志重新加入批次
-      this.batch.unshift(...logsToSend);
-    }
-  }
-
-  private scheduleFlush(): void {
-    if (this.flushTimer) return;
-
-    this.flushTimer = window.setTimeout(() => {
-      this.flush();
-    }, 5000); // 5秒后自动发送
-  }
-}
 
 /**
  * 评测系统日志记录器
@@ -327,27 +254,7 @@ export class AssessmentLogger {
     this.info('SESSION', `Session ${event}`, { sessionId, ...data }, sessionId);
   }
 
-  /**
-   * 记录用户操作
-   */
-  logUserAction(action: string, sessionId?: string, data?: any): void {
-    this.info('USER_ACTION', action, data, sessionId);
-  }
 
-  /**
-   * 记录性能指标
-   */
-  logPerformance(metric: string, value: number, unit: string, sessionId?: string): void {
-    this.info('PERFORMANCE', `${metric}: ${value}${unit}`, { metric, value, unit }, sessionId);
-  }
-
-  /**
-   * 记录存储操作
-   */
-  logStorageOperation(operation: string, success: boolean, data?: any): void {
-    const level = success ? LogLevel.INFO : LogLevel.WARN;
-    this.log(level, 'STORAGE', `Storage ${operation} ${success ? 'succeeded' : 'failed'}`, data);
-  }
 
   /**
    * 核心日志记录方法
@@ -420,23 +327,7 @@ export class AssessmentLogger {
     };
   }
 
-  /**
-   * 导出本地存储的日志
-   */
-  exportLocalLogs(): string | null {
-    const localStorageOutput = this.outputs.find(output => output instanceof LocalStorageLogOutput) as LocalStorageLogOutput;
-    return localStorageOutput ? localStorageOutput.exportLogs() : null;
-  }
 
-  /**
-   * 清除本地存储的日志
-   */
-  clearLocalLogs(): void {
-    const localStorageOutput = this.outputs.find(output => output instanceof LocalStorageLogOutput) as LocalStorageLogOutput;
-    if (localStorageOutput) {
-      localStorageOutput.clearLogs();
-    }
-  }
 }
 
 // 导出单例实例

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useAssessmentTranslations } from '@/hooks/useCSRTranslations';
 import type { AssessmentSession } from '@/types/assessment';
+import { Play, Trash2, Clock, Calendar, AlertCircle, CheckCircle } from 'lucide-react';
 
 // Import the assessment engine - we'll use the singleton instance
 let assessmentEngine: any = null;
@@ -19,9 +20,10 @@ const loadModules = async () => {
 
 interface ContinueAssessmentPageProps {
   className?: string;
+  asWidget?: boolean; // New prop to render as a simple widget
 }
 
-export default function ContinueAssessmentPage({ className = '' }: ContinueAssessmentPageProps) {
+export default function ContinueAssessmentPage({ className = '', asWidget = false }: ContinueAssessmentPageProps) {
   const [activeSessions, setActiveSessions] = useState<AssessmentSession[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -141,24 +143,11 @@ export default function ContinueAssessmentPage({ className = '' }: ContinueAsses
     return t('time.seconds', { seconds: remainingSeconds });
   };
 
+  const [toastMessage, setToastMessage] = useState<{ message: string; type: 'success' | 'error' | 'info' } | null>(null);
+
   const showMessage = (message: string, type: 'success' | 'error' | 'info' = 'info') => {
-    // Simple toast notification
-    const toast = document.createElement('div');
-    toast.className = `fixed top-4 right-4 px-4 py-2 rounded-md shadow-lg z-50 ${type === 'success'
-      ? 'bg-green-600 text-white'
-      : type === 'error'
-        ? 'bg-red-600 text-white'
-        : 'bg-blue-600 text-white'
-      }`;
-    toast.textContent = message;
-
-    document.body.appendChild(toast);
-
-    setTimeout(() => {
-      if (document.body.contains(toast)) {
-        document.body.removeChild(toast);
-      }
-    }, 3000);
+    setToastMessage({ message, type });
+    setTimeout(() => setToastMessage(null), 3000);
   };
 
   // Don't render anything while translations are loading
@@ -166,56 +155,90 @@ export default function ContinueAssessmentPage({ className = '' }: ContinueAsses
     return null;
   }
 
-  // Show loading state
-  if (isLoading) {
+  // Widget mode - simple notification
+  if (asWidget) {
+    if (isLoading) {
+      return (
+        <div className={`animate-pulse bg-base-200 h-16 rounded-lg ${className}`}>
+          <div className="flex items-center h-full px-4">
+            <div className="w-5 h-5 bg-base-300 rounded mr-3"></div>
+            <div className="flex-1">
+              <div className="h-4 bg-base-300 rounded w-3/4 mb-2"></div>
+              <div className="h-3 bg-base-300 rounded w-1/2"></div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    // Don't render widget if there are no active sessions or if there's an error
+    if (error || !activeSessions || activeSessions.length === 0) {
+      return null;
+    }
+
     return (
-      <div className="text-center py-12">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-4"></div>
-        <p className="text-gray-600 dark:text-gray-300">{t('continue.loading')}</p>
+      <div className={`alert alert-info mb-8 ${className}`}>
+        <AlertCircle className="w-5 h-5" />
+        <div className="flex-1">
+          <h3 className="font-medium">
+            {t('list.activeSessions.title', { count: activeSessions.length })}
+          </h3>
+          <p className="text-sm mt-1">
+            <a
+              href="/assessment/continue/"
+              className="link link-hover"
+            >
+              {t('list.activeSessions.continueLink')}
+            </a>
+          </p>
+        </div>
+        {activeSessions.length === 1 && (
+          <div className="text-xs opacity-70">
+            <div>{t('list.activeSessions.progress')}: {Math.round((activeSessions[0].currentQuestionIndex / (activeSessions[0].answers.length || 1)) * 100)}%</div>
+          </div>
+        )}
       </div>
     );
   }
 
-  // Show error state
+  // Full page mode
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center py-12">
+        <span className="loading loading-spinner loading-lg"></span>
+        <span className="ml-4">{t('continue.loading')}</span>
+      </div>
+    );
+  }
+
   if (error) {
     return (
-      <div className="text-center py-12">
-        <svg className="w-16 h-16 text-red-400 dark:text-red-600 mx-auto mb-4" fill="currentColor" viewBox="0 0 20 20">
-          <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd"></path>
-        </svg>
-        <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">{t('errors.loadFailed')}</h2>
-        <p className="text-gray-600 dark:text-gray-300 mb-6">{t('errors.loadFailedMessage')}</p>
-        <button
-          onClick={() => window.location.reload()}
-          className="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
-        >
+      <div className="alert alert-error">
+        <AlertCircle className="w-6 h-6" />
+        <div>
+          <h2 className="font-bold">{t('errors.loadFailed')}</h2>
+          <p>{t('errors.loadFailedMessage')}</p>
+        </div>
+        <button className="btn btn-sm" onClick={() => window.location.reload()}>
           {t('actions.refresh')}
         </button>
       </div>
     );
   }
 
-  // Show no sessions state
   if (activeSessions.length === 0) {
     return (
       <div className="text-center py-12">
-        <svg className="w-16 h-16 text-gray-400 dark:text-gray-600 mx-auto mb-4" fill="currentColor" viewBox="0 0 20 20">
-          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"></path>
-        </svg>
-        <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+        <CheckCircle className="w-16 h-16 text-success mx-auto mb-4" />
+        <h2 className="text-2xl font-bold mb-2">
           {t('messages.noActiveSessions')}
         </h2>
-        <p className="text-gray-600 dark:text-gray-300 mb-6">
+        <p className="text-base-content/70 mb-6">
           {t('messages.noActiveSessionsMessage')}
         </p>
-        <a
-          href="/assessment/"
-          className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
-        >
+        <a href="/assessment/" className="btn btn-primary">
           {t('actions.startNew')}
-          <svg className="ml-2 w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-            <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd"></path>
-          </svg>
+          <Play className="w-4 h-4 ml-2" />
         </a>
       </div>
     );
@@ -223,92 +246,98 @@ export default function ContinueAssessmentPage({ className = '' }: ContinueAsses
 
   return (
     <div className={className}>
+      {/* Toast notification */}
+      {toastMessage && (
+        <div className={`toast toast-top toast-end`}>
+          <div className={`alert ${
+            toastMessage.type === 'success' ? 'alert-success' :
+            toastMessage.type === 'error' ? 'alert-error' :
+            'alert-info'
+          }`}>
+            <span>{toastMessage.message}</span>
+          </div>
+        </div>
+      )}
+
       {/* Active Sessions List */}
       <div className="space-y-6">
         {activeSessions.map((session) => {
           const assessmentType = questionBankManager?.getAssessmentType(session.assessmentTypeId);
           const progress = assessmentEngine?.getProgress(session.id);
 
-          const statusClass = session.status === 'active'
-            ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
-            : 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200';
+          const statusBadge = session.status === 'active' ? 'badge-success' : 'badge-warning';
           const statusText = session.status === 'active' ? t('status.active') : t('status.paused');
 
           return (
-            <div key={session.id} className="bg-white dark:bg-gray-800 rounded-lg shadow border border-gray-200 dark:border-gray-700 p-6">
-              <div className="flex items-start justify-between mb-4">
-                <div className="flex-1">
-                  <div className="flex items-center space-x-3 mb-2">
-                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-                      {assessmentType?.name || t('labels.unknownAssessment')}
-                    </h3>
-                    <span className={`px-2 py-1 text-xs font-medium rounded-full ${statusClass}`}>
-                      {statusText}
+            <div key={session.id} className="card bg-base-100 shadow-xl">
+              <div className="card-body">
+                <div className="flex items-start justify-between mb-4">
+                  <div className="flex-1">
+                    <div className="flex items-center gap-3 mb-2">
+                      <h3 className="card-title">
+                        {assessmentType?.name || t('labels.unknownAssessment')}
+                      </h3>
+                      <span className={`badge ${statusBadge} badge-sm`}>
+                        {statusText}
+                      </span>
+                    </div>
+                    <p className="text-base-content/70 mb-3">
+                      {assessmentType?.description || ''}
+                    </p>
+                    <div className="flex items-center gap-6 text-sm text-base-content/60">
+                      <div className="flex items-center gap-1">
+                        <Calendar className="w-4 h-4" />
+                        {t('labels.startTime')}: {formatDate(session.startedAt)}
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <Clock className="w-4 h-4" />
+                        {t('labels.timeSpent')}: {formatDuration(session.timeSpent)}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2 ml-4">
+                    <button
+                      className="btn btn-primary btn-sm"
+                      onClick={() => continueSession(session.id)}
+                    >
+                      <Play className="w-4 h-4" />
+                      {t('actions.continue')}
+                    </button>
+                    <button
+                      className="btn btn-ghost btn-sm"
+                      onClick={() => deleteSession(session.id)}
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </button>
+                  </div>
+                </div>
+
+                {/* Progress Bar */}
+                <div className="mb-4">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-sm font-medium">
+                      {t('list.progress', { current: progress?.current || 0, total: progress?.total || 0 })}
+                    </span>
+                    <span className="text-sm text-base-content/60">
+                      {progress?.percentage || 0}%
                     </span>
                   </div>
-                  <p className="text-sm text-gray-600 dark:text-gray-300 mb-3">
-                    {assessmentType?.description || ''}
-                  </p>
-                  <div className="flex items-center space-x-6 text-sm text-gray-500 dark:text-gray-400">
-                    <div className="flex items-center">
-                      <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clipRule="evenodd"></path>
-                      </svg>
-                      {t('labels.startTime')}: {formatDate(session.startedAt)}
-                    </div>
-                    <div className="flex items-center">
-                      <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd"></path>
-                      </svg>
-                      {t('labels.timeSpent')}: {formatDuration(session.timeSpent)}
-                    </div>
-                  </div>
+                  <progress
+                    className="progress progress-primary w-full"
+                    value={progress?.percentage || 0}
+                    max="100"
+                  ></progress>
                 </div>
-                <div className="flex items-center space-x-2 ml-4">
-                  <button
-                    className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
-                    onClick={() => continueSession(session.id)}
-                  >
-                    {t('actions.continue')}
-                  </button>
-                  <button
-                    className="px-3 py-2 text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-md transition-colors"
-                    onClick={() => deleteSession(session.id)}
-                  >
-                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" clipRule="evenodd"></path>
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"></path>
-                    </svg>
-                  </button>
-                </div>
-              </div>
 
-              {/* Progress Bar */}
-              <div className="mb-4">
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                    {t('list.progress', { current: progress?.current || 0, total: progress?.total || 0 })}
-                  </span>
-                  <span className="text-sm text-gray-600 dark:text-gray-400">
-                    {progress?.percentage || 0}%
-                  </span>
+                {/* Answers Summary */}
+                <div className="text-sm text-base-content/70">
+                  <span className="font-medium">{t('labels.answered')}:</span> {session.answers.length} {t('labels.questions')}
+                  {progress?.estimatedTimeRemaining && (
+                    <span className="ml-4">
+                      <span className="font-medium">{t('labels.estimatedRemaining')}:</span> {Math.round(progress.estimatedTimeRemaining / 60)} {t('time.minutes')}
+                    </span>
+                  )}
                 </div>
-                <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                  <div
-                    className="bg-blue-600 h-2 rounded-full transition-all duration-300"
-                    style={{ width: `${progress?.percentage || 0}%` }}
-                  ></div>
-                </div>
-              </div>
-
-              {/* Answers Summary */}
-              <div className="text-sm text-gray-600 dark:text-gray-300">
-                <span className="font-medium">{t('labels.answered')}:</span> {session.answers.length} {t('labels.questions')}
-                {progress?.estimatedTimeRemaining && (
-                  <span className="ml-4">
-                    <span className="font-medium">{t('labels.estimatedRemaining')}:</span> {Math.round(progress.estimatedTimeRemaining / 60)} {t('time.minutes')}
-                  </span>
-                )}
               </div>
             </div>
           );
@@ -316,21 +345,13 @@ export default function ContinueAssessmentPage({ className = '' }: ContinueAsses
       </div>
 
       {/* Actions */}
-      <div className="mt-8 text-center">
-        <div className="flex flex-col sm:flex-row justify-center space-y-3 sm:space-y-0 sm:space-x-4">
-          <a
-            href="/assessment/"
-            className="px-6 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
-          >
-            {t('actions.startNew')}
-          </a>
-          <button
-            onClick={clearAllSessions}
-            className="px-6 py-2 text-red-600 dark:text-red-400 border border-red-300 dark:border-red-600 rounded-md hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
-          >
-            {t('actions.clearAll')}
-          </button>
-        </div>
+      <div className="mt-8 flex flex-col sm:flex-row justify-center gap-4">
+        <a href="/assessment/" className="btn btn-outline">
+          {t('actions.startNew')}
+        </a>
+        <button onClick={clearAllSessions} className="btn btn-outline btn-error">
+          {t('actions.clearAll')}
+        </button>
       </div>
     </div>
   );

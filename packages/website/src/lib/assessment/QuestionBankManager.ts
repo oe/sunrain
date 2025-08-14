@@ -12,7 +12,7 @@ export class QuestionBankManager {
   private assessmentTypes: Map<string, AssessmentType> = new Map();
   private questionsByCategory: Map<AssessmentCategory, Question[]> = new Map();
   private currentLanguage: string = 'en';
-  private currentCulturalContext: string = 'global';
+
 
   constructor() {
     this.initializeDefaultAssessments();
@@ -339,12 +339,7 @@ export class QuestionBankManager {
     this.currentLanguage = language;
   }
 
-  /**
-   * Set cultural context for cultural adaptations
-   */
-  setCulturalContext(context: string): void {
-    this.currentCulturalContext = context;
-  }
+
 
   /**
    * Get localized assessment type
@@ -389,58 +384,19 @@ export class QuestionBankManager {
     };
   }
 
-  /**
-   * Get culturally adapted assessment type
-   */
-  getCulturallyAdaptedAssessmentType(id: string, culturalContext?: string): AssessmentType | undefined {
-    const assessment = this.assessmentTypes.get(id);
-    if (!assessment) return undefined;
 
-    const context = culturalContext || this.currentCulturalContext;
-    if (context === 'global' || !assessment.culturalAdaptations?.[context]) {
-      return assessment;
-    }
-
-    const adaptation = assessment.culturalAdaptations[context];
-    return {
-      ...assessment,
-      name: adaptation.name || assessment.name,
-      description: adaptation.description || assessment.description,
-      instructions: adaptation.instructions || assessment.instructions,
-      disclaimer: adaptation.disclaimer || assessment.disclaimer,
-      questions: assessment.questions.map(question =>
-        this.getCulturallyAdaptedQuestion(question, context)
-      )
-    };
-  }
 
   /**
-   * Get culturally adapted question
-   */
-  private getCulturallyAdaptedQuestion(question: Question, culturalContext: string): Question {
-    if (!question.culturalAdaptations?.[culturalContext]) {
-      return question;
-    }
-
-    const adaptation = question.culturalAdaptations[culturalContext];
-    return {
-      ...question,
-      text: adaptation.text || question.text,
-      options: adaptation.options || question.options
-    };
-  }
-
-  /**
-   * Validate question format
+   * Basic validation for question format
    */
   validateQuestion(question: Question): { valid: boolean; errors: string[] } {
     const errors: string[] = [];
 
-    if (!question.id || question.id.trim() === '') {
+    if (!question.id?.trim()) {
       errors.push('Question ID is required');
     }
 
-    if (!question.text || question.text.trim() === '') {
+    if (!question.text?.trim()) {
       errors.push('Question text is required');
     }
 
@@ -448,19 +404,6 @@ export class QuestionBankManager {
       errors.push('Invalid question type');
     }
 
-    if (['single_choice', 'multiple_choice', 'scale'].includes(question.type) && (!question.options || question.options.length === 0)) {
-      errors.push('Options are required for choice and scale questions');
-    }
-
-    if (question.type === 'scale') {
-      if (question.scaleMin === undefined || question.scaleMax === undefined) {
-        errors.push('Scale min and max values are required for scale questions');
-      }
-      if (question.scaleMin !== undefined && question.scaleMax !== undefined && question.scaleMin >= question.scaleMax) {
-        errors.push('Scale max must be greater than scale min');
-      }
-    }
-
     return {
       valid: errors.length === 0,
       errors
@@ -468,38 +411,22 @@ export class QuestionBankManager {
   }
 
   /**
-   * Validate assessment type format
+   * Basic validation for assessment type format
    */
   validateAssessmentType(assessment: AssessmentType): { valid: boolean; errors: string[] } {
     const errors: string[] = [];
 
-    if (!assessment.id || assessment.id.trim() === '') {
+    if (!assessment.id?.trim()) {
       errors.push('Assessment ID is required');
     }
 
-    if (!assessment.name || assessment.name.trim() === '') {
+    if (!assessment.name?.trim()) {
       errors.push('Assessment name is required');
     }
 
-    if (!['personality', 'mental_health', 'stress', 'mood'].includes(assessment.category)) {
-      errors.push('Invalid assessment category');
-    }
-
-    if (!assessment.questions || assessment.questions.length === 0) {
+    if (!assessment.questions?.length) {
       errors.push('Assessment must have at least one question');
     }
-
-    if (!assessment.scoringRules || assessment.scoringRules.length === 0) {
-      errors.push('Assessment must have at least one scoring rule');
-    }
-
-    // Validate each question
-    assessment.questions?.forEach((question, index) => {
-      const questionValidation = this.validateQuestion(question);
-      if (!questionValidation.valid) {
-        errors.push(`Question ${index + 1}: ${questionValidation.errors.join(', ')}`);
-      }
-    });
 
     return {
       valid: errors.length === 0,
@@ -507,46 +434,7 @@ export class QuestionBankManager {
     };
   }
 
-  /**
-   * Export assessment types to JSON
-   */
-  exportAssessmentTypes(): string {
-    const assessments = Array.from(this.assessmentTypes.values());
-    return JSON.stringify(assessments, null, 2);
-  }
 
-  /**
-   * Import assessment types from JSON
-   */
-  importAssessmentTypes(jsonData: string): { success: boolean; errors: string[] } {
-    try {
-      const assessments: AssessmentType[] = JSON.parse(jsonData);
-      const errors: string[] = [];
-
-      for (const assessment of assessments) {
-        const validation = this.validateAssessmentType(assessment);
-        if (!validation.valid) {
-          errors.push(`Assessment ${assessment.id}: ${validation.errors.join(', ')}`);
-        } else {
-          this.assessmentTypes.set(assessment.id, assessment);
-        }
-      }
-
-      if (errors.length === 0) {
-        this.categorizeQuestions();
-      }
-
-      return {
-        success: errors.length === 0,
-        errors
-      };
-    } catch (error) {
-      return {
-        success: false,
-        errors: ['Invalid JSON format']
-      };
-    }
-  }
 }
 
 // Singleton instance

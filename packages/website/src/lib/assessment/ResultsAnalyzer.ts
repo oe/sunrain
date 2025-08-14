@@ -617,61 +617,7 @@ export class ResultsAnalyzer {
     }
   }
 
-  /**
-   * Export results to JSON
-   */
-  exportResults(): string {
-    const results = Array.from(this.results.values());
-    return JSON.stringify(results, null, 2);
-  }
 
-  /**
-   * Import results from JSON
-   */
-  importResults(jsonData: string): { success: boolean; errors: string[] } {
-    try {
-      const results: AssessmentResult[] = JSON.parse(jsonData);
-      const errors: string[] = [];
-
-      for (const result of results) {
-        try {
-          // Validate result structure
-          if (!result.id || !result.sessionId || !result.assessmentTypeId) {
-            errors.push(`Invalid result structure: ${result.id || 'unknown'}`);
-            continue;
-          }
-
-          // Convert date strings back to Date objects
-          const processedResult: AssessmentResult = {
-            ...result,
-            completedAt: new Date(result.completedAt),
-            answers: result.answers.map(answer => ({
-              ...answer,
-              answeredAt: new Date(answer.answeredAt)
-            }))
-          };
-
-          this.results.set(processedResult.id, processedResult);
-        } catch (error) {
-          errors.push(`Failed to import result ${result.id}: ${error}`);
-        }
-      }
-
-      if (errors.length === 0) {
-        this.saveResultsToStorage();
-      }
-
-      return {
-        success: errors.length === 0,
-        errors
-      };
-    } catch (error) {
-      return {
-        success: false,
-        errors: ['Invalid JSON format']
-      };
-    }
-  }
 
   /**
    * Get assessment statistics
