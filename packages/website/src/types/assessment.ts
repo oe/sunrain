@@ -1,5 +1,7 @@
 // Assessment system type definitions
 
+import type { Language } from '@sunrain/shared';
+
 export type QuestionType = 'single_choice' | 'multiple_choice' | 'scale' | 'text' | 'number' | 'date';
 export type AssessmentCategory = 'personality' | 'mental_health' | 'stress' | 'mood' | 'anxiety' | 'depression';
 export type DifficultyLevel = 'beginner' | 'intermediate' | 'advanced';
@@ -355,19 +357,20 @@ export const QUESTIONNAIRE_TAGS: QuestionnaireTag[] = [
 export interface StartAssessmentButtonProps {
   assessment: AssessmentType;
   buttonText: string;
-  language: string;
+  language?: Language;
 }
 
 export interface QuestionnaireInfoButtonProps {
   assessment: AssessmentType;
   buttonText: string;
+  language?: Language;
   onStartAssessment?: (assessmentId: string) => void;
 }
 
 export interface ExistingSessionDialogProps {
   existingSession: AssessmentSession;
   assessmentName: string;
-  language: string;
+  language?: Language;
   onContinue: () => void;
   onRestart: () => void;
   onCancel: () => void;
@@ -377,6 +380,7 @@ export interface AssessmentStatisticsProps {
   totalResults: number;
   averageTime: number;
   lastAssessment: string;
+  language?: Language;
 }
 
 export interface ErrorHandlerProps {

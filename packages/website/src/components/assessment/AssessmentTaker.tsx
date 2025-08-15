@@ -56,7 +56,7 @@ const AssessmentTaker = memo(function AssessmentTaker({
   onComplete,
   onError
 }: AssessmentTakerProps) {
-  const { t, isLoading: translationsLoading } = useAssessmentTranslations();
+  const { t, isLoading: translationsLoading } = useAssessmentTranslations(language);
 
 
   // 使用单一状态对象，简化状态管理
@@ -80,10 +80,6 @@ const AssessmentTaker = memo(function AssessmentTaker({
     isPaused: false,
     showPauseModal: false
   });
-  // Initialize assessment session
-  useEffect(() => {
-    initializeAssessment();
-  }, [assessmentId]);
 
   const initializeAssessment = useCallback(async () => {
     try {
@@ -179,6 +175,11 @@ const AssessmentTaker = memo(function AssessmentTaker({
       onError?.(error instanceof Error ? error : new Error(errorMessage));
     }
   }, [assessmentId, assessmentData, language, t, onError]);
+
+  // Initialize assessment session
+  useEffect(() => {
+    initializeAssessment();
+  }, [assessmentId, initializeAssessment]);
 
   const handleAnswerChange = useCallback((value: any) => {
     setState(prev => ({ ...prev, currentAnswer: value, validationError: null }));

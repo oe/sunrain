@@ -24,6 +24,12 @@ export interface IAssessmentTranslations {
     noData: string;
     validationFailed: string;
     unsupportedQuestionType: string;
+    cannotContinue: string;
+    continueFailed: string;
+    deleteFailed: string;
+    clearFailed: string;
+    loadFailed: string;
+    loadFailedMessage: string;
     boundary: {
       title: string;
       message: string;
@@ -77,6 +83,7 @@ export interface IAssessmentTranslations {
   /** 验证相关 */
   validation: {
     checking: string;
+    withWarnings: string;
   };
 
   /** 执行相关 */
@@ -163,10 +170,62 @@ export interface IAssessmentTranslations {
     noResultData: string;
   };
 
+  /** 历史记录 */
+  history: {
+    stats: {
+      total: string;
+      averageTime: string;
+      lastAssessment: string;
+    };
+    list: {
+      dimensions: string;
+      viewDetails: string;
+      share: string;
+      delete: string;
+    };
+    filters: {
+      type: string;
+      timeRange: string;
+      riskLevel: string;
+    };
+  };
+
+  /** 状态 */
+  status: {
+    active: string;
+    paused: string;
+  };
+
+  /** 标签 */
+  labels: {
+    unknownAssessment: string;
+    startTime: string;
+    timeSpent: string;
+    answered: string;
+    questions: string;
+    estimatedRemaining: string;
+  };
+
+  /** 时间 */
+  time: {
+    minutes: string;
+  };
+
+  /** 消息 */
+  messages: {
+    deleted: string;
+    clearedCount: string;
+    noActiveSessions: string;
+    noActiveSessionsMessage: string;
+  };
+
   /** 操作按钮 */
   actions: {
     retry: string;
     goBack: string;
+    refresh: string;
+    startNew: string;
+    continue: string;
   };
 
   /** 问卷信息模态框 */
@@ -243,5 +302,19 @@ export interface IAssessmentTranslations {
     confirm: string;
     yes: string;
     no: string;
+    error: string;
+    showing: string;
+    to: string;
+    of: string;
+    results: string;
+    riskLevels: {
+      high: string;
+      medium: string;
+      low: string;
+    };
+    timeUnits: {
+      minutes: string;
+      seconds: string;
+    };
   };
 }

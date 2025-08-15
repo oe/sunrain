@@ -21,6 +21,12 @@ export const assessmentAr: IAssessmentTranslations = {
     noData: 'فشل في تحميل بيانات التقييم',
     validationFailed: 'فشل في التحقق',
     unsupportedQuestionType: 'نوع سؤال غير مدعوم: {type}',
+    cannotContinue: 'Cannot continue session', // TODO: Translate to Arabic
+    continueFailed: 'Failed to continue session', // TODO: Translate to Arabic
+    deleteFailed: 'Failed to delete session', // TODO: Translate to Arabic
+    clearFailed: 'Failed to clear sessions', // TODO: Translate to Arabic
+    loadFailed: 'Loading Failed', // TODO: Translate to Arabic
+    loadFailedMessage: 'Unable to load assessment data. Please try again.', // TODO: Translate to Arabic
     boundary: {
       title: 'خطأ في التطبيق',
       message: 'عذراً، حدث خطأ في التطبيق.',
@@ -68,6 +74,7 @@ export const assessmentAr: IAssessmentTranslations = {
 
   validation: {
     checking: 'جاري التحقق...',
+    withWarnings: 'with warnings', // TODO: Translate to Arabic
   },
 
   execution: {
@@ -152,9 +159,56 @@ export const assessmentAr: IAssessmentTranslations = {
     noResultData: 'لم يتم العثور على بيانات التقييم'
   },
 
+  history: {
+    stats: {
+      total: "Total Assessments", // TODO: Translate to Arabic
+      averageTime: "Average Time", // TODO: Translate to Arabic
+      lastAssessment: "Last Assessment", // TODO: Translate to Arabic
+    },
+    list: {
+      dimensions: "dimensions", // TODO: Translate to Arabic
+      viewDetails: "View Details", // TODO: Translate to Arabic
+      share: "Share", // TODO: Translate to Arabic
+      delete: "Delete", // TODO: Translate to Arabic
+    },
+    filters: {
+      type: "Assessment Type", // TODO: Translate to Arabic
+      timeRange: "Time Range", // TODO: Translate to Arabic
+      riskLevel: "Risk Level", // TODO: Translate to Arabic
+    },
+  },
+
+  status: {
+    active: "Active", // TODO: Translate to Arabic
+    paused: "Paused", // TODO: Translate to Arabic
+  },
+
+  labels: {
+    unknownAssessment: "Unknown Assessment", // TODO: Translate to Arabic
+    startTime: "Started", // TODO: Translate to Arabic
+    timeSpent: "Time Spent", // TODO: Translate to Arabic
+    answered: "Answered", // TODO: Translate to Arabic
+    questions: "questions", // TODO: Translate to Arabic
+    estimatedRemaining: "Estimated Remaining", // TODO: Translate to Arabic
+  },
+
+  time: {
+    minutes: "minutes", // TODO: Translate to Arabic
+  },
+
+  messages: {
+    deleted: "Session deleted successfully", // TODO: Translate to Arabic
+    clearedCount: "Cleared {count} sessions", // TODO: Translate to Arabic
+    noActiveSessions: "All Caught Up!", // TODO: Translate to Arabic
+    noActiveSessionsMessage: "You don't have any incomplete assessments. Start a new one to continue your mental health journey.", // TODO: Translate to Arabic
+  },
+
   actions: {
     retry: 'إعادة المحاولة',
     goBack: 'العودة',
+    refresh: "Refresh", // TODO: Translate to Arabic
+    startNew: "Start New Assessment", // TODO: Translate to Arabic
+    continue: "Continue", // TODO: Translate to Arabic
   },
 
   questionnaireInfo: {
@@ -227,6 +281,20 @@ export const assessmentAr: IAssessmentTranslations = {
     confirm: 'تأكيد',
     yes: 'نعم',
     no: 'لا',
+    error: "Error", // TODO: Translate to Arabic
+    showing: "Showing", // TODO: Translate to Arabic
+    to: "to", // TODO: Translate to Arabic
+    of: "of", // TODO: Translate to Arabic
+    results: "results", // TODO: Translate to Arabic
+    riskLevels: {
+      high: "High Risk", // TODO: Translate to Arabic
+      medium: "Medium Risk", // TODO: Translate to Arabic
+      low: "Low Risk", // TODO: Translate to Arabic
+    },
+    timeUnits: {
+      minutes: "min", // TODO: Translate to Arabic
+      seconds: "s", // TODO: Translate to Arabic
+    },
   },
 };
 

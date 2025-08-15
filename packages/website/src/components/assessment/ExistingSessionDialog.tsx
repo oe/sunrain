@@ -6,11 +6,12 @@ import type { ExistingSessionDialogProps } from '@/types/assessment';
 export default function ExistingSessionDialog({
   existingSession,
   assessmentName,
+  language,
   onContinue,
   onRestart,
   onCancel
 }: ExistingSessionDialogProps) {
-  const { t } = useAssessmentTranslations();
+  const { t } = useAssessmentTranslations(language);
   const [isLoading, setIsLoading] = useState(false);
 
   const handleContinue = () => {

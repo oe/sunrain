@@ -21,6 +21,12 @@ export const assessmentEs: IAssessmentTranslations = {
     noData: 'Error al cargar datos de evaluación',
     validationFailed: 'Error de validación',
     unsupportedQuestionType: 'Tipo de pregunta no soportado: {type}',
+    cannotContinue: 'Cannot continue session', // TODO: Translate to Spanish
+    continueFailed: 'Failed to continue session', // TODO: Translate to Spanish
+    deleteFailed: 'Failed to delete session', // TODO: Translate to Spanish
+    clearFailed: 'Failed to clear sessions', // TODO: Translate to Spanish
+    loadFailed: 'Loading Failed', // TODO: Translate to Spanish
+    loadFailedMessage: 'Unable to load assessment data. Please try again.', // TODO: Translate to Spanish
     boundary: {
       title: 'Error de Aplicación',
       message: 'Lo sentimos, la aplicación encontró un error.',
@@ -68,6 +74,7 @@ export const assessmentEs: IAssessmentTranslations = {
 
   validation: {
     checking: 'Validando...',
+    withWarnings: 'with warnings', // TODO: Translate to Spanish
   },
 
   execution: {

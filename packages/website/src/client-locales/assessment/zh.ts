@@ -21,6 +21,12 @@ export const assessmentZh: IAssessmentTranslations = {
     noData: '评测数据加载失败',
     validationFailed: '验证失败',
     unsupportedQuestionType: '不支持的问题类型：{type}',
+    cannotContinue: '无法继续会话',
+    continueFailed: '继续会话失败',
+    deleteFailed: '删除会话失败',
+    clearFailed: '清除会话失败',
+    loadFailed: '加载失败',
+    loadFailedMessage: '无法加载评测数据，请重试。',
     boundary: {
       title: '应用程序错误',
       message: '抱歉，应用程序遇到了一个错误。',
@@ -68,6 +74,7 @@ export const assessmentZh: IAssessmentTranslations = {
 
   validation: {
     checking: '正在验证...',
+    withWarnings: '有警告',
   },
 
   execution: {
@@ -152,11 +159,6 @@ export const assessmentZh: IAssessmentTranslations = {
     noResultData: '没有找到评测数据'
   },
 
-  actions: {
-    retry: '重试',
-    goBack: '返回',
-  },
-
   questionnaireInfo: {
     description: '描述',
     purpose: '目的',
@@ -217,6 +219,50 @@ export const assessmentZh: IAssessmentTranslations = {
     restartWarning: '重新开始将删除您之前的所有答案。',
   },
 
+  history: {
+    stats: {
+      total: '总评测数',
+      averageTime: '平均用时',
+      lastAssessment: '最近评测',
+    },
+    list: {
+      dimensions: '维度',
+      viewDetails: '查看详情',
+      share: '分享',
+      delete: '删除',
+    },
+    filters: {
+      type: '评测类型',
+      timeRange: '时间范围',
+      riskLevel: '风险等级',
+    },
+  },
+
+  status: {
+    active: '进行中',
+    paused: '已暂停',
+  },
+
+  labels: {
+    unknownAssessment: '未知评测',
+    startTime: '开始时间',
+    timeSpent: '用时',
+    answered: '已回答',
+    questions: '题目',
+    estimatedRemaining: '预计剩余',
+  },
+
+  time: {
+    minutes: '分钟',
+  },
+
+  messages: {
+    deleted: '会话删除成功',
+    clearedCount: '已清除 {count} 个会话',
+    noActiveSessions: '全部完成！',
+    noActiveSessionsMessage: '您没有未完成的评测。开始新的评测，继续您的心理健康之旅。',
+  },
+
   common: {
     loading: '加载中...',
     cancel: '取消',
@@ -227,6 +273,20 @@ export const assessmentZh: IAssessmentTranslations = {
     confirm: '确认',
     yes: '是',
     no: '否',
+    error: '错误',
+    showing: '显示',
+    to: '到',
+    of: '共',
+    results: '结果',
+    riskLevels: {
+      high: '高风险',
+      medium: '中风险',
+      low: '低风险',
+    },
+    timeUnits: {
+      minutes: '分钟',
+      seconds: '秒',
+    },
   },
 };
 

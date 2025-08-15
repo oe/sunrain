@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { memo, useCallback, useMemo } from 'react';
 import { Pause, CheckCircle, Clock } from 'lucide-react';
 
 interface ProgressBarProps {
@@ -24,11 +24,11 @@ export default memo(function ProgressBar({
   showPauseButton = true,
   t
 }: ProgressBarProps) {
-  const formatTime = (seconds: number): string => {
+  const formatTime = useCallback((seconds: number): string => {
     const minutes = Math.floor(seconds / 60);
     const remainingSeconds = seconds % 60;
     return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
-  };
+  }, []);
 
   return (
     <div className="mb-8">
@@ -87,7 +87,7 @@ export default memo(function ProgressBar({
 
       {/* Progress milestones */}
       <div className="flex justify-between mt-2">
-        {[25, 50, 75, 100].map((milestone) => (
+        {useMemo(() => [25, 50, 75, 100].map((milestone) => (
           <div
             key={milestone}
             className={`flex flex-col items-center ${
@@ -101,7 +101,7 @@ export default memo(function ProgressBar({
             }`} />
             <span className="text-xs mt-1">{milestone}%</span>
           </div>
-        ))}
+        )), [percentage])}
       </div>
     </div>
   );

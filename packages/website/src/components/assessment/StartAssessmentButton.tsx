@@ -9,7 +9,7 @@ export default function StartAssessmentButton({
   buttonText,
   language
 }: StartAssessmentButtonProps) {
-  const { t } = useAssessmentTranslations();
+  const { t } = useAssessmentTranslations(language);
   const [showExistingSessionDialog, setShowExistingSessionDialog] = useState(false);
   const [existingSession, setExistingSession] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(false);

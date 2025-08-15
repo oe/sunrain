@@ -1,11 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback, useMemo, memo } from 'react';
 import { useAssessmentTranslations } from '@/hooks/useCSRTranslations';
 import { resultsAnalyzer } from '@/lib/assessment/ResultsAnalyzer';
 import { questionBankManager } from '@/lib/assessment/QuestionBankManager';
 import { TrendingUp, TrendingDown, BarChart3, Download, AlertCircle } from 'lucide-react';
 import type { TrendData, CategoryPerformance, RiskTrends } from '@/types/assessment';
 
-export default function AssessmentTrendsClient() {
+const AssessmentTrendsClient = memo(function AssessmentTrendsClient() {
   const { t, isLoading: translationsLoading } = useAssessmentTranslations();
   const [currentRange, setCurrentRange] = useState<number | null>(365);
   const [results, setResults] = useState<any[]>([]);
@@ -16,7 +16,7 @@ export default function AssessmentTrendsClient() {
     loadTrends();
   }, []);
 
-  const loadTrends = async () => {
+  const loadTrends = useCallback(async () => {
     try {
       setIsLoading(true);
       const allResults = resultsAnalyzer.getAllResults();
@@ -28,13 +28,13 @@ export default function AssessmentTrendsClient() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, []);
 
-  const handleRangeChange = (range: number | null) => {
+  const handleRangeChange = useCallback((range: number | null) => {
     setCurrentRange(range);
-  };
+  }, []);
 
-  const getFilteredResults = () => {
+  const getFilteredResults = useMemo(() => {
     if (!currentRange) return results;
 
     const cutoffDate = new Date();
@@ -43,10 +43,10 @@ export default function AssessmentTrendsClient() {
     return results.filter(result =>
       new Date(result.completedAt) >= cutoffDate
     );
-  };
+  }, [results, currentRange]);
 
-  const getTrendData = (): TrendData[] => {
-    const filteredResults = getFilteredResults();
+  const getTrendData = useMemo((): TrendData[] => {
+    const filteredResults = getFilteredResults;
     const monthlyData = groupResultsByMonth(filteredResults);
 
     return Object.entries(monthlyData).map(([month, monthResults]) => ({
@@ -54,10 +54,10 @@ export default function AssessmentTrendsClient() {
       avgScore: calculateAverageScore(monthResults as any[]),
       count: (monthResults as any[]).length
     }));
-  };
+  }, [getFilteredResults]);
 
-  const getCategoryPerformanceData = (): CategoryPerformance => {
-    const filteredResults = getFilteredResults();
+  const getCategoryPerformanceData = useMemo((): CategoryPerformance => {
+    const filteredResults = getFilteredResults;
     const performance: { [key: string]: number[] } = {};
 
     filteredResults.forEach((result: any) => {
@@ -80,10 +80,10 @@ export default function AssessmentTrendsClient() {
     });
 
     return result;
-  };
+  }, [getFilteredResults]);
 
-  const getRiskTrendsData = (): RiskTrends => {
-    const filteredResults = getFilteredResults();
+  const getRiskTrendsData = useMemo((): RiskTrends => {
+    const filteredResults = getFilteredResults;
     const riskCounts = { low: 0, medium: 0, high: 0 };
 
     filteredResults.forEach(result => {
@@ -98,10 +98,10 @@ export default function AssessmentTrendsClient() {
       medium: total > 0 ? (riskCounts.medium / total) * 100 : 0,
       high: total > 0 ? (riskCounts.high / total) * 100 : 0
     };
-  };
+  }, [getFilteredResults]);
 
-  const getInsights = () => {
-    const filteredResults = getFilteredResults();
+  const getInsights = useMemo(() => {
+    const filteredResults = getFilteredResults;
     const insights = [];
 
     if (filteredResults.length >= 3) {
@@ -133,7 +133,7 @@ export default function AssessmentTrendsClient() {
     }
 
     return insights;
-  };
+  }, [getFilteredResults, t]);
 
   // Helper methods for data processing
   const groupResultsByMonth = (results: any[]) => {
@@ -157,7 +157,7 @@ export default function AssessmentTrendsClient() {
     return totalScore / results.length;
   };
 
-  const exportTrendsReport = () => {
+  const exportTrendsReport = useCallback(() => {
     try {
       const filteredResults = getFilteredResults();
       const report = {
@@ -186,7 +186,7 @@ export default function AssessmentTrendsClient() {
     } catch (error) {
       console.error('Export failed:', error);
     }
-  };
+  }, [getFilteredResults, currentRange, t, getCategoryPerformanceData, getRiskTrendsData, getInsights]);
 
   if (translationsLoading || isLoading) {
     return (
@@ -218,10 +218,10 @@ export default function AssessmentTrendsClient() {
     );
   }
 
-  const trendData = getTrendData();
-  const categoryPerformance = getCategoryPerformanceData();
-  const riskTrends = getRiskTrendsData();
-  const insights = getInsights();
+  const trendData = getTrendData;
+  const categoryPerformance = getCategoryPerformanceData;
+  const riskTrends = getRiskTrendsData;
+  const insights = getInsights;
 
   return (
     <div className="space-y-6">
@@ -368,4 +368,6 @@ export default function AssessmentTrendsClient() {
       )}
     </div>
   );
-}
+});
+
+export default AssessmentTrendsClient;

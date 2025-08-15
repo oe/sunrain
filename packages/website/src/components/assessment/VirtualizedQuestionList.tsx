@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { memo, useCallback, useMemo } from 'react';
 import { CheckCircle, Clock, Circle } from 'lucide-react';
 import { useVirtualList } from '@/utils/RenderOptimizer';
 import type { VirtualizedQuestionListProps } from '@/types/assessment';
@@ -22,13 +22,13 @@ export default memo(function VirtualizedQuestionList({
     containerHeight
   });
 
-  const getQuestionStatus = (index: number) => {
+  const getQuestionStatus = useCallback((index: number) => {
     if (index < currentIndex) return 'completed';
     if (index === currentIndex) return 'current';
     return 'pending';
-  };
+  }, [currentIndex]);
 
-  const getStatusColor = (status: string) => {
+  const getStatusColor = useCallback((status: string) => {
     switch (status) {
       case 'completed':
         return 'bg-green-100 text-green-800 border-green-200';
@@ -37,9 +37,9 @@ export default memo(function VirtualizedQuestionList({
       default:
         return 'bg-gray-100 text-gray-600 border-gray-200';
     }
-  };
+  }, []);
 
-  const getStatusIcon = (status: string) => {
+  const getStatusIcon = useCallback((status: string) => {
     switch (status) {
       case 'completed':
         return <CheckCircle className="w-4 h-4" />;
@@ -48,7 +48,7 @@ export default memo(function VirtualizedQuestionList({
       default:
         return <Circle className="w-4 h-4" />;
     }
-  };
+  }, []);
 
   return (
     <div className="bg-white dark:bg-gray-800 rounded-lg shadow border border-gray-200 dark:border-gray-700">
@@ -77,7 +77,7 @@ export default memo(function VirtualizedQuestionList({
 
               return (
                 <div
-                  key={question.id}
+                  key={`${question.id}-${index}-${status}`}
                   className={`
                     flex items-center p-3 border-b border-gray-100 dark:border-gray-700 cursor-pointer
                     hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors

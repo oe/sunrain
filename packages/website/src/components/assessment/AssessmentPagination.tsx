@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { memo, useCallback, useMemo } from 'react';
 import { useAssessmentTranslations } from '@/hooks/useCSRTranslations';
 
 interface AssessmentPaginationProps {
@@ -18,12 +18,23 @@ function AssessmentPagination({
 }: AssessmentPaginationProps) {
   const { t } = useAssessmentTranslations();
 
+  const { startIndex, endIndex } = useMemo(() => {
+    const start = (currentPage - 1) * itemsPerPage + 1;
+    const end = Math.min(start + itemsPerPage - 1, totalResults);
+    return { startIndex: start, endIndex: end };
+  }, [currentPage, itemsPerPage, totalResults]);
+
+  const handlePrevious = useCallback(() => {
+    onPageChange(currentPage - 1);
+  }, [currentPage, onPageChange]);
+
+  const handleNext = useCallback(() => {
+    onPageChange(currentPage + 1);
+  }, [currentPage, onPageChange]);
+
   if (totalPages <= 1) {
     return null;
   }
-
-  const startIndex = (currentPage - 1) * itemsPerPage + 1;
-  const endIndex = Math.min(startIndex + itemsPerPage - 1, totalResults);
 
   return (
     <div className="flex justify-between items-center">
@@ -34,7 +45,7 @@ function AssessmentPagination({
         <button
           className="join-item btn btn-sm"
           disabled={currentPage === 1}
-          onClick={() => onPageChange(currentPage - 1)}
+          onClick={handlePrevious}
         >
           {t('common.previous')}
         </button>
@@ -44,7 +55,7 @@ function AssessmentPagination({
         <button
           className="join-item btn btn-sm"
           disabled={currentPage === totalPages}
-          onClick={() => onPageChange(currentPage + 1)}
+          onClick={handleNext}
         >
           {t('common.next')}
         </button>

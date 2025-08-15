@@ -40,9 +40,40 @@ function AssessmentHistoryClient() {
     loadResults();
   }, []);
 
+  const applyFilters = useCallback(() => {
+    const filtered = allResults.filter(result => {
+      // Type filter
+      if (filters.type) {
+        const assessmentType = questionBankManager.getAssessmentType(result.assessmentTypeId);
+        if (!assessmentType || assessmentType.category !== filters.type) {
+          return false;
+        }
+      }
+
+      // Time filter
+      if (filters.timeRange) {
+        const completedDate = result.completedAt instanceof Date ? result.completedAt : new Date(result.completedAt);
+        const daysSince = (Date.now() - completedDate.getTime()) / (1000 * 60 * 60 * 24);
+        if (daysSince > parseInt(filters.timeRange)) {
+          return false;
+        }
+      }
+
+      // Risk filter
+      if (filters.riskLevel && result.riskLevel !== filters.riskLevel) {
+        return false;
+      }
+
+      return true;
+    });
+
+    setFilteredResults(filtered);
+    setCurrentPage(1);
+  }, [allResults, filters]);
+
   useEffect(() => {
     applyFilters();
-  }, [allResults, filters]);
+  }, [allResults, filters, applyFilters]);
 
   const loadResults = useCallback(async () => {
     try {
@@ -79,36 +110,6 @@ function AssessmentHistoryClient() {
     };
   }, [allResults, t]);
 
-  const applyFilters = useCallback(() => {
-    const filtered = allResults.filter(result => {
-      // Type filter
-      if (filters.type) {
-        const assessmentType = questionBankManager.getAssessmentType(result.assessmentTypeId);
-        if (!assessmentType || assessmentType.category !== filters.type) {
-          return false;
-        }
-      }
-
-      // Time filter
-      if (filters.timeRange) {
-        const completedDate = result.completedAt instanceof Date ? result.completedAt : new Date(result.completedAt);
-        const daysSince = (Date.now() - completedDate.getTime()) / (1000 * 60 * 60 * 24);
-        if (daysSince > parseInt(filters.timeRange)) {
-          return false;
-        }
-      }
-
-      // Risk filter
-      if (filters.riskLevel && result.riskLevel !== filters.riskLevel) {
-        return false;
-      }
-
-      return true;
-    });
-
-    setFilteredResults(filtered);
-    setCurrentPage(1);
-  }, [allResults, filters]);
 
   const handleFiltersChange = useCallback((newFilters: FilterState) => {
     setFilters(newFilters);
@@ -273,9 +274,9 @@ function AssessmentHistoryClient() {
       ) : (
         <>
           <div className="space-y-4">
-            {paginatedResults.map((result) => (
+            {paginatedResults.map((result, index) => (
               <AssessmentHistoryItem
-                key={result.id}
+                key={`${result.id}-${result.completedAt}-${index}`}
                 result={result}
                 onViewDetails={handleViewDetails}
                 onShare={handleShare}

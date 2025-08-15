@@ -21,6 +21,12 @@ export const assessmentEn: IAssessmentTranslations = {
     noData: "Assessment data loading failed",
     validationFailed: "Validation failed",
     unsupportedQuestionType: "Unsupported question type: {type}",
+    cannotContinue: "Cannot continue session",
+    continueFailed: "Failed to continue session",
+    deleteFailed: "Failed to delete session",
+    clearFailed: "Failed to clear sessions",
+    loadFailed: "Loading Failed",
+    loadFailedMessage: "Unable to load assessment data. Please try again.",
     boundary: {
       title: "Application Error",
       message: "Sorry, the application encountered an error.",
@@ -68,6 +74,7 @@ export const assessmentEn: IAssessmentTranslations = {
 
   validation: {
     checking: "Validating...",
+    withWarnings: "with warnings",
   },
 
   execution: {
@@ -156,11 +163,6 @@ export const assessmentEn: IAssessmentTranslations = {
     noResultData: "No assessment data found",
   },
 
-  actions: {
-    retry: "Retry",
-    goBack: "Go Back",
-  },
-
   questionnaireInfo: {
     description: "Description",
     purpose: "Purpose",
@@ -224,6 +226,50 @@ export const assessmentEn: IAssessmentTranslations = {
     restartWarning: "Starting over will delete all your previous answers.",
   },
 
+  history: {
+    stats: {
+      total: "Total Assessments",
+      averageTime: "Average Time",
+      lastAssessment: "Last Assessment",
+    },
+    list: {
+      dimensions: "dimensions",
+      viewDetails: "View Details",
+      share: "Share",
+      delete: "Delete",
+    },
+    filters: {
+      type: "Assessment Type",
+      timeRange: "Time Range",
+      riskLevel: "Risk Level",
+    },
+  },
+
+  status: {
+    active: "Active",
+    paused: "Paused",
+  },
+
+  labels: {
+    unknownAssessment: "Unknown Assessment",
+    startTime: "Started",
+    timeSpent: "Time Spent",
+    answered: "Answered",
+    questions: "questions",
+    estimatedRemaining: "Estimated Remaining",
+  },
+
+  time: {
+    minutes: "minutes",
+  },
+
+  messages: {
+    deleted: "Session deleted successfully",
+    clearedCount: "Cleared {count} sessions",
+    noActiveSessions: "All Caught Up!",
+    noActiveSessionsMessage: "You don't have any incomplete assessments. Start a new one to continue your mental health journey.",
+  },
+
   common: {
     loading: "Loading...",
     cancel: "Cancel",
@@ -234,6 +280,20 @@ export const assessmentEn: IAssessmentTranslations = {
     confirm: "Confirm",
     yes: "Yes",
     no: "No",
+    error: "Error",
+    showing: "Showing",
+    to: "to",
+    of: "of",
+    results: "results",
+    riskLevels: {
+      high: "High Risk",
+      medium: "Medium Risk",
+      low: "Low Risk",
+    },
+    timeUnits: {
+      minutes: "min",
+      seconds: "s",
+    },
   },
 };
 

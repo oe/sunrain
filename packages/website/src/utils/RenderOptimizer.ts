@@ -134,6 +134,26 @@ export function createMemoComparison<T extends Record<string, any>>(
 }
 
 /**
+ * 优化的列表渲染Hook - 避免不必要的重新渲染
+ */
+export function useOptimizedList<T extends { id: string }>(
+  items: T[],
+  dependencies: React.DependencyList = []
+): T[] {
+  return useMemo(() => items, [items, ...dependencies]);
+}
+
+/**
+ * 稳定的回调函数Hook - 避免子组件不必要的重新渲染
+ */
+export function useStableCallback<T extends (...args: any[]) => any>(
+  callback: T,
+  deps: React.DependencyList
+): T {
+  return useCallback(callback, deps);
+}
+
+/**
  * 深度比较Hook - 避免不必要的依赖更新
  */
 export function useDeepMemo<T>(value: T, deps: React.DependencyList): T {

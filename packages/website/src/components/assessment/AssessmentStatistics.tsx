@@ -2,8 +2,8 @@ import { memo } from 'react';
 import { useAssessmentTranslations } from '@/hooks/useCSRTranslations';
 import type { AssessmentStatisticsProps } from '@/types/assessment';
 
-function AssessmentStatistics({ totalResults, averageTime, lastAssessment }: AssessmentStatisticsProps) {
-  const { t } = useAssessmentTranslations();
+function AssessmentStatistics({ totalResults, averageTime, lastAssessment, language }: AssessmentStatisticsProps) {
+  const { t } = useAssessmentTranslations(language);
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
