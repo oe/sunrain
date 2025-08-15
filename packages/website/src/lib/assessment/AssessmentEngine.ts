@@ -571,31 +571,7 @@ export class AssessmentEngine {
     return true;
   }
 
-  /**
-   * Set reminder for paused sessions
-   */
-  setReminder(sessionId: string, reminderTime: number): boolean {
-    if (!this.isClientSide) return false;
 
-    const session = this.sessions.get(sessionId);
-    if (!session || session.status !== "paused") return false;
-
-    // Clear existing reminder
-    this.stopReminderTimer(sessionId);
-
-    try {
-      // Set new reminder
-      const timer = window.setTimeout(() => {
-        this.sendReminder(sessionId);
-      }, reminderTime);
-
-      this.reminderTimers.set(sessionId, timer);
-      return true;
-    } catch (error) {
-      console.error("Failed to set reminder:", error);
-      return false;
-    }
-  }
 
   /**
    * Validate answer format
@@ -762,15 +738,7 @@ export class AssessmentEngine {
     }
   }
 
-  /**
-   * Send reminder (placeholder - in real app would send notification)
-   */
-  private sendReminder(sessionId: string): void {
-    console.log(
-      `Reminder: Please continue your assessment (Session: ${sessionId})`
-    );
-    // In a real application, this would trigger a notification
-  }
+
 
   /**
    * Update session time spent

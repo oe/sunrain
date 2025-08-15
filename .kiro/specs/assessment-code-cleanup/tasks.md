@@ -79,7 +79,7 @@
   - Update imports and dependencies
   - _Requirements: 4.2, 6.3_
 
-- [ ] 13. Remove unused methods and dead code
+- [x] 13. Remove unused methods and dead code
   - Audit all assessment lib files for unused private methods
   - Remove unused imports and dependencies
   - Remove incomplete or unused functionality

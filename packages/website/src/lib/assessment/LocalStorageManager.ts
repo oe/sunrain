@@ -392,34 +392,7 @@ export class LocalStorageManager {
     }
   }
 
-  /**
-   * 根据问卷ID获取结果
-   */
-  async getResultsByQuestionnaire(
-    questionnaireId: string
-  ): Promise<AssessmentResult[]> {
-    if (!this.isClientSide) {
-      return [];
-    }
 
-    try {
-      await this.ensureInitialized();
-      const resultDocs = await this.queryDocuments({
-        type: "result",
-        questionnaireId,
-      });
-
-      return resultDocs
-        .map((doc) => ({
-          ...doc,
-          completedAt: new Date(doc.completedAt),
-        }))
-        .sort((a, b) => b.completedAt.getTime() - a.completedAt.getTime());
-    } catch (error) {
-      console.error("Failed to get results by questionnaire:", error);
-      return [];
-    }
-  }
 
   /**
    * 清理会话数据
@@ -630,9 +603,7 @@ export const localStorageManager = {
     return this.getInstance().loadResultsAsync();
   },
 
-  async getResultsByQuestionnaire(questionnaireId: string) {
-    return this.getInstance().getResultsByQuestionnaire(questionnaireId);
-  },
+
 
   async clearSessions() {
     return this.getInstance().clearSessions();
@@ -658,7 +629,5 @@ export const localStorageManager = {
 
 
 
-  getCompatibilityInfo() {
-    return this.getInstance().getCompatibilityInfo();
-  },
+
 };

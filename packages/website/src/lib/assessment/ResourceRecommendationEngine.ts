@@ -406,20 +406,6 @@ export class ResourceRecommendationEngine {
   }
 
   /**
-   * Add custom resource
-   */
-  addResource(resource: ResourceItem): void {
-    this.resources.set(resource.id, resource);
-  }
-
-  /**
-   * Remove resource
-   */
-  removeResource(resourceId: string): boolean {
-    return this.resources.delete(resourceId);
-  }
-
-  /**
    * Update resource
    */
   updateResource(resourceId: string, updates: Partial<ResourceItem>): boolean {

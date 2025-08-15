@@ -1,5 +1,5 @@
 import type { Question } from "@/types/assessment";
-// Removed unused imports
+
 import { assessmentLogger } from "./AssessmentLogger";
 
 /**
@@ -524,15 +524,7 @@ export class AnswerValidator {
     this.customRules.sort((a, b) => a.priority - b.priority);
   }
 
-  /**
-   * 移除验证规则
-   */
-  removeRule(ruleName: string): void {
-    this.rules = this.rules.filter((rule) => rule.name !== ruleName);
-    this.customRules = this.customRules.filter(
-      (rule) => rule.name !== ruleName
-    );
-  }
+
 
   /**
    * 验证单个答案
@@ -711,14 +703,7 @@ export class AnswerValidator {
     }
   }
 
-  /**
-   * 获取问题类型的验证规则
-   */
-  getRulesForQuestionType(questionType: string): ValidationRule[] {
-    return this.rules.filter(
-      (rule) => rule.name === "required" || rule.name === questionType
-    );
-  }
+
 
 
 }
@@ -751,9 +736,7 @@ export const answerValidator = {
     return this.getInstance().addCustomRule(rule);
   },
 
-  removeRule(ruleName: string) {
-    return this.getInstance().removeRule(ruleName);
-  },
+
 
 
 };

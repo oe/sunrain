@@ -312,20 +312,7 @@ export class AssessmentLogger {
     await Promise.all(flushPromises);
   }
 
-  /**
-   * 获取日志统计信息
-   */
-  getLogStatistics(): {
-    totalOutputs: number;
-    debugMode: boolean;
-    minLevel: string;
-  } {
-    return {
-      totalOutputs: this.outputs.length,
-      debugMode: this.isDebugMode,
-      minLevel: LogLevel[this.minLevel]
-    };
-  }
+
 
 
 }

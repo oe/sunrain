@@ -300,46 +300,6 @@ export class QuestionBankManager {
     return this.questionsByCategory.get(category) || [];
   }
 
-  /**
-   * Add new assessment type
-   */
-  addAssessmentType(assessment: AssessmentType): void {
-    this.assessmentTypes.set(assessment.id, assessment);
-    this.categorizeQuestions();
-  }
-
-  /**
-   * Update existing assessment type
-   */
-  updateAssessmentType(id: string, updates: Partial<AssessmentType>): boolean {
-    const existing = this.assessmentTypes.get(id);
-    if (!existing) return false;
-
-    const updated = { ...existing, ...updates, updatedAt: new Date() };
-    this.assessmentTypes.set(id, updated);
-    this.categorizeQuestions();
-    return true;
-  }
-
-  /**
-   * Remove assessment type
-   */
-  removeAssessmentType(id: string): boolean {
-    const deleted = this.assessmentTypes.delete(id);
-    if (deleted) {
-      this.categorizeQuestions();
-    }
-    return deleted;
-  }
-
-  /**
-   * Set current language for localization
-   */
-  setLanguage(language: string): void {
-    this.currentLanguage = language;
-  }
-
-
 
   /**
    * Get localized assessment type
@@ -381,56 +341,6 @@ export class QuestionBankManager {
         text: translation.options?.[option.id] || option.text
       })),
       scaleLabels: translation.scaleLabels || question.scaleLabels
-    };
-  }
-
-
-
-  /**
-   * Basic validation for question format
-   */
-  validateQuestion(question: Question): { valid: boolean; errors: string[] } {
-    const errors: string[] = [];
-
-    if (!question.id?.trim()) {
-      errors.push('Question ID is required');
-    }
-
-    if (!question.text?.trim()) {
-      errors.push('Question text is required');
-    }
-
-    if (!['single_choice', 'multiple_choice', 'scale', 'text'].includes(question.type)) {
-      errors.push('Invalid question type');
-    }
-
-    return {
-      valid: errors.length === 0,
-      errors
-    };
-  }
-
-  /**
-   * Basic validation for assessment type format
-   */
-  validateAssessmentType(assessment: AssessmentType): { valid: boolean; errors: string[] } {
-    const errors: string[] = [];
-
-    if (!assessment.id?.trim()) {
-      errors.push('Assessment ID is required');
-    }
-
-    if (!assessment.name?.trim()) {
-      errors.push('Assessment name is required');
-    }
-
-    if (!assessment.questions?.length) {
-      errors.push('Assessment must have at least one question');
-    }
-
-    return {
-      valid: errors.length === 0,
-      errors
     };
   }
 
