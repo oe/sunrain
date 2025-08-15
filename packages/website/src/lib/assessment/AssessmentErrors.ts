@@ -2,7 +2,8 @@
  * 评测系统错误类型定义和错误处理
  */
 
-import { localStorageManager } from './LocalStorageManager';
+import { structuredStorage } from '@/lib/storage/StructuredStorage';
+import type { AssessmentSession } from '@/types/assessment';
 
 export enum AssessmentErrorType {
   // 初始化错误
@@ -292,9 +293,10 @@ export class StorageQuotaRecoveryStrategy implements ErrorRecoveryStrategy {
       // 尝试清理旧数据
 
       // 获取存储统计信息
-      const stats = await localStorageManager.getStorageStatistics();
+      const sessions = await structuredStorage.getByType('assessment_session');
+      const results = await structuredStorage.getByType('assessment_result');
 
-      if (stats.sessionCount > 10 || stats.resultCount > 50) {
+      if (sessions.length > 10 || results.length > 50) {
         // 清理旧数据
         console.log('Attempting to clear old data to free up storage space');
 
@@ -325,10 +327,10 @@ export class SessionRecoveryStrategy implements ErrorRecoveryStrategy {
   async recover(error: AssessmentError): Promise<boolean> {
     try {
       // 尝试从本地存储恢复会话
-      const sessions = await localStorageManager.loadSessionsAsync();
+      const sessions = await structuredStorage.getByType<AssessmentSession>('assessment_session');
 
       if (error.context.sessionId) {
-        const session = sessions.find((s: any) => s.id === error.context.sessionId);
+        const session = sessions.find(s => s.id === error.context.sessionId);
         if (session && session.status !== 'completed') {
           // 会话存在且未完成，可以恢复
           return true;
@@ -336,7 +338,7 @@ export class SessionRecoveryStrategy implements ErrorRecoveryStrategy {
       }
 
       // 检查是否有其他活跃会话
-      const activeSessions = sessions.filter((s: any) => s.status === 'active' || s.status === 'paused');
+      const activeSessions = sessions.filter(s => s.status === 'active' || s.status === 'paused');
       return activeSessions.length > 0;
     } catch (recoveryError) {
       console.error('Failed to recover session:', recoveryError);

@@ -7,7 +7,7 @@ import type {
   RiskLevel,
 } from "../../types/assessment";
 import { questionBankManager } from "./QuestionBankManager";
-import { localStorageManager } from "./LocalStorageManager";
+import { structuredStorage } from "@/lib/storage/StructuredStorage";
 
 /**
  * Results Analyzer
@@ -516,7 +516,7 @@ export class ResultsAnalyzer {
   }
 
   /**
-   * Save result using LocalStorageManager
+   * Save result using StructuredStorage
    */
   async saveResult(result: AssessmentResult): Promise<boolean> {
     try {
@@ -593,7 +593,7 @@ export class ResultsAnalyzer {
   }
 
   /**
-   * Save results to localStorage using LocalStorageManager
+   * Save results to storage using StructuredStorage
    */
   private async saveResultsToStorage(): Promise<void> {
     // Check if we're in a browser environment
@@ -602,10 +602,9 @@ export class ResultsAnalyzer {
     }
 
     try {
-      // 使用新的 LocalStorageManager 保存每个结果
-
+      // 使用新的 StructuredStorage 保存每个结果
       for (const result of this.results.values()) {
-        await localStorageManager.saveResult(result);
+        await structuredStorage.save('assessment_result', result, result.id);
       }
     } catch (error) {
       console.error("Failed to save results to storage:", error);
@@ -620,7 +619,7 @@ export class ResultsAnalyzer {
   }
 
   /**
-   * Load results from localStorage using LocalStorageManager
+   * Load results from storage using StructuredStorage
    */
   private async loadResultsFromStorage(): Promise<void> {
     // Check if we're in a browser environment
@@ -629,7 +628,7 @@ export class ResultsAnalyzer {
     }
 
     try {
-      const results = await localStorageManager.loadResultsAsync();
+      const results = await structuredStorage.getByType<AssessmentResult>('assessment_result');
 
       // 清空现有结果并加载新的
       this.results.clear();

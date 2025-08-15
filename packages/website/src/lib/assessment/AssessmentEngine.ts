@@ -11,7 +11,7 @@ import {
   errorRecoveryManager,
 } from "@/lib/assessment/AssessmentErrors";
 import { assessmentLogger } from "@/lib/assessment/AssessmentLogger";
-import { localStorageManager } from "@/lib/assessment/LocalStorageManager";
+import { structuredStorage } from "@/lib/storage/StructuredStorage";
 
 /**
  * Assessment Execution Engine
@@ -789,7 +789,12 @@ export class AssessmentEngine {
 
     try {
       const sessions = Array.from(this.sessions.values());
-      const success = await localStorageManager.getInstance().saveSessions(sessions);
+      // Save sessions using new structured storage
+      const sessionPromises = sessions.map(session =>
+        structuredStorage.save('assessment_session', session, session.id)
+      );
+      await Promise.all(sessionPromises);
+      const success = true;
 
       if (!success) {
         console.error("Failed to save sessions to storage");
@@ -877,7 +882,7 @@ export class AssessmentEngine {
     }
 
     try {
-      const sessions = await localStorageManager.getInstance().loadSessionsAsync();
+      const sessions = await structuredStorage.getByType<AssessmentSession>('assessment_session');
 
       for (const session of sessions) {
         this.sessions.set(session.id, session);
@@ -916,7 +921,7 @@ export class AssessmentEngine {
 
     if (this.isClientSide) {
       try {
-        await localStorageManager.getInstance().clearSessions();
+        await structuredStorage.deleteByType('assessment_session');
       } catch (error) {
         console.error("Failed to clear sessions from storage:", error);
       }
@@ -963,6 +968,7 @@ export class AssessmentEngine {
     hasSessionStorage: boolean;
     storageQuota?: number;
     storageUsed?: number;
+    storageType?: string;
     storageStatistics?: any;
   }> {
     const info = {
@@ -971,6 +977,7 @@ export class AssessmentEngine {
       hasSessionStorage: false,
       storageQuota: undefined as number | undefined,
       storageUsed: undefined as number | undefined,
+      storageType: undefined as string | undefined,
       storageStatistics: undefined as any,
     };
 
@@ -997,17 +1004,22 @@ export class AssessmentEngine {
 
       // Get storage quota information if available
       try {
-        const quota = await localStorageManager.getInstance().getStorageQuota();
-        info.storageQuota = quota.quota;
-        info.storageUsed = quota.usage;
+        // Storage quota information not available in new system
+        info.storageType = structuredStorage.getStorageType();
       } catch (error) {
         console.error("Failed to get storage quota:", error);
       }
 
       // Get storage statistics
       try {
-        info.storageStatistics =
-          await localStorageManager.getInstance().getStorageStatistics();
+        // Get basic storage statistics
+        const sessions = await structuredStorage.getByType('assessment_session');
+        const results = await structuredStorage.getByType('assessment_result');
+        info.storageStatistics = {
+          sessionCount: sessions.length,
+          resultCount: results.length,
+          storageType: structuredStorage.getStorageType()
+        };
       } catch (error) {
         console.error("Failed to get storage statistics:", error);
       }

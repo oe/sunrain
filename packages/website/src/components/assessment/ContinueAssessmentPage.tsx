@@ -25,6 +25,9 @@ export default function ContinueAssessmentPage({ className = '', asWidget = fals
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const { t, isLoading: translationsLoading } = useAssessmentTranslations();
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showClearAllModal, setShowClearAllModal] = useState(false);
+  const [deleteSessionId, setDeleteSessionId] = useState<string | null>(null);
 
   useEffect(() => {
     initializeInterface();
@@ -75,16 +78,21 @@ export default function ContinueAssessmentPage({ className = '', asWidget = fals
     }
   };
 
-  const deleteSession = async (sessionId: string) => {
-    if (confirm(t('actions.confirmDelete'))) {
+  const deleteSession = (sessionId: string) => {
+    setDeleteSessionId(sessionId);
+    setShowDeleteModal(true);
+  };
+
+  const confirmDeleteSession = async () => {
+    if (deleteSessionId) {
       try {
         const { assessmentEngine: engine } = await loadModules();
         if (!engine) throw new Error('Assessment engine not available');
 
-        const success = engine.deleteSession(sessionId);
+        const success = engine.deleteSession(deleteSessionId);
         if (success) {
           // Remove from local array
-          setActiveSessions(prev => prev.filter(s => s.id !== sessionId));
+          setActiveSessions(prev => prev.filter(s => s.id !== deleteSessionId));
           showMessage(t('messages.deleted'), 'success');
         } else {
           showMessage(t('errors.deleteFailed'), 'error');
@@ -94,32 +102,46 @@ export default function ContinueAssessmentPage({ className = '', asWidget = fals
         showMessage(t('errors.deleteFailed'), 'error');
       }
     }
+    setShowDeleteModal(false);
+    setDeleteSessionId(null);
   };
 
-  const clearAllSessions = async () => {
-    if (confirm(t('actions.confirmClearAll'))) {
-      try {
-        const { assessmentEngine: engine } = await loadModules();
-        if (!engine) throw new Error('Assessment engine not available');
+  const cancelDeleteSession = () => {
+    setShowDeleteModal(false);
+    setDeleteSessionId(null);
+  };
 
-        let deletedCount = 0;
-        for (const session of activeSessions) {
-          if (engine.deleteSession(session.id)) {
-            deletedCount++;
-          }
-        }
+  const clearAllSessions = () => {
+    setShowClearAllModal(true);
+  };
 
-        if (deletedCount > 0) {
-          setActiveSessions([]);
-          showMessage(t('messages.clearedCount', { count: deletedCount }), 'success');
-        } else {
-          showMessage(t('errors.clearFailed'), 'error');
+  const confirmClearAllSessions = async () => {
+    try {
+      const { assessmentEngine: engine } = await loadModules();
+      if (!engine) throw new Error('Assessment engine not available');
+
+      let deletedCount = 0;
+      for (const session of activeSessions) {
+        if (engine.deleteSession(session.id)) {
+          deletedCount++;
         }
-      } catch (error) {
-        console.error('Failed to clear all sessions:', error);
+      }
+
+      if (deletedCount > 0) {
+        setActiveSessions([]);
+        showMessage(t('messages.clearedCount', { count: deletedCount }), 'success');
+      } else {
         showMessage(t('errors.clearFailed'), 'error');
       }
+    } catch (error) {
+      console.error('Failed to clear all sessions:', error);
+      showMessage(t('errors.clearFailed'), 'error');
     }
+    setShowClearAllModal(false);
+  };
+
+  const cancelClearAllSessions = () => {
+    setShowClearAllModal(false);
   };
 
   const formatDate = (date: Date | string) => {
@@ -349,6 +371,58 @@ export default function ContinueAssessmentPage({ className = '', asWidget = fals
         <button onClick={clearAllSessions} className="btn btn-outline btn-error">
           {t('actions.clearAll')}
         </button>
+      </div>
+
+      {/* Delete Session Confirmation Modal */}
+      <div className={`modal ${showDeleteModal ? 'modal-open' : ''}`}>
+        <div className="modal-box">
+          <h3 className="font-bold text-lg mb-4">
+            {t('actions.confirmDelete')}
+          </h3>
+          <p className="py-4">
+            {t('messages.deleteSessionMessage')}
+          </p>
+          <div className="modal-action">
+            <button
+              onClick={confirmDeleteSession}
+              className="btn btn-error"
+            >
+              {t('common.delete')}
+            </button>
+            <button
+              onClick={cancelDeleteSession}
+              className="btn btn-outline"
+            >
+              {t('common.cancel')}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Clear All Sessions Confirmation Modal */}
+      <div className={`modal ${showClearAllModal ? 'modal-open' : ''}`}>
+        <div className="modal-box">
+          <h3 className="font-bold text-lg mb-4">
+            {t('actions.confirmClearAll')}
+          </h3>
+          <p className="py-4">
+            {t('messages.clearAllSessionsMessage')}
+          </p>
+          <div className="modal-action">
+            <button
+              onClick={confirmClearAllSessions}
+              className="btn btn-error"
+            >
+              {t('common.clearAll')}
+            </button>
+            <button
+              onClick={cancelClearAllSessions}
+              className="btn btn-outline"
+            >
+              {t('common.cancel')}
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );

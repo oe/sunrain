@@ -31,6 +31,8 @@ function AssessmentHistoryClient() {
     riskLevel: ''
   });
   const [showMessage, setShowMessage] = useState<{ text: string; type: 'success' | 'error' | 'info' } | null>(null);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [deleteResultId, setDeleteResultId] = useState<string | null>(null);
 
   const itemsPerPage = 10;
 
@@ -149,8 +151,13 @@ function AssessmentHistoryClient() {
   }, [t]);
 
   const handleDelete = useCallback((resultId: string) => {
-    if (confirm(t('history.list.delete'))) {
-      const success = resultsAnalyzer.deleteResult(resultId);
+    setDeleteResultId(resultId);
+    setShowDeleteModal(true);
+  }, []);
+
+  const confirmDelete = useCallback(() => {
+    if (deleteResultId) {
+      const success = resultsAnalyzer.deleteResult(deleteResultId);
       if (success) {
         loadResults();
         setShowMessage({ text: t('common.success'), type: 'success' });
@@ -158,7 +165,14 @@ function AssessmentHistoryClient() {
         setShowMessage({ text: t('common.error'), type: 'error' });
       }
     }
-  }, [t, loadResults]);
+    setShowDeleteModal(false);
+    setDeleteResultId(null);
+  }, [deleteResultId, t, loadResults]);
+
+  const cancelDelete = useCallback(() => {
+    setShowDeleteModal(false);
+    setDeleteResultId(null);
+  }, []);
 
   const handleExport = useCallback(() => {
     try {
@@ -193,6 +207,10 @@ function AssessmentHistoryClient() {
     }
   }, [showMessage]);
 
+  const handlePageChange = useCallback((page: number) => {
+    setCurrentPage(page);
+  }, []);
+
   if (translationsLoading || isLoading) {
     return (
       <div className="flex justify-center items-center py-12">
@@ -216,10 +234,6 @@ function AssessmentHistoryClient() {
       </div>
     );
   }
-
-  const handlePageChange = useCallback((page: number) => {
-    setCurrentPage(page);
-  }, []);
 
   return (
     <div className="space-y-6">
@@ -280,6 +294,32 @@ function AssessmentHistoryClient() {
           />
         </>
       )}
+
+      {/* Delete Confirmation Modal */}
+      <div className={`modal ${showDeleteModal ? 'modal-open' : ''}`}>
+        <div className="modal-box">
+          <h3 className="font-bold text-lg mb-4">
+            {t('history.list.confirmDelete')}
+          </h3>
+          <p className="py-4">
+            {t('history.list.deleteMessage')}
+          </p>
+          <div className="modal-action">
+            <button
+              onClick={confirmDelete}
+              className="btn btn-error"
+            >
+              {t('common.delete')}
+            </button>
+            <button
+              onClick={cancelDelete}
+              className="btn btn-outline"
+            >
+              {t('common.cancel')}
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
