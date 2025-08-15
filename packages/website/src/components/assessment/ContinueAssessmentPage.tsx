@@ -18,10 +18,7 @@ const loadModules = async () => {
   return { assessmentEngine, questionBankManager };
 };
 
-interface ContinueAssessmentPageProps {
-  className?: string;
-  asWidget?: boolean; // New prop to render as a simple widget
-}
+import type { ContinueAssessmentPageProps } from '@/types/assessment';
 
 export default function ContinueAssessmentPage({ className = '', asWidget = false }: ContinueAssessmentPageProps) {
   const [activeSessions, setActiveSessions] = useState<AssessmentSession[]>([]);

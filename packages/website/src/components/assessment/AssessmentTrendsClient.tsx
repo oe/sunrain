@@ -3,22 +3,7 @@ import { useAssessmentTranslations } from '@/hooks/useCSRTranslations';
 import { resultsAnalyzer } from '@/lib/assessment/ResultsAnalyzer';
 import { questionBankManager } from '@/lib/assessment/QuestionBankManager';
 import { TrendingUp, TrendingDown, BarChart3, Download, AlertCircle } from 'lucide-react';
-
-interface TrendData {
-  month: string;
-  avgScore: number;
-  count: number;
-}
-
-interface CategoryPerformance {
-  [category: string]: number;
-}
-
-interface RiskTrends {
-  low: number;
-  medium: number;
-  high: number;
-}
+import type { TrendData, CategoryPerformance, RiskTrends } from '@/types/assessment';
 
 export default function AssessmentTrendsClient() {
   const { t, isLoading: translationsLoading } = useAssessmentTranslations();

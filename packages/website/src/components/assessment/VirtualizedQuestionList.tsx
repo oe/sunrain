@@ -1,16 +1,7 @@
 import { memo } from 'react';
 import { CheckCircle, Clock, Circle } from 'lucide-react';
 import { useVirtualList } from '@/utils/RenderOptimizer';
-import type { Question } from '@/types/assessment';
-
-interface VirtualizedQuestionListProps {
-  questions: Question[];
-  currentIndex: number;
-  onQuestionSelect: (index: number) => void;
-  containerHeight: number;
-  itemHeight?: number;
-  t: (key: string, params?: Record<string, any>) => string;
-}
+import type { VirtualizedQuestionListProps } from '@/types/assessment';
 
 export default memo(function VirtualizedQuestionList({
   questions,

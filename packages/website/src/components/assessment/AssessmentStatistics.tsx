@@ -1,11 +1,6 @@
 import { memo } from 'react';
 import { useAssessmentTranslations } from '@/hooks/useCSRTranslations';
-
-interface AssessmentStatisticsProps {
-  totalResults: number;
-  averageTime: number;
-  lastAssessment: string;
-}
+import type { AssessmentStatisticsProps } from '@/types/assessment';
 
 function AssessmentStatistics({ totalResults, averageTime, lastAssessment }: AssessmentStatisticsProps) {
   const { t } = useAssessmentTranslations();

@@ -1,14 +1,8 @@
 import { useState } from 'react';
 import { Play } from 'lucide-react';
 import { useAssessmentTranslations } from '@/hooks/useCSRTranslations';
-import type { AssessmentType } from '@/types/assessment';
+import type { StartAssessmentButtonProps } from '@/types/assessment';
 import ExistingSessionDialog from './ExistingSessionDialog';
-
-interface StartAssessmentButtonProps {
-  assessment: AssessmentType;
-  buttonText: string;
-  language: string;
-}
 
 export default function StartAssessmentButton({
   assessment,

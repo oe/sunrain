@@ -1,13 +1,7 @@
 import { useState } from 'react';
 import { Info, X, Shield, CheckCircle } from 'lucide-react';
 import { useAssessmentTranslations } from '@/hooks/useCSRTranslations';
-import type { AssessmentType } from '@/types/assessment';
-
-interface QuestionnaireInfoButtonProps {
-  assessment: AssessmentType;
-  buttonText: string;
-  onStartAssessment?: (assessmentId: string) => void;
-}
+import type { QuestionnaireInfoButtonProps } from '@/types/assessment';
 
 export default function QuestionnaireInfoButton({
   assessment,

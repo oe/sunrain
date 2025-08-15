@@ -1,17 +1,6 @@
 import { memo } from 'react';
-import { ChevronLeft, Save, Loader2, ChevronRight } from 'lucide-react';
-
-interface NavigationControlsProps {
-  canGoBack: boolean;
-  canGoNext: boolean;
-  isLastQuestion: boolean;
-  isSubmitting: boolean;
-  onPrevious: () => void;
-  onNext: () => void;
-  onSave: () => void;
-  showSaveButton?: boolean;
-  t: (key: string, params?: Record<string, any>) => string;
-}
+import { ChevronLeft, Save, ChevronRight } from 'lucide-react';
+import type { NavigationControlsProps } from '@/types/assessment';
 
 export default memo(function NavigationControls({
   canGoBack,

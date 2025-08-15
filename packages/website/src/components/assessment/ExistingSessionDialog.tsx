@@ -1,16 +1,7 @@
 import { useState } from 'react';
-import { Info, Loader2, AlertTriangle } from 'lucide-react';
+import { Info, AlertTriangle } from 'lucide-react';
 import { useAssessmentTranslations } from '@/hooks/useCSRTranslations';
-import type { AssessmentSession } from '@/types/assessment';
-
-interface ExistingSessionDialogProps {
-  existingSession: AssessmentSession;
-  assessmentName: string;
-  language: string;
-  onContinue: () => void;
-  onRestart: () => void;
-  onCancel: () => void;
-}
+import type { ExistingSessionDialogProps } from '@/types/assessment';
 
 export default function ExistingSessionDialog({
   existingSession,

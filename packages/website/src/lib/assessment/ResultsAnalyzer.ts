@@ -7,6 +7,7 @@ import type {
   RiskLevel,
 } from "../../types/assessment";
 import { questionBankManager } from "./QuestionBankManager";
+import { localStorageManager } from "./LocalStorageManager";
 
 /**
  * Results Analyzer
@@ -602,8 +603,6 @@ export class ResultsAnalyzer {
 
     try {
       // 使用新的 LocalStorageManager 保存每个结果
-      const LocalStorageManagerModule = await import("./LocalStorageManager");
-      const localStorageManager = LocalStorageManagerModule.localStorageManager;
 
       for (const result of this.results.values()) {
         await localStorageManager.saveResult(result);
@@ -630,8 +629,6 @@ export class ResultsAnalyzer {
     }
 
     try {
-      const LocalStorageManagerModule = await import("./LocalStorageManager");
-      const localStorageManager = LocalStorageManagerModule.localStorageManager;
       const results = await localStorageManager.loadResultsAsync();
 
       // 清空现有结果并加载新的

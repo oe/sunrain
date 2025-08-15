@@ -1,20 +1,6 @@
 import React, { Component, type ReactNode } from 'react';
 import { AlertTriangle, RefreshCw, Home } from 'lucide-react';
-
-interface ErrorHandlerProps {
-  children?: ReactNode;
-  error?: Error;
-  title?: string;
-  message?: string;
-  fallback?: ReactNode;
-  onRetry?: () => void;
-  onGoBack?: () => void;
-  onError?: (error: Error, errorInfo?: React.ErrorInfo) => void;
-  showRetry?: boolean;
-  showGoBack?: boolean;
-  language?: string;
-  t?: (key: string, params?: Record<string, any>) => string;
-}
+import type { ErrorDisplayProps, ErrorHandlerProps } from '@/types/assessment';
 
 interface ErrorHandlerState {
   hasError: boolean;
@@ -172,17 +158,6 @@ export default class ErrorHandler extends Component<ErrorHandlerProps, ErrorHand
   }
 }
 
-// Functional component wrapper for non-boundary error display
-interface ErrorDisplayProps {
-  error: Error | string;
-  title?: string;
-  onRetry?: () => void;
-  onGoBack?: () => void;
-  showRetry?: boolean;
-  showGoBack?: boolean;
-  language?: string;
-  t?: (key: string, params?: Record<string, any>) => string;
-}
 
 export function ErrorDisplay(props: ErrorDisplayProps) {
   const errorMessage = typeof props.error === 'string' ? props.error : props.error.message;
