@@ -23,7 +23,9 @@ const AssessmentTrendsClient = memo(function AssessmentTrendsClient() {
       setResults(allResults);
       setError(null);
     } catch (err) {
-      console.error('Failed to load trends:', err);
+      if (process.env.NODE_ENV === 'development') {
+        console.error('Failed to load trends:', err);
+      }
       setError('Failed to load trends');
     } finally {
       setIsLoading(false);
@@ -184,7 +186,9 @@ const AssessmentTrendsClient = memo(function AssessmentTrendsClient() {
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
     } catch (error) {
-      console.error('Export failed:', error);
+      if (process.env.NODE_ENV === 'development') {
+        console.error('Export failed:', error);
+      }
     }
   }, [getFilteredResults, currentRange, t, getCategoryPerformanceData, getRiskTrendsData, getInsights]);
 

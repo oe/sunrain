@@ -82,7 +82,9 @@ function AssessmentHistoryClient() {
       setAllResults(results);
       setError(null);
     } catch (err) {
-      console.error('Failed to load assessment history:', err);
+      if (process.env.NODE_ENV === 'development') {
+        console.error('Failed to load assessment history:', err);
+      }
       setError('Failed to load assessment history');
     } finally {
       setIsLoading(false);
@@ -146,7 +148,9 @@ function AssessmentHistoryClient() {
         setShowMessage({ text: t('common.success'), type: 'success' });
       }
     } catch (error) {
-      console.error('Share failed:', error);
+      if (process.env.NODE_ENV === 'development') {
+        console.error('Share failed:', error);
+      }
       setShowMessage({ text: t('common.error'), type: 'error' });
     }
   }, [t]);
@@ -191,7 +195,9 @@ function AssessmentHistoryClient() {
 
       setShowMessage({ text: t('common.success'), type: 'success' });
     } catch (error) {
-      console.error('Export failed:', error);
+      if (process.env.NODE_ENV === 'development') {
+        console.error('Export failed:', error);
+      }
       setShowMessage({ text: t('common.error'), type: 'error' });
     }
   }, [t]);

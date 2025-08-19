@@ -68,6 +68,7 @@ export const assessmentHi: IAssessmentTranslations = {
 
   validation: {
     checking: 'सत्यापन कर रहे हैं...',
+    withWarnings: 'with warnings', // TODO: Translate to Hindi
   },
 
   execution: {

@@ -36,7 +36,9 @@ export default function StartAssessmentButton({
         window.location.href = `/assessment/take/${assessment.id}/`;
       }
     } catch (error) {
-      console.error('Error checking for existing sessions:', error);
+      if (process.env.NODE_ENV === 'development') {
+        console.error('Error checking for existing sessions:', error);
+      }
       // Fallback to direct navigation
       window.location.href = `/assessment/take/${assessment.id}/`;
     } finally {
@@ -59,7 +61,9 @@ export default function StartAssessmentButton({
       setShowExistingSessionDialog(false);
       window.location.href = `/assessment/take/${assessment.id}/`;
     } catch (error) {
-      console.error('Error restarting assessment:', error);
+      if (process.env.NODE_ENV === 'development') {
+        console.error('Error restarting assessment:', error);
+      }
       setShowExistingSessionDialog(false);
       window.location.href = `/assessment/take/${assessment.id}/`;
     }

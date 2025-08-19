@@ -126,7 +126,7 @@
   - Implement code splitting where beneficial
   - _Requirements: 11.1, 11.2, 11.3, 11.4_
 
-- [ ] 20. Fix translation hook usage and missing translations
+- [x] 20. Fix translation hook usage and missing translations
   - Fix incorrect useAssessmentTranslations hook usage across all TSX files
   - Ensure proper language parameter passing to translation hooks
   - Identify and translate missing Chinese text strings
@@ -134,7 +134,7 @@
   - Test translation functionality across all assessment components
   - _Requirements: 9.1, 9.4_
 
-- [ ] 21. Final integration and cleanup
+- [x] 21. Final integration and cleanup
   - Remove all unused files and components
   - Update all imports and dependencies
   - Ensure consistent code organization

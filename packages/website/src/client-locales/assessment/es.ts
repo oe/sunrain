@@ -159,9 +159,56 @@ export const assessmentEs: IAssessmentTranslations = {
     noResultData: 'No se encontraron datos de evaluación'
   },
 
+  history: {
+    stats: {
+      total: "Evaluaciones Totales",
+      averageTime: "Tiempo Promedio",
+      lastAssessment: "Última Evaluación",
+    },
+    list: {
+      dimensions: "dimensiones",
+      viewDetails: "Ver Detalles",
+      share: "Compartir",
+      delete: "Eliminar",
+    },
+    filters: {
+      type: "Tipo de Evaluación",
+      timeRange: "Rango de Tiempo",
+      riskLevel: "Nivel de Riesgo",
+    },
+  },
+
+  status: {
+    active: "Activo",
+    paused: "Pausado",
+  },
+
+  labels: {
+    unknownAssessment: "Evaluación Desconocida",
+    startTime: "Iniciado",
+    timeSpent: "Tiempo Empleado",
+    answered: "Respondido",
+    questions: "preguntas",
+    estimatedRemaining: "Tiempo Estimado Restante",
+  },
+
+  time: {
+    minutes: "minutos",
+  },
+
+  messages: {
+    deleted: "Sesión eliminada exitosamente",
+    clearedCount: "Se eliminaron {count} sesiones",
+    noActiveSessions: "¡Todo al día!",
+    noActiveSessionsMessage: "No tienes evaluaciones incompletas. Comienza una nueva para continuar tu viaje de salud mental.",
+  },
+
   actions: {
     retry: 'Reintentar',
     goBack: 'Volver',
+    refresh: "Actualizar",
+    startNew: "Comenzar Nueva Evaluación",
+    continue: "Continuar",
   },
 
   questionnaireInfo: {
@@ -234,6 +281,20 @@ export const assessmentEs: IAssessmentTranslations = {
     confirm: 'Confirmar',
     yes: 'Sí',
     no: 'No',
+    error: "Error",
+    showing: "Mostrando",
+    to: "a",
+    of: "de",
+    results: "resultados",
+    riskLevels: {
+      high: "Alto Riesgo",
+      medium: "Riesgo Medio",
+      low: "Bajo Riesgo",
+    },
+    timeUnits: {
+      minutes: "min",
+      seconds: "s",
+    },
   },
 
 };

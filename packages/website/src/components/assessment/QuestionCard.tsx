@@ -78,7 +78,9 @@ export default memo(function QuestionCard({
       setValidationState(newState);
       onValidationChange?.(newState.isValid, newState.errors, newState.warnings);
     } catch (error) {
-      console.error('Validation failed:', error);
+      if (process.env.NODE_ENV === 'development') {
+        console.error('Validation failed:', error);
+      }
       const errorState: ValidationState = {
         isValid: false,
         errors: [t('errors.validationFailed')],

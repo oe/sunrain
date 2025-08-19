@@ -1,4 +1,4 @@
-import React, { Component, type ReactNode } from 'react';
+import React, { Component } from 'react';
 import { AlertTriangle, RefreshCw, Home } from 'lucide-react';
 import type { ErrorDisplayProps, ErrorHandlerProps } from '@/types/assessment';
 

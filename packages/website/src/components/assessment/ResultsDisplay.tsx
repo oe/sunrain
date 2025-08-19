@@ -19,15 +19,10 @@ export default function ResultsDisplay() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    console.log('🔍 ResultsDisplay: Starting result loading process');
-    console.log('📍 Current URL:', window.location.href);
-
     // Get result ID from URL hash
     const hash = window.location.hash.substring(1);
-    console.log('🔗 URL hash:', hash);
 
     if (hash) {
-      console.log('✅ Using result ID from hash:', hash);
       setResultId(hash);
       loadResult(hash);
     } else {
@@ -35,39 +30,30 @@ export default function ResultsDisplay() {
       const urlParams = new URLSearchParams(window.location.search);
       const id = urlParams.get('id');
       const sessionId = urlParams.get('session');
-      console.log('🔗 URL params - id:', id, 'session:', sessionId);
 
       if (id) {
-        console.log('✅ Using result ID from URL params:', id);
         setResultId(id);
         loadResult(id);
       } else if (sessionId) {
-        console.log('✅ Using session ID from URL params:', sessionId);
         // Try to find result by session ID
         loadResultBySessionId(sessionId);
       } else {
-        console.log('🔍 No URL params, checking storage...');
-
         // Try to get the latest result from session storage
         let latestResultId = sessionStorage.getItem('latest_assessment_result');
-        console.log('💾 SessionStorage result ID:', latestResultId);
 
         // Fallback to localStorage backup
         if (!latestResultId) {
           try {
             latestResultId = localStorage.getItem('latest_assessment_result_backup');
-            console.log('💾 LocalStorage backup result ID:', latestResultId);
           } catch (error) {
-            console.warn('⚠️ Failed to get result ID from localStorage backup:', error);
+            // Ignore localStorage errors
           }
         }
 
         // Final fallback: get the most recent result
         if (!latestResultId) {
-          console.log('🔍 No stored result ID, checking all results...');
           try {
             const allResults = resultsAnalyzer.getAllResults();
-            console.log('📊 All results count:', allResults.length);
 
             if (allResults.length > 0) {
               // Sort by completion date and get the most recent
@@ -75,19 +61,16 @@ export default function ResultsDisplay() {
                 b.completedAt.getTime() - a.completedAt.getTime()
               );
               latestResultId = sortedResults[0].id;
-              console.log('✅ Using most recent result as fallback:', latestResultId);
             }
           } catch (error) {
-            console.warn('⚠️ Failed to get most recent result:', error);
+            // Ignore errors when getting results
           }
         }
 
         if (latestResultId) {
-          console.log('✅ Found result ID, loading:', latestResultId);
           setResultId(latestResultId);
           loadResult(latestResultId);
         } else {
-          console.error('❌ No result ID found anywhere');
           setError('NO_RESULT_ID');
           setIsLoading(false);
         }
@@ -112,20 +95,18 @@ export default function ResultsDisplay() {
       setIsLoading(true);
       setError(null);
 
-      console.log('🔄 Loading result with ID:', id);
-
       // Load result from local storage
       const loadedResult = resultsAnalyzer.getResult(id);
-      console.log('📊 Result found in analyzer:', !!loadedResult);
 
       if (loadedResult) {
-        console.log('✅ Result details:', {
-          id: loadedResult.id,
-          sessionId: loadedResult.sessionId,
-          assessmentTypeId: loadedResult.assessmentTypeId,
-          completedAt: loadedResult.completedAt,
-          scoresCount: Object.keys(loadedResult.scores).length
-        });
+        setResult(loadedResult);
+
+        // Get assessment type information
+        const assessmentTypeData = questionBankManager.getAssessmentType(loadedResult.assessmentTypeId);
+        setAssessmentType(assessmentTypeData);
+        setResultId(loadedResult.id);
+        setIsLoading(false);
+        return;
       }
 
       if (!loadedResult) {
@@ -133,7 +114,6 @@ export default function ResultsDisplay() {
         try {
           resultsAnalyzer.reloadResultsFromStorage();
           const reloadedResult = resultsAnalyzer.getResult(id);
-          console.log('🔍 Found result after reload:', !!reloadedResult);
 
           if (reloadedResult) {
             setResult(reloadedResult);
@@ -148,7 +128,7 @@ export default function ResultsDisplay() {
             return;
           }
         } catch (storageError) {
-          console.error('Failed to reload from storage:', storageError);
+          // Ignore storage reload errors
         }
 
         throw new Error('RESULT_NOT_FOUND');
@@ -165,7 +145,6 @@ export default function ResultsDisplay() {
       setAssessmentType(assessmentTypeData);
 
     } catch (err) {
-      console.error('Failed to load result:', err);
       setError(err instanceof Error ? err.message : 'LOAD_FAILED');
     } finally {
       setIsLoading(false);
@@ -177,8 +156,6 @@ export default function ResultsDisplay() {
       setIsLoading(true);
       setError(null);
 
-      console.log('Loading result by session ID:', sessionId);
-
       // First try to get from memory
       let allResults = resultsAnalyzer.getAllResults();
 
@@ -187,14 +164,12 @@ export default function ResultsDisplay() {
         try {
           resultsAnalyzer.reloadResultsFromStorage();
           allResults = resultsAnalyzer.getAllResults();
-          console.log('📊 Reloaded results from storage:', allResults.length);
         } catch (storageError) {
-          console.error('⚠️ Failed to reload results from storage:', storageError);
+          // Ignore storage reload errors
         }
       }
 
       const loadedResult = allResults.find(r => r.sessionId === sessionId);
-      console.log('Found result by session ID:', !!loadedResult, loadedResult?.id);
 
       if (!loadedResult) {
         throw new Error('RESULT_NOT_FOUND');
@@ -215,7 +190,6 @@ export default function ResultsDisplay() {
       setAssessmentType(assessmentTypeData);
 
     } catch (err) {
-      console.error('Failed to load result by session ID:', err);
       setError(err instanceof Error ? err.message : 'LOAD_FAILED');
     } finally {
       setIsLoading(false);
@@ -236,7 +210,6 @@ export default function ResultsDisplay() {
         await navigator.share(shareData);
       } catch (err) {
         // User cancelled or not supported
-        console.log('Share cancelled or not supported');
       }
     } else {
       // Fallback to copy link
@@ -244,7 +217,7 @@ export default function ResultsDisplay() {
         await navigator.clipboard.writeText(window.location.href);
         showNotification('Link copied to clipboard');
       } catch (err) {
-        console.error('Failed to copy link:', err);
+        // Failed to copy link
       }
     }
   };

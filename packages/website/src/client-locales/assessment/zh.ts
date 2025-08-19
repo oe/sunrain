@@ -159,6 +159,14 @@ export const assessmentZh: IAssessmentTranslations = {
     noResultData: '没有找到评测数据'
   },
 
+  actions: {
+    retry: '重试',
+    goBack: '返回',
+    refresh: '刷新',
+    startNew: '开始新评测',
+    continue: '继续',
+  },
+
   questionnaireInfo: {
     description: '描述',
     purpose: '目的',

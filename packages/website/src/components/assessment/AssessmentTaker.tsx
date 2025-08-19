@@ -47,8 +47,6 @@ interface AssessmentState {
   // Modal state
   isPaused: boolean;
   showPauseModal: boolean;
-}
-
 const AssessmentTaker = memo(function AssessmentTaker({
   assessmentId,
   assessmentData,
@@ -131,9 +129,11 @@ const AssessmentTaker = memo(function AssessmentTaker({
       const assessmentType = questionBankManager.getAssessmentType(assessmentId);
       const allAssessmentTypes = questionBankManager.getAssessmentTypes();
 
-      console.log('QuestionBankManager debug:', {
-        assessmentId,
-        assessmentType: assessmentType,
+      // Debug info for development
+      if (process.env.NODE_ENV === 'development') {
+        console.log('QuestionBankManager debug:', {
+          assessmentId,
+          assessmentType: assessmentType,
         allAssessmentTypes: allAssessmentTypes.map(a => ({ id: a.id, name: a.name, questionCount: a.questions?.length })),
         firstQuestionFromManager: assessmentType?.questions?.[0],
         firstQuestionFromProps: assessmentData.questions?.[0]
@@ -142,15 +142,17 @@ const AssessmentTaker = memo(function AssessmentTaker({
       const questions = assessmentType?.questions || assessmentData.questions;
       const currentQuestion = questions[session.currentQuestionIndex];
 
-      console.log('Initializing assessment:', {
-        assessmentId,
-        sessionIndex: session.currentQuestionIndex,
-        totalQuestions: questions.length,
-        currentQuestion: currentQuestion,
-        questionOptions: currentQuestion?.options,
-        usingEngineData: !!assessmentType,
-        assessmentDataQuestions: assessmentData.questions?.length
-      });
+          console.log('Initializing assessment:', {
+            assessmentId,
+            sessionIndex: session.currentQuestionIndex,
+            totalQuestions: questions.length,
+            currentQuestion: currentQuestion,
+            questionOptions: currentQuestion?.options,
+            usingEngineData: !!assessmentType,
+            assessmentDataQuestions: assessmentData.questions?.length
+          });
+        }
+      }
 
       // Load existing answer if resuming
       const existingAnswer = session.answers.length > session.currentQuestionIndex
@@ -169,7 +171,9 @@ const AssessmentTaker = memo(function AssessmentTaker({
       }));
 
     } catch (error) {
-      console.error('AssessmentTaker: Initialization error:', error);
+      if (process.env.NODE_ENV === 'development') {
+        console.error('AssessmentTaker: Initialization error:', error);
+      }
       const errorMessage = error instanceof Error ? error.message : t('errors.initializationFailed');
       setState(prev => ({ ...prev, error: errorMessage, isLoading: false }));
       onError?.(error instanceof Error ? error : new Error(errorMessage));
@@ -236,33 +240,39 @@ const AssessmentTaker = memo(function AssessmentTaker({
         answeredAt: new Date()
       };
 
-      console.log('Saving answer with complete question data:', {
-        sessionId: state.session.id,
-        questionId: completeQuestion.id,
-        questionType: completeQuestion.type,
-        answer: state.currentAnswer,
-        required: completeQuestion.required,
-        options: completeQuestion.options,
-        originalQuestionHadOptions: !!state.currentQuestion.options,
-        completeQuestionHasOptions: !!completeQuestion.options
-      });
+      if (process.env.NODE_ENV === 'development') {
+        console.log('Saving answer with complete question data:', {
+          sessionId: state.session.id,
+          questionId: completeQuestion.id,
+          questionType: completeQuestion.type,
+          answer: state.currentAnswer,
+          required: completeQuestion.required,
+          options: completeQuestion.options,
+          originalQuestionHadOptions: !!state.currentQuestion.options,
+          completeQuestionHasOptions: !!completeQuestion.options
+        });
+      }
 
       const result = await engine.submitAnswer(state.session.id, state.currentAnswer);
 
-      console.log('Submit result:', result);
+      if (process.env.NODE_ENV === 'development') {
+        console.log('Submit result:', result);
+      }
 
       if (result.success) {
         setState(prev => ({
           ...prev,
           answers: [...prev.answers.filter(a => a.questionId !== answer.questionId), answer]
         }));
-      } else {
+      } else if (process.env.NODE_ENV === 'development') {
         console.error('Submit failed - validation or other error. Answer:', state.currentAnswer, 'Complete question options:', completeQuestion.options);
       }
 
       return result.success;
     } catch (error) {
-      console.error('Failed to save answer:', error);
+      if (process.env.NODE_ENV === 'development') {
+        console.error('Failed to save answer:', error);
+      }
       return false;
     }
   }, [state.session, state.currentQuestion, state.currentAnswer, assessmentId]);

@@ -163,6 +163,14 @@ export const assessmentEn: IAssessmentTranslations = {
     noResultData: "No assessment data found",
   },
 
+  actions: {
+    retry: "Retry",
+    goBack: "Go Back",
+    refresh: "Refresh",
+    startNew: "Start New Assessment",
+    continue: "Continue",
+  },
+
   questionnaireInfo: {
     description: "Description",
     purpose: "Purpose",

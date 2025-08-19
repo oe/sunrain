@@ -1,11 +1,11 @@
 name: Content Update Automation
 
 on:
-  # 定时任务 - 每周一、三、五的午夜运行
-  schedule:
-    - cron: '0 0 * * 1'  # 每周一午夜 - 书籍更新
-    - cron: '0 0 * * 3'  # 每周三午夜 - 音乐更新
-    - cron: '0 0 * * 5'  # 每周五午夜 - 电影更新
+  # # 定时任务 - 每周一、三、五的午夜运行
+  # schedule:
+  #   - cron: '0 0 * * 1'  # 每周一午夜 - 书籍更新
+  #   - cron: '0 0 * * 3'  # 每周三午夜 - 音乐更新
+  #   - cron: '0 0 * * 5'  # 每周五午夜 - 电影更新
 
   # 手动触发
   workflow_dispatch:

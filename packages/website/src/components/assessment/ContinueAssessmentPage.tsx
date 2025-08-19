@@ -53,7 +53,9 @@ export default function ContinueAssessmentPage({ className = '', asWidget = fals
 
       setActiveSessions(sessions || []);
     } catch (err) {
-      console.error('Failed to load active sessions:', err);
+      if (process.env.NODE_ENV === 'development') {
+        console.error('Failed to load active sessions:', err);
+      }
       setError(err instanceof Error ? err.message : 'Failed to load sessions');
     } finally {
       setIsLoading(false);
@@ -73,7 +75,9 @@ export default function ContinueAssessmentPage({ className = '', asWidget = fals
         showMessage(t('errors.cannotContinue'), 'error');
       }
     } catch (error) {
-      console.error('Failed to continue session:', error);
+      if (process.env.NODE_ENV === 'development') {
+        console.error('Failed to continue session:', error);
+      }
       showMessage(t('errors.continueFailed'), 'error');
     }
   };
@@ -98,7 +102,9 @@ export default function ContinueAssessmentPage({ className = '', asWidget = fals
           showMessage(t('errors.deleteFailed'), 'error');
         }
       } catch (error) {
-        console.error('Failed to delete session:', error);
+        if (process.env.NODE_ENV === 'development') {
+          console.error('Failed to delete session:', error);
+        }
         showMessage(t('errors.deleteFailed'), 'error');
       }
     }
@@ -134,7 +140,9 @@ export default function ContinueAssessmentPage({ className = '', asWidget = fals
         showMessage(t('errors.clearFailed'), 'error');
       }
     } catch (error) {
-      console.error('Failed to clear all sessions:', error);
+      if (process.env.NODE_ENV === 'development') {
+        console.error('Failed to clear all sessions:', error);
+      }
       showMessage(t('errors.clearFailed'), 'error');
     }
     setShowClearAllModal(false);
