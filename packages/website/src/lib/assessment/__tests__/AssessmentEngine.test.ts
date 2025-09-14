@@ -80,7 +80,7 @@ vi.mock('../QuestionBankManager', () => ({
 // Mock the ResultsAnalyzer
 vi.mock('../ResultsAnalyzer', () => ({
   resultsAnalyzer: {
-    analyzeSession: vi.fn(() => ({
+    analyzeSession: vi.fn().mockResolvedValue({
       id: 'result-123',
       sessionId: 'session-123',
       assessmentTypeId: 'phq-9',

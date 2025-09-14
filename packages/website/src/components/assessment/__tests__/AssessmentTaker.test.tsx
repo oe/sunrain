@@ -26,7 +26,7 @@ vi.mock('@/lib/assessment/QuestionBankManager', () => ({
 // Mock the results analyzer
 vi.mock('@/lib/assessment/ResultsAnalyzer', () => ({
   resultsAnalyzer: {
-    analyzeSession: vi.fn(),
+    analyzeSession: vi.fn().mockResolvedValue(null),
     getAllResults: vi.fn(() => [])
   }
 }));

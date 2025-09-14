@@ -314,7 +314,7 @@ export class AssessmentInterface {
 
     try {
       // Analyze results
-      const result = this.resultsAnalyzer.analyzeSession(this.session);
+      const result = await this.resultsAnalyzer.analyzeSession(this.session);
       if (result) {
         // Redirect to results page
         setTimeout(() => {

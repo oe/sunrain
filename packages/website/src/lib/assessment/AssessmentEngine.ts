@@ -370,7 +370,7 @@ export class AssessmentEngine {
         });
 
         const { resultsAnalyzer } = await import('./ResultsAnalyzer');
-        const result = resultsAnalyzer.analyzeSession(session);
+        const result = await resultsAnalyzer.analyzeSession(session);
 
         if (result) {
           console.log('✅ Assessment result generated successfully:', {
@@ -392,22 +392,8 @@ export class AssessmentEngine {
             console.warn('⚠️ Failed to store result ID backup:', storageError);
           }
 
-          // Verify the result was actually saved
-          setTimeout(async () => {
-            try {
-              const { resultsAnalyzer: verifyAnalyzer } = await import('./ResultsAnalyzer');
-              const savedResult = verifyAnalyzer.getResult(result.id);
-              console.log('🔍 Verification - Result found in analyzer:', !!savedResult);
-
-              if (savedResult) {
-                console.log('✅ Result verification successful');
-              } else {
-                console.error('❌ Result verification failed - result not found in analyzer');
-              }
-            } catch (verifyError) {
-              console.error('❌ Result verification error:', verifyError);
-            }
-          }, 100);
+          // Result is now fully saved and accessible
+          console.log('✅ Result is fully saved and ready for display');
 
         } else {
           console.error('❌ Failed to generate assessment result - analyzeSession returned null');

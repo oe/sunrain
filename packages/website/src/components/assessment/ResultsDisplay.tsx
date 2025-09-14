@@ -96,7 +96,7 @@ export default function ResultsDisplay() {
       setError(null);
 
       // Load result from local storage
-      const loadedResult = resultsAnalyzer.getResult(id);
+      let loadedResult = resultsAnalyzer.getResult(id);
 
       if (loadedResult) {
         setResult(loadedResult);
@@ -109,40 +109,51 @@ export default function ResultsDisplay() {
         return;
       }
 
-      if (!loadedResult) {
-        // Try to reload from localStorage and search again
-        try {
-          resultsAnalyzer.reloadResultsFromStorage();
-          const reloadedResult = resultsAnalyzer.getResult(id);
+      // If not found in memory, try to reload from storage
+      try {
+        await resultsAnalyzer.reloadResultsFromStorage();
+        loadedResult = resultsAnalyzer.getResult(id);
 
-          if (reloadedResult) {
-            setResult(reloadedResult);
+        if (loadedResult) {
+          setResult(loadedResult);
 
-            // Get assessment type information
-            const assessmentTypeData = questionBankManager.getAssessmentType(reloadedResult.assessmentTypeId);
-            if (!assessmentTypeData) {
-              throw new Error('ASSESSMENT_TYPE_NOT_FOUND');
-            }
-
-            setAssessmentType(assessmentTypeData);
-            return;
+          // Get assessment type information
+          const assessmentTypeData = questionBankManager.getAssessmentType(loadedResult.assessmentTypeId);
+          if (!assessmentTypeData) {
+            throw new Error('ASSESSMENT_TYPE_NOT_FOUND');
           }
-        } catch (storageError) {
-          // Ignore storage reload errors
+
+          setAssessmentType(assessmentTypeData);
+          setResultId(loadedResult.id);
+          setIsLoading(false);
+          return;
+        }
+      } catch (storageError) {
+        console.warn('Failed to reload from storage:', storageError);
+      }
+
+      // If still not found, wait a bit and try one more time
+      // This handles cases where the result is still being saved
+      await new Promise(resolve => setTimeout(resolve, 500));
+      await resultsAnalyzer.reloadResultsFromStorage();
+      loadedResult = resultsAnalyzer.getResult(id);
+
+      if (loadedResult) {
+        setResult(loadedResult);
+
+        // Get assessment type information
+        const assessmentTypeData = questionBankManager.getAssessmentType(loadedResult.assessmentTypeId);
+        if (!assessmentTypeData) {
+          throw new Error('ASSESSMENT_TYPE_NOT_FOUND');
         }
 
-        throw new Error('RESULT_NOT_FOUND');
+        setAssessmentType(assessmentTypeData);
+        setResultId(loadedResult.id);
+        setIsLoading(false);
+        return;
       }
 
-      setResult(loadedResult);
-
-      // Get assessment type information
-      const assessmentTypeData = questionBankManager.getAssessmentType(loadedResult.assessmentTypeId);
-      if (!assessmentTypeData) {
-        throw new Error('ASSESSMENT_TYPE_NOT_FOUND');
-      }
-
-      setAssessmentType(assessmentTypeData);
+      throw new Error('RESULT_NOT_FOUND');
 
     } catch (err) {
       setError(err instanceof Error ? err.message : 'LOAD_FAILED');

@@ -27,7 +27,7 @@ export class ResultsAnalyzer {
   /**
    * Analyze assessment session and generate results
    */
-  analyzeSession(session: AssessmentSession): AssessmentResult | null {
+  async analyzeSession(session: AssessmentSession): Promise<AssessmentResult | null> {
     console.log("🔬 Starting session analysis:", {
       sessionId: session.id,
       status: session.status,
@@ -95,8 +95,8 @@ export class ResultsAnalyzer {
     // Store in memory
     this.results.set(result.id, result);
 
-    // Save to localStorage
-    this.saveResultsToStorage();
+    // Save to localStorage and wait for completion
+    await this.saveResultsToStorage();
 
     console.log("✅ Result analysis completed:", {
       id: result.id,
