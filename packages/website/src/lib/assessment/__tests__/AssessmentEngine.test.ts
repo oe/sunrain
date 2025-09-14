@@ -93,7 +93,7 @@ vi.mock('../ResultsAnalyzer', () => ({
       culturalContext: undefined,
       totalTimeSpent: 120,
       answers: []
-    }))
+    })
   }
 }));
 

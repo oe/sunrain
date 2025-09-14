@@ -124,8 +124,8 @@ export default memo(function QuestionCard({
               card card-compact cursor-pointer transition-all duration-200
               ${disabled ? 'opacity-50 cursor-not-allowed' : 'hover:bg-base-200'}
               ${answer === option.value
-                ? 'border-primary bg-primary/10 border-2'
-                : 'border border-base-300'
+                ? 'border-2 border-primary bg-primary/10'
+                : 'border-2 border-base-300'
               }
               ${validationState.hasErrors && hasInteracted && showValidation
                 ? 'border-error'
@@ -147,10 +147,19 @@ export default memo(function QuestionCard({
               className="sr-only"
             />
             <div className="card-body flex-row items-center p-4">
-              <div className={`
-                radio radio-primary mr-3
-                ${answer === option.value ? 'radio-checked' : ''}
-              `}></div>
+              <div className="flex items-center justify-center mr-3">
+                <div className={`
+                  w-5 h-5 rounded-full border-2 flex items-center justify-center
+                  ${answer === option.value 
+                    ? 'border-primary bg-primary' 
+                    : 'border-base-300 bg-base-100'
+                  }
+                `}>
+                  {answer === option.value && (
+                    <div className="w-2 h-2 rounded-full bg-white"></div>
+                  )}
+                </div>
+              </div>
               <div className="flex-1">
                 <span className="font-medium">
                   {option.text}
@@ -193,8 +202,8 @@ export default memo(function QuestionCard({
                 card card-compact cursor-pointer transition-all duration-200
                 ${disabled ? 'opacity-50 cursor-not-allowed' : 'hover:bg-base-200'}
                 ${isSelected
-                  ? 'border-primary bg-primary/10 border-2'
-                  : 'border border-base-300'
+                  ? 'border-2 border-primary bg-primary/10'
+                  : 'border-2 border-base-300'
                 }
                 ${validationState.hasErrors && hasInteracted && showValidation
                   ? 'border-error'
@@ -214,13 +223,18 @@ export default memo(function QuestionCard({
                 className="sr-only"
               />
               <div className="card-body flex-row items-center p-4">
-                <div className={`
-                  checkbox checkbox-primary mr-3
-                  ${isSelected ? 'checkbox-checked' : ''}
-                `}>
-                  {isSelected && (
-                    <Check className="w-3 h-3 text-white" />
-                  )}
+                <div className="flex items-center justify-center mr-3">
+                  <div className={`
+                    w-5 h-5 rounded border-2 flex items-center justify-center
+                    ${isSelected 
+                      ? 'border-primary bg-primary' 
+                      : 'border-base-300 bg-base-100'
+                    }
+                  `}>
+                    {isSelected && (
+                      <Check className="w-3 h-3 text-white" />
+                    )}
+                  </div>
                 </div>
                 <div className="flex-1">
                   <span className="font-medium">

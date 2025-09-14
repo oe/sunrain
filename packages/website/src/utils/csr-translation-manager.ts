@@ -46,6 +46,7 @@ export class CSRTranslationManager {
   private config: CSRTranslationConfig;
   private currentLanguage: Language = "en";
   private loadStates = new Map<string, TranslationLoadState>();
+  private cacheCleanupTimer: number | null = null;
 
   /**
    * 私有构造函数，实现单例模式
@@ -669,7 +670,7 @@ export class CSRTranslationManager {
    */
   private setupCacheCleanup(): void {
     // 每10分钟清理一次过期缓存
-    setInterval(() => {
+    this.cacheCleanupTimer = window.setInterval(() => {
       const now = Date.now();
       const expiredKeys: string[] = [];
 
@@ -690,6 +691,16 @@ export class CSRTranslationManager {
         );
       }
     }, 10 * 60 * 1000); // 10分钟
+  }
+
+  /**
+   * 清理缓存清理定时器
+   */
+  private clearCacheCleanup(): void {
+    if (this.cacheCleanupTimer !== null) {
+      clearInterval(this.cacheCleanupTimer);
+      this.cacheCleanupTimer = null;
+    }
   }
 
   /**

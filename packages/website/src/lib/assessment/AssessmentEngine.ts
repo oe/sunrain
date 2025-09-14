@@ -23,13 +23,9 @@ export class AssessmentEngine {
   private reminderTimers: Map<string, number> = new Map();
   private autoSaveInterval: number = 30000; // 30 seconds
   private sessionTimeout: number = 1800000; // 30 minutes
-  private maxRetryAttempts: number = 3;
-  private retryDelay: number = 1000; // 1 second
-
   private periodicSaveStarted = false;
   private isClientSide: boolean = false;
-  private sessionHealthCheckInterval: number = 60000; // 1 minute
-  private healthCheckTimer: number | null = null;
+  private periodicSaveTimer: number | null = null;
 
   constructor() {
     this.isClientSide = this.checkClientSideEnvironment();
@@ -755,7 +751,7 @@ export class AssessmentEngine {
     }
 
     try {
-      setInterval(() => {
+      this.periodicSaveTimer = window.setInterval(() => {
         // Double-check client-side environment in the interval callback
         if (!this.isClientSide) {
           return;
@@ -769,6 +765,17 @@ export class AssessmentEngine {
       }, this.autoSaveInterval);
     } catch (error) {
       console.error("Failed to start periodic save:", error);
+    }
+  }
+
+  /**
+   * Stop periodic save timer
+   */
+  private stopPeriodicSave(): void {
+    if (this.periodicSaveTimer !== null) {
+      clearInterval(this.periodicSaveTimer);
+      this.periodicSaveTimer = null;
+      this.periodicSaveStarted = false;
     }
   }
 

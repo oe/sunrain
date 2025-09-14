@@ -1,301 +1,353 @@
 /**
- * Assessment 系统日语翻译内容 (CSR)
+ * Assessment 系统英文翻译内容 (CSR)
  * 包含实际使用的翻译键，匹配组件中的client前缀结构
  */
-import type { IAssessmentTranslations } from './types';
+import type { IAssessmentTranslations } from "./types";
 
-export const assessmentJa: IAssessmentTranslations = {
+export const assessmentEn: IAssessmentTranslations = {
   assessment: {
-    title: 'メンタルヘルス評価',
+    title: "Mental Health Assessment",
   },
 
   loading: {
-    default: '読み込み中...',
-    assessment: '評価を読み込み中...',
+    default: "Loading...",
+    assessment: "Loading assessment...",
   },
 
   errors: {
-    title: 'エラー',
-    initializationFailed: '初期化エラー',
-    sessionStartFailed: '評価セッションを開始できません',
-    noData: '評価データの読み込みに失敗しました',
-    validationFailed: '検証に失敗しました',
-    unsupportedQuestionType: 'サポートされていない質問タイプ: {type}',
-    cannotContinue: '続行できません',
-    continueFailed: '続行に失敗しました',
-    deleteFailed: '削除に失敗しました',
-    clearFailed: 'クリアに失敗しました',
-    loadFailed: '読み込みに失敗しました',
-    loadFailedMessage: 'データの読み込みで問題が発生しました',
+    title: "Error",
+    initializationFailed: "Initialization failed",
+    sessionStartFailed: "Unable to start assessment session",
+    noData: "Assessment data loading failed",
+    validationFailed: "Validation failed",
+    unsupportedQuestionType: "Unsupported question type: {type}",
+    cannotContinue: "Cannot continue session",
+    continueFailed: "Failed to continue session",
+    deleteFailed: "Failed to delete session",
+    clearFailed: "Failed to clear sessions",
+    loadFailed: "Loading Failed",
+    loadFailedMessage: "Unable to load assessment data. Please try again.",
     boundary: {
-      title: 'アプリケーションエラー',
-      message: '申し訳ございませんが、アプリケーションでエラーが発生しました。',
-      details: 'エラー詳細',
-      retry: '再試行',
-      goHome: 'ホームに戻る',
+      title: "Application Error",
+      message: "Sorry, the application encountered an error.",
+      details: "Error Details",
+      retry: "Retry",
+      goHome: "Go Home",
     },
   },
 
   question: {
-    number: '質問 {number}',
-    required: '必須',
-    selectedCount: '{count}個選択済み',
-    selectedValue: '選択済み: {value}',
-    textPlaceholder: '回答を入力してください...',
-    characterCount: '{count}文字',
-    textEntered: 'テキスト入力済み',
-    answered: '回答済み',
+    number: "Question {number}",
+    required: "Required",
+    selectedCount: "{count} selected",
+    selectedValue: "Selected: {value}",
+    textPlaceholder: "Please enter your answer...",
+    characterCount: "{count} characters",
+    textEntered: "Text entered",
+    answered: "Answered",
   },
 
   questionList: {
-    title: '質問リスト',
-    progress: '進捗: {current}/{total}',
-    questionNumber: '質問 {number}',
-    completed: '完了',
-    remaining: '残り',
+    title: "Question List",
+    progress: "Progress: {current}/{total}",
+    questionNumber: "Question {number}",
+    completed: "Completed",
+    remaining: "Remaining",
   },
 
   continue: {
-    loading: '未完了の評価を読み込み中...',
+    loading: "Loading incomplete assessments...",
   },
 
   list: {
     activeSessions: {
-      title: '{count}つの未完了の評価があります',
-      continueLink: '評価を続行',
-      lastActivity: '最後のアクティビティ',
-      progress: '進捗',
+      title: "You have {count} incomplete assessments",
+      continueLink: "Continue assessments",
+      lastActivity: "Last activity",
+      progress: "Progress",
     },
   },
 
   progress: {
-    text: '{current} / {total}',
+    text: "{current} of {total}",
   },
 
   validation: {
-    checking: '検証中...',
-    withWarnings: '警告ありで検証中...',
+    checking: "Validating...",
+    withWarnings: "with warnings",
   },
 
   execution: {
     errors: {
-      submitFailed: '送信に失敗しました',
-      required: 'この項目は必須です',
+      submitFailed: "Save failed, please try again",
+      required: "This field is required",
     },
     completion: {
-      title: '評価完了',
-      message: '結果を生成中...',
+      title: "Assessment Complete",
+      message: "Generating results...",
     },
     pauseModal: {
-      title: '評価を一時停止',
-      message: '評価を一時停止してもよろしいですか？',
-      continue: '続行',
-      exit: '終了',
+      title: "Pause Assessment",
+      message: "Are you sure you want to pause the assessment?",
+      continue: "Continue",
+      exit: "Exit",
     },
     navigation: {
-      previous: '前へ',
-      next: '次へ',
-      submit: '送信',
-      save: '保存',
-      submitting: '送信中...',
+      previous: "Previous",
+      next: "Next",
+      submit: "Complete Assessment",
+      save: "Save Progress",
+      submitting: "Completing...",
     },
-    pause: '一時停止',
-    questionNumber: '質問 {number}',
-    timeSpent: '経過時間',
-    complete: '完了',
+    pause: "Pause",
+    questionNumber: "Question {number}",
+    timeSpent: "Time spent",
+    complete: "complete",
   },
 
   results: {
-    loading: '評価結果を読み込み中...',
-    completedAt: '完了時刻',
-    timeSpent: '経過時間',
-    overallAssessment: '総合評価',
-    detailedInterpretation: '詳細な解釈',
-    scoreDistribution: 'スコア分布',
-    riskAssessment: 'リスク評価',
-    personalizedRecommendations: '個別推奨事項',
-    recommendedResources: '推奨リソース',
+    loading: "Loading assessment results...",
+    completedAt: "Completed at",
+    timeSpent: "Time spent",
+    overallAssessment: "Overall Assessment",
+    detailedInterpretation: "Detailed Interpretation",
+    scoreDistribution: "Score Distribution",
+    riskAssessment: "Risk Assessment",
+    personalizedRecommendations: "Personalized Recommendations",
+    recommendedResources: "Recommended Resources",
     nextSteps: {
-      title: '次のステップ',
+      title: "Next Steps",
       moreAssessments: {
-        title: 'その他の評価',
-        description: '他の評価ツールを探索'
+        title: "More Assessments",
+        description: "Explore other assessment tools",
       },
       startPractice: {
-        title: '練習を開始',
-        description: '関連するメンタルヘルス実践を試す'
+        title: "Start Practice",
+        description: "Try related mental health practices",
       },
       browseResources: {
-        title: 'リソースを閲覧',
-        description: 'ヒーリングリソースライブラリを表示'
-      }
+        title: "Browse Resources",
+        description: "View healing resource library",
+      },
     },
     actions: {
-      share: '結果を共有',
-      savePdf: 'PDFとして保存',
-      viewHistory: '履歴を表示',
-      backToAssessments: '評価に戻る'
+      share: "Share Results",
+      savePdf: "Save as PDF",
+      viewHistory: "View History",
+      backToAssessments: "Back to Assessments",
     },
     riskLevels: {
       high: {
-        title: '注意が必要',
-        message: '評価結果は専門的な支援が必要である可能性を示しています。メンタルヘルス専門家への相談をご検討ください。'
+        title: "Needs Attention",
+        message:
+          "Your assessment results indicate you may need professional help. Consider consulting a mental health expert or calling a mental health helpline.",
       },
       medium: {
-        title: '注意推奨',
-        message: '評価結果は注意が必要な領域があることを示しています。セルフケア対策の実施をご検討ください。'
+        title: "Recommended Attention",
+        message:
+          "Your assessment results show some areas that need attention. Consider implementing self-care measures or seeking support.",
       },
       low: {
-        title: '良好な状態',
-        message: '評価結果は正常範囲内です。健康的な習慣を継続してください。'
-      }
+        title: "Good Status",
+        message:
+          "Your assessment results are within normal range. Continue maintaining healthy habits.",
+      },
     },
     disclaimer: {
-      title: '重要なお知らせ',
-      message: 'この評価結果は参考のためのものであり、専門的なメンタルヘルス診断に代わるものではありません。'
+      title: "Important Notice",
+      message:
+        "These assessment results are for reference only and cannot replace professional mental health diagnosis. If you feel distressed or need help, please consult a professional mental health expert.",
     },
-    quickActions: 'クイックアクション',
-    noResultFound: '評価結果が見つかりません',
-    noResultData: '評価データが見つかりません'
+    quickActions: "Quick Actions",
+    noResultFound: "Assessment result not found",
+    noResultData: "No assessment data found",
   },
 
   actions: {
-    retry: '再試行',
-    goBack: '戻る',
-    refresh: '更新',
-    startNew: '新しい評価を開始',
-    continue: '続行',
+    retry: "Retry",
+    goBack: "Go Back",
+    refresh: "Refresh",
+    startNew: "Start New Assessment",
+    continue: "Continue",
+    viewDetails: "View Details",
   },
 
   questionnaireInfo: {
-    description: '説明',
-    purpose: '目的',
-    whatToExpect: '期待できること',
-    professionalBackground: '専門的背景',
-    tags: 'タグ',
-    questions: '質問',
-    minutes: '分',
+    description: "Description",
+    purpose: "Purpose",
+    whatToExpect: "What to Expect",
+    professionalBackground: "Professional Background",
+    tags: "Tags",
+    questions: "Questions",
+    minutes: "Minutes",
     timeEstimate: {
-      lessThanMinute: '1分未満',
-      oneMinute: '1分',
-      minutes: '{minutes}分',
+      lessThanMinute: "Less than 1 minute",
+      oneMinute: "1 minute",
+      minutes: "{minutes} minutes",
     },
     difficulty: {
-      beginner: '初級',
-      intermediate: '中級',
-      advanced: '上級',
+      beginner: "Beginner",
+      intermediate: "Intermediate",
+      advanced: "Advanced",
     },
     steps: {
-      step1: '{count}の質問に正直に答えてください（約{time}分かかります）',
-      step2: 'あなたの回答は検証済みの採点方法を使用して分析されます',
-      step3: '個人化された結果と推奨事項を受け取ります',
+      step1: "Answer {count} questions honestly (takes about {time} minutes)",
+      step2: "Your responses will be analyzed using validated scoring methods",
+      step3: "Receive personalized results and recommendations",
     },
-    validated: '臨床的に検証された評価',
-    mentalHealthAssessment: 'メンタルヘルス評価',
-    purposeDescription: 'この評価は症状を特定し、あなたのメンタルヘルス状態の理解を導く洞察を提供するのに役立ちます。',
-    validatedDescription: 'この評価は科学的に検証された方法と採点システムを使用しています。',
+    validated: "Clinically Validated Assessment",
+    mentalHealthAssessment: "Mental Health Assessment",
+    purposeDescription:
+      "This assessment helps identify symptoms and provides insights that can guide your understanding of your mental health.",
+    validatedDescription:
+      "This assessment uses scientifically validated methods and scoring systems.",
     privacy: {
-      title: 'プライバシーとデータセキュリティ',
-      message: 'あなたの回答はデバイスにローカルに保存され、第三者と共有されることはありません。',
+      title: "Privacy & Data Security",
+      message:
+        "Your responses are stored locally on your device and are not shared with third parties.",
     },
-    startAssessment: '評価を開始',
-    starting: '開始中...',
+    startAssessment: "Start Assessment",
+    starting: "Starting...",
   },
 
   questionnaireCard: {
-    featured: '注目',
-    minutes: '分',
-    questions: '質問',
+    featured: "Featured",
+    minutes: "min",
+    questions: "questions",
     difficulty: {
-      beginner: '初級',
-      intermediate: '中級',
-      advanced: '上級',
+      beginner: "Beginner",
+      intermediate: "Intermediate",
+      advanced: "Advanced",
     },
-    validated: '検証済み',
-    viewHistory: '履歴を表示',
-    startAssessment: '評価を開始',
+    validated: "Validated",
+    viewHistory: "View History",
+    startAssessment: "Start Assessment",
   },
 
   existingSession: {
-    title: '未完了の評価',
-    progress: '進捗',
-    lastActivity: '最後のアクティビティ',
-    questionsAnswered: '回答済み',
-    message: '未完了の評価があります。中断したところから続けるか、最初からやり直すことができます。',
-    continue: '評価を続ける',
-    restart: '最初からやり直す',
-    restartWarning: '最初からやり直すと、以前の回答がすべて削除されます。',
-  },
-
-  common: {
-    loading: '読み込み中...',
-    cancel: 'キャンセル',
-    close: '閉じる',
-    save: '保存',
-    delete: '削除',
-    edit: '編集',
-    confirm: '確認',
-    yes: 'はい',
-    no: 'いいえ',
-    error: 'エラー',
-    showing: '表示中',
-    to: 'から',
-    of: 'の',
-    results: '結果',
-    riskLevels: {
-      low: '低リスク',
-      medium: '中リスク',
-      high: '高リスク',
-    },
-    timeUnits: {
-      seconds: '秒',
-      minutes: '分',
-    },
+    title: "Incomplete Assessment",
+    progress: "Progress",
+    lastActivity: "Last activity",
+    questionsAnswered: "Answered",
+    message: "You have an incomplete assessment. You can continue from where you left off, or start over.",
+    continue: "Continue Assessment",
+    restart: "Start Over",
+    restartWarning: "Starting over will delete all your previous answers.",
   },
 
   history: {
     stats: {
-      total: '合計',
-      averageTime: '平均時間',
-      lastAssessment: '最後の評価',
+      total: "Total Assessments",
+      averageTime: "Average Time",
+      lastAssessment: "Last Assessment",
     },
     list: {
-      dimensions: '次元',
-      viewDetails: '詳細を見る',
-      share: '共有',
-      delete: '削除',
+      dimensions: "dimensions",
+      viewDetails: "View Details",
+      share: "Share",
+      delete: "Delete",
     },
     filters: {
-      type: 'タイプ',
-      timeRange: '時間範囲',
-      riskLevel: 'リスクレベル',
+      type: "Assessment Type",
+      timeRange: "Time Range",
+      riskLevel: "Risk Level",
     },
   },
 
   status: {
-    active: 'アクティブ',
-    paused: '一時停止',
+    active: "Active",
+    paused: "Paused",
   },
 
   labels: {
-    unknownAssessment: '不明な評価',
-    startTime: '開始時間',
-    timeSpent: '経過時間',
-    answered: '回答済み',
-    questions: '質問',
-    estimatedRemaining: '推定残り時間',
+    unknownAssessment: "Unknown Assessment",
+    startTime: "Started",
+    timeSpent: "Time Spent",
+    answered: "Answered",
+    questions: "questions",
+    estimatedRemaining: "Estimated Remaining",
   },
 
   time: {
-    minutes: '分',
+    minutes: "minutes",
+    varies: "Varies",
+    minutesSeconds: "{minutes}m {seconds}s",
   },
 
   messages: {
-    deleted: '削除されました',
-    clearedCount: '{count}件クリアされました',
-    noActiveSessions: 'アクティブなセッションがありません',
-    noActiveSessionsMessage: 'アクティブな評価セッションがありません',
+    deleted: "Session deleted successfully",
+    clearedCount: "Cleared {count} sessions",
+    noActiveSessions: "All Caught Up!",
+    noActiveSessionsMessage: "You don't have any incomplete assessments. Start a new one to continue your mental health journey.",
+  },
+
+  common: {
+    loading: "Loading...",
+    cancel: "Cancel",
+    close: "Close",
+    save: "Save",
+    delete: "Delete",
+    edit: "Edit",
+    confirm: "Confirm",
+    yes: "Yes",
+    no: "No",
+    error: "Error",
+    showing: "Showing",
+    to: "to",
+    of: "of",
+    results: "results",
+    riskLevels: {
+      high: "High Risk",
+      medium: "Medium Risk",
+      low: "Low Risk",
+    },
+    timeUnits: {
+      minutes: "min",
+      seconds: "s",
+    },
+  },
+
+  priority: {
+    high: "High",
+    medium: "Medium",
+    low: "Low",
+  },
+
+  recommendations: {
+    riskBased: {
+      high: [
+        "🚨 Consider seeking immediate professional mental health support",
+        "📞 Contact a mental health professional or crisis hotline",
+        "🏥 Consider scheduling a detailed assessment with a mental health expert",
+        "👥 Inform family or friends about your situation and seek support"
+      ],
+      medium: [
+        "👨‍⚕️ Consider scheduling a consultation with a mental health professional",
+        "🧘‍♀️ Learn and practice stress management techniques",
+        "📚 Read books and resources about mental health",
+        "🏃‍♂️ Maintain regular physical exercise"
+      ],
+      low: [
+        "📊 Continue monitoring your mental health status",
+        "🌱 Maintain healthy lifestyle habits",
+        "💪 Develop positive coping strategies",
+        "🎯 Set achievable goals and expectations"
+      ]
+    },
+    general: [
+      "💤 Ensure adequate sleep (7-9 hours)",
+      "🥗 Maintain a balanced diet",
+      "🚫 Avoid excessive use of alcohol and drugs",
+      "🤝 Stay connected with friends and family"
+    ],
+    patterns: {
+      stable: "📈 Your scores are relatively stable, continue maintaining your current state",
+      variable: "📊 Your scores vary significantly, consider regular reassessment",
+      extreme: "⚠️ Some aspects need special attention, consider seeking professional help",
+      highAverage: "🔍 Consider a more detailed mental health assessment",
+      mediumAverage: "👀 Consider regular monitoring of mental health status"
+    }
   },
 };
 
-export default assessmentJa;
+export default assessmentEn;

@@ -92,6 +92,8 @@ export const assessmentAr: IAssessmentTranslations = {
   },
 
   results: {
+    title: 'نتائج التقييم',
+    description: 'عرض نتائج تقييمك الشخصي والتوصيات المخصصة',
     loading: 'جاري تحميل نتائج التقييم...',
     completedAt: 'تم الإكمال في',
     timeSpent: 'الوقت المستغرق',
@@ -119,7 +121,8 @@ export const assessmentAr: IAssessmentTranslations = {
     actions: {
       share: 'مشاركة النتائج',
       savePdf: 'حفظ كـ PDF',
-      viewHistory: 'عرض التاريخ'
+      viewHistory: 'عرض التاريخ',
+      backToAssessments: 'العودة إلى التقييمات'
     },
     riskLevels: {
       high: {
@@ -138,7 +141,10 @@ export const assessmentAr: IAssessmentTranslations = {
     disclaimer: {
       title: 'إشعار مهم',
       message: 'هذه نتائج التقييم للمرجع فقط ولا يمكنها أن تحل محل التشخيص المهني للصحة النفسية. إذا كنت تشعر بالضيق أو تحتاج إلى مساعدة، يرجى استشارة أخصائي صحة نفسية مهني.'
-    }
+    },
+    quickActions: 'الإجراءات السريعة',
+    noResultFound: 'لم يتم العثور على نتائج',
+    noResultData: 'لا توجد بيانات نتائج متاحة'
   },
 
   history: {
@@ -284,6 +290,24 @@ export const assessmentAr: IAssessmentTranslations = {
       hours: 'ساعات',
       days: 'أيام'
     }
+  },
+
+  /** 优先级 */
+  priority: {
+    high: 'عالي',
+    medium: 'متوسط',
+    low: 'منخفض'
+  },
+
+  /** 时间相关 */
+  time: {
+    varies: 'متغير',
+    minutesSeconds: '{minutes}د {seconds}ث'
+  },
+
+  /** 操作 */
+  actions: {
+    viewDetails: 'عرض التفاصيل'
   }
 };
 

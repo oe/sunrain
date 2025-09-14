@@ -71,7 +71,8 @@ export class ResultsAnalyzer {
     // Generate recommendations
     const recommendations = this.generateRecommendations(
       scores,
-      assessmentType
+      assessmentType,
+      session.language
     );
 
     // Assess overall risk level
@@ -252,34 +253,16 @@ export class ResultsAnalyzer {
    */
   private generateRecommendations(
     scores: Record<string, any>,
-    assessmentType: AssessmentType
+    assessmentType: AssessmentType,
+    language: string = 'en',
+    t?: (key: string) => string
   ): string[] {
     const recommendations: string[] = [];
     const overallRiskLevel = this.assessRiskLevel(scores);
 
-    // 基于整体风险级别的建议
-    if (overallRiskLevel === "high") {
-      recommendations.push(
-        "🚨 建议立即寻求专业心理健康支持",
-        "📞 联系心理健康专业人士或危机热线",
-        "🏥 考虑预约心理健康专家进行详细评估",
-        "👥 告知家人或朋友你的情况，寻求支持"
-      );
-    } else if (overallRiskLevel === "medium") {
-      recommendations.push(
-        "👨‍⚕️ 建议预约心理健康专业人士咨询",
-        "🧘‍♀️ 学习并实践压力管理技巧",
-        "📚 阅读心理健康相关书籍和资源",
-        "🏃‍♂️ 保持规律的体育锻炼"
-      );
-    } else {
-      recommendations.push(
-        "📊 继续监测你的心理健康状况",
-        "🌱 保持健康的生活方式习惯",
-        "💪 培养积极的应对策略",
-        "🎯 设定可实现的目标和期望"
-      );
-    }
+    // Get localized recommendations based on risk level
+    const riskRecommendations = this.getRiskBasedRecommendations(overallRiskLevel, language, t);
+    recommendations.push(...riskRecommendations);
 
     // 基于具体评测类型的个性化建议
     const typeSpecificRecommendations = this.getTypeSpecificRecommendations(
@@ -289,20 +272,154 @@ export class ResultsAnalyzer {
     recommendations.push(...typeSpecificRecommendations);
 
     // 基于分数模式的建议
-    const patternRecommendations = this.getPatternBasedRecommendations(scores);
+    const patternRecommendations = this.getPatternBasedRecommendations(scores, language, t);
     recommendations.push(...patternRecommendations);
 
     // 添加通用健康建议
-    recommendations.push(
-      "💤 确保充足的睡眠（7-9小时）",
-      "🥗 保持均衡的饮食",
-      "🚫 避免过度使用酒精和药物",
-      "🤝 与朋友和家人保持联系"
-    );
+    const generalRecommendations = this.getGeneralRecommendations(language, t);
+    recommendations.push(...generalRecommendations);
 
     // Remove duplicates and limit to most relevant recommendations
     const uniqueRecommendations = [...new Set(recommendations)];
     return uniqueRecommendations.slice(0, 8);
+  }
+
+  /**
+   * Get risk-based recommendations using translation system
+   */
+  private getRiskBasedRecommendations(riskLevel: string, language: string, t?: (key: string) => string): string[] {
+    if (!t) {
+      // Fallback to hardcoded translations if no translation function provided
+      return this.getFallbackRiskRecommendations(riskLevel, language);
+    }
+
+    const riskKey = `recommendations.riskBased.${riskLevel}`;
+    
+    // Try to get array of recommendations from translation
+    try {
+      const riskRecommendations = t(riskKey);
+      if (riskRecommendations && riskRecommendations !== riskKey) {
+        // If it's a string, try to parse as JSON array
+        if (typeof riskRecommendations === 'string') {
+          try {
+            const parsed = JSON.parse(riskRecommendations);
+            if (Array.isArray(parsed)) {
+              return parsed;
+            }
+          } catch {
+            // If parsing fails, treat as single recommendation
+            return [riskRecommendations];
+          }
+        }
+      }
+    } catch (error) {
+      console.warn('Failed to get risk-based recommendations from translation:', error);
+    }
+
+    // Fallback to hardcoded translations
+    return this.getFallbackRiskRecommendations(riskLevel, language);
+  }
+
+  /**
+   * Fallback risk-based recommendations when translation system is not available
+   */
+  private getFallbackRiskRecommendations(riskLevel: string, language: string): string[] {
+    const recommendations: Record<string, Record<string, string[]>> = {
+      high: {
+        en: [
+          "🚨 Consider seeking immediate professional mental health support",
+          "📞 Contact a mental health professional or crisis hotline",
+          "🏥 Consider scheduling a detailed assessment with a mental health expert",
+          "👥 Inform family or friends about your situation and seek support"
+        ],
+        zh: [
+          "🚨 建议立即寻求专业心理健康支持",
+          "📞 联系心理健康专业人士或危机热线",
+          "🏥 考虑预约心理健康专家进行详细评估",
+          "👥 告知家人或朋友你的情况，寻求支持"
+        ]
+      },
+      medium: {
+        en: [
+          "👨‍⚕️ Consider scheduling a consultation with a mental health professional",
+          "🧘‍♀️ Learn and practice stress management techniques",
+          "📚 Read books and resources about mental health",
+          "🏃‍♂️ Maintain regular physical exercise"
+        ],
+        zh: [
+          "👨‍⚕️ 建议预约心理健康专业人士咨询",
+          "🧘‍♀️ 学习并实践压力管理技巧",
+          "📚 阅读心理健康相关书籍和资源",
+          "🏃‍♂️ 保持规律的体育锻炼"
+        ]
+      },
+      low: {
+        en: [
+          "📊 Continue monitoring your mental health status",
+          "🌱 Maintain healthy lifestyle habits",
+          "💪 Develop positive coping strategies",
+          "🎯 Set achievable goals and expectations"
+        ],
+        zh: [
+          "📊 继续监测你的心理健康状况",
+          "🌱 保持健康的生活方式习惯",
+          "💪 培养积极的应对策略",
+          "🎯 设定可实现的目标和期望"
+        ]
+      }
+    };
+
+    return recommendations[riskLevel]?.[language] || recommendations[riskLevel]?.['en'] || [];
+  }
+
+  /**
+   * Get general health recommendations using translation system
+   */
+  private getGeneralRecommendations(language: string, t?: (key: string) => string): string[] {
+    if (!t) {
+      return this.getFallbackGeneralRecommendations(language);
+    }
+
+    try {
+      const generalKey = 'recommendations.general';
+      const generalRecommendations = t(generalKey);
+      if (generalRecommendations && generalRecommendations !== generalKey) {
+        try {
+          const parsed = JSON.parse(generalRecommendations);
+          if (Array.isArray(parsed)) {
+            return parsed;
+          }
+        } catch {
+          return [generalRecommendations];
+        }
+      }
+    } catch (error) {
+      console.warn('Failed to get general recommendations from translation:', error);
+    }
+
+    return this.getFallbackGeneralRecommendations(language);
+  }
+
+  /**
+   * Fallback general recommendations when translation system is not available
+   */
+  private getFallbackGeneralRecommendations(language: string): string[] {
+    const recommendations: Record<string, string[]> = {
+      en: [
+        "💤 Ensure adequate sleep (7-9 hours)",
+        "🥗 Maintain a balanced diet",
+        "🚫 Avoid excessive use of alcohol and drugs",
+        "🤝 Stay connected with friends and family"
+      ],
+      zh: [
+        "💤 确保充足的睡眠（7-9小时）",
+        "🥗 保持均衡的饮食",
+        "🚫 避免过度使用酒精和药物",
+        "🤝 与朋友和家人保持联系"
+      ]
+    };
+
+    return recommendations[language] || recommendations['en'];
   }
 
   /**
@@ -373,7 +490,7 @@ export class ResultsAnalyzer {
   /**
    * 基于分数模式获取建议
    */
-  private getPatternBasedRecommendations(scores: Record<string, any>): string[] {
+  private getPatternBasedRecommendations(scores: Record<string, any>, language: string = 'en', t?: (key: string) => string): string[] {
     const recommendations: string[] = [];
     const scoreValues = Object.values(scores).map((s: any) => s.value || 0);
     const averageScore = scoreValues.reduce((a, b) => a + b, 0) / scoreValues.length;
@@ -381,25 +498,60 @@ export class ResultsAnalyzer {
     // 检查分数一致性
     const scoreVariance = this.calculateVariance(scoreValues);
     if (scoreVariance < 2) {
-      recommendations.push("📈 你的分数相对稳定，继续保持当前状态");
+      const message = t ? t('recommendations.patterns.stable') : this.getFallbackPatternMessage('stable', language);
+      recommendations.push(message);
     } else if (scoreVariance > 10) {
-      recommendations.push("📊 你的分数变化较大，建议定期重新评估");
+      const message = t ? t('recommendations.patterns.variable') : this.getFallbackPatternMessage('variable', language);
+      recommendations.push(message);
     }
 
     // 检查是否有极端分数
     const hasExtremeScores = scoreValues.some(score => score >= 20);
     if (hasExtremeScores) {
-      recommendations.push("⚠️ 某些方面需要特别关注，建议寻求专业帮助");
+      const message = t ? t('recommendations.patterns.extreme') : this.getFallbackPatternMessage('extreme', language);
+      recommendations.push(message);
     }
 
     // 基于平均分数的建议
     if (averageScore >= 15) {
-      recommendations.push("🔍 建议进行更详细的心理健康评估");
+      const message = t ? t('recommendations.patterns.highAverage') : this.getFallbackPatternMessage('highAverage', language);
+      recommendations.push(message);
     } else if (averageScore >= 10) {
-      recommendations.push("👀 建议定期监测心理健康状况");
+      const message = t ? t('recommendations.patterns.mediumAverage') : this.getFallbackPatternMessage('mediumAverage', language);
+      recommendations.push(message);
     }
 
     return recommendations;
+  }
+
+  /**
+   * Fallback pattern messages when translation system is not available
+   */
+  private getFallbackPatternMessage(pattern: string, language: string): string {
+    const messages: Record<string, Record<string, string>> = {
+      stable: {
+        en: "📈 Your scores are relatively stable, continue maintaining your current state",
+        zh: "📈 你的分数相对稳定，继续保持当前状态"
+      },
+      variable: {
+        en: "📊 Your scores vary significantly, consider regular reassessment",
+        zh: "📊 你的分数变化较大，建议定期重新评估"
+      },
+      extreme: {
+        en: "⚠️ Some aspects need special attention, consider seeking professional help",
+        zh: "⚠️ 某些方面需要特别关注，建议寻求专业帮助"
+      },
+      highAverage: {
+        en: "🔍 Consider a more detailed mental health assessment",
+        zh: "🔍 建议进行更详细的心理健康评估"
+      },
+      mediumAverage: {
+        en: "👀 Consider regular monitoring of mental health status",
+        zh: "👀 建议定期监测心理健康状况"
+      }
+    };
+
+    return messages[pattern]?.[language] || messages[pattern]?.['en'] || '';
   }
 
   /**
@@ -798,117 +950,10 @@ export class ResultsAnalyzer {
     return report;
   }
 
-  /**
-   * 生成结果摘要
-   */
-  private generateSummary(result: AssessmentResult): string {
-    const riskLevel = result.riskLevel;
-    const totalScore = Object.values(result.scores).reduce((sum, score: any) => sum + (score.value || 0), 0);
-    const averageScore = totalScore / Object.keys(result.scores).length;
 
-    let summary = `根据你的评测结果，你的心理健康状况总体处于${this.getRiskLevelDescription(riskLevel)}水平。`;
-    
-    if (averageScore >= 15) {
-      summary += "建议你尽快寻求专业心理健康支持。";
-    } else if (averageScore >= 10) {
-      summary += "建议你关注自己的心理健康状况，考虑寻求专业咨询。";
-    } else {
-      summary += "继续保持良好的心理健康习惯。";
-    }
 
-    return summary;
-  }
 
-  /**
-   * 生成详细分析
-   */
-  private generateDetailedAnalysis(result: AssessmentResult): Record<string, any> {
-    const analysis: Record<string, any> = {};
 
-    for (const [key, score] of Object.entries(result.scores)) {
-      analysis[key] = {
-        score: score.value,
-        level: score.riskLevel,
-        description: this.getScoreDescription(key, score.value),
-        interpretation: this.getScoreInterpretation(key, score.value),
-        factors: this.getContributingFactors(key, score.value)
-      };
-    }
-
-    return analysis;
-  }
-
-  /**
-   * 生成趋势分析
-   */
-  private generateTrendAnalysis(_result: AssessmentResult): Record<string, any> {
-    return {
-      currentTrend: "stable",
-      recommendation: "继续监测你的心理健康状况",
-      timeframe: "过去30天",
-      confidence: "medium"
-    };
-  }
-
-  /**
-   * 生成个性化建议
-   */
-  private generatePersonalizedRecommendations(result: AssessmentResult): string[] {
-    const recommendations: string[] = [];
-    const riskLevel = result.riskLevel;
-
-    if (riskLevel === "high") {
-      recommendations.push("立即联系心理健康专业人士");
-      recommendations.push("告知家人或朋友你的情况");
-      recommendations.push("避免独处，寻求陪伴");
-    } else if (riskLevel === "medium") {
-      recommendations.push("预约心理健康咨询");
-      recommendations.push("学习压力管理技巧");
-      recommendations.push("保持规律的作息");
-    } else {
-      recommendations.push("继续监测心理健康状况");
-      recommendations.push("保持健康的生活习惯");
-      recommendations.push("定期进行自我评估");
-    }
-
-    return recommendations;
-  }
-
-  /**
-   * 生成风险评估
-   */
-  private generateRiskAssessment(result: AssessmentResult): Record<string, any> {
-    return {
-      overallRisk: result.riskLevel,
-      riskFactors: this.identifyRiskFactors(result),
-      protectiveFactors: this.identifyProtectiveFactors(result),
-      recommendations: this.getRiskBasedRecommendations(result.riskLevel)
-    };
-  }
-
-  /**
-   * 生成后续行动建议
-   */
-  private generateNextSteps(result: AssessmentResult): string[] {
-    const nextSteps: string[] = [];
-    const riskLevel = result.riskLevel;
-
-    if (riskLevel === "high") {
-      nextSteps.push("立即寻求专业帮助");
-      nextSteps.push("联系危机热线");
-      nextSteps.push("告知信任的人");
-    } else if (riskLevel === "medium") {
-      nextSteps.push("预约心理健康咨询");
-      nextSteps.push("开始实施建议的策略");
-      nextSteps.push("定期重新评估");
-    } else {
-      nextSteps.push("继续当前的健康习惯");
-      nextSteps.push("定期进行自我评估");
-      nextSteps.push("考虑预防性措施");
-    }
-
-    return nextSteps;
-  }
 
   /**
    * 生成资源推荐
@@ -945,110 +990,13 @@ export class ResultsAnalyzer {
     ];
   }
 
-  /**
-   * 获取风险级别描述
-   */
-  private getRiskLevelDescription(riskLevel: RiskLevel): string {
-    switch (riskLevel) {
-      case "high": return "高风险";
-      case "medium": return "中等风险";
-      case "low": return "低风险";
-      default: return "未知";
-    }
-  }
 
-  /**
-   * 获取分数描述
-   */
-  private getScoreDescription(_key: string, value: number): string {
-    if (value >= 15) return "需要立即关注";
-    if (value >= 10) return "需要关注";
-    if (value >= 5) return "轻度关注";
-    return "正常范围";
-  }
 
-  /**
-   * 获取分数解释
-   */
-  private getScoreInterpretation(key: string, value: number): string {
-    return `你的${key}得分为${value}，${this.getScoreDescription(key, value)}。`;
-  }
 
-  /**
-   * 获取影响因素
-   */
-  private getContributingFactors(_key: string, value: number): string[] {
-    const factors: string[] = [];
-    
-    if (value >= 10) {
-      factors.push("生活压力");
-      factors.push("睡眠质量");
-      factors.push("社交关系");
-    }
-    
-    return factors;
-  }
 
-  /**
-   * 识别风险因素
-   */
-  private identifyRiskFactors(result: AssessmentResult): string[] {
-    const riskFactors: string[] = [];
-    
-    for (const [key, score] of Object.entries(result.scores)) {
-      if (score.value >= 15) {
-        riskFactors.push(`${key}得分过高`);
-      }
-    }
-    
-    return riskFactors;
-  }
 
-  /**
-   * 识别保护因素
-   */
-  private identifyProtectiveFactors(result: AssessmentResult): string[] {
-    const protectiveFactors: string[] = [];
-    
-    for (const [key, score] of Object.entries(result.scores)) {
-      if (score.value < 5) {
-        protectiveFactors.push(`${key}得分正常`);
-      }
-    }
-    
-    return protectiveFactors;
-  }
 
-  /**
-   * 获取基于风险的建议
-   */
-  private getRiskBasedRecommendations(riskLevel: RiskLevel): string[] {
-    switch (riskLevel) {
-      case "high":
-        return ["立即寻求专业帮助", "联系危机热线", "告知信任的人"];
-      case "medium":
-        return ["预约心理健康咨询", "学习压力管理技巧", "保持规律作息"];
-      case "low":
-        return ["继续健康习惯", "定期自我评估", "考虑预防措施"];
-      default:
-        return ["建议咨询专业人士"];
-    }
-  }
 
-  /**
-   * 计算置信度分数
-   */
-  private calculateConfidenceScore(result: AssessmentResult): number {
-    const totalQuestions = result.answers.length;
-    const answeredQuestions = result.answers.filter(a => a.value !== undefined).length;
-    const completeness = answeredQuestions / totalQuestions;
-    
-    const scores = Object.values(result.scores).map((s: any) => s.value || 0);
-    const variance = this.calculateVariance(scores);
-    const consistency = Math.max(0, 1 - variance / 100);
-    
-    return Math.round((completeness * 0.7 + consistency * 0.3) * 100);
-  }
 }
 
 // Singleton instance

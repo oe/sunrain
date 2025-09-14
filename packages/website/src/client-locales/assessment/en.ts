@@ -169,6 +169,7 @@ export const assessmentEn: IAssessmentTranslations = {
     refresh: "Refresh",
     startNew: "Start New Assessment",
     continue: "Continue",
+    viewDetails: "View Details",
   },
 
   questionnaireInfo: {
@@ -269,6 +270,8 @@ export const assessmentEn: IAssessmentTranslations = {
 
   time: {
     minutes: "minutes",
+    varies: "Varies",
+    minutesSeconds: "{minutes}m {seconds}s",
   },
 
   messages: {
@@ -302,6 +305,48 @@ export const assessmentEn: IAssessmentTranslations = {
       minutes: "min",
       seconds: "s",
     },
+  },
+
+  priority: {
+    high: "High",
+    medium: "Medium",
+    low: "Low",
+  },
+
+  recommendations: {
+    riskBased: {
+      high: [
+        "🚨 Consider seeking immediate professional mental health support",
+        "📞 Contact a mental health professional or crisis hotline",
+        "🏥 Consider scheduling a detailed assessment with a mental health expert",
+        "👥 Inform family or friends about your situation and seek support"
+      ],
+      medium: [
+        "👨‍⚕️ Consider scheduling a consultation with a mental health professional",
+        "🧘‍♀️ Learn and practice stress management techniques",
+        "📚 Read books and resources about mental health",
+        "🏃‍♂️ Maintain regular physical exercise"
+      ],
+      low: [
+        "📊 Continue monitoring your mental health status",
+        "🌱 Maintain healthy lifestyle habits",
+        "💪 Develop positive coping strategies",
+        "🎯 Set achievable goals and expectations"
+      ]
+    },
+    general: [
+      "💤 Ensure adequate sleep (7-9 hours)",
+      "🥗 Maintain a balanced diet",
+      "🚫 Avoid excessive use of alcohol and drugs",
+      "🤝 Stay connected with friends and family"
+    ],
+    patterns: {
+      stable: "📈 Your scores are relatively stable, continue maintaining your current state",
+      variable: "📊 Your scores vary significantly, consider regular reassessment",
+      extreme: "⚠️ Some aspects need special attention, consider seeking professional help",
+      highAverage: "🔍 Consider a more detailed mental health assessment",
+      mediumAverage: "👀 Consider regular monitoring of mental health status"
+    }
   },
 };
 

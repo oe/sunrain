@@ -7,8 +7,6 @@ import { createSSGTranslations } from '@/i18n/utils';
 const lang = getLocale(Astro.url) as Language;
 const t = createSSGTranslations(lang, 'home');
 
-console.warn('this log should be in node');
-
 // User testimonials data
 const testimonials = [
   {
@@ -58,19 +56,13 @@ const testimonials = [
     <div
       class="relative z-10 flex flex-col items-center justify-center min-h-screen px-4 text-center"
     >
-      <!-- Hand-drawn sun and rain illustration placeholder -->
-      <div class="mb-8 relative">
-        <div class="text-8xl mb-4">☀️</div>
-        <div
-          class="text-4xl text-blue-400 dark:text-blue-300 absolute -top-2 -right-4"
-        >
-          🌧️
-        </div>
-        <div
-          class="text-2xl text-green-500 dark:text-green-400 absolute -bottom-4 left-1/2 transform -translate-x-1/2"
-        >
-          🌱
-        </div>
+      <!-- Logo -->
+      <div class="mb-8 flex justify-center">
+        <img 
+          src="/logo.png" 
+          alt="Sunrain Logo" 
+          class="w-32 h-32 object-contain"
+        />
       </div>
 
       <h1

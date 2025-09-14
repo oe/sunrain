@@ -209,6 +209,8 @@ export interface IAssessmentTranslations {
   /** 时间 */
   time: {
     minutes: string;
+    varies: string;
+    minutesSeconds: string;
   };
 
   /** 消息 */
@@ -226,6 +228,7 @@ export interface IAssessmentTranslations {
     refresh: string;
     startNew: string;
     continue: string;
+    viewDetails: string;
   };
 
   /** 问卷信息模态框 */
@@ -315,6 +318,30 @@ export interface IAssessmentTranslations {
     timeUnits: {
       minutes: string;
       seconds: string;
+    };
+  };
+
+  /** 优先级 */
+  priority: {
+    high: string;
+    medium: string;
+    low: string;
+  };
+
+  /** 建议内容 */
+  recommendations: {
+    riskBased: {
+      high: string[];
+      medium: string[];
+      low: string[];
+    };
+    general: string[];
+    patterns: {
+      stable: string;
+      variable: string;
+      extreme: string;
+      highAverage: string;
+      mediumAverage: string;
     };
   };
 }

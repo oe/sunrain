@@ -119,6 +119,10 @@ export interface IAssessmentTranslations {
 
   /** 评测结果页面 */
   results: {
+    /** 页面标题 */
+    title: string;
+    /** 页面描述 */
+    description: string;
     /** 加载状态 */
     loading: string;
     /** 完成时间 */
@@ -158,7 +162,14 @@ export interface IAssessmentTranslations {
       share: string;
       savePdf: string;
       viewHistory: string;
+      backToAssessments: string;
     };
+    /** 快速操作 */
+    quickActions: string;
+    /** 未找到结果 */
+    noResultFound: string;
+    /** 无结果数据 */
+    noResultData: string;
     /** 风险等级 */
     riskLevels: {
       high: {
@@ -354,5 +365,23 @@ export interface IAssessmentTranslations {
       hours: string;
       days: string;
     };
+  };
+
+  /** 优先级 */
+  priority: {
+    high: string;
+    medium: string;
+    low: string;
+  };
+
+  /** 时间相关 */
+  time: {
+    varies: string;
+    minutesSeconds: string;
+  };
+
+  /** 操作 */
+  actions: {
+    viewDetails: string;
   };
 }

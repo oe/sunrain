@@ -101,8 +101,11 @@ export default function ResultsDisplay() {
       if (loadedResult) {
         setResult(loadedResult);
 
-        // Get assessment type information
-        const assessmentTypeData = questionBankManager.getAssessmentType(loadedResult.assessmentTypeId);
+        // Get localized assessment type information
+        const assessmentTypeData = questionBankManager.getLocalizedAssessmentType(
+          loadedResult.assessmentTypeId,
+          loadedResult.language
+        );
         setAssessmentType(assessmentTypeData);
         setResultId(loadedResult.id);
         setIsLoading(false);
@@ -117,8 +120,11 @@ export default function ResultsDisplay() {
         if (loadedResult) {
           setResult(loadedResult);
 
-          // Get assessment type information
-          const assessmentTypeData = questionBankManager.getAssessmentType(loadedResult.assessmentTypeId);
+          // Get localized assessment type information
+          const assessmentTypeData = questionBankManager.getLocalizedAssessmentType(
+            loadedResult.assessmentTypeId,
+            loadedResult.language
+          );
           if (!assessmentTypeData) {
             throw new Error('ASSESSMENT_TYPE_NOT_FOUND');
           }
@@ -141,8 +147,11 @@ export default function ResultsDisplay() {
       if (loadedResult) {
         setResult(loadedResult);
 
-        // Get assessment type information
-        const assessmentTypeData = questionBankManager.getAssessmentType(loadedResult.assessmentTypeId);
+        // Get localized assessment type information
+        const assessmentTypeData = questionBankManager.getLocalizedAssessmentType(
+          loadedResult.assessmentTypeId,
+          loadedResult.language
+        );
         if (!assessmentTypeData) {
           throw new Error('ASSESSMENT_TYPE_NOT_FOUND');
         }
@@ -192,8 +201,11 @@ export default function ResultsDisplay() {
       // Update URL to use result ID
       window.history.replaceState(null, '', `/assessment/results/#${loadedResult.id}`);
 
-      // Get assessment type information
-      const assessmentTypeData = questionBankManager.getAssessmentType(loadedResult.assessmentTypeId);
+      // Get localized assessment type information
+      const assessmentTypeData = questionBankManager.getLocalizedAssessmentType(
+        loadedResult.assessmentTypeId,
+        loadedResult.language
+      );
       if (!assessmentTypeData) {
         throw new Error('ASSESSMENT_TYPE_NOT_FOUND');
       }
@@ -205,6 +217,86 @@ export default function ResultsDisplay() {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const getLocalizedRecommendations = (result: AssessmentResult): string[] => {
+    const recommendations: string[] = [];
+    const riskLevel = result.riskLevel;
+
+    // Get risk-based recommendations
+    if (riskLevel) {
+      const riskRecommendations = t(`recommendations.riskBased.${riskLevel}`);
+      if (riskRecommendations && riskRecommendations !== `recommendations.riskBased.${riskLevel}`) {
+        try {
+          const parsed = JSON.parse(riskRecommendations);
+          if (Array.isArray(parsed)) {
+            recommendations.push(...parsed);
+          }
+        } catch {
+          recommendations.push(riskRecommendations);
+        }
+      }
+    }
+
+    // Get general recommendations
+    const generalRecommendations = t('recommendations.general');
+    if (generalRecommendations && generalRecommendations !== 'recommendations.general') {
+      try {
+        const parsed = JSON.parse(generalRecommendations);
+        if (Array.isArray(parsed)) {
+          recommendations.push(...parsed);
+        }
+      } catch {
+        recommendations.push(generalRecommendations);
+      }
+    }
+
+    // Add pattern-based recommendations
+    const scoreValues = Object.values(result.scores).map((s: any) => s.value || 0);
+    const averageScore = scoreValues.reduce((a, b) => a + b, 0) / scoreValues.length;
+    const scoreVariance = calculateVariance(scoreValues);
+
+    if (scoreVariance < 2) {
+      const message = t('recommendations.patterns.stable');
+      if (message && message !== 'recommendations.patterns.stable') {
+        recommendations.push(message);
+      }
+    } else if (scoreVariance > 10) {
+      const message = t('recommendations.patterns.variable');
+      if (message && message !== 'recommendations.patterns.variable') {
+        recommendations.push(message);
+      }
+    }
+
+    const hasExtremeScores = scoreValues.some(score => score >= 20);
+    if (hasExtremeScores) {
+      const message = t('recommendations.patterns.extreme');
+      if (message && message !== 'recommendations.patterns.extreme') {
+        recommendations.push(message);
+      }
+    }
+
+    if (averageScore >= 15) {
+      const message = t('recommendations.patterns.highAverage');
+      if (message && message !== 'recommendations.patterns.highAverage') {
+        recommendations.push(message);
+      }
+    } else if (averageScore >= 10) {
+      const message = t('recommendations.patterns.mediumAverage');
+      if (message && message !== 'recommendations.patterns.mediumAverage') {
+        recommendations.push(message);
+      }
+    }
+
+    // Remove duplicates and limit to most relevant recommendations
+    const uniqueRecommendations = [...new Set(recommendations)];
+    return uniqueRecommendations.slice(0, 8);
+  };
+
+  const calculateVariance = (values: number[]): number => {
+    const mean = values.reduce((a, b) => a + b, 0) / values.length;
+    const squaredDiffs = values.map(value => Math.pow(value - mean, 2));
+    return squaredDiffs.reduce((a, b) => a + b, 0) / values.length;
   };
 
   const shareResults = async () => {
@@ -478,7 +570,7 @@ export default function ResultsDisplay() {
           {t('results.personalizedRecommendations')}
         </h2>
         <div className="space-y-4">
-          {result.recommendations.map((recommendation, index) => (
+          {getLocalizedRecommendations(result).map((recommendation, index) => (
             <div key={index} className="flex items-start p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
               <div className="flex-shrink-0 w-6 h-6 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-medium mr-3 mt-0.5">
                 {index + 1}

@@ -92,6 +92,8 @@ export const assessmentEn: IAssessmentTranslations = {
   },
 
   results: {
+    title: 'Assessment Results',
+    description: 'View your mental health assessment results, get personalized recommendations and resource suggestions.',
     loading: 'Loading assessment results...',
     completedAt: 'Completed at',
     timeSpent: 'Time spent',
@@ -119,8 +121,12 @@ export const assessmentEn: IAssessmentTranslations = {
     actions: {
       share: 'Share Results',
       savePdf: 'Save as PDF',
-      viewHistory: 'View History'
+      viewHistory: 'View History',
+      backToAssessments: 'Back to Assessments'
     },
+    quickActions: 'Quick Actions',
+    noResultFound: 'Assessment result not found',
+    noResultData: 'No assessment data found',
     riskLevels: {
       high: {
         title: 'Needs Attention',
@@ -285,6 +291,24 @@ export const assessmentEn: IAssessmentTranslations = {
       hours: 'hours',
       days: 'days'
     }
+  },
+
+  /** 优先级 */
+  priority: {
+    high: 'High',
+    medium: 'Medium',
+    low: 'Low'
+  },
+
+  /** 时间相关 */
+  time: {
+    varies: 'Varies',
+    minutesSeconds: '{minutes}m {seconds}s'
+  },
+
+  /** 操作 */
+  actions: {
+    viewDetails: 'View Details'
   }
 };
 

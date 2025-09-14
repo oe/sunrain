@@ -1,309 +1,353 @@
 /**
- * Assessment 系统韩语翻译内容 (CSR)
+ * Assessment 系统英文翻译内容 (CSR)
  * 包含实际使用的翻译键，匹配组件中的client前缀结构
  */
 import type { IAssessmentTranslations } from "./types";
 
-export const assessmentKo: IAssessmentTranslations = {
+export const assessmentEn: IAssessmentTranslations = {
   assessment: {
-    title: "정신건강 평가",
+    title: "Mental Health Assessment",
   },
 
   loading: {
-    default: "로딩 중...",
-    assessment: "평가 로딩 중...",
+    default: "Loading...",
+    assessment: "Loading assessment...",
   },
 
   errors: {
-    title: "오류",
-    initializationFailed: "초기화 실패",
-    sessionStartFailed: "평가 세션을 시작할 수 없습니다",
-    noData: "평가 데이터 로딩에 실패했습니다",
-    validationFailed: "검증에 실패했습니다",
-    unsupportedQuestionType: "지원되지 않는 질문 유형: {type}",
-    cannotContinue: "계속할 수 없습니다",
-    continueFailed: "계속하기 실패",
-    deleteFailed: "삭제 실패",
-    clearFailed: "지우기 실패",
-    loadFailed: "로딩 실패",
-    loadFailedMessage: "데이터 로딩 중 문제가 발생했습니다",
+    title: "Error",
+    initializationFailed: "Initialization failed",
+    sessionStartFailed: "Unable to start assessment session",
+    noData: "Assessment data loading failed",
+    validationFailed: "Validation failed",
+    unsupportedQuestionType: "Unsupported question type: {type}",
+    cannotContinue: "Cannot continue session",
+    continueFailed: "Failed to continue session",
+    deleteFailed: "Failed to delete session",
+    clearFailed: "Failed to clear sessions",
+    loadFailed: "Loading Failed",
+    loadFailedMessage: "Unable to load assessment data. Please try again.",
     boundary: {
-      title: "애플리케이션 오류",
-      message: "죄송합니다. 애플리케이션에서 오류가 발생했습니다.",
-      details: "오류 세부사항",
-      retry: "다시 시도",
-      goHome: "홈으로 이동",
+      title: "Application Error",
+      message: "Sorry, the application encountered an error.",
+      details: "Error Details",
+      retry: "Retry",
+      goHome: "Go Home",
     },
   },
 
   question: {
-    number: "질문 {number}",
-    required: "필수",
-    selectedCount: "{count}개 선택됨",
-    selectedValue: "선택됨: {value}",
-    textPlaceholder: "답변을 입력해주세요...",
-    characterCount: "{count}자",
-    textEntered: "텍스트 입력됨",
-    answered: "답변 완료",
+    number: "Question {number}",
+    required: "Required",
+    selectedCount: "{count} selected",
+    selectedValue: "Selected: {value}",
+    textPlaceholder: "Please enter your answer...",
+    characterCount: "{count} characters",
+    textEntered: "Text entered",
+    answered: "Answered",
   },
 
   questionList: {
-    title: "질문 목록",
-    progress: "진행률: {current}/{total}",
-    questionNumber: "질문 {number}",
-    completed: "완료",
-    remaining: "남은",
+    title: "Question List",
+    progress: "Progress: {current}/{total}",
+    questionNumber: "Question {number}",
+    completed: "Completed",
+    remaining: "Remaining",
   },
 
   continue: {
-    loading: "미완료 평가 로딩 중...",
+    loading: "Loading incomplete assessments...",
   },
 
   list: {
     activeSessions: {
-      title: "{count}개의 미완료 평가가 있습니다",
-      continueLink: "평가 계속하기",
-      lastActivity: "마지막 활동",
-      progress: "진행률",
+      title: "You have {count} incomplete assessments",
+      continueLink: "Continue assessments",
+      lastActivity: "Last activity",
+      progress: "Progress",
     },
   },
 
   progress: {
-    text: "{current} / {total}",
+    text: "{current} of {total}",
   },
 
   validation: {
-    checking: "검증 중...",
-    withWarnings: "경고와 함께 검증 중...",
+    checking: "Validating...",
+    withWarnings: "with warnings",
   },
 
   execution: {
     errors: {
-      submitFailed: "제출 실패",
-      required: "이 필드는 필수입니다",
+      submitFailed: "Save failed, please try again",
+      required: "This field is required",
     },
     completion: {
-      title: "평가 완료",
-      message: "결과 생성 중...",
+      title: "Assessment Complete",
+      message: "Generating results...",
     },
     pauseModal: {
-      title: "평가 일시정지",
-      message: "평가를 일시정지하시겠습니까?",
-      continue: "계속",
-      exit: "종료",
+      title: "Pause Assessment",
+      message: "Are you sure you want to pause the assessment?",
+      continue: "Continue",
+      exit: "Exit",
     },
     navigation: {
-      previous: "이전",
-      next: "다음",
-      submit: "제출",
-      save: "저장",
-      submitting: "제출 중...",
+      previous: "Previous",
+      next: "Next",
+      submit: "Complete Assessment",
+      save: "Save Progress",
+      submitting: "Completing...",
     },
-    pause: "일시정지",
-    questionNumber: "질문 {number}",
-    timeSpent: "소요 시간",
-    complete: "완료",
+    pause: "Pause",
+    questionNumber: "Question {number}",
+    timeSpent: "Time spent",
+    complete: "complete",
   },
 
   results: {
-    loading: "평가 결과 로딩 중...",
-    completedAt: "완료 시간",
-    timeSpent: "소요 시간",
-    overallAssessment: "전체 평가",
-    detailedInterpretation: "상세 해석",
-    scoreDistribution: "점수 분포",
-    riskAssessment: "위험 평가",
-    personalizedRecommendations: "개인화된 권장사항",
-    recommendedResources: "권장 리소스",
+    loading: "Loading assessment results...",
+    completedAt: "Completed at",
+    timeSpent: "Time spent",
+    overallAssessment: "Overall Assessment",
+    detailedInterpretation: "Detailed Interpretation",
+    scoreDistribution: "Score Distribution",
+    riskAssessment: "Risk Assessment",
+    personalizedRecommendations: "Personalized Recommendations",
+    recommendedResources: "Recommended Resources",
     nextSteps: {
-      title: "다음 단계",
+      title: "Next Steps",
       moreAssessments: {
-        title: "더 많은 평가",
-        description: "다른 평가 도구 탐색",
+        title: "More Assessments",
+        description: "Explore other assessment tools",
       },
       startPractice: {
-        title: "연습 시작",
-        description: "관련 정신 건강 실습 시도",
+        title: "Start Practice",
+        description: "Try related mental health practices",
       },
       browseResources: {
-        title: "리소스 탐색",
-        description: "치유 리소스 라이브러리 보기",
+        title: "Browse Resources",
+        description: "View healing resource library",
       },
     },
     actions: {
-      share: "결과 공유",
-      savePdf: "PDF로 저장",
-      viewHistory: "기록 보기",
-      backToAssessments: "평가로 돌아가기",
+      share: "Share Results",
+      savePdf: "Save as PDF",
+      viewHistory: "View History",
+      backToAssessments: "Back to Assessments",
     },
     riskLevels: {
       high: {
-        title: "주의 필요",
+        title: "Needs Attention",
         message:
-          "평가 결과는 전문적인 도움이 필요할 수 있음을 나타냅니다. 정신 건강 전문가와 상담을 고려해보세요.",
+          "Your assessment results indicate you may need professional help. Consider consulting a mental health expert or calling a mental health helpline.",
       },
       medium: {
-        title: "주의 권장",
+        title: "Recommended Attention",
         message:
-          "평가 결과는 주의가 필요한 영역이 있음을 보여줍니다. 자기 관리 조치 실시를 고려해보세요.",
+          "Your assessment results show some areas that need attention. Consider implementing self-care measures or seeking support.",
       },
       low: {
-        title: "양호한 상태",
+        title: "Good Status",
         message:
-          "평가 결과는 정상 범위 내에 있습니다. 건강한 습관을 계속 유지하세요.",
+          "Your assessment results are within normal range. Continue maintaining healthy habits.",
       },
     },
     disclaimer: {
-      title: "중요 공지",
+      title: "Important Notice",
       message:
-        "이 평가 결과는 참고용이며 전문적인 정신 건강 진단을 대체할 수 없습니다.",
+        "These assessment results are for reference only and cannot replace professional mental health diagnosis. If you feel distressed or need help, please consult a professional mental health expert.",
     },
-    quickActions: "빠른 작업",
-    noResultFound: "평가 결과를 찾을 수 없음",
-    noResultData: "평가 데이터를 찾을 수 없음",
+    quickActions: "Quick Actions",
+    noResultFound: "Assessment result not found",
+    noResultData: "No assessment data found",
   },
 
   actions: {
-    retry: "다시 시도",
-    goBack: "돌아가기",
-    refresh: "새로고침",
-    startNew: "새 평가 시작",
-    continue: "계속",
+    retry: "Retry",
+    goBack: "Go Back",
+    refresh: "Refresh",
+    startNew: "Start New Assessment",
+    continue: "Continue",
+    viewDetails: "View Details",
   },
 
   questionnaireInfo: {
-    description: "설명",
-    purpose: "목적",
-    whatToExpect: "기대할 수 있는 것",
-    professionalBackground: "전문적 배경",
-    tags: "태그",
-    questions: "질문",
-    minutes: "분",
+    description: "Description",
+    purpose: "Purpose",
+    whatToExpect: "What to Expect",
+    professionalBackground: "Professional Background",
+    tags: "Tags",
+    questions: "Questions",
+    minutes: "Minutes",
     timeEstimate: {
-      lessThanMinute: "1분 미만",
-      oneMinute: "1분",
-      minutes: "{minutes}분",
+      lessThanMinute: "Less than 1 minute",
+      oneMinute: "1 minute",
+      minutes: "{minutes} minutes",
     },
     difficulty: {
-      beginner: "초급",
-      intermediate: "중급",
-      advanced: "고급",
+      beginner: "Beginner",
+      intermediate: "Intermediate",
+      advanced: "Advanced",
     },
     steps: {
-      step1: "{count}개의 질문에 솔직하게 답하세요 (약 {time}분 소요)",
-      step2: "검증된 채점 방법을 사용하여 답변을 분석합니다",
-      step3: "개인화된 결과와 권장사항을 받으세요",
+      step1: "Answer {count} questions honestly (takes about {time} minutes)",
+      step2: "Your responses will be analyzed using validated scoring methods",
+      step3: "Receive personalized results and recommendations",
     },
-    validated: "임상적으로 검증된 평가",
-    mentalHealthAssessment: "정신 건강 평가",
+    validated: "Clinically Validated Assessment",
+    mentalHealthAssessment: "Mental Health Assessment",
     purposeDescription:
-      "이 평가는 증상을 식별하고 정신 건강 상태에 대한 이해를 안내할 수 있는 통찰력을 제공하는 데 도움이 됩니다.",
+      "This assessment helps identify symptoms and provides insights that can guide your understanding of your mental health.",
     validatedDescription:
-      "이 평가는 과학적으로 검증된 방법과 채점 시스템을 사용합니다.",
+      "This assessment uses scientifically validated methods and scoring systems.",
     privacy: {
-      title: "개인정보 보호 및 데이터 보안",
+      title: "Privacy & Data Security",
       message:
-        "귀하의 답변은 기기에 로컬로 저장되며 제3자와 공유되지 않습니다.",
+        "Your responses are stored locally on your device and are not shared with third parties.",
     },
-    startAssessment: "평가 시작",
-    starting: "시작 중...",
+    startAssessment: "Start Assessment",
+    starting: "Starting...",
   },
 
   questionnaireCard: {
-    featured: "추천",
-    minutes: "분",
-    questions: "질문",
+    featured: "Featured",
+    minutes: "min",
+    questions: "questions",
     difficulty: {
-      beginner: "초급",
-      intermediate: "중급",
-      advanced: "고급",
+      beginner: "Beginner",
+      intermediate: "Intermediate",
+      advanced: "Advanced",
     },
-    validated: "검증됨",
-    viewHistory: "기록 보기",
-    startAssessment: "평가 시작",
+    validated: "Validated",
+    viewHistory: "View History",
+    startAssessment: "Start Assessment",
   },
 
   existingSession: {
-    title: "미완료 평가",
-    progress: "진행률",
-    lastActivity: "마지막 활동",
-    questionsAnswered: "답변함",
-    message:
-      "미완료 평가가 있습니다. 중단한 곳부터 계속하거나 처음부터 다시 시작할 수 있습니다.",
-    continue: "평가 계속하기",
-    restart: "처음부터 시작",
-    restartWarning: "처음부터 시작하면 이전 답변이 모두 삭제됩니다.",
-  },
-
-  common: {
-    loading: "로딩 중...",
-    cancel: "취소",
-    close: "닫기",
-    save: "저장",
-    delete: "삭제",
-    edit: "편집",
-    confirm: "확인",
-    yes: "예",
-    no: "아니오",
-    error: "오류",
-    showing: "표시 중",
-    to: "에서",
-    of: "의",
-    results: "결과",
-    riskLevels: {
-      low: "낮은 위험",
-      medium: "중간 위험",
-      high: "높은 위험",
-    },
-    timeUnits: {
-      seconds: "초",
-      minutes: "분",
-    },
+    title: "Incomplete Assessment",
+    progress: "Progress",
+    lastActivity: "Last activity",
+    questionsAnswered: "Answered",
+    message: "You have an incomplete assessment. You can continue from where you left off, or start over.",
+    continue: "Continue Assessment",
+    restart: "Start Over",
+    restartWarning: "Starting over will delete all your previous answers.",
   },
 
   history: {
     stats: {
-      total: "총계",
-      averageTime: "평균 시간",
-      lastAssessment: "마지막 평가",
+      total: "Total Assessments",
+      averageTime: "Average Time",
+      lastAssessment: "Last Assessment",
     },
     list: {
-      dimensions: "차원",
-      viewDetails: "세부사항 보기",
-      share: "공유",
-      delete: "삭제",
+      dimensions: "dimensions",
+      viewDetails: "View Details",
+      share: "Share",
+      delete: "Delete",
     },
     filters: {
-      type: "유형",
-      timeRange: "시간 범위",
-      riskLevel: "위험 수준",
+      type: "Assessment Type",
+      timeRange: "Time Range",
+      riskLevel: "Risk Level",
     },
   },
 
   status: {
-    active: "활성",
-    paused: "일시정지",
+    active: "Active",
+    paused: "Paused",
   },
 
   labels: {
-    unknownAssessment: "알 수 없는 평가",
-    startTime: "시작 시간",
-    timeSpent: "소요 시간",
-    answered: "답변됨",
-    questions: "질문",
-    estimatedRemaining: "예상 남은 시간",
+    unknownAssessment: "Unknown Assessment",
+    startTime: "Started",
+    timeSpent: "Time Spent",
+    answered: "Answered",
+    questions: "questions",
+    estimatedRemaining: "Estimated Remaining",
   },
 
   time: {
-    minutes: "분",
+    minutes: "minutes",
+    varies: "Varies",
+    minutesSeconds: "{minutes}m {seconds}s",
   },
 
   messages: {
-    deleted: "삭제됨",
-    clearedCount: "{count}개 정리됨",
-    noActiveSessions: "활성 세션이 없습니다",
-    noActiveSessionsMessage: "활성 평가 세션이 없습니다",
+    deleted: "Session deleted successfully",
+    clearedCount: "Cleared {count} sessions",
+    noActiveSessions: "All Caught Up!",
+    noActiveSessionsMessage: "You don't have any incomplete assessments. Start a new one to continue your mental health journey.",
+  },
+
+  common: {
+    loading: "Loading...",
+    cancel: "Cancel",
+    close: "Close",
+    save: "Save",
+    delete: "Delete",
+    edit: "Edit",
+    confirm: "Confirm",
+    yes: "Yes",
+    no: "No",
+    error: "Error",
+    showing: "Showing",
+    to: "to",
+    of: "of",
+    results: "results",
+    riskLevels: {
+      high: "High Risk",
+      medium: "Medium Risk",
+      low: "Low Risk",
+    },
+    timeUnits: {
+      minutes: "min",
+      seconds: "s",
+    },
+  },
+
+  priority: {
+    high: "High",
+    medium: "Medium",
+    low: "Low",
+  },
+
+  recommendations: {
+    riskBased: {
+      high: [
+        "🚨 Consider seeking immediate professional mental health support",
+        "📞 Contact a mental health professional or crisis hotline",
+        "🏥 Consider scheduling a detailed assessment with a mental health expert",
+        "👥 Inform family or friends about your situation and seek support"
+      ],
+      medium: [
+        "👨‍⚕️ Consider scheduling a consultation with a mental health professional",
+        "🧘‍♀️ Learn and practice stress management techniques",
+        "📚 Read books and resources about mental health",
+        "🏃‍♂️ Maintain regular physical exercise"
+      ],
+      low: [
+        "📊 Continue monitoring your mental health status",
+        "🌱 Maintain healthy lifestyle habits",
+        "💪 Develop positive coping strategies",
+        "🎯 Set achievable goals and expectations"
+      ]
+    },
+    general: [
+      "💤 Ensure adequate sleep (7-9 hours)",
+      "🥗 Maintain a balanced diet",
+      "🚫 Avoid excessive use of alcohol and drugs",
+      "🤝 Stay connected with friends and family"
+    ],
+    patterns: {
+      stable: "📈 Your scores are relatively stable, continue maintaining your current state",
+      variable: "📊 Your scores vary significantly, consider regular reassessment",
+      extreme: "⚠️ Some aspects need special attention, consider seeking professional help",
+      highAverage: "🔍 Consider a more detailed mental health assessment",
+      mediumAverage: "👀 Consider regular monitoring of mental health status"
+    }
   },
 };
 
-export default assessmentKo;
+export default assessmentEn;

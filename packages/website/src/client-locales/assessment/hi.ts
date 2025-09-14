@@ -1,301 +1,353 @@
 /**
- * Assessment 系统印地语翻译内容 (CSR)
+ * Assessment 系统英文翻译内容 (CSR)
  * 包含实际使用的翻译键，匹配组件中的client前缀结构
  */
-import type { IAssessmentTranslations } from './types';
+import type { IAssessmentTranslations } from "./types";
 
-export const assessmentHi: IAssessmentTranslations = {
+export const assessmentEn: IAssessmentTranslations = {
   assessment: {
-    title: 'मानसिक स्वास्थ्य मूल्यांकन',
+    title: "Mental Health Assessment",
   },
 
   loading: {
-    default: 'लोड हो रहा है...',
-    assessment: 'मूल्यांकन लोड हो रहा है...',
+    default: "Loading...",
+    assessment: "Loading assessment...",
   },
 
   errors: {
-    title: 'त्रुटि',
-    initializationFailed: 'प्रारंभिकरण विफल',
-    sessionStartFailed: 'मूल्यांकन सत्र शुरू नहीं कर सकते',
-    noData: 'मूल्यांकन डेटा लोड करने में विफल',
-    validationFailed: 'सत्यापन विफल',
-    unsupportedQuestionType: 'असमर्थित प्रश्न प्रकार: {type}',
-    cannotContinue: 'जारी नहीं रख सकते',
-    continueFailed: 'जारी रखने में विफल',
-    deleteFailed: 'हटाने में विफल',
-    clearFailed: 'साफ़ करने में विफल',
-    loadFailed: 'लोड करने में विफल',
-    loadFailedMessage: 'डेटा लोड करने में समस्या हुई',
+    title: "Error",
+    initializationFailed: "Initialization failed",
+    sessionStartFailed: "Unable to start assessment session",
+    noData: "Assessment data loading failed",
+    validationFailed: "Validation failed",
+    unsupportedQuestionType: "Unsupported question type: {type}",
+    cannotContinue: "Cannot continue session",
+    continueFailed: "Failed to continue session",
+    deleteFailed: "Failed to delete session",
+    clearFailed: "Failed to clear sessions",
+    loadFailed: "Loading Failed",
+    loadFailedMessage: "Unable to load assessment data. Please try again.",
     boundary: {
-      title: 'एप्लिकेशन त्रुटि',
-      message: 'खुशी है, एप्लिकेशन में एक त्रुटि हुई है।',
-      details: 'त्रुटि विवरण',
-      retry: 'पुनः प्रयास',
-      goHome: 'होम पर जाएं',
+      title: "Application Error",
+      message: "Sorry, the application encountered an error.",
+      details: "Error Details",
+      retry: "Retry",
+      goHome: "Go Home",
     },
   },
 
   question: {
-    number: 'प्रश्न {number}',
-    required: 'आवश्यक',
-    selectedCount: '{count} चयनित',
-    selectedValue: 'चयनित: {value}',
-    textPlaceholder: 'कृपया अपना उत्तर दर्ज करें...',
-    characterCount: '{count} अक्षर',
-    textEntered: 'टेक्स्ट दर्ज किया गया',
-    answered: 'उत्तर दिया गया',
+    number: "Question {number}",
+    required: "Required",
+    selectedCount: "{count} selected",
+    selectedValue: "Selected: {value}",
+    textPlaceholder: "Please enter your answer...",
+    characterCount: "{count} characters",
+    textEntered: "Text entered",
+    answered: "Answered",
   },
 
   questionList: {
-    title: 'प्रश्न सूची',
-    progress: 'प्रगति: {current}/{total}',
-    questionNumber: 'प्रश्न {number}',
-    completed: 'पूर्ण',
-    remaining: 'शेष',
+    title: "Question List",
+    progress: "Progress: {current}/{total}",
+    questionNumber: "Question {number}",
+    completed: "Completed",
+    remaining: "Remaining",
   },
 
   continue: {
-    loading: 'अधूरे मूल्यांकन लोड हो रहे हैं...',
+    loading: "Loading incomplete assessments...",
   },
 
   list: {
     activeSessions: {
-      title: 'आपके पास {count} अधूरे मूल्यांकन हैं',
-      continueLink: 'मूल्यांकन जारी रखें',
-      lastActivity: 'अंतिम गतिविधि',
-      progress: 'प्रगति',
+      title: "You have {count} incomplete assessments",
+      continueLink: "Continue assessments",
+      lastActivity: "Last activity",
+      progress: "Progress",
     },
   },
 
   progress: {
-    text: '{current} / {total}',
+    text: "{current} of {total}",
   },
 
   validation: {
-    checking: 'सत्यापन कर रहे हैं...',
-    withWarnings: 'with warnings', // TODO: Translate to Hindi
+    checking: "Validating...",
+    withWarnings: "with warnings",
   },
 
   execution: {
     errors: {
-      submitFailed: 'सबमिशन विफल',
-      required: 'यह फ़ील्ड आवश्यक है',
+      submitFailed: "Save failed, please try again",
+      required: "This field is required",
     },
     completion: {
-      title: 'मूल्यांकन पूर्ण',
-      message: 'परिणाम उत्पन्न कर रहे हैं...',
+      title: "Assessment Complete",
+      message: "Generating results...",
     },
     pauseModal: {
-      title: 'मूल्यांकन रोकें',
-      message: 'क्या आप मूल्यांकन को रोकना चाहते हैं?',
-      continue: 'जारी रखें',
-      exit: 'बाहर निकलें',
+      title: "Pause Assessment",
+      message: "Are you sure you want to pause the assessment?",
+      continue: "Continue",
+      exit: "Exit",
     },
     navigation: {
-      previous: 'पिछला',
-      next: 'अगला',
-      submit: 'सबमिट',
-      save: 'सहेजें',
-      submitting: 'सबमिट कर रहे हैं...',
+      previous: "Previous",
+      next: "Next",
+      submit: "Complete Assessment",
+      save: "Save Progress",
+      submitting: "Completing...",
     },
-    pause: 'रोकें',
-    questionNumber: 'प्रश्न {number}',
-    timeSpent: 'बिताया गया समय',
-    complete: 'पूर्ण',
+    pause: "Pause",
+    questionNumber: "Question {number}",
+    timeSpent: "Time spent",
+    complete: "complete",
   },
 
   results: {
-    loading: 'मूल्यांकन परिणाम लोड हो रहे हैं...',
-    completedAt: 'पूरा किया गया',
-    timeSpent: 'बिताया गया समय',
-    overallAssessment: 'समग्र मूल्यांकन',
-    detailedInterpretation: 'विस्तृत व्याख्या',
-    scoreDistribution: 'स्कोर वितरण',
-    riskAssessment: 'जोखिम मूल्यांकन',
-    personalizedRecommendations: 'व्यक्तिगत सिफारिशें',
-    recommendedResources: 'अनुशंसित संसाधन',
+    loading: "Loading assessment results...",
+    completedAt: "Completed at",
+    timeSpent: "Time spent",
+    overallAssessment: "Overall Assessment",
+    detailedInterpretation: "Detailed Interpretation",
+    scoreDistribution: "Score Distribution",
+    riskAssessment: "Risk Assessment",
+    personalizedRecommendations: "Personalized Recommendations",
+    recommendedResources: "Recommended Resources",
     nextSteps: {
-      title: 'अगले कदम',
+      title: "Next Steps",
       moreAssessments: {
-        title: 'अधिक मूल्यांकन',
-        description: 'अन्य मूल्यांकन उपकरणों का अन्वेषण करें'
+        title: "More Assessments",
+        description: "Explore other assessment tools",
       },
       startPractice: {
-        title: 'अभ्यास शुरू करें',
-        description: 'संबंधित मानसिक स्वास्थ्य अभ्यास आज़माएं'
+        title: "Start Practice",
+        description: "Try related mental health practices",
       },
       browseResources: {
-        title: 'संसाधन ब्राउज़ करें',
-        description: 'उपचार संसाधन पुस्तकालय देखें'
-      }
+        title: "Browse Resources",
+        description: "View healing resource library",
+      },
     },
     actions: {
-      share: 'परिणाम साझा करें',
-      savePdf: 'PDF के रूप में सहेजें',
-      viewHistory: 'इतिहास देखें',
-      backToAssessments: 'मूल्यांकन पर वापस जाएं'
+      share: "Share Results",
+      savePdf: "Save as PDF",
+      viewHistory: "View History",
+      backToAssessments: "Back to Assessments",
     },
     riskLevels: {
       high: {
-        title: 'ध्यान की आवश्यकता',
-        message: 'आपके मूल्यांकन परिणाम इंगित करते हैं कि आपको पेशेवर सहायता की आवश्यकता हो सकती है। मानसिक स्वास्थ्य विशेषज्ञ से सलाह लेने पर विचार करें।'
+        title: "Needs Attention",
+        message:
+          "Your assessment results indicate you may need professional help. Consider consulting a mental health expert or calling a mental health helpline.",
       },
       medium: {
-        title: 'ध्यान की सिफारिश',
-        message: 'आपके मूल्यांकन परिणाम कुछ क्षेत्रों को दिखाते हैं जिन पर ध्यान देने की आवश्यकता है। स्व-देखभाल उपायों को लागू करने पर विचार करें।'
+        title: "Recommended Attention",
+        message:
+          "Your assessment results show some areas that need attention. Consider implementing self-care measures or seeking support.",
       },
       low: {
-        title: 'अच्छी स्थिति',
-        message: 'आपके मूल्यांकन परिणाम सामान्य सीमा के भीतर हैं। स्वस्थ आदतों को बनाए रखना जारी रखें।'
-      }
+        title: "Good Status",
+        message:
+          "Your assessment results are within normal range. Continue maintaining healthy habits.",
+      },
     },
     disclaimer: {
-      title: 'महत्वपूर्ण सूचना',
-      message: 'ये मूल्यांकन परिणाम केवल संदर्भ के लिए हैं और पेशेवर मानसिक स्वास्थ्य निदान का स्थान नहीं ले सकते।'
+      title: "Important Notice",
+      message:
+        "These assessment results are for reference only and cannot replace professional mental health diagnosis. If you feel distressed or need help, please consult a professional mental health expert.",
     },
-    quickActions: 'त्वरित क्रियाएं',
-    noResultFound: 'मूल्यांकन परिणाम नहीं मिला',
-    noResultData: 'मूल्यांकन डेटा नहीं मिला'
+    quickActions: "Quick Actions",
+    noResultFound: "Assessment result not found",
+    noResultData: "No assessment data found",
   },
 
   actions: {
-    retry: 'पुनः प्रयास करें',
-    goBack: 'वापस जाएं',
-    refresh: 'ताज़ा करें',
-    startNew: 'नया मूल्यांकन शुरू करें',
-    continue: 'जारी रखें',
+    retry: "Retry",
+    goBack: "Go Back",
+    refresh: "Refresh",
+    startNew: "Start New Assessment",
+    continue: "Continue",
+    viewDetails: "View Details",
   },
 
   questionnaireInfo: {
-    description: 'विवरण',
-    purpose: 'उद्देश्य',
-    whatToExpect: 'क्या अपेक्षा करें',
-    professionalBackground: 'व्यावसायिक पृष्ठभूमि',
-    tags: 'टैग',
-    questions: 'प्रश्न',
-    minutes: 'मिनट',
+    description: "Description",
+    purpose: "Purpose",
+    whatToExpect: "What to Expect",
+    professionalBackground: "Professional Background",
+    tags: "Tags",
+    questions: "Questions",
+    minutes: "Minutes",
     timeEstimate: {
-      lessThanMinute: '1 मिनट से कम',
-      oneMinute: '1 मिनट',
-      minutes: '{minutes} मिनट',
+      lessThanMinute: "Less than 1 minute",
+      oneMinute: "1 minute",
+      minutes: "{minutes} minutes",
     },
     difficulty: {
-      beginner: 'शुरुआती',
-      intermediate: 'मध्यम',
-      advanced: 'उन्नत',
+      beginner: "Beginner",
+      intermediate: "Intermediate",
+      advanced: "Advanced",
     },
     steps: {
-      step1: '{count} प्रश्नों का ईमानदारी से उत्तर दें (लगभग {time} मिनट लगेंगे)',
-      step2: 'आपके उत्तरों का विश्वसनीय स्कोरिंग विधियों का उपयोग करके विश्लेषण किया जाएगा',
-      step3: 'व्यक्तिगत परिणाम और सिफारिशें प्राप्त करें',
+      step1: "Answer {count} questions honestly (takes about {time} minutes)",
+      step2: "Your responses will be analyzed using validated scoring methods",
+      step3: "Receive personalized results and recommendations",
     },
-    validated: 'नैदानिक रूप से सत्यापित मूल्यांकन',
-    mentalHealthAssessment: 'मानसिक स्वास्थ्य मूल्यांकन',
-    purposeDescription: 'यह मूल्यांकन लक्षणों की पहचान करने और अंतर्दृष्टि प्रदान करने में मदद करता है जो आपकी मानसिक स्वास्थ्य स्थिति की समझ का मार्गदर्शन कर सकती है।',
-    validatedDescription: 'यह मूल्यांकन वैज्ञानिक रूप से सत्यापित विधियों और स्कोरिंग सिस्टम का उपयोग करता है।',
+    validated: "Clinically Validated Assessment",
+    mentalHealthAssessment: "Mental Health Assessment",
+    purposeDescription:
+      "This assessment helps identify symptoms and provides insights that can guide your understanding of your mental health.",
+    validatedDescription:
+      "This assessment uses scientifically validated methods and scoring systems.",
     privacy: {
-      title: 'गोपनीयता और डेटा सुरक्षा',
-      message: 'आपके उत्तर आपके डिवाइस पर स्थानीय रूप से संग्रहीत होते हैं और तीसरे पक्ष के साथ साझा नहीं किए जाते।',
+      title: "Privacy & Data Security",
+      message:
+        "Your responses are stored locally on your device and are not shared with third parties.",
     },
-    startAssessment: 'मूल्यांकन शुरू करें',
-    starting: 'शुरू हो रहा है...',
+    startAssessment: "Start Assessment",
+    starting: "Starting...",
   },
 
   questionnaireCard: {
-    featured: 'विशेष',
-    minutes: 'मिनट',
-    questions: 'प्रश्न',
+    featured: "Featured",
+    minutes: "min",
+    questions: "questions",
     difficulty: {
-      beginner: 'शुरुआती',
-      intermediate: 'मध्यम',
-      advanced: 'उन्नत',
+      beginner: "Beginner",
+      intermediate: "Intermediate",
+      advanced: "Advanced",
     },
-    validated: 'सत्यापित',
-    viewHistory: 'इतिहास देखें',
-    startAssessment: 'मूल्यांकन शुरू करें',
+    validated: "Validated",
+    viewHistory: "View History",
+    startAssessment: "Start Assessment",
   },
 
   existingSession: {
-    title: 'अधूरा मूल्यांकन',
-    progress: 'प्रगति',
-    lastActivity: 'अंतिम गतिविधि',
-    questionsAnswered: 'उत्तर दिए गए',
-    message: 'आपका एक अधूरा मूल्यांकन है। आप जहां छोड़ा था वहां से जारी रख सकते हैं, या फिर से शुरू कर सकते हैं।',
-    continue: 'मूल्यांकन जारी रखें',
-    restart: 'फिर से शुरू करें',
-    restartWarning: 'फिर से शुरू करने से आपके सभी पिछले उत्तर हट जाएंगे।',
-  },
-
-  common: {
-    loading: 'लोड हो रहा है...',
-    cancel: 'रद्द करें',
-    close: 'बंद करें',
-    save: 'सहेजें',
-    delete: 'हटाएं',
-    edit: 'संपादित करें',
-    confirm: 'पुष्टि करें',
-    yes: 'हां',
-    no: 'नहीं',
-    error: 'त्रुटि',
-    showing: 'दिखा रहा है',
-    to: 'से',
-    of: 'का',
-    results: 'परिणाम',
-    riskLevels: {
-      low: 'कम जोखिम',
-      medium: 'मध्यम जोखिम',
-      high: 'उच्च जोखिम',
-    },
-    timeUnits: {
-      seconds: 'सेकंड',
-      minutes: 'मिनट',
-    },
+    title: "Incomplete Assessment",
+    progress: "Progress",
+    lastActivity: "Last activity",
+    questionsAnswered: "Answered",
+    message: "You have an incomplete assessment. You can continue from where you left off, or start over.",
+    continue: "Continue Assessment",
+    restart: "Start Over",
+    restartWarning: "Starting over will delete all your previous answers.",
   },
 
   history: {
     stats: {
-      total: 'कुल',
-      averageTime: 'औसत समय',
-      lastAssessment: 'अंतिम मूल्यांकन',
+      total: "Total Assessments",
+      averageTime: "Average Time",
+      lastAssessment: "Last Assessment",
     },
     list: {
-      dimensions: 'आयाम',
-      viewDetails: 'विवरण देखें',
-      share: 'साझा करें',
-      delete: 'हटाएं',
+      dimensions: "dimensions",
+      viewDetails: "View Details",
+      share: "Share",
+      delete: "Delete",
     },
     filters: {
-      type: 'प्रकार',
-      timeRange: 'समय सीमा',
-      riskLevel: 'जोखिम स्तर',
+      type: "Assessment Type",
+      timeRange: "Time Range",
+      riskLevel: "Risk Level",
     },
   },
 
   status: {
-    active: 'सक्रिय',
-    paused: 'रोका गया',
+    active: "Active",
+    paused: "Paused",
   },
 
   labels: {
-    unknownAssessment: 'अज्ञात मूल्यांकन',
-    startTime: 'शुरुआत का समय',
-    timeSpent: 'बिताया गया समय',
-    answered: 'उत्तर दिया',
-    questions: 'प्रश्न',
-    estimatedRemaining: 'अनुमानित शेष',
+    unknownAssessment: "Unknown Assessment",
+    startTime: "Started",
+    timeSpent: "Time Spent",
+    answered: "Answered",
+    questions: "questions",
+    estimatedRemaining: "Estimated Remaining",
   },
 
   time: {
-    minutes: 'मिनट',
+    minutes: "minutes",
+    varies: "Varies",
+    minutesSeconds: "{minutes}m {seconds}s",
   },
 
   messages: {
-    deleted: 'हटाया गया',
-    clearedCount: '{count} साफ़ किया गया',
-    noActiveSessions: 'कोई सक्रिय सत्र नहीं',
-    noActiveSessionsMessage: 'आपके पास कोई सक्रिय मूल्यांकन सत्र नहीं है',
+    deleted: "Session deleted successfully",
+    clearedCount: "Cleared {count} sessions",
+    noActiveSessions: "All Caught Up!",
+    noActiveSessionsMessage: "You don't have any incomplete assessments. Start a new one to continue your mental health journey.",
+  },
+
+  common: {
+    loading: "Loading...",
+    cancel: "Cancel",
+    close: "Close",
+    save: "Save",
+    delete: "Delete",
+    edit: "Edit",
+    confirm: "Confirm",
+    yes: "Yes",
+    no: "No",
+    error: "Error",
+    showing: "Showing",
+    to: "to",
+    of: "of",
+    results: "results",
+    riskLevels: {
+      high: "High Risk",
+      medium: "Medium Risk",
+      low: "Low Risk",
+    },
+    timeUnits: {
+      minutes: "min",
+      seconds: "s",
+    },
+  },
+
+  priority: {
+    high: "High",
+    medium: "Medium",
+    low: "Low",
+  },
+
+  recommendations: {
+    riskBased: {
+      high: [
+        "🚨 Consider seeking immediate professional mental health support",
+        "📞 Contact a mental health professional or crisis hotline",
+        "🏥 Consider scheduling a detailed assessment with a mental health expert",
+        "👥 Inform family or friends about your situation and seek support"
+      ],
+      medium: [
+        "👨‍⚕️ Consider scheduling a consultation with a mental health professional",
+        "🧘‍♀️ Learn and practice stress management techniques",
+        "📚 Read books and resources about mental health",
+        "🏃‍♂️ Maintain regular physical exercise"
+      ],
+      low: [
+        "📊 Continue monitoring your mental health status",
+        "🌱 Maintain healthy lifestyle habits",
+        "💪 Develop positive coping strategies",
+        "🎯 Set achievable goals and expectations"
+      ]
+    },
+    general: [
+      "💤 Ensure adequate sleep (7-9 hours)",
+      "🥗 Maintain a balanced diet",
+      "🚫 Avoid excessive use of alcohol and drugs",
+      "🤝 Stay connected with friends and family"
+    ],
+    patterns: {
+      stable: "📈 Your scores are relatively stable, continue maintaining your current state",
+      variable: "📊 Your scores vary significantly, consider regular reassessment",
+      extreme: "⚠️ Some aspects need special attention, consider seeking professional help",
+      highAverage: "🔍 Consider a more detailed mental health assessment",
+      mediumAverage: "👀 Consider regular monitoring of mental health status"
+    }
   },
 };
 
-export default assessmentHi;
+export default assessmentEn;

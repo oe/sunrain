@@ -11,8 +11,8 @@ const currentLang = getLocale(Astro.url) as Language;
 const t = createSSGTranslations(currentLang, 'assessment');
 
 // SEO metadata
-const pageTitle = `评测结果 - ${t('common.title')}`;
-const pageDescription = '查看您的心理健康评测结果，获得个性化建议和资源推荐。';
+const pageTitle = `${t('results.title')} - ${t('common.title')}`;
+const pageDescription = t('results.description');
 ---
 
 <BaseLayout title={pageTitle} description={pageDescription}>

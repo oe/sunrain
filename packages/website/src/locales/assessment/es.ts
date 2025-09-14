@@ -1,290 +1,315 @@
 /**
- * 评测系统西班牙语翻译内容
+ * 评测系统英文翻译内容
  */
 import type { IAssessmentTranslations } from './types';
 
-export const assessmentEs: IAssessmentTranslations = {
-  pageTitle: 'Evaluación de Salud Mental',
+export const assessmentEn: IAssessmentTranslations = {
+  pageTitle: 'Mental Health Assessment',
 
   list: {
-    title: 'Evaluación de Salud Mental',
-    subtitle: 'Comprenda su estado de salud mental a través de herramientas de evaluación científicas y obtenga recomendaciones y recursos personalizados',
+    title: 'Mental Health Assessment',
+    subtitle: 'Understand your mental health status through scientific assessment tools and get personalized recommendations and resources',
     categories: {
-      mental_health: 'Evaluación de Salud Mental',
-      personality: 'Evaluación de Personalidad',
-      stress: 'Evaluación de Estrés',
-      mood: 'Evaluación del Estado de Ánimo'
+      mental_health: 'Mental Health Assessment',
+      personality: 'Personality Assessment',
+      stress: 'Stress Assessment',
+      mood: 'Mood Assessment'
     },
     categoryDescriptions: {
-      mental_health: 'Herramientas profesionales de detección de salud mental para ayudar a identificar posibles problemas de salud mental',
-      personality: 'Comprenda sus rasgos de personalidad y patrones de comportamiento',
-      stress: 'Evalúe sus niveles de estrés y capacidades de afrontamiento',
-      mood: 'Monitoree sus estados emocionales y tendencias'
+      mental_health: 'Professional mental health screening tools to help identify potential mental health issues',
+      personality: 'Understand your personality traits and behavioral patterns',
+      stress: 'Assess your stress levels and coping abilities',
+      mood: 'Monitor your emotional states and trends'
     },
-    startButton: 'Comenzar Evaluación',
-    infoButton: 'Más Información',
-    minutes: 'minutos',
-    questions: 'preguntas',
+    startButton: 'Start Assessment',
+    infoButton: 'Learn More',
+    minutes: 'minutes',
+    questions: 'questions',
     activeSessions: {
-      title: 'Tienes {count} evaluaciones incompletas',
-      message: 'Haz clic para continuar tus evaluaciones',
-      continueLink: 'Continuar evaluaciones',
-      lastActivity: 'Última actividad',
-      progress: 'Progreso'
+      title: 'You have {count} incomplete assessments',
+      message: 'Click to continue your assessments',
+      continueLink: 'Continue assessments',
+      lastActivity: 'Last activity',
+      progress: 'Progress',
     },
     quickActions: {
-      title: 'Acciones Rápidas',
+      title: 'Quick Actions',
       history: {
-        title: 'Historial de Evaluaciones',
-        description: 'Ver resultados históricos de evaluaciones'
+        title: 'Assessment History',
+        description: 'View historical assessment results'
       },
       trends: {
-        title: 'Análisis de Tendencias',
-        description: 'Ver tendencias de salud mental'
+        title: 'Trend Analysis',
+        description: 'View mental health trends'
       },
       continue: {
-        title: 'Continuar Evaluación',
-        description: 'Completar evaluaciones sin terminar'
+        title: 'Continue Assessment',
+        description: 'Complete unfinished assessments'
       }
     },
     existingSession: {
-      title: "Evaluación Sin Terminar",
-      message: "Tienes una evaluación sin terminar. Puedes continuar desde donde lo dejaste, o empezar de nuevo.",
-      progress: "Progreso",
-      lastActivity: "Última actividad",
-      questionsAnswered: "Respondidas",
-      continue: "Continuar Evaluación",
-      restart: "Empezar de Nuevo",
-      restartWarning: "Empezar de nuevo eliminará todas tus respuestas anteriores."
+      title: "Unfinished Assessment",
+      message: "You have an unfinished assessment. You can continue from where you left off, or start over.",
+      progress: "Progress",
+      lastActivity: "Last activity",
+      questionsAnswered: "Answered",
+      continue: "Continue Assessment",
+      restart: "Start Over",
+      restartWarning: "Starting over will delete all your previous answers."
     },
     disclaimer: {
-      title: 'Aviso Importante',
-      message: 'Estas herramientas de evaluación son solo para detección y autocomprensión y no pueden reemplazar el diagnóstico profesional de salud mental. Si se siente angustiado o necesita ayuda, consulte a un experto profesional en salud mental.'
+      title: 'Important Notice',
+      message: 'These assessment tools are for screening and self-understanding only and cannot replace professional mental health diagnosis. If you feel distressed or need help, please consult a professional mental health expert.'
     }
   },
 
   execution: {
-    loading: 'Cargando evaluación...',
-    pause: 'Pausar',
-    save: 'Guardar Progreso',
-    next: 'Siguiente',
-    previous: 'Anterior',
-    complete: 'Completar Evaluación',
-    timeSpent: 'Tiempo transcurrido',
-    required: '* Requerido',
-    questionNumber: 'Pregunta',
-    totalQuestions: 'preguntas',
+    loading: 'Loading assessment...',
+    pause: 'Pause',
+    save: 'Save Progress',
+    next: 'Next',
+    previous: 'Previous',
+    complete: 'Complete Assessment',
+    timeSpent: 'Time spent',
+    required: '* Required',
+    questionNumber: 'Question',
+    totalQuestions: 'questions',
     completion: {
-      title: '¡Evaluación Completa!',
-      message: 'Analizando sus resultados...'
+      title: 'Assessment Complete!',
+      message: 'Analyzing your results...'
     },
     pauseModal: {
-      title: 'Pausar Evaluación',
-      message: 'Su progreso se ha guardado automáticamente. Puede continuar la evaluación más tarde.',
-      continue: 'Continuar Evaluación',
-      exit: 'Salir'
+      title: 'Pause Assessment',
+      message: 'Your progress has been automatically saved. You can continue the assessment later.',
+      continue: 'Continue Assessment',
+      exit: 'Exit'
     },
     errors: {
-      required: 'Por favor responda esta pregunta antes de continuar.',
-      submitFailed: 'Error al enviar respuesta, por favor intente de nuevo.',
-      loadFailed: 'Error al cargar evaluación, por favor actualice e intente de nuevo.'
+      required: 'Please answer this question before continuing.',
+      submitFailed: 'Failed to submit answer, please try again.',
+      loadFailed: 'Failed to load assessment, please refresh and try again.'
     }
   },
 
   results: {
-    loading: 'Cargando resultados de evaluación...',
-    completedAt: 'Completado en',
-    timeSpent: 'Tiempo transcurrido',
-    overallAssessment: 'Evaluación General',
-    detailedInterpretation: 'Interpretación Detallada',
-    scoreDistribution: 'Distribución de Puntuaciones',
-    riskAssessment: 'Evaluación de Riesgo',
-    personalizedRecommendations: 'Recomendaciones Personalizadas',
-    recommendedResources: 'Recursos Recomendados',
+    title: 'Assessment Results',
+    description: 'View your mental health assessment results, get personalized recommendations and resource suggestions.',
+    loading: 'Loading assessment results...',
+    completedAt: 'Completed at',
+    timeSpent: 'Time spent',
+    overallAssessment: 'Overall Assessment',
+    detailedInterpretation: 'Detailed Interpretation',
+    scoreDistribution: 'Score Distribution',
+    riskAssessment: 'Risk Assessment',
+    personalizedRecommendations: 'Personalized Recommendations',
+    recommendedResources: 'Recommended Resources',
     nextSteps: {
-      title: 'Próximos Pasos',
+      title: 'Next Steps',
       moreAssessments: {
-        title: 'Más Evaluaciones',
-        description: 'Explorar otras herramientas de evaluación'
+        title: 'More Assessments',
+        description: 'Explore other assessment tools'
       },
       startPractice: {
-        title: 'Comenzar Práctica',
-        description: 'Probar prácticas relacionadas de salud mental'
+        title: 'Start Practice',
+        description: 'Try related mental health practices'
       },
       browseResources: {
-        title: 'Explorar Recursos',
-        description: 'Ver biblioteca de recursos de sanación'
+        title: 'Browse Resources',
+        description: 'View healing resource library'
       }
     },
     actions: {
-      share: 'Compartir Resultados',
-      savePdf: 'Guardar como PDF',
-      viewHistory: 'Ver Historial'
+      share: 'Share Results',
+      savePdf: 'Save as PDF',
+      viewHistory: 'View History',
+      backToAssessments: 'Back to Assessments'
     },
+    quickActions: 'Quick Actions',
+    noResultFound: 'Assessment result not found',
+    noResultData: 'No assessment data found',
     riskLevels: {
       high: {
-        title: 'Necesita Atención',
-        message: 'Sus resultados de evaluación indican que puede necesitar ayuda profesional. Considere consultar a un experto en salud mental o llamar a una línea de ayuda de salud mental.'
+        title: 'Needs Attention',
+        message: 'Your assessment results indicate you may need professional help. Consider consulting a mental health expert or calling a mental health helpline.'
       },
       medium: {
-        title: 'Atención Recomendada',
-        message: 'Sus resultados de evaluación muestran algunas áreas que necesitan atención. Considere implementar medidas de autocuidado o buscar apoyo.'
+        title: 'Recommended Attention',
+        message: 'Your assessment results show some areas that need attention. Consider implementing self-care measures or seeking support.'
       },
       low: {
-        title: 'Buen Estado',
-        message: 'Sus resultados de evaluación están dentro del rango normal. Continúe manteniendo hábitos saludables.'
+        title: 'Good Status',
+        message: 'Your assessment results are within normal range. Continue maintaining healthy habits.'
       }
     },
     disclaimer: {
-      title: 'Aviso Importante',
-      message: 'Estos resultados de evaluación son solo para referencia y no pueden reemplazar el diagnóstico profesional de salud mental. Si se siente angustiado o necesita ayuda, consulte a un experto profesional en salud mental.'
+      title: 'Important Notice',
+      message: 'These assessment results are for reference only and cannot replace professional mental health diagnosis. If you feel distressed or need help, please consult a professional mental health expert.'
     }
   },
 
   history: {
-    title: 'Historial de Evaluaciones',
-    subtitle: 'Ver sus registros históricos de evaluaciones y análisis de tendencias',
+    title: 'Assessment History',
+    subtitle: 'View your historical assessment records and trend analysis',
     statistics: {
-      total: 'Total de Evaluaciones',
-      completed: 'Completadas',
-      averageTime: 'Tiempo Promedio',
-      lastAssessment: 'Última Evaluación'
+      total: 'Total Assessments',
+      completed: 'Completed',
+      averageTime: 'Average Time',
+      lastAssessment: 'Last Assessment'
     },
     filters: {
-      assessmentType: 'Tipo de Evaluación',
-      timeRange: 'Rango de Tiempo',
-      riskLevel: 'Nivel de Riesgo',
-      allTypes: 'Todos los Tipos',
-      allTimes: 'Todos los Tiempos',
-      allLevels: 'Todos los Niveles',
-      last7Days: 'Últimos 7 días',
-      last30Days: 'Últimos 30 días',
-      last3Months: 'Últimos 3 meses',
-      lastYear: 'Último año',
-      clearFilters: 'Limpiar Filtros'
+      assessmentType: 'Assessment Type',
+      timeRange: 'Time Range',
+      riskLevel: 'Risk Level',
+      allTypes: 'All Types',
+      allTimes: 'All Times',
+      allLevels: 'All Levels',
+      last7Days: 'Last 7 days',
+      last30Days: 'Last 30 days',
+      last3Months: 'Last 3 months',
+      lastYear: 'Last year',
+      clearFilters: 'Clear Filters'
     },
     list: {
-      title: 'Registros de Evaluación',
-      viewDetails: 'Ver Detalles',
-      share: 'Compartir',
-      delete: 'Eliminar',
-      dimensions: 'dimensiones',
-      today: 'Hoy',
-      daysAgo: 'días atrás'
+      title: 'Assessment Records',
+      viewDetails: 'View Details',
+      share: 'Share',
+      delete: 'Delete',
+      dimensions: 'dimensions',
+      today: 'Today',
+      daysAgo: 'days ago'
     },
     empty: {
-      title: 'Sin Registros de Evaluación',
-      message: 'Aún no has completado ninguna evaluación',
-      startFirst: 'Comenzar Primera Evaluación'
+      title: 'No Assessment Records',
+      message: "You haven't completed any assessments yet",
+      startFirst: 'Start First Assessment'
     },
     pagination: {
-      showing: 'Mostrando',
-      to: 'a',
-      of: 'de',
-      records: 'registros',
-      previous: 'Anterior',
-      next: 'Siguiente'
+      showing: 'Showing',
+      to: 'to',
+      of: 'of',
+      records: 'records',
+      previous: 'Previous',
+      next: 'Next'
     },
     actions: {
-      export: 'Exportar Datos',
-      newAssessment: 'Nueva Evaluación'
+      export: 'Export Data',
+      newAssessment: 'New Assessment'
     }
   },
 
   continue: {
-    title: 'Continuar Evaluación',
-    subtitle: 'Complete sus evaluaciones de salud mental sin terminar',
-    loading: 'Cargando evaluaciones incompletas...',
+    title: 'Continue Assessment',
+    subtitle: 'Complete your unfinished mental health assessments',
+    loading: 'Loading incomplete assessments...',
     noSessions: {
-      title: 'Sin Evaluaciones Incompletas',
-      message: 'Actualmente no tienes evaluaciones para continuar',
-      startNew: 'Comenzar Nueva Evaluación'
+      title: 'No Incomplete Assessments',
+      message: 'You currently have no assessments to continue',
+      startNew: 'Start New Assessment'
     },
     session: {
-      startedAt: 'Iniciado en',
-      timeSpent: 'Tiempo transcurrido',
-      progress: 'Progreso',
-      answered: 'Respondidas',
-      estimatedRemaining: 'Tiempo estimado restante',
-      continueButton: 'Continuar Evaluación',
+      startedAt: 'Started at',
+      timeSpent: 'Time spent',
+      progress: 'Progress',
+      answered: 'Answered',
+      estimatedRemaining: 'Estimated remaining',
+      continueButton: 'Continue Assessment',
       status: {
-        active: 'En Progreso',
-        paused: 'Pausado'
+        active: 'In Progress',
+        paused: 'Paused'
       }
     },
     actions: {
-      startNew: 'Comenzar Nueva Evaluación',
-      clearAll: 'Limpiar Todas las Evaluaciones Incompletas'
+      startNew: 'Start New Assessment',
+      clearAll: 'Clear All Incomplete Assessments'
     },
     confirmations: {
-      deleteSession: '¿Estás seguro de que quieres eliminar esta evaluación incompleta? Todo el progreso se perderá.',
-      clearAll: '¿Estás seguro de que quieres limpiar todas las evaluaciones incompletas? Todo el progreso se perderá.'
+      deleteSession: 'Are you sure you want to delete this incomplete assessment? All progress will be lost.',
+      clearAll: 'Are you sure you want to clear all incomplete assessments? All progress will be lost.'
     }
   },
 
   trends: {
-    title: 'Análisis de Tendencias',
-    subtitle: 'Analizar sus tendencias de salud mental y patrones de desarrollo',
-    loading: 'Cargando datos de tendencias...',
+    title: 'Trend Analysis',
+    subtitle: 'Analyze your mental health trends and development patterns',
+    loading: 'Loading trend data...',
     timeRange: {
-      title: 'Rango de Tiempo',
-      last30Days: 'Últimos 30 días',
-      last3Months: 'Últimos 3 meses',
-      lastYear: 'Último año',
-      allTime: 'Todo el tiempo'
+      title: 'Time Range',
+      last30Days: 'Last 30 days',
+      last3Months: 'Last 3 months',
+      lastYear: 'Last year',
+      allTime: 'All time'
     },
     charts: {
-      overallTrend: 'Tendencia General',
-      frequency: 'Frecuencia de Evaluación',
-      riskTrend: 'Cambios en Nivel de Riesgo',
-      categoryPerformance: 'Rendimiento por Categoría'
+      overallTrend: 'Overall Trend',
+      frequency: 'Assessment Frequency',
+      riskTrend: 'Risk Level Changes',
+      categoryPerformance: 'Category Performance'
     },
     insights: {
-      title: 'Perspectivas de Tendencias',
-      positive: 'Tendencia Positiva',
-      warning: 'Necesita Atención',
-      info: 'Estable'
+      title: 'Trend Insights',
+      positive: 'Positive Trend',
+      warning: 'Needs Attention',
+      info: 'Stable'
     },
     statistics: {
-      improvementTrend: 'Tendencia de Mejora',
-      stableDimensions: 'Dimensiones Estables',
-      attentionNeeded: 'Atención Necesaria'
+      improvementTrend: 'Improvement Trend',
+      stableDimensions: 'Stable Dimensions',
+      attentionNeeded: 'Attention Needed'
     },
     noData: {
-      title: 'Sin Datos de Tendencias',
-      message: 'Necesitas completar al menos 2 evaluaciones para ver el análisis de tendencias',
-      startAssessment: 'Comenzar Evaluación'
+      title: 'No Trend Data',
+      message: 'You need to complete at least 2 assessments to view trend analysis',
+      startAssessment: 'Start Assessment'
     },
     actions: {
-      exportReport: 'Exportar Reporte de Tendencias',
-      newAssessment: 'Nueva Evaluación'
+      exportReport: 'Export Trend Report',
+      newAssessment: 'New Assessment'
     }
   },
 
+
   common: {
-    title: 'Título',
-    loading: 'Cargando...',
+    title: 'Mental Health Assessment',
+    loading: 'Loading...',
     error: 'Error',
-    success: 'Éxito',
-    refresh: 'Actualizar',
-    cancel: 'Cancelar',
-    confirm: 'Confirmar',
-    delete: 'Eliminar',
-    save: 'Guardar',
-    share: 'Compartir',
-    export: 'Exportar',
+    success: 'Success',
+    refresh: 'Refresh',
+    cancel: 'Cancel',
+    confirm: 'Confirm',
+    delete: 'Delete',
+    save: 'Save',
+    share: 'Share',
+    export: 'Export',
     riskLevels: {
-      low: 'Riesgo Bajo',
-      medium: 'Riesgo Medio',
-      high: 'Riesgo Alto'
+      low: 'Low Risk',
+      medium: 'Medium Risk',
+      high: 'High Risk'
     },
     timeUnits: {
-      seconds: 'segundos',
-      minutes: 'minutos',
-      hours: 'horas',
-      days: 'días'
+      seconds: 'seconds',
+      minutes: 'minutes',
+      hours: 'hours',
+      days: 'days'
     }
+  },
+
+  /** 优先级 */
+  priority: {
+    high: 'High',
+    medium: 'Medium',
+    low: 'Low'
+  },
+
+  /** 时间相关 */
+  time: {
+    varies: 'Varies',
+    minutesSeconds: '{minutes}m {seconds}s'
+  },
+
+  /** 操作 */
+  actions: {
+    viewDetails: 'View Details'
   }
 };
 
-export default assessmentEs;
+export default assessmentEn;

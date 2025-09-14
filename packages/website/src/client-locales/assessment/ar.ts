@@ -194,6 +194,8 @@ export const assessmentAr: IAssessmentTranslations = {
 
   time: {
     minutes: "minutes", // TODO: Translate to Arabic
+    varies: "varies", // TODO: Translate to Arabic
+    minutesSeconds: "minutes and seconds", // TODO: Translate to Arabic
   },
 
   messages: {
@@ -209,6 +211,7 @@ export const assessmentAr: IAssessmentTranslations = {
     refresh: "Refresh", // TODO: Translate to Arabic
     startNew: "Start New Assessment", // TODO: Translate to Arabic
     continue: "Continue", // TODO: Translate to Arabic
+    viewDetails: "View Details", // TODO: Translate to Arabic
   },
 
   questionnaireInfo: {
@@ -295,6 +298,49 @@ export const assessmentAr: IAssessmentTranslations = {
       minutes: "min", // TODO: Translate to Arabic
       seconds: "s", // TODO: Translate to Arabic
     },
+  },
+
+  /** 优先级 */
+  priority: {
+    high: "عالي", // TODO: Translate to Arabic
+    medium: "متوسط", // TODO: Translate to Arabic
+    low: "منخفض", // TODO: Translate to Arabic
+  },
+
+  /** 建议内容 */
+  recommendations: {
+    riskBased: {
+      high: [
+        "📞 اتصل بأخصائي الصحة العقلية أو خط المساعدة", // TODO: Translate to Arabic
+        "🏥 فكر في جدولة تقييم مفصل مع خبير الصحة العقلية", // TODO: Translate to Arabic
+        "👥 أخبر العائلة أو الأصدقاء عن وضعك واطلب الدعم" // TODO: Translate to Arabic
+      ],
+      medium: [
+        "👨‍⚕️ فكر في جدولة استشارة مع أخصائي الصحة العقلية", // TODO: Translate to Arabic
+        "🧘‍♀️ تعلم ومارس تقنيات إدارة الإجهاد", // TODO: Translate to Arabic
+        "📚 اقرأ الكتب والموارد حول الصحة العقلية", // TODO: Translate to Arabic
+        "🏃‍♂️ حافظ على التمرين البدني المنتظم" // TODO: Translate to Arabic
+      ],
+      low: [
+        "📊 استمر في مراقبة حالة صحتك العقلية", // TODO: Translate to Arabic
+        "🌱 حافظ على عادات نمط حياة صحي", // TODO: Translate to Arabic
+        "💪 طور استراتيجيات التأقلم الإيجابية", // TODO: Translate to Arabic
+        "🎯 ضع أهداف وتوقعات قابلة للتحقيق" // TODO: Translate to Arabic
+      ]
+    },
+    general: [
+      "💤 تأكد من النوم الكافي (7-9 ساعات)", // TODO: Translate to Arabic
+      "🥗 حافظ على نظام غذائي متوازن", // TODO: Translate to Arabic
+      "🚫 تجنب الاستخدام المفرط للكحول والمخدرات", // TODO: Translate to Arabic
+      "🤝 ابق على اتصال مع الأصدقاء والعائلة" // TODO: Translate to Arabic
+    ],
+    patterns: {
+      stable: "📈 درجاتك مستقرة نسبياً، استمر في الحفاظ على حالتك الحالية", // TODO: Translate to Arabic
+      variable: "📊 درجاتك تختلف بشكل كبير، فكر في إعادة التقييم المنتظمة", // TODO: Translate to Arabic
+      extreme: "⚠️ بعض الجوانب تحتاج إلى اهتمام خاص، فكر في طلب المساعدة المهنية", // TODO: Translate to Arabic
+      highAverage: "🔍 فكر في تقييم أكثر تفصيلاً للصحة العقلية", // TODO: Translate to Arabic
+      mediumAverage: "👀 فكر في المراقبة المنتظمة لحالة الصحة العقلية" // TODO: Translate to Arabic
+    }
   },
 };
 

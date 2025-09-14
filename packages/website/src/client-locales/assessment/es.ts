@@ -194,6 +194,8 @@ export const assessmentEs: IAssessmentTranslations = {
 
   time: {
     minutes: "minutos",
+    varies: "varía",
+    minutesSeconds: "minutos y segundos",
   },
 
   messages: {
@@ -209,6 +211,7 @@ export const assessmentEs: IAssessmentTranslations = {
     refresh: "Actualizar",
     startNew: "Comenzar Nueva Evaluación",
     continue: "Continuar",
+    viewDetails: "Ver Detalles",
   },
 
   questionnaireInfo: {
@@ -295,6 +298,49 @@ export const assessmentEs: IAssessmentTranslations = {
       minutes: "min",
       seconds: "s",
     },
+  },
+
+  /** 优先级 */
+  priority: {
+    high: "Alto",
+    medium: "Medio",
+    low: "Bajo",
+  },
+
+  /** 建议内容 */
+  recommendations: {
+    riskBased: {
+      high: [
+        "📞 Contacta a un profesional de salud mental o línea de crisis",
+        "🏥 Considera programar una evaluación detallada con un experto en salud mental",
+        "👥 Informa a familiares o amigos sobre tu situación y busca apoyo"
+      ],
+      medium: [
+        "👨‍⚕️ Considera programar una consulta con un profesional de salud mental",
+        "🧘‍♀️ Aprende y practica técnicas de manejo del estrés",
+        "📚 Lee libros y recursos sobre salud mental",
+        "🏃‍♂️ Mantén ejercicio físico regular"
+      ],
+      low: [
+        "📊 Continúa monitoreando tu estado de salud mental",
+        "🌱 Mantén hábitos de estilo de vida saludables",
+        "💪 Desarrolla estrategias de afrontamiento positivas",
+        "🎯 Establece metas y expectativas alcanzables"
+      ]
+    },
+    general: [
+      "💤 Asegura un sueño adecuado (7-9 horas)",
+      "🥗 Mantén una dieta equilibrada",
+      "🚫 Evita el uso excesivo de alcohol y drogas",
+      "🤝 Mantente conectado con amigos y familia"
+    ],
+    patterns: {
+      stable: "📈 Tus puntuaciones son relativamente estables, continúa manteniendo tu estado actual",
+      variable: "📊 Tus puntuaciones varían significativamente, considera una reevaluación regular",
+      extreme: "⚠️ Algunos aspectos necesitan atención especial, considera buscar ayuda profesional",
+      highAverage: "🔍 Considera una evaluación más detallada de salud mental",
+      mediumAverage: "👀 Considera el monitoreo regular del estado de salud mental"
+    }
   },
 
 };

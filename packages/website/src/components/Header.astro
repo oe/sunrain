@@ -1,9 +1,6 @@
 ---
 import { createSSGTranslations } from '@/i18n/utils';
-import { type Language, getRelativeLocaleUrl } from '@sunrain/shared';
-import LanguageSwitcher from './LanguageSwitcher';
-import ThemeSwitcher from './ThemeSwitcher';
-import MobileMenuButton from './MobileMenuButton';
+import { type Language, getRelativeLocaleUrl, languages } from '@sunrain/shared';
 
 export interface Props {
   lang: Language;
@@ -19,10 +16,45 @@ const navItems = [
   { key: 'nav.resources', href: getRelativeLocaleUrl(lang, '/resources/') },
   { key: 'nav.about', href: getRelativeLocaleUrl(lang, '/about/') }
 ];
+
+const languageEmojis: Record<Language, string> = {
+  en: '🇺🇸',
+  zh: '🇨🇳',
+  es: '🇪🇸',
+  ja: '🇯🇵',
+  ko: '🇰🇷',
+  hi: '🇮🇳',
+  ar: '🇸🇦'
+};
+
+const languageNames: Record<Language, string> = {
+  en: 'English',
+  zh: '中文',
+  es: 'Español',
+  ja: '日本語',
+  ko: '한국어',
+  hi: 'हिन्दी',
+  ar: 'العربية'
+};
+
+const getLocalizedPath = (locale: Language) => {
+  const path = Astro.url.pathname.replace(`/${lang}`, '');
+  return getRelativeLocaleUrl(locale, path);
+};
+
+const themeOptions = [
+  { key: 'system', label: 'System default', icon: 'M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z' },
+  { key: 'light', label: 'Light mode', icon: 'M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z' },
+  { key: 'dark', label: 'Dark mode', icon: 'M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z' }
+];
+
+// Get current theme from localStorage (this will be handled by client-side JS)
+// For server-side rendering, we'll use a default value and update it client-side
+const currentTheme = 'system'; // Default value, will be updated by JS
 ---
 
 <header
-  class="fixed top-0 left-0 right-0 z-50 bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm border-b border-gray-200 dark:border-gray-700 transition-all duration-300"
+  class="fixed top-0 left-0 right-0 z-50 bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm border-b border-gray-200 dark:border-gray-700 transition-colors duration-300"
 >
   <nav
     class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
@@ -38,8 +70,11 @@ const navItems = [
           aria-label="Sunrain.me - Home"
         >
           <div class="relative" aria-hidden="true">
-            <span class="text-xl">☀️</span>
-            <span class="text-xs absolute -top-1 -right-1">🌧️</span>
+            <img 
+              src="/logo.png" 
+              alt="Sunrain Logo" 
+              class="w-8 h-8 object-contain"
+            />
           </div>
           <span
             class="text-xl font-semibold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-200"
@@ -55,7 +90,7 @@ const navItems = [
           navItems.map(({ key, href }) => (
             <a
               href={href}
-              class="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white px-3 py-2 text-sm font-medium transition-all duration-200 rounded-md hover:bg-gray-50 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
+              class="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white px-3 py-2 text-sm font-medium transition-colors duration-200 rounded-md hover:bg-gray-50 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
               role="menuitem"
             >
               {t(key)}
@@ -65,19 +100,120 @@ const navItems = [
       </div>
 
       <!-- Right side controls -->
-      <div class="flex items-center space-x-3">
+      <div class="flex items-center space-x-2">
         <!-- Language Switcher -->
-        <LanguageSwitcher
-          client:only="react"
-          currentLang={lang}
-          currentPath={Astro.url.pathname}
-        />
+        <div class="relative group">
+          <button
+            id="language-button"
+            class="p-2 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md transition-colors duration-200 flex items-center space-x-1 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
+            aria-label={`Change language. Current language: ${languageNames[lang]}`}
+            aria-expanded="false"
+            aria-haspopup="listbox"
+            title={`Current language: ${languageNames[lang]}`}
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
+            </svg>
+            <span class="text-sm font-medium" aria-hidden="true">{lang.toUpperCase()}</span>
+            <svg class="w-3 h-3 transform transition-transform duration-200 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          
+          <!-- Language Dropdown -->
+          <div
+            id="language-dropdown"
+            class="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-600 z-50 overflow-hidden opacity-0 invisible transition-all duration-200 transform scale-95 group-hover:opacity-100 group-hover:visible group-hover:scale-100"
+            role="listbox"
+            aria-label="Language options"
+          >
+            <div class="py-1">
+              {Object.keys(languages).map((code) => {
+                const languageCode = code as Language;
+                return (
+                  <a
+                    href={getLocalizedPath(languageCode)}
+                    class={`flex items-center space-x-3 px-4 py-2 text-sm transition-colors duration-150 focus:outline-none ${
+                      code === lang
+                        ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 font-medium'
+                        : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white'
+                    }`}
+                    role="option"
+                    aria-selected={code === lang}
+                    aria-label={`Switch to ${languageNames[languageCode]}`}
+                  >
+                    <span class="text-base" aria-hidden="true">{languageEmojis[languageCode]}</span>
+                    <span class="flex-1">{languageNames[languageCode]}</span>
+                    {code === lang && (
+                      <svg class="w-4 h-4 text-blue-500 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-label="Current language">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                      </svg>
+                    )}
+                  </a>
+                );
+              })}
+            </div>
+          </div>
+        </div>
 
         <!-- Theme Switcher -->
-        <ThemeSwitcher client:only="react" />
+        <div class="relative group">
+          <button
+            id="theme-button"
+            class="p-2 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md transition-colors duration-200 flex items-center space-x-1 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
+            aria-label="Toggle theme"
+            aria-expanded="false"
+            aria-haspopup="listbox"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+            </svg>
+            <span class="text-sm font-medium" aria-hidden="true">SYS</span>
+            <svg class="w-3 h-3 transform transition-transform duration-200 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          
+          <!-- Theme Dropdown -->
+          <div
+            id="theme-dropdown"
+            class="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-600 z-50 overflow-hidden opacity-0 invisible transition-all duration-200 transform scale-95 group-hover:opacity-100 group-hover:visible group-hover:scale-100"
+            role="listbox"
+            aria-label="Theme options"
+          >
+            <div class="py-1">
+              {themeOptions.map((option) => (
+                <button
+                  class="flex items-center space-x-3 w-full px-4 py-2 text-sm text-left transition-colors duration-150 focus:outline-none text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white"
+                  role="option"
+                  aria-selected="false"
+                  data-theme={option.key}
+                >
+                  <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d={option.icon} />
+                  </svg>
+                  <span class="flex-1">{option.label}</span>
+                  <svg class="w-4 h-4 text-blue-500 dark:text-blue-400 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-label="Current theme">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                  </svg>
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
 
         <!-- Mobile menu button -->
-        <MobileMenuButton client:only="react" />
+        <button
+          id="mobile-menu-button"
+          class="md:hidden p-2 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
+          aria-label="Toggle mobile menu"
+          aria-expanded="false"
+          aria-controls="mobile-menu"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
       </div>
     </div>
 
@@ -107,25 +243,107 @@ const navItems = [
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
-    // 移动菜单的事件处理现在完全由 MobileMenuButton React 组件管理
-
-    // Theme switching is now handled by the ThemeSwitcher React component
-
     // Enhanced scroll effect for header with dark mode support
     const header = document.querySelector('header');
+    let isScrolled = false;
 
     window.addEventListener('scroll', () => {
       const currentScrollY = window.scrollY;
+      const shouldBeScrolled = currentScrollY > 50;
 
-      if (currentScrollY > 50) {
-        header?.classList.add('shadow-sm');
-        header?.classList.add('bg-white/100', 'dark:bg-gray-900/100');
-        header?.classList.remove('bg-white/95', 'dark:bg-gray-900/95');
-      } else {
-        header?.classList.remove('shadow-sm');
-        header?.classList.remove('bg-white/100', 'dark:bg-gray-900/100');
-        header?.classList.add('bg-white/95', 'dark:bg-gray-900/95');
+      if (shouldBeScrolled !== isScrolled) {
+        isScrolled = shouldBeScrolled;
+        
+        if (isScrolled) {
+          header?.classList.add('shadow-sm', 'bg-white/100', 'dark:bg-gray-900/100');
+          header?.classList.remove('bg-white/95', 'dark:bg-gray-900/95');
+        } else {
+          header?.classList.remove('shadow-sm', 'bg-white/100', 'dark:bg-gray-900/100');
+          header?.classList.add('bg-white/95', 'dark:bg-gray-900/95');
+        }
       }
+    });
+
+    // Mobile menu toggle
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    
+    if (mobileMenuButton && mobileMenu) {
+      mobileMenuButton.addEventListener('click', () => {
+        const isExpanded = mobileMenuButton.getAttribute('aria-expanded') === 'true';
+        mobileMenuButton.setAttribute('aria-expanded', (!isExpanded).toString());
+        mobileMenu.classList.toggle('hidden');
+      });
+    }
+
+    // Theme switching
+    const themeButtons = document.querySelectorAll('[data-theme]');
+    const themeButton = document.getElementById('theme-button');
+    const themeButtonText = themeButton?.querySelector('span[aria-hidden="true"]');
+    
+    const applyTheme = (selectedTheme: string) => {
+      const html = document.documentElement;
+      html.classList.remove('dark');
+
+      if (selectedTheme === 'dark') {
+        html.classList.add('dark');
+      } else if (selectedTheme === 'light') {
+        // Light mode - no dark class needed
+      } else { // system
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (prefersDark) {
+          html.classList.add('dark');
+        }
+      }
+
+      localStorage.setItem('theme', selectedTheme);
+      
+      // Update theme button text
+      if (themeButtonText) {
+        themeButtonText.textContent = selectedTheme === 'system' ? 'SYS' : selectedTheme === 'light' ? 'LGT' : 'DRK';
+      }
+      
+      // Update theme dropdown selection
+      const themeButtons = document.querySelectorAll('[data-theme]');
+      themeButtons.forEach(button => {
+        const isSelected = button.getAttribute('data-theme') === selectedTheme;
+        button.setAttribute('aria-selected', isSelected.toString());
+        
+        // Update visual selection state
+        if (isSelected) {
+          button.classList.add('bg-blue-50', 'dark:bg-blue-900/30', 'text-blue-600', 'dark:text-blue-400', 'font-medium');
+          button.classList.remove('text-gray-700', 'dark:text-gray-300', 'hover:bg-gray-50', 'dark:hover:bg-gray-700', 'hover:text-gray-900', 'dark:hover:text-white');
+          
+          // Show checkmark
+          const checkmark = button.querySelector('svg[aria-label="Current theme"]');
+          if (checkmark) {
+            checkmark.classList.remove('hidden');
+          }
+        } else {
+          button.classList.remove('bg-blue-50', 'dark:bg-blue-900/30', 'text-blue-600', 'dark:text-blue-400', 'font-medium');
+          button.classList.add('text-gray-700', 'dark:text-gray-300', 'hover:bg-gray-50', 'dark:hover:bg-gray-700', 'hover:text-gray-900', 'dark:hover:text-white');
+          
+          // Hide checkmark
+          const checkmark = button.querySelector('svg[aria-label="Current theme"]');
+          if (checkmark) {
+            checkmark.classList.add('hidden');
+          }
+        }
+      });
+    };
+
+    // Initialize theme
+    const savedTheme = localStorage.getItem('theme') || 'system';
+    applyTheme(savedTheme);
+
+    // Theme button event listeners
+    themeButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const theme = button.getAttribute('data-theme');
+        if (theme) {
+          applyTheme(theme);
+        }
+      });
     });
 
     // Keyboard navigation support for desktop menu
@@ -150,3 +368,4 @@ const navItems = [
     });
   });
 </script>
+

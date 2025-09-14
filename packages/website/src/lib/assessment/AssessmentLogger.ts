@@ -158,7 +158,6 @@ export class LocalStorageLogOutput implements LogOutput {
 export class AssessmentLogger {
   private outputs: LogOutput[] = [];
   private minLevel: LogLevel = LogLevel.INFO;
-  private isDebugMode: boolean = false;
 
   constructor() {
     // 默认添加控制台输出
@@ -167,7 +166,6 @@ export class AssessmentLogger {
     // 在开发环境中启用本地存储日志
     if (typeof window !== 'undefined' && window.location.hostname === 'localhost') {
       this.outputs.push(new LocalStorageLogOutput());
-      this.isDebugMode = true;
       this.minLevel = LogLevel.DEBUG;
     }
   }
@@ -183,7 +181,6 @@ export class AssessmentLogger {
    * 启用调试模式
    */
   enableDebugMode(): void {
-    this.isDebugMode = true;
     this.minLevel = LogLevel.DEBUG;
   }
 

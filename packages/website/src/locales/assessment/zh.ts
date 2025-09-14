@@ -1,295 +1,315 @@
 /**
- * 评测系统中文翻译内容
+ * 评测系统英文翻译内容
  */
-import type { IAssessmentTranslations } from "./types";
+import type { IAssessmentTranslations } from './types';
 
-export const assessmentZh: IAssessmentTranslations = {
-  pageTitle: "心理健康评测",
+export const assessmentEn: IAssessmentTranslations = {
+  pageTitle: 'Mental Health Assessment',
 
   list: {
-    title: "心理健康评测",
-    subtitle:
-      "通过科学的心理评测工具，了解您的心理健康状态，获得个性化的建议和资源推荐",
+    title: 'Mental Health Assessment',
+    subtitle: 'Understand your mental health status through scientific assessment tools and get personalized recommendations and resources',
     categories: {
-      mental_health: "心理健康评测",
-      personality: "性格特质评测",
-      stress: "压力评估",
-      mood: "情绪状态评测",
+      mental_health: 'Mental Health Assessment',
+      personality: 'Personality Assessment',
+      stress: 'Stress Assessment',
+      mood: 'Mood Assessment'
     },
     categoryDescriptions: {
-      mental_health: "专业的心理健康筛查工具，帮助识别潜在的心理健康问题",
-      personality: "了解您的性格特点和行为模式",
-      stress: "评估您的压力水平和应对能力",
-      mood: "监测您的情绪状态和变化趋势",
+      mental_health: 'Professional mental health screening tools to help identify potential mental health issues',
+      personality: 'Understand your personality traits and behavioral patterns',
+      stress: 'Assess your stress levels and coping abilities',
+      mood: 'Monitor your emotional states and trends'
     },
-    startButton: "开始评测",
-    infoButton: "了解详情",
-    minutes: "分钟",
-    questions: "题",
+    startButton: 'Start Assessment',
+    infoButton: 'Learn More',
+    minutes: 'minutes',
+    questions: 'questions',
     activeSessions: {
-      title: "您有 {count} 个未完成的评测",
-      message: "点击继续完成评测",
-      continueLink: "点击继续完成评测",
-      lastActivity: "最后活动",
-      progress: "进度",
+      title: 'You have {count} incomplete assessments',
+      message: 'Click to continue your assessments',
+      continueLink: 'Continue assessments',
+      lastActivity: 'Last activity',
+      progress: 'Progress',
     },
     quickActions: {
-      title: "快速操作",
+      title: 'Quick Actions',
       history: {
-        title: "评测历史",
-        description: "查看历史评测结果",
+        title: 'Assessment History',
+        description: 'View historical assessment results'
       },
       trends: {
-        title: "趋势分析",
-        description: "查看心理健康趋势",
+        title: 'Trend Analysis',
+        description: 'View mental health trends'
       },
       continue: {
-        title: "继续评测",
-        description: "完成未完成的评测",
-      },
+        title: 'Continue Assessment',
+        description: 'Complete unfinished assessments'
+      }
     },
     existingSession: {
-      title: "未完成的评测",
-      message: "您有一个未完成的评测。您可以继续之前的进度，或者重新开始。",
-      progress: "进度",
-      lastActivity: "最后活动",
-      questionsAnswered: "已回答",
-      continue: "继续评测",
-      restart: "重新开始",
-      restartWarning: "重新开始将删除您之前的所有答案。"
+      title: "Unfinished Assessment",
+      message: "You have an unfinished assessment. You can continue from where you left off, or start over.",
+      progress: "Progress",
+      lastActivity: "Last activity",
+      questionsAnswered: "Answered",
+      continue: "Continue Assessment",
+      restart: "Start Over",
+      restartWarning: "Starting over will delete all your previous answers."
     },
     disclaimer: {
-      title: "重要提醒",
-      message:
-        "这些评测工具仅用于筛查和自我了解，不能替代专业的心理健康诊断。如果您感到困扰或需要帮助，请咨询专业的心理健康专家。",
-    },
+      title: 'Important Notice',
+      message: 'These assessment tools are for screening and self-understanding only and cannot replace professional mental health diagnosis. If you feel distressed or need help, please consult a professional mental health expert.'
+    }
   },
 
   execution: {
-    loading: "正在加载评测...",
-    pause: "暂停",
-    save: "保存进度",
-    next: "下一题",
-    previous: "上一题",
-    complete: "完成评测",
-    timeSpent: "用时",
-    required: "* 必答",
-    questionNumber: "第",
-    totalQuestions: "题",
+    loading: 'Loading assessment...',
+    pause: 'Pause',
+    save: 'Save Progress',
+    next: 'Next',
+    previous: 'Previous',
+    complete: 'Complete Assessment',
+    timeSpent: 'Time spent',
+    required: '* Required',
+    questionNumber: 'Question',
+    totalQuestions: 'questions',
     completion: {
-      title: "评测完成！",
-      message: "正在分析您的结果...",
+      title: 'Assessment Complete!',
+      message: 'Analyzing your results...'
     },
     pauseModal: {
-      title: "暂停评测",
-      message: "您的进度已自动保存。您可以稍后继续完成评测。",
-      continue: "继续评测",
-      exit: "退出",
+      title: 'Pause Assessment',
+      message: 'Your progress has been automatically saved. You can continue the assessment later.',
+      continue: 'Continue Assessment',
+      exit: 'Exit'
     },
     errors: {
-      required: "请回答此问题后再继续。",
-      submitFailed: "提交答案失败，请重试。",
-      loadFailed: "加载评测失败，请刷新页面重试。",
-    },
+      required: 'Please answer this question before continuing.',
+      submitFailed: 'Failed to submit answer, please try again.',
+      loadFailed: 'Failed to load assessment, please refresh and try again.'
+    }
   },
 
   results: {
-    loading: "正在加载评测结果...",
-    completedAt: "完成时间",
-    timeSpent: "用时",
-    overallAssessment: "总体评估",
-    detailedInterpretation: "详细解释",
-    scoreDistribution: "分数分布",
-    riskAssessment: "风险评估",
-    personalizedRecommendations: "个性化建议",
-    recommendedResources: "推荐资源",
+    title: 'Assessment Results',
+    description: 'View your mental health assessment results, get personalized recommendations and resource suggestions.',
+    loading: 'Loading assessment results...',
+    completedAt: 'Completed at',
+    timeSpent: 'Time spent',
+    overallAssessment: 'Overall Assessment',
+    detailedInterpretation: 'Detailed Interpretation',
+    scoreDistribution: 'Score Distribution',
+    riskAssessment: 'Risk Assessment',
+    personalizedRecommendations: 'Personalized Recommendations',
+    recommendedResources: 'Recommended Resources',
     nextSteps: {
-      title: "下一步行动",
+      title: 'Next Steps',
       moreAssessments: {
-        title: "更多评测",
-        description: "探索其他评测工具",
+        title: 'More Assessments',
+        description: 'Explore other assessment tools'
       },
       startPractice: {
-        title: "开始练习",
-        description: "尝试相关的心理练习",
+        title: 'Start Practice',
+        description: 'Try related mental health practices'
       },
       browseResources: {
-        title: "浏览资源",
-        description: "查看疗愈资源库",
-      },
+        title: 'Browse Resources',
+        description: 'View healing resource library'
+      }
     },
     actions: {
-      share: "分享结果",
-      savePdf: "保存为PDF",
-      viewHistory: "查看历史",
+      share: 'Share Results',
+      savePdf: 'Save as PDF',
+      viewHistory: 'View History',
+      backToAssessments: 'Back to Assessments'
     },
+    quickActions: 'Quick Actions',
+    noResultFound: 'Assessment result not found',
+    noResultData: 'No assessment data found',
     riskLevels: {
       high: {
-        title: "需要关注",
-        message:
-          "您的评测结果显示可能需要专业帮助。建议咨询心理健康专家或拨打心理援助热线。",
+        title: 'Needs Attention',
+        message: 'Your assessment results indicate you may need professional help. Consider consulting a mental health expert or calling a mental health helpline.'
       },
       medium: {
-        title: "建议关注",
-        message:
-          "您的评测结果显示有一些需要关注的方面。建议采取一些自我护理措施或考虑寻求支持。",
+        title: 'Recommended Attention',
+        message: 'Your assessment results show some areas that need attention. Consider implementing self-care measures or seeking support.'
       },
       low: {
-        title: "状态良好",
-        message: "您的评测结果在正常范围内。继续保持健康的生活习惯。",
-      },
+        title: 'Good Status',
+        message: 'Your assessment results are within normal range. Continue maintaining healthy habits.'
+      }
     },
     disclaimer: {
-      title: "重要提醒",
-      message:
-        "此评测结果仅供参考，不能替代专业的心理健康诊断。如果您感到困扰或需要帮助，请咨询专业的心理健康专家。",
-    },
+      title: 'Important Notice',
+      message: 'These assessment results are for reference only and cannot replace professional mental health diagnosis. If you feel distressed or need help, please consult a professional mental health expert.'
+    }
   },
 
   history: {
-    title: "评测历史",
-    subtitle: "查看您的历史评测记录和趋势分析",
+    title: 'Assessment History',
+    subtitle: 'View your historical assessment records and trend analysis',
     statistics: {
-      total: "总评测次数",
-      completed: "已完成",
-      averageTime: "平均用时",
-      lastAssessment: "最近评测",
+      total: 'Total Assessments',
+      completed: 'Completed',
+      averageTime: 'Average Time',
+      lastAssessment: 'Last Assessment'
     },
     filters: {
-      assessmentType: "评测类型",
-      timeRange: "时间范围",
-      riskLevel: "风险等级",
-      allTypes: "全部类型",
-      allTimes: "全部时间",
-      allLevels: "全部等级",
-      last7Days: "最近7天",
-      last30Days: "最近30天",
-      last3Months: "最近3个月",
-      lastYear: "最近一年",
-      clearFilters: "清除筛选",
+      assessmentType: 'Assessment Type',
+      timeRange: 'Time Range',
+      riskLevel: 'Risk Level',
+      allTypes: 'All Types',
+      allTimes: 'All Times',
+      allLevels: 'All Levels',
+      last7Days: 'Last 7 days',
+      last30Days: 'Last 30 days',
+      last3Months: 'Last 3 months',
+      lastYear: 'Last year',
+      clearFilters: 'Clear Filters'
     },
     list: {
-      title: "评测记录",
-      viewDetails: "查看详情",
-      share: "分享",
-      delete: "删除",
-      dimensions: "个维度",
-      today: "今天",
-      daysAgo: "天前",
+      title: 'Assessment Records',
+      viewDetails: 'View Details',
+      share: 'Share',
+      delete: 'Delete',
+      dimensions: 'dimensions',
+      today: 'Today',
+      daysAgo: 'days ago'
     },
     empty: {
-      title: "暂无评测记录",
-      message: "您还没有完成任何评测",
-      startFirst: "开始第一个评测",
+      title: 'No Assessment Records',
+      message: "You haven't completed any assessments yet",
+      startFirst: 'Start First Assessment'
     },
     pagination: {
-      showing: "显示",
-      to: "到",
-      of: "条，共",
-      records: "条记录",
-      previous: "上一页",
-      next: "下一页",
+      showing: 'Showing',
+      to: 'to',
+      of: 'of',
+      records: 'records',
+      previous: 'Previous',
+      next: 'Next'
     },
     actions: {
-      export: "导出数据",
-      newAssessment: "新建评测",
-    },
+      export: 'Export Data',
+      newAssessment: 'New Assessment'
+    }
   },
 
   continue: {
-    title: "继续评测",
-    subtitle: "完成您未完成的心理健康评测",
-    loading: "正在加载未完成的评测...",
+    title: 'Continue Assessment',
+    subtitle: 'Complete your unfinished mental health assessments',
+    loading: 'Loading incomplete assessments...',
     noSessions: {
-      title: "没有未完成的评测",
-      message: "您目前没有需要继续的评测",
-      startNew: "开始新评测",
+      title: 'No Incomplete Assessments',
+      message: 'You currently have no assessments to continue',
+      startNew: 'Start New Assessment'
     },
     session: {
-      startedAt: "开始时间",
-      timeSpent: "已用时",
-      progress: "进度",
-      answered: "已回答",
-      estimatedRemaining: "预计剩余",
-      continueButton: "继续评测",
+      startedAt: 'Started at',
+      timeSpent: 'Time spent',
+      progress: 'Progress',
+      answered: 'Answered',
+      estimatedRemaining: 'Estimated remaining',
+      continueButton: 'Continue Assessment',
       status: {
-        active: "进行中",
-        paused: "已暂停",
-      },
+        active: 'In Progress',
+        paused: 'Paused'
+      }
     },
     actions: {
-      startNew: "开始新评测",
-      clearAll: "清除所有未完成评测",
+      startNew: 'Start New Assessment',
+      clearAll: 'Clear All Incomplete Assessments'
     },
     confirmations: {
-      deleteSession: "确定要删除这个未完成的评测吗？所有进度将丢失。",
-      clearAll: "确定要清除所有未完成的评测吗？所有进度将丢失。",
-    },
+      deleteSession: 'Are you sure you want to delete this incomplete assessment? All progress will be lost.',
+      clearAll: 'Are you sure you want to clear all incomplete assessments? All progress will be lost.'
+    }
   },
 
   trends: {
-    title: "趋势分析",
-    subtitle: "分析您的心理健康变化趋势和发展模式",
-    loading: "正在加载趋势数据...",
+    title: 'Trend Analysis',
+    subtitle: 'Analyze your mental health trends and development patterns',
+    loading: 'Loading trend data...',
     timeRange: {
-      title: "时间范围",
-      last30Days: "最近30天",
-      last3Months: "最近3个月",
-      lastYear: "最近一年",
-      allTime: "全部时间",
+      title: 'Time Range',
+      last30Days: 'Last 30 days',
+      last3Months: 'Last 3 months',
+      lastYear: 'Last year',
+      allTime: 'All time'
     },
     charts: {
-      overallTrend: "整体趋势",
-      frequency: "评测频率",
-      riskTrend: "风险等级变化",
-      categoryPerformance: "各维度表现",
+      overallTrend: 'Overall Trend',
+      frequency: 'Assessment Frequency',
+      riskTrend: 'Risk Level Changes',
+      categoryPerformance: 'Category Performance'
     },
     insights: {
-      title: "趋势洞察",
-      positive: "积极趋势",
-      warning: "需要关注",
-      info: "保持稳定",
+      title: 'Trend Insights',
+      positive: 'Positive Trend',
+      warning: 'Needs Attention',
+      info: 'Stable'
     },
     statistics: {
-      improvementTrend: "改善趋势",
-      stableDimensions: "稳定维度",
-      attentionNeeded: "需要关注",
+      improvementTrend: 'Improvement Trend',
+      stableDimensions: 'Stable Dimensions',
+      attentionNeeded: 'Attention Needed'
     },
     noData: {
-      title: "暂无趋势数据",
-      message: "您需要完成至少2次评测才能查看趋势分析",
-      startAssessment: "开始评测",
+      title: 'No Trend Data',
+      message: 'You need to complete at least 2 assessments to view trend analysis',
+      startAssessment: 'Start Assessment'
     },
     actions: {
-      exportReport: "导出趋势报告",
-      newAssessment: "进行新评测",
-    },
+      exportReport: 'Export Trend Report',
+      newAssessment: 'New Assessment'
+    }
   },
+
 
   common: {
-    title: "心理健康评测",
-    loading: "加载中...",
-    error: "错误",
-    success: "成功",
-    refresh: "刷新",
-    cancel: "取消",
-    confirm: "确认",
-    delete: "删除",
-    save: "保存",
-    share: "分享",
-    export: "导出",
+    title: 'Mental Health Assessment',
+    loading: 'Loading...',
+    error: 'Error',
+    success: 'Success',
+    refresh: 'Refresh',
+    cancel: 'Cancel',
+    confirm: 'Confirm',
+    delete: 'Delete',
+    save: 'Save',
+    share: 'Share',
+    export: 'Export',
     riskLevels: {
-      low: "低风险",
-      medium: "中风险",
-      high: "高风险",
+      low: 'Low Risk',
+      medium: 'Medium Risk',
+      high: 'High Risk'
     },
     timeUnits: {
-      seconds: "秒",
-      minutes: "分钟",
-      hours: "小时",
-      days: "天",
-    },
+      seconds: 'seconds',
+      minutes: 'minutes',
+      hours: 'hours',
+      days: 'days'
+    }
   },
+
+  /** 优先级 */
+  priority: {
+    high: 'High',
+    medium: 'Medium',
+    low: 'Low'
+  },
+
+  /** 时间相关 */
+  time: {
+    varies: 'Varies',
+    minutesSeconds: '{minutes}m {seconds}s'
+  },
+
+  /** 操作 */
+  actions: {
+    viewDetails: 'View Details'
+  }
 };
 
-export default assessmentZh;
+export default assessmentEn;
