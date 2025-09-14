@@ -32,7 +32,8 @@ export function useCSRTranslations(
 
   // 当语言或命名空间变化时加载翻译
   useEffect(() => {
-    if (isClientSide()) {
+    // 严格检查客户端环境，避免在SSG构建时执行
+    if (isClientSide() && typeof window !== 'undefined') {
       loadTranslations(namespace, language);
     }
   }, [namespace, language]);
@@ -41,6 +42,12 @@ export function useCSRTranslations(
    * 加载CSR翻译
    */
   const loadTranslations = useCallback(async (ns: string, lang: Language) => {
+    // 严格检查客户端环境
+    if (typeof window === 'undefined') {
+      // 在SSG环境中静默返回，不输出警告
+      return;
+    }
+
     const loadKey = `${ns}:${lang}`;
 
     // 避免重复加载
@@ -66,6 +73,12 @@ export function useCSRTranslations(
    * CSR翻译函数
    */
   const t = useCallback((key: string, params?: Record<string, any>): string => {
+    // 严格检查客户端环境
+    if (typeof window === 'undefined') {
+      // 在SSG环境中静默返回，不输出警告
+      return key;
+    }
+
     if (!translations) {
       if (process.env.NODE_ENV === 'development') {
         console.warn(`CSR translations not loaded for key: ${key} in ${namespace}:${language}`);
@@ -103,7 +116,7 @@ function getGlobalLanguage(): Language {
   if (typeof window !== 'undefined' && window.__ASTRO_LANGUAGE__) {
     return window.__ASTRO_LANGUAGE__;
   }
-  return 'zh'; // 默认中文
+  return 'en'; // 默认英文，避免在SSG环境中默认使用中文
 }
 
 /**

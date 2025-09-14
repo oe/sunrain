@@ -5,8 +5,9 @@ import { questionBankManager } from '@/lib/assessment/QuestionBankManager';
 import { getLocale } from 'astro-i18n-aut';
 import { createSSGTranslations } from '@/i18n/utils';
 import ContinueAssessmentPage from '@/components/assessment/ContinueAssessmentPage';
-import QuestionnaireInfoButton from '@/components/assessment/QuestionnaireInfoButton';
-import StartAssessmentButton from '@/components/assessment/StartAssessmentButton';
+import QuestionnaireInfoButton from '@/components/assessment/QuestionnaireInfoButton.astro';
+import StartAssessmentButton from '@/components/assessment/StartAssessmentButton.astro';
+import { getLocalizedAssessments } from '@/lib/assessment/AssessmentTranslations';
 import type { Language } from '@sunrain/shared';
 
 const currentLang = getLocale(Astro.url) as Language;
@@ -14,12 +15,14 @@ const currentLang = getLocale(Astro.url) as Language;
 const t = createSSGTranslations(currentLang, 'assessment');
 
 const assessmentTypes = questionBankManager.getAssessmentTypes();
-const categories = [...new Set(assessmentTypes.map((a) => a.category))];
+// 获取本地化的assessment数据
+const localizedAssessments = getLocalizedAssessments(assessmentTypes, currentLang);
+const categories = [...new Set(localizedAssessments.map((a) => a.category))];
 
 // Group assessments by category
 const assessmentsByCategory = categories.reduce(
   (acc, category) => {
-    acc[category] = questionBankManager.getAssessmentTypesByCategory(category);
+    acc[category] = localizedAssessments.filter(a => a.category === category);
     return acc;
   },
   {} as Record<string, any[]>
@@ -49,10 +52,10 @@ const assessmentsByCategory = categories.reduce(
             <section>
               <div class="mb-6">
                 <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mb-2">
-                  {t('list.categories')[category]}
+                  {t(`list.categories.${category}`)}
                 </h2>
                 <p class="text-gray-600 dark:text-gray-300">
-                  {t('list.categoryDescriptions')[category]}
+                  {t(`list.categoryDescriptions.${category}`)}
                 </p>
               </div>
 
@@ -108,21 +111,20 @@ const assessmentsByCategory = categories.reduce(
 
                       {/* Action buttons */}
                       <div class="mt-auto">
-                        {/* Info button - React component with CSR */}
+                        {/* Info button - Astro component */}
                         <div class="mb-3">
                           <QuestionnaireInfoButton
-                            assessment={assessment}
+                            assessmentId={assessment.id}
                             buttonText={t('list.infoButton')}
-                            client:idle
+                            language={currentLang}
                           />
                         </div>
 
-                        {/* Start button - React component with CSR */}
+                        {/* Start button - Astro component */}
                         <StartAssessmentButton
-                          assessment={assessment}
+                          assessmentId={assessment.id}
                           buttonText={t('list.startButton')}
                           language={currentLang}
-                          client:idle
                         />
                       </div>
                     </div>

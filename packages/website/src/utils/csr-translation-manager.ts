@@ -71,7 +71,9 @@ export class CSRTranslationManager {
 
     // 设置缓存清理定时器
     if (this.config.cache.enabled) {
-      this.setupCacheCleanup();
+      if (typeof window !== "undefined") {
+        this.setupCacheCleanup();
+      }
     }
 
     // 不再自动初始化预加载，改为按需调用
@@ -155,6 +157,12 @@ export class CSRTranslationManager {
     namespace: string,
     language?: Language
   ): Promise<CSRTranslations> {
+    // 严格检查客户端环境
+    if (typeof window === 'undefined') {
+      // 在SSG环境中静默抛出错误，不输出警告
+      throw new Error('CSR translations can only be loaded on client side');
+    }
+
     const targetLanguage = language || this.currentLanguage;
     const cacheKey = `${namespace}:${targetLanguage}`;
 

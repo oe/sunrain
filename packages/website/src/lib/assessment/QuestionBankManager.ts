@@ -261,10 +261,40 @@ export class QuestionBankManager {
       ],
       translations: {
         zh: {
-          name: 'PHQ-9 抑郁症评估',
-          description: '患者健康问卷-9，用于抑郁症筛查',
-          instructions: '在过去的2周里，您被以下问题困扰的频率如何？',
+          name: 'PHQ-9 抑郁筛查量表',
+          description: '患者健康问卷-9，用于抑郁症状筛查',
+          instructions: '在过去的两周里，您是否经常被以下问题困扰？',
           disclaimer: '此评估仅用于筛查目的，不能替代专业医疗建议。'
+        },
+        es: {
+          name: 'Evaluación de Depresión PHQ-9',
+          description: 'Cuestionario de Salud del Paciente-9 para detección de depresión',
+          instructions: 'Durante las últimas 2 semanas, ¿con qué frecuencia se ha sentido molesto por alguno de los siguientes problemas?',
+          disclaimer: 'Esta evaluación es solo para fines de detección y no reemplaza el consejo médico profesional.'
+        },
+        ja: {
+          name: 'PHQ-9 うつ病評価',
+          description: 'うつ病スクリーニング用患者健康質問票-9',
+          instructions: '過去2週間、以下の問題のいずれかにどの程度悩まされましたか？',
+          disclaimer: 'この評価はスクリーニング目的のみであり、専門的な医療アドバイスに代わるものではありません。'
+        },
+        ko: {
+          name: 'PHQ-9 우울증 평가',
+          description: '우울증 스크리닝을 위한 환자 건강 설문지-9',
+          instructions: '지난 2주 동안 다음 문제들 중 어떤 것에 얼마나 자주 괴로워하셨습니까?',
+          disclaimer: '이 평가는 스크리닝 목적으로만 사용되며 전문적인 의료 조언을 대체하지 않습니다.'
+        },
+        hi: {
+          name: 'PHQ-9 अवसाद मूल्यांकन',
+          description: 'अवसाद स्क्रीनिंग के लिए रोगी स्वास्थ्य प्रश्नावली-9',
+          instructions: 'पिछले 2 सप्ताह में, आप निम्नलिखित समस्याओं में से किसी से कितनी बार परेशान हुए हैं?',
+          disclaimer: 'यह मूल्यांकन केवल स्क्रीनिंग उद्देश्यों के लिए है और पेशेवर चिकित्सा सलाह को प्रतिस्थापित नहीं करता है।'
+        },
+        ar: {
+          name: 'تقييم الاكتئاب PHQ-9',
+          description: 'استبيان صحة المريض-9 لفحص الاكتئاب',
+          instructions: 'خلال الأسبوعين الماضيين، كم مرة أزعجتك أي من المشاكل التالية؟',
+          disclaimer: 'هذا التقييم مخصص لأغراض الفحص فقط ولا يحل محل المشورة الطبية المهنية.'
         }
       }
     };
@@ -461,10 +491,40 @@ export class QuestionBankManager {
       ],
       translations: {
         zh: {
-          name: 'GAD-7 焦虑症评估',
+          name: 'GAD-7 焦虑筛查量表',
           description: '广泛性焦虑障碍7项量表',
-          instructions: '在过去的2周里，您被以下问题困扰的频率如何？',
+          instructions: '在过去的两周里，您是否经常被以下问题困扰？',
           disclaimer: '此评估仅用于筛查目的，不能替代专业医疗建议。'
+        },
+        es: {
+          name: 'Evaluación de Ansiedad GAD-7',
+          description: 'Escala de 7 elementos para el Trastorno de Ansiedad Generalizada',
+          instructions: 'Durante las últimas 2 semanas, ¿con qué frecuencia se ha sentido molesto por los siguientes problemas?',
+          disclaimer: 'Esta evaluación es solo para fines de detección y no reemplaza el consejo médico profesional.'
+        },
+        ja: {
+          name: 'GAD-7 不安評価',
+          description: '全般性不安障害7項目スケール',
+          instructions: '過去2週間、以下の問題のいずれかにどの程度悩まされましたか？',
+          disclaimer: 'この評価はスクリーニング目的のみであり、専門的な医療アドバイスに代わるものではありません。'
+        },
+        ko: {
+          name: 'GAD-7 불안 평가',
+          description: '범불안장애 7항목 척도',
+          instructions: '지난 2주 동안 다음 문제들 중 어떤 것에 얼마나 자주 괴로워하셨습니까?',
+          disclaimer: '이 평가는 스크리닝 목적으로만 사용되며 전문적인 의료 조언을 대체하지 않습니다.'
+        },
+        hi: {
+          name: 'GAD-7 चिंता मूल्यांकन',
+          description: 'सामान्यीकृत चिंता विकार 7-आइटम स्केल',
+          instructions: 'पिछले 2 सप्ताह में, आप निम्नलिखित समस्याओं में से किसी से कितनी बार परेशान हुए हैं?',
+          disclaimer: 'यह मूल्यांकन केवल स्क्रीनिंग उद्देश्यों के लिए है और पेशेवर चिकित्सा सलाह को प्रतिस्थापित नहीं करता है।'
+        },
+        ar: {
+          name: 'تقييم القلق GAD-7',
+          description: 'مقياس اضطراب القلق العام 7 عناصر',
+          instructions: 'خلال الأسبوعين الماضيين، كم مرة أزعجتك أي من المشاكل التالية؟',
+          disclaimer: 'هذا التقييم مخصص لأغراض الفحص فقط ولا يحل محل المشورة الطبية المهنية.'
         }
       }
     };
@@ -532,8 +592,38 @@ export class QuestionBankManager {
         zh: {
           name: '感知压力量表',
           description: '评估感知压力水平',
-          instructions: '在过去的一个月里，您多久有过某种感受或想法？',
+          instructions: '在过去的一个月里，您多久会有以下感受或想法？',
           disclaimer: '此评估有助于识别压力水平，但不能替代专业咨询。'
+        },
+        es: {
+          name: 'Escala de Estrés Percibido',
+          description: 'Evaluación de los niveles de estrés percibido',
+          instructions: 'En el último mes, ¿con qué frecuencia se ha sentido o pensado de cierta manera?',
+          disclaimer: 'Esta evaluación ayuda a identificar los niveles de estrés pero no reemplaza la consulta profesional.'
+        },
+        ja: {
+          name: '知覚ストレス尺度',
+          description: '知覚ストレスレベルの評価',
+          instructions: '過去1ヶ月間、どの程度の頻度で特定の方法で感じたり考えたりしましたか？',
+          disclaimer: 'この評価はストレスレベルを特定するのに役立ちますが、専門的な相談に代わるものではありません。'
+        },
+        ko: {
+          name: '지각된 스트레스 척도',
+          description: '지각된 스트레스 수준 평가',
+          instructions: '지난 한 달 동안 특정한 방식으로 느끼거나 생각한 빈도는 얼마나 되었습니까?',
+          disclaimer: '이 평가는 스트레스 수준을 파악하는 데 도움이 되지만 전문적인 상담을 대체하지는 않습니다.'
+        },
+        hi: {
+          name: 'अनुभूत तनाव स्केल',
+          description: 'अनुभूत तनाव स्तर का मूल्यांकन',
+          instructions: 'पिछले महीने में, आपने कितनी बार एक निश्चित तरीके से महसूस किया या सोचा?',
+          disclaimer: 'यह मूल्यांकन तनाव स्तर की पहचान करने में मदद करता है लेकिन पेशेवर परामर्श को प्रतिस्थापित नहीं करता है।'
+        },
+        ar: {
+          name: 'مقياس الإجهاد المدرك',
+          description: 'تقييم مستويات الإجهاد المدرك',
+          instructions: 'في الشهر الماضي، كم مرة شعرت أو فكرت بطريقة معينة؟',
+          disclaimer: 'هذا التقييم يساعد في تحديد مستويات الإجهاد ولكنه لا يحل محل الاستشارة المهنية.'
         }
       }
     };
