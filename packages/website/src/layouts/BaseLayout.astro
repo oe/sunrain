@@ -17,7 +17,7 @@ const { title, description, lang } = Astro.props;
 const currentLang = lang || (getLocale(Astro.url) as Language);
 const t = createSSGTranslations(currentLang);
 
-const pageTitle = title ? `${title} | SunRain` : `SunRain - ${t('hero.title')}`;
+const pageTitle = title ? `${title} | Sunrain` : `Sunrain - ${t('hero.title')}`;
 const pageDescription = description || t('meta.description');
 
 // Generate hreflang links

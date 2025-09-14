@@ -5,7 +5,7 @@ import type { IAboutTranslations } from './types';
 
 export const aboutEn: IAboutTranslations = {
   page: {
-    title: 'About SunRain',
+    title: 'About Sunrain',
     subtitle: 'Dedicated to making mental health resources accessible to everyone, everywhere.',
     description: 'Learn about our mission to provide accessible mental health resources and support for people worldwide.',
   },
@@ -54,7 +54,7 @@ export const aboutEn: IAboutTranslations = {
   },
   team: {
     title: 'Our Team',
-    description: 'SunRain is built by a dedicated team of developers, mental health advocates, and community members who believe in making mental health support accessible to everyone.',
+    description: 'Sunrain is built by a dedicated team of developers, mental health advocates, and community members who believe in making mental health support accessible to everyone.',
     members: {
       developer: {
         role: 'Development Team',
@@ -71,7 +71,7 @@ export const aboutEn: IAboutTranslations = {
     },
   },
   trust: {
-    title: 'Why Trust SunRain',
+    title: 'Why Trust Sunrain',
     privacy: {
       title: 'Privacy First',
       description: 'We don\'t track, store, or sell your personal data. Your privacy and anonymity are our top priorities.',

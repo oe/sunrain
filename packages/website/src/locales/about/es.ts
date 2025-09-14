@@ -5,7 +5,7 @@ import type { IAboutTranslations } from './types';
 
 export const aboutEs: IAboutTranslations = {
   page: {
-    title: 'Acerca de SunRain',
+    title: 'Acerca de Sunrain',
     subtitle: 'Dedicados a hacer que los recursos de salud mental sean accesibles para todos, en todas partes.',
     description: 'Conoce nuestra misión de proporcionar recursos de salud mental accesibles y apoyo para personas en todo el mundo.',
   },
@@ -54,7 +54,7 @@ export const aboutEs: IAboutTranslations = {
   },
   team: {
     title: 'Nuestro Equipo',
-    description: 'SunRain está construido por un equipo dedicado de desarrolladores, defensores de la salud mental y miembros de la comunidad que creen en hacer que el apoyo de salud mental sea accesible para todos.',
+    description: 'Sunrain está construido por un equipo dedicado de desarrolladores, defensores de la salud mental y miembros de la comunidad que creen en hacer que el apoyo de salud mental sea accesible para todos.',
     members: {
       developer: {
         role: 'Equipo de Desarrollo',
@@ -71,7 +71,7 @@ export const aboutEs: IAboutTranslations = {
     },
   },
   trust: {
-    title: 'Por Qué Confiar en SunRain',
+    title: 'Por Qué Confiar en Sunrain',
     privacy: {
       title: 'Privacidad Primero',
       description: 'No rastreamos, almacenamos o vendemos tus datos personales. Tu privacidad y anonimato son nuestras principales prioridades.',

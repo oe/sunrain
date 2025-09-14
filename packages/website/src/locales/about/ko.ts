@@ -5,7 +5,7 @@ import type { IAboutTranslations } from './types';
 
 export const aboutKo: IAboutTranslations = {
   page: {
-    title: 'SunRain 소개',
+    title: 'Sunrain 소개',
     subtitle: '모든 사람, 모든 곳에서 정신 건강 자원에 접근할 수 있도록 하는 데 전념하고 있습니다.',
     description: '전 세계 사람들에게 접근 가능한 정신 건강 자원과 지원을 제공하려는 우리의 사명에 대해 알아보세요.',
   },
