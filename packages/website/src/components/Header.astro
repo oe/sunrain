@@ -1,6 +1,7 @@
 ---
 import { createSSGTranslations } from '@/i18n/utils';
 import { type Language, getRelativeLocaleUrl, languages } from '@sunrain/shared';
+import Dropdown from './Dropdown.astro';
 
 export interface Props {
   lang: Language;
@@ -102,105 +103,44 @@ const currentTheme = 'system'; // Default value, will be updated by JS
       <!-- Right side controls -->
       <div class="flex items-center space-x-2">
         <!-- Language Switcher -->
-        <div class="relative group">
-          <button
-            id="language-button"
-            class="p-2 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md transition-colors duration-200 flex items-center space-x-1 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
-            aria-label={`Change language. Current language: ${languageNames[lang]}`}
-            aria-expanded="false"
-            aria-haspopup="listbox"
-            title={`Current language: ${languageNames[lang]}`}
-          >
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
-            </svg>
-            <span class="text-sm font-medium" aria-hidden="true">{lang.toUpperCase()}</span>
-            <svg class="w-3 h-3 transform transition-transform duration-200 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-            </svg>
-          </button>
-          
-          <!-- Language Dropdown -->
-          <div
-            id="language-dropdown"
-            class="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-600 z-50 overflow-hidden opacity-0 invisible transition-all duration-200 transform scale-95 group-hover:opacity-100 group-hover:visible group-hover:scale-100"
-            role="listbox"
-            aria-label="Language options"
-          >
-            <div class="py-1">
-              {Object.keys(languages).map((code) => {
-                const languageCode = code as Language;
-                return (
-                  <a
-                    href={getLocalizedPath(languageCode)}
-                    class={`flex items-center space-x-3 px-4 py-2 text-sm transition-colors duration-150 focus:outline-none ${
-                      code === lang
-                        ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 font-medium'
-                        : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white'
-                    }`}
-                    role="option"
-                    aria-selected={code === lang}
-                    aria-label={`Switch to ${languageNames[languageCode]}`}
-                  >
-                    <span class="text-base" aria-hidden="true">{languageEmojis[languageCode]}</span>
-                    <span class="flex-1">{languageNames[languageCode]}</span>
-                    {code === lang && (
-                      <svg class="w-4 h-4 text-blue-500 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-label="Current language">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                      </svg>
-                    )}
-                  </a>
-                );
-              })}
-            </div>
-          </div>
-        </div>
+        <Dropdown
+          id="language-switcher"
+          buttonId="language-button"
+          dropdownId="language-dropdown"
+          buttonLabel={`Change language. Current language: ${languageNames[lang]}`}
+          buttonTitle={`Current language: ${languageNames[lang]}`}
+          buttonIcon="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"
+          buttonText={lang.toUpperCase()}
+          options={Object.keys(languages).map((code) => {
+            const languageCode = code as Language;
+            return {
+              key: code,
+              label: languageNames[languageCode],
+              icon: languageEmojis[languageCode],
+              href: getLocalizedPath(languageCode),
+              isSelected: code === lang
+            };
+          })}
+          dropdownLabel="Language options"
+        />
 
         <!-- Theme Switcher -->
-        <div class="relative group">
-          <button
-            id="theme-button"
-            class="p-2 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md transition-colors duration-200 flex items-center space-x-1 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
-            aria-label="Toggle theme"
-            aria-expanded="false"
-            aria-haspopup="listbox"
-          >
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-            </svg>
-            <span class="text-sm font-medium" aria-hidden="true">SYS</span>
-            <svg class="w-3 h-3 transform transition-transform duration-200 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-            </svg>
-          </button>
-          
-          <!-- Theme Dropdown -->
-          <div
-            id="theme-dropdown"
-            class="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-600 z-50 overflow-hidden opacity-0 invisible transition-all duration-200 transform scale-95 group-hover:opacity-100 group-hover:visible group-hover:scale-100"
-            role="listbox"
-            aria-label="Theme options"
-          >
-            <div class="py-1">
-              {themeOptions.map((option) => (
-                <button
-                  class="flex items-center space-x-3 w-full px-4 py-2 text-sm text-left transition-colors duration-150 focus:outline-none text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white"
-                  role="option"
-                  aria-selected="false"
-                  data-theme={option.key}
-                >
-                  <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d={option.icon} />
-                  </svg>
-                  <span class="flex-1">{option.label}</span>
-                  <svg class="w-4 h-4 text-blue-500 dark:text-blue-400 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-label="Current theme">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                  </svg>
-                </button>
-              ))}
-            </div>
-          </div>
-        </div>
+        <Dropdown
+          id="theme-switcher"
+          buttonId="theme-button"
+          dropdownId="theme-dropdown"
+          buttonLabel="Toggle theme"
+          buttonIcon="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
+          buttonText="SYS"
+          options={themeOptions.map((option) => ({
+            key: option.key,
+            label: option.label,
+            icon: option.icon,
+            dataValue: option.key,
+            isSelected: option.key === currentTheme
+          }))}
+          dropdownLabel="Theme options"
+        />
 
         <!-- Mobile menu button -->
         <button
@@ -277,7 +217,7 @@ const currentTheme = 'system'; // Default value, will be updated by JS
     }
 
     // Theme switching
-    const themeButtons = document.querySelectorAll('[data-theme]');
+    const themeButtons = document.querySelectorAll('#theme-dropdown [data-value]');
     const themeButton = document.getElementById('theme-button');
     const themeButtonText = themeButton?.querySelector('span[aria-hidden="true"]');
     
@@ -304,10 +244,10 @@ const currentTheme = 'system'; // Default value, will be updated by JS
       }
       
       // Update theme dropdown selection
-      const themeButtons = document.querySelectorAll('[data-theme]');
+      const themeButtons = document.querySelectorAll('#theme-dropdown [data-value]');
       themeButtons.forEach(button => {
-        const isSelected = button.getAttribute('data-theme') === selectedTheme;
-        button.setAttribute('aria-selected', isSelected.toString());
+        const isSelected = button.getAttribute('data-value') === selectedTheme;
+        button.setAttribute('data-selected', isSelected.toString());
         
         // Update visual selection state
         if (isSelected) {
@@ -315,7 +255,7 @@ const currentTheme = 'system'; // Default value, will be updated by JS
           button.classList.remove('text-gray-700', 'dark:text-gray-300', 'hover:bg-gray-50', 'dark:hover:bg-gray-700', 'hover:text-gray-900', 'dark:hover:text-white');
           
           // Show checkmark
-          const checkmark = button.querySelector('svg[aria-label="Current theme"]');
+          const checkmark = button.querySelector('svg[aria-label="Current selection"]');
           if (checkmark) {
             checkmark.classList.remove('hidden');
           }
@@ -324,7 +264,7 @@ const currentTheme = 'system'; // Default value, will be updated by JS
           button.classList.add('text-gray-700', 'dark:text-gray-300', 'hover:bg-gray-50', 'dark:hover:bg-gray-700', 'hover:text-gray-900', 'dark:hover:text-white');
           
           // Hide checkmark
-          const checkmark = button.querySelector('svg[aria-label="Current theme"]');
+          const checkmark = button.querySelector('svg[aria-label="Current selection"]');
           if (checkmark) {
             checkmark.classList.add('hidden');
           }
@@ -339,7 +279,7 @@ const currentTheme = 'system'; // Default value, will be updated by JS
     // Theme button event listeners
     themeButtons.forEach(button => {
       button.addEventListener('click', () => {
-        const theme = button.getAttribute('data-theme');
+        const theme = button.getAttribute('data-value');
         if (theme) {
           applyTheme(theme);
         }

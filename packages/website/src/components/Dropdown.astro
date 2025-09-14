@@ -1,0 +1,117 @@
+---
+export interface Props {
+  id: string;
+  buttonId: string;
+  dropdownId: string;
+  buttonLabel: string;
+  buttonTitle?: string;
+  buttonIcon: string;
+  buttonText: string;
+  options: Array<{
+    key: string;
+    label: string;
+    icon?: string;
+    href?: string;
+    dataValue?: string;
+    isSelected?: boolean;
+  }>;
+  dropdownLabel: string;
+  width?: string;
+}
+
+const {
+  id,
+  buttonId,
+  dropdownId,
+  buttonLabel,
+  buttonTitle,
+  buttonIcon,
+  buttonText,
+  options,
+  dropdownLabel,
+  width = 'w-48'
+} = Astro.props;
+---
+
+<div class="relative group" id={id}>
+  <button
+    id={buttonId}
+    class="p-2 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md transition-colors duration-200 flex items-center space-x-1 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
+    aria-label={buttonLabel}
+    aria-expanded="false"
+    aria-haspopup="listbox"
+    title={buttonTitle || buttonLabel}
+  >
+    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d={buttonIcon} />
+    </svg>
+    <span class="text-sm font-medium" aria-hidden="true">{buttonText}</span>
+    <svg class="w-3 h-3 transform transition-transform duration-200 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+    </svg>
+  </button>
+  
+  <!-- Dropdown -->
+  <div
+    id={dropdownId}
+    class={`absolute right-0 mt-2 ${width} bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-600 z-50 overflow-hidden opacity-0 invisible transition-all duration-200 transform scale-95 group-hover:opacity-100 group-hover:visible group-hover:scale-100`}
+    role="listbox"
+    aria-label={dropdownLabel}
+  >
+    <div class="py-1">
+      {options.map((option) => {
+        const isSelected = option.isSelected || false;
+        const baseClasses = `flex items-center space-x-3 px-4 py-2 text-sm transition-colors duration-150 focus:outline-none w-full text-left ${
+          isSelected
+            ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 font-medium'
+            : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white'
+        }`;
+        
+        const commonProps = {
+          class: baseClasses,
+          'data-value': option.dataValue || option.key,
+          'data-selected': isSelected.toString()
+        };
+
+        // 如果有href，渲染为a标签
+        if (option.href) {
+          return (
+            <a
+              href={option.href}
+              {...commonProps}
+              role="option"
+              aria-label={`Switch to ${option.label}`}
+            >
+              {option.icon && (
+                <span class="w-4 h-4 flex items-center justify-center text-base" aria-hidden="true">{option.icon}</span>
+              )}
+              <span class="flex-1">{option.label}</span>
+              <svg class={`w-4 h-4 text-blue-500 dark:text-blue-400 flex-shrink-0 ${isSelected ? '' : 'hidden'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-label="Current selection">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+            </a>
+          );
+        }
+        
+        // 否则渲染为button
+        return (
+          <button
+            {...commonProps}
+            role="option"
+            aria-label={`Select ${option.label}`}
+          >
+            {option.icon && (
+              <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d={option.icon} />
+              </svg>
+            )}
+            <span class="flex-1">{option.label}</span>
+            <svg class={`w-4 h-4 text-blue-500 dark:text-blue-400 flex-shrink-0 ${isSelected ? '' : 'hidden'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-label="Current selection">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+            </svg>
+          </button>
+        );
+      })}
+    </div>
+  </div>
+</div>
