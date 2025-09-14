@@ -1,4 +1,4 @@
-import { memo, useCallback, useMemo } from 'react';
+import { memo, useCallback } from 'react';
 import { CheckCircle, Clock, Circle } from 'lucide-react';
 import { useVirtualList } from '@/utils/RenderOptimizer';
 import type { VirtualizedQuestionListProps } from '@/types/assessment';

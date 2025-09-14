@@ -23,9 +23,13 @@ export class AssessmentEngine {
   private reminderTimers: Map<string, number> = new Map();
   private autoSaveInterval: number = 30000; // 30 seconds
   private sessionTimeout: number = 1800000; // 30 minutes
+  private maxRetryAttempts: number = 3;
+  private retryDelay: number = 1000; // 1 second
 
   private periodicSaveStarted = false;
   private isClientSide: boolean = false;
+  private sessionHealthCheckInterval: number = 60000; // 1 minute
+  private healthCheckTimer: number | null = null;
 
   constructor() {
     this.isClientSide = this.checkClientSideEnvironment();
@@ -35,6 +39,9 @@ export class AssessmentEngine {
       this.loadSessionsFromStorage().catch(error => {
         console.error('Failed to load sessions during initialization:', error);
       });
+      
+      // 启动会话健康检查
+      // this.startSessionHealthCheck();
     }
   }
 
@@ -1123,5 +1130,12 @@ export const assessmentEngine = {
     return this.getInstance().getEnvironmentInfo();
   },
 
+  getEnhancedSessionStatistics() {
+    return this.getInstance().getEnhancedSessionStatistics();
+  },
+
+  cleanup() {
+    return this.getInstance().cleanup();
+  },
 
 };

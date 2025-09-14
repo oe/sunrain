@@ -21,6 +21,12 @@ export const assessmentHi: IAssessmentTranslations = {
     noData: 'मूल्यांकन डेटा लोड करने में विफल',
     validationFailed: 'सत्यापन विफल',
     unsupportedQuestionType: 'असमर्थित प्रश्न प्रकार: {type}',
+    cannotContinue: 'जारी नहीं रख सकते',
+    continueFailed: 'जारी रखने में विफल',
+    deleteFailed: 'हटाने में विफल',
+    clearFailed: 'साफ़ करने में विफल',
+    loadFailed: 'लोड करने में विफल',
+    loadFailedMessage: 'डेटा लोड करने में समस्या हुई',
     boundary: {
       title: 'एप्लिकेशन त्रुटि',
       message: 'खुशी है, एप्लिकेशन में एक त्रुटि हुई है।',
@@ -156,6 +162,9 @@ export const assessmentHi: IAssessmentTranslations = {
   actions: {
     retry: 'पुनः प्रयास करें',
     goBack: 'वापस जाएं',
+    refresh: 'ताज़ा करें',
+    startNew: 'नया मूल्यांकन शुरू करें',
+    continue: 'जारी रखें',
   },
 
   questionnaireInfo: {
@@ -228,6 +237,64 @@ export const assessmentHi: IAssessmentTranslations = {
     confirm: 'पुष्टि करें',
     yes: 'हां',
     no: 'नहीं',
+    error: 'त्रुटि',
+    showing: 'दिखा रहा है',
+    to: 'से',
+    of: 'का',
+    results: 'परिणाम',
+    riskLevels: {
+      low: 'कम जोखिम',
+      medium: 'मध्यम जोखिम',
+      high: 'उच्च जोखिम',
+    },
+    timeUnits: {
+      seconds: 'सेकंड',
+      minutes: 'मिनट',
+    },
+  },
+
+  history: {
+    stats: {
+      total: 'कुल',
+      averageTime: 'औसत समय',
+      lastAssessment: 'अंतिम मूल्यांकन',
+    },
+    list: {
+      dimensions: 'आयाम',
+      viewDetails: 'विवरण देखें',
+      share: 'साझा करें',
+      delete: 'हटाएं',
+    },
+    filters: {
+      type: 'प्रकार',
+      timeRange: 'समय सीमा',
+      riskLevel: 'जोखिम स्तर',
+    },
+  },
+
+  status: {
+    active: 'सक्रिय',
+    paused: 'रोका गया',
+  },
+
+  labels: {
+    unknownAssessment: 'अज्ञात मूल्यांकन',
+    startTime: 'शुरुआत का समय',
+    timeSpent: 'बिताया गया समय',
+    answered: 'उत्तर दिया',
+    questions: 'प्रश्न',
+    estimatedRemaining: 'अनुमानित शेष',
+  },
+
+  time: {
+    minutes: 'मिनट',
+  },
+
+  messages: {
+    deleted: 'हटाया गया',
+    clearedCount: '{count} साफ़ किया गया',
+    noActiveSessions: 'कोई सक्रिय सत्र नहीं',
+    noActiveSessionsMessage: 'आपके पास कोई सक्रिय मूल्यांकन सत्र नहीं है',
   },
 };
 

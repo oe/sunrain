@@ -21,6 +21,12 @@ export const assessmentKo: IAssessmentTranslations = {
     noData: "평가 데이터 로딩에 실패했습니다",
     validationFailed: "검증에 실패했습니다",
     unsupportedQuestionType: "지원되지 않는 질문 유형: {type}",
+    cannotContinue: "계속할 수 없습니다",
+    continueFailed: "계속하기 실패",
+    deleteFailed: "삭제 실패",
+    clearFailed: "지우기 실패",
+    loadFailed: "로딩 실패",
+    loadFailedMessage: "데이터 로딩 중 문제가 발생했습니다",
     boundary: {
       title: "애플리케이션 오류",
       message: "죄송합니다. 애플리케이션에서 오류가 발생했습니다.",
@@ -68,6 +74,7 @@ export const assessmentKo: IAssessmentTranslations = {
 
   validation: {
     checking: "검증 중...",
+    withWarnings: "경고와 함께 검증 중...",
   },
 
   execution: {
@@ -159,6 +166,9 @@ export const assessmentKo: IAssessmentTranslations = {
   actions: {
     retry: "다시 시도",
     goBack: "돌아가기",
+    refresh: "새로고침",
+    startNew: "새 평가 시작",
+    continue: "계속",
   },
 
   questionnaireInfo: {
@@ -235,6 +245,64 @@ export const assessmentKo: IAssessmentTranslations = {
     confirm: "확인",
     yes: "예",
     no: "아니오",
+    error: "오류",
+    showing: "표시 중",
+    to: "에서",
+    of: "의",
+    results: "결과",
+    riskLevels: {
+      low: "낮은 위험",
+      medium: "중간 위험",
+      high: "높은 위험",
+    },
+    timeUnits: {
+      seconds: "초",
+      minutes: "분",
+    },
+  },
+
+  history: {
+    stats: {
+      total: "총계",
+      averageTime: "평균 시간",
+      lastAssessment: "마지막 평가",
+    },
+    list: {
+      dimensions: "차원",
+      viewDetails: "세부사항 보기",
+      share: "공유",
+      delete: "삭제",
+    },
+    filters: {
+      type: "유형",
+      timeRange: "시간 범위",
+      riskLevel: "위험 수준",
+    },
+  },
+
+  status: {
+    active: "활성",
+    paused: "일시정지",
+  },
+
+  labels: {
+    unknownAssessment: "알 수 없는 평가",
+    startTime: "시작 시간",
+    timeSpent: "소요 시간",
+    answered: "답변됨",
+    questions: "질문",
+    estimatedRemaining: "예상 남은 시간",
+  },
+
+  time: {
+    minutes: "분",
+  },
+
+  messages: {
+    deleted: "삭제됨",
+    clearedCount: "{count}개 정리됨",
+    noActiveSessions: "활성 세션이 없습니다",
+    noActiveSessionsMessage: "활성 평가 세션이 없습니다",
   },
 };
 

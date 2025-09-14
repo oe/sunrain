@@ -161,16 +161,16 @@ const AssessmentTrendsClient = memo(function AssessmentTrendsClient() {
 
   const exportTrendsReport = useCallback(() => {
     try {
-      const filteredResults = getFilteredResults();
+      const filteredResults = getFilteredResults;
       const report = {
         generatedAt: new Date().toISOString(),
         timeRange: currentRange ? `${currentRange} ${t('common.timeUnits.days')}` : t('trends.timeRange.allTime'),
         totalAssessments: filteredResults.length,
         trends: {
           overall: calculateAverageScore(filteredResults),
-          categoryPerformance: getCategoryPerformanceData(),
-          riskTrends: getRiskTrendsData(),
-          insights: getInsights()
+          categoryPerformance: getCategoryPerformanceData,
+          riskTrends: getRiskTrendsData,
+          insights: getInsights
         },
         rawData: filteredResults
       };

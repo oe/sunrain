@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, memo } from 'react';
+import React, { useState, useEffect, useCallback, memo } from 'react';
 import { CheckCircle } from 'lucide-react';
 import { useAssessmentTranslations } from '@/hooks/useCSRTranslations';
 import QuestionCard from './QuestionCard';
@@ -47,6 +47,8 @@ interface AssessmentState {
   // Modal state
   isPaused: boolean;
   showPauseModal: boolean;
+}
+
 const AssessmentTaker = memo(function AssessmentTaker({
   assessmentId,
   assessmentData,
@@ -139,20 +141,22 @@ const AssessmentTaker = memo(function AssessmentTaker({
         firstQuestionFromProps: assessmentData.questions?.[0]
       });
 
+        const questions = assessmentType?.questions || assessmentData.questions;
+        const currentQuestion = questions[session.currentQuestionIndex];
+
+        console.log('Initializing assessment:', {
+          assessmentId,
+          sessionIndex: session.currentQuestionIndex,
+          totalQuestions: questions.length,
+          currentQuestion: currentQuestion,
+          questionOptions: currentQuestion?.options,
+          usingEngineData: !!assessmentType,
+          assessmentDataQuestions: assessmentData.questions?.length
+        });
+      }
+
       const questions = assessmentType?.questions || assessmentData.questions;
       const currentQuestion = questions[session.currentQuestionIndex];
-
-          console.log('Initializing assessment:', {
-            assessmentId,
-            sessionIndex: session.currentQuestionIndex,
-            totalQuestions: questions.length,
-            currentQuestion: currentQuestion,
-            questionOptions: currentQuestion?.options,
-            usingEngineData: !!assessmentType,
-            assessmentDataQuestions: assessmentData.questions?.length
-          });
-        }
-      }
 
       // Load existing answer if resuming
       const existingAnswer = session.answers.length > session.currentQuestionIndex
@@ -433,11 +437,30 @@ const AssessmentTaker = memo(function AssessmentTaker({
     return Math.round(((state.currentQuestionIndex + 1) / state.totalQuestions) * 100);
   }, [state.currentQuestionIndex, state.totalQuestions]);
 
+  // 键盘导航支持
+  const handleKeyDown = useCallback((event: React.KeyboardEvent) => {
+    if (event.key === 'Enter' && !state.isSubmitting) {
+      event.preventDefault();
+      handleNext();
+    } else if (event.key === 'Escape' && state.currentQuestionIndex > 0) {
+      event.preventDefault();
+      handlePrevious();
+    }
+  }, [handleNext, handlePrevious, state.isSubmitting, state.currentQuestionIndex]);
+
   // Show loading state
   if (translationsLoading || state.isLoading) {
     return (
-      <div className="flex flex-col items-center justify-center py-12">
-        <span className="loading loading-spinner loading-lg mb-4"></span>
+      <div 
+        className="flex flex-col items-center justify-center py-12"
+        role="status"
+        aria-live="polite"
+        aria-label="正在加载评测"
+      >
+        <span 
+          className="loading loading-spinner loading-lg mb-4"
+          aria-hidden="true"
+        ></span>
         <p className="text-gray-600 dark:text-gray-300 text-center">
           {t('loading.assessment')}
         </p>
@@ -460,16 +483,42 @@ const AssessmentTaker = memo(function AssessmentTaker({
   // Show completion state
   if (state.isCompleted) {
     return (
-      <div className="text-center py-12">
+      <div 
+        className="text-center py-12"
+        role="status"
+        aria-live="polite"
+        aria-label="评测完成"
+      >
         <div className="mb-6">
-          <div className="w-16 h-16 bg-green-100 dark:bg-green-900/20 rounded-full flex items-center justify-center mx-auto mb-4">
-            <CheckCircle className="w-8 h-8 text-green-600 dark:text-green-400" />
+          <div 
+            className="w-16 h-16 bg-green-100 dark:bg-green-900/20 rounded-full flex items-center justify-center mx-auto mb-4"
+            role="img"
+            aria-label="完成图标"
+          >
+            <CheckCircle 
+              className="w-8 h-8 text-green-600 dark:text-green-400" 
+              aria-hidden="true"
+            />
           </div>
-          <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">{t('execution.completion.title')}</h2>
-          <p className="text-gray-600 dark:text-gray-300 mb-6">{t('execution.completion.message')}</p>
+          <h2 
+            className="text-2xl font-bold text-gray-900 dark:text-white mb-2"
+            id="completion-title"
+          >
+            {t('execution.completion.title')}
+          </h2>
+          <p 
+            className="text-gray-600 dark:text-gray-300 mb-6"
+            id="completion-message"
+          >
+            {t('execution.completion.message')}
+          </p>
         </div>
         <div className="flex justify-center">
-          <span className="loading loading-spinner loading-md"></span>
+          <span 
+            className="loading loading-spinner loading-md"
+            aria-label="正在处理结果"
+            aria-hidden="true"
+          ></span>
         </div>
       </div>
     );
@@ -487,7 +536,13 @@ const AssessmentTaker = memo(function AssessmentTaker({
   }
 
   return (
-    <div className="max-w-4xl mx-auto">
+    <div 
+      className="max-w-4xl mx-auto" 
+      role="main" 
+      aria-label="心理健康评测"
+      onKeyDown={handleKeyDown}
+      tabIndex={-1}
+    >
       {/* Progress Bar Component */}
       <ProgressBar
         current={state.currentQuestionIndex}
@@ -502,21 +557,47 @@ const AssessmentTaker = memo(function AssessmentTaker({
       />
 
       {/* Question Card */}
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 p-8 mb-6">
+      <div 
+        className="bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 p-8 mb-6"
+        role="region"
+        aria-labelledby="question-title"
+        aria-describedby="question-description"
+      >
         <div className="mb-6">
           <div className="flex items-center justify-between mb-4">
-            <span className="text-sm font-medium text-blue-600 dark:text-blue-400">
+            <span 
+              className="text-sm font-medium text-blue-600 dark:text-blue-400"
+              id="question-number"
+              aria-label={`问题 ${state.currentQuestionIndex + 1}，共 ${state.totalQuestions} 题`}
+            >
               {t('question.number', { number: state.currentQuestionIndex + 1 })}
             </span>
             {state.currentQuestion.required && (
-              <span className="text-sm text-red-500">
+              <span 
+                className="text-sm text-red-500"
+                role="img"
+                aria-label="必答题"
+              >
                 * {t('question.required')}
               </span>
             )}
           </div>
-          <h2 className="text-xl font-medium text-gray-900 dark:text-white mb-6">
+          <h2 
+            id="question-title"
+            className="text-xl font-medium text-gray-900 dark:text-white mb-6"
+            tabIndex={-1}
+          >
             {state.currentQuestion.text}
           </h2>
+          <div 
+            id="question-description"
+            className="sr-only"
+          >
+            {state.currentQuestion.required 
+              ? `必答题：${state.currentQuestion.text}` 
+              : `选答题：${state.currentQuestion.text}`
+            }
+          </div>
         </div>
 
         {/* Question Card Component */}
@@ -537,8 +618,16 @@ const AssessmentTaker = memo(function AssessmentTaker({
 
         {/* Validation Error */}
         {state.validationError && (
-          <div className="mt-4 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-md">
-            <p className="text-sm text-red-600 dark:text-red-400">{state.validationError}</p>
+          <div 
+            className="mt-4 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-md"
+            role="alert"
+            aria-live="polite"
+            aria-label="验证错误"
+          >
+            <p className="text-sm text-red-600 dark:text-red-400">
+              <span className="sr-only">错误：</span>
+              {state.validationError}
+            </p>
           </div>
         )}
       </div>

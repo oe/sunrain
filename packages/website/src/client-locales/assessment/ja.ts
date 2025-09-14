@@ -21,6 +21,12 @@ export const assessmentJa: IAssessmentTranslations = {
     noData: '評価データの読み込みに失敗しました',
     validationFailed: '検証に失敗しました',
     unsupportedQuestionType: 'サポートされていない質問タイプ: {type}',
+    cannotContinue: '続行できません',
+    continueFailed: '続行に失敗しました',
+    deleteFailed: '削除に失敗しました',
+    clearFailed: 'クリアに失敗しました',
+    loadFailed: '読み込みに失敗しました',
+    loadFailedMessage: 'データの読み込みで問題が発生しました',
     boundary: {
       title: 'アプリケーションエラー',
       message: '申し訳ございませんが、アプリケーションでエラーが発生しました。',
@@ -68,6 +74,7 @@ export const assessmentJa: IAssessmentTranslations = {
 
   validation: {
     checking: '検証中...',
+    withWarnings: '警告ありで検証中...',
   },
 
   execution: {
@@ -155,6 +162,9 @@ export const assessmentJa: IAssessmentTranslations = {
   actions: {
     retry: '再試行',
     goBack: '戻る',
+    refresh: '更新',
+    startNew: '新しい評価を開始',
+    continue: '続行',
   },
 
   questionnaireInfo: {
@@ -227,6 +237,64 @@ export const assessmentJa: IAssessmentTranslations = {
     confirm: '確認',
     yes: 'はい',
     no: 'いいえ',
+    error: 'エラー',
+    showing: '表示中',
+    to: 'から',
+    of: 'の',
+    results: '結果',
+    riskLevels: {
+      low: '低リスク',
+      medium: '中リスク',
+      high: '高リスク',
+    },
+    timeUnits: {
+      seconds: '秒',
+      minutes: '分',
+    },
+  },
+
+  history: {
+    stats: {
+      total: '合計',
+      averageTime: '平均時間',
+      lastAssessment: '最後の評価',
+    },
+    list: {
+      dimensions: '次元',
+      viewDetails: '詳細を見る',
+      share: '共有',
+      delete: '削除',
+    },
+    filters: {
+      type: 'タイプ',
+      timeRange: '時間範囲',
+      riskLevel: 'リスクレベル',
+    },
+  },
+
+  status: {
+    active: 'アクティブ',
+    paused: '一時停止',
+  },
+
+  labels: {
+    unknownAssessment: '不明な評価',
+    startTime: '開始時間',
+    timeSpent: '経過時間',
+    answered: '回答済み',
+    questions: '質問',
+    estimatedRemaining: '推定残り時間',
+  },
+
+  time: {
+    minutes: '分',
+  },
+
+  messages: {
+    deleted: '削除されました',
+    clearedCount: '{count}件クリアされました',
+    noActiveSessions: 'アクティブなセッションがありません',
+    noActiveSessionsMessage: 'アクティブな評価セッションがありません',
   },
 };
 

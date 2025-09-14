@@ -248,42 +248,167 @@ export class ResultsAnalyzer {
   }
 
   /**
-   * Generate recommendations based on scores
+   * Generate comprehensive recommendations based on scores
    */
   private generateRecommendations(
     scores: Record<string, any>,
-    _assessmentType: AssessmentType
+    assessmentType: AssessmentType
   ): string[] {
     const recommendations: string[] = [];
+    const overallRiskLevel = this.assessRiskLevel(scores);
 
-    // Generate recommendations based on risk levels and scores
-    for (const [, scoreData] of Object.entries(scores)) {
-      const riskLevel = scoreData.riskLevel;
-
-      if (riskLevel === "high") {
-        recommendations.push(
-          "Consider seeking professional help from a mental health provider.",
-          "Reach out to a trusted friend, family member, or counselor for support.",
-          "If you are in crisis, contact a mental health hotline immediately."
-        );
-      } else if (riskLevel === "medium") {
-        recommendations.push(
-          "Consider implementing stress management techniques in your daily routine.",
-          "Regular exercise and adequate sleep can help improve your mental well-being.",
-          "Consider speaking with a counselor or therapist for additional support."
-        );
-      } else if (riskLevel === "low") {
-        recommendations.push(
-          "Continue maintaining healthy habits that support your mental well-being.",
-          "Consider mindfulness or meditation practices to maintain your positive state.",
-          "Stay connected with supportive friends and family members."
-        );
-      }
+    // 基于整体风险级别的建议
+    if (overallRiskLevel === "high") {
+      recommendations.push(
+        "🚨 建议立即寻求专业心理健康支持",
+        "📞 联系心理健康专业人士或危机热线",
+        "🏥 考虑预约心理健康专家进行详细评估",
+        "👥 告知家人或朋友你的情况，寻求支持"
+      );
+    } else if (overallRiskLevel === "medium") {
+      recommendations.push(
+        "👨‍⚕️ 建议预约心理健康专业人士咨询",
+        "🧘‍♀️ 学习并实践压力管理技巧",
+        "📚 阅读心理健康相关书籍和资源",
+        "🏃‍♂️ 保持规律的体育锻炼"
+      );
+    } else {
+      recommendations.push(
+        "📊 继续监测你的心理健康状况",
+        "🌱 保持健康的生活方式习惯",
+        "💪 培养积极的应对策略",
+        "🎯 设定可实现的目标和期望"
+      );
     }
+
+    // 基于具体评测类型的个性化建议
+    const typeSpecificRecommendations = this.getTypeSpecificRecommendations(
+      assessmentType.id,
+      scores
+    );
+    recommendations.push(...typeSpecificRecommendations);
+
+    // 基于分数模式的建议
+    const patternRecommendations = this.getPatternBasedRecommendations(scores);
+    recommendations.push(...patternRecommendations);
+
+    // 添加通用健康建议
+    recommendations.push(
+      "💤 确保充足的睡眠（7-9小时）",
+      "🥗 保持均衡的饮食",
+      "🚫 避免过度使用酒精和药物",
+      "🤝 与朋友和家人保持联系"
+    );
 
     // Remove duplicates and limit to most relevant recommendations
     const uniqueRecommendations = [...new Set(recommendations)];
-    return uniqueRecommendations.slice(0, 5);
+    return uniqueRecommendations.slice(0, 8);
+  }
+
+  /**
+   * 获取基于评测类型的个性化建议
+   */
+  private getTypeSpecificRecommendations(
+    assessmentTypeId: string,
+    scores: Record<string, any>
+  ): string[] {
+    const recommendations: string[] = [];
+
+    switch (assessmentTypeId) {
+      case "phq-9":
+        const depressionScore = scores.depression?.value || 0;
+        if (depressionScore >= 15) {
+          recommendations.push(
+            "💊 考虑与医生讨论抗抑郁药物治疗",
+            "🧠 认知行为疗法可能对你有帮助",
+            "📅 建立规律的日常作息"
+          );
+        } else if (depressionScore >= 10) {
+          recommendations.push(
+            "☀️ 增加户外活动和阳光照射",
+            "🎨 尝试创意活动来提升情绪",
+            "📖 学习正念冥想技巧"
+          );
+        }
+        break;
+
+      case "gad-7":
+        const anxietyScore = scores.anxiety?.value || 0;
+        if (anxietyScore >= 15) {
+          recommendations.push(
+            "🫁 学习深呼吸和放松技巧",
+            "🧘‍♀️ 尝试渐进式肌肉放松",
+            "📱 使用焦虑管理应用程序"
+          );
+        } else if (anxietyScore >= 10) {
+          recommendations.push(
+            "🏃‍♀️ 定期进行有氧运动",
+            "☕ 减少咖啡因摄入",
+            "📝 写日记来记录和整理思绪"
+          );
+        }
+        break;
+
+      case "stress-scale":
+        const stressScore = scores.stress?.value || 0;
+        if (stressScore >= 25) {
+          recommendations.push(
+            "⏰ 学习时间管理技巧",
+            "🎯 设定现实的优先级",
+            "🚫 学会说'不'来保护自己"
+          );
+        } else if (stressScore >= 15) {
+          recommendations.push(
+            "🌿 尝试自然疗法如香薰",
+            "🎵 听舒缓的音乐",
+            "🛁 定期进行放松活动"
+          );
+        }
+        break;
+    }
+
+    return recommendations;
+  }
+
+  /**
+   * 基于分数模式获取建议
+   */
+  private getPatternBasedRecommendations(scores: Record<string, any>): string[] {
+    const recommendations: string[] = [];
+    const scoreValues = Object.values(scores).map((s: any) => s.value || 0);
+    const averageScore = scoreValues.reduce((a, b) => a + b, 0) / scoreValues.length;
+
+    // 检查分数一致性
+    const scoreVariance = this.calculateVariance(scoreValues);
+    if (scoreVariance < 2) {
+      recommendations.push("📈 你的分数相对稳定，继续保持当前状态");
+    } else if (scoreVariance > 10) {
+      recommendations.push("📊 你的分数变化较大，建议定期重新评估");
+    }
+
+    // 检查是否有极端分数
+    const hasExtremeScores = scoreValues.some(score => score >= 20);
+    if (hasExtremeScores) {
+      recommendations.push("⚠️ 某些方面需要特别关注，建议寻求专业帮助");
+    }
+
+    // 基于平均分数的建议
+    if (averageScore >= 15) {
+      recommendations.push("🔍 建议进行更详细的心理健康评估");
+    } else if (averageScore >= 10) {
+      recommendations.push("👀 建议定期监测心理健康状况");
+    }
+
+    return recommendations;
+  }
+
+  /**
+   * 计算方差
+   */
+  private calculateVariance(values: number[]): number {
+    const mean = values.reduce((a, b) => a + b, 0) / values.length;
+    const squaredDiffs = values.map(value => Math.pow(value - mean, 2));
+    return squaredDiffs.reduce((a, b) => a + b, 0) / values.length;
   }
 
   /**
@@ -324,14 +449,14 @@ export class ResultsAnalyzer {
         : undefined;
 
     // Generate resource recommendations
-    const resourceRecommendations =
-      this.generateResourceRecommendations(result);
+    // const resourceRecommendations =
+    //   this.generateResourceRecommendations(result);
 
     return {
       result,
       visualizations,
       comparisons,
-      resourceRecommendations,
+      resourceRecommendations: this.generateResourceRecommendations(result),
     };
   }
 
@@ -422,68 +547,6 @@ export class ResultsAnalyzer {
     };
   }
 
-  /**
-   * Generate resource recommendations based on results
-   */
-  private generateResourceRecommendations(result: AssessmentResult) {
-    const recommendations = [];
-
-    // Generate recommendations based on risk level and scores
-    if (result.riskLevel === "high") {
-      recommendations.push(
-        {
-          type: "resource" as const,
-          id: "crisis-hotline",
-          title: "Crisis Support Hotline",
-          description: "Immediate support for mental health crises",
-          relevanceScore: 1.0,
-        },
-        {
-          type: "article" as const,
-          id: "professional-help",
-          title: "When to Seek Professional Help",
-          description: "Guide to finding and accessing mental health services",
-          relevanceScore: 0.9,
-        }
-      );
-    } else if (result.riskLevel === "medium") {
-      recommendations.push(
-        {
-          type: "exercise" as const,
-          id: "stress-management",
-          title: "Stress Management Techniques",
-          description: "Practical exercises to manage stress and anxiety",
-          relevanceScore: 0.8,
-        },
-        {
-          type: "article" as const,
-          id: "self-care",
-          title: "Self-Care Strategies",
-          description: "Building healthy habits for mental wellness",
-          relevanceScore: 0.7,
-        }
-      );
-    } else {
-      recommendations.push(
-        {
-          type: "exercise" as const,
-          id: "mindfulness",
-          title: "Mindfulness and Meditation",
-          description: "Practices to maintain and enhance mental well-being",
-          relevanceScore: 0.6,
-        },
-        {
-          type: "article" as const,
-          id: "wellness-tips",
-          title: "Mental Wellness Tips",
-          description: "Daily practices for optimal mental health",
-          relevanceScore: 0.5,
-        }
-      );
-    }
-
-    return recommendations;
-  }
 
   /**
    * Get historical results for trend analysis
@@ -717,6 +780,274 @@ export class ResultsAnalyzer {
       results: results,
     };
     return JSON.stringify(exportData, null, 2);
+  }
+
+  /**
+   * 生成详细的结果报告
+   */
+  public generateDetailedReport(sessionId: string): AssessmentReport | null {
+    const result = this.results.get(sessionId);
+    if (!result) return null;
+
+    const report: AssessmentReport = {
+      result: result,
+      visualizations: [],
+      resourceRecommendations: this.generateResourceRecommendations(result),
+    };
+
+    return report;
+  }
+
+  /**
+   * 生成结果摘要
+   */
+  private generateSummary(result: AssessmentResult): string {
+    const riskLevel = result.riskLevel;
+    const totalScore = Object.values(result.scores).reduce((sum, score: any) => sum + (score.value || 0), 0);
+    const averageScore = totalScore / Object.keys(result.scores).length;
+
+    let summary = `根据你的评测结果，你的心理健康状况总体处于${this.getRiskLevelDescription(riskLevel)}水平。`;
+    
+    if (averageScore >= 15) {
+      summary += "建议你尽快寻求专业心理健康支持。";
+    } else if (averageScore >= 10) {
+      summary += "建议你关注自己的心理健康状况，考虑寻求专业咨询。";
+    } else {
+      summary += "继续保持良好的心理健康习惯。";
+    }
+
+    return summary;
+  }
+
+  /**
+   * 生成详细分析
+   */
+  private generateDetailedAnalysis(result: AssessmentResult): Record<string, any> {
+    const analysis: Record<string, any> = {};
+
+    for (const [key, score] of Object.entries(result.scores)) {
+      analysis[key] = {
+        score: score.value,
+        level: score.riskLevel,
+        description: this.getScoreDescription(key, score.value),
+        interpretation: this.getScoreInterpretation(key, score.value),
+        factors: this.getContributingFactors(key, score.value)
+      };
+    }
+
+    return analysis;
+  }
+
+  /**
+   * 生成趋势分析
+   */
+  private generateTrendAnalysis(_result: AssessmentResult): Record<string, any> {
+    return {
+      currentTrend: "stable",
+      recommendation: "继续监测你的心理健康状况",
+      timeframe: "过去30天",
+      confidence: "medium"
+    };
+  }
+
+  /**
+   * 生成个性化建议
+   */
+  private generatePersonalizedRecommendations(result: AssessmentResult): string[] {
+    const recommendations: string[] = [];
+    const riskLevel = result.riskLevel;
+
+    if (riskLevel === "high") {
+      recommendations.push("立即联系心理健康专业人士");
+      recommendations.push("告知家人或朋友你的情况");
+      recommendations.push("避免独处，寻求陪伴");
+    } else if (riskLevel === "medium") {
+      recommendations.push("预约心理健康咨询");
+      recommendations.push("学习压力管理技巧");
+      recommendations.push("保持规律的作息");
+    } else {
+      recommendations.push("继续监测心理健康状况");
+      recommendations.push("保持健康的生活习惯");
+      recommendations.push("定期进行自我评估");
+    }
+
+    return recommendations;
+  }
+
+  /**
+   * 生成风险评估
+   */
+  private generateRiskAssessment(result: AssessmentResult): Record<string, any> {
+    return {
+      overallRisk: result.riskLevel,
+      riskFactors: this.identifyRiskFactors(result),
+      protectiveFactors: this.identifyProtectiveFactors(result),
+      recommendations: this.getRiskBasedRecommendations(result.riskLevel)
+    };
+  }
+
+  /**
+   * 生成后续行动建议
+   */
+  private generateNextSteps(result: AssessmentResult): string[] {
+    const nextSteps: string[] = [];
+    const riskLevel = result.riskLevel;
+
+    if (riskLevel === "high") {
+      nextSteps.push("立即寻求专业帮助");
+      nextSteps.push("联系危机热线");
+      nextSteps.push("告知信任的人");
+    } else if (riskLevel === "medium") {
+      nextSteps.push("预约心理健康咨询");
+      nextSteps.push("开始实施建议的策略");
+      nextSteps.push("定期重新评估");
+    } else {
+      nextSteps.push("继续当前的健康习惯");
+      nextSteps.push("定期进行自我评估");
+      nextSteps.push("考虑预防性措施");
+    }
+
+    return nextSteps;
+  }
+
+  /**
+   * 生成资源推荐
+   */
+  private generateResourceRecommendations(_result: AssessmentResult): {
+    type: 'article' | 'exercise' | 'resource';
+    id: string;
+    title: string;
+    description: string;
+    relevanceScore: number;
+  }[] {
+    return [
+      {
+        type: 'resource',
+        id: 'mental-health-professional',
+        title: '心理健康专家',
+        description: '寻求专业心理健康支持',
+        relevanceScore: 0.9
+      },
+      {
+        type: 'article',
+        id: 'self-help-guide',
+        title: '自助指南',
+        description: '学习心理健康自我管理技巧',
+        relevanceScore: 0.7
+      },
+      {
+        type: 'exercise',
+        id: 'mindfulness-practice',
+        title: '正念练习',
+        description: '通过正念练习改善心理健康',
+        relevanceScore: 0.6
+      }
+    ];
+  }
+
+  /**
+   * 获取风险级别描述
+   */
+  private getRiskLevelDescription(riskLevel: RiskLevel): string {
+    switch (riskLevel) {
+      case "high": return "高风险";
+      case "medium": return "中等风险";
+      case "low": return "低风险";
+      default: return "未知";
+    }
+  }
+
+  /**
+   * 获取分数描述
+   */
+  private getScoreDescription(_key: string, value: number): string {
+    if (value >= 15) return "需要立即关注";
+    if (value >= 10) return "需要关注";
+    if (value >= 5) return "轻度关注";
+    return "正常范围";
+  }
+
+  /**
+   * 获取分数解释
+   */
+  private getScoreInterpretation(key: string, value: number): string {
+    return `你的${key}得分为${value}，${this.getScoreDescription(key, value)}。`;
+  }
+
+  /**
+   * 获取影响因素
+   */
+  private getContributingFactors(_key: string, value: number): string[] {
+    const factors: string[] = [];
+    
+    if (value >= 10) {
+      factors.push("生活压力");
+      factors.push("睡眠质量");
+      factors.push("社交关系");
+    }
+    
+    return factors;
+  }
+
+  /**
+   * 识别风险因素
+   */
+  private identifyRiskFactors(result: AssessmentResult): string[] {
+    const riskFactors: string[] = [];
+    
+    for (const [key, score] of Object.entries(result.scores)) {
+      if (score.value >= 15) {
+        riskFactors.push(`${key}得分过高`);
+      }
+    }
+    
+    return riskFactors;
+  }
+
+  /**
+   * 识别保护因素
+   */
+  private identifyProtectiveFactors(result: AssessmentResult): string[] {
+    const protectiveFactors: string[] = [];
+    
+    for (const [key, score] of Object.entries(result.scores)) {
+      if (score.value < 5) {
+        protectiveFactors.push(`${key}得分正常`);
+      }
+    }
+    
+    return protectiveFactors;
+  }
+
+  /**
+   * 获取基于风险的建议
+   */
+  private getRiskBasedRecommendations(riskLevel: RiskLevel): string[] {
+    switch (riskLevel) {
+      case "high":
+        return ["立即寻求专业帮助", "联系危机热线", "告知信任的人"];
+      case "medium":
+        return ["预约心理健康咨询", "学习压力管理技巧", "保持规律作息"];
+      case "low":
+        return ["继续健康习惯", "定期自我评估", "考虑预防措施"];
+      default:
+        return ["建议咨询专业人士"];
+    }
+  }
+
+  /**
+   * 计算置信度分数
+   */
+  private calculateConfidenceScore(result: AssessmentResult): number {
+    const totalQuestions = result.answers.length;
+    const answeredQuestions = result.answers.filter(a => a.value !== undefined).length;
+    const completeness = answeredQuestions / totalQuestions;
+    
+    const scores = Object.values(result.scores).map((s: any) => s.value || 0);
+    const variance = this.calculateVariance(scores);
+    const consistency = Math.max(0, 1 - variance / 100);
+    
+    return Math.round((completeness * 0.7 + consistency * 0.3) * 100);
   }
 }
 

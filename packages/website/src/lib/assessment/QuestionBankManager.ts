@@ -54,10 +54,6 @@ export class QuestionBankManager {
                 'phq9-1-1': '几天',
                 'phq9-1-2': '超过一半的天数',
                 'phq9-1-3': '几乎每天'
-              },
-              scaleLabels: {
-                min: '完全没有',
-                max: '几乎每天'
               }
             }
           }
@@ -84,6 +80,167 @@ export class QuestionBankManager {
               }
             }
           }
+        },
+        {
+          id: 'phq9-3',
+          text: 'Trouble falling or staying asleep, or sleeping too much',
+          type: 'single_choice',
+          required: true,
+          options: [
+            { id: 'phq9-3-0', text: 'Not at all', value: 0 },
+            { id: 'phq9-3-1', text: 'Several days', value: 1 },
+            { id: 'phq9-3-2', text: 'More than half the days', value: 2 },
+            { id: 'phq9-3-3', text: 'Nearly every day', value: 3 }
+          ],
+          translations: {
+            zh: {
+              text: '入睡困难、睡眠不稳或睡眠过多',
+              options: {
+                'phq9-3-0': '完全没有',
+                'phq9-3-1': '几天',
+                'phq9-3-2': '超过一半的天数',
+                'phq9-3-3': '几乎每天'
+              }
+            }
+          }
+        },
+        {
+          id: 'phq9-4',
+          text: 'Feeling tired or having little energy',
+          type: 'single_choice',
+          required: true,
+          options: [
+            { id: 'phq9-4-0', text: 'Not at all', value: 0 },
+            { id: 'phq9-4-1', text: 'Several days', value: 1 },
+            { id: 'phq9-4-2', text: 'More than half the days', value: 2 },
+            { id: 'phq9-4-3', text: 'Nearly every day', value: 3 }
+          ],
+          translations: {
+            zh: {
+              text: '感到疲倦或精力不足',
+              options: {
+                'phq9-4-0': '完全没有',
+                'phq9-4-1': '几天',
+                'phq9-4-2': '超过一半的天数',
+                'phq9-4-3': '几乎每天'
+              }
+            }
+          }
+        },
+        {
+          id: 'phq9-5',
+          text: 'Poor appetite or overeating',
+          type: 'single_choice',
+          required: true,
+          options: [
+            { id: 'phq9-5-0', text: 'Not at all', value: 0 },
+            { id: 'phq9-5-1', text: 'Several days', value: 1 },
+            { id: 'phq9-5-2', text: 'More than half the days', value: 2 },
+            { id: 'phq9-5-3', text: 'Nearly every day', value: 3 }
+          ],
+          translations: {
+            zh: {
+              text: '食欲不振或暴饮暴食',
+              options: {
+                'phq9-5-0': '完全没有',
+                'phq9-5-1': '几天',
+                'phq9-5-2': '超过一半的天数',
+                'phq9-5-3': '几乎每天'
+              }
+            }
+          }
+        },
+        {
+          id: 'phq9-6',
+          text: 'Feeling bad about yourself - or that you are a failure or have let yourself or your family down',
+          type: 'single_choice',
+          required: true,
+          options: [
+            { id: 'phq9-6-0', text: 'Not at all', value: 0 },
+            { id: 'phq9-6-1', text: 'Several days', value: 1 },
+            { id: 'phq9-6-2', text: 'More than half the days', value: 2 },
+            { id: 'phq9-6-3', text: 'Nearly every day', value: 3 }
+          ],
+          translations: {
+            zh: {
+              text: '觉得自己很糟糕，或者觉得自己是个失败者，或者让自己或家人失望',
+              options: {
+                'phq9-6-0': '完全没有',
+                'phq9-6-1': '几天',
+                'phq9-6-2': '超过一半的天数',
+                'phq9-6-3': '几乎每天'
+              }
+            }
+          }
+        },
+        {
+          id: 'phq9-7',
+          text: 'Trouble concentrating on things, such as reading the newspaper or watching television',
+          type: 'single_choice',
+          required: true,
+          options: [
+            { id: 'phq9-7-0', text: 'Not at all', value: 0 },
+            { id: 'phq9-7-1', text: 'Several days', value: 1 },
+            { id: 'phq9-7-2', text: 'More than half the days', value: 2 },
+            { id: 'phq9-7-3', text: 'Nearly every day', value: 3 }
+          ],
+          translations: {
+            zh: {
+              text: '难以集中注意力做事，比如看报纸或看电视',
+              options: {
+                'phq9-7-0': '完全没有',
+                'phq9-7-1': '几天',
+                'phq9-7-2': '超过一半的天数',
+                'phq9-7-3': '几乎每天'
+              }
+            }
+          }
+        },
+        {
+          id: 'phq9-8',
+          text: 'Moving or speaking so slowly that other people could have noticed, or the opposite - being so fidgety or restless that you have been moving around a lot more than usual',
+          type: 'single_choice',
+          required: true,
+          options: [
+            { id: 'phq9-8-0', text: 'Not at all', value: 0 },
+            { id: 'phq9-8-1', text: 'Several days', value: 1 },
+            { id: 'phq9-8-2', text: 'More than half the days', value: 2 },
+            { id: 'phq9-8-3', text: 'Nearly every day', value: 3 }
+          ],
+          translations: {
+            zh: {
+              text: '动作或说话缓慢到别人可能已经注意到，或者相反 - 坐立不安或烦躁，比平时活动得多',
+              options: {
+                'phq9-8-0': '完全没有',
+                'phq9-8-1': '几天',
+                'phq9-8-2': '超过一半的天数',
+                'phq9-8-3': '几乎每天'
+              }
+            }
+          }
+        },
+        {
+          id: 'phq9-9',
+          text: 'Thoughts that you would be better off dead, or of hurting yourself',
+          type: 'single_choice',
+          required: true,
+          options: [
+            { id: 'phq9-9-0', text: 'Not at all', value: 0 },
+            { id: 'phq9-9-1', text: 'Several days', value: 1 },
+            { id: 'phq9-9-2', text: 'More than half the days', value: 2 },
+            { id: 'phq9-9-3', text: 'Nearly every day', value: 3 }
+          ],
+          translations: {
+            zh: {
+              text: '想到死了会更好，或者伤害自己',
+              options: {
+                'phq9-9-0': '完全没有',
+                'phq9-9-1': '几天',
+                'phq9-9-2': '超过一半的天数',
+                'phq9-9-3': '几乎每天'
+              }
+            }
+          }
         }
       ],
       scoringRules: [
@@ -92,7 +249,7 @@ export class QuestionBankManager {
           name: 'PHQ-9 Total Score',
           description: 'Sum of all PHQ-9 item scores',
           calculation: 'sum',
-          questionIds: ['phq9-1', 'phq9-2'],
+          questionIds: ['phq9-1', 'phq9-2', 'phq9-3', 'phq9-4', 'phq9-5', 'phq9-6', 'phq9-7', 'phq9-8', 'phq9-9'],
           ranges: [
             { min: 0, max: 4, label: 'Minimal', description: 'Minimal depression symptoms', riskLevel: 'low' },
             { min: 5, max: 9, label: 'Mild', description: 'Mild depression symptoms', riskLevel: 'low' },
@@ -128,14 +285,8 @@ export class QuestionBankManager {
         {
           id: 'gad7-1',
           text: 'Feeling nervous, anxious, or on edge',
-          type: 'scale',
+          type: 'single_choice',
           required: true,
-          scaleMin: 0,
-          scaleMax: 3,
-          scaleLabels: {
-            min: 'Not at all',
-            max: 'Nearly every day'
-          },
           options: [
             { id: 'gad7-1-0', text: 'Not at all', value: 0 },
             { id: 'gad7-1-1', text: 'Several days', value: 1 },
@@ -153,6 +304,144 @@ export class QuestionBankManager {
               }
             }
           }
+        },
+        {
+          id: 'gad7-2',
+          text: 'Not being able to stop or control worrying',
+          type: 'single_choice',
+          required: true,
+          options: [
+            { id: 'gad7-2-0', text: 'Not at all', value: 0 },
+            { id: 'gad7-2-1', text: 'Several days', value: 1 },
+            { id: 'gad7-2-2', text: 'More than half the days', value: 2 },
+            { id: 'gad7-2-3', text: 'Nearly every day', value: 3 }
+          ],
+          translations: {
+            zh: {
+              text: '无法停止或控制担忧',
+              options: {
+                'gad7-2-0': '完全没有',
+                'gad7-2-1': '几天',
+                'gad7-2-2': '超过一半的天数',
+                'gad7-2-3': '几乎每天'
+              }
+            }
+          }
+        },
+        {
+          id: 'gad7-3',
+          text: 'Worrying too much about different things',
+          type: 'single_choice',
+          required: true,
+          options: [
+            { id: 'gad7-3-0', text: 'Not at all', value: 0 },
+            { id: 'gad7-3-1', text: 'Several days', value: 1 },
+            { id: 'gad7-3-2', text: 'More than half the days', value: 2 },
+            { id: 'gad7-3-3', text: 'Nearly every day', value: 3 }
+          ],
+          translations: {
+            zh: {
+              text: '对很多事情过度担忧',
+              options: {
+                'gad7-3-0': '完全没有',
+                'gad7-3-1': '几天',
+                'gad7-3-2': '超过一半的天数',
+                'gad7-3-3': '几乎每天'
+              }
+            }
+          }
+        },
+        {
+          id: 'gad7-4',
+          text: 'Trouble relaxing',
+          type: 'single_choice',
+          required: true,
+          options: [
+            { id: 'gad7-4-0', text: 'Not at all', value: 0 },
+            { id: 'gad7-4-1', text: 'Several days', value: 1 },
+            { id: 'gad7-4-2', text: 'More than half the days', value: 2 },
+            { id: 'gad7-4-3', text: 'Nearly every day', value: 3 }
+          ],
+          translations: {
+            zh: {
+              text: '难以放松',
+              options: {
+                'gad7-4-0': '完全没有',
+                'gad7-4-1': '几天',
+                'gad7-4-2': '超过一半的天数',
+                'gad7-4-3': '几乎每天'
+              }
+            }
+          }
+        },
+        {
+          id: 'gad7-5',
+          text: 'Being so restless that it is hard to sit still',
+          type: 'single_choice',
+          required: true,
+          options: [
+            { id: 'gad7-5-0', text: 'Not at all', value: 0 },
+            { id: 'gad7-5-1', text: 'Several days', value: 1 },
+            { id: 'gad7-5-2', text: 'More than half the days', value: 2 },
+            { id: 'gad7-5-3', text: 'Nearly every day', value: 3 }
+          ],
+          translations: {
+            zh: {
+              text: '坐立不安，难以静坐',
+              options: {
+                'gad7-5-0': '完全没有',
+                'gad7-5-1': '几天',
+                'gad7-5-2': '超过一半的天数',
+                'gad7-5-3': '几乎每天'
+              }
+            }
+          }
+        },
+        {
+          id: 'gad7-6',
+          text: 'Becoming easily annoyed or irritable',
+          type: 'single_choice',
+          required: true,
+          options: [
+            { id: 'gad7-6-0', text: 'Not at all', value: 0 },
+            { id: 'gad7-6-1', text: 'Several days', value: 1 },
+            { id: 'gad7-6-2', text: 'More than half the days', value: 2 },
+            { id: 'gad7-6-3', text: 'Nearly every day', value: 3 }
+          ],
+          translations: {
+            zh: {
+              text: '容易生气或易怒',
+              options: {
+                'gad7-6-0': '完全没有',
+                'gad7-6-1': '几天',
+                'gad7-6-2': '超过一半的天数',
+                'gad7-6-3': '几乎每天'
+              }
+            }
+          }
+        },
+        {
+          id: 'gad7-7',
+          text: 'Feeling afraid as if something awful might happen',
+          type: 'single_choice',
+          required: true,
+          options: [
+            { id: 'gad7-7-0', text: 'Not at all', value: 0 },
+            { id: 'gad7-7-1', text: 'Several days', value: 1 },
+            { id: 'gad7-7-2', text: 'More than half the days', value: 2 },
+            { id: 'gad7-7-3', text: 'Nearly every day', value: 3 }
+          ],
+          translations: {
+            zh: {
+              text: '感到害怕，好像会发生什么可怕的事情',
+              options: {
+                'gad7-7-0': '完全没有',
+                'gad7-7-1': '几天',
+                'gad7-7-2': '超过一半的天数',
+                'gad7-7-3': '几乎每天'
+              }
+            }
+          }
         }
       ],
       scoringRules: [
@@ -161,7 +450,7 @@ export class QuestionBankManager {
           name: 'GAD-7 Total Score',
           description: 'Sum of all GAD-7 item scores',
           calculation: 'sum',
-          questionIds: ['gad7-1'],
+          questionIds: ['gad7-1', 'gad7-2', 'gad7-3', 'gad7-4', 'gad7-5', 'gad7-6', 'gad7-7'],
           ranges: [
             { min: 0, max: 4, label: 'Minimal', description: 'Minimal anxiety symptoms', riskLevel: 'low' },
             { min: 5, max: 9, label: 'Mild', description: 'Mild anxiety symptoms', riskLevel: 'low' },
