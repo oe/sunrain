@@ -384,4 +384,40 @@ export interface IAssessmentTranslations {
   actions: {
     viewDetails: string;
   };
+
+  /** 问卷信息模态框 */
+  questionnaireInfo: {
+    description: string;
+    purpose: string;
+    whatToExpect: string;
+    professionalBackground: string;
+    tags: string;
+    questions: string;
+    minutes: string;
+    timeEstimate: {
+      lessThanMinute: string;
+      oneMinute: string;
+      minutes: string;
+    };
+    difficulty: {
+      beginner: string;
+      intermediate: string;
+      advanced: string;
+    };
+    steps: {
+      step1: string;
+      step2: string;
+      step3: string;
+    };
+    validated: string;
+    mentalHealthAssessment: string;
+    purposeDescription: string;
+    validatedDescription: string;
+    privacy: {
+      title: string;
+      message: string;
+    };
+    startAssessment: string;
+    starting: string;
+  };
 }

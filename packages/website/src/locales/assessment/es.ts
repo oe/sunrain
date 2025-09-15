@@ -309,6 +309,42 @@ export const assessmentEn: IAssessmentTranslations = {
   /** 操作 */
   actions: {
     viewDetails: 'View Details'
+  },
+
+  /** 问卷信息模态框 */
+  questionnaireInfo: {
+    description: 'Descripción',
+    purpose: 'Propósito',
+    whatToExpect: 'Qué Esperar',
+    professionalBackground: 'Antecedentes Profesionales',
+    tags: 'Etiquetas',
+    questions: 'Preguntas',
+    minutes: 'Minutos',
+    timeEstimate: {
+      lessThanMinute: 'Menos de 1 minuto',
+      oneMinute: '1 minuto',
+      minutes: '{minutes} minutos',
+    },
+    difficulty: {
+      beginner: 'Principiante',
+      intermediate: 'Intermedio',
+      advanced: 'Avanzado',
+    },
+    steps: {
+      step1: 'Responde {count} preguntas honestamente (toma aproximadamente {time} minutos)',
+      step2: 'Tus respuestas serán analizadas usando métodos de puntuación validados',
+      step3: 'Recibe resultados y recomendaciones personalizadas',
+    },
+    validated: 'Evaluación Clínicamente Validada',
+    mentalHealthAssessment: 'Evaluación de Salud Mental',
+    purposeDescription: 'Esta evaluación ayuda a identificar síntomas y proporciona información que puede guiar tu comprensión de tu salud mental.',
+    validatedDescription: 'Esta evaluación utiliza métodos y sistemas de puntuación científicamente validados.',
+    privacy: {
+      title: 'Privacidad y Seguridad de Datos',
+      message: 'Tus respuestas se almacenan localmente en tu dispositivo y no se comparten con terceros.',
+    },
+    startAssessment: 'Comenzar Evaluación',
+    starting: 'Iniciando...',
   }
 };
 

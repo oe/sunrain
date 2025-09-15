@@ -308,6 +308,42 @@ export const assessmentAr: IAssessmentTranslations = {
   /** 操作 */
   actions: {
     viewDetails: 'عرض التفاصيل'
+  },
+
+  /** 问卷信息模态框 */
+  questionnaireInfo: {
+    description: 'الوصف',
+    purpose: 'الغرض',
+    whatToExpect: 'ما يمكن توقعه',
+    professionalBackground: 'الخلفية المهنية',
+    tags: 'العلامات',
+    questions: 'الأسئلة',
+    minutes: 'دقائق',
+    timeEstimate: {
+      lessThanMinute: 'أقل من دقيقة',
+      oneMinute: 'دقيقة واحدة',
+      minutes: '{minutes} دقائق',
+    },
+    difficulty: {
+      beginner: 'مبتدئ',
+      intermediate: 'متوسط',
+      advanced: 'متقدم',
+    },
+    steps: {
+      step1: 'أجب على {count} أسئلة بصدق (يستغرق حوالي {time} دقائق)',
+      step2: 'سيتم تحليل إجاباتك باستخدام طرق تسجيل معتمدة',
+      step3: 'احصل على نتائج وتوصيات شخصية',
+    },
+    validated: 'تقييم معتمد سريرياً',
+    mentalHealthAssessment: 'تقييم الصحة النفسية',
+    purposeDescription: 'يساعد هذا التقييم في تحديد الأعراض وتقديم رؤى يمكن أن توجه فهمك لحالتك النفسية.',
+    validatedDescription: 'يستخدم هذا التقييم طرق وأنظمة تسجيل معتمدة علمياً.',
+    privacy: {
+      title: 'الخصوصية وأمان البيانات',
+      message: 'يتم تخزين إجاباتك محلياً على جهازك ولا تتم مشاركتها مع أطراف ثالثة.',
+    },
+    startAssessment: 'بدء التقييم',
+    starting: 'جاري البدء...',
   }
 };
 
