@@ -68,14 +68,7 @@ export class CSRTranslationManager {
       ...config,
     };
 
-    // 设置缓存清理定时器
-    if (this.config.cache.enabled) {
-      if (typeof window !== "undefined") {
-        this.setupCacheCleanup();
-      }
-    }
-
-    // 不再自动初始化预加载，改为按需调用
+    // 缓存清理改为按需进行，不使用定时器
   }
 
   /**
@@ -390,20 +383,7 @@ export class CSRTranslationManager {
    */
   private getCachedTranslation(cacheKey: string): CSRTranslations | null {
     const entry = this.translationCache.get(cacheKey);
-    if (!entry) return null;
-
-    // 检查是否过期
-    const now = Date.now();
-    if (now - entry.timestamp > this.config.cache.ttl) {
-      this.translationCache.delete(cacheKey);
-      return null;
-    }
-
-    // 更新访问信息
-    entry.accessCount++;
-    entry.lastAccessed = now;
-
-    return entry.translations;
+    return entry ? entry.translations : null;
   }
 
   /**
@@ -677,33 +657,6 @@ export class CSRTranslationManager {
     }
   }
 
-  /**
-   * 设置缓存清理定时器
-   */
-  private setupCacheCleanup(): void {
-    // 每10分钟清理一次过期缓存
-    window.setInterval(() => {
-      const now = Date.now();
-      const expiredKeys: string[] = [];
-
-      for (const [key, entry] of this.translationCache.entries()) {
-        if (now - entry.timestamp > this.config.cache.ttl) {
-          expiredKeys.push(key);
-        }
-      }
-
-      for (const key of expiredKeys) {
-        this.translationCache.delete(key);
-        this.loadStates.delete(key);
-      }
-
-      if (expiredKeys.length > 0 && process.env.NODE_ENV === "development") {
-        console.log(
-          `Cleaned up ${expiredKeys.length} expired CSR translation cache entries`
-        );
-      }
-    }, 10 * 60 * 1000); // 10分钟
-  }
 
 
   /**
@@ -743,6 +696,7 @@ export class CSRTranslationManager {
       entries,
     };
   }
+
 
   /**
    * 销毁管理器实例

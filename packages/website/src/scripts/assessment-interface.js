@@ -308,6 +308,9 @@ export class AssessmentInterface {
   }
 
   async completeAssessment() {
+    // Stop timer when assessment is completed
+    this.stopTimer();
+    
     // Hide interface, show completion
     document.getElementById('assessment-interface').classList.add('hidden');
     document.getElementById('completion-state').classList.remove('hidden');
@@ -354,6 +357,7 @@ export class AssessmentInterface {
   }
 
   exitAssessment() {
+    this.stopTimer();
     this.assessmentEngine.pauseAssessment(this.session.id);
     window.location.href = '/assessment/';
   }
@@ -366,6 +370,13 @@ export class AssessmentInterface {
       document.getElementById('time-spent').textContent =
         `用时: ${minutes}:${seconds.toString().padStart(2, '0')}`;
     }, 1000);
+  }
+
+  stopTimer() {
+    if (this.timeInterval) {
+      clearInterval(this.timeInterval);
+      this.timeInterval = null;
+    }
   }
 
   showError(message) {

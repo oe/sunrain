@@ -22,9 +22,7 @@ export class AssessmentEngine {
   private sessions: Map<string, AssessmentSession> = new Map();
   private sessionTimers: Map<string, number> = new Map();
   private reminderTimers: Map<string, number> = new Map();
-  private autoSaveInterval: number = 30000; // 30 seconds
   private sessionTimeout: number = 1800000; // 30 minutes
-  private periodicSaveStarted = false;
   private isClientSide: boolean = false;
 
   constructor() {
@@ -35,17 +33,8 @@ export class AssessmentEngine {
       this.loadSessionsFromStorage().catch(error => {
         console.error('Failed to load sessions during initialization:', error);
       });
-      
-      // 启动会话健康检查
-      // this.startSessionHealthCheck();
     }
   }
-
-
-
-
-
-
 
   /**
    * Check if we're running in a client-side environment
@@ -56,16 +45,6 @@ export class AssessmentEngine {
       typeof localStorage !== "undefined" &&
       typeof document !== "undefined"
     );
-  }
-
-  /**
-   * Initialize periodic save (call this when first using the engine in browser)
-   */
-  private ensurePeriodicSaveStarted(): void {
-    if (!this.periodicSaveStarted && this.isClientSide) {
-      this.startPeriodicSave();
-      this.periodicSaveStarted = true;
-    }
   }
 
   /**
@@ -107,7 +86,6 @@ export class AssessmentEngine {
         culturalContext,
       });
 
-      this.ensurePeriodicSaveStarted();
 
       // 确保问题库已初始化
       if (!isQuestionBankInitialized()) {
@@ -206,7 +184,6 @@ export class AssessmentEngine {
         sessionId
       );
 
-      this.ensurePeriodicSaveStarted();
 
       const session = this.sessions.get(sessionId);
       if (!session) {
@@ -355,6 +332,9 @@ export class AssessmentEngine {
     // Move to next question
     session.currentQuestionIndex++;
     session.lastActivityAt = new Date();
+    
+    // Save session after each answer submission
+    this.saveSessionsToStorage();
 
     const assessmentType = questionBankAdapter.getAssessmentType(
       session.assessmentTypeId
@@ -745,41 +725,6 @@ export class AssessmentEngine {
   /**
    * Update session time spent
    */
-  private updateSessionTime(sessionId: string): void {
-    const session = this.sessions.get(sessionId);
-    if (!session || session.status !== "active") return;
-
-    const now = new Date();
-    const timeDiff = now.getTime() - session.lastActivityAt.getTime();
-    session.timeSpent += timeDiff;
-    session.lastActivityAt = now;
-  }
-
-  /**
-   * Start periodic auto-save
-   */
-  private startPeriodicSave(): void {
-    if (!this.isClientSide) {
-      return;
-    }
-
-    try {
-      window.setInterval(() => {
-        // Double-check client-side environment in the interval callback
-        if (!this.isClientSide) {
-          return;
-        }
-
-        // Update time spent for all active sessions
-        for (const sessionId of this.sessions.keys()) {
-          this.updateSessionTime(sessionId);
-        }
-        this.saveSessionsToStorage();
-      }, this.autoSaveInterval);
-    } catch (error) {
-      console.error("Failed to start periodic save:", error);
-    }
-  }
 
 
   /**
@@ -1132,6 +1077,15 @@ export const assessmentEngine = {
 
   cleanup() {
     return this.getInstance().cleanup();
+  },
+
+  /**
+   * 清理资源，包括停止定时器
+   */
+  destroy(): void {
+    this.sessions.clear();
+    this.sessionTimers.clear();
+    this.reminderTimers.clear();
   },
 
 };
