@@ -1,7 +1,7 @@
 ---
 // Assessment list and category display page
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import { getSSGAssessmentData } from '@/lib/assessment/SSGAssessmentData';
+// import { getSSGAssessmentData } from '@/lib/assessment/SSGAssessmentData';
 import { getLocale } from 'astro-i18n-aut';
 import { createSSGTranslations } from '@/i18n/utils';
 import ContinueAssessmentWidget from '@/components/assessment/ContinueAssessmentWidget.astro';
@@ -11,9 +11,8 @@ import type { Language } from '@sunrain/shared';
 const currentLang = getLocale(Astro.url) as Language;
 const t = createSSGTranslations(currentLang, 'assessment');
 
-// 获取 SSG 数据
 // 获取 SSG 数据（用于传递给子组件）
-const ssgData = await getSSGAssessmentData(currentLang);
+// const ssgData = await getSSGAssessmentData(currentLang);
 ---
 
 <BaseLayout title={t('list.title')}>

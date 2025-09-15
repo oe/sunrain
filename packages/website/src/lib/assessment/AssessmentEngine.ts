@@ -4,6 +4,7 @@ import type {
   Question,
 } from "@/types/assessment";
 import { questionBankAdapter } from "@/lib/assessment/QuestionBankAdapter";
+import { initializeQuestionBank, isQuestionBankInitialized } from "@/lib/assessment/initializeQuestionBank";
 import {
   AssessmentError,
   AssessmentErrorType,
@@ -25,7 +26,6 @@ export class AssessmentEngine {
   private sessionTimeout: number = 1800000; // 30 minutes
   private periodicSaveStarted = false;
   private isClientSide: boolean = false;
-  private periodicSaveTimer: number | null = null;
 
   constructor() {
     this.isClientSide = this.checkClientSideEnvironment();
@@ -71,11 +71,11 @@ export class AssessmentEngine {
   /**
    * Start a new assessment session
    */
-  startAssessment(
+  async startAssessment(
     assessmentTypeId: string,
     language: string = "en",
     culturalContext?: string
-  ): AssessmentSession | null {
+  ): Promise<AssessmentSession | null> {
     try {
       if (!this.isClientSide) {
         const error = AssessmentErrorFactory.createSessionError(
@@ -109,8 +109,21 @@ export class AssessmentEngine {
 
       this.ensurePeriodicSaveStarted();
 
+      // 确保问题库已初始化
+      if (!isQuestionBankInitialized()) {
+        await initializeQuestionBank();
+      }
+
+      // 确保 questionBankAdapter 也已初始化
+      if (!questionBankAdapter.getAssessmentTypes().length) {
+        await questionBankAdapter.initialize();
+      }
+
+      
       const assessmentType =
         questionBankAdapter.getAssessmentType(assessmentTypeId);
+      
+      
       if (!assessmentType) {
         const error = AssessmentErrorFactory.createSessionError(
           AssessmentErrorType.ASSESSMENT_TYPE_NOT_FOUND,
@@ -268,7 +281,7 @@ export class AssessmentEngine {
   /**
    * Get current question for a session
    */
-  getCurrentQuestion(sessionId: string): Question | null {
+  async getCurrentQuestion(sessionId: string): Promise<Question | null> {
     const session = this.sessions.get(sessionId);
     if (!session) return null;
 
@@ -277,7 +290,7 @@ export class AssessmentEngine {
     if (!baseAssessmentType) return null;
 
     // Then get localized version if needed
-    const assessmentType = questionBankAdapter.getLocalizedAssessmentType(
+    const assessmentType = await questionBankAdapter.getLocalizedAssessmentType(
       session.assessmentTypeId,
       session.language as any
     );
@@ -315,7 +328,7 @@ export class AssessmentEngine {
       return { success: false };
     }
 
-    const currentQuestion = this.getCurrentQuestion(sessionId);
+    const currentQuestion = await this.getCurrentQuestion(sessionId);
     if (!currentQuestion) {
       return { success: false };
     }
@@ -403,7 +416,7 @@ export class AssessmentEngine {
     }
 
     // Get next question
-    const nextQuestion = this.getCurrentQuestion(sessionId);
+    const nextQuestion = await this.getCurrentQuestion(sessionId);
     this.saveSessionsToStorage();
 
     return {
@@ -416,7 +429,7 @@ export class AssessmentEngine {
   /**
    * Go back to previous question
    */
-  goToPreviousQuestion(sessionId: string): Question | null {
+  async goToPreviousQuestion(sessionId: string): Promise<Question | null> {
     const session = this.sessions.get(sessionId);
     if (!session || session.status !== "active") return null;
 
@@ -426,13 +439,13 @@ export class AssessmentEngine {
       this.saveSessionsToStorage();
     }
 
-    return this.getCurrentQuestion(sessionId);
+    return await this.getCurrentQuestion(sessionId);
   }
 
   /**
    * Jump to a specific question (for review/editing)
    */
-  goToQuestion(sessionId: string, questionIndex: number): Question | null {
+  async goToQuestion(sessionId: string, questionIndex: number): Promise<Question | null> {
     const session = this.sessions.get(sessionId);
     if (!session) return null;
 
@@ -451,7 +464,7 @@ export class AssessmentEngine {
     session.lastActivityAt = new Date();
     this.saveSessionsToStorage();
 
-    return this.getCurrentQuestion(sessionId);
+    return await this.getCurrentQuestion(sessionId);
   }
 
   /**
@@ -751,7 +764,7 @@ export class AssessmentEngine {
     }
 
     try {
-      this.periodicSaveTimer = window.setInterval(() => {
+      window.setInterval(() => {
         // Double-check client-side environment in the interval callback
         if (!this.isClientSide) {
           return;
@@ -768,16 +781,6 @@ export class AssessmentEngine {
     }
   }
 
-  /**
-   * Stop periodic save timer
-   */
-  // private stopPeriodicSave(): void {
-  //   if (this.periodicSaveTimer !== null) {
-  //     clearInterval(this.periodicSaveTimer);
-  //     this.periodicSaveTimer = null;
-  //     this.periodicSaveStarted = false;
-  //   }
-  // }
 
   /**
    * Save sessions to localStorage
@@ -1043,12 +1046,12 @@ export const assessmentEngine = {
   },
 
   // Proxy all public methods to the singleton instance
-  startAssessment(
+  async startAssessment(
     assessmentTypeId: string,
     language: string = "en",
     culturalContext?: string
   ) {
-    return this.getInstance().startAssessment(
+    return await this.getInstance().startAssessment(
       assessmentTypeId,
       language,
       culturalContext
@@ -1063,20 +1066,20 @@ export const assessmentEngine = {
     return this.getInstance().pauseAssessment(sessionId);
   },
 
-  getCurrentQuestion(sessionId: string) {
-    return this.getInstance().getCurrentQuestion(sessionId);
+  async getCurrentQuestion(sessionId: string) {
+    return await this.getInstance().getCurrentQuestion(sessionId);
   },
 
   async submitAnswer(sessionId: string, answer: any) {
     return await this.getInstance().submitAnswer(sessionId, answer);
   },
 
-  goToPreviousQuestion(sessionId: string) {
-    return this.getInstance().goToPreviousQuestion(sessionId);
+  async goToPreviousQuestion(sessionId: string) {
+    return await this.getInstance().goToPreviousQuestion(sessionId);
   },
 
-  goToQuestion(sessionId: string, questionIndex: number) {
-    return this.getInstance().goToQuestion(sessionId, questionIndex);
+  async goToQuestion(sessionId: string, questionIndex: number) {
+    return await this.getInstance().goToQuestion(sessionId, questionIndex);
   },
 
   getProgress(sessionId: string) {

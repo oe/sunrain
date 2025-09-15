@@ -14,11 +14,20 @@ export async function getStaticPaths() {
   
   // Get all available assessment types
   const assessmentTypes = questionBankAdapter.getAssessmentTypes();
+  
+  console.log('🔍 getStaticPaths - assessmentTypes:', assessmentTypes.length);
+  console.log('🔍 getStaticPaths - assessment IDs:', assessmentTypes.map(a => a.id));
 
-  return assessmentTypes.map((assessment) => ({
-    params: { id: assessment.id },
-    props: { assessment }
-  }));
+  return assessmentTypes.map((assessment) => {
+    if (!assessment.id) {
+      console.error('❌ Assessment without ID found:', assessment);
+      throw new Error(`Assessment missing ID: ${JSON.stringify(assessment)}`);
+    }
+    return {
+      params: { id: assessment.id },
+      props: { assessment }
+    };
+  });
 }
 
 const { assessment } = Astro.props;

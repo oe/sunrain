@@ -96,7 +96,15 @@ export class QuestionnaireManager {
    * 获取所有本地化的问卷
    */
   async getAllLocalizedQuestionnaires(language: Language): Promise<Questionnaire[]> {
+    // 确保管理器已初始化
+    if (this.questionnaires.size === 0) {
+      console.log('🔍 QuestionnaireManager: No questionnaires loaded, initializing...');
+      await this.initialize();
+    }
+    
     const questionnaires = this.getQuestionnaires();
+    console.log('🔍 QuestionnaireManager: Found questionnaires:', questionnaires.length);
+    
     const localizedQuestionnaires: Questionnaire[] = [];
 
     for (const questionnaire of questionnaires) {

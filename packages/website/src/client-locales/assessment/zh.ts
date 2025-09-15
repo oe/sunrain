@@ -341,6 +341,55 @@ export const assessmentZh: IAssessmentTranslations = {
       mediumAverage: '👀 建议定期监测心理健康状况'
     }
   },
+
+  trends: {
+    title: '趋势分析',
+    subtitle: '分析你的心理健康趋势和发展模式',
+    loading: '正在加载趋势数据...',
+    timeRange: {
+      title: '时间范围',
+      last30Days: '最近30天',
+      last3Months: '最近3个月',
+      lastYear: '最近一年',
+      allTime: '全部时间'
+    },
+    charts: {
+      overallTrend: '整体趋势',
+      frequency: '评估频率',
+      riskTrend: '风险水平变化',
+      categoryPerformance: '类别表现'
+    },
+    insights: {
+      title: '趋势洞察',
+      positive: '积极趋势',
+      warning: '需要关注',
+      info: '稳定'
+    },
+    statistics: {
+      improvementTrend: '改善趋势',
+      stableDimensions: '稳定维度',
+      attentionNeeded: '需要关注'
+    },
+    noData: {
+      title: '无趋势数据',
+      message: '你需要完成至少2次评估才能查看趋势分析',
+      startAssessment: '开始评估'
+    },
+    actions: {
+      exportReport: '导出趋势报告',
+      newAssessment: '新评估'
+    }
+  },
+
+  scores: {
+    total_score: '总分',
+    depression: '抑郁分数',
+    anxiety: '焦虑分数',
+    stress: '压力分数',
+    phq9_total: 'PHQ-9总分',
+    gad7_total: 'GAD-7总分',
+    stress_total: '压力量表总分'
+  },
 };
 
 export default assessmentZh;

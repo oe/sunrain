@@ -19,7 +19,7 @@ interface FilterState {
 }
 
 function AssessmentHistoryClient() {
-  const { t, isLoading: translationsLoading } = useAssessmentTranslations();
+  const { t, tString, isLoading: translationsLoading } = useAssessmentTranslations();
   const [allResults, setAllResults] = useState<AssessmentResult[]>([]);
   const [filteredResults, setFilteredResults] = useState<AssessmentResult[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -139,19 +139,19 @@ function AssessmentHistoryClient() {
     try {
       if (navigator.share) {
         await navigator.share({
-          title: t('results.actions.share'),
-          text: t('results.actions.share'),
+          title: tString('results.actions.share'),
+          text: tString('results.actions.share'),
           url: url
         });
       } else {
         await navigator.clipboard.writeText(url);
-        setShowMessage({ text: t('common.success'), type: 'success' });
+        setShowMessage({ text: tString('common.success'), type: 'success' });
       }
     } catch (error) {
       if (process.env.NODE_ENV === 'development') {
         console.error('Share failed:', error);
       }
-      setShowMessage({ text: t('common.error'), type: 'error' });
+      setShowMessage({ text: tString('common.error'), type: 'error' });
     }
   }, [t]);
 
@@ -165,9 +165,9 @@ function AssessmentHistoryClient() {
       const success = resultsAnalyzer.deleteResult(deleteResultId);
       if (success) {
         loadResults();
-        setShowMessage({ text: t('common.success'), type: 'success' });
+        setShowMessage({ text: tString('common.success'), type: 'success' });
       } else {
-        setShowMessage({ text: t('common.error'), type: 'error' });
+        setShowMessage({ text: tString('common.error'), type: 'error' });
       }
     }
     setShowDeleteModal(false);
@@ -193,12 +193,13 @@ function AssessmentHistoryClient() {
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
 
-      setShowMessage({ text: t('common.success'), type: 'success' });
+      const successMessage = t('common.success');
+      setShowMessage({ text: Array.isArray(successMessage) ? successMessage.join(', ') : successMessage, type: 'success' });
     } catch (error) {
       if (process.env.NODE_ENV === 'development') {
         console.error('Export failed:', error);
       }
-      setShowMessage({ text: t('common.error'), type: 'error' });
+      setShowMessage({ text: tString('common.error'), type: 'error' });
     }
   }, [t]);
 
@@ -257,7 +258,7 @@ function AssessmentHistoryClient() {
       <AssessmentStatistics
         totalResults={statistics.totalResults}
         averageTime={statistics.averageTime}
-        lastAssessment={statistics.lastAssessment}
+        lastAssessment={Array.isArray(statistics.lastAssessment) ? statistics.lastAssessment.join(', ') : statistics.lastAssessment}
       />
 
       {/* Filters */}

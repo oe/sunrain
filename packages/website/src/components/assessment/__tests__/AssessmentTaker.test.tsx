@@ -188,7 +188,7 @@ describe('AssessmentTaker', () => {
     const { assessmentEngine } = await import('@/lib/assessment/AssessmentEngine');
     const { questionBankManager } = await import('@/lib/assessment/QuestionBankManager');
     
-    vi.mocked(assessmentEngine.startAssessment).mockReturnValue(mockSession);
+    vi.mocked(assessmentEngine.startAssessment).mockResolvedValue(mockSession);
     vi.mocked(questionBankManager.getAssessmentType).mockReturnValue(mockAssessmentData);
 
     render(
@@ -209,7 +209,7 @@ describe('AssessmentTaker', () => {
     const { assessmentEngine } = await import('@/lib/assessment/AssessmentEngine');
     const { questionBankManager } = await import('@/lib/assessment/QuestionBankManager');
     
-    vi.mocked(assessmentEngine.startAssessment).mockReturnValue(mockSession);
+    vi.mocked(assessmentEngine.startAssessment).mockResolvedValue(mockSession);
     vi.mocked(questionBankManager.getAssessmentType).mockReturnValue(mockAssessmentData);
 
     render(
@@ -233,7 +233,7 @@ describe('AssessmentTaker', () => {
     const { assessmentEngine } = await import('@/lib/assessment/AssessmentEngine');
     const { questionBankManager } = await import('@/lib/assessment/QuestionBankManager');
     
-    vi.mocked(assessmentEngine.startAssessment).mockReturnValue(mockSession);
+    vi.mocked(assessmentEngine.startAssessment).mockResolvedValue(mockSession);
     vi.mocked(questionBankManager.getAssessmentType).mockReturnValue(mockAssessmentData);
 
     render(
@@ -261,7 +261,7 @@ describe('AssessmentTaker', () => {
     const { assessmentEngine } = await import('@/lib/assessment/AssessmentEngine');
     const { questionBankManager } = await import('@/lib/assessment/QuestionBankManager');
     
-    vi.mocked(assessmentEngine.startAssessment).mockReturnValue(mockSession);
+    vi.mocked(assessmentEngine.startAssessment).mockResolvedValue(mockSession);
     vi.mocked(questionBankManager.getAssessmentType).mockReturnValue(mockAssessmentData);
 
     render(
@@ -291,7 +291,7 @@ describe('AssessmentTaker', () => {
     const { assessmentEngine } = await import('@/lib/assessment/AssessmentEngine');
     const { questionBankManager } = await import('@/lib/assessment/QuestionBankManager');
     
-    vi.mocked(assessmentEngine.startAssessment).mockReturnValue(mockSession);
+    vi.mocked(assessmentEngine.startAssessment).mockResolvedValue(mockSession);
     vi.mocked(assessmentEngine.submitAnswer).mockResolvedValue({ success: true, completed: false });
     vi.mocked(questionBankManager.getAssessmentType).mockReturnValue(mockAssessmentData);
 
@@ -327,7 +327,7 @@ describe('AssessmentTaker', () => {
     const { assessmentEngine } = await import('@/lib/assessment/AssessmentEngine');
     const { questionBankManager } = await import('@/lib/assessment/QuestionBankManager');
     
-    vi.mocked(assessmentEngine.startAssessment).mockReturnValue(mockSession);
+    vi.mocked(assessmentEngine.startAssessment).mockResolvedValue(mockSession);
     vi.mocked(assessmentEngine.submitAnswer).mockResolvedValue({ success: true, completed: true });
     vi.mocked(questionBankManager.getAssessmentType).mockReturnValue(mockAssessmentData);
 
@@ -362,7 +362,7 @@ describe('AssessmentTaker', () => {
     const { assessmentEngine } = await import('@/lib/assessment/AssessmentEngine');
     const { questionBankManager } = await import('@/lib/assessment/QuestionBankManager');
     
-    vi.mocked(assessmentEngine.startAssessment).mockReturnValue(mockSession);
+    vi.mocked(assessmentEngine.startAssessment).mockResolvedValue(mockSession);
     vi.mocked(questionBankManager.getAssessmentType).mockReturnValue(mockAssessmentData);
 
     render(

@@ -11,7 +11,7 @@ import ErrorHandler from './ErrorHandler';
 
 
 export default function ResultsDisplay() {
-  const { t, isLoading: translationsLoading } = useAssessmentTranslations();
+  const { t, tString, isLoading: translationsLoading } = useAssessmentTranslations();
   const [resultId, setResultId] = useState<string | null>(null);
   const [result, setResult] = useState<AssessmentResult | null>(null);
   const [assessmentType, setAssessmentType] = useState<AssessmentType | null>(null);
@@ -102,7 +102,7 @@ export default function ResultsDisplay() {
         setResult(loadedResult);
 
         // Get localized assessment type information
-        const assessmentTypeData = questionBankAdapter.getLocalizedAssessmentType(
+        const assessmentTypeData = await questionBankAdapter.getLocalizedAssessmentType(
           loadedResult.assessmentTypeId,
           loadedResult.language as any
         );
@@ -121,7 +121,7 @@ export default function ResultsDisplay() {
           setResult(loadedResult);
 
           // Get localized assessment type information
-          const assessmentTypeData = questionBankAdapter.getLocalizedAssessmentType(
+          const assessmentTypeData = await questionBankAdapter.getLocalizedAssessmentType(
             loadedResult.assessmentTypeId,
             loadedResult.language as any
           );
@@ -148,7 +148,7 @@ export default function ResultsDisplay() {
         setResult(loadedResult);
 
         // Get localized assessment type information
-        const assessmentTypeData = questionBankAdapter.getLocalizedAssessmentType(
+        const assessmentTypeData = await questionBankAdapter.getLocalizedAssessmentType(
           loadedResult.assessmentTypeId,
           loadedResult.language as any
         );
@@ -202,7 +202,7 @@ export default function ResultsDisplay() {
       window.history.replaceState(null, '', `/assessment/results/#${loadedResult.id}`);
 
       // Get localized assessment type information
-      const assessmentTypeData = questionBankAdapter.getLocalizedAssessmentType(
+      const assessmentTypeData = await questionBankAdapter.getLocalizedAssessmentType(
         loadedResult.assessmentTypeId,
         loadedResult.language as any
       );
@@ -227,13 +227,17 @@ export default function ResultsDisplay() {
     if (riskLevel) {
       const riskRecommendations = t(`recommendations.riskBased.${riskLevel}`);
       if (riskRecommendations && riskRecommendations !== `recommendations.riskBased.${riskLevel}`) {
-        try {
-          const parsed = JSON.parse(riskRecommendations);
-          if (Array.isArray(parsed)) {
-            recommendations.push(...parsed);
+        if (Array.isArray(riskRecommendations)) {
+          recommendations.push(...riskRecommendations);
+        } else if (typeof riskRecommendations === 'string') {
+          try {
+            const parsed = JSON.parse(riskRecommendations);
+            if (Array.isArray(parsed)) {
+              recommendations.push(...parsed);
+            }
+          } catch {
+            recommendations.push(riskRecommendations);
           }
-        } catch {
-          recommendations.push(riskRecommendations);
         }
       }
     }
@@ -241,13 +245,17 @@ export default function ResultsDisplay() {
     // Get general recommendations
     const generalRecommendations = t('recommendations.general');
     if (generalRecommendations && generalRecommendations !== 'recommendations.general') {
-      try {
-        const parsed = JSON.parse(generalRecommendations);
-        if (Array.isArray(parsed)) {
-          recommendations.push(...parsed);
+      if (Array.isArray(generalRecommendations)) {
+        recommendations.push(...generalRecommendations);
+      } else if (typeof generalRecommendations === 'string') {
+        try {
+          const parsed = JSON.parse(generalRecommendations);
+          if (Array.isArray(parsed)) {
+            recommendations.push(...parsed);
+          }
+        } catch {
+          recommendations.push(generalRecommendations);
         }
-      } catch {
-        recommendations.push(generalRecommendations);
       }
     }
 
@@ -259,12 +267,12 @@ export default function ResultsDisplay() {
     if (scoreVariance < 2) {
       const message = t('recommendations.patterns.stable');
       if (message && message !== 'recommendations.patterns.stable') {
-        recommendations.push(message);
+        recommendations.push(Array.isArray(message) ? message.join(', ') : message);
       }
     } else if (scoreVariance > 10) {
       const message = t('recommendations.patterns.variable');
       if (message && message !== 'recommendations.patterns.variable') {
-        recommendations.push(message);
+        recommendations.push(Array.isArray(message) ? message.join(', ') : message);
       }
     }
 
@@ -272,19 +280,19 @@ export default function ResultsDisplay() {
     if (hasExtremeScores) {
       const message = t('recommendations.patterns.extreme');
       if (message && message !== 'recommendations.patterns.extreme') {
-        recommendations.push(message);
+        recommendations.push(Array.isArray(message) ? message.join(', ') : message);
       }
     }
 
     if (averageScore >= 15) {
       const message = t('recommendations.patterns.highAverage');
       if (message && message !== 'recommendations.patterns.highAverage') {
-        recommendations.push(message);
+        recommendations.push(Array.isArray(message) ? message.join(', ') : message);
       }
     } else if (averageScore >= 10) {
       const message = t('recommendations.patterns.mediumAverage');
       if (message && message !== 'recommendations.patterns.mediumAverage') {
-        recommendations.push(message);
+        recommendations.push(Array.isArray(message) ? message.join(', ') : message);
       }
     }
 
@@ -414,7 +422,8 @@ export default function ResultsDisplay() {
       'ASSESSMENT_TYPE_NOT_FOUND': 'errors.noData',
       'LOAD_FAILED': 'results.loading'
     };
-    return t(errorMap[errorCode] || 'errors.title');
+    const message = t(errorMap[errorCode] || 'errors.title');
+    return Array.isArray(message) ? message.join(', ') : message;
   };
 
   if (error) {
@@ -427,7 +436,7 @@ export default function ResultsDisplay() {
               loadResult(resultId);
             }
           }}
-          t={t}
+          t={tString}
         />
         <div className="mt-6 space-x-4">
           <button
@@ -505,7 +514,9 @@ export default function ResultsDisplay() {
               {Object.entries(result.scores).map(([scoreId, scoreData]) => (
                 <div key={scoreId} className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
                   <div>
-                    <h4 className="font-medium text-gray-900 dark:text-white">{scoreId}</h4>
+                    <h4 className="font-medium text-gray-900 dark:text-white">
+                      {t(`scores.${scoreId}`) !== `scores.${scoreId}` ? t(`scores.${scoreId}`) : scoreId}
+                    </h4>
                     <p className="text-sm text-gray-600 dark:text-gray-300">{(scoreData as any).description}</p>
                   </div>
                   <div className="text-right">

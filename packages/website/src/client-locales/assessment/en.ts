@@ -281,6 +281,55 @@ export const assessmentEn: IAssessmentTranslations = {
     noActiveSessionsMessage: "You don't have any incomplete assessments. Start a new one to continue your mental health journey.",
   },
 
+  trends: {
+    title: "Trend Analysis",
+    subtitle: "Analyze your mental health trends and development patterns",
+    loading: "Loading trend data...",
+    timeRange: {
+      title: "Time Range",
+      last30Days: "Last 30 days",
+      last3Months: "Last 3 months",
+      lastYear: "Last year",
+      allTime: "All time"
+    },
+    charts: {
+      overallTrend: "Overall Trend",
+      frequency: "Assessment Frequency",
+      riskTrend: "Risk Level Changes",
+      categoryPerformance: "Category Performance"
+    },
+    insights: {
+      title: "Trend Insights",
+      positive: "Positive Trend",
+      warning: "Needs Attention",
+      info: "Stable"
+    },
+    statistics: {
+      improvementTrend: "Improvement Trend",
+      stableDimensions: "Stable Dimensions",
+      attentionNeeded: "Attention Needed"
+    },
+    noData: {
+      title: "No Trend Data",
+      message: "You need to complete at least 2 assessments to view trend analysis",
+      startAssessment: "Start Assessment"
+    },
+    actions: {
+      exportReport: "Export Trend Report",
+      newAssessment: "New Assessment"
+    }
+  },
+
+  scores: {
+    total_score: "Total Score",
+    depression: "Depression Score",
+    anxiety: "Anxiety Score",
+    stress: "Stress Score",
+    phq9_total: "PHQ-9 Total Score",
+    gad7_total: "GAD-7 Total Score",
+    stress_total: "Stress Scale Total Score"
+  },
+
   common: {
     loading: "Loading...",
     cancel: "Cancel",

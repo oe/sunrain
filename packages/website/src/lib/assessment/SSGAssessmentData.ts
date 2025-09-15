@@ -22,7 +22,7 @@ export async function getSSGAssessmentData(language: Language): Promise<SSGAsses
   await initializeQuestionBank();
   
   // 获取本地化的评测数据
-  const assessments = questionBankAdapter.getAllLocalizedAssessmentTypes(language);
+  const assessments = await questionBankAdapter.getAllLocalizedAssessmentTypes(language);
   const categories = [...new Set(assessments.map((a) => a.category))];
   
   // 按类别分组

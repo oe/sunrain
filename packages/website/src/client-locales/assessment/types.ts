@@ -344,4 +344,55 @@ export interface IAssessmentTranslations {
       mediumAverage: string;
     };
   };
+
+  /** 趋势分析 */
+  trends: {
+    title: string;
+    subtitle: string;
+    loading: string;
+    timeRange: {
+      title: string;
+      last30Days: string;
+      last3Months: string;
+      lastYear: string;
+      allTime: string;
+    };
+    charts: {
+      overallTrend: string;
+      frequency: string;
+      riskTrend: string;
+      categoryPerformance: string;
+    };
+    insights: {
+      title: string;
+      positive: string;
+      warning: string;
+      info: string;
+    };
+    statistics: {
+      improvementTrend: string;
+      stableDimensions: string;
+      attentionNeeded: string;
+    };
+    noData: {
+      title: string;
+      message: string;
+      startAssessment: string;
+    };
+    actions: {
+      exportReport: string;
+      newAssessment: string;
+    };
+  };
+
+  /** 分数名称 */
+  scores: {
+    total_score: string;
+    depression: string;
+    anxiety: string;
+    stress: string;
+    phq9_total: string;
+    gad7_total: string;
+    stress_total: string;
+  };
 }

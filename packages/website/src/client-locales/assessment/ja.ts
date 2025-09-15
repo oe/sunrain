@@ -348,6 +348,55 @@ export const assessmentEn: IAssessmentTranslations = {
       mediumAverage: "👀 Consider regular monitoring of mental health status"
     }
   },
+
+  trends: {
+    title: "トレンド分析",
+    subtitle: "メンタルヘルスのトレンドと発展パターンを分析",
+    loading: "トレンドデータを読み込み中...",
+    timeRange: {
+      title: "期間",
+      last30Days: "過去30日",
+      last3Months: "過去3ヶ月",
+      lastYear: "過去1年",
+      allTime: "全期間"
+    },
+    charts: {
+      overallTrend: "全体的なトレンド",
+      frequency: "評価頻度",
+      riskTrend: "リスクレベル変化",
+      categoryPerformance: "カテゴリ別パフォーマンス"
+    },
+    insights: {
+      title: "トレンドインサイト",
+      positive: "ポジティブトレンド",
+      warning: "注意が必要",
+      info: "安定"
+    },
+    statistics: {
+      improvementTrend: "改善トレンド",
+      stableDimensions: "安定した次元",
+      attentionNeeded: "注意が必要"
+    },
+    noData: {
+      title: "トレンドデータなし",
+      message: "トレンド分析を表示するには、少なくとも2つの評価を完了する必要があります",
+      startAssessment: "評価を開始"
+    },
+    actions: {
+      exportReport: "トレンドレポートをエクスポート",
+      newAssessment: "新しい評価"
+    }
+  },
+
+  scores: {
+    total_score: "総合スコア",
+    depression: "うつ病スコア",
+    anxiety: "不安スコア",
+    stress: "ストレスコア",
+    phq9_total: "PHQ-9総合スコア",
+    gad7_total: "GAD-7総合スコア",
+    stress_total: "ストレススケール総合スコア"
+  },
 };
 
 export default assessmentEn;

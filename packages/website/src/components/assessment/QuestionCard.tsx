@@ -142,7 +142,15 @@ export default memo(function QuestionCard({
               name={`question-${question.id}`}
               value={option.value}
               checked={answer === option.value}
-              onChange={(e) => handleAnswerChange(Number(e.target.value))}
+              onChange={(e) => {
+                const value = e.target.value;
+                // Handle string 'null' case
+                if (value === 'null') {
+                  handleAnswerChange(null);
+                } else {
+                  handleAnswerChange(Number(value));
+                }
+              }}
               disabled={disabled}
               className="sr-only"
             />

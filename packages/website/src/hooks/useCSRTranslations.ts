@@ -16,7 +16,8 @@ declare global {
 }
 
 interface UseCSRTranslationsReturn {
-  t: (key: string, params?: Record<string, any>) => string;
+  t: (key: string, params?: Record<string, any>) => string | string[];
+  tString: (key: string, params?: Record<string, any>) => string;
   isLoading: boolean;
 }
 
@@ -72,7 +73,7 @@ export function useCSRTranslations(
   /**
    * CSR翻译函数
    */
-  const t = useCallback((key: string, params?: Record<string, any>): string => {
+  const t = useCallback((key: string, params?: Record<string, any>): string | string[] => {
     // 严格检查客户端环境
     if (typeof window === 'undefined') {
       // 在SSG环境中静默返回，不输出警告
@@ -95,6 +96,11 @@ export function useCSRTranslations(
       return key;
     }
 
+    // 如果值是数组，直接返回
+    if (Array.isArray(value)) {
+      return value;
+    }
+
     // 参数替换
     if (params && typeof value === 'string') {
       return csrManager.current.formatMessage(value, params);
@@ -103,8 +109,15 @@ export function useCSRTranslations(
     return value;
   }, [translations, namespace, language]);
 
+  // 创建一个只返回字符串的翻译函数
+  const tString = useCallback((key: string, params?: Record<string, any>): string => {
+    const result = t(key, params);
+    return Array.isArray(result) ? result.join(', ') : result;
+  }, [t]);
+
   return {
     t,
+    tString,
     isLoading
   };
 }

@@ -104,11 +104,43 @@ export class BrowserQuestionnaireLoader implements IQuestionnaireLoader {
       this.setCache(cacheKey, translation);
       return translation;
     } catch (error) {
-      // 如果翻译不存在，返回默认语言
+      // 如果翻译不存在，尝试返回默认语言
       if (language !== this.config.defaultLanguage) {
-        return this.loadQuestionnaireTranslation(id, this.config.defaultLanguage);
+        try {
+          return await this.loadQuestionnaireTranslation(id, this.config.defaultLanguage);
+        } catch (defaultError) {
+          // 如果默认语言也不存在，返回一个空的翻译对象
+          console.warn(`No translation found for questionnaire ${id} in language ${language}, using empty translation`);
+          const emptyTranslation: QuestionnaireTranslation = {
+            title: '',
+            description: '',
+            introduction: '',
+            purpose: '',
+            instructions: '',
+            disclaimer: '',
+            questions: {},
+            scoringRules: {},
+            interpretations: {}
+          };
+          this.setCache(cacheKey, emptyTranslation);
+          return emptyTranslation;
+        }
       }
-      throw new Error(`Translation not found for questionnaire ${id} in language ${language}`);
+      // 如果默认语言也不存在，返回一个空的翻译对象
+      console.warn(`No translation found for questionnaire ${id} in language ${language}, using empty translation`);
+      const emptyTranslation: QuestionnaireTranslation = {
+        title: '',
+        description: '',
+        introduction: '',
+        purpose: '',
+        instructions: '',
+        disclaimer: '',
+        questions: {},
+        scoringRules: {},
+        interpretations: {}
+      };
+      this.setCache(cacheKey, emptyTranslation);
+      return emptyTranslation;
     }
   }
 
@@ -116,18 +148,25 @@ export class BrowserQuestionnaireLoader implements IQuestionnaireLoader {
    * 加载所有问卷
    */
   async loadAllQuestionnaires(): Promise<Questionnaire[]> {
+    console.log('🔍 BrowserQuestionnaireLoader: Loading questionnaire index...');
     const index = await this.loadIndex();
+    console.log('🔍 BrowserQuestionnaireLoader: Index loaded:', index);
+    console.log('🔍 BrowserQuestionnaireLoader: Questionnaire IDs:', index.questionnaires);
+    
     const questionnaires: Questionnaire[] = [];
 
     for (const id of index.questionnaires) {
       try {
+        console.log(`🔍 BrowserQuestionnaireLoader: Loading questionnaire ${id}...`);
         const questionnaire = await this.loadQuestionnaire(id);
+        console.log(`🔍 BrowserQuestionnaireLoader: Successfully loaded ${id}:`, questionnaire.metadata);
         questionnaires.push(questionnaire);
       } catch (error) {
         console.warn(`Failed to load questionnaire ${id}:`, error);
       }
     }
 
+    console.log('🔍 BrowserQuestionnaireLoader: Total loaded questionnaires:', questionnaires.length);
     return questionnaires;
   }
 

@@ -37,9 +37,22 @@ export class NewQuestionBankManager {
     if (!this.questionnaireManager) {
       await this.initialize();
     }
+    
+    // 确保 questionnaireManager 完全初始化
+    if (!this.questionnaireManager) {
+      console.error('🔍 NewQuestionBankManager: Questionnaire manager still not initialized after initialize()');
+      return [];
+    }
 
     const questionnaires = await this.questionnaireManager.getAllLocalizedQuestionnaires('en');
-    return questionnaires.map(this.convertToAssessmentType);
+    
+    if (!questionnaires || questionnaires.length === 0) {
+      return [];
+    }
+    
+    const assessmentTypes = questionnaires.map(this.convertToAssessmentType);
+    
+    return assessmentTypes;
   }
 
   /**

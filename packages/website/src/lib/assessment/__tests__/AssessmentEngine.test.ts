@@ -148,8 +148,8 @@ describe('AssessmentEngine', () => {
   });
 
   describe('startAssessment', () => {
-    it('should start a new assessment session', () => {
-      const session = engine.startAssessment('phq-9', 'en');
+    it('should start a new assessment session', async () => {
+      const session = await engine.startAssessment('phq-9', 'en');
       
       expect(session).toBeDefined();
       expect(session?.id).toBeDefined();
@@ -160,27 +160,23 @@ describe('AssessmentEngine', () => {
       expect(session?.language).toBe('en');
     });
 
-    it('should throw error for non-existent assessment type', () => {
-      expect(() => {
-        engine.startAssessment('non-existent');
-      }).toThrow();
+    it('should throw error for non-existent assessment type', async () => {
+      await expect(engine.startAssessment('non-existent')).rejects.toThrow();
     });
 
-    it('should throw error when active session already exists', () => {
+    it('should throw error when active session already exists', async () => {
       // Start first session
-      engine.startAssessment('phq-9', 'en');
+      await engine.startAssessment('phq-9', 'en');
       
       // Try to start another session for same assessment type
-      expect(() => {
-        engine.startAssessment('phq-9', 'en');
-      }).toThrow();
+      await expect(engine.startAssessment('phq-9', 'en')).rejects.toThrow();
     });
   });
 
   describe('resumeAssessment', () => {
-    it('should resume an existing session', () => {
+    it('should resume an existing session', async () => {
       // Start a session
-      const originalSession = engine.startAssessment('phq-9', 'en');
+      const originalSession = await engine.startAssessment('phq-9', 'en');
       const sessionId = originalSession!.id;
       
       // Pause the session
@@ -210,8 +206,8 @@ describe('AssessmentEngine', () => {
   });
 
   describe('pauseAssessment', () => {
-    it('should pause an active session', () => {
-      const session = engine.startAssessment('phq-9', 'en');
+    it('should pause an active session', async () => {
+      const session = await engine.startAssessment('phq-9', 'en');
       const sessionId = session!.id;
       
       const result = engine.pauseAssessment(sessionId);
@@ -229,26 +225,26 @@ describe('AssessmentEngine', () => {
   });
 
   describe('getCurrentQuestion', () => {
-    it('should return current question for active session', () => {
-      const session = engine.startAssessment('phq-9', 'en');
+    it('should return current question for active session', async () => {
+      const session = await engine.startAssessment('phq-9', 'en');
       const sessionId = session!.id;
       
-      const question = engine.getCurrentQuestion(sessionId);
+      const question = await engine.getCurrentQuestion(sessionId);
       
       expect(question).toBeDefined();
       expect(question?.id).toBe('phq9-1');
       expect(question?.text).toBe('Little interest or pleasure in doing things');
     });
 
-    it('should return null for non-existent session', () => {
-      const question = engine.getCurrentQuestion('non-existent-session');
+    it('should return null for non-existent session', async () => {
+      const question = await engine.getCurrentQuestion('non-existent-session');
       expect(question).toBeNull();
     });
   });
 
   describe('submitAnswer', () => {
     it('should submit answer and move to next question', async () => {
-      const session = engine.startAssessment('phq-9', 'en');
+      const session = await engine.startAssessment('phq-9', 'en');
       const sessionId = session!.id;
       
       const result = await engine.submitAnswer(sessionId, 1);
@@ -264,7 +260,7 @@ describe('AssessmentEngine', () => {
     });
 
     it('should complete assessment when all questions answered', async () => {
-      const session = engine.startAssessment('phq-9', 'en');
+      const session = await engine.startAssessment('phq-9', 'en');
       const sessionId = session!.id;
       
       // Answer first question
@@ -282,7 +278,7 @@ describe('AssessmentEngine', () => {
     });
 
     it('should return false for invalid answer', async () => {
-      const session = engine.startAssessment('phq-9', 'en');
+      const session = await engine.startAssessment('phq-9', 'en');
       const sessionId = session!.id;
       
       const result = await engine.submitAnswer(sessionId, 'invalid-answer');
@@ -297,8 +293,8 @@ describe('AssessmentEngine', () => {
   });
 
   describe('getProgress', () => {
-    it('should return progress for active session', () => {
-      const session = engine.startAssessment('phq-9', 'en');
+    it('should return progress for active session', async () => {
+      const session = await engine.startAssessment('phq-9', 'en');
       const sessionId = session!.id;
       
       const progress = engine.getProgress(sessionId);
@@ -317,8 +313,8 @@ describe('AssessmentEngine', () => {
   });
 
   describe('getActiveSessions', () => {
-    it('should return active sessions', () => {
-      const session1 = engine.startAssessment('phq-9', 'en');
+    it('should return active sessions', async () => {
+      const session1 = await engine.startAssessment('phq-9', 'en');
       
       const activeSessions = engine.getActiveSessions();
       
@@ -326,8 +322,8 @@ describe('AssessmentEngine', () => {
       expect(activeSessions[0].id).toBe(session1!.id);
     });
 
-    it('should not return paused sessions', () => {
-      const session = engine.startAssessment('phq-9', 'en');
+    it('should not return paused sessions', async () => {
+      const session = await engine.startAssessment('phq-9', 'en');
       const sessionId = session!.id;
       
       engine.pauseAssessment(sessionId);
@@ -338,8 +334,8 @@ describe('AssessmentEngine', () => {
   });
 
   describe('deleteSession', () => {
-    it('should delete a session', () => {
-      const session = engine.startAssessment('phq-9', 'en');
+    it('should delete a session', async () => {
+      const session = await engine.startAssessment('phq-9', 'en');
       const sessionId = session!.id;
       
       const result = engine.deleteSession(sessionId);
@@ -357,8 +353,8 @@ describe('AssessmentEngine', () => {
   });
 
   describe('getSessionStatistics', () => {
-    it('should return session statistics', () => {
-      engine.startAssessment('phq-9', 'en');
+    it('should return session statistics', async () => {
+      await engine.startAssessment('phq-9', 'en');
       
       const stats = engine.getSessionStatistics();
       

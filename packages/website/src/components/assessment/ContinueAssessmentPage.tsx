@@ -24,7 +24,7 @@ export default function ContinueAssessmentPage({ className = '', asWidget = fals
   const [activeSessions, setActiveSessions] = useState<AssessmentSession[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const { t, isLoading: translationsLoading } = useAssessmentTranslations();
+  const { t, tString, isLoading: translationsLoading } = useAssessmentTranslations();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showClearAllModal, setShowClearAllModal] = useState(false);
   const [deleteSessionId, setDeleteSessionId] = useState<string | null>(null);
@@ -72,13 +72,13 @@ export default function ContinueAssessmentPage({ className = '', asWidget = fals
         // Redirect to assessment page
         window.location.href = `/assessment/take/${session.assessmentTypeId}/`;
       } else {
-        showMessage(t('errors.cannotContinue'), 'error');
+        showMessage(tString('errors.cannotContinue'), 'error');
       }
     } catch (error) {
       if (process.env.NODE_ENV === 'development') {
         console.error('Failed to continue session:', error);
       }
-      showMessage(t('errors.continueFailed'), 'error');
+      showMessage(tString('errors.continueFailed'), 'error');
     }
   };
 
@@ -97,15 +97,18 @@ export default function ContinueAssessmentPage({ className = '', asWidget = fals
         if (success) {
           // Remove from local array
           setActiveSessions(prev => prev.filter(s => s.id !== deleteSessionId));
-          showMessage(t('messages.deleted'), 'success');
+          const deletedMessage = t('messages.deleted');
+          showMessage(Array.isArray(deletedMessage) ? deletedMessage.join(', ') : deletedMessage, 'success');
         } else {
-          showMessage(t('errors.deleteFailed'), 'error');
+          const deleteFailedMessage = t('errors.deleteFailed');
+          showMessage(Array.isArray(deleteFailedMessage) ? deleteFailedMessage.join(', ') : deleteFailedMessage, 'error');
         }
       } catch (error) {
         if (process.env.NODE_ENV === 'development') {
           console.error('Failed to delete session:', error);
         }
-        showMessage(t('errors.deleteFailed'), 'error');
+        const deleteFailedMessage = t('errors.deleteFailed');
+        showMessage(Array.isArray(deleteFailedMessage) ? deleteFailedMessage.join(', ') : deleteFailedMessage, 'error');
       }
     }
     setShowDeleteModal(false);
@@ -135,15 +138,18 @@ export default function ContinueAssessmentPage({ className = '', asWidget = fals
 
       if (deletedCount > 0) {
         setActiveSessions([]);
-        showMessage(t('messages.clearedCount', { count: deletedCount }), 'success');
+        const clearedMessage = t('messages.clearedCount', { count: deletedCount });
+        showMessage(Array.isArray(clearedMessage) ? clearedMessage.join(', ') : clearedMessage, 'success');
       } else {
-        showMessage(t('errors.clearFailed'), 'error');
+        const clearFailedMessage = t('errors.clearFailed');
+        showMessage(Array.isArray(clearFailedMessage) ? clearFailedMessage.join(', ') : clearFailedMessage, 'error');
       }
     } catch (error) {
       if (process.env.NODE_ENV === 'development') {
         console.error('Failed to clear all sessions:', error);
       }
-      showMessage(t('errors.clearFailed'), 'error');
+      const clearFailedMessage = t('errors.clearFailed');
+      showMessage(Array.isArray(clearFailedMessage) ? clearFailedMessage.join(', ') : clearFailedMessage, 'error');
     }
     setShowClearAllModal(false);
   };

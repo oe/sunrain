@@ -46,7 +46,6 @@ export class CSRTranslationManager {
   private config: CSRTranslationConfig;
   private currentLanguage: Language = "en";
   private loadStates = new Map<string, TranslationLoadState>();
-  private cacheCleanupTimer: number | null = null;
 
   /**
    * 私有构造函数，实现单例模式
@@ -256,8 +255,7 @@ export class CSRTranslationManager {
 
       const module = await moduleLoader();
       if (process.env.NODE_ENV === "development") {
-        console.log(`Loading CSR translations for ${moduleKey}:`, module);
-        console.log(`Available exports:`, Object.keys(module));
+        // Loading CSR translations
       }
 
       // 尝试多种导出方式
@@ -270,7 +268,7 @@ export class CSRTranslationManager {
         }`;
         translations = module[namedExportKey];
         if (process.env.NODE_ENV === "development") {
-          console.log(`Trying named export: ${namedExportKey}`, !!translations);
+          // Try named export
         }
       }
 
@@ -582,7 +580,7 @@ export class CSRTranslationManager {
   getNestedValue<T extends CSRTranslations>(
     translations: T,
     keyPath: string
-  ): string | undefined {
+  ): string | string[] | undefined {
     const keys = keyPath.split(".");
     let current: any = translations;
 
@@ -594,7 +592,7 @@ export class CSRTranslationManager {
       }
     }
 
-    return typeof current === "string" ? current : undefined;
+    return typeof current === "string" || Array.isArray(current) ? current : undefined;
   }
 
   /**
@@ -612,6 +610,12 @@ export class CSRTranslationManager {
 
       if (!template) {
         console.warn(`Translation key not found: ${namespace}.${keyPath}`);
+        return keyPath;
+      }
+
+      // 只处理字符串类型的模板
+      if (typeof template !== 'string') {
+        console.warn(`Translation key ${namespace}.${keyPath} is not a string template`);
         return keyPath;
       }
 
@@ -678,7 +682,7 @@ export class CSRTranslationManager {
    */
   private setupCacheCleanup(): void {
     // 每10分钟清理一次过期缓存
-    this.cacheCleanupTimer = window.setInterval(() => {
+    window.setInterval(() => {
       const now = Date.now();
       const expiredKeys: string[] = [];
 
@@ -701,15 +705,6 @@ export class CSRTranslationManager {
     }, 10 * 60 * 1000); // 10分钟
   }
 
-  /**
-   * 清理缓存清理定时器
-   */
-  // private clearCacheCleanup(): void {
-  //   if (this.cacheCleanupTimer !== null) {
-  //     clearInterval(this.cacheCleanupTimer);
-  //     this.cacheCleanupTimer = null;
-  //   }
-  // }
 
   /**
    * 获取缓存统计信息

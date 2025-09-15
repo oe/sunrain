@@ -343,6 +343,57 @@ export const assessmentEs: IAssessmentTranslations = {
     }
   },
 
+  /** 趋势分析 */
+  trends: {
+    title: "Análisis de Tendencias",
+    subtitle: "Analiza tus tendencias de salud mental y patrones de desarrollo",
+    loading: "Cargando datos de tendencias...",
+    timeRange: {
+      title: "Rango de Tiempo",
+      last30Days: "Últimos 30 días",
+      last3Months: "Últimos 3 meses",
+      lastYear: "Último año",
+      allTime: "Todo el tiempo"
+    },
+    charts: {
+      overallTrend: "Tendencia General",
+      frequency: "Frecuencia de Evaluaciones",
+      riskTrend: "Cambios en Nivel de Riesgo",
+      categoryPerformance: "Rendimiento por Categoría"
+    },
+    insights: {
+      title: "Insights de Tendencias",
+      positive: "Tendencia Positiva",
+      warning: "Necesita Atención",
+      info: "Estable"
+    },
+    statistics: {
+      improvementTrend: "Tendencia de Mejora",
+      stableDimensions: "Dimensiones Estables",
+      attentionNeeded: "Atención Necesaria"
+    },
+    noData: {
+      title: "Sin Datos de Tendencias",
+      message: "Necesitas completar al menos 2 evaluaciones para ver el análisis de tendencias",
+      startAssessment: "Iniciar Evaluación"
+    },
+    actions: {
+      exportReport: "Exportar Reporte de Tendencias",
+      newAssessment: "Nueva Evaluación"
+    }
+  },
+
+  /** 分数名称 */
+  scores: {
+    total_score: "Puntuación Total",
+    depression: "Puntuación de Depresión",
+    anxiety: "Puntuación de Ansiedad",
+    stress: "Puntuación de Estrés",
+    phq9_total: "Puntuación Total PHQ-9",
+    gad7_total: "Puntuación Total GAD-7",
+    stress_total: "Puntuación Total Escala de Estrés"
+  },
+
 };
 
 export default assessmentEs;

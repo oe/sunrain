@@ -204,7 +204,7 @@ export function useTranslations(
    */
   const t = useCallback(
     (key: string, params?: Record<string, any>): string => {
-      let value: string | undefined;
+      let value: string | string[] | undefined;
 
       // 优先从当前翻译模式获取
       if (currentMode === "csr" && csrTranslations) {
@@ -218,6 +218,11 @@ export function useTranslations(
       } else {
         // 从SSG翻译中获取
         value = translations[key];
+      }
+
+      // 处理数组类型的翻译值
+      if (Array.isArray(value)) {
+        value = value.join(', ');
       }
 
       // 如果没有找到翻译，在开发环境显示警告

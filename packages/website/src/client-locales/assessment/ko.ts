@@ -348,6 +348,55 @@ export const assessmentEn: IAssessmentTranslations = {
       mediumAverage: "👀 Consider regular monitoring of mental health status"
     }
   },
+
+  trends: {
+    title: "트렌드 분석",
+    subtitle: "정신 건강 트렌드와 발전 패턴 분석",
+    loading: "트렌드 데이터 로딩 중...",
+    timeRange: {
+      title: "기간",
+      last30Days: "지난 30일",
+      last3Months: "지난 3개월",
+      lastYear: "지난 1년",
+      allTime: "전체 기간"
+    },
+    charts: {
+      overallTrend: "전체 트렌드",
+      frequency: "평가 빈도",
+      riskTrend: "위험 수준 변화",
+      categoryPerformance: "카테고리별 성과"
+    },
+    insights: {
+      title: "트렌드 인사이트",
+      positive: "긍정적 트렌드",
+      warning: "주의 필요",
+      info: "안정"
+    },
+    statistics: {
+      improvementTrend: "개선 트렌드",
+      stableDimensions: "안정된 차원",
+      attentionNeeded: "주의 필요"
+    },
+    noData: {
+      title: "트렌드 데이터 없음",
+      message: "트렌드 분석을 보려면 최소 2개의 평가를 완료해야 합니다",
+      startAssessment: "평가 시작"
+    },
+    actions: {
+      exportReport: "트렌드 보고서 내보내기",
+      newAssessment: "새 평가"
+    }
+  },
+
+  scores: {
+    total_score: "총 점수",
+    depression: "우울증 점수",
+    anxiety: "불안 점수",
+    stress: "스트레스 점수",
+    phq9_total: "PHQ-9 총 점수",
+    gad7_total: "GAD-7 총 점수",
+    stress_total: "스트레스 척도 총 점수"
+  },
 };
 
 export default assessmentEn;

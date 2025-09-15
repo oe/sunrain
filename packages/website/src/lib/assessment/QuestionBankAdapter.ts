@@ -28,15 +28,14 @@ export class QuestionBankAdapter {
    */
   async initialize(): Promise<void> {
     try {
-      // 预加载所有评测类型
+      // 只预加载所有评测类型（基础数据）
+      console.log('🔍 QuestionBankAdapter: Starting initialization...');
       cachedAssessmentTypes = await newQuestionBankManager.getAssessmentTypes();
+      console.log('🔍 QuestionBankAdapter: Loaded assessment types:', cachedAssessmentTypes?.length || 0);
+      console.log('🔍 QuestionBankAdapter: Assessment type IDs:', cachedAssessmentTypes?.map(t => t.id) || []);
       
-      // 预加载所有语言的本地化数据
-      const languages: Language[] = ['en', 'zh', 'es', 'ja', 'ko', 'hi', 'ar'];
-      for (const lang of languages) {
-        const localizedData = await newQuestionBankManager.getAllLocalizedAssessmentTypes(lang);
-        cachedLocalizedData.set(lang, localizedData);
-      }
+      // 不预加载翻译数据，采用按需加载策略
+      // 翻译数据将在 getLocalizedAssessmentType 方法中按需加载
     } catch (error) {
       console.error('Failed to initialize QuestionBankAdapter:', error);
       // 如果初始化失败，使用空数组作为后备
@@ -50,6 +49,7 @@ export class QuestionBankAdapter {
   getAssessmentTypes(): AssessmentType[] {
     if (!cachedAssessmentTypes) {
       console.warn('QuestionBankAdapter not initialized, returning empty array');
+      console.warn('cachedAssessmentTypes is null, this means initialize() was not called or failed');
       return [];
     }
     return cachedAssessmentTypes;
@@ -60,7 +60,21 @@ export class QuestionBankAdapter {
    */
   getAssessmentType(id: string): AssessmentType | undefined {
     const types = this.getAssessmentTypes();
-    return types.find(type => type.id === id);
+    console.log('🔍 QuestionBankAdapter: Looking for assessment type:', id);
+    console.log('🔍 QuestionBankAdapter: Available types:', types.map(t => t.id));
+    console.log('🔍 QuestionBankAdapter: cachedAssessmentTypes is null?', cachedAssessmentTypes === null);
+    console.log('🔍 QuestionBankAdapter: cachedAssessmentTypes length:', cachedAssessmentTypes?.length || 0);
+    console.log('🔍 QuestionBankAdapter: Environment:', typeof window !== 'undefined' ? 'browser' : 'server');
+    
+    // 如果在客户端且数据为空，尝试重新初始化
+    if (typeof window !== 'undefined' && (!cachedAssessmentTypes || cachedAssessmentTypes.length === 0)) {
+      console.warn('🔍 QuestionBankAdapter: Client-side cache is empty, this might be the root cause!');
+      console.warn('🔍 QuestionBankAdapter: Consider calling initialize() before getAssessmentType()');
+    }
+    
+    const found = types.find(type => type.id === id);
+    console.log('🔍 QuestionBankAdapter: Found type:', found ? found.id : 'undefined');
+    return found;
   }
 
   /**
@@ -72,26 +86,46 @@ export class QuestionBankAdapter {
   }
 
   /**
-   * 获取本地化的评测类型（同步）
+   * 获取本地化的评测类型（异步，按需加载）
    */
-  getLocalizedAssessmentType(id: string, language: Language): AssessmentType | undefined {
-    const localizedData = cachedLocalizedData.get(language);
+  async getLocalizedAssessmentType(id: string, language: Language): Promise<AssessmentType | undefined> {
+    // 检查是否已缓存该语言的翻译数据
+    let localizedData = cachedLocalizedData.get(language);
+    
     if (!localizedData) {
-      console.warn(`No localized data for language ${language}, falling back to default`);
-      return this.getAssessmentType(id);
+      try {
+        // 按需加载该语言的翻译数据
+        localizedData = await newQuestionBankManager.getAllLocalizedAssessmentTypes(language);
+        cachedLocalizedData.set(language, localizedData);
+      } catch (error) {
+        console.warn(`Failed to load localized data for language ${language}:`, error);
+        // 如果翻译加载失败，返回默认数据
+        return this.getAssessmentType(id);
+      }
     }
+    
     return localizedData.find(type => type.id === id);
   }
 
   /**
-   * 获取所有本地化的评测类型（同步）
+   * 获取所有本地化的评测类型（异步，按需加载）
    */
-  getAllLocalizedAssessmentTypes(language: Language): AssessmentType[] {
-    const localizedData = cachedLocalizedData.get(language);
+  async getAllLocalizedAssessmentTypes(language: Language): Promise<AssessmentType[]> {
+    // 检查是否已缓存该语言的翻译数据
+    let localizedData = cachedLocalizedData.get(language);
+    
     if (!localizedData) {
-      console.warn(`No localized data for language ${language}, falling back to default`);
-      return this.getAssessmentTypes();
+      try {
+        // 按需加载该语言的翻译数据
+        localizedData = await newQuestionBankManager.getAllLocalizedAssessmentTypes(language);
+        cachedLocalizedData.set(language, localizedData);
+      } catch (error) {
+        console.warn(`Failed to load localized data for language ${language}:`, error);
+        // 如果翻译加载失败，返回默认数据
+        return this.getAssessmentTypes();
+      }
     }
+    
     return localizedData;
   }
 

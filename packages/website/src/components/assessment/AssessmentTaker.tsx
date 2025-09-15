@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback, memo } from 'react';
 import { CheckCircle } from 'lucide-react';
 import { useAssessmentTranslations } from '@/hooks/useCSRTranslations';
-import { initializeQuestionBank } from '@/lib/assessment/initializeQuestionBank';
+import { initializeQuestionBank, isQuestionBankInitialized } from '@/lib/assessment/initializeQuestionBank';
 import QuestionCard from './QuestionCard';
 import ProgressBar from './ProgressBar';
 import NavigationControls from './NavigationControls';
@@ -57,8 +57,33 @@ const AssessmentTaker = memo(function AssessmentTaker({
   onComplete,
   onError
 }: AssessmentTakerProps) {
-  const { t, isLoading: translationsLoading } = useAssessmentTranslations(language);
+  // 从 URL 获取 assessmentId 作为备用方案
+  const [actualAssessmentId, setActualAssessmentId] = useState<string | null>(null);
+  
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const pathParts = window.location.pathname.split('/');
+      const idFromUrl = pathParts[pathParts.length - 2]; // 获取 /assessment/take/[id]/ 中的 id
+      
+      if (assessmentId) {
+        setActualAssessmentId(assessmentId);
+      } else if (idFromUrl && idFromUrl !== 'take') {
+        setActualAssessmentId(idFromUrl);
+      }
+    }
+  }, [assessmentId]);
 
+  // 使用 useEffect 确保在客户端环境中初始化
+  const [isClientReady, setIsClientReady] = useState(false);
+  
+  useEffect(() => {
+    // 确保在客户端环境中运行
+    if (typeof window !== 'undefined') {
+      setIsClientReady(true);
+    }
+  }, []);
+
+  const { t, tString, isLoading: translationsLoading } = useAssessmentTranslations(language);
 
   // 使用单一状态对象，简化状态管理
   const [state, setState] = useState<AssessmentState>({
@@ -86,19 +111,33 @@ const AssessmentTaker = memo(function AssessmentTaker({
     try {
       setState(prev => ({ ...prev, isLoading: true, error: null }));
 
+
+      if (!actualAssessmentId) {
+        // Don't throw error here, just return early to avoid hooks order issues
+        return;
+      }
+
       // 确保问卷库已初始化
-      await initializeQuestionBank();
+      if (!isQuestionBankInitialized()) {
+        await initializeQuestionBank();
+      }
+
+      // 确保 questionBankAdapter 也已初始化
+      const { questionBankAdapter } = await import('@/lib/assessment/QuestionBankAdapter');
+      if (!questionBankAdapter.getAssessmentTypes().length) {
+        await questionBankAdapter.initialize();
+      }
 
       const engine = await loadAssessmentEngine();
 
       if (!engine) {
-        throw new Error(t('errors.initializationFailed'));
+        throw new Error(tString('errors.initializationFailed'));
       }
 
       // Check for existing active session
       const activeSessions = engine.getActiveSessions();
       const existingSession = activeSessions.find((s: AssessmentSession) =>
-        s.assessmentTypeId === assessmentId
+        s.assessmentTypeId === actualAssessmentId
       );
 
       let session: AssessmentSession;
@@ -108,12 +147,13 @@ const AssessmentTaker = memo(function AssessmentTaker({
       } else {
         // Start new session
         try {
-          session = engine.startAssessment(assessmentId, language || 'zh');
+          session = await engine.startAssessment(actualAssessmentId, language || 'zh');
         } catch (error: any) {
+          console.error('AssessmentTaker: Error starting new session:', error);
           if (error.type === 'SESSION_ALREADY_EXISTS') {
             // This shouldn't happen since we checked above, but handle it gracefully
             const activeSession = engine.getActiveSessions().find((s: AssessmentSession) =>
-              s.assessmentTypeId === assessmentId
+              s.assessmentTypeId === actualAssessmentId
             );
             if (activeSession) {
               session = engine.resumeAssessment(activeSession.id);
@@ -127,37 +167,11 @@ const AssessmentTaker = memo(function AssessmentTaker({
       }
 
       if (!session) {
-        throw new Error(t('errors.sessionStartFailed'));
+        throw new Error(tString('errors.sessionStartFailed'));
       }
 
-      // Import questionBankManager to get consistent question data
-      const { questionBankManager } = await import('@/lib/assessment/QuestionBankManager');
-      const assessmentType = questionBankManager.getAssessmentType(assessmentId);
-      const allAssessmentTypes = questionBankManager.getAssessmentTypes();
-
-      // Debug info for development
-      if (process.env.NODE_ENV === 'development') {
-        console.log('QuestionBankManager debug:', {
-          assessmentId,
-          assessmentType: assessmentType,
-        allAssessmentTypes: allAssessmentTypes.map(a => ({ id: a.id, name: a.name, questionCount: a.questions?.length })),
-        firstQuestionFromManager: assessmentType?.questions?.[0],
-        firstQuestionFromProps: assessmentData.questions?.[0]
-      });
-
-        const questions = assessmentType?.questions || assessmentData.questions;
-        const currentQuestion = questions[session.currentQuestionIndex];
-
-        console.log('Initializing assessment:', {
-          assessmentId,
-          sessionIndex: session.currentQuestionIndex,
-          totalQuestions: questions.length,
-          currentQuestion: currentQuestion,
-          questionOptions: currentQuestion?.options,
-          usingEngineData: !!assessmentType,
-          assessmentDataQuestions: assessmentData.questions?.length
-        });
-      }
+      // Get consistent question data from questionBankAdapter
+      const assessmentType = questionBankAdapter.getAssessmentType(actualAssessmentId);
 
       const questions = assessmentType?.questions || assessmentData.questions;
       const currentQuestion = questions[session.currentQuestionIndex];
@@ -167,6 +181,11 @@ const AssessmentTaker = memo(function AssessmentTaker({
         ? session.answers[session.currentQuestionIndex].value
         : null;
 
+      // Handle string 'null' case in existing answer
+      const processedAnswer = existingAnswer === 'null' ? null : existingAnswer;
+
+      // Initialize with existing answer
+
       setState(prev => ({
         ...prev,
         session,
@@ -174,7 +193,7 @@ const AssessmentTaker = memo(function AssessmentTaker({
         currentQuestionIndex: session.currentQuestionIndex,
         totalQuestions: questions.length,
         answers: session.answers,
-        currentAnswer: existingAnswer,
+        currentAnswer: processedAnswer,
         isLoading: false
       }));
 
@@ -182,16 +201,11 @@ const AssessmentTaker = memo(function AssessmentTaker({
       if (process.env.NODE_ENV === 'development') {
         console.error('AssessmentTaker: Initialization error:', error);
       }
-      const errorMessage = error instanceof Error ? error.message : t('errors.initializationFailed');
+      const errorMessage = error instanceof Error ? error.message : tString('errors.initializationFailed');
       setState(prev => ({ ...prev, error: errorMessage, isLoading: false }));
       onError?.(error instanceof Error ? error : new Error(errorMessage));
     }
-  }, [assessmentId, assessmentData, language, t, onError]);
-
-  // Initialize assessment session
-  useEffect(() => {
-    initializeAssessment();
-  }, [assessmentId, initializeAssessment]);
+  }, [actualAssessmentId, assessmentData, language, t, onError]);
 
   const handleAnswerChange = useCallback((value: any) => {
     setState(prev => ({ ...prev, currentAnswer: value, validationError: null }));
@@ -200,9 +214,14 @@ const AssessmentTaker = memo(function AssessmentTaker({
   const validateAnswer = useCallback((): boolean => {
     if (!state.currentQuestion) return false;
 
+    // Handle string 'null' case before validation
+    const processedAnswer = state.currentAnswer === 'null' ? null : state.currentAnswer;
+
+    // Validate answer
+
     if (state.currentQuestion.required) {
-      if (state.currentAnswer === null || state.currentAnswer === undefined || state.currentAnswer === '') {
-        setState(prev => ({ ...prev, validationError: t('execution.errors.required') }));
+      if (processedAnswer === null || processedAnswer === undefined || processedAnswer === '') {
+        setState(prev => ({ ...prev, validationError: tString('execution.errors.required') }));
         return false;
       }
 
@@ -211,17 +230,17 @@ const AssessmentTaker = memo(function AssessmentTaker({
         const validOptionIds = state.currentQuestion.options.map((opt: any) => opt.id);
         const validOptionValues = state.currentQuestion.options.map((opt: any) => opt.value);
 
-        if (!validOptionIds.includes(state.currentAnswer) && !validOptionValues.includes(state.currentAnswer)) {
-          setState(prev => ({ ...prev, validationError: t('execution.errors.required') }));
+        if (!validOptionIds.includes(processedAnswer) && !validOptionValues.includes(processedAnswer)) {
+          setState(prev => ({ ...prev, validationError: tString('execution.errors.required') }));
           return false;
         }
       }
 
       // Additional validation for different question types
       if (state.currentQuestion.type === 'scale') {
-        const numValue = Number(state.currentAnswer);
+        const numValue = Number(processedAnswer);
         if (isNaN(numValue) || numValue < (state.currentQuestion.scaleMin || 0) || numValue > (state.currentQuestion.scaleMax || 10)) {
-          setState(prev => ({ ...prev, validationError: t('execution.errors.required') }));
+          setState(prev => ({ ...prev, validationError: tString('execution.errors.required') }));
           return false;
         }
       }
@@ -239,32 +258,21 @@ const AssessmentTaker = memo(function AssessmentTaker({
 
       // Get the complete question data from questionBankAdapter
       const { questionBankAdapter } = await import('@/lib/assessment/QuestionBankAdapter');
-      const assessmentType = questionBankAdapter.getAssessmentType(assessmentId);
+      const assessmentType = questionBankAdapter.getAssessmentType(actualAssessmentId);
       const completeQuestion = assessmentType?.questions?.find(q => q.id === state.currentQuestion.id) || state.currentQuestion;
 
       const answer: AssessmentAnswer = {
         questionId: completeQuestion.id,
-        value: state.currentAnswer,
+        value: state.currentAnswer === 'null' ? null : state.currentAnswer,
         answeredAt: new Date()
       };
 
-      if (process.env.NODE_ENV === 'development') {
-        console.log('Saving answer with complete question data:', {
-          sessionId: state.session.id,
-          questionId: completeQuestion.id,
-          questionType: completeQuestion.type,
-          answer: state.currentAnswer,
-          required: completeQuestion.required,
-          options: completeQuestion.options,
-          originalQuestionHadOptions: !!state.currentQuestion.options,
-          completeQuestionHasOptions: !!completeQuestion.options
-        });
-      }
+      // Save answer with complete question data
 
       const result = await engine.submitAnswer(state.session.id, state.currentAnswer);
 
       if (process.env.NODE_ENV === 'development') {
-        console.log('Submit result:', result);
+        // Submit result
       }
 
       if (result.success) {
@@ -283,14 +291,14 @@ const AssessmentTaker = memo(function AssessmentTaker({
       }
       return false;
     }
-  }, [state.session, state.currentQuestion, state.currentAnswer, assessmentId]);
+  }, [state.session, state.currentQuestion, state.currentAnswer, actualAssessmentId]);
 
   const handleNext = useCallback(async () => {
     if (!validateAnswer()) return;
 
     const saved = await saveAnswer();
     if (!saved) {
-      setState(prev => ({ ...prev, validationError: t('execution.errors.submitFailed') }));
+      setState(prev => ({ ...prev, validationError: tString('execution.errors.submitFailed') }));
       return;
     }
 
@@ -301,8 +309,8 @@ const AssessmentTaker = memo(function AssessmentTaker({
       await handleComplete();
     } else {
       // Move to next question - use consistent data source
-      const { questionBankManager } = await import('@/lib/assessment/QuestionBankManager');
-      const assessmentType = questionBankManager.getAssessmentType(assessmentId);
+      const { questionBankAdapter } = await import('@/lib/assessment/QuestionBankAdapter');
+      const assessmentType = questionBankAdapter.getAssessmentType(actualAssessmentId);
       const questions = assessmentType?.questions || assessmentData.questions;
       const nextQuestion = questions[nextIndex];
 
@@ -313,7 +321,7 @@ const AssessmentTaker = memo(function AssessmentTaker({
         ...prev,
         currentQuestion: nextQuestion,
         currentQuestionIndex: nextIndex,
-        currentAnswer: existingAnswer?.value || null,
+        currentAnswer: existingAnswer?.value === 'null' ? null : (existingAnswer?.value || null),
         validationError: null
       }));
     }
@@ -327,27 +335,27 @@ const AssessmentTaker = memo(function AssessmentTaker({
 
     const prevIndex = state.currentQuestionIndex - 1;
     // Use consistent data source
-    const { questionBankManager } = await import('@/lib/assessment/QuestionBankManager');
-    const assessmentType = questionBankManager.getAssessmentType(assessmentId);
+    const { questionBankAdapter } = await import('@/lib/assessment/QuestionBankAdapter');
+    const assessmentType = questionBankAdapter.getAssessmentType(assessmentId);
     const questions = assessmentType?.questions || assessmentData.questions;
     const prevQuestion = questions[prevIndex];
 
     // Load existing answer for previous question
     const existingAnswer = state.answers.find(a => a.questionId === prevQuestion.id);
 
-    setState(prev => ({
-      ...prev,
-      currentQuestion: prevQuestion,
-      currentQuestionIndex: prevIndex,
-      currentAnswer: existingAnswer?.value || null,
-      validationError: null
-    }));
+      setState(prev => ({
+        ...prev,
+        currentQuestion: prevQuestion,
+        currentQuestionIndex: prevIndex,
+        currentAnswer: existingAnswer?.value === 'null' ? null : (existingAnswer?.value || null),
+        validationError: null
+      }));
   }, [state.currentQuestionIndex, state.answers, assessmentData.questions, saveAnswer]);
 
   const handleSave = useCallback(async () => {
     const saved = await saveAnswer();
     if (!saved) {
-      setState(prev => ({ ...prev, validationError: t('execution.errors.submitFailed') }));
+      setState(prev => ({ ...prev, validationError: tString('execution.errors.submitFailed') }));
     }
   }, [saveAnswer, t]);
 
@@ -407,7 +415,7 @@ const AssessmentTaker = memo(function AssessmentTaker({
           const sessionResult = allResults.find(r => r.sessionId === state.session.id);
           if (sessionResult) {
             resultId = sessionResult.id;
-            console.log('Found result by session ID:', resultId);
+            // Found result by session ID
           }
         } catch (error) {
           console.warn('Failed to find result by session:', error);
@@ -420,17 +428,18 @@ const AssessmentTaker = memo(function AssessmentTaker({
       // Navigate to results page
       setTimeout(() => {
         if (resultId) {
-          console.log('Navigating to results with ID:', resultId);
+          // Navigate to results with ID
           window.location.href = `/assessment/results/#${resultId}`;
         } else {
-          console.log('Navigating to results with session fallback');
+          // Navigate to results with session fallback
           window.location.href = `/assessment/results/?session=${state.session.id}`;
         }
       }, 1500);
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : t('execution.errors.submitFailed');
-      setState(prev => ({ ...prev, error: errorMessage, isSubmitting: false }));
-      onError?.(error instanceof Error ? error : new Error(errorMessage));
+      const errorString = Array.isArray(errorMessage) ? errorMessage.join(', ') : errorMessage;
+      setState(prev => ({ ...prev, error: errorString, isSubmitting: false }));
+      onError?.(error instanceof Error ? error : new Error(errorString));
     }
   }, [state.session, onComplete, onError, t]);
 
@@ -451,6 +460,37 @@ const AssessmentTaker = memo(function AssessmentTaker({
       handlePrevious();
     }
   }, [handleNext, handlePrevious, state.isSubmitting, state.currentQuestionIndex]);
+
+  // Initialize assessment session
+  useEffect(() => {
+    if (actualAssessmentId) {
+      initializeAssessment();
+    }
+  }, [actualAssessmentId, initializeAssessment]);
+
+  // 确保 assessmentId 有效 - 在客户端准备好后检查
+  if (isClientReady && !actualAssessmentId) {
+    console.error('❌ AssessmentTaker: assessmentId is undefined', { 
+      assessmentId, 
+      actualAssessmentId, 
+      assessmentData,
+      url: typeof window !== 'undefined' ? window.location.pathname : 'N/A'
+    });
+    return (
+      <div className="alert alert-error">
+        <span>错误：问卷 ID 未定义</span>
+      </div>
+    );
+  }
+
+  // 在客户端准备好之前显示加载状态
+  if (!isClientReady) {
+    return (
+      <div className="flex items-center justify-center min-h-[400px]">
+        <div className="loading loading-spinner loading-lg"></div>
+      </div>
+    );
+  }
 
   // Show loading state
   if (translationsLoading || state.isLoading) {
@@ -479,7 +519,7 @@ const AssessmentTaker = memo(function AssessmentTaker({
         error={new Error(state.error)}
         onRetry={initializeAssessment}
         showRetry={true}
-        t={t}
+        t={tString}
       />
     );
   }
@@ -531,10 +571,10 @@ const AssessmentTaker = memo(function AssessmentTaker({
   if (!state.currentQuestion) {
     return (
       <ErrorHandler
-        error={new Error(t('errors.noData'))}
+        error={new Error(tString('errors.noData'))}
         onRetry={initializeAssessment}
         showRetry={true}
-        t={t}
+        t={tString}
       />
     );
   }
@@ -557,7 +597,7 @@ const AssessmentTaker = memo(function AssessmentTaker({
         isCompleted={state.isCompleted}
         onPause={handlePause}
         showPauseButton={true}
-        t={t}
+        t={tString}
       />
 
       {/* Question Card */}
@@ -616,7 +656,7 @@ const AssessmentTaker = memo(function AssessmentTaker({
             disabled={state.isSubmitting}
             showValidation={false}
             enableRealtimeValidation={false}
-            t={t}
+            t={tString}
           />
         </div>
 
@@ -646,7 +686,7 @@ const AssessmentTaker = memo(function AssessmentTaker({
         onNext={handleNext}
         onSave={handleSave}
         showSaveButton={true}
-        t={t}
+        t={tString}
       />
 
       {/* Pause Modal */}

@@ -57,7 +57,10 @@ export default function QuestionnaireInfoButton({
             <button
               onClick={() => setShowModal(false)}
               className="btn btn-sm btn-circle btn-ghost"
-              aria-label={t('common.close')}
+              aria-label={(() => {
+                const closeText = t('common.close');
+                return Array.isArray(closeText) ? closeText.join(', ') : closeText;
+              })()}
             >
               <X className="w-6 h-6" />
             </button>

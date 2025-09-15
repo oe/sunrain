@@ -342,6 +342,57 @@ export const assessmentAr: IAssessmentTranslations = {
       mediumAverage: "👀 فكر في المراقبة المنتظمة لحالة الصحة العقلية" // TODO: Translate to Arabic
     }
   },
+
+  /** 趋势分析 */
+  trends: {
+    title: "تحليل الاتجاهات", // TODO: Translate to Arabic
+    subtitle: "حلل اتجاهات الصحة العقلية وأنماط التطور", // TODO: Translate to Arabic
+    loading: "جاري تحميل بيانات الاتجاهات...", // TODO: Translate to Arabic
+    timeRange: {
+      title: "النطاق الزمني", // TODO: Translate to Arabic
+      last30Days: "آخر 30 يوم", // TODO: Translate to Arabic
+      last3Months: "آخر 3 أشهر", // TODO: Translate to Arabic
+      lastYear: "العام الماضي", // TODO: Translate to Arabic
+      allTime: "كل الأوقات" // TODO: Translate to Arabic
+    },
+    charts: {
+      overallTrend: "الاتجاه العام", // TODO: Translate to Arabic
+      frequency: "تكرار التقييم", // TODO: Translate to Arabic
+      riskTrend: "تغييرات مستوى المخاطر", // TODO: Translate to Arabic
+      categoryPerformance: "أداء الفئات" // TODO: Translate to Arabic
+    },
+    insights: {
+      title: "رؤى الاتجاهات", // TODO: Translate to Arabic
+      positive: "اتجاه إيجابي", // TODO: Translate to Arabic
+      warning: "يحتاج انتباه", // TODO: Translate to Arabic
+      info: "مستقر" // TODO: Translate to Arabic
+    },
+    statistics: {
+      improvementTrend: "اتجاه التحسن", // TODO: Translate to Arabic
+      stableDimensions: "الأبعاد المستقرة", // TODO: Translate to Arabic
+      attentionNeeded: "يحتاج انتباه" // TODO: Translate to Arabic
+    },
+    noData: {
+      title: "لا توجد بيانات اتجاهات", // TODO: Translate to Arabic
+      message: "تحتاج إلى إكمال تقييمين على الأقل لعرض تحليل الاتجاهات", // TODO: Translate to Arabic
+      startAssessment: "بدء التقييم" // TODO: Translate to Arabic
+    },
+    actions: {
+      exportReport: "تصدير تقرير الاتجاهات", // TODO: Translate to Arabic
+      newAssessment: "تقييم جديد" // TODO: Translate to Arabic
+    }
+  },
+
+  /** 分数名称 */
+  scores: {
+    total_score: "الدرجة الإجمالية", // TODO: Translate to Arabic
+    depression: "درجة الاكتئاب", // TODO: Translate to Arabic
+    anxiety: "درجة القلق", // TODO: Translate to Arabic
+    stress: "درجة الإجهاد", // TODO: Translate to Arabic
+    phq9_total: "درجة PHQ-9 الإجمالية", // TODO: Translate to Arabic
+    gad7_total: "درجة GAD-7 الإجمالية", // TODO: Translate to Arabic
+    stress_total: "درجة مقياس الإجهاد الإجمالية" // TODO: Translate to Arabic
+  },
 };
 
 export default assessmentAr;
