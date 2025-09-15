@@ -34,11 +34,11 @@ export default memo(function ProgressBar({
     <div className="mb-8">
       {/* Header with title and controls */}
       <div className="flex items-center justify-between mb-2">
-        <h1 className="text-2xl font-bold">
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
           {assessmentName || t('assessment.title')}
         </h1>
         <div className="flex items-center space-x-4">
-          <span className="text-sm opacity-70">
+          <span className="text-sm text-gray-600 dark:text-gray-400">
             {t('progress.text', {
               current: current + 1,
               total: total
@@ -47,10 +47,10 @@ export default memo(function ProgressBar({
           {showPauseButton && onPause && (
             <button
               onClick={onPause}
-              className="btn btn-ghost btn-sm"
+              className="flex items-center px-3 py-2 text-sm font-medium text-gray-600 dark:text-gray-400 bg-transparent hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900 transition-colors duration-200"
               title={t('execution.pause')}
             >
-              <Pause className="w-4 h-4" />
+              <Pause className="w-4 h-4 mr-1" />
               {t('execution.pause')}
             </button>
           )}
@@ -58,14 +58,15 @@ export default memo(function ProgressBar({
       </div>
 
       {/* Progress bar */}
-      <progress
-        className="progress progress-primary w-full mb-2"
-        value={Math.max(0, Math.min(100, percentage))}
-        max="100"
-      ></progress>
+      <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 mb-2">
+        <div 
+          className="bg-blue-500 h-2 rounded-full transition-all duration-300"
+          style={{ width: `${Math.max(0, Math.min(100, percentage))}%` }}
+        ></div>
+      </div>
 
       {/* Progress details */}
-      <div className="flex justify-between items-center text-xs opacity-60">
+      <div className="flex justify-between items-center text-xs text-gray-500 dark:text-gray-400">
         <div className="flex items-center space-x-4">
           <span className="flex items-center">
             <CheckCircle className="w-3 h-3 mr-1" />
@@ -79,7 +80,7 @@ export default memo(function ProgressBar({
           )}
         </div>
         <div className="flex items-center">
-          <span className="text-primary font-medium">
+          <span className="text-blue-600 dark:text-blue-400 font-medium">
             {percentage.toFixed(0)}% {t('execution.complete')}
           </span>
         </div>
@@ -92,12 +93,12 @@ export default memo(function ProgressBar({
             key={milestone}
             className={`flex flex-col items-center ${
               percentage >= milestone
-                ? 'text-primary'
-                : 'opacity-40'
+                ? 'text-blue-600 dark:text-blue-400'
+                : 'text-gray-400 dark:text-gray-600'
             }`}
           >
             <div className={`w-2 h-2 rounded-full ${
-              percentage >= milestone ? 'bg-primary' : 'bg-base-300'
+              percentage >= milestone ? 'bg-blue-500' : 'bg-gray-300 dark:bg-gray-600'
             }`} />
             <span className="text-xs mt-1">{milestone}%</span>
           </div>

@@ -690,24 +690,24 @@ const AssessmentTaker = memo(function AssessmentTaker({
       />
 
       {/* Pause Modal */}
-      <div className={`modal ${state.showPauseModal ? 'modal-open' : ''}`} onClick={(e) => e.target === e.currentTarget && handleContinue()}>
-        <div className="modal-box">
-          <h3 className="font-bold text-lg mb-4">
+      <div className={`fixed inset-0 z-50 flex items-center justify-center ${state.showPauseModal ? 'block' : 'hidden'}`} onClick={(e) => e.target === e.currentTarget && handleContinue()}>
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6 max-w-md w-full mx-4">
+          <h3 className="font-bold text-lg mb-4 text-gray-900 dark:text-white">
             {t('execution.pauseModal.title')}
           </h3>
-          <p className="py-4">
+          <p className="py-4 text-gray-600 dark:text-gray-300">
             {t('execution.pauseModal.message')}
           </p>
-          <div className="modal-action">
+          <div className="flex space-x-3 justify-end">
             <button
               onClick={handleContinue}
-              className="btn btn-primary"
+              className="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900 rounded-lg transition-colors duration-200"
             >
               {t('execution.pauseModal.continue')}
             </button>
             <button
               onClick={handleExit}
-              className="btn btn-outline"
+              className="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900 rounded-lg transition-colors duration-200"
             >
               {t('execution.pauseModal.exit')}
             </button>
