@@ -1,0 +1,31 @@
+{
+  "id": "gad-7",
+  "titleKey": "questionnaires.gad7.title",
+  "descriptionKey": "questionnaires.gad7.description",
+  "introductionKey": "questionnaires.gad7.introduction",
+  "purposeKey": "questionnaires.gad7.purpose",
+  "categoryId": "anxiety",
+  "tags": ["validated", "screening", "quick"],
+  "estimatedMinutes": 3,
+  "questionCount": 7,
+  "difficulty": "beginner",
+  "validatedScoring": true,
+  "professionalBacking": {
+    "source": "Spitzer, R. L., Kroenke, K., Williams, J. B., & Löwe, B.",
+    "reference": "A brief measure for assessing generalized anxiety disorder: the GAD-7. Archives of internal medicine, 166(10), 1092-1097.",
+    "validationStudies": [
+      "Spitzer et al. (2006) - Original validation study",
+      "Löwe et al. (2008) - Cross-cultural validation"
+    ],
+    "reliability": 0.92,
+    "validity": "Excellent internal consistency and test-retest reliability"
+  },
+  "instructions": "Please read each statement carefully and select the response that best describes how often you have been bothered by the following problems over the past 2 weeks.",
+  "disclaimer": "This questionnaire is for screening purposes only and does not constitute a medical diagnosis.",
+  "isFeatured": true,
+  "isActive": true,
+  "requiresAuth": false,
+  "version": "1.0.0",
+  "createdAt": "2024-01-01T00:00:00Z",
+  "updatedAt": "2024-01-01T00:00:00Z"
+}

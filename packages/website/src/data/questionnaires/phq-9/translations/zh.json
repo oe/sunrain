@@ -1,0 +1,151 @@
+{
+  "title": "PHQ-9 抑郁筛查量表",
+  "description": "患者健康问卷-9，用于抑郁症状筛查",
+  "introduction": "PHQ-9是一个经过验证的抑郁筛查工具，由9个问题组成，可以帮助识别抑郁症状的严重程度。",
+  "purpose": "此量表旨在帮助识别和评估抑郁症状，但不能替代专业医疗诊断。",
+  "instructions": "请仔细阅读每个陈述，选择最能描述您在过去两周内感受的答案。",
+  "disclaimer": "此问卷仅用于筛查目的，不构成医疗诊断。",
+  "questions": {
+    "q1": {
+      "text": "对事物缺乏兴趣或乐趣",
+      "options": {
+        "not_at_all": "完全没有",
+        "several_days": "几天",
+        "more_than_half": "超过一半的天数",
+        "nearly_every_day": "几乎每天"
+      }
+    },
+    "q2": {
+      "text": "感到沮丧、抑郁或绝望",
+      "options": {
+        "not_at_all": "完全没有",
+        "several_days": "几天",
+        "more_than_half": "超过一半的天数",
+        "nearly_every_day": "几乎每天"
+      }
+    },
+    "q3": {
+      "text": "入睡困难、睡眠不稳或睡眠过多",
+      "options": {
+        "not_at_all": "完全没有",
+        "several_days": "几天",
+        "more_than_half": "超过一半的天数",
+        "nearly_every_day": "几乎每天"
+      }
+    },
+    "q4": {
+      "text": "感到疲倦或精力不足",
+      "options": {
+        "not_at_all": "完全没有",
+        "several_days": "几天",
+        "more_than_half": "超过一半的天数",
+        "nearly_every_day": "几乎每天"
+      }
+    },
+    "q5": {
+      "text": "食欲不振或暴饮暴食",
+      "options": {
+        "not_at_all": "完全没有",
+        "several_days": "几天",
+        "more_than_half": "超过一半的天数",
+        "nearly_every_day": "几乎每天"
+      }
+    },
+    "q6": {
+      "text": "觉得自己很糟糕，或者觉得自己是个失败者，或者让自己或家人失望",
+      "options": {
+        "not_at_all": "完全没有",
+        "several_days": "几天",
+        "more_than_half": "超过一半的天数",
+        "nearly_every_day": "几乎每天"
+      }
+    },
+    "q7": {
+      "text": "在阅读报纸或看电视等事情上难以集中注意力",
+      "options": {
+        "not_at_all": "完全没有",
+        "several_days": "几天",
+        "more_than_half": "超过一半的天数",
+        "nearly_every_day": "几乎每天"
+      }
+    },
+    "q8": {
+      "text": "行动或说话如此缓慢，以至于别人可能已经注意到了。或者相反——如此坐立不安或焦躁不安，以至于你比平时移动得更多",
+      "options": {
+        "not_at_all": "完全没有",
+        "several_days": "几天",
+        "more_than_half": "超过一半的天数",
+        "nearly_every_day": "几乎每天"
+      }
+    },
+    "q9": {
+      "text": "想到死了会更好，或者伤害自己",
+      "options": {
+        "not_at_all": "完全没有",
+        "several_days": "几天",
+        "more_than_half": "超过一半的天数",
+        "nearly_every_day": "几乎每天"
+      }
+    }
+  },
+  "scoringRules": {
+    "total_score": {
+      "name": "PHQ-9 总分",
+      "description": "所有项目得分的总和",
+      "ranges": {
+        "0": {
+          "label": "轻微",
+          "description": "轻微抑郁症状",
+          "recommendations": ["保持良好的生活习惯", "定期进行体育锻炼", "保持社交活动"]
+        },
+        "1": {
+          "label": "轻度",
+          "description": "轻度抑郁症状",
+          "recommendations": ["考虑寻求专业帮助", "保持规律作息", "进行放松练习"]
+        },
+        "2": {
+          "label": "中度",
+          "description": "中度抑郁症状",
+          "recommendations": ["强烈建议寻求专业帮助", "考虑心理咨询", "保持积极的生活方式"]
+        },
+        "3": {
+          "label": "中重度",
+          "description": "中重度抑郁症状",
+          "recommendations": ["立即寻求专业帮助", "考虑药物治疗", "建立支持网络"]
+        },
+        "4": {
+          "label": "重度",
+          "description": "重度抑郁症状",
+          "recommendations": ["紧急寻求专业帮助", "考虑住院治疗", "确保安全环境"]
+        }
+      }
+    }
+  },
+  "interpretations": {
+    "minimal": {
+      "interpretation": "您的得分表明您目前没有明显的抑郁症状。",
+      "recommendations": "继续保持健康的生活方式，包括规律作息、均衡饮食和适量运动。",
+      "supportResources": "如果您感到压力或焦虑，可以考虑学习压力管理技巧。"
+    },
+    "mild": {
+      "interpretation": "您的得分表明您可能有轻微的抑郁症状。",
+      "recommendations": "建议您关注自己的情绪变化，考虑寻求专业帮助或学习自我调节技巧。",
+      "supportResources": "可以考虑心理咨询、支持小组或在线资源。"
+    },
+    "moderate": {
+      "interpretation": "您的得分表明您可能有中度的抑郁症状。",
+      "recommendations": "强烈建议您寻求专业帮助，包括心理咨询或精神科医生的评估。",
+      "supportResources": "请考虑联系心理健康专业人士，他们可以为您提供适当的治疗建议。"
+    },
+    "moderatelySevere": {
+      "interpretation": "您的得分表明您可能有中重度的抑郁症状。",
+      "recommendations": "建议您立即寻求专业帮助，可能需要药物治疗和心理治疗相结合。",
+      "supportResources": "请尽快联系心理健康专业人士，他们可以为您制定个性化的治疗计划。"
+    },
+    "severe": {
+      "interpretation": "您的得分表明您可能有重度的抑郁症状。",
+      "recommendations": "建议您立即寻求紧急专业帮助，可能需要住院治疗或强化门诊治疗。",
+      "supportResources": "请立即联系心理健康专业人士或前往最近的医院急诊科。"
+    }
+  }
+}

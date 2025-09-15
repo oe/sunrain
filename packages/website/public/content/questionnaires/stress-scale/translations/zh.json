@@ -1,0 +1,120 @@
+{
+  "title": "感知压力量表",
+  "description": "评估感知压力水平",
+  "introduction": "感知压力量表是一个经过验证的工具，用于测量个人生活中情况被评估为压力源的程度。",
+  "purpose": "此量表有助于识别压力水平，可以指导压力管理策略，但不能替代专业咨询。",
+  "instructions": "在过去的一个月里，您多久会有以下感受或想法？",
+  "disclaimer": "此评估有助于识别压力水平，但不能替代专业咨询。",
+  "questions": {
+    "stress-1": {
+      "text": "您多久会因为意外发生的事情而感到心烦？",
+      "scaleLabels": {
+        "min": "从不",
+        "max": "经常"
+      }
+    },
+    "stress-2": {
+      "text": "您多久会感到无法控制生活中重要的事情？",
+      "scaleLabels": {
+        "min": "从不",
+        "max": "经常"
+      }
+    },
+    "stress-3": {
+      "text": "您多久会感到紧张和'有压力'？",
+      "scaleLabels": {
+        "min": "从不",
+        "max": "经常"
+      }
+    },
+    "stress-4": {
+      "text": "您多久会对处理个人问题的能力感到自信？",
+      "scaleLabels": {
+        "min": "从不",
+        "max": "经常"
+      }
+    },
+    "stress-5": {
+      "text": "您多久会感到事情按您的意愿发展？",
+      "scaleLabels": {
+        "min": "从不",
+        "max": "经常"
+      }
+    },
+    "stress-6": {
+      "text": "您多久会发现无法应付所有必须做的事情？",
+      "scaleLabels": {
+        "min": "从不",
+        "max": "经常"
+      }
+    },
+    "stress-7": {
+      "text": "您多久能够控制生活中的烦恼？",
+      "scaleLabels": {
+        "min": "从不",
+        "max": "经常"
+      }
+    },
+    "stress-8": {
+      "text": "您多久会感到掌控一切？",
+      "scaleLabels": {
+        "min": "从不",
+        "max": "经常"
+      }
+    },
+    "stress-9": {
+      "text": "您多久会因为无法控制的事情而生气？",
+      "scaleLabels": {
+        "min": "从不",
+        "max": "经常"
+      }
+    },
+    "stress-10": {
+      "text": "您多久会感到困难堆积如山，无法克服？",
+      "scaleLabels": {
+        "min": "从不",
+        "max": "经常"
+      }
+    }
+  },
+  "scoringRules": {
+    "total_score": {
+      "name": "感知压力量表总分",
+      "description": "所有项目得分的总和（第4、5、7、8题反向计分）",
+      "ranges": {
+        "0": {
+          "label": "低压力",
+          "description": "低感知压力水平",
+          "recommendations": ["保持当前的压力管理策略", "继续健康的生活习惯", "定期监测压力水平"]
+        },
+        "1": {
+          "label": "中等压力",
+          "description": "中等感知压力水平",
+          "recommendations": ["考虑压力管理技巧", "练习放松练习", "保持工作与生活平衡"]
+        },
+        "2": {
+          "label": "高压力",
+          "description": "高感知压力水平",
+          "recommendations": ["寻求专业压力管理帮助", "考虑咨询或治疗", "实施综合压力减少策略"]
+        }
+      }
+    }
+  },
+  "interpretations": {
+    "low": {
+      "interpretation": "您的得分表明感知压力水平较低。",
+      "recommendations": "继续保持您当前的压力管理策略和健康生活习惯。",
+      "supportResources": "考虑学习额外的压力管理技巧以备将来使用。"
+    },
+    "moderate": {
+      "interpretation": "您的得分表明感知压力水平中等。",
+      "recommendations": "考虑实施压力管理技巧，如放松练习、时间管理和保持工作与生活平衡。",
+      "supportResources": "考虑压力管理研讨会、正念应用或支持小组。"
+    },
+    "high": {
+      "interpretation": "您的得分表明感知压力水平较高。",
+      "recommendations": "我们建议寻求专业压力管理帮助，包括咨询或治疗，以制定综合的压力减少策略。",
+      "supportResources": "请考虑联系心理健康专业人士，他们可以帮助您制定有效的压力管理策略。"
+    }
+  }
+}

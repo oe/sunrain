@@ -1,0 +1,121 @@
+{
+  "questions": [
+    {
+      "id": "q1",
+      "text": "Little interest or pleasure in doing things",
+      "type": "single_choice",
+      "required": true,
+      "weight": 1,
+      "options": [
+        { "id": "not_at_all", "text": "Not at all", "value": 0 },
+        { "id": "several_days", "text": "Several days", "value": 1 },
+        { "id": "more_than_half", "text": "More than half the days", "value": 2 },
+        { "id": "nearly_every_day", "text": "Nearly every day", "value": 3 }
+      ]
+    },
+    {
+      "id": "q2",
+      "text": "Feeling down, depressed, or hopeless",
+      "type": "single_choice",
+      "required": true,
+      "weight": 1,
+      "options": [
+        { "id": "not_at_all", "text": "Not at all", "value": 0 },
+        { "id": "several_days", "text": "Several days", "value": 1 },
+        { "id": "more_than_half", "text": "More than half the days", "value": 2 },
+        { "id": "nearly_every_day", "text": "Nearly every day", "value": 3 }
+      ]
+    },
+    {
+      "id": "q3",
+      "text": "Trouble falling or staying asleep, or sleeping too much",
+      "type": "single_choice",
+      "required": true,
+      "weight": 1,
+      "options": [
+        { "id": "not_at_all", "text": "Not at all", "value": 0 },
+        { "id": "several_days", "text": "Several days", "value": 1 },
+        { "id": "more_than_half", "text": "More than half the days", "value": 2 },
+        { "id": "nearly_every_day", "text": "Nearly every day", "value": 3 }
+      ]
+    },
+    {
+      "id": "q4",
+      "text": "Feeling tired or having little energy",
+      "type": "single_choice",
+      "required": true,
+      "weight": 1,
+      "options": [
+        { "id": "not_at_all", "text": "Not at all", "value": 0 },
+        { "id": "several_days", "text": "Several days", "value": 1 },
+        { "id": "more_than_half", "text": "More than half the days", "value": 2 },
+        { "id": "nearly_every_day", "text": "Nearly every day", "value": 3 }
+      ]
+    },
+    {
+      "id": "q5",
+      "text": "Poor appetite or overeating",
+      "type": "single_choice",
+      "required": true,
+      "weight": 1,
+      "options": [
+        { "id": "not_at_all", "text": "Not at all", "value": 0 },
+        { "id": "several_days", "text": "Several days", "value": 1 },
+        { "id": "more_than_half", "text": "More than half the days", "value": 2 },
+        { "id": "nearly_every_day", "text": "Nearly every day", "value": 3 }
+      ]
+    },
+    {
+      "id": "q6",
+      "text": "Feeling bad about yourself or that you are a failure or have let yourself or your family down",
+      "type": "single_choice",
+      "required": true,
+      "weight": 1,
+      "options": [
+        { "id": "not_at_all", "text": "Not at all", "value": 0 },
+        { "id": "several_days", "text": "Several days", "value": 1 },
+        { "id": "more_than_half", "text": "More than half the days", "value": 2 },
+        { "id": "nearly_every_day", "text": "Nearly every day", "value": 3 }
+      ]
+    },
+    {
+      "id": "q7",
+      "text": "Trouble concentrating on things, such as reading the newspaper or watching television",
+      "type": "single_choice",
+      "required": true,
+      "weight": 1,
+      "options": [
+        { "id": "not_at_all", "text": "Not at all", "value": 0 },
+        { "id": "several_days", "text": "Several days", "value": 1 },
+        { "id": "more_than_half", "text": "More than half the days", "value": 2 },
+        { "id": "nearly_every_day", "text": "Nearly every day", "value": 3 }
+      ]
+    },
+    {
+      "id": "q8",
+      "text": "Moving or speaking so slowly that other people could have noticed. Or the opposite - being so fidgety or restless that you have been moving around a lot more than usual",
+      "type": "single_choice",
+      "required": true,
+      "weight": 1,
+      "options": [
+        { "id": "not_at_all", "text": "Not at all", "value": 0 },
+        { "id": "several_days", "text": "Several days", "value": 1 },
+        { "id": "more_than_half", "text": "More than half the days", "value": 2 },
+        { "id": "nearly_every_day", "text": "Nearly every day", "value": 3 }
+      ]
+    },
+    {
+      "id": "q9",
+      "text": "Thoughts that you would be better off dead, or of hurting yourself",
+      "type": "single_choice",
+      "required": true,
+      "weight": 1,
+      "options": [
+        { "id": "not_at_all", "text": "Not at all", "value": 0 },
+        { "id": "several_days", "text": "Several days", "value": 1 },
+        { "id": "more_than_half", "text": "More than half the days", "value": 2 },
+        { "id": "nearly_every_day", "text": "Nearly every day", "value": 3 }
+      ]
+    }
+  ]
+}

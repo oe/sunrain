@@ -4,7 +4,7 @@ import { useAssessmentTranslations } from '@/hooks/useCSRTranslations';
 import { getDateLocale } from '@/utils/language';
 import { resultsAnalyzer } from '@/lib/assessment/ResultsAnalyzer';
 import { resourceRecommendationEngine } from '@/lib/assessment/ResourceRecommendationEngine';
-import { questionBankManager } from '@/lib/assessment/QuestionBankManager';
+import { questionBankAdapter } from '@/lib/assessment/QuestionBankAdapter';
 import type { AssessmentResult, AssessmentType } from '@/types/assessment';
 import ErrorHandler from './ErrorHandler';
 
@@ -102,9 +102,9 @@ export default function ResultsDisplay() {
         setResult(loadedResult);
 
         // Get localized assessment type information
-        const assessmentTypeData = questionBankManager.getLocalizedAssessmentType(
+        const assessmentTypeData = questionBankAdapter.getLocalizedAssessmentType(
           loadedResult.assessmentTypeId,
-          loadedResult.language
+          loadedResult.language as any
         );
         setAssessmentType(assessmentTypeData);
         setResultId(loadedResult.id);
@@ -121,9 +121,9 @@ export default function ResultsDisplay() {
           setResult(loadedResult);
 
           // Get localized assessment type information
-          const assessmentTypeData = questionBankManager.getLocalizedAssessmentType(
+          const assessmentTypeData = questionBankAdapter.getLocalizedAssessmentType(
             loadedResult.assessmentTypeId,
-            loadedResult.language
+            loadedResult.language as any
           );
           if (!assessmentTypeData) {
             throw new Error('ASSESSMENT_TYPE_NOT_FOUND');
@@ -148,9 +148,9 @@ export default function ResultsDisplay() {
         setResult(loadedResult);
 
         // Get localized assessment type information
-        const assessmentTypeData = questionBankManager.getLocalizedAssessmentType(
+        const assessmentTypeData = questionBankAdapter.getLocalizedAssessmentType(
           loadedResult.assessmentTypeId,
-          loadedResult.language
+          loadedResult.language as any
         );
         if (!assessmentTypeData) {
           throw new Error('ASSESSMENT_TYPE_NOT_FOUND');
@@ -202,9 +202,9 @@ export default function ResultsDisplay() {
       window.history.replaceState(null, '', `/assessment/results/#${loadedResult.id}`);
 
       // Get localized assessment type information
-      const assessmentTypeData = questionBankManager.getLocalizedAssessmentType(
+      const assessmentTypeData = questionBankAdapter.getLocalizedAssessmentType(
         loadedResult.assessmentTypeId,
-        loadedResult.language
+        loadedResult.language as any
       );
       if (!assessmentTypeData) {
         throw new Error('ASSESSMENT_TYPE_NOT_FOUND');

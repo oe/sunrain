@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useMemo, memo } from 'react';
 import { useAssessmentTranslations } from '@/hooks/useCSRTranslations';
 import { resultsAnalyzer } from '@/lib/assessment/ResultsAnalyzer';
-import { questionBankManager } from '@/lib/assessment/QuestionBankManager';
+import { questionBankAdapter } from '@/lib/assessment/QuestionBankAdapter';
 import { TrendingUp, TrendingDown, BarChart3, Download, AlertCircle } from 'lucide-react';
 import type { TrendData, CategoryPerformance, RiskTrends } from '@/types/assessment';
 
@@ -63,7 +63,7 @@ const AssessmentTrendsClient = memo(function AssessmentTrendsClient() {
     const performance: { [key: string]: number[] } = {};
 
     filteredResults.forEach((result: any) => {
-      const assessmentType = questionBankManager.getAssessmentType(result.assessmentTypeId);
+      const assessmentType = questionBankAdapter.getAssessmentType(result.assessmentTypeId);
       if (assessmentType) {
         const category = assessmentType.category;
         if (!performance[category]) performance[category] = [];

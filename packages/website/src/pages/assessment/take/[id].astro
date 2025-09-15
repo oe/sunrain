@@ -3,13 +3,17 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { getLocale } from 'astro-i18n-aut';
 import { createSSGTranslations } from '@/i18n/utils';
-import { questionBankManager } from '@/lib/assessment/QuestionBankManager';
+import { initializeQuestionBank } from '@/lib/assessment/initializeQuestionBank';
+import { questionBankAdapter } from '@/lib/assessment/QuestionBankAdapter';
 import AssessmentTaker from '@/components/assessment/AssessmentTaker';
 import type { Language } from '@sunrain/shared';
 
 export async function getStaticPaths() {
+  // 初始化问卷库数据
+  await initializeQuestionBank();
+  
   // Get all available assessment types
-  const assessmentTypes = questionBankManager.getAssessmentTypes();
+  const assessmentTypes = questionBankAdapter.getAssessmentTypes();
 
   return assessmentTypes.map((assessment) => ({
     params: { id: assessment.id },

@@ -1,0 +1,31 @@
+{
+  "id": "stress-scale",
+  "titleKey": "Perceived Stress Scale",
+  "descriptionKey": "Assessment of perceived stress levels",
+  "introductionKey": "The Perceived Stress Scale is a validated tool for measuring the degree to which situations in one's life are appraised as stressful.",
+  "purposeKey": "This scale helps identify stress levels and can guide stress management strategies, but it cannot replace professional consultation.",
+  "categoryId": "stress",
+  "tags": ["validated", "screening", "stress"],
+  "estimatedMinutes": 4,
+  "questionCount": 10,
+  "difficulty": "beginner",
+  "validatedScoring": true,
+  "professionalBacking": {
+    "source": "Cohen, S., Kamarck, T., & Mermelstein, R.",
+    "reference": "A global measure of perceived stress. Journal of health and social behavior, 24(4), 385-396.",
+    "validationStudies": [
+      "Cohen et al. (1983) - Original validation study",
+      "Lee (2012) - Systematic review and meta-analysis"
+    ],
+    "reliability": 0.85,
+    "validity": "Construct validity confirmed through factor analysis"
+  },
+  "instructions": "In the last month, how often have you felt or thought a certain way?",
+  "disclaimer": "This assessment helps identify stress levels but does not replace professional consultation.",
+  "isFeatured": true,
+  "isActive": true,
+  "requiresAuth": false,
+  "version": "1.0.0",
+  "createdAt": "2024-01-01T00:00:00Z",
+  "updatedAt": "2024-01-01T00:00:00Z"
+}

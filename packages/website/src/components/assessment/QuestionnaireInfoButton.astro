@@ -11,8 +11,8 @@ export interface Props {
 const { assessmentId, buttonText, language = 'en' } = Astro.props;
 
 // Get assessment data and translations
-const { questionBankManager } = await import('@/lib/assessment/QuestionBankManager');
-const assessment = questionBankManager.getAssessmentType(assessmentId);
+const { questionBankAdapter } = await import('@/lib/assessment/QuestionBankAdapter');
+const assessment = questionBankAdapter.getAssessmentType(assessmentId);
 const assessmentTranslations = getAssessmentTranslations(language as any);
 
 if (!assessment) {

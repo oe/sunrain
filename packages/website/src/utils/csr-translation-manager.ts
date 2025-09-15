@@ -704,12 +704,12 @@ export class CSRTranslationManager {
   /**
    * 清理缓存清理定时器
    */
-  private clearCacheCleanup(): void {
-    if (this.cacheCleanupTimer !== null) {
-      clearInterval(this.cacheCleanupTimer);
-      this.cacheCleanupTimer = null;
-    }
-  }
+  // private clearCacheCleanup(): void {
+  //   if (this.cacheCleanupTimer !== null) {
+  //     clearInterval(this.cacheCleanupTimer);
+  //     this.cacheCleanupTimer = null;
+  //   }
+  // }
 
   /**
    * 获取缓存统计信息

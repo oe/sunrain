@@ -6,7 +6,7 @@ import type {
   ScoringRule,
   RiskLevel,
 } from "../../types/assessment";
-import { questionBankManager } from "./QuestionBankManager";
+import { questionBankAdapter } from "./QuestionBankAdapter";
 import { structuredStorage } from "@/lib/storage/StructuredStorage";
 
 /**
@@ -43,7 +43,7 @@ export class ResultsAnalyzer {
       return null;
     }
 
-    const assessmentType = questionBankManager.getAssessmentType(
+    const assessmentType = questionBankAdapter.getAssessmentType(
       session.assessmentTypeId
     );
     if (!assessmentType) {
@@ -583,7 +583,7 @@ export class ResultsAnalyzer {
     const result = this.results.get(resultId);
     if (!result) return null;
 
-    const assessmentType = questionBankManager.getAssessmentType(
+    const assessmentType = questionBankAdapter.getAssessmentType(
       result.assessmentTypeId
     );
     if (!assessmentType) return null;

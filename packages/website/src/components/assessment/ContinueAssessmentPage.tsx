@@ -5,17 +5,17 @@ import { Play, Trash2, Clock, Calendar, AlertCircle, CheckCircle } from 'lucide-
 
 // Import the assessment engine - we'll use the singleton instance
 let assessmentEngine: any = null;
-let questionBankManager: any = null;
+let questionBankAdapter: any = null;
 
 // Dynamically import the modules to avoid SSR issues
 const loadModules = async () => {
-  if (typeof window !== 'undefined' && (!assessmentEngine || !questionBankManager)) {
+  if (typeof window !== 'undefined' && (!assessmentEngine || !questionBankAdapter)) {
     const engineModule = await import('@/lib/assessment/AssessmentEngine');
-    const questionModule = await import('@/lib/assessment/QuestionBankManager');
+    const adapterModule = await import('@/lib/assessment/QuestionBankAdapter');
     assessmentEngine = engineModule.assessmentEngine;
-    questionBankManager = questionModule.questionBankManager;
+    questionBankAdapter = adapterModule.questionBankAdapter;
   }
-  return { assessmentEngine, questionBankManager };
+  return { assessmentEngine, questionBankAdapter };
 };
 
 import type { ContinueAssessmentPageProps } from '@/types/assessment';
@@ -289,7 +289,7 @@ export default function ContinueAssessmentPage({ className = '', asWidget = fals
       {/* Active Sessions List */}
       <div className="space-y-6">
         {activeSessions.map((session) => {
-          const assessmentType = questionBankManager?.getAssessmentType(session.assessmentTypeId);
+          const assessmentType = questionBankAdapter?.getAssessmentType(session.assessmentTypeId);
           const progress = assessmentEngine?.getProgress(session.id);
 
           const statusBadge = session.status === 'active' ? 'badge-success' : 'badge-warning';

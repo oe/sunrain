@@ -1,9 +1,9 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { AssessmentEngine } from '../AssessmentEngine';
 
-// Mock the questionBankManager
-vi.mock('../QuestionBankManager', () => ({
-  questionBankManager: {
+// Mock the questionBankAdapter
+vi.mock('../QuestionBankAdapter', () => ({
+  questionBankAdapter: {
     getAssessmentType: vi.fn((id: string) => {
       if (id === 'phq-9') {
         return {

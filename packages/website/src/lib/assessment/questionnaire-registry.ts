@@ -4,28 +4,32 @@
  * 初始化和注册所有可用的问卷
  */
 
-import { questionBankManager } from './QuestionBankManager';
+import { questionBankAdapter } from './QuestionBankAdapter';
 
 /**
  * 初始化默认问卷
  */
-export function initializeQuestionnaires() {
-  // QuestionBankManager already initializes default assessments in constructor
-  console.log('✅ Questionnaires initialized successfully');
+export async function initializeQuestionnaires() {
+  try {
+    await questionBankAdapter.initialize();
+    console.log('✅ Questionnaires initialized successfully');
+  } catch (error) {
+    console.error('❌ Failed to initialize questionnaires:', error);
+  }
 }
 
 /**
  * 获取所有已注册的问卷ID
  */
 export function getRegisteredQuestionnaireIds(): string[] {
-  return questionBankManager.getAssessmentTypes().map(assessment => assessment.id);
+  return questionBankAdapter.getAssessmentTypes().map(assessment => assessment.id);
 }
 
 /**
  * 检查问卷是否已注册
  */
 export function isQuestionnaireRegistered(id: string): boolean {
-  return questionBankManager.getAssessmentType(id) !== undefined;
+  return questionBankAdapter.getAssessmentType(id) !== undefined;
 }
 
 // 自动初始化

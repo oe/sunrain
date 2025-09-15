@@ -1,0 +1,123 @@
+{
+  "title": "GAD-7 焦虑筛查量表",
+  "description": "广泛性焦虑障碍7项量表",
+  "introduction": "GAD-7是一个经过验证的焦虑筛查工具，由7个问题组成，可以帮助识别焦虑症状的严重程度。",
+  "purpose": "此量表旨在帮助识别和评估焦虑症状，但不能替代专业医疗诊断。",
+  "instructions": "在过去的两周里，您是否经常被以下问题困扰？",
+  "disclaimer": "此评估仅用于筛查目的，不能替代专业医疗建议。",
+  "questions": {
+    "gad7-1": {
+      "text": "感到紧张、焦虑或烦躁",
+      "options": {
+        "not_at_all": "完全没有",
+        "several_days": "几天",
+        "more_than_half": "超过一半的天数",
+        "nearly_every_day": "几乎每天"
+      }
+    },
+    "gad7-2": {
+      "text": "无法停止或控制担忧",
+      "options": {
+        "not_at_all": "完全没有",
+        "several_days": "几天",
+        "more_than_half": "超过一半的天数",
+        "nearly_every_day": "几乎每天"
+      }
+    },
+    "gad7-3": {
+      "text": "对很多事情过度担忧",
+      "options": {
+        "not_at_all": "完全没有",
+        "several_days": "几天",
+        "more_than_half": "超过一半的天数",
+        "nearly_every_day": "几乎每天"
+      }
+    },
+    "gad7-4": {
+      "text": "难以放松",
+      "options": {
+        "not_at_all": "完全没有",
+        "several_days": "几天",
+        "more_than_half": "超过一半的天数",
+        "nearly_every_day": "几乎每天"
+      }
+    },
+    "gad7-5": {
+      "text": "坐立不安，难以静坐",
+      "options": {
+        "not_at_all": "完全没有",
+        "several_days": "几天",
+        "more_than_half": "超过一半的天数",
+        "nearly_every_day": "几乎每天"
+      }
+    },
+    "gad7-6": {
+      "text": "容易生气或烦躁",
+      "options": {
+        "not_at_all": "完全没有",
+        "several_days": "几天",
+        "more_than_half": "超过一半的天数",
+        "nearly_every_day": "几乎每天"
+      }
+    },
+    "gad7-7": {
+      "text": "感到害怕，好像会发生什么可怕的事情",
+      "options": {
+        "not_at_all": "完全没有",
+        "several_days": "几天",
+        "more_than_half": "超过一半的天数",
+        "nearly_every_day": "几乎每天"
+      }
+    }
+  },
+  "scoringRules": {
+    "total_score": {
+      "name": "GAD-7 总分",
+      "description": "所有项目得分的总和",
+      "ranges": {
+        "0": {
+          "label": "轻微",
+          "description": "轻微焦虑症状",
+          "recommendations": ["保持良好的生活习惯", "定期进行体育锻炼", "练习放松技巧"]
+        },
+        "1": {
+          "label": "轻度",
+          "description": "轻度焦虑症状",
+          "recommendations": ["考虑压力管理技巧", "练习正念", "保持规律作息"]
+        },
+        "2": {
+          "label": "中度",
+          "description": "中度焦虑症状",
+          "recommendations": ["考虑寻求专业帮助", "练习认知行为技巧", "考虑心理咨询"]
+        },
+        "3": {
+          "label": "重度",
+          "description": "重度焦虑症状",
+          "recommendations": ["立即寻求专业帮助", "考虑药物治疗", "建立支持网络"]
+        }
+      }
+    }
+  },
+  "interpretations": {
+    "minimal": {
+      "interpretation": "您的得分表明您目前没有明显的焦虑症状。",
+      "recommendations": "继续保持健康的生活方式，包括规律作息、均衡饮食和适量运动。",
+      "supportResources": "如果您感到压力，可以考虑学习压力管理技巧。"
+    },
+    "mild": {
+      "interpretation": "您的得分表明您可能有轻微的焦虑症状。",
+      "recommendations": "建议您关注自己的焦虑水平，学习压力管理技巧。",
+      "supportResources": "可以考虑正念应用、放松技巧或支持小组。"
+    },
+    "moderate": {
+      "interpretation": "您的得分表明您可能有中度的焦虑症状。",
+      "recommendations": "强烈建议您寻求专业帮助，包括心理咨询或精神科医生的评估。",
+      "supportResources": "请考虑联系心理健康专业人士，他们可以为您提供适当的治疗建议。"
+    },
+    "severe": {
+      "interpretation": "您的得分表明您可能有重度的焦虑症状。",
+      "recommendations": "建议您立即寻求专业帮助，可能需要药物治疗和心理治疗相结合。",
+      "supportResources": "请尽快联系心理健康专业人士，他们可以为您制定个性化的治疗计划。"
+    }
+  }
+}

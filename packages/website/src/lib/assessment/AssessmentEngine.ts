@@ -3,7 +3,7 @@ import type {
   AssessmentAnswer,
   Question,
 } from "@/types/assessment";
-import { questionBankManager } from "@/lib/assessment/QuestionBankManager";
+import { questionBankAdapter } from "@/lib/assessment/QuestionBankAdapter";
 import {
   AssessmentError,
   AssessmentErrorType,
@@ -110,7 +110,7 @@ export class AssessmentEngine {
       this.ensurePeriodicSaveStarted();
 
       const assessmentType =
-        questionBankManager.getAssessmentType(assessmentTypeId);
+        questionBankAdapter.getAssessmentType(assessmentTypeId);
       if (!assessmentType) {
         const error = AssessmentErrorFactory.createSessionError(
           AssessmentErrorType.ASSESSMENT_TYPE_NOT_FOUND,
@@ -273,13 +273,13 @@ export class AssessmentEngine {
     if (!session) return null;
 
     // First try to get the base assessment type (which should have complete data)
-    const baseAssessmentType = questionBankManager.getAssessmentType(session.assessmentTypeId);
+    const baseAssessmentType = questionBankAdapter.getAssessmentType(session.assessmentTypeId);
     if (!baseAssessmentType) return null;
 
     // Then get localized version if needed
-    const assessmentType = questionBankManager.getLocalizedAssessmentType(
+    const assessmentType = questionBankAdapter.getLocalizedAssessmentType(
       session.assessmentTypeId,
-      session.language
+      session.language as any
     );
 
     const questions = assessmentType?.questions || baseAssessmentType.questions;
@@ -343,7 +343,7 @@ export class AssessmentEngine {
     session.currentQuestionIndex++;
     session.lastActivityAt = new Date();
 
-    const assessmentType = questionBankManager.getAssessmentType(
+    const assessmentType = questionBankAdapter.getAssessmentType(
       session.assessmentTypeId
     );
     if (!assessmentType) {
@@ -436,7 +436,7 @@ export class AssessmentEngine {
     const session = this.sessions.get(sessionId);
     if (!session) return null;
 
-    const assessmentType = questionBankManager.getAssessmentType(
+    const assessmentType = questionBankAdapter.getAssessmentType(
       session.assessmentTypeId
     );
     if (
@@ -467,7 +467,7 @@ export class AssessmentEngine {
     const session = this.sessions.get(sessionId);
     if (!session) return null;
 
-    const assessmentType = questionBankManager.getAssessmentType(
+    const assessmentType = questionBankAdapter.getAssessmentType(
       session.assessmentTypeId
     );
     if (!assessmentType) return null;
@@ -771,13 +771,13 @@ export class AssessmentEngine {
   /**
    * Stop periodic save timer
    */
-  private stopPeriodicSave(): void {
-    if (this.periodicSaveTimer !== null) {
-      clearInterval(this.periodicSaveTimer);
-      this.periodicSaveTimer = null;
-      this.periodicSaveStarted = false;
-    }
-  }
+  // private stopPeriodicSave(): void {
+  //   if (this.periodicSaveTimer !== null) {
+  //     clearInterval(this.periodicSaveTimer);
+  //     this.periodicSaveTimer = null;
+  //     this.periodicSaveStarted = false;
+  //   }
+  // }
 
   /**
    * Save sessions to localStorage

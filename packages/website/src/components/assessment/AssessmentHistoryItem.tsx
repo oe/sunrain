@@ -2,7 +2,7 @@ import { memo, useCallback } from 'react';
 import { Calendar, Clock, BarChart3, Eye, Share2, Trash2 } from 'lucide-react';
 import { useAssessmentTranslations } from '@/hooks/useCSRTranslations';
 import { getDateLocale } from '@/utils/language';
-import { questionBankManager } from '@/lib/assessment/QuestionBankManager';
+import { questionBankAdapter } from '@/lib/assessment/QuestionBankAdapter';
 import type { AssessmentResult } from '@/types/assessment';
 
 interface AssessmentHistoryItemProps {
@@ -62,7 +62,7 @@ function AssessmentHistoryItem({ result, onViewDetails, onShare, onDelete }: Ass
     return `${remainingSeconds}${t('common.timeUnits.seconds')}`;
   }, [t]);
 
-  const assessmentType = questionBankManager.getAssessmentType(result.assessmentTypeId);
+  const assessmentType = questionBankAdapter.getAssessmentType(result.assessmentTypeId);
 
   return (
     <div className="card bg-base-100 shadow-sm">

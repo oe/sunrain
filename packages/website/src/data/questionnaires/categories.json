@@ -1,0 +1,52 @@
+{
+  "categories": [
+    {
+      "id": "depression",
+      "nameKey": "categories.depression.name",
+      "descriptionKey": "categories.depression.description",
+      "icon": "mood-sad",
+      "color": "#3B82F6",
+      "order": 1
+    },
+    {
+      "id": "anxiety",
+      "nameKey": "categories.anxiety.name",
+      "descriptionKey": "categories.anxiety.description",
+      "icon": "heart-pulse",
+      "color": "#F59E0B",
+      "order": 2
+    },
+    {
+      "id": "stress",
+      "nameKey": "categories.stress.name",
+      "descriptionKey": "categories.stress.description",
+      "icon": "brain",
+      "color": "#EF4444",
+      "order": 3
+    },
+    {
+      "id": "personality",
+      "nameKey": "categories.personality.name",
+      "descriptionKey": "categories.personality.description",
+      "icon": "user-circle",
+      "color": "#8B5CF6",
+      "order": 4
+    },
+    {
+      "id": "self-esteem",
+      "nameKey": "categories.selfEsteem.name",
+      "descriptionKey": "categories.selfEsteem.description",
+      "icon": "heart",
+      "color": "#10B981",
+      "order": 5
+    },
+    {
+      "id": "relationships",
+      "nameKey": "categories.relationships.name",
+      "descriptionKey": "categories.relationships.description",
+      "icon": "users",
+      "color": "#F97316",
+      "order": 6
+    }
+  ]
+}

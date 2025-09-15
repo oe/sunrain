@@ -1,5 +1,5 @@
 import { assessmentEngine } from '@/lib/assessment/AssessmentEngine.js';
-import { questionBankManager } from '@/lib/assessment/QuestionBankManager.js';
+import { questionBankAdapter } from '@/lib/assessment/QuestionBankAdapter.js';
 import { resultsAnalyzer } from '@/lib/assessment/ResultsAnalyzer.js';
 
 export class AssessmentInterface {
@@ -11,7 +11,7 @@ export class AssessmentInterface {
     this.timeInterval = null;
     this.startTime = Date.now();
     this.assessmentEngine = assessmentEngine;
-    this.questionBankManager = questionBankManager;
+    this.questionBankAdapter = questionBankAdapter;
     this.resultsAnalyzer = resultsAnalyzer;
 
     this.initializeInterface();

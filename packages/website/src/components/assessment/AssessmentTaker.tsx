@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback, memo } from 'react';
 import { CheckCircle } from 'lucide-react';
 import { useAssessmentTranslations } from '@/hooks/useCSRTranslations';
+import { initializeQuestionBank } from '@/lib/assessment/initializeQuestionBank';
 import QuestionCard from './QuestionCard';
 import ProgressBar from './ProgressBar';
 import NavigationControls from './NavigationControls';
@@ -84,6 +85,9 @@ const AssessmentTaker = memo(function AssessmentTaker({
   const initializeAssessment = useCallback(async () => {
     try {
       setState(prev => ({ ...prev, isLoading: true, error: null }));
+
+      // 确保问卷库已初始化
+      await initializeQuestionBank();
 
       const engine = await loadAssessmentEngine();
 
@@ -233,9 +237,9 @@ const AssessmentTaker = memo(function AssessmentTaker({
       const engine = await loadAssessmentEngine();
       if (!engine) throw new Error('Assessment engine not available');
 
-      // Get the complete question data from questionBankManager
-      const { questionBankManager } = await import('@/lib/assessment/QuestionBankManager');
-      const assessmentType = questionBankManager.getAssessmentType(assessmentId);
+      // Get the complete question data from questionBankAdapter
+      const { questionBankAdapter } = await import('@/lib/assessment/QuestionBankAdapter');
+      const assessmentType = questionBankAdapter.getAssessmentType(assessmentId);
       const completeQuestion = assessmentType?.questions?.find(q => q.id === state.currentQuestion.id) || state.currentQuestion;
 
       const answer: AssessmentAnswer = {

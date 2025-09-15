@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useMemo, memo } from 'react';
 import { useAssessmentTranslations } from '@/hooks/useCSRTranslations';
 import { resultsAnalyzer } from '@/lib/assessment/ResultsAnalyzer';
-import { questionBankManager } from '@/lib/assessment/QuestionBankManager';
+import { questionBankAdapter } from '@/lib/assessment/QuestionBankAdapter';
 import { BarChart3 } from 'lucide-react';
 import AssessmentHistoryItem from './AssessmentHistoryItem';
 import AssessmentStatistics from './AssessmentStatistics';
@@ -44,7 +44,7 @@ function AssessmentHistoryClient() {
     const filtered = allResults.filter(result => {
       // Type filter
       if (filters.type) {
-        const assessmentType = questionBankManager.getAssessmentType(result.assessmentTypeId);
+        const assessmentType = questionBankAdapter.getAssessmentType(result.assessmentTypeId);
         if (!assessmentType || assessmentType.category !== filters.type) {
           return false;
         }
