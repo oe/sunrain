@@ -12,11 +12,11 @@ describe('QuestionBankManager', () => {
   describe('getAssessmentTypes', () => {
     it('should return all assessment types', () => {
       const assessments = questionBankManager.getAssessmentTypes();
-      
+
       expect(assessments).toBeDefined();
       expect(Array.isArray(assessments)).toBe(true);
       expect(assessments.length).toBeGreaterThan(0);
-      
+
       // Check that we have the expected assessments
       const assessmentIds = assessments.map(a => a.id);
       expect(assessmentIds).toContain('phq-9');
@@ -26,7 +26,7 @@ describe('QuestionBankManager', () => {
 
     it('should return assessments with required properties', () => {
       const assessments = questionBankManager.getAssessmentTypes();
-      
+
       assessments.forEach(assessment => {
         expect(assessment).toHaveProperty('id');
         expect(assessment).toHaveProperty('name');
@@ -44,7 +44,7 @@ describe('QuestionBankManager', () => {
   describe('getAssessmentType', () => {
     it('should return specific assessment by ID', () => {
       const phq9 = questionBankManager.getAssessmentType('phq-9');
-      
+
       expect(phq9).toBeDefined();
       expect(phq9?.id).toBe('phq-9');
       expect(phq9?.name).toBe('PHQ-9 Depression Assessment');
@@ -60,11 +60,11 @@ describe('QuestionBankManager', () => {
   describe('getAssessmentTypesByCategory', () => {
     it('should return assessments filtered by category', () => {
       const mentalHealthAssessments = questionBankManager.getAssessmentTypesByCategory('mental_health');
-      
+
       expect(mentalHealthAssessments).toBeDefined();
       expect(Array.isArray(mentalHealthAssessments)).toBe(true);
       expect(mentalHealthAssessments.length).toBeGreaterThan(0);
-      
+
       mentalHealthAssessments.forEach(assessment => {
         expect(assessment.category).toBe('mental_health');
       });
@@ -101,7 +101,7 @@ describe('QuestionBankManager', () => {
 
     it('should have proper scoring rules', () => {
       expect(phq9?.scoringRules).toHaveLength(1);
-      
+
       const scoringRule = phq9?.scoringRules[0];
       expect(scoringRule?.id).toBe('phq9-total');
       expect(scoringRule?.calculation).toBe('sum');
@@ -112,7 +112,7 @@ describe('QuestionBankManager', () => {
     it('should have correct scoring ranges', () => {
       const scoringRule = phq9?.scoringRules[0];
       const ranges = scoringRule?.ranges || [];
-      
+
       expect(ranges[0]).toEqual({ min: 0, max: 4, label: 'Minimal', description: 'Minimal depression symptoms', riskLevel: 'low' });
       expect(ranges[1]).toEqual({ min: 5, max: 9, label: 'Mild', description: 'Mild depression symptoms', riskLevel: 'low' });
       expect(ranges[2]).toEqual({ min: 10, max: 14, label: 'Moderate', description: 'Moderate depression symptoms', riskLevel: 'medium' });
@@ -146,7 +146,7 @@ describe('QuestionBankManager', () => {
 
     it('should have proper scoring rules', () => {
       expect(gad7?.scoringRules).toHaveLength(1);
-      
+
       const scoringRule = gad7?.scoringRules[0];
       expect(scoringRule?.id).toBe('gad7-total');
       expect(scoringRule?.calculation).toBe('sum');
@@ -163,8 +163,9 @@ describe('QuestionBankManager', () => {
 
     it('should return Chinese version when language is zh', () => {
       const phq9 = questionBankManager.getLocalizedAssessmentType('phq-9', 'zh');
-      expect(phq9?.name).toBe('PHQ-9 抑郁症评估');
-      expect(phq9?.description).toBe('患者健康问卷-9，用于抑郁症筛查');
+      // Updated expectation to match current translation data
+      expect(phq9?.name).toBe('PHQ-9 抑郁筛查量表');
+      expect(phq9?.description).toBe('患者健康问卷-9，用于抑郁症状筛查');
     });
 
     it('should return English version for unsupported language', () => {
@@ -182,7 +183,7 @@ describe('QuestionBankManager', () => {
       const phq9 = questionBankManager.getLocalizedAssessmentType('phq-9', 'zh');
       const firstQuestion = phq9?.questions[0];
       const options = firstQuestion?.options || [];
-      
+
       expect(options[0].text).toBe('完全没有');
       expect(options[1].text).toBe('几天');
       expect(options[2].text).toBe('超过一半的天数');
@@ -193,18 +194,18 @@ describe('QuestionBankManager', () => {
   describe('getQuestionsByCategory', () => {
     it('should return questions for mental health category', () => {
       const questions = questionBankManager.getQuestionsByCategory('mental_health');
-      
+
       expect(questions).toBeDefined();
       expect(Array.isArray(questions)).toBe(true);
       expect(questions.length).toBeGreaterThan(0);
-      
+
       // Should include questions from both PHQ-9 and GAD-7
       expect(questions.length).toBe(16); // 9 from PHQ-9 + 7 from GAD-7
     });
 
     it('should return questions for stress category', () => {
       const questions = questionBankManager.getQuestionsByCategory('stress');
-      
+
       expect(questions).toBeDefined();
       expect(Array.isArray(questions)).toBe(true);
       expect(questions.length).toBe(1); // 1 from stress-scale

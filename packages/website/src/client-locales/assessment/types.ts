@@ -62,6 +62,8 @@ export interface IAssessmentTranslations {
 
   /** 继续评测页面 */
   continue: {
+    title: string;
+    subtitle: string;
     loading: string;
   };
 

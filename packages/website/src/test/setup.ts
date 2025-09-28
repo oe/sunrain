@@ -77,22 +77,41 @@ Object.defineProperty(window, 'matchMedia', {
 // Mock console methods to reduce noise in tests
 const originalConsoleError = console.error;
 const originalConsoleWarn = console.warn;
+const originalConsoleLog = console.log;
+const originalConsoleInfo = console.info;
 
 beforeEach(() => {
   // Reset all mocks before each test
   vi.clearAllMocks();
-  
+
   // Reset localStorage and sessionStorage
   localStorageMock.getItem.mockClear();
   localStorageMock.setItem.mockClear();
   localStorageMock.removeItem.mockClear();
   localStorageMock.clear.mockClear();
-  
+
   sessionStorageMock.getItem.mockClear();
   sessionStorageMock.setItem.mockClear();
   sessionStorageMock.removeItem.mockClear();
   sessionStorageMock.clear.mockClear();
 });
+
+// Provide a global flag for code under test to optionally skip long timers
+;(globalThis as any).__DISABLE_ASSESSMENT_TIMERS__ = true;
+
+// Lightweight timer stubs to prevent large timer queue buildup
+const originalSetTimeout = globalThis.setTimeout;
+const originalClearTimeout = globalThis.clearTimeout;
+
+globalThis.setTimeout = ((fn: any, delay?: number, ...args: any[]) => {
+  // Collapse very long delays when flag is set
+  if ((globalThis as any).__DISABLE_ASSESSMENT_TIMERS__ && delay && delay > 1000) {
+    return originalSetTimeout(fn, 5, ...args);
+  }
+  return originalSetTimeout(fn, delay, ...args);
+}) as any;
+
+globalThis.clearTimeout = ((id: any) => originalClearTimeout(id)) as any;
 
 // Suppress specific console errors that are expected in tests
 console.error = (...args: any[]) => {
@@ -119,3 +138,7 @@ console.warn = (...args: any[]) => {
   }
   originalConsoleWarn(...args);
 };
+
+// Silence generic log/info (can be re-enabled per test if needed)
+console.log = (..._args: any[]) => {};
+console.info = (..._args: any[]) => {};

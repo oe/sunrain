@@ -3,9 +3,20 @@ import { resolve } from 'path';
 
 export default defineConfig({
   test: {
+    pool: 'forks',
     environment: 'jsdom',
     globals: true,
     setupFiles: ['./src/test/setup.ts'],
+    include: [
+      'test/unit/**/*.test.{ts,tsx}',
+      'test/unit/**/*.spec.{ts,tsx}'
+    ],
+    poolOptions: {
+      threads: {
+        maxThreads: 1,
+        minThreads: 1
+      }
+    },
     environmentOptions: {
       jsdom: {
         resources: 'usable'

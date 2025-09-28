@@ -4,7 +4,7 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 // import { getSSGAssessmentData } from '@/lib/assessment/SSGAssessmentData';
 import { getLocale } from 'astro-i18n-aut';
 import { createSSGTranslations } from '@/i18n/utils';
-import ContinueAssessmentWidget from '@/components/assessment/ContinueAssessmentWidget.astro';
+import ContinueAssessmentWidget from '@/components/assessment/ContinueAssessmentWidget';
 import AssessmentList from '@/components/assessment/AssessmentList.astro';
 import type { Language } from '@sunrain/shared';
 
@@ -28,8 +28,8 @@ const t = createSSGTranslations(currentLang, 'assessment');
         </p>
       </div>
 
-      <!-- Continue Assessment Widget - Optimized with placeholder -->
-      <ContinueAssessmentWidget />
+      <!-- Continue Assessment Widget - Client-side React component -->
+      <ContinueAssessmentWidget client:only="react" />
 
       <!-- Assessment Categories - Static SSG -->
       <AssessmentList language={currentLang} />

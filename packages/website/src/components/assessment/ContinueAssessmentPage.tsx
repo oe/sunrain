@@ -183,13 +183,13 @@ export default function ContinueAssessmentPage({ className = '', asWidget = fals
     setTimeout(() => setToastMessage(null), 3000);
   };
 
-  // Don't render anything while translations are loading
-  if (translationsLoading) {
-    return null;
-  }
-
   // Widget mode - simple notification
   if (asWidget) {
+    // Don't render anything if translations are still loading
+    if (translationsLoading) {
+      return null;
+    }
+
     if (isLoading) {
       return (
         <div className={`animate-pulse bg-base-200 h-16 rounded-lg ${className}`}>

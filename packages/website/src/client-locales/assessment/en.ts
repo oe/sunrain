@@ -56,6 +56,8 @@ export const assessmentEn: IAssessmentTranslations = {
   },
 
   continue: {
+    title: "Continue Assessment",
+    subtitle: "Complete your unfinished mental health assessments",
     loading: "Loading incomplete assessments...",
   },
 

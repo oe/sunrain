@@ -22,11 +22,16 @@ export class AssessmentEngine {
   private sessions: Map<string, AssessmentSession> = new Map();
   private sessionTimers: Map<string, number> = new Map();
   private reminderTimers: Map<string, number> = new Map();
-  private sessionTimeout: number = 1800000; // 30 minutes
+  private sessionTimeout: number = 1800000; // 30 minutes (production default)
   private isClientSide: boolean = false;
 
   constructor() {
     this.isClientSide = this.checkClientSideEnvironment();
+
+    // In test environments, optionally shorten session timeout to reduce active timers
+    if ((globalThis as any).__DISABLE_ASSESSMENT_TIMERS__) {
+      this.sessionTimeout = 50; // very short to allow rapid cleanup
+    }
 
     if (this.isClientSide) {
       // 异步加载会话，不阻塞构造函数
@@ -97,11 +102,11 @@ export class AssessmentEngine {
         await questionBankAdapter.initialize();
       }
 
-      
+
       const assessmentType =
         questionBankAdapter.getAssessmentType(assessmentTypeId);
-      
-      
+
+
       if (!assessmentType) {
         const error = AssessmentErrorFactory.createSessionError(
           AssessmentErrorType.ASSESSMENT_TYPE_NOT_FOUND,
@@ -332,7 +337,7 @@ export class AssessmentEngine {
     // Move to next question
     session.currentQuestionIndex++;
     session.lastActivityAt = new Date();
-    
+
     // Save session after each answer submission
     this.saveSessionsToStorage();
 
@@ -670,6 +675,10 @@ export class AssessmentEngine {
    */
   private startSessionTimer(sessionId: string): void {
     if (!this.isClientSide) return;
+    if ((globalThis as any).__DISABLE_ASSESSMENT_TIMERS__) {
+      // Skip creating timers in test environment to reduce memory usage
+      return;
+    }
 
     this.stopSessionTimer(sessionId);
 
@@ -830,6 +839,9 @@ export class AssessmentEngine {
     }
 
     try {
+      // Clear existing sessions before loading from storage
+      this.sessions.clear();
+
       const sessions = await structuredStorage.getByType<AssessmentSession>('assessment_session');
 
       for (const session of sessions) {

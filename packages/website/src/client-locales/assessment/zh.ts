@@ -56,6 +56,8 @@ export const assessmentZh: IAssessmentTranslations = {
   },
 
   continue: {
+    title: '继续评测',
+    subtitle: '完成您未完成的心理健康评测',
     loading: '正在加载未完成的评测...',
   },
 

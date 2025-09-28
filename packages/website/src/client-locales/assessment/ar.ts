@@ -56,6 +56,8 @@ export const assessmentAr: IAssessmentTranslations = {
   },
 
   continue: {
+    title: 'متابعة التقييم',
+    subtitle: 'أكمل تقييماتك الصحية النفسية غير المكتملة',
     loading: 'جاري تحميل التقييمات غير المكتملة...',
   },
 

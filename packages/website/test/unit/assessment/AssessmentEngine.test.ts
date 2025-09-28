@@ -1,8 +1,8 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
-import { AssessmentEngine } from '../AssessmentEngine';
+import { AssessmentEngine } from '@/lib/assessment/AssessmentEngine';
 
 // Mock the questionBankAdapter with required methods for new engine logic
-vi.mock('../QuestionBankAdapter', () => {
+vi.mock('@/lib/assessment/QuestionBankAdapter', () => {
   const assessment = {
     id: 'phq-9',
     name: 'PHQ-9 Depression Assessment',
@@ -15,7 +15,7 @@ vi.mock('../QuestionBankAdapter', () => {
         options: [
           { id: 'phq9-1-0', text: 'Not at all', value: 0 },
           { id: 'phq9-1-1', text: 'Several days', value: 1 },
-          { id: 'phq9-1-2', text: 'More than half the days', value: 2 },
+            { id: 'phq9-1-2', text: 'More than half the days', value: 2 },
           { id: 'phq9-1-3', text: 'Nearly every day', value: 3 }
         ]
       },
@@ -44,7 +44,7 @@ vi.mock('../QuestionBankAdapter', () => {
 });
 
 // Mock the ResultsAnalyzer
-vi.mock('../ResultsAnalyzer', () => ({
+vi.mock('@/lib/assessment/ResultsAnalyzer', () => ({
   resultsAnalyzer: {
     analyzeSession: vi.fn().mockResolvedValue({
       id: 'result-123',
@@ -75,10 +75,17 @@ vi.mock('@/lib/storage/StructuredStorage', () => ({
 
 describe('AssessmentEngine', () => {
   let engine: AssessmentEngine;
+  const originalConsole = { log: console.log, info: console.info, warn: console.warn, error: console.error };
 
   beforeEach(() => {
     // Clear all mocks
     vi.clearAllMocks();
+
+    // Silence verbose engine logs to reduce memory/console buffering during test run
+    console.log = vi.fn();
+    console.info = vi.fn();
+    console.warn = vi.fn();
+    console.error = vi.fn();
 
     // Mock browser environment
     Object.defineProperty(window, 'localStorage', {
@@ -111,6 +118,11 @@ describe('AssessmentEngine', () => {
   afterEach(() => {
     // Clean up any active sessions
     engine.clearAllSessions();
+    // Restore console
+    console.log = originalConsole.log;
+    console.info = originalConsole.info;
+    console.warn = originalConsole.warn;
+    console.error = originalConsole.error;
   });
 
   describe('startAssessment', () => {
