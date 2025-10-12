@@ -12,7 +12,7 @@ export const sharedKo: ISharedTranslations = {
     assessment: '평가',
   },
   footer: {
-    copyright: '© 2025 Sunrain. 모든 권리 보유.',
+    copyright: '© 2025 Sunrain.me. 모든 권리 보유.',
     mission: '글로벌 익명 정신 건강 지원 플랫폼, 희망과 치유를 전파합니다.',
     quickLinks: '빠른 링크',
     community: '커뮤니티',

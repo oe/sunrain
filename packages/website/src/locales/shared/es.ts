@@ -12,7 +12,7 @@ export const sharedEs: ISharedTranslations = {
     assessment: 'Evaluación',
   },
   footer: {
-    copyright: '© 2025 Sunrain. Todos los derechos reservados.',
+    copyright: '© 2025 Sunrain.me. Todos los derechos reservados.',
     mission: 'Plataforma global anónima de apoyo a la salud mental, difundiendo esperanza y sanación.',
     quickLinks: 'Enlaces Rápidos',
     community: 'Comunidad',

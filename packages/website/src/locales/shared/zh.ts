@@ -13,7 +13,7 @@ export const sharedZh: ISharedTranslations = {
     assessment: '心理测评'
   },
   footer: {
-    copyright: '© 2025 Sunrain. 保留所有权利.',
+    copyright: '© 2025 Sunrain.me. 保留所有权利.',
     mission: '全球匿名心理支持平台，传播希望和治愈。',
     quickLinks: '快捷链接',
     community: '社区',

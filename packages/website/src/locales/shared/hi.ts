@@ -12,7 +12,7 @@ export const sharedHi: ISharedTranslations = {
     assessment: 'मूल्यांकन',
   },
   footer: {
-    copyright: '© 2025 Sunrain. सभी अधिकार सुरक्षित.',
+    copyright: '© 2025 Sunrain.me. सभी अधिकार सुरक्षित.',
     mission: 'वैश्विक गुमनाम मानसिक स्वास्थ्य सहायता मंच, आशा और उपचार फैलाना।',
     quickLinks: 'त्वरित लिंक',
     community: 'समुदाय',

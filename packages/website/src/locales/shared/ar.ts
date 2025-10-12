@@ -12,7 +12,7 @@ export const sharedAr: ISharedTranslations = {
     assessment: 'التقييم',
   },
   footer: {
-    copyright: '© 2025 Sunrain. جميع الحقوق محفوظة.',
+    copyright: '© 2025 Sunrain.me. جميع الحقوق محفوظة.',
     mission: 'منصة عالمية مجهولة لدعم الصحة النفسية، نشر الأمل والشفاء.',
     quickLinks: 'روابط سريعة',
     community: 'المجتمع',

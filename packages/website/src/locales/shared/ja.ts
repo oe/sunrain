@@ -12,7 +12,7 @@ export const sharedJa: ISharedTranslations = {
     assessment: 'アセスメント',
   },
   footer: {
-    copyright: '© 2025 Sunrain. 全著作権所有.',
+    copyright: '© 2025 Sunrain.me. 全著作権所有.',
     mission: 'グローバル匿名メンタルヘルスサポートプラットフォーム、希望と癒しを広める。',
     quickLinks: 'クイックリンク',
     community: 'コミュニティ',
