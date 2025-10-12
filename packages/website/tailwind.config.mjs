@@ -5,6 +5,11 @@ export default {
     './src/astro_tmp_pages_*/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'
   ],
   darkMode: 'class',
+  plugins: [
+    require('tailwindcss-rtl'),
+    require('daisyui'),
+    require('@tailwindcss/typography'),
+  ],
   theme: {
     extend: {
       fontFamily: {

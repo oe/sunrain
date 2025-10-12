@@ -33,7 +33,11 @@ const practices = practiceLoader.getSimplePractices(lang);
       {practices.length > 0 ? (
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {practices.map((practice) => (
-            <div class="card bg-base-100 shadow-xl transition-all duration-300 hover:shadow-2xl hover:scale-105">
+            <a
+              href={getRelativeLocaleUrl(lang, `/practice/${practice.id}/`)}
+              class="card bg-base-100 shadow-xl transition-all duration-300 hover:shadow-2xl hover:scale-105 block"
+              aria-label={`${t('startPractice')}: ${practice.name}`}
+            >
               <div class="card-body">
                 <div class="flex items-center justify-between mb-2">
                   <span class="badge badge-primary badge-sm">{practice.difficulty}</span>
@@ -52,18 +56,15 @@ const practices = practiceLoader.getSimplePractices(lang);
                 </div>
 
                 <div class="card-actions justify-end">
-                  <a
-                    href={getRelativeLocaleUrl(lang, `/practice/${practice.id}/`)}
-                    class="btn btn-primary btn-sm w-full relative"
-                  >
+                  <div class="btn btn-primary btn-sm w-full relative">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1m4 0h1m-6 4h1m4 0h1m-6-8h8a2 2 0 012 2v8a2 2 0 01-2 2H8a2 2 0 01-2-2v-8a2 2 0 012-2z"></path>
                     </svg>
                     {t('startPractice')}
-                  </a>
+                  </div>
                 </div>
               </div>
-            </div>
+            </a>
           ))}
         </div>
       ) : (

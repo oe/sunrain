@@ -25,40 +25,41 @@
     "test:core": "vitest run test/unit/assessment/AnswerValidator.test.ts test/unit/assessment/QuestionBankManager.test.ts",
     "test:engine": "vitest run test/unit/assessment/AssessmentEngine.test.ts",
     "test:analysis": "vitest run test/unit/assessment/ResultsAnalyzer.test.ts",
-  "test:ui:unit": "vitest run test/unit/components/AssessmentTaker.test.tsx",
-  "test:ui:unit:shallow": "SHALLOW_ASSESSMENT_TAKER=1 vitest run test/unit/components/AssessmentTaker.test.tsx",
+    "test:ui:unit": "vitest run test/unit/components/AssessmentTaker.test.tsx",
+    "test:ui:unit:shallow": "SHALLOW_ASSESSMENT_TAKER=1 vitest run test/unit/components/AssessmentTaker.test.tsx",
     "test:i18n": "vitest run test/unit/locales/assessmentTranslations.test.ts",
-  "test:all": "pnpm test:core && pnpm test:engine && pnpm test:analysis && pnpm test:ui:unit:shallow && pnpm test:i18n"
+    "test:all": "pnpm test:core && pnpm test:engine && pnpm test:analysis && pnpm test:ui:unit:shallow && pnpm test:i18n"
   },
   "dependencies": {
-    "astro": "catalog:",
     "@astrojs/react": "catalog:",
     "@astrojs/sitemap": "catalog:",
     "@astrojs/tailwind": "catalog:",
+    "@sunrain/shared": "workspace:*",
+    "@tailwindcss/typography": "catalog:",
+    "astro": "catalog:",
     "astro-i18n-aut": "catalog:",
+    "clsx": "catalog:",
+    "daisyui": "catalog:",
+    "lucide-react": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:",
-    "@tailwindcss/typography": "catalog:",
-    "tailwindcss": "catalog:",
-    "daisyui": "catalog:",
-    "clsx": "catalog:",
-    "lucide-react": "catalog:",
     "sass": "catalog:",
-    "@sunrain/shared": "workspace:*"
+    "tailwindcss": "catalog:"
   },
   "devDependencies": {
     "@astrojs/check": "catalog:",
+    "@playwright/test": "^1.49.1",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.1.0",
+    "@testing-library/user-event": "^14.5.2",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
-    "typescript": "catalog:",
-    "tsx": "catalog:",
-    "vitest": "^2.1.8",
     "@vitest/ui": "^2.1.8",
     "jsdom": "^25.0.1",
-    "@testing-library/react": "^16.1.0",
-    "@testing-library/jest-dom": "^6.6.3",
-    "@testing-library/user-event": "^14.5.2",
     "playwright": "^1.49.1",
-    "@playwright/test": "^1.49.1"
+    "tailwindcss-rtl": "^0.9.0",
+    "tsx": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "^2.1.8"
   }
 }

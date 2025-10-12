@@ -1,5 +1,6 @@
 ---
 import { createSSGTranslations } from '@/i18n/utils';
+import { getSharedTranslations } from '@/locales';
 import { type Language, getRelativeLocaleUrl, languages } from '@sunrain/shared';
 import Dropdown from './Dropdown.astro';
 
@@ -10,6 +11,7 @@ export interface Props {
 const { lang } = Astro.props;
 // 使用新的SSG翻译系统，不使用React hooks
 const t = createSSGTranslations(lang);
+const sharedT = getSharedTranslations(lang);
 
 const navItems = [
   { key: 'nav.home', href: getRelativeLocaleUrl(lang, '/') },
@@ -44,9 +46,9 @@ const getLocalizedPath = (locale: Language) => {
 };
 
 const themeOptions = [
-  { key: 'system', label: 'System default', icon: 'M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z' },
-  { key: 'light', label: 'Light mode', icon: 'M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z' },
-  { key: 'dark', label: 'Dark mode', icon: 'M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z' }
+  { key: 'system', label: sharedT.theme.system, icon: 'M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z' },
+  { key: 'light', label: sharedT.theme.light, icon: 'M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z' },
+  { key: 'dark', label: sharedT.theme.dark, icon: 'M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z' }
 ];
 
 // Get current theme from localStorage (this will be handled by client-side JS)
@@ -67,7 +69,7 @@ const currentTheme = 'system'; // Default value, will be updated by JS
       <div class="flex items-center">
         <a
           href={getRelativeLocaleUrl(lang, '/')}
-          class="flex items-center space-x-3 group focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900 rounded-md p-1 -m-1"
+          class="flex items-center space-x-3 rtl:space-x-reverse group focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900 rounded-md p-1 -m-1"
           aria-label="Sunrain.me - Home"
         >
           <div class="relative" aria-hidden="true">
@@ -86,7 +88,7 @@ const currentTheme = 'system'; // Default value, will be updated by JS
       </div>
 
       <!-- Desktop Navigation -->
-      <div class="hidden md:flex items-center space-x-1" role="menubar">
+      <div class="hidden md:flex items-center space-x-1 rtl:space-x-reverse" role="menubar">
         {
           navItems.map(({ key, href }) => (
             <a
@@ -101,7 +103,7 @@ const currentTheme = 'system'; // Default value, will be updated by JS
       </div>
 
       <!-- Right side controls -->
-      <div class="flex items-center space-x-2">
+      <div class="flex items-center space-x-2 rtl:space-x-reverse">
         <!-- Language Switcher -->
         <Dropdown
           id="language-switcher"
@@ -129,7 +131,7 @@ const currentTheme = 'system'; // Default value, will be updated by JS
           id="theme-switcher"
           buttonId="theme-button"
           dropdownId="theme-dropdown"
-          buttonLabel="Toggle theme"
+          buttonLabel={sharedT.theme.toggle}
           buttonIcon="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
           buttonText="SYS"
           options={themeOptions.map((option) => ({
@@ -139,7 +141,7 @@ const currentTheme = 'system'; // Default value, will be updated by JS
             dataValue: option.key,
             isSelected: option.key === currentTheme
           }))}
-          dropdownLabel="Theme options"
+          dropdownLabel={sharedT.theme.toggle}
         />
 
         <!-- Mobile menu button -->

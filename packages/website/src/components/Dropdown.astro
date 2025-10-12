@@ -36,7 +36,7 @@ const {
 <div class="relative group" id={id}>
   <button
     id={buttonId}
-    class="p-2 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md transition-colors duration-200 flex items-center space-x-1 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
+    class="p-2 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md transition-colors duration-200 flex items-center space-x-1 rtl:space-x-reverse focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
     aria-label={buttonLabel}
     aria-expanded="false"
     aria-haspopup="listbox"
@@ -54,14 +54,14 @@ const {
   <!-- Dropdown -->
   <div
     id={dropdownId}
-    class={`absolute right-0 mt-2 ${width} bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-600 z-50 overflow-hidden opacity-0 invisible transition-all duration-200 transform scale-95 group-hover:opacity-100 group-hover:visible group-hover:scale-100`}
+    class={`absolute right-0 rtl:left-0 rtl:right-auto mt-2 ${width} bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-600 z-50 overflow-hidden opacity-0 invisible transition-all duration-200 transform scale-95 group-hover:opacity-100 group-hover:visible group-hover:scale-100`}
     role="listbox"
     aria-label={dropdownLabel}
   >
     <div class="py-1">
       {options.map((option) => {
         const isSelected = option.isSelected || false;
-        const baseClasses = `flex items-center space-x-3 px-4 py-2 text-sm transition-colors duration-150 focus:outline-none w-full text-left ${
+        const baseClasses = `flex items-center space-x-3 rtl:space-x-reverse px-4 py-2 text-sm transition-colors duration-150 focus:outline-none w-full text-left rtl:text-right ${
           isSelected
             ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 font-medium'
             : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white'
