@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { Play, Pause, Volume2, VolumeX, Settings } from 'lucide-react';
 
 interface PracticeControlsProps {
@@ -43,62 +43,73 @@ export default function PracticeControls({
   const [lastConfirmedDuration, setLastConfirmedDuration] = useState(defaultDuration);
 
   const timerRef = useRef<any>(null);
+  const startTimeRef = useRef<number>(0);
+  const pausedTimeRef = useRef<number>(0);
+
+  const updateTimer = useCallback(() => {
+    const now = Date.now();
+    const elapsed = Math.floor((now - startTimeRef.current) / 1000);
+    const remaining = Math.max(0, (currentDuration * 60) - elapsed);
+    
+    setTimeRemaining(remaining);
+    
+    if (remaining <= 0) {
+      setIsPlaying(false);
+      setIsPaused(false);
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+        timerRef.current = null;
+      }
+    }
+  }, [currentDuration]);
 
   const startPractice = () => {
+    // 先停止任何现有的定时器
+    if (timerRef.current) {
+      clearInterval(timerRef.current);
+      timerRef.current = null;
+    }
+    
+    // 记录开始时间
+    startTimeRef.current = Date.now();
+    
+    // 设置状态
     setIsPlaying(true);
     setIsPaused(false);
     setTimeRemaining(currentDuration * 60);
     
-    if (timerRef.current) {
-      clearInterval(timerRef.current);
-    }
-    
-    timerRef.current = setInterval(() => {
-      setTimeRemaining((prev) => {
-        if (prev <= 1) {
-          setIsPlaying(false);
-          setIsPaused(false);
-          if (timerRef.current) {
-            clearInterval(timerRef.current);
-          }
-          return 0;
-        }
-        return prev - 1;
-      });
-    }, 1000);
+    // 启动定时器
+    timerRef.current = setInterval(updateTimer, 500);
   };
 
   const pausePractice = () => {
-    setIsPaused(true);
     if (timerRef.current) {
       clearInterval(timerRef.current);
+      timerRef.current = null;
     }
+    // 记录暂停时间
+    pausedTimeRef.current = Date.now();
+    setIsPaused(true);
   };
 
   const resumePractice = () => {
+    // 调整开始时间，减去暂停的时间
+    const pauseDuration = Date.now() - pausedTimeRef.current;
+    startTimeRef.current += pauseDuration;
+    
+    // 重新开始定时器
+    timerRef.current = setInterval(updateTimer, 500);
     setIsPaused(false);
-    timerRef.current = setInterval(() => {
-      setTimeRemaining((prev) => {
-        if (prev <= 1) {
-          setIsPlaying(false);
-          setIsPaused(false);
-          if (timerRef.current) {
-            clearInterval(timerRef.current);
-          }
-          return 0;
-        }
-        return prev - 1;
-      });
-    }, 1000);
   };
 
   const resetPractice = () => {
+    if (timerRef.current) {
+      clearInterval(timerRef.current);
+      timerRef.current = null;
+    }
     setIsPlaying(false);
     setIsPaused(false);
     setTimeRemaining(currentDuration * 60);
-    if (timerRef.current) {
-      clearInterval(timerRef.current);
-    }
   };
 
   const toggleMute = () => {
@@ -144,6 +155,32 @@ export default function PracticeControls({
   useEffect(() => {
     setIsInitialized(true);
   }, []);
+
+  // Cleanup timer on unmount
+  useEffect(() => {
+    return () => {
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+        timerRef.current = null;
+      }
+    };
+  }, []);
+
+  // 页面可见性检测 - 防止浏览器标签页冻结影响倒计时
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (!document.hidden && isPlaying && !isPaused && timerRef.current) {
+        // 页面重新可见时，重新计算剩余时间
+        updateTimer();
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
+  }, [isPlaying, isPaused, updateTimer]);
 
   // Handle duration changes during practice (for non-playing states)
   useEffect(() => {
