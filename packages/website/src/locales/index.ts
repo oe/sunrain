@@ -12,6 +12,8 @@ import guideTranslations, { getGuideTranslations } from './guide';
 import resourcesTranslations, { getResourcesTranslations } from './resources';
 import aboutTranslations, { getAboutTranslations } from './about';
 import { getAssessmentTranslations } from './assessment';
+import practiceTranslations, { getPracticeTranslations } from './practice';
+import relaxTranslations, { getRelaxTranslations } from './relax';
 
 // 导出翻译映射
 export {
@@ -19,7 +21,9 @@ export {
   homeTranslations,
   guideTranslations,
   resourcesTranslations,
-  aboutTranslations
+  aboutTranslations,
+  practiceTranslations,
+  relaxTranslations
 };
 
 // 导出获取翻译的函数
@@ -29,7 +33,9 @@ export {
   getGuideTranslations,
   getResourcesTranslations,
   getAboutTranslations,
-  getAssessmentTranslations
+  getAssessmentTranslations,
+  getPracticeTranslations,
+  getRelaxTranslations
 };
 
 // 类型导出
@@ -39,3 +45,5 @@ export type { IGuideTranslations } from './guide';
 export type { IResourcesTranslations } from './resources';
 export type { IAboutTranslations } from './about';
 export type { IAssessmentTranslations } from './assessment';
+export type { IPracticeTranslations } from './practice';
+export type { IRelaxTranslations } from './relax/types';

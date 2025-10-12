@@ -4,11 +4,15 @@ import { getResourcesTranslations } from "@/locales";
 import { getGuideTranslations } from "@/locales";
 import { getHomeTranslations } from "@/locales";
 import { getSharedTranslations } from "@/locales";
+import { getPracticeTranslations } from "@/locales";
+import { getRelaxTranslations } from "@/locales";
 import type { IAboutTranslations } from "@/locales";
 import type { IResourcesTranslations } from "@/locales";
 import type { IGuideTranslations } from "@/locales";
 import type { IHomeTranslations } from "@/locales";
 import type { ISharedTranslations } from "@/locales";
+import type { IPracticeTranslations } from "@/locales";
+import type { IRelaxTranslations } from "@/locales";
 import { type Language, type PageType } from "@sunrain/shared";
 
 /**
@@ -19,7 +23,9 @@ export type TranslationsUnion =
   | IHomeTranslations
   | IGuideTranslations
   | IResourcesTranslations
-  | IAboutTranslations;
+  | IAboutTranslations
+  | IPracticeTranslations
+  | IRelaxTranslations;
 
 /**
  * SSG翻译函数 - 直接在Astro组件中调用，不使用React hooks
@@ -50,6 +56,12 @@ export function createSSGTranslations(lang: Language, pageType?: PageType) {
         break;
       case "assessment":
         pageTranslations = getAssessmentTranslations(lang);
+        break;
+      case "practice":
+        pageTranslations = getPracticeTranslations(lang);
+        break;
+      case "relax":
+        pageTranslations = getRelaxTranslations(lang);
         break;
     }
   }

@@ -644,7 +644,7 @@ export default function ResultsDisplay() {
             </div>
           </a>
 
-          <a href="/practice" className="flex items-center p-4 bg-white dark:bg-gray-800 rounded-lg shadow hover:shadow-md transition-shadow">
+          <a href="/practice/" className="flex items-center p-4 bg-white dark:bg-gray-800 rounded-lg shadow hover:shadow-md transition-shadow">
             <Play className="w-8 h-8 text-green-600 dark:text-green-400 mr-3" />
             <div>
               <h3 className="font-medium text-gray-900 dark:text-white">
@@ -656,7 +656,7 @@ export default function ResultsDisplay() {
             </div>
           </a>
 
-          <a href="/resources" className="flex items-center p-4 bg-white dark:bg-gray-800 rounded-lg shadow hover:shadow-md transition-shadow">
+          <a href="/resources/" className="flex items-center p-4 bg-white dark:bg-gray-800 rounded-lg shadow hover:shadow-md transition-shadow">
             <List className="w-8 h-8 text-purple-600 dark:text-purple-400 mr-3" />
             <div>
               <h3 className="font-medium text-gray-900 dark:text-white">

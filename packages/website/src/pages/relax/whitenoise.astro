@@ -1,0 +1,49 @@
+---
+import { getLocale } from 'astro-i18n-aut';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { type Language, getRelativeLocaleUrl } from '@sunrain/shared';
+import { createSSGTranslations } from '@/i18n/utils';
+import WhiteNoisePlayer from '@/components/relax/WhiteNoisePlayer';
+
+const lang = getLocale(Astro.url) as Language;
+const t = createSSGTranslations(lang, 'relax');
+---
+
+<BaseLayout
+  title={t('whitenoise.title')}
+  description={t('whitenoise.description')}
+  lang={lang}
+>
+  <div class="container mx-auto px-4 py-8">
+    <div class="text-center mb-8">
+      <h1 class="text-4xl md:text-5xl font-bold text-gray-800 dark:text-white mb-4">
+        {t('whitenoise.title')}
+      </h1>
+      <p class="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+        {t('whitenoise.description')}
+      </p>
+    </div>
+
+    <div class="max-w-4xl mx-auto">
+      <WhiteNoisePlayer lang={lang} />
+    </div>
+
+    <!-- Navigation -->
+    <div class="text-center mt-12">
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a
+          href={getRelativeLocaleUrl(lang, '/relax/')}
+          class="btn btn-outline"
+        >
+          {t('backToRelax')}
+        </a>
+        <a
+          href={getRelativeLocaleUrl(lang, '/practice/')}
+          class="btn btn-ghost"
+        >
+          {t('backToPractice')}
+        </a>
+      </div>
+    </div>
+  </div>
+</BaseLayout>

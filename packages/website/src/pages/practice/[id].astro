@@ -1,0 +1,303 @@
+---
+import { getLocale } from 'astro-i18n-aut';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { type Language, getRelativeLocaleUrl } from '@sunrain/shared';
+import { createSSGTranslations } from '@/i18n/utils';
+import PracticeControls from '@/components/practice/PracticeControls';
+import type { PracticeType } from '@/types/practice';
+
+const lang = getLocale(Astro.url) as Language;
+const t = createSSGTranslations(lang, 'practice');
+const { id } = Astro.params;
+
+if (!id) {
+  return Astro.redirect(`/${lang}/practice/`);
+}
+
+// Practice data - same as in PracticePlayer
+const mockPractices: Record<string, PracticeType> = {
+  'mindful-breathing-basic': {
+    id: 'mindful-breathing-basic',
+    name: 'Basic Mindful Breathing',
+    description: 'A simple breathing exercise to help you focus and relax.',
+    category: 'breathing',
+    difficulty: 'beginner',
+    defaultDuration: 5,
+    minDuration: 3,
+    maxDuration: 15,
+    steps: [
+      {
+        id: 'step-1',
+        title: 'Get Comfortable',
+        description: 'Find a comfortable seated position',
+        duration: 30,
+        instruction: 'Sit comfortably with your back straight and feet flat on the floor.',
+      },
+      {
+        id: 'step-2',
+        title: 'Natural Breathing',
+        description: 'Notice your natural breath',
+        duration: 60,
+        instruction: 'Simply notice your breath as it flows in and out naturally.',
+      },
+    ],
+    instructions: ['Find a quiet space', 'Sit comfortably'],
+    benefits: ['Reduces stress', 'Improves focus'],
+    tips: ['Start with shorter sessions'],
+    tags: ['breathing', 'mindfulness'],
+    targetAudience: ['beginners'],
+    therapeuticBenefits: ['stress reduction'],
+    language: 'en',
+    customizable: {
+      duration: true,
+      backgroundMusic: true,
+      voiceGuidance: true,
+      visualCues: true,
+    },
+    averageRating: 4.7,
+    completionRate: 0.89,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
+  'body-scan-meditation': {
+    id: 'body-scan-meditation',
+    name: 'Progressive Body Scan',
+    description: 'A guided meditation that helps you relax by systematically focusing on different parts of your body.',
+    category: 'meditation',
+    difficulty: 'beginner',
+    defaultDuration: 15,
+    minDuration: 10,
+    maxDuration: 30,
+    steps: [
+      {
+        id: 'step-1',
+        title: 'Preparation',
+        description: 'Get into a comfortable lying position',
+        duration: 60,
+        instruction: 'Lie down comfortably on your back.',
+      },
+      {
+        id: 'step-2',
+        title: 'Starting with Feet',
+        description: 'Focus on your feet and toes',
+        duration: 120,
+        instruction: 'Bring your attention to your feet.',
+      },
+      {
+        id: 'step-3',
+        title: 'Moving Up',
+        description: 'Slowly scan up through your body',
+        duration: 300,
+        instruction: 'Gradually move your attention up through your legs, torso, arms, and head.',
+      },
+    ],
+    instructions: ['Lie down comfortably', 'Close your eyes'],
+    benefits: ['Deep relaxation', 'Better sleep'],
+    tips: ['Use a blanket if cold'],
+    tags: ['meditation', 'body scan', 'relaxation', 'sleep'],
+    targetAudience: ['beginners'],
+    therapeuticBenefits: ['stress relief', 'better sleep'],
+    language: 'en',
+    customizable: {
+      duration: true,
+      backgroundMusic: true,
+      voiceGuidance: true,
+      visualCues: true,
+    },
+    averageRating: 4.5,
+    completionRate: 0.82,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
+  'loving-kindness-meditation': {
+    id: 'loving-kindness-meditation',
+    name: 'Loving-Kindness Meditation',
+    description: 'A heart-opening practice that cultivates compassion and love for yourself and others.',
+    category: 'meditation',
+    difficulty: 'intermediate',
+    defaultDuration: 20,
+    minDuration: 15,
+    maxDuration: 45,
+    steps: [
+      {
+        id: 'step-1',
+        title: 'Centering',
+        description: 'Center yourself with breath',
+        duration: 120,
+        instruction: 'Sit comfortably and take a few deep breaths.',
+      },
+      {
+        id: 'step-2',
+        title: 'Self-Compassion',
+        description: 'Send loving-kindness to yourself',
+        duration: 300,
+        instruction: 'Repeat silently: "May I be happy. May I be healthy."',
+      },
+      {
+        id: 'step-3',
+        title: 'Extending to Others',
+        description: 'Extend loving-kindness to others',
+        duration: 300,
+        instruction: 'Think of someone you care about and send them loving-kindness.',
+      },
+    ],
+    instructions: ['Sit comfortably', 'Place hand on heart'],
+    benefits: ['Increases self-compassion', 'Improves relationships'],
+    tips: ['Start with easier people'],
+    tags: ['meditation', 'compassion', 'loving-kindness', 'heart'],
+    targetAudience: ['intermediate practitioners'],
+    therapeuticBenefits: ['emotional healing'],
+    language: 'en',
+    customizable: {
+      duration: true,
+      backgroundMusic: true,
+      voiceGuidance: true,
+      visualCues: true,
+    },
+    averageRating: 4.6,
+    completionRate: 0.75,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
+};
+
+const practice = mockPractices[id] || mockPractices['mindful-breathing-basic'];
+
+// Define static paths for practice pages
+export async function getStaticPaths() {
+  const practices = [
+    { id: 'mindful-breathing-basic', name: 'Basic Mindful Breathing' },
+    { id: 'body-scan-meditation', name: 'Progressive Body Scan' },
+    { id: 'loving-kindness-meditation', name: 'Loving-Kindness Meditation' },
+    { id: 'quick-relax', name: 'Quick Relaxation' },
+    { id: 'stress-relief', name: 'Stress Relief Breathing' },
+  ];
+
+  const languages = ['en', 'zh', 'es', 'ar', 'hi', 'ja', 'ko'];
+  
+  return practices.flatMap(practice => 
+    languages.map(lang => ({
+      params: { id: practice.id },
+      props: { lang, practice }
+    }))
+  );
+}
+---
+
+<BaseLayout
+  title={practice.name}
+  description={practice.description}
+  lang={lang}
+>
+  <div class="container mx-auto px-4 py-8">
+    <!-- Back Button -->
+    <div class="mb-6">
+      <a
+        href={getRelativeLocaleUrl(lang, '/practice/')}
+        class="btn btn-ghost btn-sm"
+      >
+        ← {t('backToList')}
+      </a>
+    </div>
+
+    <!-- Practice Header -->
+    <div class="text-center mb-8">
+      <h1 class="text-3xl font-bold text-gray-800 dark:text-white mb-2">
+        {practice.name}
+      </h1>
+      <p class="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+        {practice.description}
+      </p>
+    </div>
+
+    <!-- Main Content Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <!-- Left Column: Practice Info & Steps -->
+      <div class="lg:col-span-2 space-y-6">
+        <!-- Quick Info -->
+        <div class="card bg-base-100 shadow-xl">
+          <div class="card-body">
+            <div class="flex flex-wrap gap-4 items-center justify-between">
+              <div class="flex items-center gap-2">
+                <span class="text-2xl">
+                  {practice.category === 'breathing' ? '🫁' : practice.category === 'meditation' ? '🧘' : '🧠'}
+                </span>
+                <div>
+                  <div class="font-semibold capitalize">{practice.category}</div>
+                  <div class={`badge badge-sm ${practice.difficulty === 'beginner' ? 'badge-success' : practice.difficulty === 'intermediate' ? 'badge-warning' : 'badge-error'}`}>
+                    {practice.difficulty}
+                  </div>
+                </div>
+              </div>
+              <div class="text-right">
+                <div class="text-2xl font-bold text-primary">{practice.defaultDuration} min</div>
+                <div class="text-sm text-gray-500">Default duration</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Practice Steps -->
+        <div class="card bg-base-100 shadow-xl">
+          <div class="card-body">
+            <h2 class="card-title mb-4">Practice Steps</h2>
+            <div class="space-y-3">
+              {practice.steps.map((step, index) => (
+                <div class="flex items-start gap-3 p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                  <div class="flex-shrink-0 w-6 h-6 bg-primary text-primary-content rounded-full flex items-center justify-center text-sm font-bold">
+                    {index + 1}
+                  </div>
+                  <div class="flex-1 min-w-0">
+                    <h3 class="font-semibold mb-1">{step.title}</h3>
+                    <p class="text-sm text-gray-600 dark:text-gray-300 mb-1">{step.description}</p>
+                    <p class="text-xs text-gray-500 mb-2">{step.duration}s</p>
+                    <p class="text-sm">{step.instruction}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <!-- Benefits & Tips -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="card bg-base-100 shadow-xl">
+            <div class="card-body">
+              <h3 class="card-title text-lg mb-3">✨ Benefits</h3>
+              <ul class="space-y-1">
+                {practice.benefits.map((benefit) => (
+                  <li class="text-sm flex items-start gap-2">
+                    <span class="text-green-500 mt-0.5">•</span>
+                    <span>{benefit}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          <div class="card bg-base-100 shadow-xl">
+            <div class="card-body">
+              <h3 class="card-title text-lg mb-3">💡 Tips</h3>
+              <ul class="space-y-1">
+                {practice.tips.map((tip) => (
+                  <li class="text-sm flex items-start gap-2">
+                    <span class="text-yellow-500 mt-0.5">•</span>
+                    <span>{tip}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Controls Only -->
+      <div class="space-y-6">
+        <!-- Practice Controls -->
+        <div class="sticky top-20">
+          <PracticeControls practice={practice} client:load />
+        </div>
+      </div>
+    </div>
+  </div>
+</BaseLayout>

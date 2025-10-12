@@ -21,6 +21,9 @@ const locales = {
 export default defineConfig({
   site: 'https://sunrain.me',
   trailingSlash: "always",
+  server: {
+    port: 4362,
+  },
   build: {
     format: "directory",
   },
