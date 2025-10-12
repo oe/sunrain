@@ -1,0 +1,27 @@
+{
+  "title": "Basic Mindful Breathing",
+  "description": "A simple breathing exercise to help you focus and relax. Perfect for beginners.",
+  "instructions": [
+    "Find a quiet space",
+    "Sit comfortably"
+  ],
+  "benefits": [
+    "Reduces stress",
+    "Improves focus"
+  ],
+  "tips": [
+    "Start with shorter sessions"
+  ],
+  "steps": [
+    {
+      "title": "Get Comfortable",
+      "description": "Find a comfortable seated position",
+      "instruction": "Sit comfortably with your back straight and feet flat on the floor."
+    },
+    {
+      "title": "Natural Breathing",
+      "description": "Notice your natural breath",
+      "instruction": "Simply notice your breath as it flows in and out naturally."
+    }
+  ]
+}

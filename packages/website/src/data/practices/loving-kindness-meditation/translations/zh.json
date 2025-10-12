@@ -1,0 +1,32 @@
+{
+  "title": "慈心冥想",
+  "description": "一种打开心扉的练习，培养对自己和他人的慈悲和爱心。",
+  "instructions": [
+    "舒适地坐着",
+    "将手放在心口"
+  ],
+  "benefits": [
+    "增加自我慈悲",
+    "改善人际关系"
+  ],
+  "tips": [
+    "从容易的人开始"
+  ],
+  "steps": [
+    {
+      "title": "定心",
+      "description": "用呼吸让自己定心",
+      "instruction": "舒适地坐着，做几次深呼吸。"
+    },
+    {
+      "title": "自我慈悲",
+      "description": "向自己发送慈心",
+      "instruction": "默念：\"愿我快乐。愿我健康。\""
+    },
+    {
+      "title": "扩展到他人",
+      "description": "向他人发送慈心",
+      "instruction": "想着您关心的人，向他们发送慈心。"
+    }
+  ]
+}

@@ -11,6 +11,7 @@ export const practiceZh: IPracticeTranslations = {
   
   // 导航和按钮
   backToList: '返回列表',
+  backToPractice: '返回练习',
   startPractice: '开始练习',
   pausePractice: '暂停练习',
   resumePractice: '继续练习',
@@ -36,6 +37,9 @@ export const practiceZh: IPracticeTranslations = {
   next: '下一步',
   pause: '暂停',
   resume: '继续',
+  reset: '重置',
+  mute: '静音',
+  unmute: '取消静音',
   settings: '设置',
   practiceSettings: '练习设置',
   duration: '时长（分钟）',
@@ -48,9 +52,19 @@ export const practiceZh: IPracticeTranslations = {
   paused: '已暂停',
   almostDone: '快完成了！',
   inProgress: '进行中',
-  greatJob: '太棒了！',
-  practiceCompleted: '练习已完成。',
-  quickStart: '快速开始',
+  greatJob: '做得很好！',
+  practiceCompleted: '您已成功完成正念练习。',
+  
+  // 练习信息
+  quickInfo: '快速信息',
+  practiceSteps: '练习步骤',
+  benefits: '益处',
+  tips: '提示',
+  difficulty: '难度',
+  category: '类别',
+  targetAudience: '目标受众',
+  completionRate: '完成率',
+  minutes: '分钟',
   
   // 呼吸练习
   breathingExercise: '呼吸练习',
@@ -63,9 +77,8 @@ export const practiceZh: IPracticeTranslations = {
   searchPractices: '搜索练习...',
   filters: '筛选',
   clearAll: '清除全部',
-  category: '类别',
-  difficulty: '难度',
-  duration: '时长',
+  filterCategory: '类别',
+  filterDifficulty: '难度',
   all: '全部',
   short: '短时（≤5分钟）',
   medium: '中等（5-15分钟）',
@@ -85,6 +98,21 @@ export const practiceZh: IPracticeTranslations = {
   movement: '运动',
   visualization: '想象',
   
+  // 标签翻译
+  tags: {
+    breathing: '呼吸',
+    mindfulness: '正念',
+    relaxation: '放松',
+    beginner: '初级',
+    meditation: '冥想',
+    'body-scan': '身体扫描',
+    sleep: '睡眠',
+    compassion: '慈悲',
+    'loving-kindness': '慈爱',
+    heart: '内心',
+    intermediate: '中级',
+  },
+  
   // 错误消息
   failedToLoadPractice: '加载练习失败',
   practiceNotFound: '未找到练习',
@@ -93,6 +121,12 @@ export const practiceZh: IPracticeTranslations = {
   // 成功消息
   practiceSaved: '练习保存成功',
   achievementUnlocked: '成就解锁！',
+  
+  // 确认对话框
+  durationChangeTitle: '修改练习时长',
+  durationChangeMessage: '练习正在进行中。是否要重新开始，使用新的时长',
+  durationChangeCancel: '取消',
+  durationChangeConfirm: '重新开始',
   
   // 帮助文本
   practiceHelp: '选择适合您当前心情和可用时间的练习。',

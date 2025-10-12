@@ -11,6 +11,7 @@ export const practiceAr: IPracticeTranslations = {
   
   // 导航和按钮
   backToList: 'العودة إلى القائمة',
+  backToPractice: 'العودة إلى التمرين',
   startPractice: 'بدء الممارسة',
   pausePractice: 'إيقاف الممارسة مؤقتاً',
   resumePractice: 'استئناف الممارسة',
@@ -36,6 +37,9 @@ export const practiceAr: IPracticeTranslations = {
   next: 'التالي',
   pause: 'إيقاف مؤقت',
   resume: 'استئناف',
+  reset: 'إعادة تعيين',
+  mute: 'كتم الصوت',
+  unmute: 'إلغاء كتم الصوت',
   settings: 'الإعدادات',
   practiceSettings: 'إعدادات الممارسة',
   duration: 'المدة (بالدقائق)',
@@ -49,8 +53,18 @@ export const practiceAr: IPracticeTranslations = {
   almostDone: 'تقريباً انتهى!',
   inProgress: 'قيد التقدم',
   greatJob: 'عمل رائع!',
-  practiceCompleted: 'تم إكمال الممارسة.',
-  quickStart: 'بداية سريعة',
+  practiceCompleted: 'لقد أكملت بنجاح ممارسة اليقظة الذهنية.',
+  
+  // 练习信息
+  quickInfo: 'معلومات سريعة',
+  practiceSteps: 'خطوات الممارسة',
+  benefits: 'الفوائد',
+  tips: 'نصائح',
+  difficulty: 'الصعوبة',
+  category: 'الفئة',
+  targetAudience: 'الجمهور المستهدف',
+  completionRate: 'معدل الإكمال',
+  minutes: 'دقيقة',
   
   // 呼吸练习
   breathingExercise: 'تمرين التنفس',
@@ -63,9 +77,8 @@ export const practiceAr: IPracticeTranslations = {
   searchPractices: 'البحث في الممارسات...',
   filters: 'المرشحات',
   clearAll: 'مسح الكل',
-  category: 'الفئة',
-  difficulty: 'الصعوبة',
-  duration: 'المدة',
+  filterCategory: 'الفئة',
+  filterDifficulty: 'الصعوبة',
   all: 'الكل',
   short: 'قصيرة (≤5 دقائق)',
   medium: 'متوسطة (5-15 دقيقة)',
@@ -85,6 +98,21 @@ export const practiceAr: IPracticeTranslations = {
   movement: 'الحركة',
   visualization: 'التصور',
   
+  // 标签翻译
+  tags: {
+    breathing: 'التنفس',
+    mindfulness: 'اليقظة الذهنية',
+    relaxation: 'الاسترخاء',
+    beginner: 'مبتدئ',
+    meditation: 'التأمل',
+    'body-scan': 'مسح الجسم',
+    sleep: 'النوم',
+    compassion: 'الرحمة',
+    'loving-kindness': 'المحبة اللطيفة',
+    heart: 'القلب',
+    intermediate: 'متوسط',
+  },
+  
   // 错误消息
   failedToLoadPractice: 'فشل في تحميل الممارسة',
   practiceNotFound: 'لم يتم العثور على الممارسة',
@@ -93,6 +121,12 @@ export const practiceAr: IPracticeTranslations = {
   // 成功消息
   practiceSaved: 'تم حفظ الممارسة بنجاح',
   achievementUnlocked: 'تم فتح الإنجاز!',
+  
+  // 确认对话框
+  durationChangeTitle: 'تغيير مدة الممارسة',
+  durationChangeMessage: 'الممارسة قيد التشغيل حالياً. هل تريد إعادة البدء بالمدة الجديدة',
+  durationChangeCancel: 'إلغاء',
+  durationChangeConfirm: 'إعادة البدء',
   
   // 帮助文本
   practiceHelp: 'اختر ممارسة تناسب مزاجك الحالي والوقت المتاح لديك.',

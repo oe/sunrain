@@ -2,7 +2,6 @@
 import React from 'react';
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 // IMPORTANT: Mock heavy child components BEFORE importing AssessmentTaker to reduce memory usage
 vi.mock('lucide-react', () => ({
   CheckCircle: () => React.createElement('svg', { 'data-testid': 'icon' })

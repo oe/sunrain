@@ -9,6 +9,7 @@ export interface IPracticeTranslations {
   
   // 导航和按钮
   backToList: string;
+  backToPractice: string;
   startPractice: string;
   pausePractice: string;
   resumePractice: string;
@@ -34,6 +35,9 @@ export interface IPracticeTranslations {
   next: string;
   pause: string;
   resume: string;
+  reset: string;
+  mute: string;
+  unmute: string;
   settings: string;
   practiceSettings: string;
   duration: string;
@@ -49,6 +53,17 @@ export interface IPracticeTranslations {
   greatJob: string;
   practiceCompleted: string;
   
+  // 练习信息
+  quickInfo: string;
+  practiceSteps: string;
+  benefits: string;
+  tips: string;
+  difficulty: string;
+  category: string;
+  targetAudience: string;
+  completionRate: string;
+  minutes: string;
+  
   // 呼吸练习
   breathingExercise: string;
   breatheIn: string;
@@ -60,8 +75,8 @@ export interface IPracticeTranslations {
   searchPractices: string;
   filters: string;
   clearAll: string;
-  category: string;
-  difficulty: string;
+  filterCategory: string;
+  filterDifficulty: string;
   all: string;
   short: string;
   medium: string;
@@ -81,6 +96,21 @@ export interface IPracticeTranslations {
   movement: string;
   visualization: string;
   
+  // 标签翻译
+  tags: {
+    breathing: string;
+    mindfulness: string;
+    relaxation: string;
+    beginner: string;
+    meditation: string;
+    'body-scan': string;
+    sleep: string;
+    compassion: string;
+    'loving-kindness': string;
+    heart: string;
+    intermediate: string;
+  };
+  
   // 错误消息
   failedToLoadPractice: string;
   practiceNotFound: string;
@@ -89,6 +119,12 @@ export interface IPracticeTranslations {
   // 成功消息
   practiceSaved: string;
   achievementUnlocked: string;
+  
+  // 确认对话框
+  durationChangeTitle: string;
+  durationChangeMessage: string;
+  durationChangeCancel: string;
+  durationChangeConfirm: string;
   
   // 帮助文本
   practiceHelp: string;

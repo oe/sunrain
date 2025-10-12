@@ -1,25 +1,53 @@
 import { useState, useEffect, useRef } from 'react';
 import { Play, Pause, Volume2, VolumeX, Settings } from 'lucide-react';
-import type { PracticeType } from '@/types/practice';
 
 interface PracticeControlsProps {
-  practice: PracticeType;
+  defaultDuration: number;
+  minDuration: number;
+  maxDuration: number;
+  translations: {
+    start: string;
+    pause: string;
+    resume: string;
+    reset: string;
+    mute: string;
+    unmute: string;
+    settings: string;
+    duration: string;
+    completed: string;
+    practiceSettings: string;
+    minutes: string;
+    durationChangeTitle: string;
+    durationChangeMessage: string;
+    durationChangeCancel: string;
+    durationChangeConfirm: string;
+  };
 }
 
-export default function PracticeControls({ practice }: PracticeControlsProps) {
+export default function PracticeControls({ 
+  defaultDuration, 
+  minDuration, 
+  maxDuration, 
+  translations 
+}: PracticeControlsProps) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
-  const [timeRemaining, setTimeRemaining] = useState(practice.defaultDuration * 60);
+  const [currentDuration, setCurrentDuration] = useState(defaultDuration);
+  const [timeRemaining, setTimeRemaining] = useState(defaultDuration * 60);
   const [volume, setVolume] = useState(0.8);
   const [isMuted, setIsMuted] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
-  const [currentStepIndex, setCurrentStepIndex] = useState(0);
+  const [isInitialized, setIsInitialized] = useState(false);
+  const [showDurationModal, setShowDurationModal] = useState(false);
+  const [tempDuration, setTempDuration] = useState(defaultDuration);
+  const [lastConfirmedDuration, setLastConfirmedDuration] = useState(defaultDuration);
 
-  const timerRef = useRef<number | null>(null);
+  const timerRef = useRef<any>(null);
 
   const startPractice = () => {
     setIsPlaying(true);
     setIsPaused(false);
+    setTimeRemaining(currentDuration * 60);
     
     if (timerRef.current) {
       clearInterval(timerRef.current);
@@ -67,8 +95,7 @@ export default function PracticeControls({ practice }: PracticeControlsProps) {
   const resetPractice = () => {
     setIsPlaying(false);
     setIsPaused(false);
-    setTimeRemaining(practice.defaultDuration * 60);
-    setCurrentStepIndex(0);
+    setTimeRemaining(currentDuration * 60);
     if (timerRef.current) {
       clearInterval(timerRef.current);
     }
@@ -78,6 +105,29 @@ export default function PracticeControls({ practice }: PracticeControlsProps) {
     setIsMuted(!isMuted);
   };
 
+  const handleDurationChange = (newDuration: number) => {
+    if (isPlaying && !isPaused) {
+      // 正在倒计时：显示确认模态框
+      setTempDuration(newDuration);
+      setShowDurationModal(true);
+    } else {
+      // 停止或暂停状态：直接更新
+      setCurrentDuration(newDuration);
+      setLastConfirmedDuration(newDuration);
+    }
+  };
+
+  const confirmDurationChange = () => {
+    setCurrentDuration(tempDuration);
+    setTimeRemaining(tempDuration * 60);
+    setLastConfirmedDuration(tempDuration);
+    setShowDurationModal(false);
+  };
+
+  const cancelDurationChange = () => {
+    setShowDurationModal(false);
+  };
+
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
@@ -85,11 +135,29 @@ export default function PracticeControls({ practice }: PracticeControlsProps) {
   };
 
   const getProgressPercentage = () => {
-    const totalTime = practice.defaultDuration * 60;
+    const totalTime = currentDuration * 60;
     return ((totalTime - timeRemaining) / totalTime) * 100;
   };
 
-  const currentStep = practice.steps[currentStepIndex];
+
+  // Initialize component
+  useEffect(() => {
+    setIsInitialized(true);
+  }, []);
+
+  // Handle duration changes during practice (for non-playing states)
+  useEffect(() => {
+    if (!isInitialized) return;
+
+    if (isPaused) {
+      // If paused, update remaining time proportionally
+      const progressRatio = timeRemaining / (currentDuration * 60);
+      setTimeRemaining(Math.floor(currentDuration * 60 * progressRatio));
+    } else if (!isPlaying) {
+      // If stopped, update timeRemaining to match currentDuration
+      setTimeRemaining(currentDuration * 60);
+    }
+  }, [currentDuration, isInitialized, isPlaying, isPaused]);
 
   // Cleanup on unmount
   useEffect(() => {
@@ -124,7 +192,7 @@ export default function PracticeControls({ practice }: PracticeControlsProps) {
                 🎉 Great job! Practice completed.
               </div>
               <div className="text-sm text-green-500 dark:text-green-400 mt-1">
-                You've successfully completed your mindfulness practice.
+                {translations.completed}
               </div>
             </div>
           )}
@@ -143,7 +211,7 @@ export default function PracticeControls({ practice }: PracticeControlsProps) {
                   onClick={startPractice}
                 >
                   <Play className="w-5 h-5" />
-                  Start Practice
+                  {translations.start}
                 </button>
               ) : (
                 <button
@@ -153,12 +221,12 @@ export default function PracticeControls({ practice }: PracticeControlsProps) {
                   {isPaused ? (
                     <>
                       <Play className="w-5 h-5" />
-                      Resume
+                      {translations.resume}
                     </>
                   ) : (
                     <>
                       <Pause className="w-5 h-5" />
-                      Pause
+                      {translations.pause}
                     </>
                   )}
                 </button>
@@ -170,7 +238,7 @@ export default function PracticeControls({ practice }: PracticeControlsProps) {
               className="btn btn-outline w-full"
               onClick={resetPractice}
             >
-              Reset
+              {translations.reset}
             </button>
 
             {/* Volume Control */}
@@ -203,29 +271,37 @@ export default function PracticeControls({ practice }: PracticeControlsProps) {
               onClick={() => setShowSettings(!showSettings)}
             >
               <Settings className="w-4 h-4" />
-              Settings
+              {translations.settings}
             </button>
           </div>
 
           {/* Settings Panel */}
           {showSettings && (
             <div className="border-t pt-4">
-              <h4 className="font-semibold mb-4">Practice Settings</h4>
+              <h4 className="font-semibold mb-4">{translations.practiceSettings}</h4>
               <div className="space-y-4">
                 <div>
                   <label className="label">
-                    <span className="label-text">Duration (minutes)</span>
+                    <span className="label-text">{translations.duration}</span>
                   </label>
                   <input
                     type="range"
-                    min={practice.minDuration}
-                    max={practice.maxDuration}
-                    value={practice.defaultDuration}
+                    min={minDuration}
+                    max={maxDuration}
+                    value={currentDuration}
+                    onChange={(e) => setCurrentDuration(parseInt(e.target.value))}
+                    onMouseUp={(e) => {
+                      const newDuration = parseInt((e.target as HTMLInputElement).value);
+                      if (newDuration !== lastConfirmedDuration) {
+                        handleDurationChange(newDuration);
+                      }
+                    }}
                     className="range range-primary"
                   />
                   <div className="flex justify-between text-xs text-gray-500 mt-1">
-                    <span>{practice.minDuration} min</span>
-                    <span>{practice.maxDuration} min</span>
+                    <span>{minDuration} {translations.minutes}</span>
+                    <span className="font-medium text-base-content">{currentDuration} {translations.minutes}</span>
+                    <span>{maxDuration} {translations.minutes}</span>
                   </div>
                 </div>
               </div>
@@ -233,6 +309,32 @@ export default function PracticeControls({ practice }: PracticeControlsProps) {
           )}
         </div>
       </div>
+
+      {/* Duration Change Confirmation Modal */}
+      {showDurationModal && (
+        <div className="modal modal-open">
+          <div className="modal-box">
+            <h3 className="font-bold text-lg mb-4">{translations.durationChangeTitle}</h3>
+            <p className="mb-4">
+              {translations.durationChangeMessage} <strong>{tempDuration} {translations.minutes}</strong>？
+            </p>
+            <div className="modal-action">
+              <button 
+                className="btn btn-outline" 
+                onClick={cancelDurationChange}
+              >
+                {translations.durationChangeCancel}
+              </button>
+              <button 
+                className="btn btn-primary" 
+                onClick={confirmDurationChange}
+              >
+                {translations.durationChangeConfirm}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

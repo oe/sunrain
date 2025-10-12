@@ -11,6 +11,7 @@ export const practiceEs: IPracticeTranslations = {
   
   // 导航和按钮
   backToList: 'Volver a la Lista',
+  backToPractice: 'Volver a la Práctica',
   startPractice: 'Iniciar Práctica',
   pausePractice: 'Pausar Práctica',
   resumePractice: 'Reanudar Práctica',
@@ -36,6 +37,9 @@ export const practiceEs: IPracticeTranslations = {
   next: 'Siguiente',
   pause: 'Pausar',
   resume: 'Reanudar',
+  reset: 'Reiniciar',
+  mute: 'Silenciar',
+  unmute: 'Activar sonido',
   settings: 'Configuración',
   practiceSettings: 'Configuración de Práctica',
   duration: 'Duración (minutos)',
@@ -50,7 +54,17 @@ export const practiceEs: IPracticeTranslations = {
   inProgress: 'En Progreso',
   greatJob: '¡Excelente trabajo!',
   practiceCompleted: 'Práctica completada.',
-  quickStart: 'Inicio Rápido',
+  
+  // 练习信息
+  quickInfo: 'Información Rápida',
+  practiceSteps: 'Pasos de la Práctica',
+  benefits: 'Beneficios',
+  tips: 'Consejos',
+  difficulty: 'Dificultad',
+  category: 'Categoría',
+  targetAudience: 'Audiencia Objetivo',
+  completionRate: 'Tasa de Finalización',
+  minutes: 'min',
   
   // 呼吸练习
   breathingExercise: 'Ejercicio de Respiración',
@@ -63,9 +77,8 @@ export const practiceEs: IPracticeTranslations = {
   searchPractices: 'Buscar prácticas...',
   filters: 'Filtros',
   clearAll: 'Limpiar todo',
-  category: 'Categoría',
-  difficulty: 'Dificultad',
-  duration: 'Duración',
+  filterCategory: 'Categoría',
+  filterDifficulty: 'Dificultad',
   all: 'Todas',
   short: 'Corta (≤5 min)',
   medium: 'Media (5-15 min)',
@@ -85,6 +98,21 @@ export const practiceEs: IPracticeTranslations = {
   movement: 'Movimiento',
   visualization: 'Visualización',
   
+  // 标签翻译
+  tags: {
+    breathing: 'Respiración',
+    mindfulness: 'Mindfulness',
+    relaxation: 'Relajación',
+    beginner: 'Principiante',
+    meditation: 'Meditación',
+    'body-scan': 'Escaneo Corporal',
+    sleep: 'Sueño',
+    compassion: 'Compasión',
+    'loving-kindness': 'Amabilidad Amorosa',
+    heart: 'Corazón',
+    intermediate: 'Intermedio',
+  },
+  
   // 错误消息
   failedToLoadPractice: 'Error al cargar la práctica',
   practiceNotFound: 'Práctica no encontrada',
@@ -93,6 +121,12 @@ export const practiceEs: IPracticeTranslations = {
   // 成功消息
   practiceSaved: 'Práctica guardada exitosamente',
   achievementUnlocked: '¡Logro desbloqueado!',
+  
+  // 确认对话框
+  durationChangeTitle: 'Cambiar Duración de Práctica',
+  durationChangeMessage: 'La práctica está ejecutándose actualmente. ¿Quieres reiniciar con la nueva duración de',
+  durationChangeCancel: 'Cancelar',
+  durationChangeConfirm: 'Reiniciar',
   
   // 帮助文本
   practiceHelp: 'Elige una práctica que se adapte a tu estado de ánimo actual y tiempo disponible.',

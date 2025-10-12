@@ -11,6 +11,7 @@ export const practiceJa: IPracticeTranslations = {
   
   // 导航和按钮
   backToList: 'リストに戻る',
+  backToPractice: '実践に戻る',
   startPractice: '実践を開始',
   pausePractice: '実践を一時停止',
   resumePractice: '実践を再開',
@@ -36,10 +37,14 @@ export const practiceJa: IPracticeTranslations = {
   next: '次へ',
   pause: '一時停止',
   resume: '再開',
+  reset: 'リセット',
   settings: '設定',
   practiceSettings: '実践設定',
   duration: '時間（分）',
+  minutes: '分',
   backgroundMusic: 'バックグラウンドミュージック',
+  mute: 'ミュート',
+  unmute: 'ミュート解除',
   howAreYouFeeling: '今の気分はいかがですか？',
   rateYourMood: '開始前に気分を評価してください',
   
@@ -50,7 +55,14 @@ export const practiceJa: IPracticeTranslations = {
   inProgress: '進行中',
   greatJob: '素晴らしい！',
   practiceCompleted: '実践が完了しました。',
-  quickStart: 'クイックスタート',
+  
+  // 练习信息
+  quickInfo: 'クイック情報',
+  practiceSteps: '実践ステップ',
+  benefits: '効果',
+  tips: 'コツ',
+  targetAudience: '対象者',
+  completionRate: '完了率',
   
   // 呼吸练习
   breathingExercise: '呼吸エクササイズ',
@@ -63,9 +75,10 @@ export const practiceJa: IPracticeTranslations = {
   searchPractices: '実践を検索...',
   filters: 'フィルター',
   clearAll: 'すべてクリア',
+  filterCategory: 'カテゴリフィルター',
+  filterDifficulty: '難易度フィルター',
   category: 'カテゴリー',
   difficulty: '難易度',
-  duration: '時間',
   all: 'すべて',
   short: '短時間（≤5分）',
   medium: '中時間（5-15分）',
@@ -94,10 +107,31 @@ export const practiceJa: IPracticeTranslations = {
   practiceSaved: '実践が正常に保存されました',
   achievementUnlocked: '実績が解除されました！',
   
+  // 确认对话框
+  durationChangeTitle: '実践時間の変更',
+  durationChangeMessage: '実践が現在実行中です。新しい時間で再開しますか',
+  durationChangeCancel: 'キャンセル',
+  durationChangeConfirm: '再開',
+  
   // 帮助文本
   practiceHelp: '現在の気分と利用可能な時間に合った実践を選択してください。',
   breathingHelp: '呼吸に集中し、視覚的なガイドに従ってください。',
   timerHelp: '自分に合った時間を設定してください。いつでも実践時間を延長または短縮できます。',
+  
+  // 标签翻译
+  tags: {
+    breathing: '呼吸',
+    mindfulness: 'マインドフルネス',
+    relaxation: 'リラクゼーション',
+    beginner: '初級',
+    meditation: '瞑想',
+    'body-scan': 'ボディスキャン',
+    sleep: '睡眠',
+    compassion: '慈悲',
+    'loving-kindness': '慈愛',
+    heart: '心',
+    intermediate: '中級',
+  },
 };
 
 export default practiceJa;

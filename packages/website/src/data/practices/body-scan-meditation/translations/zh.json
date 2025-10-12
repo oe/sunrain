@@ -1,0 +1,32 @@
+{
+  "title": "渐进式身体扫描",
+  "description": "一种引导式冥想，通过系统地关注身体的不同部位来帮助您放松。",
+  "instructions": [
+    "舒适地躺下",
+    "闭上眼睛"
+  ],
+  "benefits": [
+    "深度放松",
+    "改善睡眠"
+  ],
+  "tips": [
+    "如果冷的话使用毯子"
+  ],
+  "steps": [
+    {
+      "title": "准备",
+      "description": "找一个舒适的躺姿",
+      "instruction": "舒适地仰卧。"
+    },
+    {
+      "title": "从脚开始",
+      "description": "专注于您的脚和脚趾",
+      "instruction": "将注意力带到您的脚上。"
+    },
+    {
+      "title": "向上移动",
+      "description": "慢慢扫描身体向上",
+      "instruction": "逐渐将注意力从腿部、躯干、手臂移动到头部。"
+    }
+  ]
+}

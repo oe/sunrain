@@ -84,15 +84,21 @@ const alternateLinks = Object.keys(languages).map((locale) => ({
         const prefersDark = window.matchMedia(
           '(prefers-color-scheme: dark)'
         ).matches;
+        const html = document.documentElement;
+
+        // Remove existing theme classes
+        html.classList.remove('dark');
+        html.removeAttribute('data-theme');
 
         if (
           savedTheme === 'dark' ||
           (savedTheme === 'system' && prefersDark) ||
           (!savedTheme && prefersDark)
         ) {
-          document.documentElement.classList.add('dark');
+          html.classList.add('dark');
+          html.setAttribute('data-theme', 'dark');
         } else {
-          document.documentElement.classList.remove('dark');
+          html.setAttribute('data-theme', 'light');
         }
       })();
     </script>

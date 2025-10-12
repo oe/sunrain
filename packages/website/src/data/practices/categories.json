@@ -1,0 +1,32 @@
+{
+  "categories": [
+    {
+      "id": "breathing",
+      "nameKey": "practices.categories.breathing",
+      "descriptionKey": "practices.categories.breathingDescription",
+      "icon": "🌬️",
+      "color": "blue"
+    },
+    {
+      "id": "meditation",
+      "nameKey": "practices.categories.meditation",
+      "descriptionKey": "practices.categories.meditationDescription",
+      "icon": "🧘",
+      "color": "purple"
+    },
+    {
+      "id": "relaxation",
+      "nameKey": "practices.categories.relaxation",
+      "descriptionKey": "practices.categories.relaxationDescription",
+      "icon": "😌",
+      "color": "green"
+    },
+    {
+      "id": "movement",
+      "nameKey": "practices.categories.movement",
+      "descriptionKey": "practices.categories.movementDescription",
+      "icon": "🤸",
+      "color": "orange"
+    }
+  ]
+}

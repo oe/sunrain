@@ -5,6 +5,11 @@
 
 import { relaxEn } from './en';
 import { relaxZh } from './zh';
+import { relaxEs } from './es';
+import { relaxAr } from './ar';
+import { relaxHi } from './hi';
+import { relaxJa } from './ja';
+import { relaxKo } from './ko';
 import type { IRelaxTranslations } from './types';
 import type { Language } from '@sunrain/shared';
 
@@ -12,11 +17,11 @@ import type { Language } from '@sunrain/shared';
 const relaxTranslations: Record<Language, IRelaxTranslations> = {
   en: relaxEn,
   zh: relaxZh,
-  es: relaxEn, // 暂时使用英文
-  ar: relaxEn, // 暂时使用英文
-  hi: relaxEn, // 暂时使用英文
-  ja: relaxEn, // 暂时使用英文
-  ko: relaxEn, // 暂时使用英文
+  es: relaxEs,
+  ar: relaxAr,
+  hi: relaxHi,
+  ja: relaxJa,
+  ko: relaxKo,
 };
 
 /**

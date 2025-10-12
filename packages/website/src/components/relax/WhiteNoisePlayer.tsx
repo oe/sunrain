@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { Play, Pause, Volume2, VolumeX, RotateCcw, Clock } from 'lucide-react';
+import { Play, Pause, Volume2, VolumeX, RotateCcw } from 'lucide-react';
 // import { createCSRTranslations } from '@/i18n/utils';
 
 interface WhiteNoisePlayerProps {
@@ -60,7 +60,7 @@ const whiteNoiseTracks: WhiteNoiseTrack[] = [
   },
 ];
 
-export default function WhiteNoisePlayer({ lang }: WhiteNoisePlayerProps) {
+export default function WhiteNoisePlayer({ }: WhiteNoisePlayerProps) {
   const [selectedTrack, setSelectedTrack] = useState<WhiteNoiseTrack | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [volume, setVolume] = useState(0.5);
@@ -71,7 +71,7 @@ export default function WhiteNoisePlayer({ lang }: WhiteNoisePlayerProps) {
   const audioContextRef = useRef<AudioContext | null>(null);
   const gainNodeRef = useRef<GainNode | null>(null);
   const oscillatorRef = useRef<OscillatorNode | null>(null);
-  const timerRef = useRef<number | null>(null);
+  const timerRef = useRef<any>(null);
 
   // const t = createCSRTranslations(lang, 'relax');
 
@@ -155,7 +155,7 @@ export default function WhiteNoisePlayer({ lang }: WhiteNoisePlayerProps) {
     }
 
     // Generate appropriate noise based on track
-    let noiseSource;
+    let noiseSource: AudioNode;
     switch (selectedTrack.id) {
       case 'rain':
       case 'ocean':

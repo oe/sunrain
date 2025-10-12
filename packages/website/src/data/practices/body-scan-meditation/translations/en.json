@@ -1,0 +1,32 @@
+{
+  "title": "Progressive Body Scan",
+  "description": "A guided meditation that helps you relax by systematically focusing on different parts of your body.",
+  "instructions": [
+    "Lie down comfortably",
+    "Close your eyes"
+  ],
+  "benefits": [
+    "Deep relaxation",
+    "Better sleep"
+  ],
+  "tips": [
+    "Use a blanket if cold"
+  ],
+  "steps": [
+    {
+      "title": "Preparation",
+      "description": "Get into a comfortable lying position",
+      "instruction": "Lie down comfortably on your back."
+    },
+    {
+      "title": "Starting with Feet",
+      "description": "Focus on your feet and toes",
+      "instruction": "Bring your attention to your feet."
+    },
+    {
+      "title": "Moving Up",
+      "description": "Slowly scan up through your body",
+      "instruction": "Gradually move your attention up through your legs, torso, arms, and head."
+    }
+  ]
+}

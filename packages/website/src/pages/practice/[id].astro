@@ -4,7 +4,7 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import { type Language, getRelativeLocaleUrl } from '@sunrain/shared';
 import { createSSGTranslations } from '@/i18n/utils';
 import PracticeControls from '@/components/practice/PracticeControls';
-import type { PracticeType } from '@/types/practice';
+import { practiceLoader } from '@/data/practices/PracticeLoader';
 
 const lang = getLocale(Astro.url) as Language;
 const t = createSSGTranslations(lang, 'practice');
@@ -14,165 +14,16 @@ if (!id) {
   return Astro.redirect(`/${lang}/practice/`);
 }
 
-// Practice data - same as in PracticePlayer
-const mockPractices: Record<string, PracticeType> = {
-  'mindful-breathing-basic': {
-    id: 'mindful-breathing-basic',
-    name: 'Basic Mindful Breathing',
-    description: 'A simple breathing exercise to help you focus and relax.',
-    category: 'breathing',
-    difficulty: 'beginner',
-    defaultDuration: 5,
-    minDuration: 3,
-    maxDuration: 15,
-    steps: [
-      {
-        id: 'step-1',
-        title: 'Get Comfortable',
-        description: 'Find a comfortable seated position',
-        duration: 30,
-        instruction: 'Sit comfortably with your back straight and feet flat on the floor.',
-      },
-      {
-        id: 'step-2',
-        title: 'Natural Breathing',
-        description: 'Notice your natural breath',
-        duration: 60,
-        instruction: 'Simply notice your breath as it flows in and out naturally.',
-      },
-    ],
-    instructions: ['Find a quiet space', 'Sit comfortably'],
-    benefits: ['Reduces stress', 'Improves focus'],
-    tips: ['Start with shorter sessions'],
-    tags: ['breathing', 'mindfulness'],
-    targetAudience: ['beginners'],
-    therapeuticBenefits: ['stress reduction'],
-    language: 'en',
-    customizable: {
-      duration: true,
-      backgroundMusic: true,
-      voiceGuidance: true,
-      visualCues: true,
-    },
-    averageRating: 4.7,
-    completionRate: 0.89,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-  'body-scan-meditation': {
-    id: 'body-scan-meditation',
-    name: 'Progressive Body Scan',
-    description: 'A guided meditation that helps you relax by systematically focusing on different parts of your body.',
-    category: 'meditation',
-    difficulty: 'beginner',
-    defaultDuration: 15,
-    minDuration: 10,
-    maxDuration: 30,
-    steps: [
-      {
-        id: 'step-1',
-        title: 'Preparation',
-        description: 'Get into a comfortable lying position',
-        duration: 60,
-        instruction: 'Lie down comfortably on your back.',
-      },
-      {
-        id: 'step-2',
-        title: 'Starting with Feet',
-        description: 'Focus on your feet and toes',
-        duration: 120,
-        instruction: 'Bring your attention to your feet.',
-      },
-      {
-        id: 'step-3',
-        title: 'Moving Up',
-        description: 'Slowly scan up through your body',
-        duration: 300,
-        instruction: 'Gradually move your attention up through your legs, torso, arms, and head.',
-      },
-    ],
-    instructions: ['Lie down comfortably', 'Close your eyes'],
-    benefits: ['Deep relaxation', 'Better sleep'],
-    tips: ['Use a blanket if cold'],
-    tags: ['meditation', 'body scan', 'relaxation', 'sleep'],
-    targetAudience: ['beginners'],
-    therapeuticBenefits: ['stress relief', 'better sleep'],
-    language: 'en',
-    customizable: {
-      duration: true,
-      backgroundMusic: true,
-      voiceGuidance: true,
-      visualCues: true,
-    },
-    averageRating: 4.5,
-    completionRate: 0.82,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-  'loving-kindness-meditation': {
-    id: 'loving-kindness-meditation',
-    name: 'Loving-Kindness Meditation',
-    description: 'A heart-opening practice that cultivates compassion and love for yourself and others.',
-    category: 'meditation',
-    difficulty: 'intermediate',
-    defaultDuration: 20,
-    minDuration: 15,
-    maxDuration: 45,
-    steps: [
-      {
-        id: 'step-1',
-        title: 'Centering',
-        description: 'Center yourself with breath',
-        duration: 120,
-        instruction: 'Sit comfortably and take a few deep breaths.',
-      },
-      {
-        id: 'step-2',
-        title: 'Self-Compassion',
-        description: 'Send loving-kindness to yourself',
-        duration: 300,
-        instruction: 'Repeat silently: "May I be happy. May I be healthy."',
-      },
-      {
-        id: 'step-3',
-        title: 'Extending to Others',
-        description: 'Extend loving-kindness to others',
-        duration: 300,
-        instruction: 'Think of someone you care about and send them loving-kindness.',
-      },
-    ],
-    instructions: ['Sit comfortably', 'Place hand on heart'],
-    benefits: ['Increases self-compassion', 'Improves relationships'],
-    tips: ['Start with easier people'],
-    tags: ['meditation', 'compassion', 'loving-kindness', 'heart'],
-    targetAudience: ['intermediate practitioners'],
-    therapeuticBenefits: ['emotional healing'],
-    language: 'en',
-    customizable: {
-      duration: true,
-      backgroundMusic: true,
-      voiceGuidance: true,
-      visualCues: true,
-    },
-    averageRating: 4.6,
-    completionRate: 0.75,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-};
+// 直接使用数据加载器，无需复杂转换
+const practice = practiceLoader.getSimplePractice(id, lang);
 
-const practice = mockPractices[id] || mockPractices['mindful-breathing-basic'];
+if (!practice) {
+  return Astro.redirect(`/${lang}/practice/`);
+}
 
 // Define static paths for practice pages
 export async function getStaticPaths() {
-  const practices = [
-    { id: 'mindful-breathing-basic', name: 'Basic Mindful Breathing' },
-    { id: 'body-scan-meditation', name: 'Progressive Body Scan' },
-    { id: 'loving-kindness-meditation', name: 'Loving-Kindness Meditation' },
-    { id: 'quick-relax', name: 'Quick Relaxation' },
-    { id: 'stress-relief', name: 'Stress Relief Breathing' },
-  ];
-
+  const practices = practiceLoader.getPractices();
   const languages = ['en', 'zh', 'es', 'ar', 'hi', 'ja', 'ko'];
   
   return practices.flatMap(practice => 
@@ -196,42 +47,66 @@ export async function getStaticPaths() {
         href={getRelativeLocaleUrl(lang, '/practice/')}
         class="btn btn-ghost btn-sm"
       >
-        ← {t('backToList')}
+        ← {t('backToPractice')}
       </a>
     </div>
 
     <!-- Practice Header -->
     <div class="text-center mb-8">
-      <h1 class="text-3xl font-bold text-gray-800 dark:text-white mb-2">
+      <div class="flex items-center justify-center gap-2 mb-4">
+        <span class="badge badge-primary badge-lg">{practice.difficulty}</span>
+        <span class="badge badge-outline badge-lg">{practice.category}</span>
+        <span class="text-sm text-base-content/60">{practice.defaultDuration} {t('minutes')}</span>
+      </div>
+      
+      <h1 class="text-4xl md:text-5xl font-bold text-base-content mb-4">
         {practice.name}
       </h1>
-      <p class="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+      
+      <p class="text-xl text-base-content/70 max-w-3xl mx-auto mb-6">
         {practice.description}
       </p>
+
+      <!-- Quick Stats -->
+      <div class="flex justify-center gap-6 text-sm text-base-content/60">
+        <div class="flex items-center gap-1">
+          <span>⭐</span>
+          <span>{practice.averageRating}</span>
+        </div>
+        <div class="flex items-center gap-1">
+          <span>📊</span>
+          <span>{Math.round(practice.completionRate * 100)}% {t('completionRate')}</span>
+        </div>
+      </div>
     </div>
 
-    <!-- Main Content Grid -->
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
       <!-- Left Column: Practice Info & Steps -->
       <div class="lg:col-span-2 space-y-6">
         <!-- Quick Info -->
         <div class="card bg-base-100 shadow-xl">
           <div class="card-body">
-            <div class="flex flex-wrap gap-4 items-center justify-between">
-              <div class="flex items-center gap-2">
-                <span class="text-2xl">
-                  {practice.category === 'breathing' ? '🫁' : practice.category === 'meditation' ? '🧘' : '🧠'}
-                </span>
-                <div>
-                  <div class="font-semibold capitalize">{practice.category}</div>
-                  <div class={`badge badge-sm ${practice.difficulty === 'beginner' ? 'badge-success' : practice.difficulty === 'intermediate' ? 'badge-warning' : 'badge-error'}`}>
-                    {practice.difficulty}
-                  </div>
-                </div>
+            <h2 class="card-title text-2xl mb-4">{t('quickInfo')}</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <h3 class="font-semibold text-base-content mb-2">{t('duration')}</h3>
+                <p class="text-base-content/70">{practice.minDuration}-{practice.maxDuration} {t('minutes')}</p>
               </div>
-              <div class="text-right">
-                <div class="text-2xl font-bold text-primary">{practice.defaultDuration} min</div>
-                <div class="text-sm text-gray-500">Default duration</div>
+              
+              <div>
+                <h3 class="font-semibold text-base-content mb-2">{t('difficulty')}</h3>
+                <p class="text-base-content/70 capitalize">{practice.difficulty}</p>
+              </div>
+              
+              <div>
+                <h3 class="font-semibold text-base-content mb-2">{t('category')}</h3>
+                <p class="text-base-content/70 capitalize">{practice.category}</p>
+              </div>
+              
+              <div>
+                <h3 class="font-semibold text-base-content mb-2">{t('targetAudience')}</h3>
+                <p class="text-base-content/70">{practice.targetAudience.join(', ')}</p>
               </div>
             </div>
           </div>
@@ -240,18 +115,23 @@ export async function getStaticPaths() {
         <!-- Practice Steps -->
         <div class="card bg-base-100 shadow-xl">
           <div class="card-body">
-            <h2 class="card-title mb-4">Practice Steps</h2>
-            <div class="space-y-3">
+            <h2 class="card-title text-2xl mb-4">{t('practiceSteps')}</h2>
+            
+            <div class="space-y-4">
               {practice.steps.map((step, index) => (
-                <div class="flex items-start gap-3 p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
-                  <div class="flex-shrink-0 w-6 h-6 bg-primary text-primary-content rounded-full flex items-center justify-center text-sm font-bold">
-                    {index + 1}
+                <div class="flex gap-4 p-4 bg-base-200 rounded-lg">
+                  <div class="flex-shrink-0">
+                    <div class="w-8 h-8 bg-primary text-primary-content rounded-full flex items-center justify-center font-bold">
+                      {index + 1}
+                    </div>
                   </div>
-                  <div class="flex-1 min-w-0">
-                    <h3 class="font-semibold mb-1">{step.title}</h3>
-                    <p class="text-sm text-gray-600 dark:text-gray-300 mb-1">{step.description}</p>
-                    <p class="text-xs text-gray-500 mb-2">{step.duration}s</p>
-                    <p class="text-sm">{step.instruction}</p>
+                  <div class="flex-grow">
+                    <h3 class="font-semibold text-lg mb-2">{step.title}</h3>
+                    <p class="text-base-content/70 mb-2">{step.description}</p>
+                    <p class="text-sm text-base-content/60">{step.instruction}</p>
+                    <div class="mt-2 text-xs text-base-content/50">
+                      {Math.floor(step.duration / 60)}:{(step.duration % 60).toString().padStart(2, '0')} {t('duration')}
+                    </div>
                   </div>
                 </div>
               ))}
@@ -260,29 +140,31 @@ export async function getStaticPaths() {
         </div>
 
         <!-- Benefits & Tips -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- Benefits -->
           <div class="card bg-base-100 shadow-xl">
             <div class="card-body">
-              <h3 class="card-title text-lg mb-3">✨ Benefits</h3>
-              <ul class="space-y-1">
-                {practice.benefits.map((benefit) => (
-                  <li class="text-sm flex items-start gap-2">
-                    <span class="text-green-500 mt-0.5">•</span>
-                    <span>{benefit}</span>
+              <h2 class="card-title text-xl mb-4">{t('benefits')}</h2>
+              <ul class="space-y-2">
+                {practice.benefits.map((benefit, index) => (
+                  <li class="flex items-start gap-2">
+                    <span class="text-green-500 mt-1">✓</span>
+                    <span class="text-base-content/70">{benefit}</span>
                   </li>
                 ))}
               </ul>
             </div>
           </div>
 
+          <!-- Tips -->
           <div class="card bg-base-100 shadow-xl">
             <div class="card-body">
-              <h3 class="card-title text-lg mb-3">💡 Tips</h3>
-              <ul class="space-y-1">
-                {practice.tips.map((tip) => (
-                  <li class="text-sm flex items-start gap-2">
-                    <span class="text-yellow-500 mt-0.5">•</span>
-                    <span>{tip}</span>
+              <h2 class="card-title text-xl mb-4">{t('tips')}</h2>
+              <ul class="space-y-2">
+                {practice.tips.map((tip, index) => (
+                  <li class="flex items-start gap-2">
+                    <span class="text-blue-500 mt-1">💡</span>
+                    <span class="text-base-content/70">{tip}</span>
                   </li>
                 ))}
               </ul>
@@ -293,10 +175,40 @@ export async function getStaticPaths() {
 
       <!-- Right Column: Controls Only -->
       <div class="space-y-6">
-        <!-- Practice Controls -->
         <div class="sticky top-20">
-          <PracticeControls practice={practice} client:load />
+          <PracticeControls 
+            defaultDuration={practice.defaultDuration}
+            minDuration={practice.minDuration}
+            maxDuration={practice.maxDuration}
+            translations={{
+              start: t('startPractice'),
+              pause: t('pause'),
+              resume: t('resume'),
+              reset: t('reset'),
+              mute: t('mute'),
+              unmute: t('unmute'),
+              settings: t('settings'),
+              duration: t('duration'),
+              completed: t('practiceCompleted'),
+              practiceSettings: t('practiceSettings'),
+              minutes: t('minutes'),
+              durationChangeTitle: t('durationChangeTitle'),
+              durationChangeMessage: t('durationChangeMessage'),
+              durationChangeCancel: t('durationChangeCancel'),
+              durationChangeConfirm: t('durationChangeConfirm')
+            }}
+            client:load 
+          />
         </div>
+      </div>
+    </div>
+
+    <!-- Tags -->
+    <div class="mt-8 text-center">
+      <div class="flex flex-wrap justify-center gap-2">
+        {practice.tags.map((tag) => (
+          <span class="badge badge-outline badge-sm">{tag}</span>
+        ))}
       </div>
     </div>
   </div>

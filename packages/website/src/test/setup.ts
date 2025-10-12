@@ -77,8 +77,6 @@ Object.defineProperty(window, 'matchMedia', {
 // Mock console methods to reduce noise in tests
 const originalConsoleError = console.error;
 const originalConsoleWarn = console.warn;
-const originalConsoleLog = console.log;
-const originalConsoleInfo = console.info;
 
 beforeEach(() => {
   // Reset all mocks before each test

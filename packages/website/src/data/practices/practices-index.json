@@ -1,0 +1,43 @@
+{
+  "practices": [
+    {
+      "id": "mindful-breathing-basic",
+      "titleKey": "practices.mindfulBreathingBasic.title",
+      "descriptionKey": "practices.mindfulBreathingBasic.description",
+      "categoryId": "breathing",
+      "tags": ["breathing", "mindfulness", "relaxation", "beginner"],
+      "estimatedMinutes": 5,
+      "difficulty": "beginner",
+      "isFeatured": true,
+      "isActive": true,
+      "version": "1.0.0",
+      "lastUpdated": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "body-scan-meditation",
+      "titleKey": "practices.bodyScanMeditation.title",
+      "descriptionKey": "practices.bodyScanMeditation.description",
+      "categoryId": "meditation",
+      "tags": ["meditation", "body-scan", "relaxation", "sleep"],
+      "estimatedMinutes": 15,
+      "difficulty": "beginner",
+      "isFeatured": true,
+      "isActive": true,
+      "version": "1.0.0",
+      "lastUpdated": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "loving-kindness-meditation",
+      "titleKey": "practices.lovingKindnessMeditation.title",
+      "descriptionKey": "practices.lovingKindnessMeditation.description",
+      "categoryId": "meditation",
+      "tags": ["meditation", "compassion", "loving-kindness", "heart"],
+      "estimatedMinutes": 20,
+      "difficulty": "intermediate",
+      "isFeatured": true,
+      "isActive": true,
+      "version": "1.0.0",
+      "lastUpdated": "2024-01-01T00:00:00Z"
+    }
+  ]
+}

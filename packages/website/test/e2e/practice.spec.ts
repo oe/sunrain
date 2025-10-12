@@ -44,7 +44,7 @@ test.describe('Practice Functionality E2E Tests', () => {
 
   test('should filter practices by search', async ({ page }) => {
     // Type in search box
-    const searchInput = page.getByPlaceholderText('Search practices...');
+    const searchInput = page.getByPlaceholder('Search practices...');
     await searchInput.fill('breathing');
     
     // Wait for filtered results

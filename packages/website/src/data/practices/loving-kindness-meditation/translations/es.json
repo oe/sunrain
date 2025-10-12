@@ -1,0 +1,32 @@
+{
+  "title": "Meditación de Bondad Amorosa",
+  "description": "Una práctica que abre el corazón y cultiva la compasión y el amor hacia ti mismo y hacia los demás.",
+  "instructions": [
+    "Siéntate cómodamente",
+    "Coloca la mano en el corazón"
+  ],
+  "benefits": [
+    "Aumenta la autocompasión",
+    "Mejora las relaciones"
+  ],
+  "tips": [
+    "Comienza con personas más fáciles"
+  ],
+  "steps": [
+    {
+      "title": "Centrarse",
+      "description": "Centrarse con la respiración",
+      "instruction": "Siéntate cómodamente y toma algunas respiraciones profundas."
+    },
+    {
+      "title": "Autocompasión",
+      "description": "Enviar bondad amorosa a ti mismo",
+      "instruction": "Repite silenciosamente: \"Que sea feliz. Que sea saludable.\""
+    },
+    {
+      "title": "Extender a Otros",
+      "description": "Extender bondad amorosa a otros",
+      "instruction": "Piensa en alguien que te importa y envíales bondad amorosa."
+    }
+  ]
+}

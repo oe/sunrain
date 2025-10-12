@@ -23,15 +23,20 @@ export default function ThemeSwitcher({ currentTheme = 'system' }: Props) {
 
     // Remove existing theme classes
     html.classList.remove('dark');
+    html.removeAttribute('data-theme');
 
     if (selectedTheme === 'dark') {
       html.classList.add('dark');
+      html.setAttribute('data-theme', 'dark');
     } else if (selectedTheme === 'light') {
-      // Light mode - no dark class needed
+      html.setAttribute('data-theme', 'light');
     } else { // system
       const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
       if (prefersDark) {
         html.classList.add('dark');
+        html.setAttribute('data-theme', 'dark');
+      } else {
+        html.setAttribute('data-theme', 'light');
       }
     }
 

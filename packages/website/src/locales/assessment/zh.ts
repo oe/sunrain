@@ -64,84 +64,48 @@ export const assessmentZh: IAssessmentTranslations = {
   },
 
   execution: {
-    title: '评测进行中',
-    subtitle: '请诚实回答以下问题，以获得准确的结果',
-    progress: '进度',
-    questionNumber: '第 {number} 题',
-    timeSpent: '已用时',
-    estimatedRemaining: '预计剩余时间',
+    loading: '正在加载评测...',
     pause: '暂停',
-    continue: '继续',
-    previous: '上一题',
+    save: '保存',
     next: '下一题',
-    submit: '提交',
-    submitting: '提交中...',
+    previous: '上一题',
+    complete: '完成',
+    timeSpent: '已用时',
+    required: '必答题',
+    questionNumber: '第 {number} 题',
+    totalQuestions: '共 {total} 题',
+    completion: {
+      title: '评测完成',
+      message: '感谢您完成评测，正在生成结果...'
+    },
     pauseModal: {
       title: '评测已暂停',
       message: '您的进度已保存，您可以随时继续评测。',
       continue: '继续评测',
       exit: '退出评测'
     },
-    validation: {
-      required: '此题为必答题',
-      invalid: '请选择有效答案',
-      tooShort: '答案太短',
-      tooLong: '答案太长'
-    },
     errors: {
-      title: '评测错误',
-      initializationFailed: '评测初始化失败',
-      sessionStartFailed: '评测会话启动失败',
-      noData: '没有评测数据',
-      validationFailed: '验证失败',
-      unsupportedQuestionType: '不支持的问题类型',
-      cannotContinue: '无法继续评测',
-      continueFailed: '继续评测失败',
-      deleteFailed: '删除失败',
-      clearFailed: '清除失败',
-      loadFailed: '加载失败',
-      loadFailedMessage: '无法加载评测数据，请刷新页面重试',
-      boundary: {
-        title: '评测系统错误',
-        message: '评测过程中发生了错误',
-        details: '错误详情',
-        retry: '重试',
-        goHome: '返回首页'
-      }
+      required: '请回答所有必答题',
+      submitFailed: '提交失败，请重试',
+      loadFailed: '加载失败，请刷新页面'
     },
-    success: {
-      title: '评测完成',
-      message: '感谢您完成评测，正在生成结果...',
-      generating: '正在生成结果...',
-      completed: '评测已完成'
-    }
   },
 
   results: {
     title: '评测结果',
-    subtitle: '基于您的回答生成的个性化结果和建议',
+    description: '基于您的回答生成的个性化结果和建议',
     loading: '正在生成结果...',
-    generating: '正在分析您的回答...',
-    completed: '结果已生成',
-    overall: {
-      title: '总体评估',
-      score: '总分',
-      level: '风险等级',
-      description: '评估描述'
-    },
-    dimensions: {
-      title: '各维度分析',
-      depression: '抑郁倾向',
-      anxiety: '焦虑倾向',
-      stress: '压力水平',
-      mood: '情绪状态'
-    },
-    recommendations: {
-      title: '个性化建议',
-      immediate: '即时建议',
-      longTerm: '长期建议',
-      resources: '相关资源'
-    },
+    completedAt: '完成时间',
+    timeSpent: '用时',
+    overallAssessment: '总体评估',
+    detailedInterpretation: '详细解释',
+    scoreDistribution: '分数分布',
+    riskAssessment: '风险评估',
+    personalizedRecommendations: '个性化建议',
+    recommendedResources: '推荐资源',
+    quickActions: '快速操作',
+    noResultFound: '未找到结果',
+    noResultData: '无结果数据',
     nextSteps: {
       title: '后续步骤',
       moreAssessments: {
@@ -152,38 +116,40 @@ export const assessmentZh: IAssessmentTranslations = {
         title: '开始练习',
         description: '开始心理健康练习'
       },
-      viewResources: {
-        title: '查看资源',
-        description: '浏览心理健康资源'
+      browseResources: {
+        title: '浏览资源',
+        description: '查看心理健康资源'
       }
     },
     actions: {
       share: '分享结果',
-      export: '导出报告',
-      newAssessment: '新评测',
-      viewHistory: '查看历史'
+      savePdf: '保存PDF',
+      viewHistory: '查看历史',
+      backToAssessments: '返回评测'
     },
     riskLevels: {
-      low: '低风险',
-      medium: '中等风险',
-      high: '高风险'
+      low: {
+        title: '低风险',
+        message: '您的风险水平较低，继续保持良好的心理健康状态'
+      },
+      medium: {
+        title: '中等风险',
+        message: '您的风险水平中等，建议关注心理健康并采取预防措施'
+      },
+      high: {
+        title: '高风险',
+        message: '您的风险水平较高，建议寻求专业帮助'
+      }
     },
-    noData: {
-      title: '无结果数据',
-      message: '无法生成评测结果，请重试',
-      retry: '重试'
+    disclaimer: {
+      title: '免责声明',
+      message: '本评测结果仅供参考，不能替代专业医疗建议。如有心理健康问题，请咨询专业医生。'
     }
   },
 
   history: {
     title: '评测历史',
     subtitle: '查看您的历史评测记录和趋势',
-    loading: '加载历史记录...',
-    noData: {
-      title: '暂无评测记录',
-      message: '您还没有完成任何评测',
-      startFirst: '开始第一个评测'
-    },
     statistics: {
       total: '总评测数',
       completed: '已完成',

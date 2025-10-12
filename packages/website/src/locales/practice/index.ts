@@ -36,4 +36,7 @@ export function getPracticeTranslations(lang: string): IPracticeTranslations {
   return practiceTranslations[lang] || practiceTranslations.en;
 }
 
+// 导出练习题翻译
+// export * from './exercises'; // 已移除，使用新的数据管理系统
+
 export default practiceTranslations;

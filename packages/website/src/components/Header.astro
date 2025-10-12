@@ -224,15 +224,20 @@ const currentTheme = 'system'; // Default value, will be updated by JS
     const applyTheme = (selectedTheme: string) => {
       const html = document.documentElement;
       html.classList.remove('dark');
+      html.removeAttribute('data-theme');
 
       if (selectedTheme === 'dark') {
         html.classList.add('dark');
+        html.setAttribute('data-theme', 'dark');
       } else if (selectedTheme === 'light') {
-        // Light mode - no dark class needed
+        html.setAttribute('data-theme', 'light');
       } else { // system
         const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
         if (prefersDark) {
           html.classList.add('dark');
+          html.setAttribute('data-theme', 'dark');
+        } else {
+          html.setAttribute('data-theme', 'light');
         }
       }
 

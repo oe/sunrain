@@ -11,6 +11,7 @@ export const practiceEn: IPracticeTranslations = {
   
   // 导航和按钮
   backToList: 'Back to List',
+  backToPractice: 'Back to Practice',
   startPractice: 'Start Practice',
   pausePractice: 'Pause Practice',
   resumePractice: 'Resume Practice',
@@ -36,6 +37,9 @@ export const practiceEn: IPracticeTranslations = {
   next: 'Next',
   pause: 'Pause',
   resume: 'Resume',
+  reset: 'Reset',
+  mute: 'Mute',
+  unmute: 'Unmute',
   settings: 'Settings',
   practiceSettings: 'Practice Settings',
   duration: 'Duration (minutes)',
@@ -48,8 +52,19 @@ export const practiceEn: IPracticeTranslations = {
   paused: 'Paused',
   almostDone: 'Almost done!',
   inProgress: 'In Progress',
+  practiceCompleted: 'You\'ve successfully completed your mindfulness practice.',
+  
+  // 练习信息
+  quickInfo: 'Quick Info',
+  practiceSteps: 'Practice Steps',
+  benefits: 'Benefits',
+  tips: 'Tips',
+  difficulty: 'Difficulty',
+  category: 'Category',
+  targetAudience: 'Target Audience',
+  completionRate: 'completion rate',
+  minutes: 'min',
   greatJob: 'Great job!',
-  practiceCompleted: 'Practice completed.',
   
   // 呼吸练习
   breathingExercise: 'Breathing Exercise',
@@ -62,8 +77,8 @@ export const practiceEn: IPracticeTranslations = {
   searchPractices: 'Search practices...',
   filters: 'Filters',
   clearAll: 'Clear all',
-  category: 'Category',
-  difficulty: 'Difficulty',
+  filterCategory: 'Category',
+  filterDifficulty: 'Difficulty',
   all: 'All',
   short: 'Short (≤5 min)',
   medium: 'Medium (5-15 min)',
@@ -83,6 +98,21 @@ export const practiceEn: IPracticeTranslations = {
   movement: 'Movement',
   visualization: 'Visualization',
   
+  // 标签翻译
+  tags: {
+    breathing: 'Breathing',
+    mindfulness: 'Mindfulness',
+    relaxation: 'Relaxation',
+    beginner: 'Beginner',
+    meditation: 'Meditation',
+    'body-scan': 'Body Scan',
+    sleep: 'Sleep',
+    compassion: 'Compassion',
+    'loving-kindness': 'Loving-Kindness',
+    heart: 'Heart',
+    intermediate: 'Intermediate',
+  },
+  
   // 错误消息
   failedToLoadPractice: 'Failed to load practice',
   practiceNotFound: 'Practice not found',
@@ -91,6 +121,12 @@ export const practiceEn: IPracticeTranslations = {
   // 成功消息
   practiceSaved: 'Practice saved successfully',
   achievementUnlocked: 'Achievement unlocked!',
+  
+  // 确认对话框
+  durationChangeTitle: 'Change Practice Duration',
+  durationChangeMessage: 'Practice is currently running. Do you want to restart with the new duration of',
+  durationChangeCancel: 'Cancel',
+  durationChangeConfirm: 'Restart',
   
   // 帮助文本
   practiceHelp: 'Choose a practice that suits your current mood and available time.',

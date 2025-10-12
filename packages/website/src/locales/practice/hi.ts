@@ -11,6 +11,7 @@ export const practiceHi: IPracticeTranslations = {
   
   // 导航和按钮
   backToList: 'सूची पर वापस जाएं',
+  backToPractice: 'अभ्यास पर वापस जाएं',
   startPractice: 'अभ्यास शुरू करें',
   pausePractice: 'अभ्यास रोकें',
   resumePractice: 'अभ्यास जारी रखें',
@@ -36,10 +37,14 @@ export const practiceHi: IPracticeTranslations = {
   next: 'अगला',
   pause: 'रोकें',
   resume: 'जारी रखें',
+  reset: 'रीसेट करें',
   settings: 'सेटिंग्स',
   practiceSettings: 'अभ्यास सेटिंग्स',
   duration: 'अवधि (मिनट)',
+  minutes: 'मिनट',
   backgroundMusic: 'पृष्ठभूमि संगीत',
+  mute: 'म्यूट करें',
+  unmute: 'अनम्यूट करें',
   howAreYouFeeling: 'आप कैसा महसूस कर रहे हैं?',
   rateYourMood: 'शुरू करने से पहले अपने मूड का मूल्यांकन करें',
   
@@ -50,7 +55,14 @@ export const practiceHi: IPracticeTranslations = {
   inProgress: 'प्रगति में',
   greatJob: 'बहुत बढ़िया!',
   practiceCompleted: 'अभ्यास पूरा हो गया।',
-  quickStart: 'त्वरित शुरुआत',
+  
+  // 练习信息
+  quickInfo: 'त्वरित जानकारी',
+  practiceSteps: 'अभ्यास चरण',
+  benefits: 'लाभ',
+  tips: 'सुझाव',
+  targetAudience: 'लक्षित दर्शक',
+  completionRate: 'पूर्णता दर',
   
   // 呼吸练习
   breathingExercise: 'सांस लेने का व्यायाम',
@@ -63,9 +75,10 @@ export const practiceHi: IPracticeTranslations = {
   searchPractices: 'अभ्यास खोजें...',
   filters: 'फिल्टर',
   clearAll: 'सभी साफ करें',
+  filterCategory: 'श्रेणी फिल्टर',
+  filterDifficulty: 'कठिनाई फिल्टर',
   category: 'श्रेणी',
   difficulty: 'कठिनाई',
-  duration: 'अवधि',
   all: 'सभी',
   short: 'छोटा (≤5 मिनट)',
   medium: 'मध्यम (5-15 मिनट)',
@@ -94,10 +107,31 @@ export const practiceHi: IPracticeTranslations = {
   practiceSaved: 'अभ्यास सफलतापूर्वक सहेजा गया',
   achievementUnlocked: 'उपलब्धि अनलॉक!',
   
+  // 确认对话框
+  durationChangeTitle: 'अभ्यास अवधि बदलें',
+  durationChangeMessage: 'अभ्यास वर्तमान में चल रहा है। क्या आप नई अवधि के साथ पुनः आरंभ करना चाहते हैं',
+  durationChangeCancel: 'रद्द करें',
+  durationChangeConfirm: 'पुनः आरंभ करें',
+  
   // 帮助文本
   practiceHelp: 'एक अभ्यास चुनें जो आपके वर्तमान मूड और उपलब्ध समय के अनुकूल हो।',
   breathingHelp: 'अपनी सांस पर ध्यान केंद्रित करें और दृश्य मार्गदर्शिका का पालन करें।',
   timerHelp: 'एक अवधि निर्धारित करें जो आपके लिए काम करे। आप हमेशा अपने अभ्यास को बढ़ा या घटा सकते हैं।',
+  
+  // 标签翻译
+  tags: {
+    breathing: 'सांस लेना',
+    mindfulness: 'माइंडफुलनेस',
+    relaxation: 'आराम',
+    beginner: 'शुरुआती',
+    meditation: 'ध्यान',
+    'body-scan': 'शरीर स्कैन',
+    sleep: 'नींद',
+    compassion: 'करुणा',
+    'loving-kindness': 'प्रेमपूर्ण दया',
+    heart: 'दिल',
+    intermediate: 'मध्यम',
+  },
 };
 
 export default practiceHi;
