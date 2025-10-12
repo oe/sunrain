@@ -1,6 +1,7 @@
 ---
 import { createSSGTranslations } from '@/i18n/utils';
 import { type Language, getRelativeLocaleUrl } from '@sunrain/shared';
+import BrandName from './BrandName.astro';
 
 export interface Props {
   lang: Language;
@@ -37,7 +38,7 @@ const features = [
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
       <!-- Brand Section -->
       <div class="lg:col-span-1">
-        <div class="flex items-center space-x-3 mb-4">
+        <div class="flex items-center space-x-1 mb-4">
           <div class="relative" aria-hidden="true">
             <img 
               src="/logo.png" 
@@ -45,9 +46,7 @@ const features = [
               class="w-8 h-8 object-contain"
             />
           </div>
-          <span class="text-xl font-semibold text-gray-900 dark:text-white">
-            Sunrain.me
-          </span>
+          <BrandName class="text-xl" />
         </div>
         <p
           class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed mb-4"

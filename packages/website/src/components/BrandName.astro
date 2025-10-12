@@ -1,0 +1,15 @@
+---
+const { class: className } = Astro.props;
+---
+<span class:list={['font-chewy', 'brand-name', className]}>
+    Sunrain.me
+</span>
+<style>
+.brand-name {
+    color: transparent;
+    background-image: linear-gradient(to right, #eace6d, #aec2db);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+</style>
