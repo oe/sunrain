@@ -12,6 +12,7 @@ const { assessmentId, buttonText, language = 'en' } = Astro.props;
 <button
   id={`start-btn-${assessmentId}`}
   class="btn btn-primary btn-lg w-full text-lg"
+  data-testid={`start-assessment-${assessmentId}`}
   data-assessment-id={assessmentId}
   data-language={language}
 >

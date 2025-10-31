@@ -87,13 +87,14 @@ const currentTheme = 'system'; // Default value, will be updated by JS
       </div>
 
       <!-- Desktop Navigation -->
-      <div class="hidden md:flex items-center space-x-1 rtl:space-x-reverse" role="menubar">
+      <div class="hidden md:flex items-center space-x-1 rtl:space-x-reverse" role="menubar" data-testid="main-navigation">
         {
           navItems.map(({ key, href }) => (
             <a
               href={href}
               class="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white px-3 py-2 text-sm font-medium transition-colors duration-200 rounded-md hover:bg-gray-50 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
               role="menuitem"
+              data-testid={`nav-${key.split('.')[1]}`}
             >
               {t(key)}
             </a>

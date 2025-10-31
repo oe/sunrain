@@ -23,10 +23,10 @@ test.describe('MVP 核心功能测试', () => {
       // 验证页面标题
       await expect(page).toHaveTitle(/Sunrain/i);
       
-      // 验证核心导航链接存在
-      const nav = page.locator('nav, header');
-      await expect(nav.getByRole('link', { name: /assessment|评测/i })).toBeVisible();
-      await expect(nav.getByRole('link', { name: /resources|资源/i })).toBeVisible();
+      // 验证核心导航链接存在（使用 data-testid）
+      const nav = page.locator('[data-testid="main-navigation"]');
+      await expect(nav.locator('[data-testid="nav-resources"]')).toBeVisible();
+      await expect(nav.locator('[data-testid="nav-guide"]')).toBeVisible();
       
       // 验证主要内容区域存在
       await expect(page.locator('main')).toBeVisible();
@@ -52,14 +52,12 @@ test.describe('MVP 核心功能测试', () => {
     });
 
     test('评估列表页显示所有问卷', async ({ page }) => {
-      // 导航到评估页面
-      await page.click('a:has-text("Assessment"), a:has-text("评测"), a:has-text("自我评测")');
+      // 导航到评估页面（使用 trailing slash）
+      await page.goto('/assessment/');
       await page.waitForLoadState('networkidle');
       
-      // 验证至少显示 3 个问卷
-      const questionnaireCards = page.locator('[data-testid*="questionnaire"], .questionnaire-card, article, .card').filter({
-        hasText: /PHQ|GAD|PSS|压力|焦虑|抑郁/
-      });
+      // 验证至少显示 3 个问卷（使用 data-testid）
+      const questionnaireCards = page.locator('[data-testid="questionnaire-card"]');
       
       await expect(questionnaireCards.first()).toBeVisible({ timeout: 10000 });
       const count = await questionnaireCards.count();
@@ -70,14 +68,12 @@ test.describe('MVP 核心功能测试', () => {
   test.describe('2. PHQ-9 评估完整流程', () => {
     
     test('完成 PHQ-9 评估并查看结果', async ({ page }) => {
-      // 1. 导航到评估页面
-      await page.goto('/assessment');
+      // 1. 导航到评估页面（使用 trailing slash）
+      await page.goto('/assessment/');
       await page.waitForLoadState('networkidle');
       
-      // 2. 找到并点击 PHQ-9 开始按钮
-      const startButton = page.locator('a, button').filter({
-        hasText: /开始评估|Start Assessment|PHQ-9/i
-      }).first();
+      // 2. 找到并点击 PHQ-9 开始按钮（使用 data-testid）
+      const startButton = page.locator('[data-testid="start-assessment-phq9"]');
       
       await startButton.click();
       await page.waitForLoadState('networkidle');
@@ -149,11 +145,10 @@ test.describe('MVP 核心功能测试', () => {
 
     test('评估历史记录正确保存', async ({ page }) => {
       // 先完成一次评估（简化版）
-      await page.goto('/assessment');
+      await page.goto('/assessment/');
       
-      const startButton = page.locator('a, button').filter({
-        hasText: /开始|Start/i
-      }).first();
+      // 使用 data-testid 找到第一个开始按钮
+      const startButton = page.locator('[data-testid^="start-assessment-"]').first();
       await startButton.click({ timeout: 10000 });
       
       // 快速完成评估
@@ -175,8 +170,8 @@ test.describe('MVP 核心功能测试', () => {
       // 等待完成
       await page.waitForTimeout(2000);
       
-      // 导航到历史页面
-      await page.goto('/assessment/history');
+      // 导航到历史页面（使用 trailing slash）
+      await page.goto('/assessment/history/');
       await page.waitForLoadState('networkidle');
       
       // 验证有历史记录显示
@@ -198,7 +193,7 @@ test.describe('MVP 核心功能测试', () => {
   test.describe('3. 资源页面验证', () => {
     
     test('书籍推荐页面正常显示', async ({ page }) => {
-      await page.goto('/resources');
+      await page.goto('/resources/');
       await page.waitForLoadState('networkidle');
       
       // 验证页面包含资源相关内容
@@ -215,7 +210,7 @@ test.describe('MVP 核心功能测试', () => {
     });
 
     test('资源页面搜索功能可用', async ({ page }) => {
-      await page.goto('/resources');
+      await page.goto('/resources/');
       await page.waitForLoadState('networkidle');
       
       // 查找搜索框
@@ -268,8 +263,8 @@ test.describe('MVP 核心功能测试', () => {
     });
 
     test('中文版评估问卷显示正确', async ({ page }) => {
-      // 确保在中文模式
-      await page.goto('/zh/assessment');
+      // 确保在中文模式（使用 trailing slash）
+      await page.goto('/zh/assessment/');
       await page.waitForLoadState('networkidle');
       
       // 验证有中文内容
@@ -279,8 +274,8 @@ test.describe('MVP 核心功能测试', () => {
     });
 
     test('英文版评估问卷显示正确', async ({ page }) => {
-      // 切换到英文模式
-      await page.goto('/en/assessment');
+      // 切换到英文模式（使用 trailing slash）
+      await page.goto('/en/assessment/');
       await page.waitForLoadState('networkidle');
       
       // 验证有英文内容且基本没有中文
@@ -293,11 +288,10 @@ test.describe('MVP 核心功能测试', () => {
   test.describe('5. 数据持久化验证', () => {
     
     test('评估数据在页面刷新后仍然存在', async ({ page, context }) => {
-      // 开始评估
-      await page.goto('/assessment');
-      const startButton = page.locator('a, button').filter({
-        hasText: /开始|Start/i
-      }).first();
+      // 开始评估（使用 trailing slash）
+      await page.goto('/assessment/');
+      // 使用 data-testid 找到第一个开始按钮
+      const startButton = page.locator('[data-testid^="start-assessment-"]').first();
       await startButton.click({ timeout: 10000 });
       
       // 回答几个问题
@@ -361,11 +355,10 @@ test.describe('MVP 响应式设计测试', () => {
     });
 
     test('移动端评估问卷可正常操作', async ({ page }) => {
-      await page.goto('/assessment');
+      await page.goto('/assessment/');
       
-      const startButton = page.locator('a, button').filter({
-        hasText: /开始|Start/i
-      }).first();
+      // 使用 data-testid 找到第一个开始按钮
+      const startButton = page.locator('[data-testid^="start-assessment-"]').first();
       
       if (await startButton.isVisible({ timeout: 5000 })) {
         await startButton.click();
@@ -443,7 +436,7 @@ test.describe('MVP 性能验证', () => {
 
   test('评估页面加载性能', async ({ page }) => {
     const startTime = Date.now();
-    await page.goto('/assessment');
+    await page.goto('/assessment/');
     await page.waitForLoadState('networkidle');
     const loadTime = Date.now() - startTime;
     
@@ -467,10 +460,10 @@ test.describe('MVP 性能验证', () => {
     await page.goto('/');
     await page.waitForLoadState('networkidle');
     
-    await page.goto('/assessment');
+    await page.goto('/assessment/');
     await page.waitForLoadState('networkidle');
     
-    await page.goto('/resources');
+    await page.goto('/resources/');
     await page.waitForLoadState('networkidle');
     
     // 过滤掉一些已知的非关键错误
