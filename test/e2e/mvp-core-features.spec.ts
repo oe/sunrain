@@ -94,14 +94,19 @@ test.describe('MVP 核心功能测试', () => {
         await firstAnswer.click({ force: true });
         await page.waitForTimeout(500);
         
-        // 点击 "Next" 按钮
-        const nextButton = page.locator('button:has-text("Next"), button:has-text("下一")').first();
-        await expect(nextButton).toBeVisible({ timeout: 3000 });
-        await nextButton.click({ force: true });
+        // 点击 "Next" 或 "Submit" 按钮
+        const isLastQuestion = i === totalQuestions;
+        const buttonSelector = isLastQuestion 
+          ? 'button:has-text("Submit"), button:has-text("Complete"), button:has-text("提交"), button:has-text("完成"), button:has-text("Next"), button:has-text("下一")'
+          : 'button:has-text("Next"), button:has-text("下一")';
         
-        // 等待 DOM 更新（不是页面导航，而是内容更新）
+        const actionButton = page.locator(buttonSelector).first();
+        await expect(actionButton).toBeVisible({ timeout: 3000 });
+        await actionButton.click({ force: true });
+        
+        // 等待 DOM 更新或页面跳转
         if (i < totalQuestions) {
-          // 等待下一个问题出现或当前问题消失
+          // 等待下一个问题出现
           await page.waitForTimeout(1000);
         } else {
           // 最后一题，等待跳转到结果页
@@ -159,10 +164,10 @@ test.describe('MVP 核心功能测试', () => {
           await firstAnswer.click({ force: true });
           await page.waitForTimeout(500);
           
-          // 点击 Next 按钮
-          const nextButton = page.locator('button:has-text("Next"), button:has-text("下一")').first();
-          if (await nextButton.isVisible({ timeout: 2000 }).catch(() => false)) {
-            await nextButton.click({ force: true });
+          // 点击 Next 或 Submit 按钮
+          const actionButton = page.locator('button:has-text("Next"), button:has-text("下一"), button:has-text("Submit"), button:has-text("提交"), button:has-text("Complete"), button:has-text("完成")').first();
+          if (await actionButton.isVisible({ timeout: 2000 }).catch(() => false)) {
+            await actionButton.click({ force: true });
             await page.waitForTimeout(1000);
           }
         } else {
