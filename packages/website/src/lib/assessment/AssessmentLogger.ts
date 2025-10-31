@@ -70,85 +70,8 @@ export class ConsoleLogOutput implements LogOutput {
   }
 }
 
-/**
- * 本地存储日志输出
- */
-export class LocalStorageLogOutput implements LogOutput {
-  private readonly maxEntries = 1000;
-  private readonly storageKey = 'assessment_logs';
-  private isClientSide: boolean;
-
-  constructor() {
-    this.isClientSide = typeof window !== 'undefined' && typeof localStorage !== 'undefined';
-  }
-
-  async write(entry: LogEntry): Promise<void> {
-    if (!this.isClientSide) return;
-
-    try {
-      const logs = this.loadLogs();
-      logs.push({
-        ...entry,
-        timestamp: entry.timestamp.toISOString()
-      });
-
-      // 保持日志数量在限制内
-      if (logs.length > this.maxEntries) {
-        logs.splice(0, logs.length - this.maxEntries);
-      }
-
-      localStorage.setItem(this.storageKey, JSON.stringify(logs));
-    } catch (error) {
-      // 如果存储失败，至少输出到控制台
-      console.error('Failed to write log to localStorage:', error);
-      console.log('Original log entry:', entry);
-    }
-  }
-
-  private loadLogs(): any[] {
-    if (!this.isClientSide) return [];
-
-    try {
-      const stored = localStorage.getItem(this.storageKey);
-      return stored ? JSON.parse(stored) : [];
-    } catch (error) {
-      console.error('Failed to load logs from localStorage:', error);
-      return [];
-    }
-  }
-
-  /**
-   * 获取存储的日志
-   */
-  getLogs(): LogEntry[] {
-    const logs = this.loadLogs();
-    return logs.map(log => ({
-      ...log,
-      timestamp: new Date(log.timestamp)
-    }));
-  }
-
-  /**
-   * 清除所有日志
-   */
-  clearLogs(): void {
-    if (!this.isClientSide) return;
-
-    try {
-      localStorage.removeItem(this.storageKey);
-    } catch (error) {
-      console.error('Failed to clear logs:', error);
-    }
-  }
-
-  /**
-   * 导出日志为JSON
-   */
-  exportLogs(): string {
-    const logs = this.getLogs();
-    return JSON.stringify(logs, null, 2);
-  }
-}
+// LocalStorageLogOutput 已移除 - 简化日志系统
+// 在开发环境使用控制台输出即可，不需要持久化日志
 
 
 
@@ -163,9 +86,8 @@ export class AssessmentLogger {
     // 默认添加控制台输出
     this.outputs.push(new ConsoleLogOutput());
 
-    // 在开发环境中启用本地存储日志
+    // 在开发环境中启用调试级别
     if (typeof window !== 'undefined' && window.location.hostname === 'localhost') {
-      this.outputs.push(new LocalStorageLogOutput());
       this.minLevel = LogLevel.DEBUG;
     }
   }

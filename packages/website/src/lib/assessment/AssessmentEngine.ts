@@ -9,7 +9,6 @@ import {
   AssessmentError,
   AssessmentErrorType,
   AssessmentErrorFactory,
-  errorRecoveryManager,
 } from "@/lib/assessment/AssessmentErrors";
 import { assessmentLogger } from "@/lib/assessment/AssessmentLogger";
 import { structuredStorage } from "@/lib/storage/StructuredStorage";
@@ -793,38 +792,22 @@ export class AssessmentEngine {
       assessmentError
     );
 
-    // 尝试使用错误恢复管理器
-    const recoveryResult = await errorRecoveryManager.attemptRecovery(
-      assessmentError
-    );
-
-    if (recoveryResult.recovered) {
-      assessmentLogger.info("STORAGE", "Storage error recovered", {
-        strategy: recoveryResult.strategy?.getDescription(),
-        message: recoveryResult.message,
-      });
-    } else {
-      assessmentLogger.warn("STORAGE", "Failed to recover from storage error", {
-        message: recoveryResult.message,
-      });
-
-      // 最后的备用方案：检查localStorage是否可用
-      try {
-        const testKey = "__storage_test__";
-        localStorage.setItem(testKey, "test");
-        localStorage.removeItem(testKey);
-      } catch (storageError) {
-        const criticalError = AssessmentErrorFactory.createStorageError(
-          AssessmentErrorType.STORAGE_NOT_AVAILABLE,
-          "localStorage is not available",
-          storageError
-        );
-        assessmentLogger.critical(
-          "STORAGE",
-          "localStorage completely unavailable",
-          criticalError
-        );
-      }
+    // 简化的错误处理：直接检查localStorage是否可用
+    try {
+      const testKey = "__storage_test__";
+      localStorage.setItem(testKey, "test");
+      localStorage.removeItem(testKey);
+    } catch (storageError) {
+      const criticalError = AssessmentErrorFactory.createStorageError(
+        AssessmentErrorType.STORAGE_NOT_AVAILABLE,
+        "localStorage is not available",
+        storageError as Error
+      );
+      assessmentLogger.critical(
+        "STORAGE",
+        "localStorage completely unavailable",
+        criticalError
+      );
     }
   }
 
