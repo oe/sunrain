@@ -1,6 +1,6 @@
 # Sunrain 架构设计文档
 
-版本：1.0  
+版本：2.0  
 最后更新：2024-10-31
 
 ## 目录
@@ -16,7 +16,7 @@
 
 ## 概述
 
-Sunrain 是一个开源心理健康平台，采用现代化的前端技术栈和 monorepo 架构，提供心理健康自我评估、日常练习、放松功能和疗愈资源。
+Sunrain 是一个开源心理健康平台，采用现代化的前端技术栈和**单仓库架构**，提供心理健康自我评估、日常练习、放松功能和疗愈资源。
 
 ### 核心特性
 
@@ -65,35 +65,23 @@ Sunrain 是一个开源心理健康平台，采用现代化的前端技术栈和
 └─────────────────────────────────────────────────────────┘
 ```
 
-### Monorepo 结构
+### 项目结构
 
 ```
 sunrain/
-├── packages/
-│   ├── website/              # 主网站应用
-│   │   ├── src/
-│   │   │   ├── components/   # React/Astro 组件
-│   │   │   ├── pages/        # Astro 页面
-│   │   │   ├── lib/          # 业务逻辑
-│   │   │   ├── locales/      # SSG 翻译
-│   │   │   ├── client-locales/ # CSR 翻译
-│   │   │   ├── data/         # 问卷和练习数据
-│   │   │   └── types/        # TypeScript 类型
-│   │   └── public/           # 静态资源
-│   │
-│   ├── content-fetcher/      # 内容管理工具
-│   │   └── src/
-│   │       ├── fetchers/     # 内容抓取器
-│   │       ├── services/     # 外部服务集成
-│   │       └── cli/          # 命令行工具
-│   │
-│   └── shared/               # 共享工具和类型
-│       └── src/
-│           ├── types.ts      # 共享类型定义
-│           ├── i18n.ts       # 国际化工具
-│           └── content.ts    # 内容工具
-│
-└── docs/                     # 项目文档
+├── src/
+│   ├── components/           # React/Astro 组件
+│   ├── pages/                # Astro 页面
+│   ├── lib/                  # 业务逻辑
+│   ├── locales/              # SSG 翻译
+│   ├── client-locales/       # CSR 翻译
+│   ├── data/                 # 问卷和练习数据
+│   ├── shared/               # 共享类型和工具
+│   └── types/                # TypeScript 类型
+├── public/                   # 静态资源
+├── docs/                     # 项目文档
+├── scripts/                  # 工具脚本
+└── test/                     # 测试文件
 ```
 
 ## 技术栈
@@ -131,15 +119,9 @@ sunrain/
 
 **pnpm**
 - 快速、节省磁盘空间的包管理器
-- Workspace支持
-- 依赖catalog管理
+- 高效的依赖管理
 
-**Turbo**
-- Monorepo构建系统
-- 智能缓存
-- 并行任务执行
-
-**TypeScript 5.8+**
+**TypeScript 5.3+**
 - 类型安全
 - 更好的IDE支持
 - 减少运行时错误
@@ -405,6 +387,15 @@ src/client-locales/
 - 错误消息
 - 按钮和表单
 
+### 共享类型和工具
+
+```
+src/shared/
+├── types.ts          # 共享类型定义
+├── i18n.ts           # 国际化工具
+└── content.ts        # 内容工具
+```
+
 ### 翻译加载流程
 
 ```
@@ -442,43 +433,25 @@ src/client-locales/
 pnpm install
 
 # 启动开发服务器
-pnpm dev              # 所有包
-pnpm dev:website      # 仅网站
+pnpm dev
 
 # 运行测试
 pnpm test             # 所有测试
-pnpm test:watch       # 监听模式
+pnpm test:run         # 运行一次
 
 # 代码检查
 pnpm lint             # ESLint
-pnpm format           # Prettier
+pnpm type-check       # TypeScript
 ```
 
 ### 构建流程
-
-```
-1. Turbo 分析依赖关系
-   ↓
-2. 并行构建 shared 和 content-fetcher
-   ↓
-3. 构建 website（依赖前两者）
-   ↓
-4. 生成静态文件到 dist/
-   ↓
-5. 优化资源（压缩、树摇）
-```
-
-### 构建命令
 
 ```bash
 # 完整构建
 pnpm build
 
-# 清理缓存后构建
-pnpm build:clean
-
-# 生产构建
-NODE_ENV=production pnpm build
+# 预览构建结果
+pnpm preview
 ```
 
 ### 部署
@@ -487,35 +460,16 @@ NODE_ENV=production pnpm build
 
 **配置**:
 - 构建命令: `pnpm build`
-- 输出目录: `packages/website/dist`
+- 输出目录: `dist/`
 - Node版本: 18+
 
 **环境变量**:
 ```bash
 NODE_VERSION=18
-PNPM_VERSION=8
+PNPM_VERSION=10
 ```
 
 ## 性能优化
-
-### Turbo 缓存策略
-
-```json
-{
-  "pipeline": {
-    "build": {
-      "dependsOn": ["^build"],
-      "outputs": ["dist/**", ".astro/**"],
-      "cache": true
-    }
-  }
-}
-```
-
-**缓存效果**:
-- 首次构建: ~45秒
-- 缓存命中: ~5秒
-- 加速比: 9x
 
 ### 代码分割
 
@@ -548,6 +502,35 @@ PNPM_VERSION=8
 | 最大内容绘制 (LCP) | < 2.5s | ~2.0s |
 | 首次输入延迟 (FID) | < 100ms | ~50ms |
 | 累积布局偏移 (CLS) | < 0.1 | ~0.05 |
+
+## 内容管理
+
+### 当前方案
+
+内容数据以静态 JSON 文件存储在 `src/data/` 和 `public/content/` 目录。
+
+### 推荐的内容获取工作流
+
+对于需要定期更新的内容（书籍、音乐、电影等），建议使用 **n8n + AI** 工作流：
+
+```
+n8n 定时触发
+    ↓
+调用外部 API
+    ↓
+AI 处理和分类
+    ↓
+生成 JSON 文件
+    ↓
+自动提交到仓库
+```
+
+**优势**:
+- ✅ 可视化流程设计
+- ✅ 无需编写代码
+- ✅ AI 辅助内容质量控制
+- ✅ 灵活的调度和触发
+- ✅ 易于维护和调整
 
 ## 安全和隐私
 
@@ -620,7 +603,7 @@ const supportsServiceWorker = 'serviceWorker' in navigator;
 
 - [ ] PWA离线支持
 - [ ] 原生移动应用
-- [ ] 内容自动化管理
+- [ ] 内容自动化管理（n8n + AI）
 - [ ] 用户社区功能
 
 ## 相关文档
@@ -628,7 +611,6 @@ const supportsServiceWorker = 'serviceWorker' in navigator;
 - [项目状态](./PROJECT_STATUS.md) - 当前实现状态
 - [问卷系统设计](./QUESTIONNAIRE_SYSTEM_DESIGN.md) - 问卷系统详细设计
 - [状态管理指南](./state-management-guidelines.md) - 状态管理最佳实践
-- [构建性能](./turbo-caching.md) - Turbo 构建优化
 
 ## 贡献指南
 
@@ -637,5 +619,5 @@ const supportsServiceWorker = 'serviceWorker' in navigator;
 ---
 
 文档维护：定期更新以反映架构变化  
-最后审查：2024-10-31
-
+最后审查：2024-10-31  
+架构版本：2.0（简化为单仓库）

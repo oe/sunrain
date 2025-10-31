@@ -1,60 +1,59 @@
 {
   "name": "sunrain",
   "type": "module",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "private": true,
-  "description": "Mental health resources platform - monorepo",
-  "packageManager": "pnpm@10.12.1+sha512.f0dda8580f0ee9481c5c79a1d927b9164f2c478e90992ad268bbb2465a736984391d6333d2c327913578b2804af33474ca554ba29c04a8b13060a717675ae3ac",
-  "engines": {
-    "node": ">=18.0.0",
-    "pnpm": ">=8.0.0"
-  },
+  "description": "Mental health resources website built with Astro",
   "scripts": {
-    "dev": "turbo run dev --parallel",
-    "dev:website": "turbo run dev --filter=@sunrain/website",
-    "dev:content-fetcher": "turbo run dev --filter=@sunrain/content-fetcher",
-    "dev:shared": "turbo run dev --filter=@sunrain/shared",
-    "build": "turbo run build",
-    "build:website": "turbo run build --filter=@sunrain/website",
-    "build:content-fetcher": "turbo run build --filter=@sunrain/content-fetcher",
-    "build:shared": "turbo run build --filter=@sunrain/shared",
-    "build:prod": "turbo run clean && turbo run build",
-    "preview": "turbo run preview",
-    "preview:website": "turbo run preview --filter=@sunrain/website",
-    "lint": "turbo run lint",
-    "lint:fix": "turbo run lint --continue",
-    "type-check": "turbo run type-check",
-    "clean": "turbo run clean",
-    "clean:all": "turbo run clean && rm -rf node_modules/.cache",
-    "fetch:books": "turbo run fetch:books --filter=@sunrain/content-fetcher",
-    "fetch:movies": "turbo run fetch:movies --filter=@sunrain/content-fetcher",
-    "fetch:music": "turbo run fetch:music --filter=@sunrain/content-fetcher",
-    "fetch:all": "turbo run fetch:all --filter=@sunrain/content-fetcher",
-    "i18n:sync": "turbo run i18n:sync --filter=@sunrain/content-fetcher",
-    "i18n:detect": "turbo run i18n:detect --filter=@sunrain/content-fetcher",
-    "i18n:report": "turbo run i18n:report --filter=@sunrain/content-fetcher",
-    "i18n:cleanup": "turbo run i18n:cleanup --filter=@sunrain/content-fetcher",
-    "test:validator": "turbo run test:validator --filter=@sunrain/content-fetcher"
+    "dev": "astro dev",
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "lint": "astro check",
+    "type-check": "astro check",
+    "check-translations": "tsx scripts/check-translations.ts",
+    "validate-translations": "tsx scripts/validate-translation-quality.ts",
+    "questionnaire": "tsx scripts/questionnaire-cli.ts",
+    "migrate-questionnaires": "tsx scripts/migrate-questionnaires.ts",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "test:run": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:headed": "playwright test --headed"
   },
-  "workspaces": [
-    "packages/*"
-  ],
   "dependencies": {
-    "@sunrain/shared": "workspace:*"
+    "@astrojs/react": "^4.3.0",
+    "@astrojs/sitemap": "^3.4.1",
+    "@astrojs/tailwind": "^5.1.2",
+    "@tailwindcss/typography": "^0.5.15",
+    "astro": "^5.11.0",
+    "astro-i18n-aut": "^0.7.0",
+    "clsx": "^2.1.1",
+    "daisyui": "^4.12.14",
+    "lucide-react": "^0.468.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "sass": "^1.83.0",
+    "tailwindcss": "^3.4.0"
   },
   "devDependencies": {
-    "turbo": "^2.3.4"
+    "@astrojs/check": "^0.9.4",
+    "@playwright/test": "^1.49.1",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.1.0",
+    "@testing-library/user-event": "^14.5.2",
+    "@types/node": "^20.10.0",
+    "@types/react": "^19.1.0",
+    "@types/react-dom": "^19.1.0",
+    "@vitest/ui": "^2.1.8",
+    "jsdom": "^25.0.1",
+    "playwright": "^1.49.1",
+    "tailwindcss-rtl": "^0.9.0",
+    "tsx": "^4.6.0",
+    "typescript": "^5.3.0",
+    "vitest": "^2.1.8"
   },
-  "keywords": [
-    "mental-health",
-    "resources",
-    "astro",
-    "monorepo",
-    "typescript"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/sunrain/sunrain.git"
-  },
-  "license": "MIT"
+  "packageManager": "pnpm@10.12.1+sha512.f0dda8580f0ee9481c5c79a1d927b9164f2c478e90992ad268bbb2465a736984391d6333d2c327913578b2804af33474ca554ba29c04a8b13060a717675ae3ac"
 }

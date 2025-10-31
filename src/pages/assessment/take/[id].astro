@@ -1,0 +1,118 @@
+---
+// Assessment execution interface with React components
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { getLocale } from 'astro-i18n-aut';
+import { createSSGTranslations } from '@/i18n/utils';
+import { initializeQuestionBank } from '@/lib/assessment/initializeQuestionBank';
+import { questionBankAdapter } from '@/lib/assessment/QuestionBankAdapter';
+import AssessmentTaker from '@/components/assessment/AssessmentTaker';
+import type { Language } from '@/shared';
+
+export async function getStaticPaths() {
+  // 初始化问卷库数据
+  await initializeQuestionBank();
+  
+  // Get all available assessment types
+  const assessmentTypes = questionBankAdapter.getAssessmentTypes();
+  
+  console.log('🔍 getStaticPaths - assessmentTypes:', assessmentTypes.length);
+  console.log('🔍 getStaticPaths - assessment IDs:', assessmentTypes.map(a => a.id));
+
+  return assessmentTypes.map((assessment) => {
+    if (!assessment.id) {
+      console.error('❌ Assessment without ID found:', assessment);
+      throw new Error(`Assessment missing ID: ${JSON.stringify(assessment)}`);
+    }
+    return {
+      params: { id: assessment.id },
+      props: { assessment }
+    };
+  });
+}
+
+const { assessment } = Astro.props;
+const currentLang = getLocale(Astro.url) as Language;
+
+// 使用新的SSG翻译系统，不使用React hooks
+const t = createSSGTranslations(currentLang, 'assessment');
+
+// SEO metadata
+const pageTitle = `${assessment.name} - ${t('common.title')}`;
+const pageDescription = assessment.description || `完成${assessment.name}心理健康评测，获得专业的分析报告和建议。`;
+const canonicalUrl = `${Astro.site}assessment/take/${assessment.id}/`;
+
+// Structured data for assessment
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": assessment.name,
+  "description": pageDescription,
+  "url": canonicalUrl,
+  "applicationCategory": "HealthApplication",
+  "operatingSystem": "Web Browser",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "CNY"
+  },
+  "author": {
+    "@type": "Organization",
+    "name": "Sunrain Mental Health",
+    "url": Astro.site
+  }
+};
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+>
+  <!-- SEO and meta tags -->
+  <meta slot="head" name="robots" content="noindex, nofollow" />
+  <link slot="head" rel="canonical" href={canonicalUrl} />
+
+  <!-- Open Graph meta tags -->
+  <meta slot="head" property="og:title" content={pageTitle} />
+  <meta slot="head" property="og:description" content={pageDescription} />
+  <meta slot="head" property="og:type" content="website" />
+  <meta slot="head" property="og:url" content={canonicalUrl} />
+  <meta slot="head" property="og:site_name" content="Sunrain Mental Health" />
+  <meta slot="head" property="og:locale" content={currentLang === 'zh' ? 'zh_CN' : 'en_US'} />
+
+  <!-- Twitter Card meta tags -->
+  <meta slot="head" name="twitter:card" content="summary" />
+  <meta slot="head" name="twitter:title" content={pageTitle} />
+  <meta slot="head" name="twitter:description" content={pageDescription} />
+
+  <!-- Assessment specific meta tags -->
+  <meta slot="head" name="assessment:id" content={assessment.id} />
+  <meta slot="head" name="assessment:type" content={assessment.category || 'psychological'} />
+  <meta slot="head" name="assessment:duration" content={String(assessment.duration) || '10-15'} />
+  <meta slot="head" name="assessment:questions" content={String(assessment.questions?.length || 0)} />
+
+  <!-- Structured data -->
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(structuredData)} is:inline />
+
+  <!-- Security headers -->
+  <meta slot="head" http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta slot="head" http-equiv="X-Frame-Options" content="DENY" />
+  <meta slot="head" http-equiv="X-XSS-Protection" content="1; mode=block" />
+
+  <!-- Viewport and mobile optimization -->
+  <meta slot="head" name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta slot="head" name="format-detection" content="telephone=no" />
+
+  <!-- Theme color for mobile browsers -->
+  <meta slot="head" name="theme-color" content="#2563eb" />
+  <meta slot="head" name="msapplication-TileColor" content="#2563eb" />
+
+  <main class="container mx-auto px-4 py-8">
+    <!-- Use the new React AssessmentTaker component with client:only directive -->
+    <AssessmentTaker
+      client:only="react"
+      assessmentId={assessment.id}
+      assessmentData={assessment}
+      language={currentLang}
+    />
+  </main>
+</BaseLayout>

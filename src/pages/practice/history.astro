@@ -1,0 +1,73 @@
+---
+import { getLocale } from 'astro-i18n-aut';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { type Language, getRelativeLocaleUrl } from '@/shared';
+import { createSSGTranslations } from '@/i18n/utils';
+
+const lang = getLocale(Astro.url) as Language;
+const t = createSSGTranslations(lang, 'practice');
+---
+
+<BaseLayout
+  title={t('historyTitle')}
+  description={t('historyDescription')}
+  lang={lang}
+>
+  <div class="container mx-auto px-4 py-8">
+    <!-- Header Section -->
+    <div class="text-center mb-8">
+      <h1 class="text-3xl md:text-4xl font-bold text-gray-800 dark:text-white mb-4">
+        {t('historyTitle')}
+      </h1>
+      <p class="text-lg text-gray-600 dark:text-gray-300">
+        {t('historyDescription')}
+      </p>
+    </div>
+
+    <!-- Back Button -->
+    <div class="mb-6">
+      <a
+        href={getRelativeLocaleUrl(lang, '/practice/')}
+        class="btn btn-ghost btn-sm"
+      >
+        ← {t('backToList')}
+      </a>
+    </div>
+
+    <!-- Statistics Overview -->
+    <div class="mb-8">
+      <div id="practice-stats" class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <!-- Statistics will be loaded here by React component -->
+      </div>
+    </div>
+
+    <!-- History List -->
+    <div class="mb-8">
+      <div id="practice-history" class="space-y-4">
+        <!-- History items will be loaded here by React component -->
+      </div>
+    </div>
+
+    <!-- Empty State -->
+    <div id="empty-state" class="text-center py-12 hidden">
+      <div class="text-6xl mb-4">📊</div>
+      <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-2">
+        {t('noHistoryTitle')}
+      </h3>
+      <p class="text-gray-600 dark:text-gray-300 mb-6">
+        {t('noHistoryDescription')}
+      </p>
+      <a
+        href={getRelativeLocaleUrl(lang, '/practice/')}
+        class="btn btn-primary"
+      >
+        {t('startFirstPractice')}
+      </a>
+    </div>
+  </div>
+
+  <!-- Load Practice History -->
+  <script>
+    console.log('Practice history page loaded');
+  </script>
+</BaseLayout>

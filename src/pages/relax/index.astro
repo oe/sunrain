@@ -1,0 +1,112 @@
+---
+import { getLocale } from 'astro-i18n-aut';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { type Language, getRelativeLocaleUrl } from '@/shared';
+import { createSSGTranslations } from '@/i18n/utils';
+
+const lang = getLocale(Astro.url) as Language;
+const t = createSSGTranslations(lang, 'relax');
+---
+
+<BaseLayout
+  title={t('title')}
+  description={t('description')}
+  lang={lang}
+>
+  <div class="container mx-auto px-4 py-8">
+    <div class="text-center mb-12">
+      <h1 class="text-4xl md:text-5xl font-bold text-base-content mb-4">
+        {t('title')}
+      </h1>
+      <p class="text-xl text-base-content/70 max-w-2xl mx-auto">
+        {t('description')}
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+      <!-- White Noise -->
+      <a
+        href={getRelativeLocaleUrl(lang, '/relax/whitenoise/')}
+        class="card bg-base-100 shadow-xl transition-all duration-300 hover:shadow-2xl hover:scale-105 block"
+        aria-label={`${t('whitenoise.start')}: ${t('whitenoise.title')}`}
+      >
+        <div class="card-body text-center">
+          <div class="text-6xl mb-4">🌊</div>
+          <h2 class="card-title justify-center text-2xl mb-2">
+            {t('whitenoise.title')}
+          </h2>
+          <p class="text-base-content/70 mb-6">
+            {t('whitenoise.description')}
+          </p>
+          <div class="card-actions justify-center">
+            <div class="btn btn-primary">
+              {t('whitenoise.start')}
+            </div>
+          </div>
+        </div>
+      </a>
+
+      <!-- Breathing Exercise -->
+      <a
+        href={getRelativeLocaleUrl(lang, '/relax/breathing/')}
+        class="card bg-base-100 shadow-xl transition-all duration-300 hover:shadow-2xl hover:scale-105 block"
+        aria-label={`${t('breathing.start')}: ${t('breathing.title')}`}
+      >
+        <div class="card-body text-center">
+          <div class="text-6xl mb-4">🫁</div>
+          <h2 class="card-title justify-center text-2xl mb-2">
+            {t('breathing.title')}
+          </h2>
+          <p class="text-base-content/70 mb-6">
+            {t('breathing.description')}
+          </p>
+          <div class="card-actions justify-center">
+            <div class="btn btn-primary">
+              {t('breathing.start')}
+            </div>
+          </div>
+        </div>
+      </a>
+
+      <!-- Relaxation Games -->
+      <a
+        href={getRelativeLocaleUrl(lang, '/relax/games/')}
+        class="card bg-base-100 shadow-xl transition-all duration-300 hover:shadow-2xl hover:scale-105 block"
+        aria-label={`${t('games.start')}: ${t('games.title')}`}
+      >
+        <div class="card-body text-center">
+          <div class="text-6xl mb-4">🎮</div>
+          <h2 class="card-title justify-center text-2xl mb-2">
+            {t('games.title')}
+          </h2>
+          <p class="text-base-content/70 mb-6">
+            {t('games.description')}
+          </p>
+          <div class="card-actions justify-center">
+            <div class="btn btn-primary">
+              {t('games.start')}
+            </div>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="text-center">
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a
+          href={getRelativeLocaleUrl(lang, '/practice/')}
+          class="btn btn-outline btn-lg"
+        >
+          {t('backToPractice')}
+        </a>
+        <a
+          href={getRelativeLocaleUrl(lang, '/')}
+          class="btn btn-ghost btn-lg"
+        >
+          {t('backToHome')}
+        </a>
+      </div>
+    </div>
+  </div>
+</BaseLayout>

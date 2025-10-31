@@ -1,266 +1,269 @@
-# Sunrain - Mental Health Resources Platform
+# Sunrain 🌧️
 
-A comprehensive mental health resources platform built as a monorepo, providing curated books, movies, music, and guides to support mental wellbeing.
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Built with Astro](https://img.shields.io/badge/Built%20with-Astro-FF5D01.svg)](https://astro.build)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.3-blue.svg)](https://www.typescriptlang.org/)
 
-## 🏗️ Monorepo Structure
+> 一个开源、隐私优先的心理健康平台
 
-This project is organized as a monorepo using pnpm workspaces and Turbo for efficient build orchestration:
+**在线访问**: [sunrain.run](https://sunrain.run)
+
+## ✨ 特性
+
+### 🎯 核心功能
+
+- **📊 自我评估** - 标准化心理健康评估问卷（PHQ-9、GAD-7等）
+- **🧘 日常练习** - 正念冥想、呼吸练习、身体扫描
+- **😌 快速放松** - 白噪音、自然声音、放松音频
+- **📚 疗愈资源** - 精选书籍、音乐、电影推荐
+
+### 🌍 国际化
+
+支持 **7种语言**：
+- 🇬🇧 英语 (English)
+- 🇨🇳 中文 (简体)
+- 🇪🇸 西班牙语 (Español)
+- 🇯🇵 日语 (日本語)
+- 🇰🇷 韩语 (한국어)
+- 🇮🇳 印地语 (हिन्दी)
+- 🇸🇦 阿拉伯语 (العربية)
+
+### 🔒 隐私保护
+
+- ✅ **本地存储** - 所有数据在浏览器本地存储
+- ✅ **零追踪** - 不使用第三方分析和追踪
+- ✅ **无注册** - 无需账户即可使用所有功能
+- ✅ **数据控制** - 随时导出或删除你的数据
+
+### ⚡ 技术亮点
+
+- **极速加载** - Astro静态生成，Lighthouse评分95+
+- **离线可用** - 基于IndexedDB的本地存储
+- **响应式设计** - 完美适配移动端和桌面端
+- **暗色模式** - 保护你的眼睛
+- **无障碍** - WCAG 2.1 AA标准
+
+## 🏗️ 技术栈
+
+- **框架**: [Astro 5](https://astro.build) + [React 19](https://react.dev)
+- **样式**: [Tailwind CSS 4](https://tailwindcss.com) + [DaisyUI](https://daisyui.com)
+- **类型**: [TypeScript 5.3](https://www.typescriptlang.org/)
+- **存储**: IndexedDB + 内存回退
+- **测试**: [Vitest](https://vitest.dev) + [Playwright](https://playwright.dev)
+- **构建**: [pnpm](https://pnpm.io)
+- **部署**: [Cloudflare Pages](https://pages.cloudflare.com)
+
+## 🚀 快速开始
+
+### 前置要求
+
+- Node.js 18+
+- pnpm 8+
+
+### 安装
+
+```bash
+# 克隆仓库
+git clone https://github.com/yourusername/sunrain.git
+cd sunrain
+
+# 安装依赖
+pnpm install
+
+# 启动开发服务器
+pnpm dev
+```
+
+访问 `http://localhost:4321` 查看网站。
+
+### 开发命令
+
+```bash
+# 开发
+pnpm dev              # 启动开发服务器
+
+# 构建
+pnpm build            # 构建生产版本
+pnpm preview          # 预览构建结果
+
+# 测试
+pnpm test             # 运行单元测试
+pnpm test:e2e         # 运行E2E测试
+pnpm test:run         # 运行一次测试
+
+# 代码质量
+pnpm lint             # 运行ESLint
+pnpm type-check       # TypeScript类型检查
+```
+
+## 📁 项目结构
 
 ```
 sunrain/
-├── packages/
-│   ├── website/                 # Main Astro website
-│   ├── content-fetcher/         # Content fetching scripts and utilities
-│   └── shared/                  # Shared utilities and types
-├── docs/                        # Documentation
-├── package.json                 # Root workspace configuration
-├── pnpm-workspace.yaml         # pnpm workspace configuration
-└── turbo.json                  # Turbo build orchestration
+├── src/
+│   ├── components/       # React/Astro 组件
+│   │   ├── assessment/   # 评估相关组件
+│   │   ├── practice/     # 练习相关组件
+│   │   └── ...
+│   ├── pages/            # Astro 页面路由
+│   ├── lib/              # 业务逻辑
+│   │   ├── assessment/   # 评估引擎
+│   │   ├── storage/      # 数据存储
+│   │   └── ...
+│   ├── locales/          # 服务端翻译
+│   ├── client-locales/   # 客户端翻译
+│   ├── data/             # 静态数据
+│   │   ├── questionnaires/  # 问卷数据
+│   │   └── practices/       # 练习数据
+│   ├── shared/           # 共享代码
+│   └── types/            # TypeScript 类型
+├── public/               # 静态资源
+├── docs/                 # 项目文档
+├── scripts/              # 工具脚本
+└── test/                 # 测试文件
 ```
 
-### Packages
+## 📖 文档
 
-- **`@sunrain/website`** - The main Astro-based website with multilingual support
-- **`@sunrain/content-fetcher`** - CLI tools and scripts for fetching and managing content
-- **`@sunrain/shared`** - Shared TypeScript types, utilities, and configurations
+详细文档请查看 [`docs/`](./docs/) 目录：
 
-## 🚀 Quick Start
+- [架构设计](./docs/ARCHITECTURE.md) - 系统架构和技术选型
+- [项目状态](./docs/PROJECT_STATUS.md) - 当前实现状态
+- [问卷系统](./docs/QUESTIONNAIRE_SYSTEM_DESIGN.md) - 问卷系统详细设计
+- [状态管理](./docs/state-management-guidelines.md) - 状态管理指南
 
-### Prerequisites
+## 🤝 贡献指南
 
-- Node.js 18.0.0 or higher
-- pnpm 8.0.0 or higher
+我们欢迎所有形式的贡献！
 
-### Installation
+### 贡献方式
 
-```bash
-# Clone the repository
-git clone https://github.com/sunrain/sunrain.git
-cd sunrain
+1. **报告问题** - 发现bug或有改进建议
+2. **翻译** - 改进现有翻译或添加新语言
+3. **内容** - 添加问卷、练习或资源
+4. **代码** - 修复bug或实现新功能
+5. **文档** - 改进文档和注释
 
-# Install dependencies
-pnpm install
-```
+### 开发流程
 
-### Development
+1. Fork 本仓库
+2. 创建你的特性分支 (`git checkout -b feature/AmazingFeature`)
+3. 提交你的更改 (`git commit -m 'Add some AmazingFeature'`)
+4. 推送到分支 (`git push origin feature/AmazingFeature`)
+5. 开启 Pull Request
 
-```bash
-# Start all packages in development mode
-pnpm dev
+### 代码规范
 
-# Start specific packages
-pnpm dev:website          # Website only
-pnpm dev:content-fetcher  # Content fetcher only
-pnpm dev:shared          # Shared package only
-```
+- 遵循现有代码风格
+- 确保所有测试通过
+- 为新功能添加测试
+- 更新相关文档
+- 提交信息清晰明确
 
-### Building
+详细的开发规范请查看 [开发指南](./docs/DEVELOPMENT_GUIDE.md)。
 
-```bash
-# Build all packages
-pnpm build
+## 📊 添加内容
 
-# Build specific packages
-pnpm build:website
-pnpm build:content-fetcher
-pnpm build:shared
+### 添加问卷
 
-# Production build (clean + build)
-pnpm build:prod
-```
+1. 在 `src/data/questionnaires/` 创建问卷目录
+2. 按照格式创建 JSON 文件
+3. 在 `questionnaires-index.json` 添加索引
+4. 运行验证：`pnpm questionnaire validate <id>`
 
-## 📦 Package Scripts
+详见：[问卷系统文档](./docs/QUESTIONNAIRE_SYSTEM_DESIGN.md)
 
-### Website Development
-- `pnpm dev:website` - Start website development server
-- `pnpm build:website` - Build website for production
-- `pnpm preview:website` - Preview built website
+### 添加练习
 
-### Content Management
-- `pnpm fetch:all` - Fetch all content (books, movies, music)
-- `pnpm fetch:books` - Fetch books content only
-- `pnpm fetch:movies` - Fetch movies content only
-- `pnpm fetch:music` - Fetch music content only
+1. 在 `src/data/practices/` 创建练习目录
+2. 创建 metadata.json 和 steps.json
+3. 在 `practices-index.json` 添加索引
 
-### Internationalization
-- `pnpm i18n:sync` - Sync translation files
-- `pnpm i18n:detect` - Detect missing translations
-- `pnpm i18n:report` - Generate translation report
-- `pnpm i18n:cleanup` - Clean up unused translations
+### 添加资源
 
-### Quality Assurance
-- `pnpm lint` - Run linting across all packages
-- `pnpm type-check` - Run TypeScript type checking
-- `pnpm test:validator` - Run content validation tests
+资源数据存储在 `public/content/`：
+- `books.json` - 书籍推荐
+- `music.json` - 音乐推荐
+- `movies.json` - 电影推荐
 
-### Utilities
-- `pnpm clean` - Clean build outputs
-- `pnpm clean:all` - Clean all build outputs and caches
+## 🔧 配置
 
-## 🛠️ Development Workflow
+### 环境变量
 
-### Adding New Dependencies
+项目不需要环境变量即可运行。所有配置都在代码中。
 
-Dependencies are managed through pnpm's catalog feature for consistency:
+### 构建配置
 
-1. Add to catalog in root `package.json`:
-```json
-{
-  "pnpm": {
-    "catalog": {
-      "new-dependency": "^1.0.0"
-    }
-  }
-}
-```
+- **Astro配置**: `astro.config.mjs`
+- **Tailwind配置**: `tailwind.config.mjs`
+- **TypeScript配置**: `tsconfig.json`
+- **Vitest配置**: `vitest.config.ts`
 
-2. Use in package:
-```json
-{
-  "dependencies": {
-    "new-dependency": "catalog:"
-  }
-}
-```
+## 📄 许可证
 
-### Working with Packages
+本项目采用 [MIT 许可证](./LICENSE)。
 
-Each package can be developed independently:
+你可以自由地：
+- ✅ 商业使用
+- ✅ 修改
+- ✅ 分发
+- ✅ 私人使用
 
-```bash
-# Work on website
-cd packages/website
-pnpm dev
+唯一要求是保留版权声明和许可证声明。
 
-# Work on content fetcher
-cd packages/content-fetcher
-pnpm build
+## 🙏 致谢
 
-# Work on shared utilities
-cd packages/shared
-pnpm dev
-```
+### 技术栈
 
-### Cross-Package Dependencies
+- [Astro](https://astro.build) - 现代静态站点生成器
+- [React](https://react.dev) - 用户界面库
+- [Tailwind CSS](https://tailwindcss.com) - CSS框架
+- [DaisyUI](https://daisyui.com) - UI组件库
 
-Packages can depend on each other using workspace protocol:
+### 评估工具
 
-```json
-{
-  "dependencies": {
-    "@sunrain/shared": "workspace:*"
-  }
-}
-```
+本项目使用标准化的心理健康评估工具，包括：
+- PHQ-9 (Patient Health Questionnaire-9)
+- GAD-7 (Generalized Anxiety Disorder-7)
+- PSS (Perceived Stress Scale)
 
-## 🏃‍♂️ Performance & Caching
+这些工具在公共领域或已获得使用许可。
 
-This monorepo uses Turbo for intelligent build caching and parallelization:
+### 灵感来源
 
-- **Incremental builds** - Only rebuild what changed
-- **Parallel execution** - Run independent tasks simultaneously  
-- **Smart caching** - Cache build outputs and skip unnecessary work
-- **Dependency awareness** - Respect build order dependencies
+感谢所有致力于心理健康开源项目的开发者和组织。
 
-## 🌍 Internationalization
+## 📞 联系方式
 
-The platform supports multiple languages:
+- **网站**: [sunrain.run](https://sunrain.run)
+- **GitHub**: [sunrain](https://github.com/yourusername/sunrain)
+- **问题反馈**: [GitHub Issues](https://github.com/yourusername/sunrain/issues)
 
-- English (en)
-- Chinese (zh)
-- Spanish (es)
-- Arabic (ar)
-- Hindi (hi)
-- Japanese (ja)
-- Korean (ko)
+## 🗺️ 路线图
 
-Translation management is handled through the content-fetcher package.
+### v1.1 (进行中)
 
-## 📁 Project Structure Details
+- [ ] 完善翻译质量
+- [ ] 添加更多标准化问卷
+- [ ] 提升测试覆盖率
+- [ ] 性能优化
 
-### Website Package (`packages/website`)
-- Astro-based static site generator
-- React components for interactive elements
-- Tailwind CSS for styling
-- Multilingual content support
-- Responsive design
+### v1.2 (计划中)
 
-### Content Fetcher Package (`packages/content-fetcher`)
-- CLI tools for content management
-- API integrations for external content
-- Content validation and processing
-- Translation synchronization
-- Data transformation utilities
+- [ ] PWA离线支持
+- [ ] 数据导出功能
+- [ ] 更多冥想练习
+- [ ] 社区功能
 
-### Shared Package (`packages/shared`)
-- Common TypeScript types
-- Shared utility functions
-- Configuration interfaces
-- Cross-package constants
+### v2.0 (远期)
 
-## 🔧 Troubleshooting
+- [ ] 原生移动应用
+- [ ] AI辅助功能
+- [ ] 社交分享
+- [ ] 专业版功能
 
-### Common Issues
+---
 
-**Build failures after dependency changes:**
-```bash
-pnpm clean:all
-pnpm install
-pnpm build
-```
+**用爱和代码构建 ❤️**
 
-**TypeScript errors in IDE:**
-- Restart TypeScript server
-- Check workspace configuration
-- Verify package dependencies
-
-**Turbo cache issues:**
-```bash
-pnpm clean
-# or force rebuild
-turbo run build --force
-```
-
-**Package resolution issues:**
-```bash
-# Clear pnpm cache
-pnpm store prune
-pnpm install
-```
-
-### Getting Help
-
-1. Check package-specific README files
-2. Review the docs/ directory
-3. Check existing issues in the repository
-4. Create a new issue with detailed information
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes in the appropriate package
-4. Run tests and linting
-5. Submit a pull request
-
-### Development Guidelines
-
-- Follow existing code style and conventions
-- Add tests for new functionality
-- Update documentation as needed
-- Use conventional commit messages
-- Ensure all packages build successfully
-
-## 📄 License
-
-MIT License - see LICENSE file for details
-
-## 🙏 Acknowledgments
-
-Built with modern web technologies:
-- [Astro](https://astro.build/) - Static site generator
-- [React](https://react.dev/) - UI components
-- [Tailwind CSS](https://tailwindcss.com/) - Styling
-- [TypeScript](https://www.typescriptlang.org/) - Type safety
-- [pnpm](https://pnpm.io/) - Package management
-- [Turbo](https://turbo.build/) - Build orchestration
+如果这个项目对你有帮助，请给我们一个 ⭐️
