@@ -78,44 +78,35 @@ test.describe('MVP 核心功能测试', () => {
       await startButton.click();
       await page.waitForLoadState('networkidle');
       
-      // 3. 回答所有 9 个问题
+      // 3. 回答所有 9 个问题（SPA 方式，不刷新页面）
       const totalQuestions = 9;
       
-      for (let i = 0; i < totalQuestions; i++) {
-        // 等待页面稳定
-        await page.waitForTimeout(1500);
+      for (let i = 1; i <= totalQuestions; i++) {
+        console.log(`Answering question ${i}...`);
         
-        // 找到第一个 radio 选项并选择
-        const radioOptions = page.locator('input[type="radio"]');
-        const radioCount = await radioOptions.count();
+        // 等待当前问题显示
+        const currentQuestion = page.locator(`[data-testid="q${i}"]`);
+        await expect(currentQuestion).toBeVisible({ timeout: 5000 });
         
-        if (radioCount === 0) {
-          console.log(`No radio buttons found at iteration ${i}, assuming assessment complete`);
-          break;
-        }
-        
-        // 选择第一个选项（通常是"Not at all"）
-        const firstRadio = radioOptions.first();
-        await firstRadio.scrollIntoViewIfNeeded();
-        await firstRadio.check({ force: true });
-        await page.waitForTimeout(800);
+        // 选择第一个答案选项（a1 = "Not at all"）
+        const firstAnswer = page.locator('[data-testid="a1"]');
+        await expect(firstAnswer).toBeVisible({ timeout: 3000 });
+        await firstAnswer.click({ force: true });
+        await page.waitForTimeout(500);
         
         // 点击 "Next" 按钮
         const nextButton = page.locator('button:has-text("Next"), button:has-text("下一")').first();
-        const isVisible = await nextButton.isVisible({ timeout: 5000 }).catch(() => false);
+        await expect(nextButton).toBeVisible({ timeout: 3000 });
+        await nextButton.click({ force: true });
         
-        if (isVisible) {
-          await nextButton.scrollIntoViewIfNeeded();
-          await nextButton.click({ force: true });
-          
-          // 等待导航完成（可能是页面跳转或 SPA 路由）
-          await Promise.race([
-            page.waitForLoadState('networkidle', { timeout: 5000 }).catch(() => {}),
-            page.waitForTimeout(2000)
-          ]);
+        // 等待 DOM 更新（不是页面导航，而是内容更新）
+        if (i < totalQuestions) {
+          // 等待下一个问题出现或当前问题消失
+          await page.waitForTimeout(1000);
         } else {
-          console.log(`No Next button found at question ${i + 1}, might be complete`);
-          break;
+          // 最后一题，等待跳转到结果页
+          await page.waitForLoadState('networkidle');
+          await page.waitForTimeout(2000);
         }
       }
       
@@ -150,29 +141,27 @@ test.describe('MVP 核心功能测试', () => {
       const startButton = page.locator('[data-testid^="start-assessment-"]').first();
       await startButton.click({ timeout: 10000 });
       
-      // 快速完成评估（与主测试使用相同的逻辑）
+      // 快速完成评估（使用 data-testid）
       await page.waitForLoadState('networkidle');
       
-      for (let i = 0; i < 12; i++) {
-        await page.waitForTimeout(800);
-        
-        // 检查是否还在评估页面
-        const isStillInAssessment = await page.locator('text=/Question|题目|\\d+ of \\d+/i').isVisible({ timeout: 2000 }).catch(() => false);
-        if (!isStillInAssessment) {
+      // 自动检测评估问题数量
+      for (let i = 1; i <= 12; i++) {
+        // 检查问题是否存在
+        const questionExists = await page.locator(`[data-testid="q${i}"]`).isVisible({ timeout: 2000 }).catch(() => false);
+        if (!questionExists) {
+          console.log(`Question ${i} not found, assessment likely complete`);
           break;
         }
         
-        // 选择第一个 radio 选项
-        const firstRadio = page.locator('input[type="radio"]').first();
-        if (await firstRadio.isVisible({ timeout: 3000 }).catch(() => false)) {
-          await firstRadio.scrollIntoViewIfNeeded();
-          await firstRadio.check({ force: true });
+        // 选择第一个答案
+        const firstAnswer = page.locator('[data-testid="a1"]');
+        if (await firstAnswer.isVisible({ timeout: 2000 }).catch(() => false)) {
+          await firstAnswer.click({ force: true });
           await page.waitForTimeout(500);
           
           // 点击 Next 按钮
           const nextButton = page.locator('button:has-text("Next"), button:has-text("下一")').first();
-          if (await nextButton.isVisible({ timeout: 3000 }).catch(() => false)) {
-            await nextButton.scrollIntoViewIfNeeded();
+          if (await nextButton.isVisible({ timeout: 2000 }).catch(() => false)) {
             await nextButton.click({ force: true });
             await page.waitForTimeout(1000);
           }
@@ -183,7 +172,7 @@ test.describe('MVP 核心功能测试', () => {
       
       // 等待完成并加载结果页
       await page.waitForLoadState('networkidle');
-      await page.waitForTimeout(3000);
+      await page.waitForTimeout(2000);
       
       // 导航到历史页面（使用 trailing slash）
       await page.goto('/assessment/history/');

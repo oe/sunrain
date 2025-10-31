@@ -12,6 +12,7 @@ interface QuestionCardProps {
   disabled?: boolean;
   showValidation?: boolean;
   enableRealtimeValidation?: boolean;
+  questionIndex?: number;
   t: (key: string, params?: Record<string, any>) => string;
 }
 
@@ -28,6 +29,7 @@ export default memo(function QuestionCard({
   answer,
   onAnswerChange,
   onValidationChange,
+  questionIndex,
   disabled = false,
   showValidation = true,
   enableRealtimeValidation = true,
@@ -117,9 +119,10 @@ export default memo(function QuestionCard({
 
     return (
       <div className="space-y-3">
-        {question.options.map((option) => (
+        {question.options.map((option, optionIndex) => (
           <label
             key={option.id}
+            data-testid={`a${optionIndex + 1}`}
             className={`
               block p-4 rounded-lg border-2 cursor-pointer transition-all duration-200
               ${disabled ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-50 dark:hover:bg-gray-700'}
@@ -153,6 +156,7 @@ export default memo(function QuestionCard({
               }}
               disabled={disabled}
               className="sr-only"
+              data-testid={`a${optionIndex + 1}-input`}
             />
             <div className="flex items-center">
               <div className="flex items-center justify-center mr-3">

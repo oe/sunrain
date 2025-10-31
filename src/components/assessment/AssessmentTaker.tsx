@@ -606,6 +606,7 @@ const AssessmentTaker = memo(function AssessmentTaker({
         role="region"
         aria-labelledby="question-title"
         aria-describedby="question-description"
+        data-testid={`question-card-q${state.currentQuestionIndex + 1}`}
       >
         <div className="mb-6">
           <div className="flex items-center justify-between mb-4">
@@ -613,6 +614,7 @@ const AssessmentTaker = memo(function AssessmentTaker({
               className="text-sm font-medium text-blue-600 dark:text-blue-400"
               id="question-number"
               aria-label={`问题 ${state.currentQuestionIndex + 1}，共 ${state.totalQuestions} 题`}
+              data-testid="question-number"
             >
               {t('question.number', { number: state.currentQuestionIndex + 1 })}
             </span>
@@ -630,6 +632,7 @@ const AssessmentTaker = memo(function AssessmentTaker({
             id="question-title"
             className="text-xl font-medium text-gray-900 dark:text-white mb-6"
             tabIndex={-1}
+            data-testid={`q${state.currentQuestionIndex + 1}`}
           >
             {state.currentQuestion.text}
           </h2>
@@ -656,6 +659,7 @@ const AssessmentTaker = memo(function AssessmentTaker({
             disabled={state.isSubmitting}
             showValidation={false}
             enableRealtimeValidation={false}
+            questionIndex={state.currentQuestionIndex + 1}
             t={tString}
           />
         </div>
