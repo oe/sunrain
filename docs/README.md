@@ -19,6 +19,18 @@
   - 进行中的工作
   - 未来规划
 
+- **[项目路线图](./ROADMAP.md)** ⭐
+  - MVP 上线计划
+  - 版本迭代规划
+  - 里程碑时间表
+  - 关键指标定义
+
+- **[MVP 上线检查清单](./MVP_CHECKLIST.md)** ⭐
+  - 详细任务清单
+  - 分周计划
+  - 验收标准
+  - 进度追踪
+
 - **[问卷系统设计](./QUESTIONNAIRE_SYSTEM_DESIGN.md)**
   - 问卷数据结构
   - 加载和管理机制
@@ -82,6 +94,8 @@
 #### 🏗️ 架构和设计
 - [架构设计](./ARCHITECTURE.md)
 - [项目状态](./PROJECT_STATUS.md)
+- [项目路线图](./ROADMAP.md)
+- [MVP 上线检查清单](./MVP_CHECKLIST.md)
 - [问卷系统设计](./QUESTIONNAIRE_SYSTEM_DESIGN.md)
 
 #### 💻 开发实践
@@ -102,10 +116,12 @@
 | 问题 | 查看文档 |
 |------|---------|
 | 项目整体架构是什么？ | [架构设计](./ARCHITECTURE.md) |
+| 项目下一步做什么？ | [项目路线图](./ROADMAP.md) |
+| MVP 上线需要做什么？ | [MVP 检查清单](./MVP_CHECKLIST.md) |
+| 当前实现了哪些功能？ | [项目状态](./PROJECT_STATUS.md) |
 | 如何添加新问卷？ | [问卷系统设计](./QUESTIONNAIRE_SYSTEM_DESIGN.md) |
 | 如何管理组件状态？ | [状态管理指南](./state-management-guidelines.md) |
 | 为什么从 Monorepo 改为单仓库？ | [迁移指南](./MIGRATION_GUIDE.md) |
-| 当前实现了哪些功能？ | [项目状态](./PROJECT_STATUS.md) |
 | 暗色模式如何实现？ | [暗色主题修复](./DARK_THEME_FIXES.md) |
 
 ## 📝 文档维护规范
@@ -155,9 +171,10 @@
 如果你是第一次接触本项目，建议按以下顺序阅读：
 
 1. **[../README.md](../README.md)** - 项目概览和快速开始
-2. **[ARCHITECTURE.md](./ARCHITECTURE.md)** - 理解系统架构
-3. **[PROJECT_STATUS.md](./PROJECT_STATUS.md)** - 了解当前状态
-4. **[state-management-guidelines.md](./state-management-guidelines.md)** - 学习代码规范
+2. **[ROADMAP.md](./ROADMAP.md)** - 了解项目规划
+3. **[ARCHITECTURE.md](./ARCHITECTURE.md)** - 理解系统架构
+4. **[PROJECT_STATUS.md](./PROJECT_STATUS.md)** - 了解当前状态
+5. **[state-management-guidelines.md](./state-management-guidelines.md)** - 学习代码规范
 
 然后根据你的兴趣选择其他文档深入学习。
 
@@ -165,11 +182,11 @@
 
 | 类型 | 数量 |
 |------|------|
-| 架构设计文档 | 3 |
+| 架构设计文档 | 5 |
 | 开发指南 | 3 |
 | 技术细节 | 1 |
 | 脚本和工具 | 1 |
-| **总计** | **8** |
+| **总计** | **10** |
 
 ## 💡 贡献文档
 
