@@ -65,7 +65,13 @@
   - 缓存配置
   - 性能指标
 
-### 测试和脚本
+### 测试和质量保证
+
+- **[E2E 测试报告](./E2E-TESTING.md)** ⭐
+  - Playwright E2E 测试结果
+  - 测试覆盖率报告
+  - 已知问题和修复建议
+  - MVP 上线测试清单
 
 - **[测试构建脚本](./test-build-performance.sh)**
   - 构建性能测试
@@ -106,6 +112,7 @@
 - [暗色主题修复](./DARK_THEME_FIXES.md)
 
 #### ✅ 测试和验证
+- [E2E 测试报告](./E2E-TESTING.md)
 - [迁移完成清单](./MIGRATION_COMPLETION_CHECKLIST.md)
 - [测试构建脚本](./test-build-performance.sh)
 
