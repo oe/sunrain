@@ -183,18 +183,19 @@ test.describe('MVP 核心功能测试', () => {
       await page.goto('/assessment/history/');
       await page.waitForLoadState('networkidle');
       
-      // 验证有历史记录显示（使用 last() 避免匹配多个 main 元素）
-      const historyContent = await page.locator('main').last().textContent();
-      const hasHistory = historyContent?.match(/PHQ|GAD|PSS|评估|Assessment/) !== null;
+      // 验证有历史记录显示
+      const historyItems = page.locator('[data-testid="assessment-history-item"]');
+      const itemCount = await historyItems.count();
       
-      if (hasHistory) {
-        // 验证至少有一条记录
-        const recordItems = page.locator('[data-testid*="history"], .history-item, article, .card').filter({
-          hasText: /PHQ|GAD|PSS/i
-        });
-        
-        const count = await recordItems.count();
-        expect(count).toBeGreaterThan(0);
+      // 应该至少有一条历史记录
+      expect(itemCount).toBeGreaterThan(0);
+      
+      // 验证第一条记录包含评估相关信息
+      if (itemCount > 0) {
+        const firstItem = historyItems.first();
+        await expect(firstItem).toBeVisible();
+        const itemText = await firstItem.textContent();
+        expect(itemText).toMatch(/PHQ|GAD|Stress|Depression|Anxiety|评估/i);
       }
     });
   });

@@ -65,7 +65,7 @@ function AssessmentHistoryItem({ result, onViewDetails, onShare, onDelete }: Ass
   const assessmentType = questionBankAdapter.getAssessmentType(result.assessmentTypeId);
 
   return (
-    <div className="card bg-base-100 shadow-sm">
+    <div className="card bg-base-100 shadow-sm" data-testid="assessment-history-item">
       <div className="card-body">
         <div className="flex items-center justify-between">
           <div className="flex-1">
