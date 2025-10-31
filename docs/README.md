@@ -73,6 +73,12 @@
   - 已知问题和修复建议
   - MVP 上线测试清单
 
+- **[跨浏览器测试报告](./CROSS_BROWSER_TESTING.md)** ⭐
+  - Chrome/Firefox/Safari 兼容性测试
+  - 93% 总体通过率
+  - 浏览器特性对比
+  - 已知问题分析
+
 - **[测试构建脚本](./test-build-performance.sh)**
   - 构建性能测试
   - 自动化测试脚本
@@ -113,6 +119,7 @@
 
 #### ✅ 测试和验证
 - [E2E 测试报告](./E2E-TESTING.md)
+- [跨浏览器测试报告](./CROSS_BROWSER_TESTING.md)
 - [迁移完成清单](./MIGRATION_COMPLETION_CHECKLIST.md)
 - [测试构建脚本](./test-build-performance.sh)
 
@@ -191,9 +198,10 @@
 |------|------|
 | 架构设计文档 | 5 |
 | 开发指南 | 3 |
+| 测试报告 | 2 |
 | 技术细节 | 1 |
 | 脚本和工具 | 1 |
-| **总计** | **10** |
+| **总计** | **12** |
 
 ## 💡 贡献文档
 
