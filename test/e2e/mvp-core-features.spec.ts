@@ -178,11 +178,17 @@ test.describe('MVP 核心功能测试', () => {
       
       // 等待完成并加载结果页
       await page.waitForLoadState('networkidle');
-      await page.waitForTimeout(3000);
+      await page.waitForTimeout(2000);
+      
+      // 等待结果保存到 IndexedDB（给足够的时间）
+      await page.waitForTimeout(2000);
       
       // 导航到历史页面（使用 trailing slash）
       await page.goto('/assessment/history/');
       await page.waitForLoadState('networkidle');
+      
+      // 等待历史数据加载（客户端组件需要时间从 IndexedDB 读取）
+      await page.waitForTimeout(2000);
       
       // 验证有历史记录显示
       const historyItems = page.locator('[data-testid="assessment-history-item"]');
