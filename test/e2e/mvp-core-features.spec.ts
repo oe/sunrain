@@ -139,45 +139,46 @@ test.describe('MVP 核心功能测试', () => {
     });
 
     test('评估历史记录正确保存', async ({ page }) => {
-      // 先完成一次评估（简化版）
+      // 先完成一次 PHQ-9 评估
       await page.goto('/assessment/');
-      
-      // 使用 data-testid 找到第一个开始按钮
-      const startButton = page.locator('[data-testid^="start-assessment-"]').first();
-      await startButton.click({ timeout: 10000 });
-      
-      // 快速完成评估（使用 data-testid）
       await page.waitForLoadState('networkidle');
       
-      // 自动检测评估问题数量
-      for (let i = 1; i <= 12; i++) {
+      // 使用 data-testid 找到 PHQ-9 开始按钮
+      const startButton = page.locator('[data-testid="start-assessment-phq-9"]');
+      await expect(startButton).toBeVisible({ timeout: 5000 });
+      await startButton.click();
+      await page.waitForLoadState('networkidle');
+      
+      // 快速完成 PHQ-9 的9个问题（使用 data-testid）
+      for (let i = 1; i <= 9; i++) {
         // 检查问题是否存在
-        const questionExists = await page.locator(`[data-testid="q${i}"]`).isVisible({ timeout: 2000 }).catch(() => false);
+        const questionExists = await page.locator(`[data-testid="q${i}"]`).isVisible({ timeout: 3000 }).catch(() => false);
         if (!questionExists) {
-          console.log(`Question ${i} not found, assessment likely complete`);
+          console.log(`Question ${i} not found, stopping assessment`);
           break;
         }
         
         // 选择第一个答案
         const firstAnswer = page.locator('[data-testid="a1"]');
-        if (await firstAnswer.isVisible({ timeout: 2000 }).catch(() => false)) {
-          await firstAnswer.click({ force: true });
-          await page.waitForTimeout(500);
-          
-          // 点击 Next 或 Submit 按钮
-          const actionButton = page.locator('button:has-text("Next"), button:has-text("下一"), button:has-text("Submit"), button:has-text("提交"), button:has-text("Complete"), button:has-text("完成")').first();
-          if (await actionButton.isVisible({ timeout: 2000 }).catch(() => false)) {
-            await actionButton.click({ force: true });
-            await page.waitForTimeout(1000);
-          }
-        } else {
-          break;
-        }
+        await expect(firstAnswer).toBeVisible({ timeout: 3000 });
+        await firstAnswer.click({ force: true });
+        await page.waitForTimeout(500);
+        
+        // 点击 Next 或 Submit 按钮
+        const isLastQuestion = i === 9;
+        const buttonSelector = isLastQuestion 
+          ? 'button:has-text("Submit"), button:has-text("Complete"), button:has-text("提交"), button:has-text("完成"), button:has-text("Next"), button:has-text("下一")'
+          : 'button:has-text("Next"), button:has-text("下一")';
+        
+        const actionButton = page.locator(buttonSelector).first();
+        await expect(actionButton).toBeVisible({ timeout: 3000 });
+        await actionButton.click({ force: true });
+        await page.waitForTimeout(1000);
       }
       
       // 等待完成并加载结果页
       await page.waitForLoadState('networkidle');
-      await page.waitForTimeout(2000);
+      await page.waitForTimeout(3000);
       
       // 导航到历史页面（使用 trailing slash）
       await page.goto('/assessment/history/');
