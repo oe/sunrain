@@ -56,6 +56,38 @@ export const resourcesZh: IResourcesTranslations = {
     amazon: 'Amazon',
     goodreads: 'Goodreads',
   },
+  crisis: {
+    title: '危机热线',
+    subtitle: '24/7 心理健康支持',
+    description: '按国家/地区查找专业的心理健康危机支持热线和资源。这些服务为处于困境中的人们提供免费、保密的支持。',
+    emergency: {
+      title: '🚨 处于紧急危险中？',
+      description: '如果您处于紧急危险中或正在经历危及生命的紧急情况，请立即拨打当地紧急服务电话（例如，美国拨打911，英国拨打999）。',
+    },
+    filters: {
+      searchPlaceholder: '按国家或热线名称搜索...',
+      selectRegion: '选择国家/地区',
+      allRegions: '所有国家/地区',
+    },
+    hotline: {
+      phone: '电话',
+      website: '网站',
+      available: '可用时间',
+      languages: '支持语言',
+      call: '拨打',
+      visitWebsite: '访问网站',
+      available247: '24/7',
+    },
+    noResults: {
+      title: '未找到热线',
+      description: '请尝试调整您的搜索或筛选条件。',
+    },
+    disclaimer: '此信息仅供参考。我们不认可或保证所列服务的质量。使用前请核实当前的联系信息。',
+    encouragement: {
+      title: '你并不孤单',
+      message: '阳光遇见雨的地方，希望与治愈始终触手可及。寻求帮助是勇敢的表现，而非软弱。',
+    },
+  },
 };
 
 export default resourcesZh;

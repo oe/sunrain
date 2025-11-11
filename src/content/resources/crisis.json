@@ -1,0 +1,1169 @@
+{
+  "en": {
+    "title": "Crisis Hotlines",
+    "description": "24/7 mental health crisis support hotlines and resources by country/region",
+    "regions": [
+      {
+        "code": "US",
+        "name": "United States",
+        "countryCode": "+1",
+        "hotlines": [
+          {
+            "id": "988",
+            "name": "988 Suicide & Crisis Lifeline",
+            "phone": "988",
+            "description": "Free, confidential 24/7 support for people in distress, prevention and crisis resources",
+            "website": "https://988lifeline.org",
+            "available": "24/7",
+            "languages": ["English", "Spanish"]
+          },
+          {
+            "id": "crisis-text",
+            "name": "Crisis Text Line",
+            "phone": "Text HOME to 741741",
+            "description": "Free, 24/7 crisis support via text message",
+            "website": "https://www.crisistextline.org",
+            "available": "24/7",
+            "languages": ["English"]
+          }
+        ]
+      },
+      {
+        "code": "CN",
+        "name": "China",
+        "countryCode": "+86",
+        "hotlines": [
+          {
+            "id": "beijing-hotline",
+            "name": "北京心理危机研究与干预中心",
+            "phone": "400-161-9995",
+            "description": "24小时心理危机干预和自杀预防热线",
+            "website": "http://www.crisis.org.cn",
+            "available": "24/7",
+            "languages": ["中文"]
+          },
+          {
+            "id": "shanghai-hotline",
+            "name": "上海市心理援助热线",
+            "phone": "021-12320-5",
+            "description": "24小时心理健康咨询服务",
+            "website": null,
+            "available": "24/7",
+            "languages": ["中文"]
+          }
+        ]
+      },
+      {
+        "code": "GB",
+        "name": "United Kingdom",
+        "countryCode": "+44",
+        "hotlines": [
+          {
+            "id": "samaritans",
+            "name": "Samaritans",
+            "phone": "116 123",
+            "description": "Free, confidential 24/7 emotional support",
+            "website": "https://www.samaritans.org",
+            "available": "24/7",
+            "languages": ["English", "Welsh"]
+          },
+          {
+            "id": "shout",
+            "name": "Shout",
+            "phone": "Text SHOUT to 85258",
+            "description": "Free, confidential 24/7 text support",
+            "website": "https://giveusashout.org",
+            "available": "24/7",
+            "languages": ["English"]
+          }
+        ]
+      },
+      {
+        "code": "CA",
+        "name": "Canada",
+        "countryCode": "+1",
+        "hotlines": [
+          {
+            "id": "988",
+            "name": "988 Suicide Crisis Helpline",
+            "phone": "988",
+            "description": "Free, confidential 24/7 support for people in distress, suicide prevention and crisis resources",
+            "website": "https://988.ca",
+            "available": "24/7",
+            "languages": ["English", "French"]
+          },
+          {
+            "id": "kids-help-phone",
+            "name": "Kids Help Phone",
+            "phone": "1-800-668-6868",
+            "description": "24/7 support for children, youth and young adults (20 and under)",
+            "website": "https://kidshelpphone.ca",
+            "available": "24/7",
+            "languages": ["English", "French"]
+          }
+        ]
+      },
+      {
+        "code": "AU",
+        "name": "Australia",
+        "countryCode": "+61",
+        "hotlines": [
+          {
+            "id": "lifeline",
+            "name": "Lifeline Australia",
+            "phone": "13 11 14",
+            "description": "24/7 crisis support and suicide prevention",
+            "website": "https://www.lifeline.org.au",
+            "available": "24/7",
+            "languages": ["English"]
+          },
+          {
+            "id": "beyond-blue",
+            "name": "Beyond Blue",
+            "phone": "1300 22 4636",
+            "description": "24/7 mental health support and information",
+            "website": "https://www.beyondblue.org.au",
+            "available": "24/7",
+            "languages": ["English"]
+          }
+        ]
+      },
+      {
+        "code": "JP",
+        "name": "Japan",
+        "countryCode": "+81",
+        "hotlines": [
+          {
+            "id": "inochi-dial",
+            "name": "いのちの電話",
+            "phone": "0120-783-556",
+            "description": "24時間対応の自殺予防相談電話",
+            "website": "https://www.find-j.jp",
+            "available": "24/7",
+            "languages": ["日本語"]
+          },
+          {
+            "id": "yorisoi-hotline",
+            "name": "よりそいホットライン",
+            "phone": "0120-279-338",
+            "description": "24時間対応の相談電話",
+            "website": "https://www.yorisoi-hotline.jp",
+            "available": "24/7",
+            "languages": ["日本語"]
+          }
+        ]
+      },
+      {
+        "code": "KR",
+        "name": "South Korea",
+        "countryCode": "+82",
+        "hotlines": [
+          {
+            "id": "korea-lifeline",
+            "name": "자살예방상담전화",
+            "phone": "1393",
+            "description": "24시간 자살예방 상담 서비스",
+            "website": "https://www.1393.or.kr",
+            "available": "24/7",
+            "languages": ["한국어"]
+          }
+        ]
+      },
+      {
+        "code": "IN",
+        "name": "India",
+        "countryCode": "+91",
+        "hotlines": [
+          {
+            "id": "vandrevala",
+            "name": "Vandrevala Foundation",
+            "phone": "1860 2662 345",
+            "description": "24/7 mental health support and counseling",
+            "website": "https://www.vandrevalafoundation.com",
+            "available": "24/7",
+            "languages": ["English", "Hindi"]
+          },
+          {
+            "id": "icall",
+            "name": "iCall",
+            "phone": "022-25521111",
+            "description": "Tele-counseling service for mental health",
+            "website": "https://icallhelpline.org",
+            "available": "Mon-Sat 8am-10pm",
+            "languages": ["English", "Hindi", "Marathi"]
+          }
+        ]
+      },
+      {
+        "code": "ES",
+        "name": "Spain",
+        "countryCode": "+34",
+        "hotlines": [
+          {
+            "id": "telefono-esperanza",
+            "name": "Teléfono de la Esperanza",
+            "phone": "717 003 717",
+            "description": "Atención telefónica 24 horas para crisis emocionales",
+            "website": "https://www.telefonodelaesperanza.org",
+            "available": "24/7",
+            "languages": ["Español"]
+          }
+        ]
+      },
+      {
+        "code": "SA",
+        "name": "Saudi Arabia",
+        "countryCode": "+966",
+        "hotlines": [
+          {
+            "id": "sa-helpline",
+            "name": "خط المساعدة النفسية",
+            "phone": "920033360",
+            "description": "خدمة الدعم النفسي على مدار الساعة",
+            "website": null,
+            "available": "24/7",
+            "languages": ["العربية"]
+          }
+        ]
+      },
+      {
+        "code": "MX",
+        "name": "Mexico",
+        "countryCode": "+52",
+        "hotlines": [
+          {
+            "id": "linea-de-vida",
+            "name": "Línea de la Vida",
+            "phone": "800 911 2000",
+            "description": "Atención 24 horas para crisis emocionales y adicciones",
+            "website": "https://www.gob.mx/salud/acciones-y-programas/linea-de-la-vida-800-911-2000",
+            "available": "24/7",
+            "languages": ["Español"]
+          }
+        ]
+      },
+      {
+        "code": "BR",
+        "name": "Brazil",
+        "countryCode": "+55",
+        "hotlines": [
+          {
+            "id": "cvv",
+            "name": "Centro de Valorização da Vida",
+            "phone": "188",
+            "description": "Atendimento 24 horas para prevenção do suicídio",
+            "website": "https://www.cvv.org.br",
+            "available": "24/7",
+            "languages": ["Português"]
+          }
+        ]
+      },
+      {
+        "code": "FR",
+        "name": "France",
+        "countryCode": "+33",
+        "hotlines": [
+          {
+            "id": "suicide-ecoute",
+            "name": "Suicide Écoute",
+            "phone": "01 45 39 40 00",
+            "description": "Écoute et soutien 24h/24 pour la prévention du suicide",
+            "website": "https://www.suicide-ecoute.fr",
+            "available": "24/7",
+            "languages": ["Français"]
+          }
+        ]
+      },
+      {
+        "code": "DE",
+        "name": "Germany",
+        "countryCode": "+49",
+        "hotlines": [
+          {
+            "id": "telefonseelsorge",
+            "name": "Telefonseelsorge",
+            "phone": "0800 111 0 111",
+            "description": "Kostenlose, anonyme Beratung rund um die Uhr",
+            "website": "https://www.telefonseelsorge.de",
+            "available": "24/7",
+            "languages": ["Deutsch"]
+          }
+        ]
+      },
+      {
+        "code": "IT",
+        "name": "Italy",
+        "countryCode": "+39",
+        "hotlines": [
+          {
+            "id": "telefono-amico",
+            "name": "Telefono Amico",
+            "phone": "199 284 284",
+            "description": "Ascolto e supporto emotivo 24 ore su 24",
+            "website": "https://www.telefonoamico.it",
+            "available": "24/7",
+            "languages": ["Italiano"]
+          }
+        ]
+      },
+      {
+        "code": "SG",
+        "name": "Singapore",
+        "countryCode": "+65",
+        "hotlines": [
+          {
+            "id": "sos",
+            "name": "Samaritans of Singapore",
+            "phone": "1-767",
+            "description": "Emotional support for crisis, self-harm, or suicidal thoughts",
+            "website": "https://www.sos.org.sg",
+            "available": "24/7",
+            "languages": ["English", "Mandarin", "Tamil", "Malay"]
+          },
+          {
+            "id": "mindline",
+            "name": "National Mindline",
+            "phone": "1771",
+            "description": "24/7 national mental health helpline providing confidential and anonymous support",
+            "website": "https://mindline.sg",
+            "available": "24/7",
+            "languages": ["English", "Mandarin", "Tamil", "Malay"]
+          }
+        ]
+      },
+      {
+        "code": "TW",
+        "name": "Taiwan",
+        "countryCode": "+886",
+        "hotlines": [
+          {
+            "id": "taiwan-lifeline",
+            "name": "生命線",
+            "phone": "1995",
+            "description": "24小時生命線協談專線",
+            "website": "https://www.life1995.org.tw",
+            "available": "24/7",
+            "languages": ["中文"]
+          }
+        ]
+      },
+      {
+        "code": "HK",
+        "name": "Hong Kong",
+        "countryCode": "+852",
+        "hotlines": [
+          {
+            "id": "hk-samaritans",
+            "name": "撒瑪利亞會",
+            "phone": "2896 0000",
+            "description": "24小時防止自殺熱線",
+            "website": "https://www.sbhk.org.hk",
+            "available": "24/7",
+            "languages": ["中文", "English"]
+          },
+          {
+            "id": "caritas-family-crisis",
+            "name": "明爱向晴轩",
+            "phone": "18288",
+            "description": "24小时家庭危机支援和辅导服务",
+            "website": "https://fcsc.caritas.org.hk",
+            "available": "24/7",
+            "languages": ["中文", "English"]
+          }
+        ]
+      },
+      {
+        "code": "NZ",
+        "name": "New Zealand",
+        "countryCode": "+64",
+        "hotlines": [
+          {
+            "id": "lifeline-nz",
+            "name": "Lifeline Aotearoa",
+            "phone": "0800 543 354",
+            "description": "24/7 crisis support and suicide prevention",
+            "website": "https://www.lifeline.org.nz",
+            "available": "24/7",
+            "languages": ["English", "Māori"]
+          }
+        ]
+      },
+      {
+        "code": "NL",
+        "name": "Netherlands",
+        "countryCode": "+31",
+        "hotlines": [
+          {
+            "id": "113",
+            "name": "113 Suicide Prevention",
+            "phone": "0800 0113",
+            "description": "24/7 suicide prevention and emotional support",
+            "website": "https://www.113.nl",
+            "available": "24/7",
+            "languages": ["Nederlands", "English"]
+          }
+        ]
+      },
+      {
+        "code": "SE",
+        "name": "Sweden",
+        "countryCode": "+46",
+        "hotlines": [
+          {
+            "id": "mind",
+            "name": "Mind",
+            "phone": "90101",
+            "description": "24/7 mental health support and crisis intervention",
+            "website": "https://mind.se",
+            "available": "24/7",
+            "languages": ["Svenska", "English"]
+          }
+        ]
+      },
+      {
+        "code": "NO",
+        "name": "Norway",
+        "countryCode": "+47",
+        "hotlines": [
+          {
+            "id": "mental-helse",
+            "name": "Mental Helse",
+            "phone": "116 123",
+            "description": "24/7 mental health support and crisis intervention",
+            "website": "https://www.mentalhelse.no",
+            "available": "24/7",
+            "languages": ["Norsk", "English"]
+          }
+        ]
+      },
+      {
+        "code": "DK",
+        "name": "Denmark",
+        "countryCode": "+45",
+        "hotlines": [
+          {
+            "id": "livslinien",
+            "name": "Livslinien",
+            "phone": "70 201 201",
+            "description": "24/7 suicide prevention and emotional support",
+            "website": "https://www.livslinien.dk",
+            "available": "24/7",
+            "languages": ["Dansk", "English"]
+          }
+        ]
+      },
+      {
+        "code": "FI",
+        "name": "Finland",
+        "countryCode": "+358",
+        "hotlines": [
+          {
+            "id": "crisis-phone",
+            "name": "Crisis Phone",
+            "phone": "09 2525 0111",
+            "description": "24/7 mental health crisis support",
+            "website": "https://www.mielenterveysseura.fi",
+            "available": "24/7",
+            "languages": ["Suomi", "English"]
+          }
+        ]
+      },
+      {
+        "code": "CH",
+        "name": "Switzerland",
+        "countryCode": "+41",
+        "hotlines": [
+          {
+            "id": "die-dargebotene-hand",
+            "name": "Die Dargebotene Hand",
+            "phone": "143",
+            "description": "24/7 emotional support and crisis intervention",
+            "website": "https://www.143.ch",
+            "available": "24/7",
+            "languages": ["Deutsch", "Français", "Italiano", "English"]
+          }
+        ]
+      },
+      {
+        "code": "AT",
+        "name": "Austria",
+        "countryCode": "+43",
+        "hotlines": [
+          {
+            "id": "telefonseelsorge-at",
+            "name": "Telefonseelsorge",
+            "phone": "142",
+            "description": "24/7 emotional support and crisis intervention",
+            "website": "https://www.telefonseelsorge.at",
+            "available": "24/7",
+            "languages": ["Deutsch", "English"]
+          }
+        ]
+      },
+      {
+        "code": "BE",
+        "name": "Belgium",
+        "countryCode": "+32",
+        "hotlines": [
+          {
+            "id": "zelfmoordlijn",
+            "name": "Zelfmoordlijn",
+            "phone": "1813",
+            "description": "24/7 suicide prevention and emotional support",
+            "website": "https://www.zelfmoord1813.be",
+            "available": "24/7",
+            "languages": ["Nederlands", "Français", "Deutsch", "English"]
+          }
+        ]
+      },
+      {
+        "code": "PT",
+        "name": "Portugal",
+        "countryCode": "+351",
+        "hotlines": [
+          {
+            "id": "voz-amiga",
+            "name": "Voz Amiga",
+            "phone": "213 544 545",
+            "description": "24/7 emotional support and suicide prevention",
+            "website": "https://www.vozamiga.net",
+            "available": "24/7",
+            "languages": ["Português"]
+          }
+        ]
+      },
+      {
+        "code": "GR",
+        "name": "Greece",
+        "countryCode": "+30",
+        "hotlines": [
+          {
+            "id": "klimaka",
+            "name": "Klimaka",
+            "phone": "1018",
+            "description": "24/7 suicide prevention and mental health support",
+            "website": "https://www.klimaka.org.gr",
+            "available": "24/7",
+            "languages": ["Ελληνικά", "English"]
+          }
+        ]
+      },
+      {
+        "code": "PL",
+        "name": "Poland",
+        "countryCode": "+48",
+        "hotlines": [
+          {
+            "id": "telefon-zaufania",
+            "name": "Telefon Zaufania",
+            "phone": "116 123",
+            "description": "24/7 emotional support and crisis intervention",
+            "website": "https://www.116123.pl",
+            "available": "24/7",
+            "languages": ["Polski", "English"]
+          }
+        ]
+      },
+      {
+        "code": "IE",
+        "name": "Ireland",
+        "countryCode": "+353",
+        "hotlines": [
+          {
+            "id": "samaritans-ie",
+            "name": "Samaritans Ireland",
+            "phone": "116 123",
+            "description": "24/7 confidential emotional support",
+            "website": "https://www.samaritans.ie",
+            "available": "24/7",
+            "languages": ["English", "Gaeilge"]
+          }
+        ]
+      }
+    ]
+  },
+  "zh": {
+    "title": "危机热线",
+    "description": "按国家/地区分类的24/7心理健康危机支持热线和资源",
+    "regions": [
+      {
+        "code": "US",
+        "name": "美国",
+        "countryCode": "+1",
+        "hotlines": [
+          {
+            "id": "988",
+            "name": "988自杀与危机生命线",
+            "phone": "988",
+            "description": "为处于困境中的人们提供免费、保密的24/7支持、预防和危机资源",
+            "website": "https://988lifeline.org",
+            "available": "24/7",
+            "languages": ["英语", "西班牙语"]
+          },
+          {
+            "id": "crisis-text",
+            "name": "危机短信热线",
+            "phone": "发送HOME至741741",
+            "description": "通过短信提供免费24/7危机支持",
+            "website": "https://www.crisistextline.org",
+            "available": "24/7",
+            "languages": ["英语"]
+          }
+        ]
+      },
+      {
+        "code": "CN",
+        "name": "中国",
+        "countryCode": "+86",
+        "hotlines": [
+          {
+            "id": "beijing-hotline",
+            "name": "北京心理危机研究与干预中心",
+            "phone": "400-161-9995",
+            "description": "24小时心理危机干预和自杀预防热线",
+            "website": "http://www.crisis.org.cn",
+            "available": "24/7",
+            "languages": ["中文"]
+          },
+          {
+            "id": "shanghai-hotline",
+            "name": "上海市心理援助热线",
+            "phone": "021-12320-5",
+            "description": "24小时心理健康咨询服务",
+            "website": null,
+            "available": "24/7",
+            "languages": ["中文"]
+          }
+        ]
+      },
+      {
+        "code": "GB",
+        "name": "英国",
+        "countryCode": "+44",
+        "hotlines": [
+          {
+            "id": "samaritans",
+            "name": "撒玛利亚会",
+            "phone": "116 123",
+            "description": "免费、保密的24/7情感支持",
+            "website": "https://www.samaritans.org",
+            "available": "24/7",
+            "languages": ["英语", "威尔士语"]
+          },
+          {
+            "id": "shout",
+            "name": "Shout",
+            "phone": "发送SHOUT至85258",
+            "description": "免费、保密的24/7短信支持",
+            "website": "https://giveusashout.org",
+            "available": "24/7",
+            "languages": ["英语"]
+          }
+        ]
+      },
+      {
+        "code": "CA",
+        "name": "加拿大",
+        "countryCode": "+1",
+        "hotlines": [
+          {
+            "id": "988",
+            "name": "988自杀危机热线",
+            "phone": "988",
+            "description": "为处于困境中的人们提供免费、保密的24/7支持、自杀预防和危机资源",
+            "website": "https://988.ca",
+            "available": "24/7",
+            "languages": ["英语", "法语"]
+          },
+          {
+            "id": "kids-help-phone",
+            "name": "儿童帮助热线",
+            "phone": "1-800-668-6868",
+            "description": "为20岁及以下的儿童、青少年和年轻人提供24/7支持",
+            "website": "https://kidshelpphone.ca",
+            "available": "24/7",
+            "languages": ["英语", "法语"]
+          }
+        ]
+      },
+      {
+        "code": "AU",
+        "name": "澳大利亚",
+        "countryCode": "+61",
+        "hotlines": [
+          {
+            "id": "lifeline",
+            "name": "澳大利亚生命线",
+            "phone": "13 11 14",
+            "description": "24/7危机支持和自杀预防",
+            "website": "https://www.lifeline.org.au",
+            "available": "24/7",
+            "languages": ["英语"]
+          },
+          {
+            "id": "beyond-blue",
+            "name": "Beyond Blue",
+            "phone": "1300 22 4636",
+            "description": "24/7心理健康支持和信息",
+            "website": "https://www.beyondblue.org.au",
+            "available": "24/7",
+            "languages": ["英语"]
+          }
+        ]
+      },
+      {
+        "code": "JP",
+        "name": "日本",
+        "countryCode": "+81",
+        "hotlines": [
+          {
+            "id": "inochi-dial",
+            "name": "いのちの電話",
+            "phone": "0120-783-556",
+            "description": "24時間対応の自殺予防相談電話",
+            "website": "https://www.find-j.jp",
+            "available": "24/7",
+            "languages": ["日本語"]
+          },
+          {
+            "id": "yorisoi-hotline",
+            "name": "よりそいホットライン",
+            "phone": "0120-279-338",
+            "description": "24時間対応の相談電話",
+            "website": "https://www.yorisoi-hotline.jp",
+            "available": "24/7",
+            "languages": ["日本語"]
+          }
+        ]
+      },
+      {
+        "code": "KR",
+        "name": "韩国",
+        "countryCode": "+82",
+        "hotlines": [
+          {
+            "id": "korea-lifeline",
+            "name": "자살예방상담전화",
+            "phone": "1393",
+            "description": "24시간 자살예방 상담 서비스",
+            "website": "https://www.1393.or.kr",
+            "available": "24/7",
+            "languages": ["한국어"]
+          }
+        ]
+      },
+      {
+        "code": "IN",
+        "name": "印度",
+        "countryCode": "+91",
+        "hotlines": [
+          {
+            "id": "vandrevala",
+            "name": "Vandrevala基金会",
+            "phone": "1860 2662 345",
+            "description": "24/7心理健康支持和咨询",
+            "website": "https://www.vandrevalafoundation.com",
+            "available": "24/7",
+            "languages": ["英语", "印地语"]
+          },
+          {
+            "id": "icall",
+            "name": "iCall",
+            "phone": "022-25521111",
+            "description": "心理健康电话咨询服务",
+            "website": "https://icallhelpline.org",
+            "available": "周一至周六 8:00-22:00",
+            "languages": ["英语", "印地语", "马拉地语"]
+          }
+        ]
+      },
+      {
+        "code": "ES",
+        "name": "西班牙",
+        "countryCode": "+34",
+        "hotlines": [
+          {
+            "id": "telefono-esperanza",
+            "name": "希望电话",
+            "phone": "717 003 717",
+            "description": "24小时情感危机电话服务",
+            "website": "https://www.telefonodelaesperanza.org",
+            "available": "24/7",
+            "languages": ["西班牙语"]
+          }
+        ]
+      },
+      {
+        "code": "SA",
+        "name": "沙特阿拉伯",
+        "countryCode": "+966",
+        "hotlines": [
+          {
+            "id": "sa-helpline",
+            "name": "心理健康热线",
+            "phone": "920033360",
+            "description": "24小时心理健康支持服务",
+            "website": null,
+            "available": "24/7",
+            "languages": ["阿拉伯语"]
+          }
+        ]
+      },
+      {
+        "code": "MX",
+        "name": "墨西哥",
+        "countryCode": "+52",
+        "hotlines": [
+          {
+            "id": "linea-de-vida",
+            "name": "生命线",
+            "phone": "800 911 2000",
+            "description": "24小时情感危机和成瘾服务",
+            "website": "https://www.gob.mx/salud/acciones-y-programas/linea-de-la-vida-800-911-2000",
+            "available": "24/7",
+            "languages": ["西班牙语"]
+          }
+        ]
+      },
+      {
+        "code": "BR",
+        "name": "巴西",
+        "countryCode": "+55",
+        "hotlines": [
+          {
+            "id": "cvv",
+            "name": "生命价值中心",
+            "phone": "188",
+            "description": "24小时自杀预防服务",
+            "website": "https://www.cvv.org.br",
+            "available": "24/7",
+            "languages": ["葡萄牙语"]
+          }
+        ]
+      },
+      {
+        "code": "FR",
+        "name": "法国",
+        "countryCode": "+33",
+        "hotlines": [
+          {
+            "id": "suicide-ecoute",
+            "name": "自杀倾听热线",
+            "phone": "01 45 39 40 00",
+            "description": "24小时自杀预防倾听和支持",
+            "website": "https://www.suicide-ecoute.fr",
+            "available": "24/7",
+            "languages": ["法语"]
+          }
+        ]
+      },
+      {
+        "code": "DE",
+        "name": "德国",
+        "countryCode": "+49",
+        "hotlines": [
+          {
+            "id": "telefonseelsorge",
+            "name": "电话咨询",
+            "phone": "0800 111 0 111",
+            "description": "免费、匿名、全天候咨询服务",
+            "website": "https://www.telefonseelsorge.de",
+            "available": "24/7",
+            "languages": ["德语"]
+          }
+        ]
+      },
+      {
+        "code": "IT",
+        "name": "意大利",
+        "countryCode": "+39",
+        "hotlines": [
+          {
+            "id": "telefono-amico",
+            "name": "友好电话",
+            "phone": "199 284 284",
+            "description": "24小时倾听和情感支持",
+            "website": "https://www.telefonoamico.it",
+            "available": "24/7",
+            "languages": ["意大利语"]
+          }
+        ]
+      },
+      {
+        "code": "SG",
+        "name": "新加坡",
+        "countryCode": "+65",
+        "hotlines": [
+          {
+            "id": "sos",
+            "name": "新加坡撒玛利亚会",
+            "phone": "1-767",
+            "description": "为危机、自伤或自杀念头提供情感支持",
+            "website": "https://www.sos.org.sg",
+            "available": "24/7",
+            "languages": ["英语", "中文", "泰米尔语", "马来语"]
+          },
+          {
+            "id": "mindline",
+            "name": "全国心理健康热线",
+            "phone": "1771",
+            "description": "24/7全国心理健康热线，提供保密和匿名支持",
+            "website": "https://mindline.sg",
+            "available": "24/7",
+            "languages": ["英语", "中文", "泰米尔语", "马来语"]
+          }
+        ]
+      },
+      {
+        "code": "TW",
+        "name": "台湾",
+        "countryCode": "+886",
+        "hotlines": [
+          {
+            "id": "taiwan-lifeline",
+            "name": "生命線",
+            "phone": "1995",
+            "description": "24小時生命線協談專線",
+            "website": "https://www.life1995.org.tw",
+            "available": "24/7",
+            "languages": ["中文"]
+          }
+        ]
+      },
+      {
+        "code": "HK",
+        "name": "香港",
+        "countryCode": "+852",
+        "hotlines": [
+          {
+            "id": "hk-samaritans",
+            "name": "撒瑪利亞會",
+            "phone": "2896 0000",
+            "description": "24小時防止自殺熱線",
+            "website": "https://www.sbhk.org.hk",
+            "available": "24/7",
+            "languages": ["中文", "英语"]
+          },
+          {
+            "id": "caritas-family-crisis",
+            "name": "明爱向晴轩",
+            "phone": "18288",
+            "description": "24小时家庭危机支援和辅导服务",
+            "website": "https://fcsc.caritas.org.hk",
+            "available": "24/7",
+            "languages": ["中文", "英语"]
+          }
+        ]
+      },
+      {
+        "code": "NZ",
+        "name": "新西兰",
+        "countryCode": "+64",
+        "hotlines": [
+          {
+            "id": "lifeline-nz",
+            "name": "新西兰生命线",
+            "phone": "0800 543 354",
+            "description": "24/7危机支持和自杀预防",
+            "website": "https://www.lifeline.org.nz",
+            "available": "24/7",
+            "languages": ["英语", "毛利语"]
+          }
+        ]
+      },
+      {
+        "code": "NL",
+        "name": "荷兰",
+        "countryCode": "+31",
+        "hotlines": [
+          {
+            "id": "113",
+            "name": "113自杀预防",
+            "phone": "0800 0113",
+            "description": "24/7自杀预防和情感支持",
+            "website": "https://www.113.nl",
+            "available": "24/7",
+            "languages": ["荷兰语", "英语"]
+          }
+        ]
+      },
+      {
+        "code": "SE",
+        "name": "瑞典",
+        "countryCode": "+46",
+        "hotlines": [
+          {
+            "id": "mind",
+            "name": "Mind",
+            "phone": "90101",
+            "description": "24/7心理健康支持和危机干预",
+            "website": "https://mind.se",
+            "available": "24/7",
+            "languages": ["瑞典语", "英语"]
+          }
+        ]
+      },
+      {
+        "code": "NO",
+        "name": "挪威",
+        "countryCode": "+47",
+        "hotlines": [
+          {
+            "id": "mental-helse",
+            "name": "Mental Helse",
+            "phone": "116 123",
+            "description": "24/7心理健康支持和危机干预",
+            "website": "https://www.mentalhelse.no",
+            "available": "24/7",
+            "languages": ["挪威语", "英语"]
+          }
+        ]
+      },
+      {
+        "code": "DK",
+        "name": "丹麦",
+        "countryCode": "+45",
+        "hotlines": [
+          {
+            "id": "livslinien",
+            "name": "Livslinien",
+            "phone": "70 201 201",
+            "description": "24/7自杀预防和情感支持",
+            "website": "https://www.livslinien.dk",
+            "available": "24/7",
+            "languages": ["丹麦语", "英语"]
+          }
+        ]
+      },
+      {
+        "code": "FI",
+        "name": "芬兰",
+        "countryCode": "+358",
+        "hotlines": [
+          {
+            "id": "crisis-phone",
+            "name": "危机电话",
+            "phone": "09 2525 0111",
+            "description": "24/7心理健康危机支持",
+            "website": "https://www.mielenterveysseura.fi",
+            "available": "24/7",
+            "languages": ["芬兰语", "英语"]
+          }
+        ]
+      },
+      {
+        "code": "CH",
+        "name": "瑞士",
+        "countryCode": "+41",
+        "hotlines": [
+          {
+            "id": "die-dargebotene-hand",
+            "name": "Die Dargebotene Hand",
+            "phone": "143",
+            "description": "24/7情感支持和危机干预",
+            "website": "https://www.143.ch",
+            "available": "24/7",
+            "languages": ["德语", "法语", "意大利语", "英语"]
+          }
+        ]
+      },
+      {
+        "code": "AT",
+        "name": "奥地利",
+        "countryCode": "+43",
+        "hotlines": [
+          {
+            "id": "telefonseelsorge-at",
+            "name": "电话咨询",
+            "phone": "142",
+            "description": "24/7情感支持和危机干预",
+            "website": "https://www.telefonseelsorge.at",
+            "available": "24/7",
+            "languages": ["德语", "英语"]
+          }
+        ]
+      },
+      {
+        "code": "BE",
+        "name": "比利时",
+        "countryCode": "+32",
+        "hotlines": [
+          {
+            "id": "zelfmoordlijn",
+            "name": "Zelfmoordlijn",
+            "phone": "1813",
+            "description": "24/7自杀预防和情感支持",
+            "website": "https://www.zelfmoord1813.be",
+            "available": "24/7",
+            "languages": ["荷兰语", "法语", "德语", "英语"]
+          }
+        ]
+      },
+      {
+        "code": "PT",
+        "name": "葡萄牙",
+        "countryCode": "+351",
+        "hotlines": [
+          {
+            "id": "voz-amiga",
+            "name": "Voz Amiga",
+            "phone": "213 544 545",
+            "description": "24/7情感支持和自杀预防",
+            "website": "https://www.vozamiga.net",
+            "available": "24/7",
+            "languages": ["葡萄牙语"]
+          }
+        ]
+      },
+      {
+        "code": "GR",
+        "name": "希腊",
+        "countryCode": "+30",
+        "hotlines": [
+          {
+            "id": "klimaka",
+            "name": "Klimaka",
+            "phone": "1018",
+            "description": "24/7自杀预防和心理健康支持",
+            "website": "https://www.klimaka.org.gr",
+            "available": "24/7",
+            "languages": ["希腊语", "英语"]
+          }
+        ]
+      },
+      {
+        "code": "PL",
+        "name": "波兰",
+        "countryCode": "+48",
+        "hotlines": [
+          {
+            "id": "telefon-zaufania",
+            "name": "Telefon Zaufania",
+            "phone": "116 123",
+            "description": "24/7情感支持和危机干预",
+            "website": "https://www.116123.pl",
+            "available": "24/7",
+            "languages": ["波兰语", "英语"]
+          }
+        ]
+      },
+      {
+        "code": "IE",
+        "name": "爱尔兰",
+        "countryCode": "+353",
+        "hotlines": [
+          {
+            "id": "samaritans-ie",
+            "name": "爱尔兰撒玛利亚会",
+            "phone": "116 123",
+            "description": "24/7保密情感支持",
+            "website": "https://www.samaritans.ie",
+            "available": "24/7",
+            "languages": ["英语", "爱尔兰语"]
+          }
+        ]
+      }
+    ]
+  }
+}
+

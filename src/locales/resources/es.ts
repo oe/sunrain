@@ -56,6 +56,38 @@ export const resourcesEs: IResourcesTranslations = {
     amazon: 'Amazon',
     goodreads: 'Goodreads',
   },
+  crisis: {
+    title: 'Líneas de Crisis',
+    subtitle: 'Apoyo de Salud Mental 24/7',
+    description: 'Encuentra líneas de crisis profesionales de apoyo en salud mental y recursos por país/región. Estos servicios brindan apoyo gratuito y confidencial para personas en dificultades.',
+    emergency: {
+      title: '🚨 ¿En Peligro Inmediato?',
+      description: 'Si estás en peligro inmediato o experimentando una emergencia que amenaza tu vida, llama inmediatamente a los servicios de emergencia locales (por ejemplo, 911 en EE. UU., 112 en España).',
+    },
+    filters: {
+      searchPlaceholder: 'Buscar por país o nombre de línea...',
+      selectRegion: 'Seleccionar País/Región',
+      allRegions: 'Todos los Países/Regiones',
+    },
+    hotline: {
+      phone: 'Teléfono',
+      website: 'Sitio Web',
+      available: 'Disponible',
+      languages: 'Idiomas',
+      call: 'Llamar',
+      visitWebsite: 'Visitar Sitio Web',
+      available247: '24/7',
+    },
+    noResults: {
+      title: 'No se encontraron líneas',
+      description: 'Intenta ajustar tu búsqueda o criterios de filtro.',
+    },
+    disclaimer: 'Esta información se proporciona únicamente con fines informativos. No respaldamos ni garantizamos los servicios listados. Por favor, verifica la información de contacto actual antes de usar.',
+    encouragement: {
+      title: 'No Estás Solo',
+      message: 'Donde el sol se encuentra con la lluvia, la esperanza y la sanación siempre están al alcance. Buscar ayuda es una señal de fortaleza, no de debilidad.',
+    },
+  },
 };
 
 export default resourcesEs;

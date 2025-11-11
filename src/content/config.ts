@@ -19,6 +19,7 @@ const resourcesCollection = defineCollection({
     z.object({
       title: z.string(),
       description: z.string(),
+      // For music, movies, books resources
       items: z.array(
         z.object({
           id: z.string(),
@@ -47,7 +48,26 @@ const resourcesCollection = defineCollection({
           youtubeUrl: z.string().optional(),
           image: z.string().optional(),
         })
-      ),
+      ).optional(),
+      // For crisis hotlines
+      regions: z.array(
+        z.object({
+          code: z.string(),
+          name: z.string(),
+          countryCode: z.string().optional(), // International dialing code (e.g., +1, +44)
+          hotlines: z.array(
+            z.object({
+              id: z.string(),
+              name: z.string(),
+              phone: z.string(),
+              description: z.string(),
+              website: z.string().nullable().optional(),
+              available: z.string(),
+              languages: z.array(z.string()),
+            })
+          ),
+        })
+      ).optional(),
     })
   ),
 });

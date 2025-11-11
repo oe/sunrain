@@ -8,10 +8,7 @@ build/
 .vercel/
 
 # Package-specific build outputs
-packages/*/dist/
-packages/*/build/
-packages/*/.astro/
-packages/website/reports
+src/astro_tmp_pages*
 
 # Temporary i18n pages (astro-i18n-aut)
 packages/website/src/astro_tmp_pages_*/

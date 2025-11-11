@@ -56,6 +56,38 @@ export const resourcesEn: IResourcesTranslations = {
     amazon: 'Amazon',
     goodreads: 'Goodreads',
   },
+  crisis: {
+    title: 'Crisis Hotlines',
+    subtitle: '24/7 Mental Health Support',
+    description: 'Find professional mental health crisis support hotlines and resources by country/region. These services provide free, confidential support for people in distress.',
+    emergency: {
+      title: '🚨 In Immediate Danger?',
+      description: 'If you are in immediate danger or experiencing a life-threatening emergency, please call your local emergency services (e.g., 911 in the US, 999 in the UK) immediately.',
+    },
+    filters: {
+      searchPlaceholder: 'Search by country or hotline name...',
+      selectRegion: 'Select Country/Region',
+      allRegions: 'All Countries/Regions',
+    },
+    hotline: {
+      phone: 'Phone',
+      website: 'Website',
+      available: 'Available',
+      languages: 'Languages',
+      call: 'Call',
+      visitWebsite: 'Visit Website',
+      available247: '24/7',
+    },
+    noResults: {
+      title: 'No hotlines found',
+      description: 'Try adjusting your search or filter criteria.',
+    },
+    disclaimer: 'This information is provided for informational purposes only. We do not endorse or guarantee the services listed. Please verify the current contact information before use.',
+    encouragement: {
+      title: 'You Are Not Alone',
+      message: 'Where the sun meets the rain, hope and healing are always within reach. Reaching out for help is a sign of strength, not weakness.',
+    },
+  },
 };
 
 export default resourcesEn;

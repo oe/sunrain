@@ -96,4 +96,62 @@ export interface IResourcesTranslations {
     /** Goodreads */
     goodreads: string;
   };
+  /** 危机热线页面 */
+  crisis: {
+    /** 页面标题 */
+    title: string;
+    /** 页面副标题 */
+    subtitle: string;
+    /** 页面描述 */
+    description: string;
+    /** 紧急提示 */
+    emergency: {
+      /** 标题 */
+      title: string;
+      /** 描述 */
+      description: string;
+    };
+    /** 筛选 */
+    filters: {
+      /** 搜索占位符 */
+      searchPlaceholder: string;
+      /** 选择国家/地区 */
+      selectRegion: string;
+      /** 全部 */
+      allRegions: string;
+    };
+    /** 热线信息 */
+    hotline: {
+      /** 电话 */
+      phone: string;
+      /** 网站 */
+      website: string;
+      /** 可用时间 */
+      available: string;
+      /** 支持语言 */
+      languages: string;
+      /** 拨打 */
+      call: string;
+      /** 访问网站 */
+      visitWebsite: string;
+      /** 24/7 */
+      available247: string;
+    };
+    /** 无结果 */
+    noResults: {
+      /** 标题 */
+      title: string;
+      /** 描述 */
+      description: string;
+    };
+    /** 免责声明 */
+    disclaimer: string;
+    /** 鼓励语句 */
+    encouragement: {
+      /** 标题 */
+      title: string;
+      /** 描述 */
+      message: string;
+    };
+  };
 }
