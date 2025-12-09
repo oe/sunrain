@@ -141,7 +141,7 @@
     }
   },
   "footer": {
-    "copyright": "© 2025 Sunrain. सर्वाधिकार सुरक्षित।",
+    "copyright": "© {year} Sunrain. सर्वाधिकार सुरक्षित।",
     "mission": "आशा और उपचार फैलाना।",
     "links": "लिंक",
     "privacy": "गोपनीयता",

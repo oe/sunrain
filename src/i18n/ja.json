@@ -141,7 +141,7 @@
     }
   },
   "footer": {
-    "copyright": "© 2025 Sunrain. All rights reserved.",
+    "copyright": "© {year} Sunrain. All rights reserved.",
     "mission": "希望と癒しを広める。",
     "links": "リンク",
     "privacy": "プライバシー",

@@ -141,7 +141,7 @@
     }
   },
   "footer": {
-    "copyright": "© 2025 Sunrain. All rights reserved.",
+    "copyright": "© {year} Sunrain. All rights reserved.",
     "mission": "희망과 치유를 전파합니다.",
     "links": "링크",
     "privacy": "개인정보",

@@ -141,7 +141,7 @@
     }
   },
   "footer": {
-    "copyright": "© 2025 Sunrain. All rights reserved.",
+    "copyright": "© {year} Sunrain. All rights reserved.",
     "mission": "Spreading hope and healing.",
     "links": "Links",
     "privacy": "Privacy",

@@ -141,7 +141,7 @@
     }
   },
   "footer": {
-    "copyright": "© 2025 Sunrain. جميع الحقوق محفوظة.",
+    "copyright": "© {year} Sunrain. جميع الحقوق محفوظة.",
     "mission": "نشر الأمل والشفاء.",
     "links": "روابط",
     "privacy": "الخصوصية",

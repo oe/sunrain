@@ -7,6 +7,7 @@ interface Props {
 }
 
 const { lang } = Astro.props;
+const currentYear = new Date().getFullYear();
 ---
 
 <footer class="bg-gray-50 dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
@@ -43,7 +44,7 @@ const { lang } = Astro.props;
 
     <!-- Copyright -->
     <div class="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700 text-center text-sm text-gray-500 dark:text-gray-400">
-      <p>{t('footer.copyright', lang)}</p>
+      <p>{t('footer.copyright', lang, { year: currentYear })}</p>
     </div>
   </div>
 </footer>

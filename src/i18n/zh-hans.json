@@ -141,7 +141,7 @@
     }
   },
   "footer": {
-    "copyright": "© 2025 Sunrain. 保留所有权利。",
+    "copyright": "© {year} Sunrain. 保留所有权利。",
     "mission": "传播希望与治愈。",
     "links": "链接",
     "privacy": "隐私政策",

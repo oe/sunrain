@@ -42,8 +42,13 @@ const translations: Record<Language, typeof en> = {
 
 /**
  * Get translation value by dot-notation key
+ * Supports placeholder replacement with params: t('key', lang, { year: 2025 })
  */
-export function t(key: string, lang: Language = DEFAULT_LANGUAGE): string {
+export function t(
+  key: string, 
+  lang: Language = DEFAULT_LANGUAGE, 
+  params?: Record<string, string | number>
+): string {
   const keys = key.split('.');
   let value: any = translations[lang] || translations[DEFAULT_LANGUAGE];
   
@@ -64,14 +69,23 @@ export function t(key: string, lang: Language = DEFAULT_LANGUAGE): string {
     }
   }
   
-  return typeof value === 'string' ? value : key;
+  let result = typeof value === 'string' ? value : key;
+  
+  // Replace placeholders like {year} with actual values
+  if (params) {
+    for (const [paramKey, paramValue] of Object.entries(params)) {
+      result = result.replace(new RegExp(`\\{${paramKey}\\}`, 'g'), String(paramValue));
+    }
+  }
+  
+  return result;
 }
 
 /**
  * Create a translation function for a specific language
  */
 export function createTranslator(lang: Language) {
-  return (key: string) => t(key, lang);
+  return (key: string, params?: Record<string, string | number>) => t(key, lang, params);
 }
 
 /**

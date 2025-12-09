@@ -141,7 +141,7 @@
     }
   },
   "footer": {
-    "copyright": "© 2025 Sunrain. 保留所有權利。",
+    "copyright": "© {year} Sunrain. 保留所有權利。",
     "mission": "傳遞希望與療癒。",
     "links": "連結",
     "privacy": "隱私權政策",
