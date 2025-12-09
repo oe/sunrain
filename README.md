@@ -2,75 +2,76 @@
 
 > Where the sun meets the rain
 
-开源、免费、注重隐私的心理健康自助平台。
+An open-source, free, and privacy-focused mental health self-help platform.
 
-## ✨ 功能
+## ✨ Features
 
-- **📋 心理测评** - PHQ-9 (抑郁筛查) / GAD-7 (焦虑筛查)
-- **🧘 呼吸练习** - 可自定义的呼吸引导
-- **📞 危机热线** - 全球 30+ 国家/地区的求助资源
+- **Self-Assessment** - PHQ-9 (depression screening) / GAD-7 (anxiety screening)
+- **Breathing Exercise** - Customizable guided breathing
+- **Crisis Hotlines** - Resources from 30+ countries/regions worldwide
 
-## 🌍 多语言支持
+## 🌍 Languages
 
-English | 中文 | Español | 日本語 | 한국어 | हिन्दी | العربية
+English | 简体中文 | 繁體中文 | Español | 日本語 | 한국어 | हिन्दी | العربية
 
-## 🔒 隐私优先
+## 🔒 Privacy First
 
-- 所有数据仅存储在您的设备上
-- 不使用 Cookies 追踪
-- 不收集任何个人信息
+- All data is stored locally on your device
+- No cookies for tracking
+- No personal information collected
 
-## 🚀 快速开始
+## 🚀 Getting Started
 
 ```bash
-# 安装依赖
+# Install dependencies
 pnpm install
 
-# 开发模式
+# Development
 pnpm dev
 
-# 构建
+# Build
 pnpm build
 
-# 预览构建结果
+# Preview build
 pnpm preview
 ```
 
-## 📁 项目结构
+## 📁 Project Structure
 
 ```
 src/
-├── content/           # 内容数据 (问卷/危机热线)
-├── i18n/              # UI 翻译文件
-├── lib/               # 核心工具库
-├── layouts/           # 页面布局
-├── components/        # 组件
-├── pages/             # 页面
-└── styles/            # 样式
+├── content/           # Content data (questionnaires/crisis hotlines)
+├── i18n/              # UI translation files
+├── lib/               # Core utilities
+├── layouts/           # Page layouts
+├── components/        # Components
+├── pages/             # Pages
+└── styles/            # Styles
 ```
 
-## 📦 技术栈
+## 📦 Tech Stack
 
-- [Astro](https://astro.build/) - 静态站点生成
-- [TailwindCSS](https://tailwindcss.com/) - 样式
-- [TypeScript](https://www.typescriptlang.org/) - 类型安全
+- [Astro](https://astro.build/) - Static site generation
+- [TailwindCSS](https://tailwindcss.com/) - Styling
+- [TypeScript](https://www.typescriptlang.org/) - Type safety
+- [React](https://react.dev/) - UI components
+- [Lucide](https://lucide.dev/) - Icons
 
-## 📄 文档
+## 📄 Documentation
 
-- [需求文档](./docs/REQUIREMENTS.md)
-- [设计文档](./docs/DESIGN.md)
+- [Requirements](./docs/REQUIREMENTS.md)
+- [Design](./docs/DESIGN.md)
 
-## 🤝 贡献
+## 🤝 Contributing
 
-欢迎提交 Issue 和 Pull Request！
+Issues and Pull Requests are welcome!
 
-## ⚠️ 免责声明
+## ⚠️ Disclaimer
 
-本平台提供的所有测评工具和信息仅供参考和自我了解，不能替代专业的心理健康诊断和治疗。
+All assessment tools and information provided on this platform are for reference and self-understanding only. They cannot replace professional mental health diagnosis and treatment.
 
-如果您正在经历心理健康危机，请立即联系当地的心理危机热线或寻求专业帮助。
+If you are experiencing a mental health crisis, please contact your local crisis hotline or seek professional help immediately.
 
-## 📜 许可证
+## 📜 License
 
 [MIT](./LICENSE)
-
