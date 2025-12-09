@@ -84,6 +84,33 @@ const lang = getLanguageFromPath(Astro.url.pathname) as Language;
         </p>
       </section>
 
+      <!-- Contact & Support -->
+      <section class="mb-12">
+        <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6 text-center">
+          {t('about.contact.title', lang)}
+        </h2>
+        <div class="grid md:grid-cols-2 gap-6">
+          <!-- Email -->
+          <a href="mailto:apps@forth.ink" 
+             class="flex items-center gap-4 p-6 bg-gray-50 dark:bg-gray-800 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+            <Icon name="Mail" size={32} className="text-blue-600 dark:text-blue-400" client:load />
+            <div>
+              <h3 class="font-bold text-gray-900 dark:text-white">{t('about.contact.email', lang)}</h3>
+              <p class="text-gray-600 dark:text-gray-400">apps@forth.ink</p>
+            </div>
+          </a>
+          <!-- Donate -->
+          <a href="https://forth.ink/donate/" target="_blank" rel="noopener noreferrer"
+             class="flex items-center gap-4 p-6 bg-rose-50 dark:bg-rose-900/20 rounded-xl hover:bg-rose-100 dark:hover:bg-rose-900/30 transition-colors">
+            <Icon name="Heart" size={32} className="text-rose-600 dark:text-rose-400" client:load />
+            <div>
+              <h3 class="font-bold text-gray-900 dark:text-white">{t('about.contact.donate', lang)}</h3>
+              <p class="text-gray-600 dark:text-gray-400">{t('about.contact.donateDescription', lang)}</p>
+            </div>
+          </a>
+        </div>
+      </section>
+
       <!-- Open Source -->
       <section class="text-center">
         <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">

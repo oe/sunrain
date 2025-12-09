@@ -132,6 +132,12 @@
       "title": "开源项目",
       "description": "Sunrain 是开源的，欢迎贡献。",
       "github": "在 GitHub 上查看"
+    },
+    "contact": {
+      "title": "联系与支持",
+      "email": "联系我们",
+      "donate": "支持我们",
+      "donateDescription": "帮助我们维护项目运行"
     }
   },
   "footer": {

@@ -15,6 +15,8 @@ import {
   Lock,
   Globe,
   BarChart3,
+  Mail,
+  Heart,
 } from 'lucide-react';
 import type { LucideProps } from 'lucide-react';
 
@@ -32,6 +34,8 @@ const iconMap = {
   Lock,
   Globe,
   BarChart3,
+  Mail,
+  Heart,
 } as const;
 
 export type IconName = keyof typeof iconMap;

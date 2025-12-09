@@ -132,6 +132,12 @@
       "title": "オープンソース",
       "description": "Sunrainはオープンソースであり、貢献を歓迎します。",
       "github": "GitHubで見る"
+    },
+    "contact": {
+      "title": "お問い合わせ・サポート",
+      "email": "お問い合わせ",
+      "donate": "サポートする",
+      "donateDescription": "プロジェクトの運営にご協力ください"
     }
   },
   "footer": {

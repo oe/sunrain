@@ -132,6 +132,12 @@
       "title": "Código Abierto",
       "description": "Sunrain es de código abierto y da la bienvenida a contribuciones.",
       "github": "Ver en GitHub"
+    },
+    "contact": {
+      "title": "Contacto y Apoyo",
+      "email": "Contáctenos",
+      "donate": "Apóyenos",
+      "donateDescription": "Ayúdenos a mantener este proyecto en funcionamiento"
     }
   },
   "footer": {

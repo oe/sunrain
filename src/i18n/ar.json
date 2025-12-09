@@ -132,6 +132,12 @@
       "title": "مفتوح المصدر",
       "description": "Sunrain مفتوح المصدر ويرحب بالمساهمات.",
       "github": "عرض على GitHub"
+    },
+    "contact": {
+      "title": "الاتصال والدعم",
+      "email": "اتصل بنا",
+      "donate": "ادعمنا",
+      "donateDescription": "ساعدنا في الحفاظ على هذا المشروع"
     }
   },
   "footer": {
