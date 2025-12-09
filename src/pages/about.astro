@@ -12,7 +12,7 @@ const lang = getLanguageFromPath(Astro.url.pathname) as Language;
       <!-- Header -->
       <div class="text-center mb-12">
         <div class="flex justify-center mb-4">
-          <Icon name="CloudSun" size={64} className="text-amber-500" client:load />
+          <Icon name="CloudSun" size={64} className="text-amber-500"  />
         </div>
         <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-4">
           {t('about.title', lang)}
@@ -35,7 +35,7 @@ const lang = getLanguageFromPath(Astro.url.pathname) as Language;
           <!-- Privacy -->
           <div class="bg-blue-50 dark:bg-blue-900/20 rounded-xl p-6">
             <div class="mb-3">
-              <Icon name="Lock" size={32} className="text-blue-600 dark:text-blue-400" client:load />
+              <Icon name="Lock" size={32} className="text-blue-600 dark:text-blue-400"  />
             </div>
             <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">
               {t('about.values.privacy.title', lang)}
@@ -48,7 +48,7 @@ const lang = getLanguageFromPath(Astro.url.pathname) as Language;
           <!-- Accessibility -->
           <div class="bg-green-50 dark:bg-green-900/20 rounded-xl p-6">
             <div class="mb-3">
-              <Icon name="Globe" size={32} className="text-green-600 dark:text-green-400" client:load />
+              <Icon name="Globe" size={32} className="text-green-600 dark:text-green-400"  />
             </div>
             <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">
               {t('about.values.accessibility.title', lang)}
@@ -61,7 +61,7 @@ const lang = getLanguageFromPath(Astro.url.pathname) as Language;
           <!-- Evidence -->
           <div class="bg-purple-50 dark:bg-purple-900/20 rounded-xl p-6">
             <div class="mb-3">
-              <Icon name="BarChart3" size={32} className="text-purple-600 dark:text-purple-400" client:load />
+              <Icon name="BarChart3" size={32} className="text-purple-600 dark:text-purple-400"  />
             </div>
             <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">
               {t('about.values.evidence.title', lang)}
@@ -76,7 +76,7 @@ const lang = getLanguageFromPath(Astro.url.pathname) as Language;
       <!-- Disclaimer -->
       <section class="mb-12 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800/30 rounded-xl p-6">
         <h3 class="flex items-center gap-2 font-bold text-amber-800 dark:text-amber-300 mb-2">
-          <Icon name="AlertTriangle" size={20} client:load />
+          <Icon name="AlertTriangle" size={20}  />
           {t('about.disclaimer.title', lang)}
         </h3>
         <p class="text-amber-700 dark:text-amber-400">
@@ -93,7 +93,7 @@ const lang = getLanguageFromPath(Astro.url.pathname) as Language;
           <!-- Email -->
           <a href="mailto:apps@forth.ink" 
              class="flex items-center gap-4 p-6 bg-gray-50 dark:bg-gray-800 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
-            <Icon name="Mail" size={32} className="text-blue-600 dark:text-blue-400" client:load />
+            <Icon name="Mail" size={32} className="text-blue-600 dark:text-blue-400"  />
             <div>
               <h3 class="font-bold text-gray-900 dark:text-white">{t('about.contact.email', lang)}</h3>
               <p class="text-gray-600 dark:text-gray-400">apps@forth.ink</p>
@@ -102,7 +102,7 @@ const lang = getLanguageFromPath(Astro.url.pathname) as Language;
           <!-- Donate -->
           <a href="https://forth.ink/donate/" target="_blank" rel="noopener noreferrer"
              class="flex items-center gap-4 p-6 bg-rose-50 dark:bg-rose-900/20 rounded-xl hover:bg-rose-100 dark:hover:bg-rose-900/30 transition-colors">
-            <Icon name="Heart" size={32} className="text-rose-600 dark:text-rose-400" client:load />
+            <Icon name="Heart" size={32} className="text-rose-600 dark:text-rose-400"  />
             <div>
               <h3 class="font-bold text-gray-900 dark:text-white">{t('about.contact.donate', lang)}</h3>
               <p class="text-gray-600 dark:text-gray-400">{t('about.contact.donateDescription', lang)}</p>

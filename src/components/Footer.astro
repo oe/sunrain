@@ -15,7 +15,7 @@ const currentYear = new Date().getFullYear();
     <div class="flex flex-col md:flex-row justify-between items-center gap-4">
       <!-- Brand -->
       <div class="flex items-center gap-3">
-        <Icon name="CloudSun" size={32} className="text-amber-500" client:load />
+        <Icon name="CloudSun" size={32} className="text-amber-500" />
         <div>
           <p class="font-bold text-gray-900 dark:text-white">Sunrain</p>
           <p class="text-sm text-gray-500 dark:text-gray-400">{t('footer.mission', lang)}</p>
@@ -28,7 +28,7 @@ const currentYear = new Date().getFullYear();
           href={getLocalizedPath('/crisis/', lang)}
           class="flex items-center gap-1 text-red-600 dark:text-red-400 hover:underline font-medium"
         >
-          <Icon name="Phone" size={16} client:load />
+          <Icon name="Phone" size={16} />
           {t('nav.crisis', lang)}
         </a>
         <a
