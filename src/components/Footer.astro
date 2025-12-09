@@ -1,147 +1,50 @@
 ---
-import { createSSGTranslations } from '@/i18n/utils';
-import { type Language, getRelativeLocaleUrl } from '@/shared';
-import BrandName from './BrandName.astro';
+import { t, getLocalizedPath, type Language } from '@/lib/i18n';
+import { Icon } from '@/components/Icon';
 
-export interface Props {
+interface Props {
   lang: Language;
 }
 
 const { lang } = Astro.props;
-const t = createSSGTranslations(lang);
-
-const currentYear = new Date().getFullYear();
-
-const quickLinks = [
-  { key: 'nav.home', href: getRelativeLocaleUrl(lang, '/') },
-  { key: 'nav.guide', href: getRelativeLocaleUrl(lang, '/guide/') },
-  { key: 'nav.resources', href: getRelativeLocaleUrl(lang, '/resources/') },
-  { key: 'nav.about', href: getRelativeLocaleUrl(lang, '/about/') }
-];
-
-const features = [
-  { key: 'footer.selfCheck', href: '#' },
-  {
-    key: 'footer.healingResources',
-    href: getRelativeLocaleUrl(lang, '/resources/')
-  },
-  { key: 'footer.crisisHotline', href: getRelativeLocaleUrl(lang, '/resources/crisis/') },
-  { key: 'footer.multilingual', href: '#' }
-];
 ---
 
-<footer
-  class="bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700 transition-colors duration-300"
-  role="contentinfo"
->
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-      <!-- Brand Section -->
-      <div class="lg:col-span-1">
-        <div class="flex items-center space-x-1 mb-4">
-          <div class="relative" aria-hidden="true">
-            <img
-              src="/logo.png"
-              alt="Sunrain Logo"
-              class="w-8 h-8 object-contain"
-            />
-          </div>
-          <BrandName class="text-xl" />
+<footer class="bg-gray-50 dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
+  <div class="container mx-auto px-4 py-8">
+    <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+      <!-- Brand -->
+      <div class="flex items-center gap-3">
+        <Icon name="CloudSun" size={32} className="text-amber-500" client:load />
+        <div>
+          <p class="font-bold text-gray-900 dark:text-white">Sunrain</p>
+          <p class="text-sm text-gray-500 dark:text-gray-400">{t('footer.mission', lang)}</p>
         </div>
-        <p
-          class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed mb-4"
-        >
-          {t('footer.mission')}
-        </p>
-        <p class="text-gray-500 dark:text-gray-400 text-xs">
-          {t('footer.copyright').replace('2025', currentYear.toString())}
-        </p>
       </div>
 
-      <!-- Quick Links -->
-      <nav aria-labelledby="footer-quicklinks">
-        <h3
-          id="footer-quicklinks"
-          class="text-sm font-semibold text-gray-900 dark:text-white uppercase tracking-wider mb-4"
+      <!-- Links -->
+      <div class="flex items-center gap-6 text-sm">
+        <a
+          href={getLocalizedPath('/crisis/', lang)}
+          class="flex items-center gap-1 text-red-600 dark:text-red-400 hover:underline font-medium"
         >
-          {t('footer.quickLinks')}
-        </h3>
-        <ul class="space-y-3" role="list">
-          {
-            quickLinks.map(({ key, href }) => (
-              <li>
-                <a
-                  href={href}
-                  class="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white text-sm transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900 rounded px-1 py-0.5 -mx-1 -my-0.5"
-                >
-                  {t(key)}
-                </a>
-              </li>
-            ))
-          }
-        </ul>
-      </nav>
-
-      <!-- Features -->
-      <nav aria-labelledby="footer-features">
-        <h3
-          id="footer-features"
-          class="text-sm font-semibold text-gray-900 dark:text-white uppercase tracking-wider mb-4"
+          <Icon name="Phone" size={16} client:load />
+          {t('nav.crisis', lang)}
+        </a>
+        <a
+          href="https://github.com/anthropics/sunrain"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
         >
-          {t('footer.features')}
-        </h3>
-        <ul class="space-y-3" role="list">
-          {
-            features.map(({ key, href }) => (
-              <li>
-                <a
-                  href={href}
-                  class="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white text-sm transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900 rounded px-1 py-0.5 -mx-1 -my-0.5"
-                >
-                  {t(key)}
-                </a>
-              </li>
-            ))
-          }
-        </ul>
-      </nav>
-
-      <!-- Support -->
-      <nav aria-labelledby="footer-support">
-        <h3
-          id="footer-support"
-          class="text-sm font-semibold text-gray-900 dark:text-white uppercase tracking-wider mb-4"
-        >
-          {t('footer.support')}
-        </h3>
-        <ul class="space-y-3" role="list">
-          <li>
-            <a
-              href="#"
-              class="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white text-sm transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900 rounded px-1 py-0.5 -mx-1 -my-0.5"
-            >
-              {t('footer.helpCenter')}
-            </a>
-          </li>
-          <li>
-            <a
-              href="#"
-              class="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white text-sm transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900 rounded px-1 py-0.5 -mx-1 -my-0.5"
-            >
-              {t('footer.privacy')}
-            </a>
-          </li>
-          <li>
-            <a
-              href="#"
-              class="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white text-sm transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900 rounded px-1 py-0.5 -mx-1 -my-0.5"
-            >
-              {t('footer.accessibility')}
-            </a>
-          </li>
-        </ul>
-      </nav>
+          {t('footer.github', lang)}
+        </a>
+      </div>
     </div>
 
+    <!-- Copyright -->
+    <div class="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700 text-center text-sm text-gray-500 dark:text-gray-400">
+      <p>{t('footer.copyright', lang)}</p>
+    </div>
   </div>
 </footer>
+

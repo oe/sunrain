@@ -1,0 +1,282 @@
+# PHQ-9 (Patient Health Questionnaire-9)
+# Depression Screening Tool - Single file with all languages
+
+id: phq-9
+version: "1.0"
+category: depression
+
+meta:
+  title:
+    en: "Patient Health Questionnaire-9 (PHQ-9)"
+    zh-hans: "患者健康问卷-9 (PHQ-9)"
+    es: "Cuestionario de Salud del Paciente-9 (PHQ-9)"
+    ja: "患者健康質問票-9 (PHQ-9)"
+    ko: "환자 건강 설문지-9 (PHQ-9)"
+    hi: "रोगी स्वास्थ्य प्रश्नावली-9 (PHQ-9)"
+    ar: "استبيان صحة المريض-9 (PHQ-9)"
+  
+  description:
+    en: "A brief questionnaire for screening and monitoring depression severity"
+    zh-hans: "用于筛查和监测抑郁症严重程度的简短问卷"
+    es: "Un breve cuestionario para detectar y monitorear la severidad de la depresión"
+    ja: "うつ病の重症度をスクリーニングおよびモニタリングするための簡単な質問票"
+    ko: "우울증 심각도를 선별하고 모니터링하기 위한 간단한 설문지"
+    hi: "अवसाद की गंभीरता की जांच और निगरानी के लिए एक संक्षिप्त प्रश्नावली"
+    ar: "استبيان موجز لفحص ومراقبة شدة الاكتئاب"
+  
+  instruction:
+    en: "Over the last 2 weeks, how often have you been bothered by any of the following problems?"
+    zh-hans: "在过去两周内，以下问题困扰您的频率是？"
+    es: "Durante las últimas 2 semanas, ¿con qué frecuencia le han molestado los siguientes problemas?"
+    ja: "過去2週間、以下の問題にどのくらい悩まされましたか？"
+    ko: "지난 2주 동안 다음 문제들로 얼마나 자주 괴로웠습니까?"
+    hi: "पिछले 2 सप्ताह में, निम्नलिखित समस्याओं से आप कितनी बार परेशान हुए?"
+    ar: "خلال الأسبوعين الماضيين، كم مرة أزعجتك المشاكل التالية؟"
+  
+  estimatedMinutes: 5
+  questionCount: 9
+
+# Shared options for all questions
+options:
+  - value: 0
+    label:
+      en: "Not at all"
+      zh-hans: "完全不会"
+      es: "Para nada"
+      ja: "全くない"
+      ko: "전혀 없음"
+      hi: "बिल्कुल नहीं"
+      ar: "على الإطلاق لا"
+  - value: 1
+    label:
+      en: "Several days"
+      zh-hans: "几天"
+      es: "Varios días"
+      ja: "数日"
+      ko: "며칠"
+      hi: "कई दिन"
+      ar: "عدة أيام"
+  - value: 2
+    label:
+      en: "More than half the days"
+      zh-hans: "一半以上的天数"
+      es: "Más de la mitad de los días"
+      ja: "半分以上"
+      ko: "절반 이상"
+      hi: "आधे से अधिक दिन"
+      ar: "أكثر من نصف الأيام"
+  - value: 3
+    label:
+      en: "Nearly every day"
+      zh-hans: "几乎每天"
+      es: "Casi todos los días"
+      ja: "ほぼ毎日"
+      ko: "거의 매일"
+      hi: "लगभग हर दिन"
+      ar: "كل يوم تقريباً"
+
+questions:
+  - id: q1
+    text:
+      en: "Little interest or pleasure in doing things"
+      zh-hans: "做事时提不起劲或没有兴趣"
+      es: "Poco interés o placer en hacer cosas"
+      ja: "物事に対してほとんど興味がない、または楽しめない"
+      ko: "일을 하는 것에 대한 흥미나 즐거움이 거의 없음"
+      hi: "चीजों को करने में कम रुचि या आनंद"
+      ar: "قلة الاهتمام أو المتعة في القيام بالأشياء"
+
+  - id: q2
+    text:
+      en: "Feeling down, depressed, or hopeless"
+      zh-hans: "感到心情低落、沮丧或绝望"
+      es: "Sentirse desanimado/a, deprimido/a o sin esperanza"
+      ja: "気分が落ち込む、憂うつになる、または絶望的な気持ちになる"
+      ko: "기분이 가라앉거나, 우울하거나, 희망이 없다고 느낌"
+      hi: "उदास, निराश या निराशाजनक महसूस करना"
+      ar: "الشعور بالحزن أو الاكتئاب أو اليأس"
+
+  - id: q3
+    text:
+      en: "Trouble falling or staying asleep, or sleeping too much"
+      zh-hans: "入睡困难、睡不安稳或睡眠过多"
+      es: "Dificultad para dormir o permanecer dormido/a, o dormir demasiado"
+      ja: "寝つきが悪い、途中で目が覚める、または逆に眠りすぎる"
+      ko: "잠들기 어렵거나, 잠을 유지하기 어렵거나, 너무 많이 잠"
+      hi: "सोने या सोते रहने में परेशानी, या बहुत अधिक सोना"
+      ar: "صعوبة في النوم أو البقاء نائماً، أو النوم كثيراً"
+
+  - id: q4
+    text:
+      en: "Feeling tired or having little energy"
+      zh-hans: "感到疲倦或没有精力"
+      es: "Sentirse cansado/a o con poca energía"
+      ja: "疲れた感じがする、または気力がない"
+      ko: "피곤하거나 기운이 없다고 느낌"
+      hi: "थकान महसूस करना या कम ऊर्जा होना"
+      ar: "الشعور بالتعب أو قلة الطاقة"
+
+  - id: q5
+    text:
+      en: "Poor appetite or overeating"
+      zh-hans: "食欲不振或暴饮暴食"
+      es: "Poco apetito o comer en exceso"
+      ja: "食欲がない、または食べ過ぎる"
+      ko: "식욕이 없거나 과식함"
+      hi: "कम भूख या अधिक खाना"
+      ar: "ضعف الشهية أو الإفراط في الأكل"
+
+  - id: q6
+    text:
+      en: "Feeling bad about yourself or that you are a failure or have let yourself or your family down"
+      zh-hans: "觉得自己很糟糕，或觉得自己是个失败者，或让自己或家人失望"
+      es: "Sentirse mal consigo mismo/a o que es un fracaso o que ha decepcionado a su familia"
+      ja: "自分に自信がない、または自分は失敗者だと感じる、あるいは自分や家族を失望させた"
+      ko: "자신에 대해 나쁘게 느끼거나 실패자라고 느끼거나 자신이나 가족을 실망시켰다고 느낌"
+      hi: "अपने बारे में बुरा महसूस करना या विफलता की भावना या खुद या परिवार को निराश करना"
+      ar: "الشعور بالسوء تجاه نفسك أو أنك فاشل أو خذلت نفسك أو عائلتك"
+
+  - id: q7
+    text:
+      en: "Trouble concentrating on things, such as reading the newspaper or watching television"
+      zh-hans: "难以集中注意力，例如阅读报纸或看电视时"
+      es: "Dificultad para concentrarse en cosas como leer el periódico o ver televisión"
+      ja: "新聞を読んだりテレビを見るなど、物事に集中することが難しい"
+      ko: "신문 읽기나 TV 보기 같은 일에 집중하기 어려움"
+      hi: "किसी चीज़ पर ध्यान केंद्रित करने में परेशानी, जैसे अखबार पढ़ना या टीवी देखना"
+      ar: "صعوبة التركيز على الأشياء، مثل قراءة الصحيفة أو مشاهدة التلفزيون"
+
+  - id: q8
+    text:
+      en: "Moving or speaking so slowly that other people could have noticed. Or the opposite - being so fidgety or restless that you have been moving around a lot more than usual"
+      zh-hans: "行动或说话变得很慢，以至于别人可能注意到了。或者相反，变得烦躁不安，比平时动得更多"
+      es: "Moverse o hablar tan lento que otras personas lo han notado. O lo contrario - estar tan inquieto/a que se ha estado moviendo mucho más de lo normal"
+      ja: "他の人が気づくほど動きや話し方が遅い。または逆に、落ち着きがなく、普段よりずっと動き回っている"
+      ko: "다른 사람들이 알아차릴 정도로 움직이거나 말하는 것이 느림. 또는 반대로 안절부절하여 평소보다 훨씬 많이 움직임"
+      hi: "इतनी धीरे चलना या बोलना कि दूसरे लोग नोटिस कर सकते हैं। या इसके विपरीत - इतना बेचैन होना कि सामान्य से बहुत अधिक घूमना"
+      ar: "التحرك أو التحدث ببطء شديد لدرجة أن الآخرين قد لاحظوا ذلك. أو العكس - أن تكون مضطرباً أو قلقاً لدرجة أنك تتحرك أكثر من المعتاد"
+
+  - id: q9
+    text:
+      en: "Thoughts that you would be better off dead, or of hurting yourself"
+      zh-hans: "有不如死掉或伤害自己的念头"
+      es: "Pensamientos de que estaría mejor muerto/a, o de hacerse daño"
+      ja: "死んだ方がましだ、または自分を傷つけたいという考え"
+      ko: "차라리 죽는 것이 낫겠다는 생각, 또는 자해에 대한 생각"
+      hi: "सोचना कि मर जाना बेहतर होगा, या खुद को नुकसान पहुंचाने के विचार"
+      ar: "أفكار بأنك ستكون أفضل حالاً ميتاً، أو بإيذاء نفسك"
+
+scoring:
+  type: sum
+  maxScore: 27
+  
+  interpretations:
+    - range: [0, 4]
+      level: minimal
+      color: "#22c55e"
+      label:
+        en: "Minimal depression"
+        zh-hans: "极少抑郁"
+        es: "Depresión mínima"
+        ja: "最小限のうつ病"
+        ko: "최소한의 우울증"
+        hi: "न्यूनतम अवसाद"
+        ar: "اكتئاب ضئيل"
+      suggestion:
+        en: "Your symptoms suggest minimal depression. Continue monitoring your mental health and maintain healthy habits."
+        zh-hans: "您的症状显示抑郁程度极低。请继续关注心理健康，保持健康习惯。"
+        es: "Sus síntomas sugieren depresión mínima. Continúe monitoreando su salud mental y mantenga hábitos saludables."
+        ja: "症状は最小限のうつ病を示唆しています。引き続きメンタルヘルスを監視し、健康的な習慣を維持してください。"
+        ko: "증상이 최소한의 우울증을 나타냅니다. 정신 건강을 계속 모니터링하고 건강한 습관을 유지하세요."
+        hi: "आपके लक्षण न्यूनतम अवसाद का संकेत देते हैं। अपने मानसिक स्वास्थ्य की निगरानी जारी रखें और स्वस्थ आदतें बनाए रखें।"
+        ar: "تشير أعراضك إلى اكتئاب ضئيل. استمر في مراقبة صحتك النفسية والحفاظ على عادات صحية."
+
+    - range: [5, 9]
+      level: mild
+      color: "#eab308"
+      label:
+        en: "Mild depression"
+        zh-hans: "轻度抑郁"
+        es: "Depresión leve"
+        ja: "軽度のうつ病"
+        ko: "경미한 우울증"
+        hi: "हल्का अवसाद"
+        ar: "اكتئاب خفيف"
+      suggestion:
+        en: "You may be experiencing mild depression. Consider self-help strategies, breathing exercises, or speaking with a counselor."
+        zh-hans: "您可能存在轻度抑郁。建议尝试自助策略、呼吸练习，或与心理咨询师交谈。"
+        es: "Puede estar experimentando depresión leve. Considere estrategias de autoayuda, ejercicios de respiración o hablar con un consejero."
+        ja: "軽度のうつ病を経験している可能性があります。セルフヘルプ戦略、呼吸法、またはカウンセラーとの相談を検討してください。"
+        ko: "경미한 우울증을 경험하고 있을 수 있습니다. 자가 도움 전략, 호흡 운동 또는 상담사와의 상담을 고려해 보세요."
+        hi: "आप हल्के अवसाद का अनुभव कर रहे हो सकते हैं। आत्म-सहायता रणनीतियों, श्वास व्यायाम या परामर्शदाता से बात करने पर विचार करें।"
+        ar: "قد تكون تعاني من اكتئاب خفيف. فكر في استراتيجيات المساعدة الذاتية أو تمارين التنفس أو التحدث مع مستشار."
+
+    - range: [10, 14]
+      level: moderate
+      color: "#f97316"
+      label:
+        en: "Moderate depression"
+        zh-hans: "中度抑郁"
+        es: "Depresión moderada"
+        ja: "中程度のうつ病"
+        ko: "중등도 우울증"
+        hi: "मध्यम अवसाद"
+        ar: "اكتئاب متوسط"
+      suggestion:
+        en: "Your symptoms indicate moderate depression. We recommend consulting with a mental health professional for proper evaluation and guidance."
+        zh-hans: "您的症状表明中度抑郁。建议咨询心理健康专业人士进行适当评估和指导。"
+        es: "Sus síntomas indican depresión moderada. Recomendamos consultar con un profesional de salud mental para una evaluación y orientación adecuadas."
+        ja: "症状は中程度のうつ病を示しています。適切な評価と指導のために、メンタルヘルスの専門家に相談することをお勧めします。"
+        ko: "증상이 중등도 우울증을 나타냅니다. 적절한 평가와 안내를 위해 정신건강 전문가와 상담하시기 바랍니다."
+        hi: "आपके लक्षण मध्यम अवसाद का संकेत देते हैं। उचित मूल्यांकन और मार्गदर्शन के लिए मानसिक स्वास्थ्य पेशेवर से परामर्श करने की सिफारिश करते हैं।"
+        ar: "تشير أعراضك إلى اكتئاب متوسط. نوصي باستشارة أخصائي الصحة النفسية للتقييم والتوجيه المناسب."
+
+    - range: [15, 19]
+      level: moderately_severe
+      color: "#ef4444"
+      label:
+        en: "Moderately severe depression"
+        zh-hans: "中重度抑郁"
+        es: "Depresión moderadamente severa"
+        ja: "中等度から重度のうつ病"
+        ko: "중증도 우울증"
+        hi: "मध्यम गंभीर अवसाद"
+        ar: "اكتئاب شديد متوسط"
+      suggestion:
+        en: "Your symptoms suggest moderately severe depression. Please seek professional mental health support as soon as possible."
+        zh-hans: "您的症状表明中重度抑郁。请尽快寻求专业心理健康支持。"
+        es: "Sus síntomas sugieren depresión moderadamente severa. Por favor busque apoyo profesional de salud mental lo antes posible."
+        ja: "症状は中等度から重度のうつ病を示唆しています。できるだけ早く専門的なメンタルヘルスサポートを求めてください。"
+        ko: "증상이 중증도 우울증을 나타냅니다. 가능한 한 빨리 전문적인 정신건강 지원을 받으시기 바랍니다."
+        hi: "आपके लक्षण मध्यम गंभीर अवसाद का संकेत देते हैं। कृपया जल्द से जल्द पेशेवर मानसिक स्वास्थ्य सहायता लें।"
+        ar: "تشير أعراضك إلى اكتئاب شديد متوسط. يرجى طلب دعم الصحة النفسية المهنية في أقرب وقت ممكن."
+
+    - range: [20, 27]
+      level: severe
+      color: "#dc2626"
+      label:
+        en: "Severe depression"
+        zh-hans: "重度抑郁"
+        es: "Depresión severa"
+        ja: "重度のうつ病"
+        ko: "심한 우울증"
+        hi: "गंभीर अवसाद"
+        ar: "اكتئاب شديد"
+      suggestion:
+        en: "Your symptoms indicate severe depression. Please contact a mental health professional or crisis hotline immediately. You don't have to face this alone."
+        zh-hans: "您的症状表明重度抑郁。请立即联系心理健康专业人士或危机热线。您不必独自面对。"
+        es: "Sus síntomas indican depresión severa. Por favor contacte a un profesional de salud mental o línea de crisis inmediatamente. No tiene que enfrentar esto solo/a."
+        ja: "症状は重度のうつ病を示しています。すぐにメンタルヘルスの専門家または危機対応ホットラインに連絡してください。一人で向き合う必要はありません。"
+        ko: "증상이 심한 우울증을 나타냅니다. 즉시 정신건강 전문가나 위기 상담 전화에 연락하세요. 혼자 감당할 필요가 없습니다."
+        hi: "आपके लक्षण गंभीर अवसाद का संकेत देते हैं। कृपया तुरंत मानसिक स्वास्थ्य पेशेवर या संकट हेल्पलाइन से संपर्क करें। आपको इसका अकेले सामना नहीं करना है।"
+        ar: "تشير أعراضك إلى اكتئاب شديد. يرجى الاتصال بأخصائي الصحة النفسية أو خط الأزمات فوراً. لا يجب أن تواجه هذا بمفردك."
+
+disclaimer:
+  en: "This questionnaire is for screening purposes only and does not constitute a medical diagnosis. If you feel distressed or need help, please consult a professional."
+  zh-hans: "本问卷仅供筛查使用，不构成医学诊断。如果您感到困扰或需要帮助，请咨询专业人士。"
+  es: "Este cuestionario es solo para fines de detección y no constituye un diagnóstico médico. Si se siente angustiado/a o necesita ayuda, consulte a un profesional."
+  ja: "この質問票はスクリーニング目的のみであり、医学的診断を構成するものではありません。苦痛を感じたり、助けが必要な場合は、専門家にご相談ください。"
+  ko: "이 설문지는 선별 목적으로만 사용되며 의학적 진단을 구성하지 않습니다. 고통스럽거나 도움이 필요하면 전문가와 상담하세요."
+  hi: "यह प्रश्नावली केवल स्क्रीनिंग उद्देश्यों के लिए है और यह चिकित्सा निदान नहीं है। यदि आप परेशान हैं या मदद की जरूरत है, तो कृपया किसी पेशेवर से परामर्श करें।"
+  ar: "هذا الاستبيان لأغراض الفحص فقط ولا يشكل تشخيصاً طبياً. إذا كنت تشعر بالضيق أو تحتاج إلى مساعدة، يرجى استشارة متخصص."
+

@@ -1,0 +1,215 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { t, getLanguageFromPath, type Language } from '@/lib/i18n';
+
+const lang = getLanguageFromPath(Astro.url.pathname) as Language;
+---
+
+<BaseLayout title={t('breathing.title', lang)}>
+  <div class="min-h-[calc(100vh-4rem)] bg-gradient-to-b from-teal-50 to-cyan-50 dark:from-gray-900 dark:to-gray-800 flex items-center justify-center p-4">
+    <div class="max-w-lg w-full text-center">
+      <!-- Header -->
+      <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+        {t('breathing.title', lang)}
+      </h1>
+      <p class="text-gray-600 dark:text-gray-300 mb-8">
+        {t('breathing.subtitle', lang)}
+      </p>
+
+      <!-- Breathing Circle -->
+      <div class="relative mb-8">
+        <div id="breathing-circle" class="w-64 h-64 mx-auto rounded-full bg-teal-400/30 dark:bg-teal-500/20 flex items-center justify-center transition-transform duration-1000 ease-in-out">
+          <div class="w-48 h-48 rounded-full bg-teal-400/50 dark:bg-teal-500/30 flex items-center justify-center">
+            <div class="w-32 h-32 rounded-full bg-teal-500 dark:bg-teal-400 flex items-center justify-center">
+              <span id="breathing-text" class="text-white text-xl font-medium">
+                {t('breathing.start', lang)}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cycles Counter -->
+      <p class="text-gray-600 dark:text-gray-400 mb-6">
+        {t('breathing.cycles', lang)}: <span id="cycles-count">0</span>
+      </p>
+
+      <!-- Controls -->
+      <div class="flex justify-center gap-4">
+        <button
+          id="start-btn"
+          class="px-8 py-3 bg-teal-600 hover:bg-teal-700 text-white font-medium rounded-full transition-colors"
+        >
+          {t('breathing.start', lang)}
+        </button>
+        <button
+          id="pause-btn"
+          class="hidden px-8 py-3 bg-amber-500 hover:bg-amber-600 text-white font-medium rounded-full transition-colors"
+        >
+          {t('breathing.pause', lang)}
+        </button>
+        <button
+          id="reset-btn"
+          class="px-8 py-3 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 font-medium rounded-full hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
+        >
+          {t('breathing.reset', lang)}
+        </button>
+      </div>
+
+      <!-- Settings -->
+      <div class="mt-12 bg-white/50 dark:bg-gray-800/50 rounded-xl p-6">
+        <h3 class="font-medium text-gray-900 dark:text-white mb-4">
+          {t('breathing.settings.title', lang)}
+        </h3>
+        <div class="grid grid-cols-3 gap-4 text-sm">
+          <div>
+            <label class="block text-gray-600 dark:text-gray-400 mb-1">
+              {t('breathing.settings.inhaleTime', lang)}
+            </label>
+            <input
+              type="number"
+              id="inhale-time"
+              value="4"
+              min="1"
+              max="10"
+              class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-center"
+            />
+          </div>
+          <div>
+            <label class="block text-gray-600 dark:text-gray-400 mb-1">
+              {t('breathing.settings.holdTime', lang)}
+            </label>
+            <input
+              type="number"
+              id="hold-time"
+              value="4"
+              min="0"
+              max="10"
+              class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-center"
+            />
+          </div>
+          <div>
+            <label class="block text-gray-600 dark:text-gray-400 mb-1">
+              {t('breathing.settings.exhaleTime', lang)}
+            </label>
+            <input
+              type="number"
+              id="exhale-time"
+              value="4"
+              min="1"
+              max="10"
+              class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-center"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<script is:inline define:vars={{ lang }}>
+  // Translations
+  const translations = {
+    en: { inhale: 'Inhale', hold: 'Hold', exhale: 'Exhale', start: 'Start' },
+    'zh-hans': { inhale: '吸气', hold: '屏息', exhale: '呼气', start: '开始' },
+    'zh-hant': { inhale: '吸氣', hold: '閉氣', exhale: '吐氣', start: '開始' },
+    es: { inhale: 'Inhalar', hold: 'Mantener', exhale: 'Exhalar', start: 'Iniciar' },
+    ja: { inhale: '吸う', hold: '止める', exhale: '吐く', start: '開始' },
+    ko: { inhale: '들이쉬기', hold: '멈추기', exhale: '내쉬기', start: '시작' },
+    hi: { inhale: 'सांस लें', hold: 'रोकें', exhale: 'छोड़ें', start: 'शुरू' },
+    ar: { inhale: 'شهيق', hold: 'احبس', exhale: 'زفير', start: 'ابدأ' },
+  };
+  const t = translations[lang] || translations.en;
+  
+  // Elements
+  const circle = document.getElementById('breathing-circle');
+  const breathingText = document.getElementById('breathing-text');
+  const cyclesCount = document.getElementById('cycles-count');
+  const startBtn = document.getElementById('start-btn');
+  const pauseBtn = document.getElementById('pause-btn');
+  const resetBtn = document.getElementById('reset-btn');
+  const inhaleInput = document.getElementById('inhale-time');
+  const holdInput = document.getElementById('hold-time');
+  const exhaleInput = document.getElementById('exhale-time');
+  
+  // State
+  let isRunning = false;
+  let cycles = 0;
+  let currentPhase = 'ready';
+  let timeoutId = null;
+  
+  function getSettings() {
+    return {
+      inhale: parseInt(inhaleInput?.value || '4') * 1000,
+      hold: parseInt(holdInput?.value || '4') * 1000,
+      exhale: parseInt(exhaleInput?.value || '4') * 1000,
+    };
+  }
+  
+  function updateCircle(scale, text) {
+    if (circle) circle.style.transform = `scale(${scale})`;
+    if (breathingText) breathingText.textContent = text;
+  }
+  
+  function breathingCycle() {
+    if (!isRunning) return;
+    
+    const { inhale, hold, exhale } = getSettings();
+    
+    // Inhale
+    currentPhase = 'inhale';
+    updateCircle(1.3, t.inhale);
+    if (circle) circle.style.transitionDuration = `${inhale}ms`;
+    
+    timeoutId = setTimeout(() => {
+      if (!isRunning) return;
+      
+      // Hold
+      currentPhase = 'hold';
+      updateCircle(1.3, t.hold);
+      
+      timeoutId = setTimeout(() => {
+        if (!isRunning) return;
+        
+        // Exhale
+        currentPhase = 'exhale';
+        updateCircle(1, t.exhale);
+        if (circle) circle.style.transitionDuration = `${exhale}ms`;
+        
+        timeoutId = setTimeout(() => {
+          if (!isRunning) return;
+          cycles++;
+          if (cyclesCount) cyclesCount.textContent = String(cycles);
+          breathingCycle();
+        }, exhale);
+      }, hold);
+    }, inhale);
+  }
+  
+  function start() {
+    isRunning = true;
+    startBtn?.classList.add('hidden');
+    pauseBtn?.classList.remove('hidden');
+    breathingCycle();
+  }
+  
+  function pause() {
+    isRunning = false;
+    if (timeoutId) clearTimeout(timeoutId);
+    startBtn?.classList.remove('hidden');
+    pauseBtn?.classList.add('hidden');
+  }
+  
+  function reset() {
+    pause();
+    cycles = 0;
+    if (cyclesCount) cyclesCount.textContent = '0';
+    updateCircle(1, t.start);
+    if (circle) circle.style.transitionDuration = '300ms';
+  }
+  
+  startBtn?.addEventListener('click', start);
+  pauseBtn?.addEventListener('click', pause);
+  resetBtn?.addEventListener('click', reset);
+</script>
+

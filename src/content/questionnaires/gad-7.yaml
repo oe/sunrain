@@ -1,0 +1,242 @@
+# GAD-7 (Generalized Anxiety Disorder-7)
+# Anxiety Screening Tool - Single file with all languages
+
+id: gad-7
+version: "1.0"
+category: anxiety
+
+meta:
+  title:
+    en: "Generalized Anxiety Disorder-7 (GAD-7)"
+    zh-hans: "广泛性焦虑障碍量表-7 (GAD-7)"
+    es: "Trastorno de Ansiedad Generalizada-7 (GAD-7)"
+    ja: "全般性不安障害-7 (GAD-7)"
+    ko: "범불안장애-7 (GAD-7)"
+    hi: "सामान्यीकृत चिंता विकार-7 (GAD-7)"
+    ar: "اضطراب القلق العام-7 (GAD-7)"
+  
+  description:
+    en: "A brief questionnaire for screening and monitoring anxiety severity"
+    zh-hans: "用于筛查和监测焦虑严重程度的简短问卷"
+    es: "Un breve cuestionario para detectar y monitorear la severidad de la ansiedad"
+    ja: "不安の重症度をスクリーニングおよびモニタリングするための簡単な質問票"
+    ko: "불안 심각도를 선별하고 모니터링하기 위한 간단한 설문지"
+    hi: "चिंता की गंभीरता की जांच और निगरानी के लिए एक संक्षिप्त प्रश्नावली"
+    ar: "استبيان موجز لفحص ومراقبة شدة القلق"
+  
+  instruction:
+    en: "Over the last 2 weeks, how often have you been bothered by the following problems?"
+    zh-hans: "在过去两周内，以下问题困扰您的频率是？"
+    es: "Durante las últimas 2 semanas, ¿con qué frecuencia le han molestado los siguientes problemas?"
+    ja: "過去2週間、以下の問題にどのくらい悩まされましたか？"
+    ko: "지난 2주 동안 다음 문제들로 얼마나 자주 괴로웠습니까?"
+    hi: "पिछले 2 सप्ताह में, निम्नलिखित समस्याओं से आप कितनी बार परेशान हुए?"
+    ar: "خلال الأسبوعين الماضيين، كم مرة أزعجتك المشاكل التالية؟"
+  
+  estimatedMinutes: 3
+  questionCount: 7
+
+# Shared options for all questions
+options:
+  - value: 0
+    label:
+      en: "Not at all"
+      zh-hans: "完全不会"
+      es: "Para nada"
+      ja: "全くない"
+      ko: "전혀 없음"
+      hi: "बिल्कुल नहीं"
+      ar: "على الإطلاق لا"
+  - value: 1
+    label:
+      en: "Several days"
+      zh-hans: "几天"
+      es: "Varios días"
+      ja: "数日"
+      ko: "며칠"
+      hi: "कई दिन"
+      ar: "عدة أيام"
+  - value: 2
+    label:
+      en: "More than half the days"
+      zh-hans: "一半以上的天数"
+      es: "Más de la mitad de los días"
+      ja: "半分以上"
+      ko: "절반 이상"
+      hi: "आधे से अधिक दिन"
+      ar: "أكثر من نصف الأيام"
+  - value: 3
+    label:
+      en: "Nearly every day"
+      zh-hans: "几乎每天"
+      es: "Casi todos los días"
+      ja: "ほぼ毎日"
+      ko: "거의 매일"
+      hi: "लगभग हर दिन"
+      ar: "كل يوم تقريباً"
+
+questions:
+  - id: q1
+    text:
+      en: "Feeling nervous, anxious, or on edge"
+      zh-hans: "感到紧张、焦虑或烦躁"
+      es: "Sentirse nervioso/a, ansioso/a o con los nervios de punta"
+      ja: "緊張したり、不安を感じたり、落ち着かない"
+      ko: "긴장하거나, 불안하거나, 초조함"
+      hi: "घबराहट, चिंता या बेचैनी महसूस करना"
+      ar: "الشعور بالتوتر أو القلق أو الانزعاج"
+
+  - id: q2
+    text:
+      en: "Not being able to stop or control worrying"
+      zh-hans: "无法停止或控制担忧"
+      es: "No poder dejar de preocuparse o controlar la preocupación"
+      ja: "心配するのを止められない、またはコントロールできない"
+      ko: "걱정을 멈추거나 조절할 수 없음"
+      hi: "चिंता को रोकने या नियंत्रित करने में असमर्थ"
+      ar: "عدم القدرة على التوقف عن القلق أو السيطرة عليه"
+
+  - id: q3
+    text:
+      en: "Worrying too much about different things"
+      zh-hans: "对各种事情过分担忧"
+      es: "Preocuparse demasiado por diferentes cosas"
+      ja: "いろいろなことを心配しすぎる"
+      ko: "여러 가지에 대해 너무 많이 걱정함"
+      hi: "विभिन्न चीजों के बारे में बहुत अधिक चिंता करना"
+      ar: "القلق الزائد بشأن أشياء مختلفة"
+
+  - id: q4
+    text:
+      en: "Trouble relaxing"
+      zh-hans: "难以放松"
+      es: "Dificultad para relajarse"
+      ja: "リラックスすることが難しい"
+      ko: "긴장을 풀기 어려움"
+      hi: "आराम करने में परेशानी"
+      ar: "صعوبة في الاسترخاء"
+
+  - id: q5
+    text:
+      en: "Being so restless that it's hard to sit still"
+      zh-hans: "烦躁不安以至于难以静坐"
+      es: "Estar tan inquieto/a que es difícil quedarse quieto/a"
+      ja: "落ち着きがなく、じっとしていられない"
+      ko: "안절부절해서 가만히 앉아 있기 어려움"
+      hi: "इतना बेचैन होना कि शांत बैठना मुश्किल हो"
+      ar: "التململ الشديد لدرجة صعوبة الجلوس ساكناً"
+
+  - id: q6
+    text:
+      en: "Becoming easily annoyed or irritable"
+      zh-hans: "容易生气或烦躁"
+      es: "Molestarse o irritarse fácilmente"
+      ja: "簡単にイライラしたり、怒りっぽくなる"
+      ko: "쉽게 짜증이 나거나 화가 남"
+      hi: "आसानी से नाराज़ या चिड़चिड़ा होना"
+      ar: "الانزعاج أو الغضب بسهولة"
+
+  - id: q7
+    text:
+      en: "Feeling afraid, as if something awful might happen"
+      zh-hans: "感到害怕，好像有什么可怕的事情要发生"
+      es: "Sentir miedo, como si algo terrible pudiera pasar"
+      ja: "何か恐ろしいことが起こりそうで怖い"
+      ko: "끔찍한 일이 일어날 것 같은 두려움"
+      hi: "डर लगना, जैसे कुछ भयानक होने वाला हो"
+      ar: "الشعور بالخوف، كأن شيئاً فظيعاً قد يحدث"
+
+scoring:
+  type: sum
+  maxScore: 21
+  
+  interpretations:
+    - range: [0, 4]
+      level: minimal
+      color: "#22c55e"
+      label:
+        en: "Minimal anxiety"
+        zh-hans: "极少焦虑"
+        es: "Ansiedad mínima"
+        ja: "最小限の不安"
+        ko: "최소한의 불안"
+        hi: "न्यूनतम चिंता"
+        ar: "قلق ضئيل"
+      suggestion:
+        en: "Your symptoms suggest minimal anxiety. Continue maintaining healthy habits and stress management techniques."
+        zh-hans: "您的症状显示焦虑程度极低。请继续保持健康习惯和压力管理技巧。"
+        es: "Sus síntomas sugieren ansiedad mínima. Continúe manteniendo hábitos saludables y técnicas de manejo del estrés."
+        ja: "症状は最小限の不安を示唆しています。健康的な習慣とストレス管理テクニックを続けてください。"
+        ko: "증상이 최소한의 불안을 나타냅니다. 건강한 습관과 스트레스 관리 기술을 계속 유지하세요."
+        hi: "आपके लक्षण न्यूनतम चिंता का संकेत देते हैं। स्वस्थ आदतों और तनाव प्रबंधन तकनीकों को बनाए रखें।"
+        ar: "تشير أعراضك إلى قلق ضئيل. استمر في الحفاظ على العادات الصحية وتقنيات إدارة التوتر."
+
+    - range: [5, 9]
+      level: mild
+      color: "#eab308"
+      label:
+        en: "Mild anxiety"
+        zh-hans: "轻度焦虑"
+        es: "Ansiedad leve"
+        ja: "軽度の不安"
+        ko: "경미한 불안"
+        hi: "हल्की चिंता"
+        ar: "قلق خفيف"
+      suggestion:
+        en: "You may be experiencing mild anxiety. Try breathing exercises and relaxation techniques. Consider talking to someone if symptoms persist."
+        zh-hans: "您可能存在轻度焦虑。尝试呼吸练习和放松技巧。如果症状持续，考虑与他人交谈。"
+        es: "Puede estar experimentando ansiedad leve. Pruebe ejercicios de respiración y técnicas de relajación. Considere hablar con alguien si los síntomas persisten."
+        ja: "軽度の不安を経験している可能性があります。呼吸法やリラクゼーションテクニックを試してみてください。症状が続く場合は、誰かに相談することを検討してください。"
+        ko: "경미한 불안을 경험하고 있을 수 있습니다. 호흡 운동과 이완 기법을 시도해 보세요. 증상이 지속되면 누군가와 이야기하는 것을 고려해 보세요."
+        hi: "आप हल्की चिंता का अनुभव कर रहे हो सकते हैं। श्वास व्यायाम और विश्राम तकनीकों का प्रयास करें। यदि लक्षण बने रहें तो किसी से बात करने पर विचार करें।"
+        ar: "قد تكون تعاني من قلق خفيف. جرب تمارين التنفس وتقنيات الاسترخاء. فكر في التحدث مع شخص ما إذا استمرت الأعراض."
+
+    - range: [10, 14]
+      level: moderate
+      color: "#f97316"
+      label:
+        en: "Moderate anxiety"
+        zh-hans: "中度焦虑"
+        es: "Ansiedad moderada"
+        ja: "中程度の不安"
+        ko: "중등도 불안"
+        hi: "मध्यम चिंता"
+        ar: "قلق متوسط"
+      suggestion:
+        en: "Your symptoms indicate moderate anxiety. We recommend consulting with a mental health professional for proper evaluation and guidance."
+        zh-hans: "您的症状表明中度焦虑。建议咨询心理健康专业人士进行适当评估和指导。"
+        es: "Sus síntomas indican ansiedad moderada. Recomendamos consultar con un profesional de salud mental para una evaluación y orientación adecuadas."
+        ja: "症状は中程度の不安を示しています。適切な評価と指導のために、メンタルヘルスの専門家に相談することをお勧めします。"
+        ko: "증상이 중등도 불안을 나타냅니다. 적절한 평가와 안내를 위해 정신건강 전문가와 상담하시기 바랍니다."
+        hi: "आपके लक्षण मध्यम चिंता का संकेत देते हैं। उचित मूल्यांकन और मार्गदर्शन के लिए मानसिक स्वास्थ्य पेशेवर से परामर्श करने की सिफारिश करते हैं।"
+        ar: "تشير أعراضك إلى قلق متوسط. نوصي باستشارة أخصائي الصحة النفسية للتقييم والتوجيه المناسب."
+
+    - range: [15, 21]
+      level: severe
+      color: "#ef4444"
+      label:
+        en: "Severe anxiety"
+        zh-hans: "重度焦虑"
+        es: "Ansiedad severa"
+        ja: "重度の不安"
+        ko: "심한 불안"
+        hi: "गंभीर चिंता"
+        ar: "قلق شديد"
+      suggestion:
+        en: "Your symptoms indicate severe anxiety. Please seek professional mental health support as soon as possible. You don't have to face this alone."
+        zh-hans: "您的症状表明重度焦虑。请尽快寻求专业心理健康支持。您不必独自面对。"
+        es: "Sus síntomas indican ansiedad severa. Por favor busque apoyo profesional de salud mental lo antes posible. No tiene que enfrentar esto solo/a."
+        ja: "症状は重度の不安を示しています。できるだけ早く専門的なメンタルヘルスサポートを求めてください。一人で向き合う必要はありません。"
+        ko: "증상이 심한 불안을 나타냅니다. 가능한 한 빨리 전문적인 정신건강 지원을 받으시기 바랍니다. 혼자 감당할 필요가 없습니다."
+        hi: "आपके लक्षण गंभीर चिंता का संकेत देते हैं। कृपया जल्द से जल्द पेशेवर मानसिक स्वास्थ्य सहायता लें। आपको इसका अकेले सामना नहीं करना है।"
+        ar: "تشير أعراضك إلى قلق شديد. يرجى طلب دعم الصحة النفسية المهنية في أقرب وقت ممكن. لا يجب أن تواجه هذا بمفردك."
+
+disclaimer:
+  en: "This questionnaire is for screening purposes only and does not constitute a medical diagnosis. If you feel distressed or need help, please consult a professional."
+  zh-hans: "本问卷仅供筛查使用，不构成医学诊断。如果您感到困扰或需要帮助，请咨询专业人士。"
+  es: "Este cuestionario es solo para fines de detección y no constituye un diagnóstico médico. Si se siente angustiado/a o necesita ayuda, consulte a un profesional."
+  ja: "この質問票はスクリーニング目的のみであり、医学的診断を構成するものではありません。苦痛を感じたり、助けが必要な場合は、専門家にご相談ください。"
+  ko: "이 설문지는 선별 목적으로만 사용되며 의학적 진단을 구성하지 않습니다. 고통스럽거나 도움이 필요하면 전문가와 상담하세요."
+  hi: "यह प्रश्नावली केवल स्क्रीनिंग उद्देश्यों के लिए है और यह चिकित्सा निदान नहीं है। यदि आप परेशान हैं या मदद की जरूरत है, तो कृपया किसी पेशेवर से परामर्श करें।"
+  ar: "هذا الاستبيان لأغراض الفحص فقط ولا يشكل تشخيصاً طبياً. إذا كنت تشعر بالضيق أو تحتاج إلى مساعدة، يرجى استشارة متخصص."
+

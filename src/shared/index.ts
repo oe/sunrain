@@ -1,5 +1,0 @@
-// Export all shared types and utilities
-export * from './types';
-export * from './i18n';
-
-// Cache test comment

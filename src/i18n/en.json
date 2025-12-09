@@ -1,0 +1,169 @@
+{
+  "site": {
+    "name": "Sunrain",
+    "tagline": "Where the sun meets the rain",
+    "description": "Mental health resources and self-help tools for anxiety, depression, and emotional well-being."
+  },
+  "nav": {
+    "home": "Home",
+    "assessment": "Assessment",
+    "breathing": "Breathing",
+    "crisis": "Crisis Help",
+    "about": "About"
+  },
+  "home": {
+    "hero": {
+      "title": "Your Mental Health Journey Starts Here",
+      "subtitle": "Discover tools, resources, and guidance for better mental health",
+      "description": "A warm, safe space for your mind. 🤗",
+      "startAssessment": "Start Assessment",
+      "tryBreathing": "Try Breathing Exercise"
+    },
+    "features": {
+      "assessment": {
+        "title": "Self-Assessment",
+        "description": "Understand your mental health with scientifically validated questionnaires",
+        "button": "Start Assessment →"
+      },
+      "breathing": {
+        "title": "Breathing Exercise",
+        "description": "Calm your mind with guided breathing exercises",
+        "button": "Start Breathing →"
+      },
+      "crisis": {
+        "title": "Crisis Support",
+        "description": "24/7 crisis hotlines and mental health resources worldwide",
+        "button": "Get Help →"
+      }
+    }
+  },
+  "assessment": {
+    "title": "Mental Health Assessment",
+    "subtitle": "Understand your mental health status through scientific assessment tools",
+    "startButton": "Start Assessment",
+    "minutes": "minutes",
+    "questions": "questions",
+    "history": {
+      "title": "Assessment History",
+      "empty": "No assessment history yet",
+      "clearAll": "Clear All",
+      "confirmClear": "Are you sure you want to clear all history?"
+    },
+    "taking": {
+      "question": "Question",
+      "of": "of",
+      "next": "Next",
+      "previous": "Previous",
+      "submit": "Submit",
+      "progress": "Progress"
+    },
+    "results": {
+      "title": "Your Results",
+      "score": "Score",
+      "level": "Level",
+      "suggestion": "Suggestion",
+      "retake": "Retake Assessment",
+      "viewHistory": "View History",
+      "disclaimer": "This assessment is for screening purposes only and does not constitute a medical diagnosis."
+    },
+    "disclaimer": {
+      "title": "Important Notice",
+      "message": "These assessments are for self-understanding only and cannot replace professional mental health diagnosis. If you feel distressed, please consult a professional."
+    }
+  },
+  "breathing": {
+    "title": "Breathing Exercise",
+    "subtitle": "Take a moment to calm your mind with guided breathing",
+    "instruction": "Follow the circle and breathe",
+    "inhale": "Inhale",
+    "hold": "Hold",
+    "exhale": "Exhale",
+    "start": "Start",
+    "pause": "Pause",
+    "reset": "Reset",
+    "cycles": "Cycles completed",
+    "settings": {
+      "title": "Settings",
+      "inhaleTime": "Inhale (seconds)",
+      "holdTime": "Hold (seconds)",
+      "exhaleTime": "Exhale (seconds)"
+    }
+  },
+  "crisis": {
+    "title": "Crisis Hotlines",
+    "subtitle": "You are not alone. Help is available 24/7.",
+    "description": "Find mental health crisis support hotlines in your country or region.",
+    "emergency": {
+      "title": "In Immediate Danger?",
+      "message": "If you or someone else is in immediate danger, please call emergency services (911, 999, 110, etc.) immediately."
+    },
+    "search": "Search country or hotline...",
+    "filter": "All Countries",
+    "phone": "Phone",
+    "available": "Available",
+    "languages": "Languages",
+    "website": "Visit Website"
+  },
+  "about": {
+    "title": "About Sunrain",
+    "mission": {
+      "title": "Our Mission",
+      "description": "Sunrain is an open-source mental health platform dedicated to providing accessible, anonymous mental health resources for everyone, everywhere."
+    },
+    "values": {
+      "privacy": {
+        "title": "Privacy First",
+        "description": "All data stays on your device. We don't track or collect any personal information."
+      },
+      "accessibility": {
+        "title": "Accessible",
+        "description": "Free, open-source, and available in multiple languages."
+      },
+      "evidence": {
+        "title": "Evidence-Based",
+        "description": "Our assessments use scientifically validated questionnaires."
+      }
+    },
+    "disclaimer": {
+      "title": "Disclaimer",
+      "message": "Sunrain is not a substitute for professional mental health care. If you're experiencing a mental health crisis, please contact a mental health professional or crisis hotline."
+    },
+    "opensource": {
+      "title": "Open Source",
+      "description": "Sunrain is open source and welcomes contributions.",
+      "github": "View on GitHub"
+    }
+  },
+  "footer": {
+    "copyright": "© 2025 Sunrain. All rights reserved.",
+    "mission": "Spreading hope and healing.",
+    "links": "Links",
+    "privacy": "Privacy",
+    "github": "GitHub"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Something went wrong",
+    "retry": "Try Again",
+    "back": "Back",
+    "close": "Close",
+    "save": "Save",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "language": "Language",
+    "theme": {
+      "toggle": "Toggle theme",
+      "light": "Light",
+      "dark": "Dark",
+      "system": "System"
+    }
+  },
+  "errors": {
+    "notFound": {
+      "title": "Page Not Found",
+      "message": "The page you're looking for doesn't exist.",
+      "backHome": "Back to Home"
+    }
+  }
+}
+

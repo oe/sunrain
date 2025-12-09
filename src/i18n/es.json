@@ -1,0 +1,169 @@
+{
+  "site": {
+    "name": "Sunrain",
+    "tagline": "Donde el sol encuentra la lluvia",
+    "description": "Recursos de salud mental y herramientas de autoayuda para ansiedad, depresión y bienestar emocional."
+  },
+  "nav": {
+    "home": "Inicio",
+    "assessment": "Evaluación",
+    "breathing": "Respiración",
+    "crisis": "Ayuda en Crisis",
+    "about": "Acerca de"
+  },
+  "home": {
+    "hero": {
+      "title": "Tu Viaje de Salud Mental Comienza Aquí",
+      "subtitle": "Descubre herramientas, recursos y orientación para una mejor salud mental",
+      "description": "Un espacio cálido y seguro para tu mente. 🤗",
+      "startAssessment": "Iniciar Evaluación",
+      "tryBreathing": "Probar Ejercicio de Respiración"
+    },
+    "features": {
+      "assessment": {
+        "title": "Autoevaluación",
+        "description": "Comprende tu salud mental con cuestionarios científicamente validados",
+        "button": "Iniciar Evaluación →"
+      },
+      "breathing": {
+        "title": "Ejercicio de Respiración",
+        "description": "Calma tu mente con ejercicios de respiración guiados",
+        "button": "Comenzar →"
+      },
+      "crisis": {
+        "title": "Apoyo en Crisis",
+        "description": "Líneas de crisis 24/7 y recursos de salud mental en todo el mundo",
+        "button": "Obtener Ayuda →"
+      }
+    }
+  },
+  "assessment": {
+    "title": "Evaluación de Salud Mental",
+    "subtitle": "Comprende tu estado de salud mental a través de herramientas de evaluación científicas",
+    "startButton": "Iniciar Evaluación",
+    "minutes": "minutos",
+    "questions": "preguntas",
+    "history": {
+      "title": "Historial de Evaluaciones",
+      "empty": "Sin historial de evaluaciones",
+      "clearAll": "Borrar Todo",
+      "confirmClear": "¿Estás seguro de querer borrar todo el historial?"
+    },
+    "taking": {
+      "question": "Pregunta",
+      "of": "de",
+      "next": "Siguiente",
+      "previous": "Anterior",
+      "submit": "Enviar",
+      "progress": "Progreso"
+    },
+    "results": {
+      "title": "Tus Resultados",
+      "score": "Puntuación",
+      "level": "Nivel",
+      "suggestion": "Sugerencia",
+      "retake": "Repetir Evaluación",
+      "viewHistory": "Ver Historial",
+      "disclaimer": "Esta evaluación es solo para fines de detección y no constituye un diagnóstico médico."
+    },
+    "disclaimer": {
+      "title": "Aviso Importante",
+      "message": "Estas evaluaciones son solo para autoconocimiento y no pueden reemplazar un diagnóstico profesional de salud mental."
+    }
+  },
+  "breathing": {
+    "title": "Ejercicio de Respiración",
+    "subtitle": "Tómate un momento para calmar tu mente con respiración guiada",
+    "instruction": "Sigue el círculo y respira",
+    "inhale": "Inhalar",
+    "hold": "Mantener",
+    "exhale": "Exhalar",
+    "start": "Iniciar",
+    "pause": "Pausar",
+    "reset": "Reiniciar",
+    "cycles": "Ciclos completados",
+    "settings": {
+      "title": "Configuración",
+      "inhaleTime": "Inhalar (segundos)",
+      "holdTime": "Mantener (segundos)",
+      "exhaleTime": "Exhalar (segundos)"
+    }
+  },
+  "crisis": {
+    "title": "Líneas de Crisis",
+    "subtitle": "No estás solo/a. La ayuda está disponible 24/7.",
+    "description": "Encuentra líneas de apoyo de crisis de salud mental en tu país o región.",
+    "emergency": {
+      "title": "¿En Peligro Inmediato?",
+      "message": "Si tú o alguien más está en peligro inmediato, llama a los servicios de emergencia inmediatamente."
+    },
+    "search": "Buscar país o línea...",
+    "filter": "Todos los Países",
+    "phone": "Teléfono",
+    "available": "Disponible",
+    "languages": "Idiomas",
+    "website": "Visitar Sitio Web"
+  },
+  "about": {
+    "title": "Acerca de Sunrain",
+    "mission": {
+      "title": "Nuestra Misión",
+      "description": "Sunrain es una plataforma de salud mental de código abierto dedicada a proporcionar recursos de salud mental accesibles y anónimos para todos."
+    },
+    "values": {
+      "privacy": {
+        "title": "Privacidad Primero",
+        "description": "Todos los datos permanecen en tu dispositivo. No rastreamos ni recopilamos información personal."
+      },
+      "accessibility": {
+        "title": "Accesible",
+        "description": "Gratuito, de código abierto y disponible en múltiples idiomas."
+      },
+      "evidence": {
+        "title": "Basado en Evidencia",
+        "description": "Nuestras evaluaciones utilizan cuestionarios científicamente validados."
+      }
+    },
+    "disclaimer": {
+      "title": "Descargo de Responsabilidad",
+      "message": "Sunrain no sustituye la atención profesional de salud mental. Si estás experimentando una crisis, contacta a un profesional o línea de crisis."
+    },
+    "opensource": {
+      "title": "Código Abierto",
+      "description": "Sunrain es de código abierto y da la bienvenida a contribuciones.",
+      "github": "Ver en GitHub"
+    }
+  },
+  "footer": {
+    "copyright": "© 2025 Sunrain. Todos los derechos reservados.",
+    "mission": "Difundiendo esperanza y sanación.",
+    "links": "Enlaces",
+    "privacy": "Privacidad",
+    "github": "GitHub"
+  },
+  "common": {
+    "loading": "Cargando...",
+    "error": "Algo salió mal",
+    "retry": "Intentar de Nuevo",
+    "back": "Volver",
+    "close": "Cerrar",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "confirm": "Confirmar",
+    "language": "Idioma",
+    "theme": {
+      "toggle": "Cambiar tema",
+      "light": "Claro",
+      "dark": "Oscuro",
+      "system": "Sistema"
+    }
+  },
+  "errors": {
+    "notFound": {
+      "title": "Página No Encontrada",
+      "message": "La página que buscas no existe.",
+      "backHome": "Volver al Inicio"
+    }
+  }
+}
+

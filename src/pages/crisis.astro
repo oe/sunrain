@@ -1,0 +1,221 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { t, getLanguageFromPath, type Language } from '@/lib/i18n';
+import { Icon } from '@/components/Icon';
+
+const lang = getLanguageFromPath(Astro.url.pathname) as Language;
+
+// Types for crisis data
+interface Hotline {
+  id: string;
+  name: string;
+  phone: string;
+  description?: string;
+  website?: string;
+  available?: string;
+  languages?: string[];
+}
+
+interface Region {
+  code: string;
+  name: string;
+  countryCode?: string;
+  hotlines: Hotline[];
+}
+
+// Import crisis data - fallback zh-hant to zh-hans
+import crisisData from '@/content/resources/crisis.json';
+
+// Get the appropriate language data with fallback
+function getCrisisData(language: Language) {
+  if (crisisData[language]) return crisisData[language];
+  if (language === 'zh-hant' && crisisData['zh-hans']) return crisisData['zh-hans'];
+  return crisisData['en'];
+}
+
+const data = getCrisisData(lang);
+const regions: Region[] = data.regions || [];
+
+// Country emoji mapping
+const countryEmojis: Record<string, string> = {
+  US: '🇺🇸', CN: '🇨🇳', GB: '🇬🇧', CA: '🇨🇦', AU: '🇦🇺', JP: '🇯🇵',
+  KR: '🇰🇷', IN: '🇮🇳', DE: '🇩🇪', FR: '🇫🇷', IT: '🇮🇹', ES: '🇪🇸',
+  BR: '🇧🇷', MX: '🇲🇽', SG: '🇸🇬', TW: '🇹🇼', HK: '🇭🇰', PH: '🇵🇭',
+  NZ: '🇳🇿', NL: '🇳🇱', SE: '🇸🇪', NO: '🇳🇴', DK: '🇩🇰', FI: '🇫🇮',
+  CH: '🇨🇭', AT: '🇦🇹', BE: '🇧🇪', PT: '🇵🇹', GR: '🇬🇷', PL: '🇵🇱', IE: '🇮🇪',
+};
+---
+
+<BaseLayout title={t('crisis.title', lang)}>
+  <div class="container mx-auto px-4 py-12">
+    <!-- Header -->
+    <div class="text-center mb-8">
+      <h1 class="flex items-center justify-center gap-3 text-4xl font-bold text-gray-900 dark:text-white mb-4">
+        <Icon name="Phone" size={36} className="text-red-500" client:load />
+        {t('crisis.title', lang)}
+      </h1>
+      <p class="text-xl text-gray-600 dark:text-gray-300 mb-2">
+        {t('crisis.subtitle', lang)}
+      </p>
+      <p class="text-gray-500 dark:text-gray-400">
+        {t('crisis.description', lang)}
+      </p>
+    </div>
+
+    <!-- Emergency Banner -->
+    <div class="max-w-3xl mx-auto mb-12 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800/30 rounded-xl p-6">
+      <h3 class="flex items-center gap-2 font-bold text-red-800 dark:text-red-300 mb-2">
+        <Icon name="AlertCircle" size={20} client:load />
+        {t('crisis.emergency.title', lang)}
+      </h3>
+      <p class="text-red-700 dark:text-red-400">
+        {t('crisis.emergency.message', lang)}
+      </p>
+    </div>
+
+    <!-- Search & Filter -->
+    <div class="max-w-3xl mx-auto mb-8 flex flex-col sm:flex-row gap-4">
+      <input
+        type="text"
+        id="search-input"
+        placeholder={t('crisis.search', lang)}
+        class="flex-1 px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+      />
+      <select
+        id="region-filter"
+        class="px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+      >
+        <option value="">🌍 {t('crisis.filter', lang)}</option>
+        {regions.map((r: Region) => (
+          <option value={r.code}>
+            {countryEmojis[r.code] || '🌍'} {r.name}
+          </option>
+        ))}
+      </select>
+    </div>
+
+    <!-- Hotlines by Region -->
+    <div id="regions-container" class="space-y-8">
+      {regions.map((region: Region) => (
+        <div class="region-section" data-region={region.code}>
+          <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+            <span>{countryEmojis[region.code] || '🌍'}</span>
+            <span>{region.name}</span>
+            {region.countryCode && (
+              <span class="text-sm font-normal text-gray-500">({region.countryCode})</span>
+            )}
+          </h2>
+          <div class={`grid gap-4 ${region.hotlines.length === 1 ? 'grid-cols-1 max-w-2xl' : region.hotlines.length === 2 ? 'grid-cols-1 md:grid-cols-2 max-w-4xl' : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'}`}>
+            {region.hotlines.map((hotline: Hotline) => (
+              <div class="hotline-card bg-white dark:bg-gray-800 rounded-xl shadow-md border border-gray-100 dark:border-gray-700 p-6 hover:shadow-lg transition-shadow"
+                   data-name={hotline.name.toLowerCase()}
+                   data-phone={hotline.phone.toLowerCase()}>
+                <div class="flex items-center gap-2 text-red-600 dark:text-red-400 mb-3">
+                  <span>📞</span>
+                  <span class="text-sm font-medium">{t('crisis.phone', lang)}</span>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+                  {hotline.name}
+                </h3>
+                <p class="text-gray-500 dark:text-gray-400 text-sm mb-4">
+                  {hotline.description}
+                </p>
+                <a
+                  href={`tel:${hotline.phone.replace(/\D/g, '')}`}
+                  class="block text-2xl font-bold text-red-600 dark:text-red-400 mb-3 hover:underline"
+                >
+                  {hotline.phone}
+                </a>
+                <div class="flex flex-wrap gap-2 text-xs text-gray-500 dark:text-gray-400">
+                  <span class="px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 rounded">
+                    {hotline.available}
+                  </span>
+                  {hotline.languages?.map((lang: string) => (
+                    <span class="px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded">
+                      {lang}
+                    </span>
+                  ))}
+                </div>
+                {hotline.website && (
+                  <a
+                    href={hotline.website}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="inline-flex items-center gap-1 mt-4 text-sm text-blue-600 dark:text-blue-400 hover:underline"
+                  >
+                    {t('crisis.website', lang)} →
+                  </a>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- No Results -->
+    <div id="no-results" class="hidden text-center py-12">
+      <p class="text-gray-500 dark:text-gray-400 text-lg">
+        No results found. Try a different search term.
+      </p>
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  const searchInput = document.getElementById('search-input') as HTMLInputElement;
+  const regionFilter = document.getElementById('region-filter') as HTMLSelectElement;
+  const noResults = document.getElementById('no-results');
+  const regionSections = document.querySelectorAll('.region-section');
+  
+  function filterContent() {
+    const searchTerm = searchInput?.value.toLowerCase() || '';
+    const selectedRegion = regionFilter?.value || '';
+    let hasResults = false;
+    
+    regionSections.forEach((section) => {
+      const regionCode = section.getAttribute('data-region');
+      const cards = section.querySelectorAll('.hotline-card');
+      let sectionHasVisibleCards = false;
+      
+      // Check region filter
+      if (selectedRegion && regionCode !== selectedRegion) {
+        (section as HTMLElement).classList.add('hidden');
+        return;
+      }
+      
+      // Check search term for each card
+      cards.forEach((card) => {
+        const name = card.getAttribute('data-name') || '';
+        const phone = card.getAttribute('data-phone') || '';
+        const matches = !searchTerm || name.includes(searchTerm) || phone.includes(searchTerm);
+        
+        if (matches) {
+          (card as HTMLElement).classList.remove('hidden');
+          sectionHasVisibleCards = true;
+        } else {
+          (card as HTMLElement).classList.add('hidden');
+        }
+      });
+      
+      if (sectionHasVisibleCards) {
+        (section as HTMLElement).classList.remove('hidden');
+        hasResults = true;
+      } else {
+        (section as HTMLElement).classList.add('hidden');
+      }
+    });
+    
+    if (noResults) {
+      if (hasResults) {
+        noResults.classList.add('hidden');
+      } else {
+        noResults.classList.remove('hidden');
+      }
+    }
+  }
+  
+  searchInput?.addEventListener('input', filterContent);
+  regionFilter?.addEventListener('change', filterContent);
+</script>
+

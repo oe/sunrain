@@ -9,7 +9,8 @@ import sitemap from '@astrojs/sitemap';
 const defaultLocale = "en";
 const locales = {
   en: 'en-US',
-  zh: 'zh-CN',
+  'zh-hans': 'zh-Hans',
+  'zh-hant': 'zh-Hant',
   es: 'es-ES',
   ja: 'ja-JP',
   ko: 'ko-KR',

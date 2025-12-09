@@ -1,376 +1,124 @@
 ---
-import { getLocale } from 'astro-i18n-aut';
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import { type Language, getRelativeLocaleUrl } from '@/shared';
-import { createSSGTranslations } from '@/i18n/utils';
+import { t, getLocalizedPath, getLanguageFromPath, type Language } from '@/lib/i18n';
+import { Icon } from '@/components/Icon';
 
-const lang = getLocale(Astro.url) as Language;
-const t = createSSGTranslations(lang, 'home');
-
-// User testimonials data
-const testimonials = [
-  {
-    text: 'This space felt like home.',
-    author: 'Anonymous User'
-  },
-  {
-    text: "The self-check helped me realize I wasn't alone.",
-    author: 'Community Member'
-  },
-  {
-    text: 'Finally found resources that actually help.',
-    author: 'Grateful Visitor'
-  },
-  {
-    text: 'The mindfulness exercises changed my daily routine.',
-    author: 'Regular User'
-  }
-];
+const lang = getLanguageFromPath(Astro.url.pathname) as Language;
 ---
 
-<BaseLayout
-  title={t('hero.title')}
-  description={t('meta.description')}
-  lang={lang}
->
+<BaseLayout title={t('home.hero.title', lang)}>
   <!-- Hero Section -->
-  <section
-    class="relative min-h-screen bg-gradient-to-br from-pink-50 via-orange-50 to-yellow-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 overflow-hidden"
-  >
+  <section class="relative min-h-[80vh] bg-gradient-to-br from-amber-50 via-orange-50 to-rose-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 flex items-center">
     <!-- Decorative elements -->
-    <div class="absolute inset-0 opacity-20 dark:opacity-10">
-      <div
-        class="absolute top-20 left-10 w-32 h-32 bg-yellow-300 dark:bg-yellow-600 rounded-full blur-xl"
-      >
-      </div>
-      <div
-        class="absolute top-40 right-20 w-24 h-24 bg-pink-300 dark:bg-pink-600 rounded-full blur-lg"
-      >
-      </div>
-      <div
-        class="absolute bottom-32 left-1/4 w-20 h-20 bg-orange-300 dark:bg-orange-600 rounded-full blur-lg"
-      >
-      </div>
+    <div class="absolute inset-0 overflow-hidden opacity-20 dark:opacity-10">
+      <div class="absolute top-20 left-10 w-32 h-32 bg-yellow-300 rounded-full blur-3xl"></div>
+      <div class="absolute top-40 right-20 w-24 h-24 bg-rose-300 rounded-full blur-2xl"></div>
+      <div class="absolute bottom-20 left-1/3 w-40 h-40 bg-orange-300 rounded-full blur-3xl"></div>
     </div>
 
-    <div
-      class="relative z-10 flex flex-col items-center justify-center min-h-screen px-4 text-center"
-    >
-      <!-- Logo -->
-      <div class="mb-8 flex justify-center">
-        <img 
-          src="/logo.png" 
-          alt="Sunrain Logo" 
-          class="w-32 h-32 object-contain"
-        />
-      </div>
-
-      <h1
-        class="text-5xl md:text-7xl font-bold text-gray-800 dark:text-white mb-6 leading-tight"
-      >
-        <span
-          class="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-pink-400 dark:from-orange-300 dark:to-pink-300"
-        >
-          {t('hero.tagline')}
-        </span>
-      </h1>
-
-      <p
-        class="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-12 max-w-2xl font-light"
-      >
-        {t('hero.description')}
-      </p>
-
-      <div class="flex flex-col sm:flex-row gap-4">
-        <a
-          href={getRelativeLocaleUrl(lang, '/assessment/')}
-          class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900 inline-block"
-        >
-          {t('hero.selfCheckButton')}
-        </a>
-        <a
-          href={getRelativeLocaleUrl(lang, '/relax/')}
-          class="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-900 dark:text-white border border-gray-300 dark:border-gray-600 hover:border-gray-400 dark:hover:border-gray-500 px-8 py-4 rounded-lg font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900 inline-block"
-        >
-          {t('hero.quickRelaxButton')}
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Core Features Section -->
-  <section class="py-24 bg-white dark:bg-gray-900">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center mb-16">
-        <h2
-          class="text-3xl md:text-4xl font-semibold text-gray-900 dark:text-white mb-4"
-        >
-          {t('features.title')}
-        </h2>
-        <p class="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-          {t('features.subtitle')}
+    <div class="container mx-auto px-4 py-16 relative z-10">
+      <div class="max-w-3xl mx-auto text-center">
+        <!-- Logo -->
+        <div class="mb-6 flex justify-center">
+          <Icon name="CloudSun" size={72} className="text-amber-500" client:load />
+        </div>
+        
+        <!-- Tagline -->
+        <p class="text-lg text-amber-600 dark:text-amber-400 font-medium mb-4">
+          {t('site.tagline', lang)}
         </p>
-      </div>
 
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <!-- Self-Check Module -->
-        <a
-          href={getRelativeLocaleUrl(lang, '/assessment/')}
-          class="group bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-6 hover:border-blue-300 dark:hover:border-blue-600 hover:shadow-sm transition-all duration-200 block"
-        >
-          <div class="flex items-start space-x-4">
-            <div class="flex-shrink-0">
-              <div
-                class="w-12 h-12 bg-blue-50 dark:bg-blue-900/30 rounded-lg flex items-center justify-center text-xl"
-              >
-                🧠
-              </div>
-            </div>
-            <div class="flex-1 min-w-0">
-              <h3
-                class="text-lg font-semibold text-gray-900 dark:text-white mb-2"
-              >
-                {t('features.selfCheck.title')}
-              </h3>
-              <p class="text-sm text-gray-600 dark:text-gray-300 mb-4">
-                {t('features.selfCheck.description')}
-              </p>
-              <span
-                class="text-sm text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium"
-              >
-                {t('features.selfCheck.button')}
-              </span>
-            </div>
-          </div>
-        </a>
+        <!-- Title -->
+        <h1 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">
+          {t('home.hero.title', lang)}
+        </h1>
 
-        <!-- Daily Practice Module -->
-        <a
-          href={getRelativeLocaleUrl(lang, '/practice/')}
-          class="group bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-6 hover:border-green-300 dark:hover:border-green-600 hover:shadow-sm transition-all duration-200 block"
-        >
-          <div class="flex items-start space-x-4">
-            <div class="flex-shrink-0">
-              <div
-                class="w-12 h-12 bg-green-50 dark:bg-green-900/30 rounded-lg flex items-center justify-center text-xl"
-              >
-                🧘
-              </div>
-            </div>
-            <div class="flex-1 min-w-0">
-              <h3
-                class="text-lg font-semibold text-gray-900 dark:text-white mb-2"
-              >
-                {t('features.dailyPractice.title')}
-              </h3>
-              <p class="text-sm text-gray-600 dark:text-gray-300 mb-4">
-                {t('features.dailyPractice.description')}
-              </p>
-              <span
-                class="text-sm text-green-600 dark:text-green-400 hover:text-green-700 dark:hover:text-green-300 font-medium"
-              >
-                {t('features.dailyPractice.button')}
-              </span>
-            </div>
-          </div>
-        </a>
-
-        <!-- Quick Relief Module -->
-        <a
-          href={getRelativeLocaleUrl(lang, '/relax/')}
-          class="group bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-6 hover:border-purple-300 dark:hover:border-purple-600 hover:shadow-sm transition-all duration-200 block"
-        >
-          <div class="flex items-start space-x-4">
-            <div class="flex-shrink-0">
-              <div
-                class="w-12 h-12 bg-purple-50 dark:bg-purple-900/30 rounded-lg flex items-center justify-center text-xl"
-              >
-                🎧
-              </div>
-            </div>
-            <div class="flex-1 min-w-0">
-              <h3
-                class="text-lg font-semibold text-gray-900 dark:text-white mb-2"
-              >
-                {t('features.quickRelief.title')}
-              </h3>
-              <p class="text-sm text-gray-600 dark:text-gray-300 mb-4">
-                {t('features.quickRelief.description')}
-              </p>
-              <span
-                class="text-sm text-purple-600 dark:text-purple-400 hover:text-purple-700 dark:hover:text-purple-300 font-medium"
-              >
-                {t('features.quickRelief.button')}
-              </span>
-            </div>
-          </div>
-        </a>
-
-        <!-- Healing Library Module -->
-        <div
-          class="group bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-6 hover:border-pink-300 dark:hover:border-pink-600 hover:shadow-sm transition-all duration-200 opacity-75"
-        >
-          <div class="flex items-start space-x-4">
-            <div class="flex-shrink-0">
-              <div
-                class="w-12 h-12 bg-pink-50 dark:bg-pink-900/30 rounded-lg flex items-center justify-center text-xl"
-              >
-                📚
-              </div>
-            </div>
-            <div class="flex-1 min-w-0">
-              <h3
-                class="text-lg font-semibold text-gray-900 dark:text-white mb-2"
-              >
-                {t('features.healingLibrary.title')}
-              </h3>
-              <p class="text-sm text-gray-600 dark:text-gray-300 mb-4">
-                {t('features.healingLibrary.description')}
-              </p>
-              <span
-                class="text-sm text-pink-600 dark:text-pink-400 font-medium"
-              >
-                {t('features.healingLibrary.button')} (Coming Soon)
-              </span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Psychology Wiki Module -->
-        <div
-          class="group bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-6 hover:border-orange-300 dark:hover:border-orange-600 hover:shadow-sm transition-all duration-200 opacity-75"
-        >
-          <div class="flex items-start space-x-4">
-            <div class="flex-shrink-0">
-              <div
-                class="w-12 h-12 bg-orange-50 dark:bg-orange-900/30 rounded-lg flex items-center justify-center text-xl"
-              >
-                🌐
-              </div>
-            </div>
-            <div class="flex-1 min-w-0">
-              <h3
-                class="text-lg font-semibold text-gray-900 dark:text-white mb-2"
-              >
-                {t('features.psychologyWiki.title')}
-              </h3>
-              <p class="text-sm text-gray-600 dark:text-gray-300 mb-4">
-                {t('features.psychologyWiki.description')}
-              </p>
-              <span
-                class="text-sm text-orange-600 dark:text-orange-400 font-medium"
-              >
-                {t('features.psychologyWiki.button')} (Coming Soon)
-              </span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Support Hotline Module -->
-        <div
-          class="group bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-6 hover:border-red-300 dark:hover:border-red-600 hover:shadow-sm transition-all duration-200 opacity-75"
-        >
-          <div class="flex items-start space-x-4">
-            <div class="flex-shrink-0">
-              <div
-                class="w-12 h-12 bg-red-50 dark:bg-red-900/30 rounded-lg flex items-center justify-center text-xl"
-              >
-                ☎️
-              </div>
-            </div>
-            <div class="flex-1 min-w-0">
-              <h3
-                class="text-lg font-semibold text-gray-900 dark:text-white mb-2"
-              >
-                {t('features.supportHotline.title')}
-              </h3>
-              <p class="text-sm text-gray-600 dark:text-gray-300 mb-4">
-                {t('features.supportHotline.description')}
-              </p>
-              <span
-                class="text-sm text-red-600 dark:text-red-400 font-medium"
-              >
-                {t('features.supportHotline.button')} (Coming Soon)
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- User Voices Section -->
-  <section class="py-24 bg-gray-50 dark:bg-gray-800">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center mb-16">
-        <h2
-          class="text-3xl md:text-4xl font-semibold text-gray-900 dark:text-white mb-4"
-        >
-          {t('userVoices.title')}
-        </h2>
-        <p class="text-lg text-gray-600 dark:text-gray-300">
-          {t('userVoices.subtitle')}
+        <!-- Description -->
+        <p class="text-xl text-gray-600 dark:text-gray-300 mb-8">
+          {t('home.hero.subtitle', lang)}
         </p>
-      </div>
 
-      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {
-          testimonials.map((testimonial) => (
-            <div class="bg-white dark:bg-gray-700 rounded-lg p-6 border border-gray-200 dark:border-gray-600 shadow-sm">
-              <blockquote class="text-gray-700 dark:text-gray-300 mb-4 text-sm leading-relaxed">
-                "{testimonial.text}"
-              </blockquote>
-              <div class="flex items-center justify-between">
-                <cite class="text-xs text-gray-500 dark:text-gray-400">
-                  — {testimonial.author}
-                </cite>
-                <button class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium">
-                  {t('userVoices.feelSameButton')}
-                </button>
-              </div>
-            </div>
-          ))
-        }
+        <!-- CTA Buttons -->
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a
+            href={getLocalizedPath('/assessment/', lang)}
+            class="inline-flex items-center justify-center px-8 py-3 bg-amber-500 hover:bg-amber-600 text-white font-semibold rounded-full shadow-lg hover:shadow-xl transition-all"
+          >
+            {t('home.hero.startAssessment', lang)}
+          </a>
+          <a
+            href={getLocalizedPath('/breathing/', lang)}
+            class="inline-flex items-center justify-center px-8 py-3 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 font-semibold rounded-full shadow-md hover:shadow-lg border border-gray-200 dark:border-gray-700 transition-all"
+          >
+            {t('home.hero.tryBreathing', lang)}
+          </a>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- Call to Action Section -->
-  <section
-    class="py-20 bg-gradient-to-br from-orange-100 to-pink-100 dark:from-gray-800 dark:to-gray-700 relative overflow-hidden"
-  >
-    <!-- Decorative elements -->
-    <div class="absolute inset-0 opacity-10 dark:opacity-5">
-      <div class="absolute top-10 left-10 text-6xl">✉️</div>
-      <div class="absolute bottom-10 right-10 text-6xl">🌱</div>
-      <div class="absolute top-1/2 left-1/4 text-4xl">💌</div>
-    </div>
+  <!-- Features Section -->
+  <section class="py-20 bg-white dark:bg-gray-900">
+    <div class="container mx-auto px-4">
+      <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+        <!-- Assessment Card -->
+        <div class="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-2xl p-8 border border-blue-100 dark:border-blue-800/30 hover:shadow-lg transition-shadow">
+          <div class="mb-4">
+            <Icon name="ClipboardList" size={40} className="text-blue-600 dark:text-blue-400" client:load />
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">
+            {t('home.features.assessment.title', lang)}
+          </h3>
+          <p class="text-gray-600 dark:text-gray-300 mb-6">
+            {t('home.features.assessment.description', lang)}
+          </p>
+          <a
+            href={getLocalizedPath('/assessment/', lang)}
+            class="inline-flex items-center text-blue-600 dark:text-blue-400 font-medium hover:underline"
+          >
+            {t('home.features.assessment.button', lang)}
+          </a>
+        </div>
 
-    <div class="relative z-10 max-w-4xl mx-auto px-4 text-center">
-      <div class="text-6xl mb-8">🌱</div>
-      <h2
-        class="text-4xl md:text-5xl font-bold text-gray-800 dark:text-white mb-6"
-      >
-        {t('cta.title')}
-      </h2>
-      <p
-        class="text-xl text-gray-600 dark:text-gray-300 mb-12 max-w-2xl mx-auto"
-      >
-        {t('cta.description')}
-      </p>
+        <!-- Breathing Card -->
+        <div class="bg-gradient-to-br from-green-50 to-teal-50 dark:from-green-900/20 dark:to-teal-900/20 rounded-2xl p-8 border border-green-100 dark:border-green-800/30 hover:shadow-lg transition-shadow">
+          <div class="mb-4">
+            <Icon name="Wind" size={40} className="text-green-600 dark:text-green-400" client:load />
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">
+            {t('home.features.breathing.title', lang)}
+          </h3>
+          <p class="text-gray-600 dark:text-gray-300 mb-6">
+            {t('home.features.breathing.description', lang)}
+          </p>
+          <a
+            href={getLocalizedPath('/breathing/', lang)}
+            class="inline-flex items-center text-green-600 dark:text-green-400 font-medium hover:underline"
+          >
+            {t('home.features.breathing.button', lang)}
+          </a>
+        </div>
 
-      <div class="flex flex-col sm:flex-row gap-4 justify-center">
-        <button
-          class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800"
-        >
-          {t('cta.submitStoryButton')}
-        </button>
-        <button
-          class="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-900 dark:text-white border border-gray-300 dark:border-gray-600 hover:border-gray-400 dark:hover:border-gray-500 px-8 py-4 rounded-lg font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800"
-        >
-          {t('cta.mindfulnessButton')}
-        </button>
+        <!-- Crisis Card -->
+        <div class="bg-gradient-to-br from-red-50 to-rose-50 dark:from-red-900/20 dark:to-rose-900/20 rounded-2xl p-8 border border-red-100 dark:border-red-800/30 hover:shadow-lg transition-shadow">
+          <div class="mb-4">
+            <Icon name="Phone" size={40} className="text-red-600 dark:text-red-400" client:load />
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">
+            {t('home.features.crisis.title', lang)}
+          </h3>
+          <p class="text-gray-600 dark:text-gray-300 mb-6">
+            {t('home.features.crisis.description', lang)}
+          </p>
+          <a
+            href={getLocalizedPath('/crisis/', lang)}
+            class="inline-flex items-center text-red-600 dark:text-red-400 font-medium hover:underline"
+          >
+            {t('home.features.crisis.button', lang)}
+          </a>
+        </div>
       </div>
     </div>
   </section>
 </BaseLayout>
+

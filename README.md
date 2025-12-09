@@ -1,272 +1,76 @@
-# Sunrain 🌧️
+# 🌤️ Sunrain
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Built with Astro](https://img.shields.io/badge/Built%20with-Astro-FF5D01.svg)](https://astro.build)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.3-blue.svg)](https://www.typescriptlang.org/)
+> Where the sun meets the rain
 
-> 一个开源、隐私优先的心理健康平台
+开源、免费、注重隐私的心理健康自助平台。
 
-**在线访问**: [sunrain.run](https://sunrain.run)
+## ✨ 功能
 
-## ✨ 特性
+- **📋 心理测评** - PHQ-9 (抑郁筛查) / GAD-7 (焦虑筛查)
+- **🧘 呼吸练习** - 可自定义的呼吸引导
+- **📞 危机热线** - 全球 30+ 国家/地区的求助资源
 
-### 🎯 核心功能
+## 🌍 多语言支持
 
-- **📊 自我评估** - 标准化心理健康评估问卷（PHQ-9、GAD-7等）
-- **🧘 日常练习** - 正念冥想、呼吸练习、身体扫描
-- **😌 快速放松** - 白噪音、自然声音、放松音频
-- **📚 疗愈资源** - 精选书籍、音乐、电影推荐
+English | 中文 | Español | 日本語 | 한국어 | हिन्दी | العربية
 
-### 🌍 国际化
+## 🔒 隐私优先
 
-支持 **7种语言**：
-- 🇬🇧 英语 (English)
-- 🇨🇳 中文 (简体)
-- 🇪🇸 西班牙语 (Español)
-- 🇯🇵 日语 (日本語)
-- 🇰🇷 韩语 (한국어)
-- 🇮🇳 印地语 (हिन्दी)
-- 🇸🇦 阿拉伯语 (العربية)
-
-### 🔒 隐私保护
-
-- ✅ **本地存储** - 所有数据在浏览器本地存储
-- ✅ **零追踪** - 不使用第三方分析和追踪
-- ✅ **无注册** - 无需账户即可使用所有功能
-- ✅ **数据控制** - 随时导出或删除你的数据
-
-### ⚡ 技术亮点
-
-- **极速加载** - Astro静态生成，Lighthouse评分95+
-- **离线可用** - 基于IndexedDB的本地存储
-- **响应式设计** - 完美适配移动端和桌面端
-- **暗色模式** - 保护你的眼睛
-- **无障碍** - WCAG 2.1 AA标准
-
-## 🏗️ 技术栈
-
-- **框架**: [Astro 5](https://astro.build) + [React 19](https://react.dev)
-- **样式**: [Tailwind CSS 4](https://tailwindcss.com) + [DaisyUI](https://daisyui.com)
-- **类型**: [TypeScript 5.3](https://www.typescriptlang.org/)
-- **存储**: IndexedDB + 内存回退
-- **测试**: [Vitest](https://vitest.dev) + [Playwright](https://playwright.dev)
-- **构建**: [pnpm](https://pnpm.io)
-- **部署**: [Cloudflare Pages](https://pages.cloudflare.com)
+- 所有数据仅存储在您的设备上
+- 不使用 Cookies 追踪
+- 不收集任何个人信息
 
 ## 🚀 快速开始
 
-### 前置要求
-
-- Node.js 18+
-- pnpm 8+
-
-### 安装
-
 ```bash
-# 克隆仓库
-git clone https://github.com/yourusername/sunrain.git
-cd sunrain
-
 # 安装依赖
 pnpm install
 
-# 启动开发服务器
+# 开发模式
 pnpm dev
-```
-
-访问 `http://localhost:4321` 查看网站。
-
-### 开发命令
-
-```bash
-# 开发
-pnpm dev              # 启动开发服务器
 
 # 构建
-pnpm build            # 构建生产版本
-pnpm preview          # 预览构建结果
+pnpm build
 
-# 测试
-pnpm test             # 运行单元测试
-pnpm test:e2e         # 运行E2E测试
-pnpm test:run         # 运行一次测试
-
-# 代码质量
-pnpm lint             # 运行ESLint
-pnpm type-check       # TypeScript类型检查
+# 预览构建结果
+pnpm preview
 ```
 
 ## 📁 项目结构
 
 ```
-sunrain/
-├── src/
-│   ├── components/       # React/Astro 组件
-│   │   ├── assessment/   # 评估相关组件
-│   │   ├── practice/     # 练习相关组件
-│   │   └── ...
-│   ├── pages/            # Astro 页面路由
-│   ├── lib/              # 业务逻辑
-│   │   ├── assessment/   # 评估引擎
-│   │   ├── storage/      # 数据存储
-│   │   └── ...
-│   ├── locales/          # 服务端翻译
-│   ├── client-locales/   # 客户端翻译
-│   ├── data/             # 静态数据
-│   │   ├── questionnaires/  # 问卷数据
-│   │   └── practices/       # 练习数据
-│   ├── shared/           # 共享代码
-│   └── types/            # TypeScript 类型
-├── public/               # 静态资源
-├── docs/                 # 项目文档
-├── scripts/              # 工具脚本
-└── test/                 # 测试文件
+src/
+├── content/           # 内容数据 (问卷/危机热线)
+├── i18n/              # UI 翻译文件
+├── lib/               # 核心工具库
+├── layouts/           # 页面布局
+├── components/        # 组件
+├── pages/             # 页面
+└── styles/            # 样式
 ```
 
-## 📖 文档
+## 📦 技术栈
 
-详细文档请查看 [`docs/`](./docs/) 目录：
+- [Astro](https://astro.build/) - 静态站点生成
+- [TailwindCSS](https://tailwindcss.com/) - 样式
+- [TypeScript](https://www.typescriptlang.org/) - 类型安全
 
-- [项目路线图](./docs/ROADMAP.md) ⭐ - MVP 上线和迭代计划
-- [架构设计](./docs/ARCHITECTURE.md) - 系统架构和技术选型
-- [项目状态](./docs/PROJECT_STATUS.md) - 当前实现状态
-- [问卷系统](./docs/QUESTIONNAIRE_SYSTEM_DESIGN.md) - 问卷系统详细设计
-- [状态管理](./docs/state-management-guidelines.md) - 状态管理指南
+## 📄 文档
 
-## 🤝 贡献指南
+- [需求文档](./docs/REQUIREMENTS.md)
+- [设计文档](./docs/DESIGN.md)
 
-我们欢迎所有形式的贡献！
+## 🤝 贡献
 
-### 贡献方式
+欢迎提交 Issue 和 Pull Request！
 
-1. **报告问题** - 发现bug或有改进建议
-2. **翻译** - 改进现有翻译或添加新语言
-3. **内容** - 添加问卷、练习或资源
-4. **代码** - 修复bug或实现新功能
-5. **文档** - 改进文档和注释
+## ⚠️ 免责声明
 
-### 开发流程
+本平台提供的所有测评工具和信息仅供参考和自我了解，不能替代专业的心理健康诊断和治疗。
 
-1. Fork 本仓库
-2. 创建你的特性分支 (`git checkout -b feature/AmazingFeature`)
-3. 提交你的更改 (`git commit -m 'Add some AmazingFeature'`)
-4. 推送到分支 (`git push origin feature/AmazingFeature`)
-5. 开启 Pull Request
+如果您正在经历心理健康危机，请立即联系当地的心理危机热线或寻求专业帮助。
 
-### 代码规范
+## 📜 许可证
 
-- 遵循现有代码风格
-- 确保所有测试通过
-- 为新功能添加测试
-- 更新相关文档
-- 提交信息清晰明确
+[MIT](./LICENSE)
 
-详细的开发规范请查看 [开发指南](./docs/DEVELOPMENT_GUIDE.md)。
-
-## 📊 添加内容
-
-### 添加问卷
-
-1. 在 `src/data/questionnaires/` 创建问卷目录
-2. 按照格式创建 JSON 文件
-3. 在 `questionnaires-index.json` 添加索引
-4. 运行验证：`pnpm questionnaire validate <id>`
-
-详见：[问卷系统文档](./docs/QUESTIONNAIRE_SYSTEM_DESIGN.md)
-
-### 添加练习
-
-1. 在 `src/data/practices/` 创建练习目录
-2. 创建 metadata.json 和 steps.json
-3. 在 `practices-index.json` 添加索引
-
-### 添加资源
-
-资源数据存储在 `public/content/`：
-- `books.json` - 书籍推荐
-- `music.json` - 音乐推荐
-- `movies.json` - 电影推荐
-
-## 🔧 配置
-
-### 环境变量
-
-项目不需要环境变量即可运行。所有配置都在代码中。
-
-### 构建配置
-
-- **Astro配置**: `astro.config.mjs`
-- **Tailwind配置**: `tailwind.config.mjs`
-- **TypeScript配置**: `tsconfig.json`
-- **Vitest配置**: `vitest.config.ts`
-
-## 📄 许可证
-
-本项目采用 [MIT 许可证](./LICENSE)。
-
-你可以自由地：
-- ✅ 商业使用
-- ✅ 修改
-- ✅ 分发
-- ✅ 私人使用
-
-唯一要求是保留版权声明和许可证声明。
-
-## 🙏 致谢
-
-### 技术栈
-
-- [Astro](https://astro.build) - 现代静态站点生成器
-- [React](https://react.dev) - 用户界面库
-- [Tailwind CSS](https://tailwindcss.com) - CSS框架
-- [DaisyUI](https://daisyui.com) - UI组件库
-
-### 评估工具
-
-本项目使用标准化的心理健康评估工具，包括：
-- PHQ-9 (Patient Health Questionnaire-9)
-- GAD-7 (Generalized Anxiety Disorder-7)
-- PSS (Perceived Stress Scale)
-
-这些工具在公共领域或已获得使用许可。
-
-### 灵感来源
-
-感谢所有致力于心理健康开源项目的开发者和组织。
-
-## 📞 联系方式
-
-- **网站**: [sunrain.run](https://sunrain.run)
-- **GitHub**: [sunrain](https://github.com/yourusername/sunrain)
-- **问题反馈**: [GitHub Issues](https://github.com/yourusername/sunrain/issues)
-
-## 🗺️ 路线图
-
-查看详细的 [项目路线图](./docs/ROADMAP.md) 了解完整规划。
-
-### 🎯 阶段 1: MVP 上线 (2-3周)
-
-**核心功能**：
-- ✅ 心理健康评估（PHQ-9、GAD-7、PSS）
-- ✅ 资源推荐（书籍、音乐、电影）
-- ✅ 多语言支持（7种语言）
-- ✅ 本地数据存储
-
-**目标**: 让用户能完成基础的心理健康自我评估
-
-### 🚀 阶段 2: 功能完善 (1-2个月)
-
-- v1.1 - 快速响应用户反馈
-- v1.2 - 添加日常练习功能
-- v1.3 - 添加放松音频功能
-
-### 🌟 阶段 3: 持续迭代 (长期)
-
-- v2.0 - PWA、评估趋势、社区功能
-- v3.0 - 移动应用、AI辅助、专业版
-
----
-
-**用爱和代码构建 ❤️**
-
-如果这个项目对你有帮助，请给我们一个 ⭐️

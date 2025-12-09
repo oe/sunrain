@@ -1,62 +1,30 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import { t, getLocalizedPath, getLanguageFromPath, type Language } from '@/lib/i18n';
+import { Icon } from '@/components/Icon';
+
+const lang = getLanguageFromPath(Astro.url.pathname) as Language;
 ---
 
-<BaseLayout
-  title="404 - Page Not Found"
-  description="The page you're looking for doesn't exist."
-  lang="en"
->
-  <main class="min-h-screen bg-gradient-to-br from-blue-50 to-green-50 flex items-center justify-center py-12">
-    <div class="max-w-md mx-auto text-center px-4">
-      <!-- 404 Icon -->
-      <div class="mb-8">
-        <svg class="w-24 h-24 mx-auto text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9.172 16.172a4 4 0 015.656 0M9 12h6m-6-4h6m2 5.291A7.962 7.962 0 0112 15c-2.34 0-4.46.901-6.018 2.373L5 16l.017.33A7.962 7.962 0 0012 21a7.963 7.963 0 006.018-2.373L19 17l-.017-.33z"></path>
-        </svg>
+<BaseLayout title={t('errors.notFound.title', lang)}>
+  <div class="min-h-[60vh] flex items-center justify-center">
+    <div class="text-center">
+      <div class="flex justify-center mb-6">
+        <Icon name="CloudRain" size={80} className="text-gray-400 dark:text-gray-500" client:load />
       </div>
-
-      <!-- 404 Content -->
-      <div class="bg-white rounded-lg shadow-md p-8">
-        <h1 class="text-6xl font-bold text-gray-800 mb-4">404</h1>
-        <h2 class="text-2xl font-semibold text-gray-700 mb-4">Page Not Found</h2>
-        <p class="text-gray-600 mb-8">
-          The page you're looking for doesn't exist or has been moved.
-        </p>
-
-        <!-- Navigation Options -->
-        <div class="space-y-4">
-          <a
-            href="/"
-            class="inline-block w-full bg-blue-600 text-white font-semibold px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors"
-          >
-            Go Home
-          </a>
-          <div class="grid grid-cols-2 gap-4">
-            <a
-              href="/en/guide/"
-              class="inline-block bg-gray-100 text-gray-700 font-medium px-4 py-2 rounded-lg hover:bg-gray-200 transition-colors text-sm"
-            >
-              Self-Help Guides
-            </a>
-            <a
-              href="/en/resources/"
-              class="inline-block bg-gray-100 text-gray-700 font-medium px-4 py-2 rounded-lg hover:bg-gray-200 transition-colors text-sm"
-            >
-              Resources
-            </a>
-          </div>
-        </div>
-
-        <!-- Helpful Message -->
-        <div class="mt-8 p-4 bg-blue-50 rounded-lg">
-          <p class="text-sm text-blue-800">
-            If you need support or have questions, please visit our
-            <a href="/en/about/" class="font-medium underline hover:no-underline">About page</a>
-            for more information.
-          </p>
-        </div>
-      </div>
+      <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+        {t('errors.notFound.title', lang)}
+      </h1>
+      <p class="text-xl text-gray-600 dark:text-gray-300 mb-8">
+        {t('errors.notFound.message', lang)}
+      </p>
+      <a
+        href={getLocalizedPath('/', lang)}
+        class="inline-flex items-center px-6 py-3 bg-amber-500 hover:bg-amber-600 text-white font-medium rounded-full transition-colors"
+      >
+        {t('errors.notFound.backHome', lang)}
+      </a>
     </div>
-  </main>
+  </div>
 </BaseLayout>
+

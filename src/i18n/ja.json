@@ -1,0 +1,169 @@
+{
+  "site": {
+    "name": "Sunrain",
+    "tagline": "太陽が雨に出会う場所",
+    "description": "不安、うつ病、感情的な健康のためのメンタルヘルスリソースとセルフヘルプツール。"
+  },
+  "nav": {
+    "home": "ホーム",
+    "assessment": "評価",
+    "breathing": "呼吸",
+    "crisis": "危機支援",
+    "about": "について"
+  },
+  "home": {
+    "hero": {
+      "title": "メンタルヘルスの旅がここから始まります",
+      "subtitle": "より良いメンタルヘルスのためのツール、リソース、ガイダンスを発見",
+      "description": "あなたの心のための温かく安全な空間。🤗",
+      "startAssessment": "評価を開始",
+      "tryBreathing": "呼吸エクササイズを試す"
+    },
+    "features": {
+      "assessment": {
+        "title": "自己評価",
+        "description": "科学的に検証された質問票でメンタルヘルスを理解する",
+        "button": "評価を開始 →"
+      },
+      "breathing": {
+        "title": "呼吸エクササイズ",
+        "description": "ガイド付き呼吸エクササイズで心を落ち着かせる",
+        "button": "開始 →"
+      },
+      "crisis": {
+        "title": "危機支援",
+        "description": "世界中の24時間対応の危機ホットラインとメンタルヘルスリソース",
+        "button": "ヘルプを取得 →"
+      }
+    }
+  },
+  "assessment": {
+    "title": "メンタルヘルス評価",
+    "subtitle": "科学的な評価ツールでメンタルヘルスの状態を理解する",
+    "startButton": "評価を開始",
+    "minutes": "分",
+    "questions": "問",
+    "history": {
+      "title": "評価履歴",
+      "empty": "評価履歴がありません",
+      "clearAll": "すべてクリア",
+      "confirmClear": "すべての履歴をクリアしますか？"
+    },
+    "taking": {
+      "question": "質問",
+      "of": "/",
+      "next": "次へ",
+      "previous": "前へ",
+      "submit": "送信",
+      "progress": "進捗"
+    },
+    "results": {
+      "title": "あなたの結果",
+      "score": "スコア",
+      "level": "レベル",
+      "suggestion": "提案",
+      "retake": "再評価",
+      "viewHistory": "履歴を見る",
+      "disclaimer": "この評価はスクリーニング目的のみであり、医学的診断を構成するものではありません。"
+    },
+    "disclaimer": {
+      "title": "重要なお知らせ",
+      "message": "これらの評価は自己理解のみを目的としており、専門的なメンタルヘルス診断に代わるものではありません。"
+    }
+  },
+  "breathing": {
+    "title": "呼吸エクササイズ",
+    "subtitle": "ガイド付き呼吸で心を落ち着かせる時間を取りましょう",
+    "instruction": "円に従って呼吸してください",
+    "inhale": "吸う",
+    "hold": "止める",
+    "exhale": "吐く",
+    "start": "開始",
+    "pause": "一時停止",
+    "reset": "リセット",
+    "cycles": "完了したサイクル",
+    "settings": {
+      "title": "設定",
+      "inhaleTime": "吸う（秒）",
+      "holdTime": "止める（秒）",
+      "exhaleTime": "吐く（秒）"
+    }
+  },
+  "crisis": {
+    "title": "危機ホットライン",
+    "subtitle": "あなたは一人ではありません。24時間年中無休でヘルプが利用可能です。",
+    "description": "あなたの国や地域のメンタルヘルス危機支援ホットラインを見つけてください。",
+    "emergency": {
+      "title": "緊急の危険がありますか？",
+      "message": "あなたや他の誰かが緊急の危険にさらされている場合は、すぐに緊急サービス（110、119など）に電話してください。"
+    },
+    "search": "国またはホットラインを検索...",
+    "filter": "すべての国",
+    "phone": "電話",
+    "available": "利用可能",
+    "languages": "言語",
+    "website": "ウェブサイトを訪問"
+  },
+  "about": {
+    "title": "Sunrainについて",
+    "mission": {
+      "title": "私たちの使命",
+      "description": "Sunrainは、誰もがアクセスできる匿名のメンタルヘルスリソースを提供することに専念するオープンソースのメンタルヘルスプラットフォームです。"
+    },
+    "values": {
+      "privacy": {
+        "title": "プライバシー優先",
+        "description": "すべてのデータはあなたのデバイスに保存されます。個人情報の追跡や収集は行いません。"
+      },
+      "accessibility": {
+        "title": "アクセシブル",
+        "description": "無料、オープンソース、複数の言語で利用可能。"
+      },
+      "evidence": {
+        "title": "エビデンスベース",
+        "description": "私たちの評価は科学的に検証された質問票を使用しています。"
+      }
+    },
+    "disclaimer": {
+      "title": "免責事項",
+      "message": "Sunrainは専門的なメンタルヘルスケアの代わりにはなりません。メンタルヘルスの危機を経験している場合は、専門家または危機ホットラインに連絡してください。"
+    },
+    "opensource": {
+      "title": "オープンソース",
+      "description": "Sunrainはオープンソースであり、貢献を歓迎します。",
+      "github": "GitHubで見る"
+    }
+  },
+  "footer": {
+    "copyright": "© 2025 Sunrain. All rights reserved.",
+    "mission": "希望と癒しを広める。",
+    "links": "リンク",
+    "privacy": "プライバシー",
+    "github": "GitHub"
+  },
+  "common": {
+    "loading": "読み込み中...",
+    "error": "エラーが発生しました",
+    "retry": "再試行",
+    "back": "戻る",
+    "close": "閉じる",
+    "save": "保存",
+    "cancel": "キャンセル",
+    "confirm": "確認",
+    "language": "言語",
+    "theme": {
+      "toggle": "テーマ切替",
+      "light": "ライト",
+      "dark": "ダーク",
+      "system": "システム"
+    }
+  },
+  "errors": {
+    "notFound": {
+      "title": "ページが見つかりません",
+      "message": "お探しのページは存在しません。",
+      "backHome": "ホームに戻る"
+    }
+  }
+}
+

@@ -1,24 +1,61 @@
-import type { LucideIcon } from 'lucide-react';
-import { ChevronRight, AlertTriangle, Phone, ExternalLink, SearchX } from 'lucide-react';
+/**
+ * Icon component using lucide-react
+ * Only imports the icons actually used in the app for optimal bundle size
+ */
+import {
+  CloudSun,
+  CloudRain,
+  ClipboardList,
+  Wind,
+  Phone,
+  AlertCircle,
+  AlertTriangle,
+  Clock,
+  FileText,
+  Lock,
+  Globe,
+  BarChart3,
+} from 'lucide-react';
+import type { LucideProps } from 'lucide-react';
 
-interface IconProps {
-  name: 'chevron-right' | 'alert-triangle' | 'phone' | 'external-link' | 'search-x';
-  class?: string;
-  size?: number;
+// Map of icon names to components (only icons used in the app)
+const iconMap = {
+  CloudSun,
+  CloudRain,
+  ClipboardList,
+  Wind,
+  Phone,
+  AlertCircle,
+  AlertTriangle,
+  Clock,
+  FileText,
+  Lock,
+  Globe,
+  BarChart3,
+} as const;
+
+export type IconName = keyof typeof iconMap;
+
+interface IconProps extends Omit<LucideProps, 'ref'> {
+  name: IconName;
 }
 
-const iconMap: Record<string, LucideIcon> = {
-  'chevron-right': ChevronRight,
-  'alert-triangle': AlertTriangle,
-  'phone': Phone,
-  'external-link': ExternalLink,
-  'search-x': SearchX,
-};
-
-export default function Icon({ name, class: className, size = 24 }: IconProps) {
-  const IconComponent = iconMap[name];
-  if (!IconComponent) return null;
+export function Icon({ name, size = 24, strokeWidth = 2, className = '', ...props }: IconProps) {
+  const LucideIcon = iconMap[name];
   
-  return <IconComponent className={className} size={size} strokeWidth={2} />;
+  if (!LucideIcon) {
+    console.warn(`Icon "${name}" not found`);
+    return null;
+  }
+  
+  return (
+    <LucideIcon
+      size={size}
+      strokeWidth={strokeWidth}
+      className={className}
+      {...props}
+    />
+  );
 }
 
+export default Icon;
