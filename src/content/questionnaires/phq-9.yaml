@@ -8,7 +8,8 @@ category: depression
 meta:
   title:
     en: "Patient Health Questionnaire-9 (PHQ-9)"
-    zh-hans: "患者健康问卷-9 (PHQ-9)"
+    zh-hans: "抑郁症筛查量表-9 (PHQ-9)"
+    zh-hant: "憂鬱症篩檢量表-9 (PHQ-9)"
     es: "Cuestionario de Salud del Paciente-9 (PHQ-9)"
     ja: "患者健康質問票-9 (PHQ-9)"
     ko: "환자 건강 설문지-9 (PHQ-9)"
@@ -17,7 +18,8 @@ meta:
   
   description:
     en: "A brief questionnaire for screening and monitoring depression severity"
-    zh-hans: "用于筛查和监测抑郁症严重程度的简短问卷"
+    zh-hans: "用于筛查和监测抑郁程度的简短问卷"
+    zh-hant: "用於篩檢和監測憂鬱程度的簡短問卷"
     es: "Un breve cuestionario para detectar y monitorear la severidad de la depresión"
     ja: "うつ病の重症度をスクリーニングおよびモニタリングするための簡単な質問票"
     ko: "우울증 심각도를 선별하고 모니터링하기 위한 간단한 설문지"
@@ -26,7 +28,8 @@ meta:
   
   instruction:
     en: "Over the last 2 weeks, how often have you been bothered by any of the following problems?"
-    zh-hans: "在过去两周内，以下问题困扰您的频率是？"
+    zh-hans: "在过去两周内，您有多少时间受到以下问题的困扰？"
+    zh-hant: "在過去兩週內，您有多少時間受到以下問題的困擾？"
     es: "Durante las últimas 2 semanas, ¿con qué frecuencia le han molestado los siguientes problemas?"
     ja: "過去2週間、以下の問題にどのくらい悩まされましたか？"
     ko: "지난 2주 동안 다음 문제들로 얼마나 자주 괴로웠습니까?"
@@ -41,7 +44,8 @@ options:
   - value: 0
     label:
       en: "Not at all"
-      zh-hans: "完全不会"
+      zh-hans: "完全没有"
+      zh-hant: "完全沒有"
       es: "Para nada"
       ja: "全くない"
       ko: "전혀 없음"
@@ -50,25 +54,28 @@ options:
   - value: 1
     label:
       en: "Several days"
-      zh-hans: "几天"
+      zh-hans: "好几天"
+      zh-hant: "好幾天"
       es: "Varios días"
-      ja: "数日"
-      ko: "며칠"
+      ja: "数日間"
+      ko: "며칠 동안"
       hi: "कई दिन"
       ar: "عدة أيام"
   - value: 2
     label:
       en: "More than half the days"
-      zh-hans: "一半以上的天数"
+      zh-hans: "一半以上时间"
+      zh-hant: "一半以上時間"
       es: "Más de la mitad de los días"
-      ja: "半分以上"
-      ko: "절반 이상"
+      ja: "半分以上の日"
+      ko: "절반 이상의 날"
       hi: "आधे से अधिक दिन"
       ar: "أكثر من نصف الأيام"
   - value: 3
     label:
       en: "Nearly every day"
       zh-hans: "几乎每天"
+      zh-hant: "幾乎每天"
       es: "Casi todos los días"
       ja: "ほぼ毎日"
       ko: "거의 매일"
@@ -79,7 +86,8 @@ questions:
   - id: q1
     text:
       en: "Little interest or pleasure in doing things"
-      zh-hans: "做事时提不起劲或没有兴趣"
+      zh-hans: "做事提不起兴趣或感受不到乐趣"
+      zh-hant: "做事提不起興趣或感受不到樂趣"
       es: "Poco interés o placer en hacer cosas"
       ja: "物事に対してほとんど興味がない、または楽しめない"
       ko: "일을 하는 것에 대한 흥미나 즐거움이 거의 없음"
@@ -89,7 +97,8 @@ questions:
   - id: q2
     text:
       en: "Feeling down, depressed, or hopeless"
-      zh-hans: "感到心情低落、沮丧或绝望"
+      zh-hans: "感到情绪低落、沮丧或绝望"
+      zh-hant: "感到情緒低落、沮喪或絕望"
       es: "Sentirse desanimado/a, deprimido/a o sin esperanza"
       ja: "気分が落ち込む、憂うつになる、または絶望的な気持ちになる"
       ko: "기분이 가라앉거나, 우울하거나, 희망이 없다고 느낌"
@@ -99,7 +108,8 @@ questions:
   - id: q3
     text:
       en: "Trouble falling or staying asleep, or sleeping too much"
-      zh-hans: "入睡困难、睡不安稳或睡眠过多"
+      zh-hans: "难以入睡、容易醒来或睡得过多"
+      zh-hant: "難以入睡、容易醒來或睡得過多"
       es: "Dificultad para dormir o permanecer dormido/a, o dormir demasiado"
       ja: "寝つきが悪い、途中で目が覚める、または逆に眠りすぎる"
       ko: "잠들기 어렵거나, 잠을 유지하기 어렵거나, 너무 많이 잠"
@@ -109,7 +119,8 @@ questions:
   - id: q4
     text:
       en: "Feeling tired or having little energy"
-      zh-hans: "感到疲倦或没有精力"
+      zh-hans: "感到疲惫或没有精力"
+      zh-hant: "感到疲憊或沒有精力"
       es: "Sentirse cansado/a o con poca energía"
       ja: "疲れた感じがする、または気力がない"
       ko: "피곤하거나 기운이 없다고 느낌"
@@ -120,6 +131,7 @@ questions:
     text:
       en: "Poor appetite or overeating"
       zh-hans: "食欲不振或暴饮暴食"
+      zh-hant: "食慾不振或暴飲暴食"
       es: "Poco apetito o comer en exceso"
       ja: "食欲がない、または食べ過ぎる"
       ko: "식욕이 없거나 과식함"
@@ -129,7 +141,8 @@ questions:
   - id: q6
     text:
       en: "Feeling bad about yourself or that you are a failure or have let yourself or your family down"
-      zh-hans: "觉得自己很糟糕，或觉得自己是个失败者，或让自己或家人失望"
+      zh-hans: "对自己感到不满，觉得自己很失败，或让自己和家人失望"
+      zh-hant: "對自己感到不滿，覺得自己很失敗，或讓自己和家人失望"
       es: "Sentirse mal consigo mismo/a o que es un fracaso o que ha decepcionado a su familia"
       ja: "自分に自信がない、または自分は失敗者だと感じる、あるいは自分や家族を失望させた"
       ko: "자신에 대해 나쁘게 느끼거나 실패자라고 느끼거나 자신이나 가족을 실망시켰다고 느낌"
@@ -139,7 +152,8 @@ questions:
   - id: q7
     text:
       en: "Trouble concentrating on things, such as reading the newspaper or watching television"
-      zh-hans: "难以集中注意力，例如阅读报纸或看电视时"
+      zh-hans: "难以集中注意力，比如阅读或看电视时"
+      zh-hant: "難以集中注意力，比如閱讀或看電視時"
       es: "Dificultad para concentrarse en cosas como leer el periódico o ver televisión"
       ja: "新聞を読んだりテレビを見るなど、物事に集中することが難しい"
       ko: "신문 읽기나 TV 보기 같은 일에 집중하기 어려움"
@@ -149,7 +163,8 @@ questions:
   - id: q8
     text:
       en: "Moving or speaking so slowly that other people could have noticed. Or the opposite - being so fidgety or restless that you have been moving around a lot more than usual"
-      zh-hans: "行动或说话变得很慢，以至于别人可能注意到了。或者相反，变得烦躁不安，比平时动得更多"
+      zh-hans: "动作或说话慢到别人可能会注意到；或者相反，变得烦躁不安，比平时活动得更多"
+      zh-hant: "動作或說話慢到別人可能會注意到；或者相反，變得煩躁不安，比平時活動得更多"
       es: "Moverse o hablar tan lento que otras personas lo han notado. O lo contrario - estar tan inquieto/a que se ha estado moviendo mucho más de lo normal"
       ja: "他の人が気づくほど動きや話し方が遅い。または逆に、落ち着きがなく、普段よりずっと動き回っている"
       ko: "다른 사람들이 알아차릴 정도로 움직이거나 말하는 것이 느림. 또는 반대로 안절부절하여 평소보다 훨씬 많이 움직임"
@@ -159,7 +174,8 @@ questions:
   - id: q9
     text:
       en: "Thoughts that you would be better off dead, or of hurting yourself"
-      zh-hans: "有不如死掉或伤害自己的念头"
+      zh-hans: "有觉得自己死了会更好，或想伤害自己的念头"
+      zh-hant: "有覺得自己死了會更好，或想傷害自己的念頭"
       es: "Pensamientos de que estaría mejor muerto/a, o de hacerse daño"
       ja: "死んだ方がましだ、または自分を傷つけたいという考え"
       ko: "차라리 죽는 것이 낫겠다는 생각, 또는 자해에 대한 생각"
@@ -176,7 +192,8 @@ scoring:
       color: "#22c55e"
       label:
         en: "Minimal depression"
-        zh-hans: "极少抑郁"
+        zh-hans: "抑郁程度极低"
+        zh-hant: "憂鬱程度極低"
         es: "Depresión mínima"
         ja: "最小限のうつ病"
         ko: "최소한의 우울증"
@@ -184,7 +201,8 @@ scoring:
         ar: "اكتئاب ضئيل"
       suggestion:
         en: "Your symptoms suggest minimal depression. Continue monitoring your mental health and maintain healthy habits."
-        zh-hans: "您的症状显示抑郁程度极低。请继续关注心理健康，保持健康习惯。"
+        zh-hans: "您目前的抑郁程度很低。请继续关注自己的心理状态，保持健康的生活习惯。"
+        zh-hant: "您目前的憂鬱程度很低。請繼續關注自己的心理狀態，保持健康的生活習慣。"
         es: "Sus síntomas sugieren depresión mínima. Continúe monitoreando su salud mental y mantenga hábitos saludables."
         ja: "症状は最小限のうつ病を示唆しています。引き続きメンタルヘルスを監視し、健康的な習慣を維持してください。"
         ko: "증상이 최소한의 우울증을 나타냅니다. 정신 건강을 계속 모니터링하고 건강한 습관을 유지하세요."
@@ -197,6 +215,7 @@ scoring:
       label:
         en: "Mild depression"
         zh-hans: "轻度抑郁"
+        zh-hant: "輕度憂鬱"
         es: "Depresión leve"
         ja: "軽度のうつ病"
         ko: "경미한 우울증"
@@ -204,7 +223,8 @@ scoring:
         ar: "اكتئاب خفيف"
       suggestion:
         en: "You may be experiencing mild depression. Consider self-help strategies, breathing exercises, or speaking with a counselor."
-        zh-hans: "您可能存在轻度抑郁。建议尝试自助策略、呼吸练习，或与心理咨询师交谈。"
+        zh-hans: "您可能正在经历轻度抑郁。可以尝试一些自我调节方法、呼吸练习，或者与亲友倾诉。如果症状持续，建议咨询心理咨询师。"
+        zh-hant: "您可能正在經歷輕度憂鬱。可以嘗試一些自我調節方法、呼吸練習，或者與親友傾訴。如果症狀持續，建議諮詢心理諮詢師。"
         es: "Puede estar experimentando depresión leve. Considere estrategias de autoayuda, ejercicios de respiración o hablar con un consejero."
         ja: "軽度のうつ病を経験している可能性があります。セルフヘルプ戦略、呼吸法、またはカウンセラーとの相談を検討してください。"
         ko: "경미한 우울증을 경험하고 있을 수 있습니다. 자가 도움 전략, 호흡 운동 또는 상담사와의 상담을 고려해 보세요."
@@ -217,6 +237,7 @@ scoring:
       label:
         en: "Moderate depression"
         zh-hans: "中度抑郁"
+        zh-hant: "中度憂鬱"
         es: "Depresión moderada"
         ja: "中程度のうつ病"
         ko: "중등도 우울증"
@@ -224,7 +245,8 @@ scoring:
         ar: "اكتئاب متوسط"
       suggestion:
         en: "Your symptoms indicate moderate depression. We recommend consulting with a mental health professional for proper evaluation and guidance."
-        zh-hans: "您的症状表明中度抑郁。建议咨询心理健康专业人士进行适当评估和指导。"
+        zh-hans: "您的情况显示为中度抑郁。建议您咨询心理健康专业人士，以获得适当的评估和指导。"
+        zh-hant: "您的情況顯示為中度憂鬱。建議您諮詢心理健康專業人士，以獲得適當的評估和指導。"
         es: "Sus síntomas indican depresión moderada. Recomendamos consultar con un profesional de salud mental para una evaluación y orientación adecuadas."
         ja: "症状は中程度のうつ病を示しています。適切な評価と指導のために、メンタルヘルスの専門家に相談することをお勧めします。"
         ko: "증상이 중등도 우울증을 나타냅니다. 적절한 평가와 안내를 위해 정신건강 전문가와 상담하시기 바랍니다."
@@ -237,6 +259,7 @@ scoring:
       label:
         en: "Moderately severe depression"
         zh-hans: "中重度抑郁"
+        zh-hant: "中重度憂鬱"
         es: "Depresión moderadamente severa"
         ja: "中等度から重度のうつ病"
         ko: "중증도 우울증"
@@ -244,7 +267,8 @@ scoring:
         ar: "اكتئاب شديد متوسط"
       suggestion:
         en: "Your symptoms suggest moderately severe depression. Please seek professional mental health support as soon as possible."
-        zh-hans: "您的症状表明中重度抑郁。请尽快寻求专业心理健康支持。"
+        zh-hans: "您的情况显示为中重度抑郁。请尽快寻求专业的心理健康支持。"
+        zh-hant: "您的情況顯示為中重度憂鬱。請儘快尋求專業的心理健康支持。"
         es: "Sus síntomas sugieren depresión moderadamente severa. Por favor busque apoyo profesional de salud mental lo antes posible."
         ja: "症状は中等度から重度のうつ病を示唆しています。できるだけ早く専門的なメンタルヘルスサポートを求めてください。"
         ko: "증상이 중증도 우울증을 나타냅니다. 가능한 한 빨리 전문적인 정신건강 지원을 받으시기 바랍니다."
@@ -257,6 +281,7 @@ scoring:
       label:
         en: "Severe depression"
         zh-hans: "重度抑郁"
+        zh-hant: "重度憂鬱"
         es: "Depresión severa"
         ja: "重度のうつ病"
         ko: "심한 우울증"
@@ -264,7 +289,8 @@ scoring:
         ar: "اكتئاب شديد"
       suggestion:
         en: "Your symptoms indicate severe depression. Please contact a mental health professional or crisis hotline immediately. You don't have to face this alone."
-        zh-hans: "您的症状表明重度抑郁。请立即联系心理健康专业人士或危机热线。您不必独自面对。"
+        zh-hans: "您的情况显示为重度抑郁。请立即联系心理健康专业人士或拨打危机热线。您不必独自承受，寻求帮助是勇敢的选择。"
+        zh-hant: "您的情況顯示為重度憂鬱。請立即聯繫心理健康專業人士或撥打危機專線。您不必獨自承受，尋求幫助是勇敢的選擇。"
         es: "Sus síntomas indican depresión severa. Por favor contacte a un profesional de salud mental o línea de crisis inmediatamente. No tiene que enfrentar esto solo/a."
         ja: "症状は重度のうつ病を示しています。すぐにメンタルヘルスの専門家または危機対応ホットラインに連絡してください。一人で向き合う必要はありません。"
         ko: "증상이 심한 우울증을 나타냅니다. 즉시 정신건강 전문가나 위기 상담 전화에 연락하세요. 혼자 감당할 필요가 없습니다."
@@ -273,7 +299,8 @@ scoring:
 
 disclaimer:
   en: "This questionnaire is for screening purposes only and does not constitute a medical diagnosis. If you feel distressed or need help, please consult a professional."
-  zh-hans: "本问卷仅供筛查使用，不构成医学诊断。如果您感到困扰或需要帮助，请咨询专业人士。"
+  zh-hans: "本问卷仅供初步筛查参考，不能作为医学诊断依据。如果您感到困扰或需要帮助，请咨询专业的心理健康人士。"
+  zh-hant: "本問卷僅供初步篩檢參考，不能作為醫學診斷依據。如果您感到困擾或需要協助，請諮詢專業的心理健康人士。"
   es: "Este cuestionario es solo para fines de detección y no constituye un diagnóstico médico. Si se siente angustiado/a o necesita ayuda, consulte a un profesional."
   ja: "この質問票はスクリーニング目的のみであり、医学的診断を構成するものではありません。苦痛を感じたり、助けが必要な場合は、専門家にご相談ください。"
   ko: "이 설문지는 선별 목적으로만 사용되며 의학적 진단을 구성하지 않습니다. 고통스럽거나 도움이 필요하면 전문가와 상담하세요."

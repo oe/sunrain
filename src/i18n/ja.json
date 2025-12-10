@@ -6,10 +6,10 @@
   },
   "nav": {
     "home": "ホーム",
-    "assessment": "評価",
-    "breathing": "呼吸",
+    "assessment": "診断",
+    "breathing": "呼吸法",
     "crisis": "危機支援",
-    "about": "について"
+    "about": "サイト情報"
   },
   "home": {
     "hero": {
@@ -142,7 +142,7 @@
   },
   "footer": {
     "copyright": "© {year} Sunrain. All rights reserved.",
-    "mission": "希望と癒しを広める。",
+    "mission": "心に寄り添い、希望の光を届けます。",
     "links": "リンク",
     "privacy": "プライバシー",
     "github": "GitHub"
