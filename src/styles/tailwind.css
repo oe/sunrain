@@ -86,32 +86,30 @@ body {
   @apply transition-all duration-200 hover:shadow-sm hover:border-gray-300;
 }
 
-/* Dark mode support */
-@media (prefers-color-scheme: dark) {
-  .dark-auto {
-    color-scheme: dark;
-  }
-}
-
-/* Ensure dark mode classes work properly */
-.dark {
-  color-scheme: dark;
-}
-
 /* Theme transition support */
 html {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Dark mode variables */
+/* Color scheme and theme variables */
+/* color-scheme is set based on page theme class, NOT system preference */
+/* This ensures form elements (radio, checkbox, etc.) follow page theme, not OS theme */
 :root {
+  color-scheme: light;
   --color-bg: #ffffff;
   --color-text: #1f2937;
 }
 
 .dark {
+  color-scheme: dark;
   --color-bg: #111827;
   --color-text: #f9fafb;
+}
+
+/* Force form elements to follow page theme with consistent accent color */
+input[type="radio"],
+input[type="checkbox"] {
+  accent-color: #2563eb; /* blue-600 */
 }
 
 /* Theme switcher animations */
