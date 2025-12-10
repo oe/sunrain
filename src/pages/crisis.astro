@@ -76,9 +76,13 @@ const countryEmojis: Record<string, string> = {
     <!-- Search & Filter -->
     <div class="max-w-3xl mx-auto mb-8 flex flex-col sm:flex-row gap-4">
       <input
-        type="text"
+        type="search"
         id="search-input"
         placeholder={t('crisis.search', lang)}
+        autocomplete="off"
+        data-1p-ignore
+        data-lpignore="true"
+        data-form-type="other"
         class="flex-1 px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
       />
       <select
@@ -97,7 +101,7 @@ const countryEmojis: Record<string, string> = {
     <!-- Hotlines by Region -->
     <div id="regions-container" class="space-y-8">
       {regions.map((region: Region) => (
-        <div class="region-section" data-region={region.code}>
+        <div class="region-section" data-region={region.code} data-region-name={region.name.toLowerCase()}>
           <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
             <span>{countryEmojis[region.code] || '🌍'}</span>
             <span>{region.name}</span>
@@ -109,7 +113,8 @@ const countryEmojis: Record<string, string> = {
             {region.hotlines.map((hotline: Hotline) => (
               <div class="hotline-card bg-white dark:bg-gray-800 rounded-xl shadow-md border border-gray-100 dark:border-gray-700 p-6 hover:shadow-lg transition-shadow"
                    data-name={hotline.name.toLowerCase()}
-                   data-phone={hotline.phone.toLowerCase()}>
+                   data-phone={hotline.phone.toLowerCase()}
+                   data-description={(hotline.description || '').toLowerCase()}>
                 <div class="flex items-center gap-2 text-red-600 dark:text-red-400 mb-3">
                   <span>📞</span>
                   <span class="text-sm font-medium">{t('crisis.phone', lang)}</span>
@@ -175,22 +180,30 @@ const countryEmojis: Record<string, string> = {
     
     regionSections.forEach((section) => {
       const regionCode = section.getAttribute('data-region');
+      const regionName = section.getAttribute('data-region-name') || '';
       const cards = section.querySelectorAll('.hotline-card');
       let sectionHasVisibleCards = false;
       
-      // Check region filter
+      // Check region filter (dropdown)
       if (selectedRegion && regionCode !== selectedRegion) {
         (section as HTMLElement).classList.add('hidden');
         return;
       }
       
+      // Check if region name matches search term - show all cards in that region
+      const regionMatches = searchTerm && regionName.includes(searchTerm);
+      
       // Check search term for each card
       cards.forEach((card) => {
         const name = card.getAttribute('data-name') || '';
         const phone = card.getAttribute('data-phone') || '';
-        const matches = !searchTerm || name.includes(searchTerm) || phone.includes(searchTerm);
+        const description = card.getAttribute('data-description') || '';
+        const cardMatches = !searchTerm || regionMatches || 
+          name.includes(searchTerm) || 
+          phone.includes(searchTerm) || 
+          description.includes(searchTerm);
         
-        if (matches) {
+        if (cardMatches) {
           (card as HTMLElement).classList.remove('hidden');
           sectionHasVisibleCards = true;
         } else {
