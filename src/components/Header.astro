@@ -1,6 +1,5 @@
 ---
 import { t, getLocalizedPath, SUPPORTED_LANGUAGES, LANGUAGE_NAMES, type Language } from '@/lib/i18n';
-import { Icon } from '@/components/Icon';
 
 interface Props {
   lang: Language;
@@ -21,7 +20,7 @@ const navItems = [
   <nav class="container mx-auto px-4 h-16 flex items-center justify-between">
     <!-- Logo -->
     <a href={getLocalizedPath('/', lang)} class="flex items-center gap-2 text-xl font-bold text-gray-900 dark:text-white">
-      <Icon name="CloudSun" size={28} className="text-amber-500" />
+      <img src="/logo.png" alt="Sunrain" class="w-7 h-7" />
       <span>Sunrain</span>
     </a>
 
