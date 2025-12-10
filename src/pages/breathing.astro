@@ -137,6 +137,9 @@ const lang = getLanguageFromPath(Astro.url.pathname) as Language;
   let cycles = 0;
   let currentPhase = 'ready';
   let timeoutId = null;
+  let phaseStartTime = 0;
+  let phaseDuration = 0;
+  let remainingTime = 0;
   
   function getSettings() {
     return {
@@ -146,56 +149,73 @@ const lang = getLanguageFromPath(Astro.url.pathname) as Language;
     };
   }
   
-  function updateCircle(scale, text) {
-    if (circle) circle.style.transform = `scale(${scale})`;
+  function updateCircle(scale, text, duration) {
+    if (circle) {
+      circle.style.transitionDuration = `${duration}ms`;
+      circle.style.transform = `scale(${scale})`;
+    }
     if (breathingText) breathingText.textContent = text;
   }
   
-  function breathingCycle() {
+  function runPhase(phase, duration) {
     if (!isRunning) return;
     
-    const { inhale, hold, exhale } = getSettings();
+    const settings = getSettings();
+    currentPhase = phase;
+    phaseStartTime = Date.now();
+    phaseDuration = duration;
     
-    // Inhale
-    currentPhase = 'inhale';
-    updateCircle(1.3, t.inhale);
-    if (circle) circle.style.transitionDuration = `${inhale}ms`;
-    
-    timeoutId = setTimeout(() => {
-      if (!isRunning) return;
-      
-      // Hold
-      currentPhase = 'hold';
-      updateCircle(1.3, t.hold);
-      
+    if (phase === 'inhale') {
+      updateCircle(1.3, t.inhale, duration);
+      timeoutId = setTimeout(() => runPhase('hold', settings.hold), duration);
+    } else if (phase === 'hold') {
+      updateCircle(1.3, t.hold, 0);
+      timeoutId = setTimeout(() => runPhase('exhale', settings.exhale), duration);
+    } else if (phase === 'exhale') {
+      updateCircle(1, t.exhale, duration);
       timeoutId = setTimeout(() => {
-        if (!isRunning) return;
-        
-        // Exhale
-        currentPhase = 'exhale';
-        updateCircle(1, t.exhale);
-        if (circle) circle.style.transitionDuration = `${exhale}ms`;
-        
-        timeoutId = setTimeout(() => {
-          if (!isRunning) return;
-          cycles++;
-          if (cyclesCount) cyclesCount.textContent = String(cycles);
-          breathingCycle();
-        }, exhale);
-      }, hold);
-    }, inhale);
+        cycles++;
+        if (cyclesCount) cyclesCount.textContent = String(cycles);
+        runPhase('inhale', settings.inhale);
+      }, duration);
+    }
   }
   
   function start() {
     isRunning = true;
     startBtn?.classList.add('hidden');
     pauseBtn?.classList.remove('hidden');
-    breathingCycle();
+    
+    const settings = getSettings();
+    
+    if (currentPhase === 'ready') {
+      // Fresh start
+      runPhase('inhale', settings.inhale);
+    } else if (remainingTime > 0) {
+      // Resume from paused state
+      runPhase(currentPhase, remainingTime);
+    } else {
+      // Fallback: start new cycle
+      runPhase('inhale', settings.inhale);
+    }
   }
   
   function pause() {
     isRunning = false;
     if (timeoutId) clearTimeout(timeoutId);
+    
+    // Calculate remaining time for current phase
+    const elapsed = Date.now() - phaseStartTime;
+    remainingTime = Math.max(0, phaseDuration - elapsed);
+    
+    // Pause the CSS transition
+    if (circle) {
+      const computedStyle = window.getComputedStyle(circle);
+      const currentTransform = computedStyle.transform;
+      circle.style.transitionDuration = '0ms';
+      circle.style.transform = currentTransform;
+    }
+    
     startBtn?.classList.remove('hidden');
     pauseBtn?.classList.add('hidden');
   }
@@ -203,9 +223,10 @@ const lang = getLanguageFromPath(Astro.url.pathname) as Language;
   function reset() {
     pause();
     cycles = 0;
+    currentPhase = 'ready';
+    remainingTime = 0;
     if (cyclesCount) cyclesCount.textContent = '0';
-    updateCircle(1, t.start);
-    if (circle) circle.style.transitionDuration = '300ms';
+    updateCircle(1, t.start, 300);
   }
   
   startBtn?.addEventListener('click', start);
