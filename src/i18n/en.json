@@ -17,24 +17,31 @@
       "subtitle": "Discover tools, resources, and guidance for better mental health",
       "description": "A warm, safe space for your mind. 🤗",
       "startAssessment": "Start Assessment",
-      "tryBreathing": "Try Breathing Exercise"
+      "tryBreathing": "Try Breathing Exercise",
+      "scrollHint": "Explore"
     },
     "features": {
+      "sectionTitle": "Core Features",
+      "sectionSubtitle": "Tools designed to support your mental wellness journey",
       "assessment": {
         "title": "Self-Assessment",
         "description": "Understand your mental health with scientifically validated questionnaires",
-        "button": "Start Assessment →"
+        "button": "Start Assessment"
       },
       "breathing": {
         "title": "Breathing Exercise",
         "description": "Calm your mind with guided breathing exercises",
-        "button": "Start Breathing →"
+        "button": "Start Breathing"
       },
       "crisis": {
         "title": "Crisis Support",
         "description": "24/7 crisis hotlines and mental health resources worldwide",
-        "button": "Get Help →"
+        "button": "Get Help"
       }
+    },
+    "privacy": {
+      "title": "Your Privacy, Protected",
+      "description": "All your data stays on your device. No tracking, no cookies, no servers. Your mental health journey is yours alone."
     }
   },
   "assessment": {
@@ -82,6 +89,9 @@
     "pause": "Pause",
     "reset": "Reset",
     "cycles": "Cycles completed",
+    "modes": {
+      "title": "Breathing Mode"
+    },
     "settings": {
       "title": "Settings",
       "inhaleTime": "Inhale (seconds)",
@@ -172,4 +182,3 @@
     }
   }
 }
-

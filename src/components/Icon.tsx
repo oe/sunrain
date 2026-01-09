@@ -17,6 +17,12 @@ import {
   BarChart3,
   Mail,
   Heart,
+  ArrowRight,
+  Shield,
+  Play,
+  Pause,
+  RotateCcw,
+  Check,
 } from 'lucide-react';
 import type { LucideProps } from 'lucide-react';
 
@@ -36,6 +42,12 @@ const iconMap = {
   BarChart3,
   Mail,
   Heart,
+  ArrowRight,
+  Shield,
+  Play,
+  Pause,
+  RotateCcw,
+  Check,
 } as const;
 
 export type IconName = keyof typeof iconMap;

@@ -17,24 +17,31 @@
       "subtitle": "Descubre herramientas, recursos y orientación para una mejor salud mental",
       "description": "Un espacio cálido y seguro para tu mente. 🤗",
       "startAssessment": "Iniciar Evaluación",
-      "tryBreathing": "Probar Ejercicio de Respiración"
+      "tryBreathing": "Probar Ejercicio de Respiración",
+      "scrollHint": "Explorar"
     },
     "features": {
+      "sectionTitle": "Características Principales",
+      "sectionSubtitle": "Herramientas diseñadas para apoyar tu viaje de bienestar mental",
       "assessment": {
         "title": "Autoevaluación",
         "description": "Comprende tu salud mental con cuestionarios científicamente validados",
-        "button": "Iniciar Evaluación →"
+        "button": "Iniciar Evaluación"
       },
       "breathing": {
         "title": "Ejercicio de Respiración",
         "description": "Calma tu mente con ejercicios de respiración guiados",
-        "button": "Comenzar →"
+        "button": "Iniciar Respiración"
       },
       "crisis": {
         "title": "Apoyo en Crisis",
         "description": "Líneas de crisis 24/7 y recursos de salud mental en todo el mundo",
-        "button": "Obtener Ayuda →"
+        "button": "Obtener Ayuda"
       }
+    },
+    "privacy": {
+      "title": "Tu Privacidad, Protegida",
+      "description": "Todos tus datos permanecen en tu dispositivo. Sin seguimiento, sin cookies, sin servidores. Tu viaje de salud mental es solo tuyo."
     }
   },
   "assessment": {
@@ -82,6 +89,9 @@
     "pause": "Pausar",
     "reset": "Reiniciar",
     "cycles": "Ciclos completados",
+    "modes": {
+      "title": "Modo de Respiración"
+    },
     "settings": {
       "title": "Configuración",
       "inhaleTime": "Inhalar (segundos)",
@@ -172,4 +182,3 @@
     }
   }
 }
-

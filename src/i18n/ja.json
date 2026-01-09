@@ -17,24 +17,31 @@
       "subtitle": "より良いメンタルヘルスのためのツール、リソース、ガイダンスを発見",
       "description": "あなたの心のための温かく安全な空間。🤗",
       "startAssessment": "評価を開始",
-      "tryBreathing": "呼吸エクササイズを試す"
+      "tryBreathing": "呼吸エクササイズを試す",
+      "scrollHint": "探索"
     },
     "features": {
+      "sectionTitle": "主な機能",
+      "sectionSubtitle": "メンタルウェルネスの旅をサポートするための専用ツール",
       "assessment": {
         "title": "自己評価",
         "description": "科学的に検証された質問票でメンタルヘルスを理解する",
-        "button": "評価を開始 →"
+        "button": "評価を開始"
       },
       "breathing": {
         "title": "呼吸エクササイズ",
         "description": "ガイド付き呼吸エクササイズで心を落ち着かせる",
-        "button": "開始 →"
+        "button": "呼吸法を開始"
       },
       "crisis": {
         "title": "危機支援",
         "description": "世界中の24時間対応の危機ホットラインとメンタルヘルスリソース",
-        "button": "ヘルプを取得 →"
+        "button": "ヘルプを取得"
       }
+    },
+    "privacy": {
+      "title": "プライバシーは保護されています",
+      "description": "すべてのデータはお使いのデバイスに保存されます。追跡もCookieもサーバーもありません。あなたのメンタルヘルスの旅は、あなただけのものです。"
     }
   },
   "assessment": {
@@ -82,6 +89,9 @@
     "pause": "一時停止",
     "reset": "リセット",
     "cycles": "完了したサイクル",
+    "modes": {
+      "title": "呼吸モード"
+    },
     "settings": {
       "title": "設定",
       "inhaleTime": "吸う（秒）",
@@ -172,4 +182,3 @@
     }
   }
 }
-

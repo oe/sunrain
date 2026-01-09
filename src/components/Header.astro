@@ -1,56 +1,118 @@
 ---
-import { t, getLocalizedPath, SUPPORTED_LANGUAGES, LANGUAGE_NAMES, type Language } from '@/lib/i18n';
+import {
+  t,
+  getLocalizedPath,
+  SUPPORTED_LANGUAGES,
+  LANGUAGE_NAMES,
+  type Language
+} from '@/lib/i18n';
 
 interface Props {
   lang: Language;
 }
 
 const { lang } = Astro.props;
+const currentPath = Astro.url.pathname;
+
+// Get the path without language prefix for comparison
+function getPathWithoutLang(path: string): string {
+  return path.replace(/^\/[a-z]{2}(-[a-z]+)?(?=\/|$)/, '') || '/';
+}
+
+const normalizedPath = getPathWithoutLang(currentPath);
 
 const navItems = [
   { key: 'nav.home', href: '/' },
   { key: 'nav.assessment', href: '/assessment/' },
   { key: 'nav.breathing', href: '/breathing/' },
   { key: 'nav.crisis', href: '/crisis/' },
-  { key: 'nav.about', href: '/about/' },
+  { key: 'nav.about', href: '/about/' }
 ];
+
+// Check if current path matches nav item
+function isActive(itemHref: string): boolean {
+  if (itemHref === '/') {
+    return normalizedPath === '/' || normalizedPath === '';
+  }
+  return normalizedPath.startsWith(itemHref);
+}
 ---
 
-<header class="fixed top-0 left-0 right-0 z-50 bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm border-b border-gray-200 dark:border-gray-700">
-  <nav class="container mx-auto px-4 h-16 flex items-center justify-between">
+<header
+  id="main-header"
+  class="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
+>
+  <div
+    class="header-bg absolute inset-0 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-200/50 dark:border-gray-700/50"
+  >
+  </div>
+
+  <nav
+    class="container mx-auto px-4 h-16 flex items-center justify-between relative z-10"
+  >
     <!-- Logo -->
-    <a href={getLocalizedPath('/', lang)} class="flex items-center gap-2 text-xl font-bold text-gray-900 dark:text-white">
-      <img src="/logo.png" alt="Sunrain" class="w-7 h-7" />
-      <span>Sunrain</span>
+    <a
+      href={getLocalizedPath('/', lang)}
+      class="flex items-center gap-2.5 text-xl font-bold text-gray-900 dark:text-white group"
+    >
+      <div class="relative">
+        <div
+          class="absolute -inset-1 bg-gradient-to-r from-amber-400 to-orange-400 rounded-full blur opacity-0 group-hover:opacity-50 transition-opacity duration-300"
+        >
+        </div>
+        <img
+          src="/logo.png"
+          alt="Sunrain"
+          class="relative w-8 h-8 group-hover:scale-110 transition-transform duration-300"
+        />
+      </div>
+      <span
+        class="bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-200 bg-clip-text text-transparent"
+        >Sunrain</span
+      >
     </a>
 
     <!-- Desktop Nav -->
-    <div class="hidden md:flex items-center gap-6">
-      {navItems.map((item) => (
-        <a
-          href={getLocalizedPath(item.href, lang)}
-          class="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors"
-        >
-          {t(item.key, lang)}
-        </a>
-      ))}
+    <div class="hidden md:flex items-center gap-1">
+      {
+        navItems.map((item) => (
+          <a
+            href={getLocalizedPath(item.href, lang)}
+            class:list={[
+              'relative px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200',
+              isActive(item.href)
+                ? 'text-amber-600 dark:text-amber-400'
+                : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100/50 dark:hover:bg-gray-800/50'
+            ]}
+          >
+            {t(item.key, lang)}
+            {isActive(item.href) && (
+              <span class="absolute bottom-0 left-1/2 -translate-x-1/2 w-1 h-1 bg-amber-500 rounded-full" />
+            )}
+          </a>
+        ))
+      }
     </div>
 
     <!-- Right side: Language + Theme -->
-    <div class="flex items-center gap-3">
+    <div class="flex items-center gap-2">
       <!-- Language Selector -->
       <div class="relative">
         <select
           id="lang-select"
-          class="appearance-none bg-transparent px-2 py-1.5 pr-6 text-sm text-gray-600 dark:text-gray-400 cursor-pointer hover:text-gray-900 dark:hover:text-white focus:outline-none transition-colors"
+          class="appearance-none bg-gray-100/50 dark:bg-gray-800/50 px-3 py-1.5 pr-7 rounded-lg text-sm text-gray-600 dark:text-gray-400 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-amber-500/50 transition-all duration-200"
         >
-          {SUPPORTED_LANGUAGES.map((l) => (
-            <option value={l} selected={l === lang}>
-              {LANGUAGE_NAMES[l]}
-            </option>
-          ))}
+          {
+            SUPPORTED_LANGUAGES.map((l) => (
+              <option value={l} selected={l === lang}>
+                {LANGUAGE_NAMES[l]}
+              </option>
+            ))
+          }
         </select>
-        <span class="absolute right-1 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400 dark:text-gray-500 text-xs">
+        <span
+          class="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400 dark:text-gray-500 text-xs"
+        >
           ▼
         </span>
       </div>
@@ -59,31 +121,84 @@ const navItems = [
       <div class="relative">
         <button
           id="theme-toggle"
-          class="p-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+          class="p-2.5 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-gray-100/50 dark:hover:bg-gray-800/50 transition-all duration-200"
           aria-label={t('common.theme.toggle', lang)}
         >
-          <svg id="theme-icon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+          <svg
+            id="theme-icon"
+            class="w-5 h-5"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
+            ></path>
           </svg>
         </button>
-        
+
         <!-- Dropdown menu -->
-        <div id="theme-menu" class="hidden absolute right-0 mt-2 w-32 rounded-lg py-1 z-50 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-lg">
-          <button data-value="light" class="theme-option w-full px-3 py-2 text-left text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center gap-2">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+        <div
+          id="theme-menu"
+          class="hidden absolute right-0 mt-2 w-36 rounded-xl py-1.5 z-50 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-xl animate-fade-in-scale"
+        >
+          <button
+            data-value="light"
+            class="theme-option w-full px-3 py-2 text-left text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center gap-2 transition-colors"
+          >
+            <svg
+              class="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
+              ></path>
             </svg>
             {t('common.theme.light', lang)}
           </button>
-          <button data-value="dark" class="theme-option w-full px-3 py-2 text-left text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center gap-2">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+          <button
+            data-value="dark"
+            class="theme-option w-full px-3 py-2 text-left text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center gap-2 transition-colors"
+          >
+            <svg
+              class="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
+              ></path>
             </svg>
             {t('common.theme.dark', lang)}
           </button>
-          <button data-value="system" class="theme-option w-full px-3 py-2 text-left text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center gap-2">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+          <button
+            data-value="system"
+            class="theme-option w-full px-3 py-2 text-left text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center gap-2 transition-colors"
+          >
+            <svg
+              class="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+              ></path>
             </svg>
             {t('common.theme.system', lang)}
           </button>
@@ -93,119 +208,191 @@ const navItems = [
       <!-- Mobile Menu Button -->
       <button
         id="mobile-menu-btn"
-        class="md:hidden p-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
+        class="md:hidden p-2.5 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-gray-100/50 dark:hover:bg-gray-800/50 transition-colors"
         aria-label="Menu"
       >
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        <svg
+          id="menu-icon"
+          class="w-6 h-6 transition-transform duration-300"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M4 6h16M4 12h16M4 18h16"></path>
         </svg>
       </button>
     </div>
   </nav>
 
   <!-- Mobile Menu -->
-  <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700">
-    <div class="container mx-auto px-4 py-4 flex flex-col gap-3">
-      {navItems.map((item) => (
-        <a
-          href={getLocalizedPath(item.href, lang)}
-          class="py-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
-        >
-          {t(item.key, lang)}
-        </a>
-      ))}
+  <div
+    id="mobile-menu"
+    class="hidden md:hidden overflow-hidden transition-all duration-300"
+    style="max-height: 0;"
+  >
+    <div
+      class="bg-white/95 dark:bg-gray-900/95 backdrop-blur-md border-t border-gray-200/50 dark:border-gray-700/50"
+    >
+      <div class="container mx-auto px-4 py-4 flex flex-col gap-1">
+        {
+          navItems.map((item) => (
+            <a
+              href={getLocalizedPath(item.href, lang)}
+              class:list={[
+                'py-3 px-4 rounded-lg transition-all duration-200',
+                isActive(item.href)
+                  ? 'bg-amber-50 dark:bg-amber-900/20 text-amber-600 dark:text-amber-400 font-medium'
+                  : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'
+              ]}
+            >
+              {t(item.key, lang)}
+            </a>
+          ))
+        }
+      </div>
     </div>
   </div>
 </header>
 
 <script>
+  // Header scroll effect
+  const header = document.getElementById('main-header');
+  const headerBg = header?.querySelector('.header-bg');
+
+  function updateHeaderOnScroll() {
+    if (window.scrollY > 20) {
+      headerBg?.classList.add('shadow-sm');
+    } else {
+      headerBg?.classList.remove('shadow-sm');
+    }
+  }
+
+  window.addEventListener('scroll', updateHeaderOnScroll, { passive: true });
+  updateHeaderOnScroll();
+
   // Theme selector
   const themeToggle = document.getElementById('theme-toggle');
   const themeMenu = document.getElementById('theme-menu');
   const themeIcon = document.getElementById('theme-icon');
   const themeOptions = document.querySelectorAll('.theme-option');
-  
+
   const icons = {
-    light: 'M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z',
+    light:
+      'M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z',
     dark: 'M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z',
-    system: 'M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z'
+    system:
+      'M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z'
   };
-  
+
   function getThemeSetting(): string {
     return localStorage.getItem('theme') || 'system';
   }
-  
+
   function systemPrefersDark(): boolean {
     return window.matchMedia('(prefers-color-scheme: dark)').matches;
   }
-  
+
   function updateIcon(setting: string) {
     const path = themeIcon?.querySelector('path');
     if (path) {
-      path.setAttribute('d', icons[setting as keyof typeof icons] || icons.system);
+      path.setAttribute(
+        'd',
+        icons[setting as keyof typeof icons] || icons.system
+      );
     }
   }
-  
+
   function applyTheme(setting: string) {
     const html = document.documentElement;
     html.classList.remove('dark');
-    
+
     if (setting === 'dark' || (setting === 'system' && systemPrefersDark())) {
       html.classList.add('dark');
     }
-    
+
     localStorage.setItem('theme', setting);
     updateIcon(setting);
   }
-  
+
   // Initialize icon
   updateIcon(getThemeSetting());
-  
+
   // Toggle menu
   themeToggle?.addEventListener('click', (e) => {
     e.stopPropagation();
     themeMenu?.classList.toggle('hidden');
   });
-  
+
   // Handle theme selection
-  themeOptions.forEach(btn => {
+  themeOptions.forEach((btn) => {
     btn.addEventListener('click', () => {
       const theme = (btn as HTMLElement).dataset.value || 'system';
       themeMenu?.classList.add('hidden');
       applyTheme(theme);
     });
   });
-  
+
   // Close menu when clicking outside
   document.addEventListener('click', (e) => {
-    if (!themeToggle?.contains(e.target as Node) && !themeMenu?.contains(e.target as Node)) {
+    if (
+      !themeToggle?.contains(e.target as Node) &&
+      !themeMenu?.contains(e.target as Node)
+    ) {
       themeMenu?.classList.add('hidden');
     }
   });
-  
+
   // Listen for system theme changes
-  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
-    if (getThemeSetting() === 'system') {
-      applyTheme('system');
-    }
-  });
+  window
+    .matchMedia('(prefers-color-scheme: dark)')
+    .addEventListener('change', () => {
+      if (getThemeSetting() === 'system') {
+        applyTheme('system');
+      }
+    });
 
   // Language selector
-  const langSelect = document.getElementById('lang-select') as HTMLSelectElement;
+  const langSelect = document.getElementById(
+    'lang-select'
+  ) as HTMLSelectElement;
   langSelect?.addEventListener('change', (e) => {
     const newLang = (e.target as HTMLSelectElement).value;
     const currentPath = window.location.pathname;
     // Handle both simple locales (en, es) and compound locales (zh-hans, zh-hant)
-    const cleanPath = currentPath.replace(/^\/[a-z]{2}(-[a-z]+)?(?=\/|$)/, '') || '/';
+    const cleanPath =
+      currentPath.replace(/^\/[a-z]{2}(-[a-z]+)?(?=\/|$)/, '') || '/';
     const newPath = newLang === 'en' ? cleanPath : `/${newLang}${cleanPath}`;
     window.location.href = newPath;
   });
 
-  // Mobile menu toggle
+  // Mobile menu toggle with animation
   const mobileMenuBtn = document.getElementById('mobile-menu-btn');
   const mobileMenu = document.getElementById('mobile-menu');
+  const menuIcon = document.getElementById('menu-icon');
+  let isMenuOpen = false;
+
   mobileMenuBtn?.addEventListener('click', () => {
-    mobileMenu?.classList.toggle('hidden');
+    isMenuOpen = !isMenuOpen;
+
+    if (isMenuOpen) {
+      mobileMenu?.classList.remove('hidden');
+      // Trigger reflow for animation
+      mobileMenu?.offsetHeight;
+      mobileMenu!.style.maxHeight = mobileMenu!.scrollHeight + 'px';
+      menuIcon?.classList.add('rotate-90');
+    } else {
+      mobileMenu!.style.maxHeight = '0';
+      menuIcon?.classList.remove('rotate-90');
+      // Hide after animation
+      setTimeout(() => {
+        if (!isMenuOpen) {
+          mobileMenu?.classList.add('hidden');
+        }
+      }, 300);
+    }
   });
 </script>
-

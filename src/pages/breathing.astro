@@ -1,106 +1,294 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { t, getLanguageFromPath, type Language } from '@/lib/i18n';
+import { Icon } from '@/components/Icon';
 
 const lang = getLanguageFromPath(Astro.url.pathname) as Language;
+
+// Breathing modes configuration
+const breathingModes = [
+  {
+    id: 'balanced',
+    name: {
+      en: 'Balanced',
+      'zh-hans': '平衡呼吸',
+      'zh-hant': '平衡呼吸',
+      es: 'Equilibrado',
+      ja: 'バランス',
+      ko: '균형',
+      hi: 'संतुलित',
+      ar: 'متوازن'
+    },
+    description: {
+      en: 'Equal rhythm for focus',
+      'zh-hans': '均衡节奏，集中注意力',
+      'zh-hant': '均衡節奏，集中注意力',
+      es: 'Ritmo igual para concentrarse',
+      ja: '集中のための均等リズム',
+      ko: '집중을 위한 균등 리듬',
+      hi: 'एकाग्रता के लिए समान लय',
+      ar: 'إيقاع متساوٍ للتركيز'
+    },
+    inhale: 4,
+    hold: 4,
+    exhale: 4,
+    color: 'teal'
+  },
+  {
+    id: 'relaxing',
+    name: {
+      en: '4-7-8 Relaxing',
+      'zh-hans': '4-7-8 放松',
+      'zh-hant': '4-7-8 放鬆',
+      es: '4-7-8 Relajante',
+      ja: '4-7-8 リラックス',
+      ko: '4-7-8 이완',
+      hi: '4-7-8 आराम',
+      ar: '4-7-8 استرخاء'
+    },
+    description: {
+      en: 'Deep relaxation & sleep',
+      'zh-hans': '深度放松助眠',
+      'zh-hant': '深度放鬆助眠',
+      es: 'Relajación profunda y sueño',
+      ja: '深いリラクゼーションと睡眠',
+      ko: '깊은 휴식과 수면',
+      hi: 'गहरा आराम और नींद',
+      ar: 'استرخاء عميق ونوم'
+    },
+    inhale: 4,
+    hold: 7,
+    exhale: 8,
+    color: 'indigo'
+  },
+  {
+    id: 'box',
+    name: {
+      en: 'Box Breathing',
+      'zh-hans': '方形呼吸',
+      'zh-hant': '方形呼吸',
+      es: 'Respiración Cuadrada',
+      ja: 'ボックス呼吸',
+      ko: '박스 호흡',
+      hi: 'बॉक्स श्वास',
+      ar: 'تنفس مربع'
+    },
+    description: {
+      en: 'Navy SEAL technique',
+      'zh-hans': '海豹突击队技术',
+      'zh-hant': '海豹突擊隊技術',
+      es: 'Técnica Navy SEAL',
+      ja: 'ネイビーシール技術',
+      ko: '네이비 씰 기술',
+      hi: 'नेवी सील तकनीक',
+      ar: 'تقنية نافي سيل'
+    },
+    inhale: 4,
+    hold: 4,
+    exhale: 4,
+    holdAfter: 4,
+    color: 'blue'
+  },
+  {
+    id: 'calming',
+    name: {
+      en: 'Quick Calm',
+      'zh-hans': '快速平静',
+      'zh-hant': '快速平靜',
+      es: 'Calma Rápida',
+      ja: 'クイック・カーム',
+      ko: '빠른 진정',
+      hi: 'त्वरित शांति',
+      ar: 'هدوء سريع'
+    },
+    description: {
+      en: 'For anxiety relief',
+      'zh-hans': '缓解焦虑',
+      'zh-hant': '緩解焦慮',
+      es: 'Para aliviar la ansiedad',
+      ja: '不安解消のため',
+      ko: '불안 해소',
+      hi: 'चिंता से राहत',
+      ar: 'لتخفيف القلق'
+    },
+    inhale: 4,
+    hold: 2,
+    exhale: 6,
+    color: 'emerald'
+  }
+];
 ---
 
 <BaseLayout title={t('breathing.title', lang)}>
-  <div class="min-h-[calc(100vh-4rem)] bg-gradient-to-b from-teal-50 to-cyan-50 dark:from-gray-900 dark:to-gray-800 flex items-center justify-center p-4">
-    <div class="max-w-lg w-full text-center">
+  <div
+    class="min-h-[calc(100vh-4rem)] bg-gradient-to-b from-teal-50 via-cyan-50 to-blue-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 flex flex-col items-center justify-center p-4 pt-20"
+  >
+    <div class="max-w-xl w-full text-center">
       <!-- Header -->
-      <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+      <h1
+        class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-2 animate-fade-in-up"
+      >
         {t('breathing.title', lang)}
       </h1>
-      <p class="text-gray-600 dark:text-gray-300 mb-8">
+      <p
+        class="text-gray-600 dark:text-gray-300 mb-8 animate-fade-in-up delay-100"
+      >
         {t('breathing.subtitle', lang)}
       </p>
 
-      <!-- Breathing Circle -->
-      <div class="relative mb-8">
-        <div id="breathing-circle" class="w-64 h-64 mx-auto rounded-full bg-teal-400/30 dark:bg-teal-500/20 flex items-center justify-center transition-transform duration-1000 ease-in-out">
-          <div class="w-48 h-48 rounded-full bg-teal-400/50 dark:bg-teal-500/30 flex items-center justify-center">
-            <div class="w-32 h-32 rounded-full bg-teal-500 dark:bg-teal-400 flex items-center justify-center">
-              <span id="breathing-text" class="text-white text-xl font-medium">
-                {t('breathing.start', lang)}
-              </span>
-            </div>
+      <!-- Breathing Circle Container -->
+      <div class="relative mb-8 animate-fade-in-scale delay-200">
+        <!-- Outer glow ring -->
+        <div
+          id="glow-ring"
+          class="absolute inset-0 rounded-full opacity-0 transition-opacity duration-1000"
+        >
+        </div>
+
+        <!-- Main breathing circle - overflow hidden to contain shadow -->
+        <div class="relative w-72 h-72 mx-auto overflow-hidden rounded-full">
+          <!-- Background rings -->
+          <div
+            class="absolute inset-0 rounded-full border-4 border-teal-200/30 dark:border-teal-700/30"
+          >
           </div>
+          <div
+            class="absolute inset-4 rounded-full border-2 border-teal-200/20 dark:border-teal-700/20"
+          >
+          </div>
+          <div
+            class="absolute inset-8 rounded-full border border-teal-200/10 dark:border-teal-700/10"
+          >
+          </div>
+
+          <!-- Animated breathing circle -->
+          <div
+            id="breathing-circle"
+            class="absolute inset-8 rounded-full flex items-center justify-center transition-all"
+            style="background: radial-gradient(circle, rgba(20, 184, 166, 0.4) 0%, rgba(20, 184, 166, 0.2) 50%, rgba(20, 184, 166, 0.05) 100%);"
+          >
+            <button
+              id="inner-circle"
+              type="button"
+              class="w-28 h-28 rounded-full bg-gradient-to-br from-teal-400 to-cyan-500 dark:from-teal-500 dark:to-cyan-600 flex items-center justify-center shadow-lg shadow-teal-500/30 transition-all cursor-pointer hover:scale-105 hover:shadow-xl hover:shadow-teal-500/40 focus:outline-none focus:ring-2 focus:ring-teal-400 focus:ring-offset-2"
+              aria-label="Start breathing exercise"
+            >
+              <div class="text-center text-white">
+                <span id="breathing-text" class="block text-xl font-semibold">
+                  {t('breathing.start', lang)}
+                </span>
+                <span
+                  id="timer-text"
+                  class="block text-2xl font-bold mt-1 hidden">0</span
+                >
+              </div>
+            </button>
+          </div>
+
+          <!-- Progress ring (SVG) -->
+          <svg class="absolute inset-0 w-full h-full -rotate-90">
+            <circle
+              id="progress-ring"
+              cx="50%"
+              cy="50%"
+              r="46%"
+              fill="none"
+              stroke="url(#gradient)"
+              stroke-width="4"
+              stroke-linecap="round"
+              stroke-dasharray="290"
+              stroke-dashoffset="290"
+              class="transition-all"></circle>
+            <defs>
+              <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#14b8a6"></stop>
+                <stop offset="100%" stop-color="#06b6d4"></stop>
+              </linearGradient>
+            </defs>
+          </svg>
         </div>
       </div>
 
       <!-- Cycles Counter -->
-      <p class="text-gray-600 dark:text-gray-400 mb-6">
-        {t('breathing.cycles', lang)}: <span id="cycles-count">0</span>
+      <p
+        class="text-gray-600 dark:text-gray-400 mb-6 animate-fade-in-up delay-300"
+      >
+        {t('breathing.cycles', lang)}: <span
+          id="cycles-count"
+          class="font-semibold text-teal-600 dark:text-teal-400">0</span
+        >
       </p>
 
       <!-- Controls -->
-      <div class="flex justify-center gap-4">
+      <div class="flex justify-center gap-4 mb-10 animate-fade-in-up delay-400">
         <button
           id="start-btn"
-          class="px-8 py-3 bg-teal-600 hover:bg-teal-700 text-white font-medium rounded-full transition-colors"
+          class="group relative px-8 py-3.5 bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-600 hover:to-cyan-600 text-white font-semibold rounded-2xl shadow-lg shadow-teal-500/25 hover:shadow-xl hover:shadow-teal-500/30 transition-all duration-300 hover:-translate-y-0.5 flex items-center gap-2"
         >
+          <Icon name="Play" size={20} />
           {t('breathing.start', lang)}
         </button>
         <button
           id="pause-btn"
-          class="hidden px-8 py-3 bg-amber-500 hover:bg-amber-600 text-white font-medium rounded-full transition-colors"
+          class="hidden group relative px-8 py-3.5 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-semibold rounded-2xl shadow-lg shadow-amber-500/25 hover:shadow-xl hover:shadow-amber-500/30 transition-all duration-300 hover:-translate-y-0.5 flex items-center gap-2"
         >
+          <Icon name="Pause" size={20} />
           {t('breathing.pause', lang)}
         </button>
         <button
           id="reset-btn"
-          class="px-8 py-3 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 font-medium rounded-full hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
+          class="px-8 py-3.5 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm text-gray-700 dark:text-gray-200 font-semibold rounded-2xl shadow-md hover:shadow-lg border border-gray-200/50 dark:border-gray-700/50 transition-all duration-300 hover:-translate-y-0.5 flex items-center gap-2"
         >
+          <Icon name="RotateCcw" size={20} />
           {t('breathing.reset', lang)}
         </button>
       </div>
 
-      <!-- Settings -->
-      <div class="mt-12 bg-white/50 dark:bg-gray-800/50 rounded-xl p-6">
-        <h3 class="font-medium text-gray-900 dark:text-white mb-4">
-          {t('breathing.settings.title', lang)}
+      <!-- Mode Selection -->
+      <div
+        class="bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-3xl p-6 shadow-lg border border-white/20 dark:border-gray-700/20 animate-fade-in-up delay-500"
+      >
+        <h3 class="font-semibold text-gray-900 dark:text-white mb-4">
+          {t('breathing.modes.title', lang) || 'Breathing Mode'}
         </h3>
-        <div class="grid grid-cols-3 gap-4 text-sm">
-          <div>
-            <label class="block text-gray-600 dark:text-gray-400 mb-1">
-              {t('breathing.settings.inhaleTime', lang)}
-            </label>
-            <input
-              type="number"
-              id="inhale-time"
-              value="4"
-              min="1"
-              max="10"
-              class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-center"
-            />
-          </div>
-          <div>
-            <label class="block text-gray-600 dark:text-gray-400 mb-1">
-              {t('breathing.settings.holdTime', lang)}
-            </label>
-            <input
-              type="number"
-              id="hold-time"
-              value="4"
-              min="0"
-              max="10"
-              class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-center"
-            />
-          </div>
-          <div>
-            <label class="block text-gray-600 dark:text-gray-400 mb-1">
-              {t('breathing.settings.exhaleTime', lang)}
-            </label>
-            <input
-              type="number"
-              id="exhale-time"
-              value="4"
-              min="1"
-              max="10"
-              class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-center"
-            />
-          </div>
+        <div id="modes-container" class="grid grid-cols-2 gap-3">
+          {
+            breathingModes.map((mode, index) => (
+              <button
+                data-mode={mode.id}
+                data-inhale={mode.inhale}
+                data-hold={mode.hold}
+                data-exhale={mode.exhale}
+                data-hold-after={mode.holdAfter || 0}
+                class:list={[
+                  'mode-btn group p-4 rounded-2xl text-left transition-all duration-300 hover:scale-[1.02]',
+                  index === 0
+                    ? 'bg-gradient-to-br from-teal-100 to-cyan-100 dark:from-teal-900/40 dark:to-cyan-900/40 ring-2 ring-teal-500'
+                    : 'bg-gray-50 dark:bg-gray-700/50 hover:bg-gray-100 dark:hover:bg-gray-700'
+                ]}
+              >
+                <div class="flex items-center gap-2 mb-1">
+                  <span
+                    class:list={[
+                      'w-2 h-2 rounded-full',
+                      `bg-${mode.color}-500`
+                    ]}
+                    style={`background-color: var(--color-${mode.color}, #14b8a6)`}
+                  />
+                  <span class="font-medium text-gray-900 dark:text-white text-sm">
+                    {mode.name[lang] || mode.name.en}
+                  </span>
+                </div>
+                <p class="text-xs text-gray-500 dark:text-gray-400">
+                  {mode.description[lang] || mode.description.en}
+                </p>
+                <p class="text-xs text-gray-400 dark:text-gray-500 mt-1">
+                  {mode.inhale}-{mode.hold}-{mode.exhale}
+                  {mode.holdAfter ? `-${mode.holdAfter}` : ''}
+                </p>
+              </button>
+            ))
+          }
         </div>
       </div>
     </div>
@@ -110,127 +298,331 @@ const lang = getLanguageFromPath(Astro.url.pathname) as Language;
 <script is:inline define:vars={{ lang }}>
   // Translations
   const translations = {
-    en: { inhale: 'Inhale', hold: 'Hold', exhale: 'Exhale', start: 'Start' },
-    'zh-hans': { inhale: '吸气', hold: '屏息', exhale: '呼气', start: '开始' },
-    'zh-hant': { inhale: '吸氣', hold: '閉氣', exhale: '吐氣', start: '開始' },
-    es: { inhale: 'Inhalar', hold: 'Mantener', exhale: 'Exhalar', start: 'Iniciar' },
-    ja: { inhale: '吸う', hold: '止める', exhale: '吐く', start: '開始' },
-    ko: { inhale: '들이쉬기', hold: '멈추기', exhale: '내쉬기', start: '시작' },
-    hi: { inhale: 'सांस लें', hold: 'रोकें', exhale: 'छोड़ें', start: 'शुरू' },
-    ar: { inhale: 'شهيق', hold: 'احبس', exhale: 'زفير', start: 'ابدأ' },
+    en: {
+      inhale: 'Inhale',
+      hold: 'Hold',
+      exhale: 'Exhale',
+      start: 'Start',
+      holdOut: 'Hold'
+    },
+    'zh-hans': {
+      inhale: '吸气',
+      hold: '屏息',
+      exhale: '呼气',
+      start: '开始',
+      holdOut: '屏息'
+    },
+    'zh-hant': {
+      inhale: '吸氣',
+      hold: '閉氣',
+      exhale: '吐氣',
+      start: '開始',
+      holdOut: '閉氣'
+    },
+    es: {
+      inhale: 'Inhalar',
+      hold: 'Mantener',
+      exhale: 'Exhalar',
+      start: 'Iniciar',
+      holdOut: 'Mantener'
+    },
+    ja: {
+      inhale: '吸う',
+      hold: '止める',
+      exhale: '吐く',
+      start: '開始',
+      holdOut: '止める'
+    },
+    ko: {
+      inhale: '들이쉬기',
+      hold: '멈추기',
+      exhale: '내쉬기',
+      start: '시작',
+      holdOut: '멈추기'
+    },
+    hi: {
+      inhale: 'सांस लें',
+      hold: 'रोकें',
+      exhale: 'छोड़ें',
+      start: 'शुरू',
+      holdOut: 'रोकें'
+    },
+    ar: {
+      inhale: 'شهيق',
+      hold: 'احبس',
+      exhale: 'زفير',
+      start: 'ابدأ',
+      holdOut: 'احبس'
+    }
   };
   const t = translations[lang] || translations.en;
-  
+
   // Elements
-  const circle = document.getElementById('breathing-circle');
+  const breathingCircle = document.getElementById('breathing-circle');
+  const innerCircle = document.getElementById('inner-circle');
+  const glowRing = document.getElementById('glow-ring');
   const breathingText = document.getElementById('breathing-text');
+  const timerText = document.getElementById('timer-text');
+  const progressRing = document.getElementById('progress-ring');
   const cyclesCount = document.getElementById('cycles-count');
   const startBtn = document.getElementById('start-btn');
   const pauseBtn = document.getElementById('pause-btn');
   const resetBtn = document.getElementById('reset-btn');
-  const inhaleInput = document.getElementById('inhale-time');
-  const holdInput = document.getElementById('hold-time');
-  const exhaleInput = document.getElementById('exhale-time');
-  
+  const modeBtns = document.querySelectorAll('.mode-btn');
+
   // State
   let isRunning = false;
   let cycles = 0;
   let currentPhase = 'ready';
-  let timeoutId = null;
+  let animationFrame = null;
   let phaseStartTime = 0;
   let phaseDuration = 0;
-  let remainingTime = 0;
-  
-  function getSettings() {
-    return {
-      inhale: parseInt(inhaleInput?.value || '4') * 1000,
-      hold: parseInt(holdInput?.value || '4') * 1000,
-      exhale: parseInt(exhaleInput?.value || '4') * 1000,
-    };
+  let pausedAt = 0;
+
+  // Settings
+  let settings = {
+    inhale: 4000,
+    hold: 4000,
+    exhale: 4000,
+    holdAfter: 0
+  };
+
+  const colorSchemes = {
+    teal: { from: '#14b8a6', to: '#06b6d4', glow: 'rgba(20, 184, 166, 0.3)' },
+    indigo: { from: '#6366f1', to: '#8b5cf6', glow: 'rgba(99, 102, 241, 0.3)' },
+    blue: { from: '#3b82f6', to: '#0ea5e9', glow: 'rgba(59, 130, 246, 0.3)' },
+    emerald: { from: '#10b981', to: '#34d399', glow: 'rgba(16, 185, 129, 0.3)' }
+  };
+  let currentColors = colorSchemes.teal;
+
+  function updateColors(colorName) {
+    currentColors = colorSchemes[colorName] || colorSchemes.teal;
+    innerCircle.style.background = `linear-gradient(to bottom right, ${currentColors.from}, ${currentColors.to})`;
+    innerCircle.style.boxShadow = `0 10px 15px -3px ${currentColors.glow}`;
+
+    // Update SVG gradient
+    const stops = document.querySelectorAll('#gradient stop');
+    if (stops[0]) stops[0].setAttribute('stop-color', currentColors.from);
+    if (stops[1]) stops[1].setAttribute('stop-color', currentColors.to);
   }
-  
-  function updateCircle(scale, text, duration) {
-    if (circle) {
-      circle.style.transitionDuration = `${duration}ms`;
-      circle.style.transform = `scale(${scale})`;
+
+  function setCircleState(scale, text, timer = null) {
+    breathingCircle.style.transform = `scale(${scale})`;
+    breathingText.textContent = text;
+
+    if (timer !== null) {
+      timerText.textContent = timer;
+      timerText.classList.remove('hidden');
+    } else {
+      timerText.classList.add('hidden');
     }
-    if (breathingText) breathingText.textContent = text;
+
+    // Glow effect
+    if (scale > 1) {
+      glowRing.style.opacity = '1';
+      glowRing.style.boxShadow = `0 0 60px 20px ${currentColors.glow}`;
+    } else {
+      glowRing.style.opacity = '0';
+    }
   }
-  
+
+  function updateProgress(progress) {
+    const circumference = 290;
+    const offset = circumference - progress * circumference;
+    progressRing.style.strokeDashoffset = offset;
+  }
+
   function runPhase(phase, duration) {
     if (!isRunning) return;
-    
-    const settings = getSettings();
+
     currentPhase = phase;
-    phaseStartTime = Date.now();
+    phaseStartTime = performance.now();
     phaseDuration = duration;
-    
-    if (phase === 'inhale') {
-      updateCircle(1.3, t.inhale, duration);
-      timeoutId = setTimeout(() => runPhase('hold', settings.hold), duration);
-    } else if (phase === 'hold') {
-      updateCircle(1.3, t.hold, 0);
-      timeoutId = setTimeout(() => runPhase('exhale', settings.exhale), duration);
-    } else if (phase === 'exhale') {
-      updateCircle(1, t.exhale, duration);
-      timeoutId = setTimeout(() => {
-        cycles++;
-        if (cyclesCount) cyclesCount.textContent = String(cycles);
-        runPhase('inhale', settings.inhale);
-      }, duration);
+
+    const animate = (now) => {
+      if (!isRunning) return;
+
+      const elapsed = now - phaseStartTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const remaining = Math.ceil((duration - elapsed) / 1000);
+
+      if (phase === 'inhale') {
+        const scale = 1 + 0.4 * easeOutCubic(progress);
+        setCircleState(scale, t.inhale, remaining > 0 ? remaining : null);
+        updateProgress(progress);
+      } else if (phase === 'hold') {
+        setCircleState(1.4, t.hold, remaining > 0 ? remaining : null);
+        updateProgress(progress);
+      } else if (phase === 'exhale') {
+        const scale = 1.4 - 0.4 * easeOutCubic(progress);
+        setCircleState(scale, t.exhale, remaining > 0 ? remaining : null);
+        updateProgress(progress);
+      } else if (phase === 'holdAfter') {
+        setCircleState(1, t.holdOut, remaining > 0 ? remaining : null);
+        updateProgress(progress);
+      }
+
+      if (progress < 1) {
+        animationFrame = requestAnimationFrame(animate);
+      } else {
+        nextPhase();
+      }
+    };
+
+    animationFrame = requestAnimationFrame(animate);
+  }
+
+  function nextPhase() {
+    if (currentPhase === 'inhale') {
+      runPhase('hold', settings.hold);
+    } else if (currentPhase === 'hold') {
+      runPhase('exhale', settings.exhale);
+    } else if (currentPhase === 'exhale') {
+      if (settings.holdAfter > 0) {
+        runPhase('holdAfter', settings.holdAfter);
+      } else {
+        completeCycle();
+      }
+    } else if (currentPhase === 'holdAfter') {
+      completeCycle();
     }
   }
-  
+
+  function completeCycle() {
+    cycles++;
+    cyclesCount.textContent = String(cycles);
+    runPhase('inhale', settings.inhale);
+  }
+
+  function easeOutCubic(x) {
+    return 1 - Math.pow(1 - x, 3);
+  }
+
   function start() {
     isRunning = true;
-    startBtn?.classList.add('hidden');
-    pauseBtn?.classList.remove('hidden');
-    
-    const settings = getSettings();
-    
-    if (currentPhase === 'ready') {
-      // Fresh start
+    startBtn.classList.add('hidden');
+    pauseBtn.classList.remove('hidden');
+
+    breathingCircle.style.transition = 'transform 0.1s ease-out';
+
+    if (currentPhase === 'ready' || pausedAt === 0) {
       runPhase('inhale', settings.inhale);
-    } else if (remainingTime > 0) {
-      // Resume from paused state
-      runPhase(currentPhase, remainingTime);
     } else {
-      // Fallback: start new cycle
-      runPhase('inhale', settings.inhale);
+      // Resume from paused state
+      const remainingTime = phaseDuration - pausedAt;
+      runPhase(currentPhase, remainingTime);
     }
   }
-  
+
   function pause() {
     isRunning = false;
-    if (timeoutId) clearTimeout(timeoutId);
-    
-    // Calculate remaining time for current phase
-    const elapsed = Date.now() - phaseStartTime;
-    remainingTime = Math.max(0, phaseDuration - elapsed);
-    
-    // Pause the CSS transition
-    if (circle) {
-      const computedStyle = window.getComputedStyle(circle);
-      const currentTransform = computedStyle.transform;
-      circle.style.transitionDuration = '0ms';
-      circle.style.transform = currentTransform;
+    if (animationFrame) {
+      cancelAnimationFrame(animationFrame);
     }
-    
-    startBtn?.classList.remove('hidden');
-    pauseBtn?.classList.add('hidden');
+    pausedAt = performance.now() - phaseStartTime;
+
+    startBtn.classList.remove('hidden');
+    pauseBtn.classList.add('hidden');
   }
-  
+
   function reset() {
     pause();
     cycles = 0;
     currentPhase = 'ready';
-    remainingTime = 0;
-    if (cyclesCount) cyclesCount.textContent = '0';
-    updateCircle(1, t.start, 300);
+    pausedAt = 0;
+    cyclesCount.textContent = '0';
+
+    breathingCircle.style.transition =
+      'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
+    setCircleState(1, t.start);
+    updateProgress(0);
+    glowRing.style.opacity = '0';
   }
-  
+
+  function selectMode(btn) {
+    // Update UI
+    modeBtns.forEach((b) => {
+      b.classList.remove(
+        'bg-gradient-to-br',
+        'from-teal-100',
+        'to-cyan-100',
+        'dark:from-teal-900/40',
+        'dark:to-cyan-900/40',
+        'ring-2',
+        'ring-teal-500'
+      );
+      b.classList.add('bg-gray-50', 'dark:bg-gray-700/50');
+    });
+    btn.classList.remove('bg-gray-50', 'dark:bg-gray-700/50');
+    btn.classList.add(
+      'bg-gradient-to-br',
+      'from-teal-100',
+      'to-cyan-100',
+      'dark:from-teal-900/40',
+      'dark:to-cyan-900/40',
+      'ring-2',
+      'ring-teal-500'
+    );
+
+    // Update settings
+    settings = {
+      inhale: parseInt(btn.dataset.inhale) * 1000,
+      hold: parseInt(btn.dataset.hold) * 1000,
+      exhale: parseInt(btn.dataset.exhale) * 1000,
+      holdAfter: parseInt(btn.dataset.holdAfter || '0') * 1000
+    };
+
+    // Reset if running
+    if (isRunning || currentPhase !== 'ready') {
+      reset();
+    }
+  }
+
+  // Event listeners
   startBtn?.addEventListener('click', start);
   pauseBtn?.addEventListener('click', pause);
   resetBtn?.addEventListener('click', reset);
+
+  // Inner circle click handler - toggle start/pause
+  innerCircle?.addEventListener('click', () => {
+    if (currentPhase === 'ready' || !isRunning) {
+      start();
+    } else {
+      pause();
+    }
+  });
+
+  modeBtns.forEach((btn) => {
+    btn.addEventListener('click', () => selectMode(btn));
+  });
+
+  // Initialize
+  breathingCircle.style.transition =
+    'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
 </script>
 
+<style>
+  @keyframes glow-pulse {
+    0%,
+    100% {
+      opacity: 0.3;
+    }
+    50% {
+      opacity: 0.6;
+    }
+  }
+
+  #glow-ring {
+    transition:
+      opacity 0.5s ease-out,
+      box-shadow 0.5s ease-out;
+  }
+
+  #breathing-circle {
+    will-change: transform;
+  }
+
+  #progress-ring {
+    transition: stroke-dashoffset 0.1s linear;
+  }
+</style>
