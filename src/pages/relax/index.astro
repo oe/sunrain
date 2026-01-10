@@ -1,0 +1,84 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import {
+  t,
+  getLocalizedPath,
+  getLanguageFromPath,
+  type Language
+} from '@/lib/i18n';
+import { Icon } from '@/components/Icon';
+
+const lang = getLanguageFromPath(Astro.url.pathname) as Language;
+---
+
+<BaseLayout
+  title={t('relax.title', lang)}
+  description={t('relax.subtitle', lang)}
+>
+  <div class="container mx-auto px-4 py-16">
+    <div class="max-w-4xl mx-auto text-center mb-16 animate-fade-in-up">
+      <h1
+        class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6"
+      >
+        {t('relax.title', lang)}
+      </h1>
+      <p class="text-xl text-gray-600 dark:text-gray-300">
+        {t('relax.subtitle', lang)}
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+      <!-- Breathing Card -->
+      <a
+        href={getLocalizedPath('/breathing/', lang)}
+        class="group relative bg-gradient-to-br from-teal-50 to-cyan-50 dark:from-teal-900/20 dark:to-cyan-900/20 rounded-3xl p-10 border border-teal-100/50 dark:border-teal-800/30 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 block animate-fade-in-up delay-100"
+      >
+        <div class="flex flex-col items-center text-center">
+          <div
+            class="mb-6 w-20 h-20 rounded-2xl bg-gradient-to-br from-teal-500 to-cyan-500 flex items-center justify-center shadow-lg shadow-teal-500/25 group-hover:scale-110 transition-transform duration-300"
+          >
+            <Icon name="Wind" size={36} className="text-white" />
+          </div>
+          <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-3">
+            {t('relax.breathing.title', lang)}
+          </h2>
+          <p class="text-gray-600 dark:text-gray-300 mb-6 font-medium">
+            {t('relax.breathing.description', lang)}
+          </p>
+          <div
+            class="inline-flex items-center gap-2 text-teal-600 dark:text-teal-400 font-bold group-hover:gap-3 transition-all duration-300"
+          >
+            {t('breathing.start', lang) || 'Start'}
+            <Icon name="ArrowRight" size={20} />
+          </div>
+        </div>
+      </a>
+
+      <!-- Sounds Card -->
+      <a
+        href={getLocalizedPath('/relax/sounds/', lang)}
+        class="group relative bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 rounded-3xl p-10 border border-indigo-100/50 dark:border-indigo-800/30 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 block animate-fade-in-up delay-200"
+      >
+        <div class="flex flex-col items-center text-center">
+          <div
+            class="mb-6 w-20 h-20 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center shadow-lg shadow-indigo-500/25 group-hover:scale-110 transition-transform duration-300"
+          >
+            <Icon name="Music" size={36} className="text-white" />
+          </div>
+          <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-3">
+            {t('relax.sounds.title', lang)}
+          </h2>
+          <p class="text-gray-600 dark:text-gray-300 mb-6 font-medium">
+            {t('relax.sounds.description', lang)}
+          </p>
+          <div
+            class="inline-flex items-center gap-2 text-indigo-600 dark:text-indigo-400 font-bold group-hover:gap-3 transition-all duration-300"
+          >
+            {t('relax.sounds.play', lang)}
+            <Icon name="ArrowRight" size={20} />
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+</BaseLayout>

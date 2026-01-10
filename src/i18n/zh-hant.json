@@ -7,8 +7,9 @@
   "nav": {
     "home": "首頁",
     "assessment": "心理評估",
-    "breathing": "呼吸練習",
-    "crisis": "危機協助",
+    "relax": "放鬆",
+    "resources": "資源",
+    "crisis": "危機求助",
     "about": "關於"
   },
   "home": {
@@ -93,11 +94,41 @@
       "title": "呼吸模式"
     },
     "settings": {
-      "title": "設定",
-      "inhaleTime": "吸氣時長（秒）",
-      "holdTime": "閉氣時長（秒）",
-      "exhaleTime": "吐氣時長（秒）"
+      "title": "設置",
+      "inhaleTime": "吸氣 (秒)",
+      "holdTime": "閉氣 (秒)",
+      "exhaleTime": "吐氣 (秒)"
     }
+  },
+  "relax": {
+    "title": "放鬆中心",
+    "subtitle": "尋找平靜的工具",
+    "breathing": {
+      "title": "呼吸練習",
+      "description": "引導式深呼吸，減輕壓力"
+    },
+    "sounds": {
+      "title": "環境音效",
+      "description": "專注與放鬆的白噪音",
+      "whiteNoise": "白噪音",
+      "pinkNoise": "粉紅噪音",
+      "brownNoise": "紅噪音",
+      "offlineNote": "<strong>注意：</strong> 這些聲音是由瀏覽器使用 Web Audio API 實時生成的。加載後不消耗網絡流量，可離線播放。",
+      "play": "播放",
+      "pause": "暫停",
+      "volume": "音量"
+    }
+  },
+  "resources": {
+    "title": "心理健康資源",
+    "subtitle": "精選專業文章與指南",
+    "categories": {
+      "anxiety": "焦慮",
+      "depression": "抑鬱",
+      "sleep": "睡眠",
+      "mindfulness": "正念"
+    },
+    "disclaimer": "這些鏈接指向外部網站。Sunrain不對其內容負責。"
   },
   "crisis": {
     "title": "危機專線",

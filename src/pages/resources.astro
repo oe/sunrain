@@ -1,0 +1,81 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { t, getLanguageFromPath, type Language } from '@/lib/i18n';
+import { Icon } from '@/components/Icon';
+import type { IconName } from '@/components/Icon';
+import { getResources } from '@/data/resources';
+
+const lang = getLanguageFromPath(Astro.url.pathname) as Language;
+const categories = getResources(lang);
+---
+
+<BaseLayout
+  title={t('resources.title', lang)}
+  description={t('resources.subtitle', lang)}
+>
+  <div class="container mx-auto px-4 py-16">
+    <div class="max-w-4xl mx-auto text-center mb-16 animate-fade-in-up">
+      <h1
+        class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6"
+      >
+        {t('resources.title', lang)}
+      </h1>
+      <p class="text-xl text-gray-600 dark:text-gray-300">
+        {t('resources.subtitle', lang)}
+      </p>
+    </div>
+
+    <div class="max-w-4xl mx-auto grid gap-8 animate-fade-in-up delay-100">
+      {
+        categories.map((category) => (
+          <div class="bg-white dark:bg-gray-800 rounded-3xl p-8 border border-gray-100 dark:border-gray-700 shadow-sm hover:shadow-md transition-shadow">
+            <div class="flex items-center gap-4 mb-6">
+              <div class="w-12 h-12 rounded-2xl bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center text-amber-600 dark:text-amber-400">
+                <Icon name={category.icon} size={24} />
+              </div>
+              <h2 class="text-2xl font-bold text-gray-900 dark:text-white">
+                {t(`resources.categories.${category.id}`, lang)}
+              </h2>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-4">
+              {category.links.map((link) => (
+                <a
+                  href={link.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="group block p-4 rounded-xl bg-gray-50 dark:bg-gray-700/50 hover:bg-amber-50 dark:hover:bg-amber-900/20 transition-colors border border-transparent hover:border-amber-200 dark:hover:border-amber-800/50"
+                >
+                  <div class="flex justify-between items-start mb-2">
+                    <span class="font-semibold text-gray-900 dark:text-white group-hover:text-amber-700 dark:group-hover:text-amber-300 transition-colors">
+                      {link.title}
+                    </span>
+                    <Icon
+                      name="ArrowRight"
+                      size={16}
+                      className="text-gray-400 -rotate-45 group-hover:text-amber-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all"
+                    />
+                  </div>
+                  <div class="text-sm text-gray-500 dark:text-gray-400">
+                    {link.source}
+                  </div>
+                </a>
+              ))}
+            </div>
+          </div>
+        ))
+      }
+    </div>
+
+    <div
+      class="max-w-4xl mx-auto mt-12 text-center text-sm text-gray-500 dark:text-gray-400 animate-fade-in-up delay-200"
+    >
+      <Icon
+        name="AlertCircle"
+        size={16}
+        className="inline-block mr-1 align-text-bottom"
+      />
+      {t('resources.disclaimer', lang)}
+    </div>
+  </div>
+</BaseLayout>

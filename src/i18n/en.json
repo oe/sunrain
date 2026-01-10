@@ -7,7 +7,8 @@
   "nav": {
     "home": "Home",
     "assessment": "Assessment",
-    "breathing": "Breathing",
+    "relax": "Relax",
+    "resources": "Resources",
     "crisis": "Crisis Help",
     "about": "About"
   },
@@ -98,6 +99,36 @@
       "holdTime": "Hold (seconds)",
       "exhaleTime": "Exhale (seconds)"
     }
+  },
+  "relax": {
+    "title": "Relaxation Hub",
+    "subtitle": "Tools to help you find your calm",
+    "breathing": {
+      "title": "Breathing Exercise",
+      "description": "Guided deep breathing to reduce stress"
+    },
+    "sounds": {
+      "title": "Soundscapes",
+      "description": "Ambient sounds for focus and relaxation",
+      "whiteNoise": "White Noise",
+      "pinkNoise": "Pink Noise",
+      "brownNoise": "Brown Noise",
+      "offlineNote": "<strong>Note:</strong> These sounds are generated in real-time by your browser using the Web Audio API. They don't use any internet bandwidth once loaded and can be played offline.",
+      "play": "Play",
+      "pause": "Pause",
+      "volume": "Volume"
+    }
+  },
+  "resources": {
+    "title": "Mental Health Resources",
+    "subtitle": "Curated professional articles and guides",
+    "categories": {
+      "anxiety": "Anxiety",
+      "depression": "Depression",
+      "sleep": "Sleep",
+      "mindfulness": "Mindfulness"
+    },
+    "disclaimer": "These links lead to external websites. Sunrain is not responsible for their content."
   },
   "crisis": {
     "title": "Crisis Hotlines",

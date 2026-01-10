@@ -7,7 +7,8 @@
   "nav": {
     "home": "Inicio",
     "assessment": "Evaluación",
-    "breathing": "Respiración",
+    "relax": "Relajarse",
+    "resources": "Recursos",
     "crisis": "Ayuda en Crisis",
     "about": "Acerca de"
   },
@@ -98,6 +99,36 @@
       "holdTime": "Mantener (segundos)",
       "exhaleTime": "Exhalar (segundos)"
     }
+  },
+  "relax": {
+    "title": "Centro de Relajación",
+    "subtitle": "Herramientas para encontrar la calma",
+    "breathing": {
+      "title": "Ejercicio de Respiración",
+      "description": "Respiración profunda guiada para reducir el estrés"
+    },
+    "sounds": {
+      "title": "Paisajes Sonoros",
+      "description": "Sonidos ambientales para el enfoque y la relajación",
+      "whiteNoise": "Ruido Blanco",
+      "pinkNoise": "Ruido Rosa",
+      "brownNoise": "Ruido Marrón",
+      "offlineNote": "<strong>Nota:</strong> Estos sonidos son generados en tiempo real por tu navegador usando la API de Web Audio. No consumen ancho de banda una vez cargados y pueden reproducirse sin conexión.",
+      "play": "Reproducir",
+      "pause": "Pausa",
+      "volume": "Volumen"
+    }
+  },
+  "resources": {
+    "title": "Recursos de Salud Mental",
+    "subtitle": "Artículos y guías profesionales seleccionados",
+    "categories": {
+      "anxiety": "Ansiedad",
+      "depression": "Depresión",
+      "sleep": "Sueño",
+      "mindfulness": "Mindfulness"
+    },
+    "disclaimer": "Estos enlaces llevan a sitios web externos. Sunrain no se hace responsable de su contenido."
   },
   "crisis": {
     "title": "Líneas de Crisis",

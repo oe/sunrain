@@ -1,0 +1,265 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { t, getLanguageFromPath, type Language } from '@/lib/i18n';
+import { Icon } from '@/components/Icon';
+import type { IconName } from '@/components/Icon';
+
+const lang = getLanguageFromPath(Astro.url.pathname) as Language;
+
+const sounds = [
+  {
+    id: 'white',
+    // Name removed here, will be translated dynamically
+    icon: 'Wind' as IconName,
+    bgClass: 'bg-gray-100 dark:bg-gray-900/30',
+    textClass: 'text-gray-600 dark:text-gray-400'
+  },
+  {
+    id: 'pink',
+    icon: 'CloudSun' as IconName,
+    bgClass: 'bg-amber-100 dark:bg-amber-900/30',
+    textClass: 'text-amber-600 dark:text-amber-400'
+  },
+  {
+    id: 'brown',
+    icon: 'CloudRain' as IconName,
+    bgClass: 'bg-stone-100 dark:bg-stone-900/30',
+    textClass: 'text-stone-600 dark:text-stone-400'
+  }
+];
+---
+
+<BaseLayout
+  title={t('relax.sounds.title', lang)}
+  description={t('relax.sounds.description', lang)}
+>
+  <div class="container mx-auto px-4 py-16">
+    <div class="max-w-4xl mx-auto mb-8 animate-fade-in-up">
+      <a
+        href="/relax/"
+        class="inline-flex items-center text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors mb-6"
+      >
+        <Icon name="ArrowRight" size={20} className="rotate-180 mr-2" />
+        {t('common.back', lang)}
+      </a>
+
+      <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+        {t('relax.sounds.title', lang)}
+      </h1>
+      <p class="text-xl text-gray-600 dark:text-gray-300">
+        {t('relax.sounds.description', lang)}
+      </p>
+    </div>
+
+    <div
+      class="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto animate-fade-in-up delay-100"
+    >
+      {
+        sounds.map((sound) => (
+          <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-gray-700 hover:shadow-md transition-all duration-300">
+            <div
+              class={`w-12 h-12 rounded-xl ${sound.bgClass} flex items-center justify-center mb-4 ${sound.textClass}`}
+            >
+              <Icon name={sound.icon} size={24} />
+            </div>
+            <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">
+              {t(`relax.sounds.${sound.id}Noise`, lang)}
+            </h3>
+
+            <div class="flex items-center gap-3">
+              <button
+                class="play-btn w-12 h-12 rounded-full bg-gray-900 dark:bg-white text-white dark:text-gray-900 flex items-center justify-center hover:scale-105 active:scale-95 transition-all duration-200"
+                data-sound={sound.id}
+                aria-label={
+                  t('relax.sounds.play', lang) +
+                  ' ' +
+                  t(`relax.sounds.${sound.id}Noise`, lang)
+                }
+              >
+                <Icon name="Play" size={20} className="ml-1" />
+              </button>
+              <div class="flex-1">
+                <input
+                  type="range"
+                  min="0"
+                  max="1"
+                  step="0.01"
+                  value="0.5"
+                  class="volume-slider w-full accent-gray-900 dark:accent-white"
+                  data-sound={sound.id}
+                  aria-label={t('relax.sounds.volume', lang)}
+                />
+              </div>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+
+    <div
+      class="max-w-4xl mx-auto mt-12 bg-blue-50 dark:bg-blue-900/20 rounded-xl p-6 text-sm text-blue-800 dark:text-blue-200 animate-fade-in-up delay-200"
+    >
+      <div class="flex gap-3">
+        <Icon name="WifiOff" size={20} className="shrink-0" />
+        <p set:html={t('relax.sounds.offlineNote', lang)} />
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  // Simple Noise Generator using Web Audio API
+  class NoiseGenerator {
+    ctx: AudioContext | null = null;
+    nodes: Map<
+      string,
+      { gain: GainNode; source: AudioBufferSourceNode | null }
+    > = new Map();
+
+    constructor() {
+      const AudioContext =
+        window.AudioContext || (window as any).webkitAudioContext;
+      if (AudioContext) {
+        this.ctx = new AudioContext();
+      }
+    }
+
+    // Generate noise buffer
+    createNoiseBuffer(type: 'white' | 'pink' | 'brown'): AudioBuffer | null {
+      if (!this.ctx) return null;
+
+      const bufferSize = 2 * this.ctx.sampleRate; // 2 seconds buffer
+      const buffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
+      const output = buffer.getChannelData(0);
+
+      if (type === 'white') {
+        for (let i = 0; i < bufferSize; i++) {
+          output[i] = Math.random() * 2 - 1;
+        }
+      } else if (type === 'pink') {
+        let b0 = 0,
+          b1 = 0,
+          b2 = 0,
+          b3 = 0,
+          b4 = 0,
+          b5 = 0,
+          b6 = 0;
+        for (let i = 0; i < bufferSize; i++) {
+          const white = Math.random() * 2 - 1;
+          b0 = 0.99886 * b0 + white * 0.0555179;
+          b1 = 0.99332 * b1 + white * 0.0750759;
+          b2 = 0.969 * b2 + white * 0.153852;
+          b3 = 0.8665 * b3 + white * 0.3104856;
+          b4 = 0.55 * b4 + white * 0.5329522;
+          b5 = -0.7616 * b5 - white * 0.016898;
+          output[i] = b0 + b1 + b2 + b3 + b4 + b5 + b6 + white * 0.5362;
+          output[i] *= 0.11; // (roughly) compensate for gain
+          b6 = white * 0.115926;
+        }
+      } else if (type === 'brown') {
+        let lastOut = 0;
+        for (let i = 0; i < bufferSize; i++) {
+          const white = Math.random() * 2 - 1;
+          output[i] = (lastOut + 0.02 * white) / 1.02;
+          lastOut = output[i];
+          output[i] *= 3.5; // (roughly) compensate for gain
+        }
+      }
+      return buffer;
+    }
+
+    toggle(type: 'white' | 'pink' | 'brown', volume: number) {
+      if (!this.ctx) return;
+      if (this.ctx.state === 'suspended') {
+        this.ctx.resume();
+      }
+
+      const existing = this.nodes.get(type);
+
+      if (existing && existing.source) {
+        // Stop
+        existing.source.stop();
+        existing.source.disconnect();
+        this.nodes.set(type, { ...existing, source: null });
+        return false; // stopped
+      } else {
+        // Start
+        const buffer = this.createNoiseBuffer(type);
+        if (!buffer) return;
+
+        const source = this.ctx.createBufferSource();
+        source.buffer = buffer;
+        source.loop = true;
+
+        const gainNode = existing?.gain || this.ctx.createGain();
+        gainNode.gain.value = volume;
+
+        source.connect(gainNode);
+        gainNode.connect(this.ctx.destination);
+        source.start();
+
+        this.nodes.set(type, { gain: gainNode, source });
+        return true; // started
+      }
+    }
+
+    setVolume(type: 'white' | 'pink' | 'brown', volume: number) {
+      const node = this.nodes.get(type);
+      if (node) {
+        node.gain.gain.value = volume;
+      } else if (this.ctx) {
+        // Prepare gain node even if not playing
+        const gain = this.ctx.createGain();
+        gain.gain.value = volume;
+        this.nodes.set(type, { gain, source: null });
+      }
+    }
+  }
+
+  const generator = new NoiseGenerator();
+  const buttons = document.querySelectorAll('.play-btn');
+  const sliders = document.querySelectorAll('.volume-slider');
+
+  // SVG for icons
+  const PLAY_ICON =
+    '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" class="ml-1" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>';
+  const PAUSE_ICON =
+    '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>';
+
+  buttons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const type = (btn as HTMLElement).dataset.sound as any;
+      const slider = document.querySelector(
+        `.volume-slider[data-sound="${type}"]`
+      ) as HTMLInputElement;
+      const volume = parseFloat(slider.value);
+
+      const isPlaying = generator.toggle(type, volume);
+
+      // Update UI
+      btn.innerHTML = isPlaying ? PAUSE_ICON : PLAY_ICON;
+      btn.classList.toggle('bg-amber-500', isPlaying);
+      btn.classList.toggle('dark:bg-amber-400', isPlaying);
+      btn.classList.toggle('text-white', isPlaying); // Ensure text is white when active
+
+      if (isPlaying) {
+        // Remove default bg classes if active to let amber take over
+        btn.classList.remove(
+          'bg-gray-900',
+          'dark:bg-white',
+          'dark:text-gray-900'
+        );
+      } else {
+        btn.classList.add('bg-gray-900', 'dark:bg-white', 'dark:text-gray-900');
+      }
+    });
+  });
+
+  sliders.forEach((slider) => {
+    slider.addEventListener('input', (e) => {
+      const type = (e.target as HTMLElement).dataset.sound as any;
+      const vol = parseFloat((e.target as HTMLInputElement).value);
+      generator.setVolume(type, vol);
+    });
+  });
+</script>

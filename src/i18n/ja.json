@@ -7,6 +7,8 @@
   "nav": {
     "home": "ホーム",
     "assessment": "診断",
+    "relax": "リラックス",
+    "resources": "リソース",
     "breathing": "呼吸法",
     "crisis": "危機支援",
     "about": "サイト情報"
@@ -98,6 +100,36 @@
       "holdTime": "止める（秒）",
       "exhaleTime": "吐く（秒）"
     }
+  },
+  "relax": {
+    "title": "リラクゼーション",
+    "subtitle": "平穏を見つけるためのツール",
+    "breathing": {
+      "title": "呼吸エクササイズ",
+      "description": "ストレスを軽減するガイド付き深呼吸"
+    },
+    "sounds": {
+      "title": "サウンドスケープ",
+      "description": "集中とリラックスのための環境音",
+      "whiteNoise": "ホワイトノイズ",
+      "pinkNoise": "ピンクノイズ",
+      "brownNoise": "ブラウンノイズ",
+      "offlineNote": "<strong>注意:</strong> これらの音は、Web Audio APIを使用してブラウザでリアルタイムに生成されます。ロード後はインターネット帯域幅を使用せず、オフラインで再生できます。",
+      "play": "再生",
+      "pause": "一時停止",
+      "volume": "音量"
+    }
+  },
+  "resources": {
+    "title": "メンタルヘルスリソース",
+    "subtitle": "厳選された専門的な記事とガイド",
+    "categories": {
+      "anxiety": "不安",
+      "depression": "うつ",
+      "sleep": "睡眠",
+      "mindfulness": "マインドフルネス"
+    },
+    "disclaimer": "これらのリンクは外部ウェブサイトにつながります。Sunrainはその内容について責任を負いません。"
   },
   "crisis": {
     "title": "危機ホットライン",

@@ -23,6 +23,9 @@ import {
   Pause,
   RotateCcw,
   Check,
+  Music,
+  BookOpen,
+  WifiOff,
 } from 'lucide-react';
 import type { LucideProps } from 'lucide-react';
 
@@ -48,6 +51,9 @@ const iconMap = {
   Pause,
   RotateCcw,
   Check,
+  Music,
+  BookOpen,
+  WifiOff,
 } as const;
 
 export type IconName = keyof typeof iconMap;
