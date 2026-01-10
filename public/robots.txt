@@ -18,5 +18,4 @@ Allow: /hi/
 Allow: /ko/
 Allow: /ar/
 
-# Crawl delay (optional)
-Crawl-delay: 1
+

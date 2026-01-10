@@ -101,6 +101,7 @@ function isActive(itemHref: string): boolean {
       <div class="relative">
         <select
           id="lang-select"
+          aria-label={t('common.language', lang) || 'Select Language'}
           class="appearance-none bg-gray-100/50 dark:bg-gray-800/50 px-3 py-1.5 pr-7 rounded-lg text-sm text-gray-600 dark:text-gray-400 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-amber-500/50 transition-all duration-200"
         >
           {
