@@ -52,7 +52,7 @@ const lang = getLanguageFromPath(Astro.url.pathname) as Language;
         <div class="mb-8 flex justify-center animate-fade-in-down">
           <div class="relative group">
             <div
-              class="absolute -inset-4 bg-gradient-to-r from-amber-400 to-rose-400 rounded-full blur-xl opacity-20 group-hover:opacity-30 transition-opacity duration-500"
+              class="absolute -inset-4 bg-gradient-to-r from-amber-400 to-rose-400 rounded-full blur-xl opacity-20 dark:opacity-40 group-hover:opacity-30 dark:group-hover:opacity-50 transition-opacity duration-500"
             >
             </div>
             <img
@@ -107,10 +107,14 @@ const lang = getLanguageFromPath(Astro.url.pathname) as Language;
           </a>
           <a
             href={getLocalizedPath('/breathing/', lang)}
-            class="group inline-flex items-center justify-center px-8 py-4 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm text-gray-700 dark:text-gray-200 font-semibold rounded-2xl shadow-md hover:shadow-lg border border-gray-200/50 dark:border-gray-700/50 transition-all duration-300 hover:-translate-y-1"
+            class="group inline-flex items-center justify-center px-8 py-4 bg-white/80 dark:bg-white/10 backdrop-blur-sm text-gray-700 dark:text-white font-semibold rounded-2xl shadow-md hover:shadow-lg border border-gray-200/50 dark:border-white/10 transition-all duration-300 hover:-translate-y-1"
           >
             <span class="flex items-center gap-2">
-              <Icon name="Wind" size={20} className="text-teal-500" />
+              <Icon
+                name="Wind"
+                size={20}
+                className="text-teal-500 dark:text-teal-400"
+              />
               {t('home.hero.tryBreathing', lang)}
             </span>
           </a>

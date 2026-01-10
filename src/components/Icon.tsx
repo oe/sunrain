@@ -58,12 +58,12 @@ interface IconProps extends Omit<LucideProps, 'ref'> {
 
 export function Icon({ name, size = 24, strokeWidth = 2, className = '', ...props }: IconProps) {
   const LucideIcon = iconMap[name];
-  
+
   if (!LucideIcon) {
     console.warn(`Icon "${name}" not found`);
     return null;
   }
-  
+
   return (
     <LucideIcon
       size={size}
