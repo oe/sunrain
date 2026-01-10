@@ -10,15 +10,22 @@ const { lang } = Astro.props;
 const currentYear = new Date().getFullYear();
 ---
 
-<footer class="bg-gray-50 dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
+<footer
+  class="bg-gray-50 dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700"
+>
   <div class="container mx-auto px-4 py-8">
     <div class="flex flex-col md:flex-row justify-between items-center gap-4">
       <!-- Brand -->
       <div class="flex items-center gap-3">
-        <img src="/logo.png" alt="Sunrain" class="w-8 h-8" />
+        <picture>
+          <source srcset="/logo.avif" type="image/avif" />
+          <img src="/logo.png" alt="Sunrain" class="w-8 h-8" />
+        </picture>
         <div>
           <p class="font-bold text-gray-900 dark:text-white">Sunrain</p>
-          <p class="text-sm text-gray-500 dark:text-gray-400">{t('footer.mission', lang)}</p>
+          <p class="text-sm text-gray-500 dark:text-gray-400">
+            {t('footer.mission', lang)}
+          </p>
         </div>
       </div>
 
@@ -43,9 +50,10 @@ const currentYear = new Date().getFullYear();
     </div>
 
     <!-- Copyright -->
-    <div class="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700 text-center text-sm text-gray-500 dark:text-gray-400">
+    <div
+      class="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700 text-center text-sm text-gray-500 dark:text-gray-400"
+    >
       <p>{t('footer.copyright', lang, { year: currentYear })}</p>
     </div>
   </div>
 </footer>
-
