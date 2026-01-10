@@ -2,7 +2,7 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://sunrain.example.com/sitemap-index.xml
+Sitemap: https://sunrain.me/sitemap-index.xml
 
 # Block admin areas (if any in the future)
 Disallow: /admin/

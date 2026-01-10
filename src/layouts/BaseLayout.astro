@@ -1,5 +1,11 @@
 ---
-import { getLanguageFromPath, isRTL, t, type Language, SUPPORTED_LANGUAGES } from '@/lib/i18n';
+import {
+  getLanguageFromPath,
+  isRTL,
+  t,
+  type Language,
+  SUPPORTED_LANGUAGES
+} from '@/lib/i18n';
 import Header from '@/components/Header.astro';
 import Footer from '@/components/Footer.astro';
 import '@/styles/tailwind.css';
@@ -7,24 +13,36 @@ import '@/styles/tailwind.css';
 export interface Props {
   title?: string;
   description?: string;
+  image?: string;
+  type?: string;
 }
 
-const { title, description } = Astro.props;
+const {
+  title,
+  description,
+  image = '/og-image.jpg',
+  type = 'website'
+} = Astro.props;
 
 const pathname = Astro.url.pathname;
 const lang = getLanguageFromPath(pathname) as Language;
 const dir = isRTL(lang) ? 'rtl' : 'ltr';
 
-const siteTitle = title ? `${title} | Sunrain` : `Sunrain - ${t('site.tagline', lang)}`;
+const siteTitle = title
+  ? `${title} | Sunrain`
+  : `Sunrain - ${t('site.tagline', lang)}`;
 const siteDescription = description || t('site.description', lang);
+const siteImage = new URL(image, Astro.site).href;
 
 // Generate alternate language links for SEO
 const alternateLinks = SUPPORTED_LANGUAGES.map((locale) => {
   // Handle both simple locales (en, es) and compound locales (zh-hans, zh-hant)
-  const cleanPath = pathname.replace(/^\/[a-z]{2}(-[a-z]+)?(?=\/|$)/, '') || '/';
-  const url = locale === 'en' 
-    ? new URL(cleanPath, Astro.site).href
-    : new URL(`/${locale}${cleanPath}`, Astro.site).href;
+  const cleanPath =
+    pathname.replace(/^\/[a-z]{2}(-[a-z]+)?(?=\/|$)/, '') || '/';
+  const url =
+    locale === 'en'
+      ? new URL(cleanPath, Astro.site).href
+      : new URL(`/${locale}${cleanPath}`, Astro.site).href;
   return { lang: locale, url };
 });
 ---
@@ -45,32 +63,66 @@ const alternateLinks = SUPPORTED_LANGUAGES.map((locale) => {
     <link rel="sitemap" type="application/xml" href="/sitemap-index.xml" />
 
     <!-- Hreflang Links -->
-    {alternateLinks.map(({ lang: l, url }) => (
-      <link rel="alternate" hreflang={l} href={url} />
-    ))}
-    <link rel="alternate" hreflang="x-default" href={new URL('/', Astro.site).href} />
+    {
+      alternateLinks.map(({ lang: l, url }) => (
+        <link rel="alternate" hreflang={l} href={url} />
+      ))
+    }
+    <link
+      rel="alternate"
+      hreflang="x-default"
+      href={new URL('/', Astro.site).href}
+    />
 
     <!-- Open Graph -->
     <meta property="og:title" content={siteTitle} />
     <meta property="og:description" content={siteDescription} />
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={type} />
     <meta property="og:url" content={Astro.url.href} />
-    <meta property="og:locale" content={lang === 'zh-hans' ? 'zh_CN' : lang === 'zh-hant' ? 'zh_TW' : lang} />
+    <meta property="og:image" content={siteImage} />
+    <meta
+      property="og:locale"
+      content={lang === 'zh-hans'
+        ? 'zh_CN'
+        : lang === 'zh-hant'
+          ? 'zh_TW'
+          : lang}
+    />
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={siteTitle} />
     <meta name="twitter:description" content={siteDescription} />
+    <meta name="twitter:image" content={siteImage} />
+
+    <script
+      type="application/ld+json"
+      is:inline
+      set:html={JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'WebSite',
+        name: 'Sunrain',
+        url: Astro.site,
+        description: t('site.description', lang),
+        inLanguage: lang
+      })}
+    />
 
     <!-- Theme initialization -->
     <script is:inline>
-      (function() {
+      (function () {
         const savedTheme = localStorage.getItem('theme');
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const prefersDark = window.matchMedia(
+          '(prefers-color-scheme: dark)'
+        ).matches;
         const html = document.documentElement;
-        
+
         html.classList.remove('dark');
-        if (savedTheme === 'dark' || (savedTheme === 'system' && prefersDark) || (!savedTheme && prefersDark)) {
+        if (
+          savedTheme === 'dark' ||
+          (savedTheme === 'system' && prefersDark) ||
+          (!savedTheme && prefersDark)
+        ) {
           html.classList.add('dark');
         }
       })();
@@ -81,7 +133,9 @@ const alternateLinks = SUPPORTED_LANGUAGES.map((locale) => {
       window.__LANG__ = lang;
     </script>
   </head>
-  <body class="min-h-screen bg-white dark:bg-gray-900 flex flex-col font-sans antialiased">
+  <body
+    class="min-h-screen bg-white dark:bg-gray-900 flex flex-col font-sans antialiased"
+  >
     <Header lang={lang} />
     <main class="flex-1 pt-16">
       <slot />
@@ -89,4 +143,3 @@ const alternateLinks = SUPPORTED_LANGUAGES.map((locale) => {
     <Footer lang={lang} />
   </body>
 </html>
-
