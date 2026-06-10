@@ -2,11 +2,11 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { t, getLanguageFromPath, type Language } from '@/lib/i18n';
 import { Icon } from '@/components/Icon';
-import type { IconName } from '@/components/Icon';
 import { getResources } from '@/data/resources';
 
 const lang = getLanguageFromPath(Astro.url.pathname) as Language;
 const categories = getResources(lang);
+const showLanguageNotice = lang !== 'en';
 ---
 
 <BaseLayout
@@ -23,6 +23,13 @@ const categories = getResources(lang);
       <p class="text-xl text-gray-600 dark:text-gray-300">
         {t('resources.subtitle', lang)}
       </p>
+      {
+        showLanguageNotice && (
+          <p class="mt-4 text-sm text-amber-700 dark:text-amber-300">
+            {t('resources.languageNotice', lang)}
+          </p>
+        )
+      }
     </div>
 
     <div class="max-w-4xl mx-auto grid gap-8 animate-fade-in-up delay-100">

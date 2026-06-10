@@ -72,7 +72,13 @@
       "suggestion": "제안",
       "retake": "재평가",
       "viewHistory": "기록 보기",
-      "disclaimer": "이 평가는 선별 목적으로만 사용되며 의학적 진단을 구성하지 않습니다."
+      "disclaimer": "이 평가는 선별 목적으로만 사용되며 의학적 진단을 구성하지 않습니다.",
+      "nextSteps": {
+        "title": "다음에 해볼 수 있는 일",
+        "breathing": "짧은 호흡 운동 해보기",
+        "resources": "정신 건강 자료 읽기",
+        "crisis": "안전하지 않다고 느끼면 위기 지원 찾기"
+      }
     },
     "disclaimer": {
       "title": "중요 공지",
@@ -128,7 +134,8 @@
       "sleep": "수면",
       "mindfulness": "마음챙김"
     },
-    "disclaimer": "이 링크들은 외부 웹사이트로 연결됩니다. Sunrain은 해당 콘텐츠에 대해 책임을 지지 않습니다."
+    "disclaimer": "이 링크들은 외부 웹사이트로 연결됩니다. Sunrain은 해당 콘텐츠에 대해 책임을 지지 않습니다.",
+    "languageNotice": "현지화된 출처를 검토하는 동안 일부 선별 자료는 영어로 제공될 수 있습니다."
   },
   "crisis": {
     "title": "위기 핫라인",
@@ -143,7 +150,8 @@
     "phone": "전화",
     "available": "이용 가능",
     "languages": "언어",
-    "website": "웹사이트 방문"
+    "website": "웹사이트 방문",
+    "noResults": "결과를 찾을 수 없습니다. 다른 검색어를 시도해 보세요."
   },
   "about": {
     "title": "Sunrain 소개",

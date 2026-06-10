@@ -72,7 +72,13 @@
       "suggestion": "建议",
       "retake": "重新测评",
       "viewHistory": "查看历史",
-      "disclaimer": "本测评仅供筛查参考，不构成医学诊断。"
+      "disclaimer": "本测评仅供筛查参考，不构成医学诊断。",
+      "nextSteps": {
+        "title": "接下来可以做什么",
+        "breathing": "尝试一个简短的呼吸练习",
+        "resources": "阅读心理健康资源",
+        "crisis": "如果感到不安全，请查看危机支持"
+      }
     },
     "disclaimer": {
       "title": "重要提示",
@@ -128,7 +134,8 @@
       "sleep": "睡眠",
       "mindfulness": "正念"
     },
-    "disclaimer": "这些链接指向外部网站。Sunrain不对其内容负责。"
+    "disclaimer": "这些链接指向外部网站。Sunrain不对其内容负责。",
+    "languageNotice": "部分精选文章在本地化来源完成审核前可能仍为英文。"
   },
   "crisis": {
     "title": "危机热线",
@@ -143,7 +150,8 @@
     "phone": "电话",
     "available": "服务时间",
     "languages": "服务语言",
-    "website": "访问网站"
+    "website": "访问网站",
+    "noResults": "未找到结果。请尝试其他搜索词。"
   },
   "about": {
     "title": "关于 Sunrain",

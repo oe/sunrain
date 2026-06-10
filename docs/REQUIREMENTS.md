@@ -128,7 +128,8 @@
 | 代码 | 语言 |
 |------|------|
 | en | English (默认) |
-| zh | 中文 |
+| zh-hans | 简体中文 |
+| zh-hant | 繁體中文 |
 | es | Español |
 | ja | 日本語 |
 | ko | 한국어 |
@@ -202,4 +203,3 @@
 | SSG | Static Site Generation，静态站点生成 |
 | RTL | Right-to-Left，从右到左的书写方向 |
 | localStorage | 浏览器本地存储 API |
-

@@ -6,6 +6,10 @@ import { localizeQuestionnaire } from '@/lib/questionnaire';
 import { Icon } from '@/components/Icon';
 
 const lang = getLanguageFromPath(Astro.url.pathname) as Language;
+const historyLabels = {
+  score: t('assessment.results.score', lang),
+  confirmClear: t('assessment.history.confirmClear', lang)
+};
 
 // Load questionnaires
 const questionnairesRaw = await getCollection('questionnaires');
@@ -79,7 +83,11 @@ const questionnaires = questionnairesRaw.map(q => localizeQuestionnaire(q.data, 
       <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">
         {t('assessment.history.title', lang)}
       </h2>
-      <div id="history-container" class="bg-white dark:bg-gray-800 rounded-2xl shadow-md border border-gray-100 dark:border-gray-700 p-6">
+      <div
+        id="history-container"
+        class="bg-white dark:bg-gray-800 rounded-2xl shadow-md border border-gray-100 dark:border-gray-700 p-6"
+        data-score-label={historyLabels.score}
+      >
         <p id="history-empty" class="text-gray-500 dark:text-gray-400 text-center py-8">
           {t('assessment.history.empty', lang)}
         </p>
@@ -87,6 +95,7 @@ const questionnaires = questionnairesRaw.map(q => localizeQuestionnaire(q.data, 
         <button
           id="clear-history-btn"
           class="hidden mt-4 text-sm text-red-600 dark:text-red-400 hover:underline"
+          data-confirm-message={historyLabels.confirmClear}
         >
           {t('assessment.history.clearAll', lang)}
         </button>
@@ -99,9 +108,11 @@ const questionnaires = questionnairesRaw.map(q => localizeQuestionnaire(q.data, 
   import { getResults, clearAllResults } from '@/lib/storage';
   import type { AssessmentResult } from '@/lib/questionnaire';
   
+  const historyContainer = document.getElementById('history-container');
   const historyEmpty = document.getElementById('history-empty');
   const historyList = document.getElementById('history-list');
   const clearBtn = document.getElementById('clear-history-btn');
+  const scoreLabel = historyContainer?.dataset.scoreLabel || 'Score';
   
   function renderHistory() {
     const results = getResults();
@@ -118,29 +129,49 @@ const questionnaires = questionnairesRaw.map(q => localizeQuestionnaire(q.data, 
     clearBtn?.classList.remove('hidden');
     
     if (historyList) {
-      historyList.innerHTML = results.slice(0, 10).map((r: AssessmentResult) => `
-        <div class="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700/50 rounded-xl">
-          <div>
-            <p class="font-medium text-gray-900 dark:text-white">${r.questionnaireTitle}</p>
-            <p class="text-sm text-gray-500 dark:text-gray-400">
-              ${new Date(r.completedAt).toLocaleDateString()}
-            </p>
-          </div>
-          <div class="text-right">
-            <span class="inline-block px-3 py-1 rounded-full text-sm font-medium" style="background-color: ${r.color}20; color: ${r.color}">
-              ${r.label}
-            </span>
-            <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">
-              Score: ${r.score}
-            </p>
-          </div>
-        </div>
-      `).join('');
+      historyList.replaceChildren(
+        ...results.slice(0, 10).map((r: AssessmentResult) => createHistoryItem(r))
+      );
     }
+  }
+
+  function createHistoryItem(result: AssessmentResult): HTMLElement {
+    const item = document.createElement('div');
+    item.className = 'flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700/50 rounded-xl';
+
+    const details = document.createElement('div');
+    const title = document.createElement('p');
+    title.className = 'font-medium text-gray-900 dark:text-white';
+    title.textContent = result.questionnaireTitle;
+
+    const date = document.createElement('p');
+    date.className = 'text-sm text-gray-500 dark:text-gray-400';
+    date.textContent = new Date(result.completedAt).toLocaleDateString();
+
+    details.append(title, date);
+
+    const summary = document.createElement('div');
+    summary.className = 'text-right';
+
+    const badge = document.createElement('span');
+    badge.className = 'inline-block px-3 py-1 rounded-full text-sm font-medium';
+    badge.textContent = result.label;
+    badge.style.backgroundColor = `${result.color}20`;
+    badge.style.color = result.color;
+
+    const score = document.createElement('p');
+    score.className = 'text-sm text-gray-500 dark:text-gray-400 mt-1';
+    score.textContent = `${scoreLabel}: ${result.score}`;
+
+    summary.append(badge, score);
+    item.append(details, summary);
+
+    return item;
   }
   
   clearBtn?.addEventListener('click', () => {
-    if (confirm('Are you sure you want to clear all history?')) {
+    const confirmMessage = clearBtn?.dataset.confirmMessage || '';
+    if (confirm(confirmMessage)) {
       clearAllResults();
       renderHistory();
     }
@@ -148,4 +179,3 @@ const questionnaires = questionnairesRaw.map(q => localizeQuestionnaire(q.data, 
   
   renderHistory();
 </script>
-

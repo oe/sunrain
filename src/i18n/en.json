@@ -72,7 +72,13 @@
       "suggestion": "Suggestion",
       "retake": "Retake Assessment",
       "viewHistory": "View History",
-      "disclaimer": "This assessment is for screening purposes only and does not constitute a medical diagnosis."
+      "disclaimer": "This assessment is for screening purposes only and does not constitute a medical diagnosis.",
+      "nextSteps": {
+        "title": "Helpful next steps",
+        "breathing": "Try a short breathing exercise",
+        "resources": "Read mental health resources",
+        "crisis": "Find crisis support if you feel unsafe"
+      }
     },
     "disclaimer": {
       "title": "Important Notice",
@@ -128,7 +134,8 @@
       "sleep": "Sleep",
       "mindfulness": "Mindfulness"
     },
-    "disclaimer": "These links lead to external websites. Sunrain is not responsible for their content."
+    "disclaimer": "These links lead to external websites. Sunrain is not responsible for their content.",
+    "languageNotice": "Some curated articles may be available in English while localized sources are reviewed."
   },
   "crisis": {
     "title": "Crisis Hotlines",
@@ -143,7 +150,8 @@
     "phone": "Phone",
     "available": "Available",
     "languages": "Languages",
-    "website": "Visit Website"
+    "website": "Visit Website",
+    "noResults": "No results found. Try a different search term."
   },
   "about": {
     "title": "About Sunrain",

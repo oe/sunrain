@@ -59,7 +59,12 @@ const questionnairesCollection = defineCollection({
   }),
 });
 
+const resourcesCollection = defineCollection({
+  type: 'data',
+  schema: z.record(z.string(), z.unknown()),
+});
+
 export const collections = {
   questionnaires: questionnairesCollection,
+  resources: resourcesCollection,
 };
-

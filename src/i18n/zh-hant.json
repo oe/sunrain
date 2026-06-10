@@ -72,7 +72,13 @@
       "suggestion": "建議",
       "retake": "重新評估",
       "viewHistory": "檢視紀錄",
-      "disclaimer": "本評估僅供篩檢參考，不構成醫學診斷。"
+      "disclaimer": "本評估僅供篩檢參考，不構成醫學診斷。",
+      "nextSteps": {
+        "title": "接下來可以做什麼",
+        "breathing": "嘗試一個簡短的呼吸練習",
+        "resources": "閱讀心理健康資源",
+        "crisis": "如果感到不安全，請查看危機支援"
+      }
     },
     "disclaimer": {
       "title": "重要提示",
@@ -128,7 +134,8 @@
       "sleep": "睡眠",
       "mindfulness": "正念"
     },
-    "disclaimer": "這些鏈接指向外部網站。Sunrain不對其內容負責。"
+    "disclaimer": "這些鏈接指向外部網站。Sunrain不對其內容負責。",
+    "languageNotice": "部分精選文章在本地化來源完成審核前可能仍為英文。"
   },
   "crisis": {
     "title": "危機專線",
@@ -143,7 +150,8 @@
     "phone": "電話",
     "available": "服務時間",
     "languages": "服務語言",
-    "website": "前往網站"
+    "website": "前往網站",
+    "noResults": "找不到結果。請嘗試其他搜尋詞。"
   },
   "about": {
     "title": "關於 Sunrain",

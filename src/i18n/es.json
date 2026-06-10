@@ -72,7 +72,13 @@
       "suggestion": "Sugerencia",
       "retake": "Repetir Evaluación",
       "viewHistory": "Ver Historial",
-      "disclaimer": "Esta evaluación es solo para fines de detección y no constituye un diagnóstico médico."
+      "disclaimer": "Esta evaluación es solo para fines de detección y no constituye un diagnóstico médico.",
+      "nextSteps": {
+        "title": "Próximos pasos útiles",
+        "breathing": "Prueba un ejercicio breve de respiración",
+        "resources": "Lee recursos de salud mental",
+        "crisis": "Busca apoyo de crisis si no te sientes a salvo"
+      }
     },
     "disclaimer": {
       "title": "Aviso Importante",
@@ -128,7 +134,8 @@
       "sleep": "Sueño",
       "mindfulness": "Mindfulness"
     },
-    "disclaimer": "Estos enlaces llevan a sitios web externos. Sunrain no se hace responsable de su contenido."
+    "disclaimer": "Estos enlaces llevan a sitios web externos. Sunrain no se hace responsable de su contenido.",
+    "languageNotice": "Algunos artículos seleccionados pueden estar en inglés mientras se revisan fuentes localizadas."
   },
   "crisis": {
     "title": "Líneas de Crisis",
@@ -143,7 +150,8 @@
     "phone": "Teléfono",
     "available": "Disponible",
     "languages": "Idiomas",
-    "website": "Visitar Sitio Web"
+    "website": "Visitar Sitio Web",
+    "noResults": "No se encontraron resultados. Prueba con otro término de búsqueda."
   },
   "about": {
     "title": "Acerca de Sunrain",

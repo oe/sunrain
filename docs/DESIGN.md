@@ -24,8 +24,9 @@ src/
 │       └── crisis.json      # 危机热线数据
 ├── i18n/                    # UI 翻译文件
 │   ├── en.json
-│   ├── zh.json
-│   └── ... (7 种语言)
+│   ├── zh-hans.json
+│   ├── zh-hant.json
+│   └── ... (8 种语言)
 ├── lib/                     # 核心库
 │   ├── i18n.ts              # 国际化工具
 │   ├── questionnaire.ts     # 问卷处理
@@ -62,14 +63,17 @@ version: "1.0"
 meta:
   title:
     en: "Patient Health Questionnaire-9 (PHQ-9)"
-    zh: "患者健康问卷-9 (PHQ-9)"
+    zh-hans: "患者健康问卷-9 (PHQ-9)"
+    zh-hant: "患者健康問卷-9 (PHQ-9)"
     # ... 其他语言
   description:
     en: "A brief questionnaire for screening depression"
-    zh: "用于筛查抑郁症状的简短问卷"
+    zh-hans: "用于筛查抑郁症状的简短问卷"
+    zh-hant: "用於篩檢憂鬱症狀的簡短問卷"
   instruction:
     en: "Over the last 2 weeks, how often have you..."
-    zh: "在过去两周内，以下问题困扰您的频率是？"
+    zh-hans: "在过去两周内，以下问题困扰您的频率是？"
+    zh-hant: "在過去兩週內，以下問題困擾您的頻率是？"
   estimatedMinutes: 5
   category: depression
 
@@ -77,18 +81,21 @@ options:
   - value: 0
     label:
       en: "Not at all"
-      zh: "完全不会"
+      zh-hans: "完全不会"
+      zh-hant: "完全不會"
   - value: 1
     label:
       en: "Several days"
-      zh: "几天"
+      zh-hans: "几天"
+      zh-hant: "幾天"
   # ...
 
 questions:
   - id: q1
     text:
       en: "Little interest or pleasure in doing things"
-      zh: "做事时提不起劲或没有兴趣"
+      zh-hans: "做事时提不起劲或没有兴趣"
+      zh-hant: "做事時提不起勁或沒有興趣"
   # ...
 
 scoring:
@@ -100,10 +107,12 @@ scoring:
       color: "#22c55e"
       label:
         en: "Minimal depression"
-        zh: "极少抑郁"
+        zh-hans: "极少抑郁"
+        zh-hant: "極少憂鬱"
       suggestion:
         en: "Your symptoms suggest minimal depression..."
-        zh: "您的症状显示抑郁程度极低..."
+        zh-hans: "您的症状显示抑郁程度极低..."
+        zh-hant: "您的症狀顯示憂鬱程度極低..."
     # ...
 ```
 
@@ -147,7 +156,7 @@ interface AssessmentResult {
   color: string;           // 颜色: "#f97316"
   suggestion: string;      // 建议文本
   completedAt: string;     // ISO 日期: "2024-12-10T00:00:00.000Z"
-  language: string;        // 测评时语言: "zh"
+  language: string;        // 测评时语言: "zh-hans"
 }
 ```
 
@@ -168,7 +177,7 @@ interface AssessmentResult {
 **关键函数**:
 ```typescript
 // 支持的语言
-const SUPPORTED_LANGUAGES = ['en', 'zh', 'es', 'ja', 'ko', 'hi', 'ar'];
+const SUPPORTED_LANGUAGES = ['en', 'zh-hans', 'zh-hant', 'es', 'ja', 'ko', 'hi', 'ar'];
 
 // 获取翻译
 function t(key: string, lang: Language): string
@@ -333,9 +342,13 @@ function clearAllResults(): void
 /assessment/          → 英语测评列表
 /assessment/phq-9/    → 英语 PHQ-9 测评
 
-/zh/                  → 中文首页
-/zh/assessment/       → 中文测评列表
-/zh/assessment/phq-9/ → 中文 PHQ-9 测评
+/zh-hans/                  → 简体中文首页
+/zh-hans/assessment/       → 简体中文测评列表
+/zh-hans/assessment/phq-9/ → 简体中文 PHQ-9 测评
+
+/zh-hant/                  → 繁體中文首頁
+/zh-hant/assessment/       → 繁體中文測評列表
+/zh-hant/assessment/phq-9/ → 繁體中文 PHQ-9 測評
 
 /ar/                  → 阿拉伯语首页 (RTL)
 ```
@@ -350,7 +363,7 @@ export default defineConfig({
   integrations: [
     i18n({
       defaultLocale: 'en',
-      locales: ['en', 'zh', 'es', 'ja', 'ko', 'hi', 'ar'],
+      locales: ['en', 'zh-hans', 'zh-hant', 'es', 'ja', 'ko', 'hi', 'ar'],
     })
   ]
 });
@@ -374,7 +387,8 @@ dist/
 │   ├── index.html
 │   ├── phq-9/index.html
 │   └── gad-7/index.html
-├── zh/
+├── zh-hans/
+├── zh-hant/
 │   ├── index.html
 │   └── assessment/...
 └── _astro/
@@ -488,4 +502,3 @@ const title = t('page.title', lang);
   }
 }
 ```
-
