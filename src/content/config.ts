@@ -25,6 +25,11 @@ const questionSchema = z.object({
   text: multiLangText,
 });
 
+const safetyTriggerSchema = z.object({
+  questionId: z.string(),
+  minValue: z.number(),
+});
+
 // Interpretation schema
 const interpretationSchema = z.object({
   range: z.tuple([z.number(), z.number()]),
@@ -55,6 +60,9 @@ const questionnairesCollection = defineCollection({
       maxScore: z.number(),
       interpretations: z.array(interpretationSchema),
     }),
+    safety: z.object({
+      responseTriggers: z.array(safetyTriggerSchema),
+    }).optional(),
     disclaimer: multiLangText,
   }),
 });

@@ -54,6 +54,10 @@ assertNoMatch(
 );
 const assessmentPage = readText('src/pages/assessment/[id].astro');
 assert.match(assessmentPage, /assessment\.results\.nextSteps\.title/);
+assert.match(assessmentPage, /function hasSafetySignal\(\)/);
+assert.match(assessmentPage, /result-safety-notice/);
+assert.match(assessmentPage, /resultSafetyNotice\?\.focus\(\)/);
+assert.match(assessmentPage, /assessmentLabels\.safetyScoreContext/);
 assert.match(assessmentPage, /\/breathing\//);
 assert.match(assessmentPage, /\/resources\//);
 assert.match(assessmentPage, /\/crisis\//);
@@ -69,5 +73,22 @@ assertNoMatch(
 );
 const resourcesPage = readText('src/pages/resources.astro');
 assert.match(resourcesPage, /resources\.languageNotice/);
+
+const phq9 = readText('src/content/questionnaires/phq-9.yaml');
+assert.match(phq9, /questionId:\s*q9\s+minValue:\s*1/);
+
+for (const file of translationFiles) {
+  const translation = readJson(`src/i18n/${file}`);
+  assertNoMatch(
+    `src/i18n/${file}`,
+    /No tracking, no cookies, no servers|无追踪、无Cookie、无服务器/,
+    'privacy copy must distinguish local mental-health data from infrastructure telemetry'
+  );
+  assert.equal(
+    translation.about.values.privacy.description,
+    translation.home.privacy.description,
+    `${file}: home and about privacy disclosures must stay consistent`
+  );
+}
 
 console.log('Sunrain verification passed.');

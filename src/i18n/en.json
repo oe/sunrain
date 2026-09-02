@@ -42,7 +42,7 @@
     },
     "privacy": {
       "title": "Your Privacy, Protected",
-      "description": "All your data stays on your device. No tracking, no cookies, no servers. Your mental health journey is yours alone."
+      "description": "Your assessment answers and scores stay on this device. No account or advertising trackers. We never upload your mental health responses. Our hosting and CDN providers may process basic, anonymous traffic and performance data."
     }
   },
   "assessment": {
@@ -79,6 +79,13 @@
         "resources": "Read mental health resources",
         "crisis": "Find crisis support if you feel unsafe"
       }
+    },
+    "safety": {
+      "title": "Your safety matters",
+      "message": "Your response suggests that thoughts of death or self-harm have been present recently. This questionnaire cannot assess immediate risk. Please consider telling someone you trust and contacting a qualified mental health professional now.",
+      "urgent": "If you may act on these thoughts or cannot stay safe, contact local emergency services now.",
+      "scoreContext": "Regardless of the total score shown, this response needs attention. Please follow the safety guidance above first.",
+      "crisisLink": "View crisis support"
     },
     "disclaimer": {
       "title": "Important Notice",
@@ -162,7 +169,7 @@
     "values": {
       "privacy": {
         "title": "Privacy First",
-        "description": "All data stays on your device. We don't track or collect any personal information."
+        "description": "Your assessment answers and scores stay on this device. No account or advertising trackers. We never upload your mental health responses. Our hosting and CDN providers may process basic, anonymous traffic and performance data."
       },
       "accessibility": {
         "title": "Accessible",

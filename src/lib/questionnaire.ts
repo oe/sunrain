@@ -17,6 +17,7 @@ export interface LocalizedQuestionnaire {
   category: string;
   options: Array<{ value: number; label: string }>;
   questions: Array<{ id: string; text: string }>;
+  safetyTriggers: Array<{ questionId: string; minValue: number }>;
   interpretations: Array<{
     range: [number, number];
     level: string;
@@ -85,6 +86,7 @@ export function localizeQuestionnaire(
       id: q.id,
       text: getLocalizedText(q.text, lang),
     })),
+    safetyTriggers: data.safety?.responseTriggers || [],
     interpretations: (data.scoring?.interpretations || []).map((i: any) => ({
       range: i.range,
       level: i.level,
@@ -148,4 +150,3 @@ export function createAssessmentResult(
     language: lang,
   };
 }
-

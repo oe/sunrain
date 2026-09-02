@@ -42,7 +42,7 @@
     },
     "privacy": {
       "title": "Tu Privacidad, Protegida",
-      "description": "Todos tus datos permanecen en tu dispositivo. Sin seguimiento, sin cookies, sin servidores. Tu viaje de salud mental es solo tuyo."
+      "description": "Tus respuestas y puntuaciones se guardan solo en este dispositivo. No necesitas una cuenta ni usamos rastreadores publicitarios. Nunca subimos tus respuestas de salud mental. Nuestros proveedores de alojamiento y CDN pueden procesar datos básicos y anónimos de tráfico y rendimiento."
     }
   },
   "assessment": {
@@ -79,6 +79,13 @@
         "resources": "Lee recursos de salud mental",
         "crisis": "Busca apoyo de crisis si no te sientes a salvo"
       }
+    },
+    "safety": {
+      "title": "Tu seguridad importa",
+      "message": "Tu respuesta indica que recientemente podrías haber tenido pensamientos sobre morir o hacerte daño. Este cuestionario no puede evaluar el riesgo inmediato. Considera decírselo ahora a alguien de confianza y contactar a un profesional de salud mental cualificado.",
+      "urgent": "Si crees que podrías actuar según estos pensamientos o no puedes mantenerte a salvo, contacta ahora con los servicios de emergencia locales.",
+      "scoreContext": "Independientemente de la puntuación total mostrada, esta respuesta requiere atención. Sigue primero la orientación de seguridad anterior.",
+      "crisisLink": "Ver apoyo de crisis"
     },
     "disclaimer": {
       "title": "Aviso Importante",
@@ -162,7 +169,7 @@
     "values": {
       "privacy": {
         "title": "Privacidad Primero",
-        "description": "Todos los datos permanecen en tu dispositivo. No rastreamos ni recopilamos información personal."
+        "description": "Tus respuestas y puntuaciones se guardan solo en este dispositivo. No necesitas una cuenta ni usamos rastreadores publicitarios. Nunca subimos tus respuestas de salud mental. Nuestros proveedores de alojamiento y CDN pueden procesar datos básicos y anónimos de tráfico y rendimiento."
       },
       "accessibility": {
         "title": "Accesible",

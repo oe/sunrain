@@ -26,7 +26,8 @@ const assessmentLabels = {
   question: t('assessment.taking.question', lang),
   of: t('assessment.taking.of', lang),
   next: t('assessment.taking.next', lang),
-  submit: t('assessment.taking.submit', lang)
+  submit: t('assessment.taking.submit', lang),
+  safetyScoreContext: t('assessment.safety.scoreContext', lang)
 };
 ---
 
@@ -86,6 +87,29 @@ const assessmentLabels = {
         >
         </h2>
         <div id="options-container" class="space-y-3"></div>
+
+        <div
+          id="answer-safety-notice"
+          class="hidden mt-6 rounded-2xl border-2 border-red-300 bg-red-50 p-5 text-left dark:border-red-800 dark:bg-red-950/40"
+          role="alert"
+          aria-live="polite"
+        >
+          <h3 class="font-bold text-red-900 dark:text-red-100 mb-2">
+            {t('assessment.safety.title', lang)}
+          </h3>
+          <p class="text-sm leading-relaxed text-red-800 dark:text-red-200 mb-2">
+            {t('assessment.safety.message', lang)}
+          </p>
+          <p class="text-sm font-semibold text-red-900 dark:text-red-100 mb-4">
+            {t('assessment.safety.urgent', lang)}
+          </p>
+          <a
+            href={getLocalizedPath('/crisis/', lang)}
+            class="inline-flex items-center justify-center rounded-xl bg-red-700 px-4 py-2.5 text-sm font-semibold text-white hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-offset-2 dark:focus:ring-offset-gray-800"
+          >
+            {t('assessment.safety.crisisLink', lang)}
+          </a>
+        </div>
       </div>
 
       <!-- Navigation -->
@@ -125,6 +149,29 @@ const assessmentLabels = {
         </div>
 
         <div class="p-8">
+          <div
+            id="result-safety-notice"
+            class="hidden mb-8 scroll-mt-24 rounded-2xl border-2 border-red-300 bg-red-50 p-6 dark:border-red-800 dark:bg-red-950/40"
+            role="alert"
+            tabindex="-1"
+          >
+            <h3 class="text-lg font-bold text-red-900 dark:text-red-100 mb-2">
+              {t('assessment.safety.title', lang)}
+            </h3>
+            <p class="text-sm leading-relaxed text-red-800 dark:text-red-200 mb-2">
+              {t('assessment.safety.message', lang)}
+            </p>
+            <p class="text-sm font-semibold text-red-900 dark:text-red-100 mb-4">
+              {t('assessment.safety.urgent', lang)}
+            </p>
+            <a
+              href={getLocalizedPath('/crisis/', lang)}
+              class="inline-flex items-center justify-center rounded-xl bg-red-700 px-4 py-2.5 text-sm font-semibold text-white hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-offset-2 dark:focus:ring-offset-gray-800"
+            >
+              {t('assessment.safety.crisisLink', lang)}
+            </a>
+          </div>
+
           <!-- Circular Score Display -->
           <div class="flex justify-center mb-8">
             <div class="relative w-48 h-48">
@@ -316,6 +363,32 @@ const assessmentLabels = {
   const prevBtn = document.getElementById('prev-btn');
   const nextBtn = document.getElementById('next-btn');
   const retakeBtn = document.getElementById('retake-btn');
+  const answerSafetyNotice = document.getElementById('answer-safety-notice');
+  const resultSafetyNotice = document.getElementById('result-safety-notice');
+
+  function hasSafetySignal() {
+    return questionnaire.safetyTriggers.some((trigger) => {
+      const questionIndex = questionnaire.questions.findIndex(
+        (question) => question.id === trigger.questionId
+      );
+      const answer = answers[questionIndex];
+      return questionIndex >= 0 && answer !== null && answer >= trigger.minValue;
+    });
+  }
+
+  function updateSafetyNotices() {
+    const safetySignal = hasSafetySignal();
+    const currentQuestion = questionnaire.questions[currentIndex];
+    const isSafetyQuestion = questionnaire.safetyTriggers.some(
+      (trigger) => trigger.questionId === currentQuestion?.id
+    );
+
+    answerSafetyNotice?.classList.toggle(
+      'hidden',
+      !(safetySignal && isSafetyQuestion)
+    );
+    resultSafetyNotice?.classList.toggle('hidden', !safetySignal);
+  }
 
   function renderQuestion() {
     const q = questionnaire.questions[currentIndex];
@@ -346,6 +419,8 @@ const assessmentLabels = {
         ? assessmentLabels.submit
         : `${assessmentLabels.next} →`;
     }
+
+    updateSafetyNotices();
   }
 
   function createOptionControl(opt) {
@@ -424,6 +499,16 @@ const assessmentLabels = {
     // Show results
     assessmentContainer?.classList.add('hidden');
     resultsContainer?.classList.remove('hidden');
+    updateSafetyNotices();
+    const safetySignal = hasSafetySignal();
+
+    requestAnimationFrame(() => {
+      if (safetySignal) {
+        resultSafetyNotice?.focus();
+      } else {
+        resultsContainer?.scrollIntoView({ block: 'start' });
+      }
+    });
 
     const scoreValue = document.getElementById('score-value');
     const resultLevel = document.getElementById('result-level');
@@ -439,7 +524,9 @@ const assessmentLabels = {
       resultLevel.style.color = interpretation.color;
     }
     if (resultSuggestion) {
-      resultSuggestion.textContent = interpretation.suggestion;
+      resultSuggestion.textContent = safetySignal
+        ? assessmentLabels.safetyScoreContext
+        : interpretation.suggestion;
     }
 
     // Animate circular progress
