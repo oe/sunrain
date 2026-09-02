@@ -141,5 +141,12 @@ const alternateLinks = SUPPORTED_LANGUAGES.map((locale) => {
       <slot />
     </main>
     <Footer lang={lang} />
+    <!-- Cloudflare Web Analytics: anonymous page and performance measurements only. -->
+    <script
+      is:inline
+      type="module"
+      src="https://static.cloudflareinsights.com/beacon.min.js"
+      data-cf-beacon='{"token": "684ad3417be54b9f94e54af82b4169c0"}'
+    ></script>
   </body>
 </html>

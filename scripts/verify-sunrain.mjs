@@ -47,6 +47,10 @@ assert.doesNotMatch(requirements, /\|\s*zh\s*\|\s*中文\s*\|/);
 const contentConfig = readText('src/content/config.ts');
 assert.match(contentConfig, /resources\s*:/, 'resources collection must be explicit');
 
+const baseLayout = readText('src/layouts/BaseLayout.astro');
+assert.match(baseLayout, /static\.cloudflareinsights\.com\/beacon\.min\.js/);
+assert.match(baseLayout, /data-cf-beacon=/);
+
 assertNoMatch(
   'src/pages/assessment/[id].astro',
   /Question \$\{|Submit|Next →/,
