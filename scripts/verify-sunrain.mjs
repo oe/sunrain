@@ -74,6 +74,12 @@ assertNoMatch(
 const resourcesPage = readText('src/pages/resources.astro');
 assert.match(resourcesPage, /resources\.languageNotice/);
 
+assertNoMatch(
+  'src/pages/index.astro',
+  /No tracking, no cookies, no servers/,
+  'homepage fallback privacy copy must disclose infrastructure telemetry'
+);
+
 const phq9 = readText('src/content/questionnaires/phq-9.yaml');
 assert.match(phq9, /questionId:\s*q9\s+minValue:\s*1/);
 
