@@ -86,7 +86,11 @@ for (const sound of [
   'wind-in-trees',
   'water-droplets',
   'flowing-river',
-  'ocean-waves'
+  'ocean-waves',
+  'forest-birds',
+  'rain-on-window',
+  'fireplace',
+  'pink-noise'
 ]) {
   assert.match(soundscapePage, new RegExp(`/sounds/${sound}\\.webm`));
   assert.match(soundscapePage, new RegExp(`/sounds/${sound}\\.mp3`));
@@ -95,6 +99,12 @@ for (const sound of [
     assert.ok(statSync(asset).size > 100_000, `${sound}.${extension} is missing or too small`);
   }
 }
+for (const preset of ['rainy-night', 'forest-morning', 'deep-masking']) {
+  assert.match(soundscapePage, new RegExp(`'${preset}'`));
+}
+assert.match(soundscapePage, /button\.ariaPressed === 'true'/);
+assert.match(soundscapePage, /data-default-volume=\{sound\.defaultVolume\}/);
+assert.match(soundscapePage, /function resetVolumes\(\)/);
 
 assertNoMatch(
   'src/pages/index.astro',

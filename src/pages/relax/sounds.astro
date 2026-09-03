@@ -51,7 +51,45 @@ const sounds = [
     bgClass: 'bg-indigo-100 dark:bg-indigo-900/30',
     textClass: 'text-indigo-600 dark:text-indigo-300',
     defaultVolume: 0.4
+  },
+  {
+    id: 'forest-birds',
+    translationKey: 'forestBirds',
+    icon: 'Bird' as IconName,
+    bgClass: 'bg-lime-100 dark:bg-lime-900/30',
+    textClass: 'text-lime-700 dark:text-lime-300',
+    defaultVolume: 0.32
+  },
+  {
+    id: 'rain-on-window',
+    translationKey: 'rainOnWindow',
+    icon: 'CloudRain' as IconName,
+    bgClass: 'bg-slate-100 dark:bg-slate-700/50',
+    textClass: 'text-slate-600 dark:text-slate-300',
+    defaultVolume: 0.4
+  },
+  {
+    id: 'fireplace',
+    translationKey: 'fireplace',
+    icon: 'Flame' as IconName,
+    bgClass: 'bg-orange-100 dark:bg-orange-900/30',
+    textClass: 'text-orange-600 dark:text-orange-300',
+    defaultVolume: 0.3
+  },
+  {
+    id: 'pink-noise',
+    translationKey: 'pinkNoise',
+    icon: 'AudioLines' as IconName,
+    bgClass: 'bg-rose-100 dark:bg-rose-900/30',
+    textClass: 'text-rose-600 dark:text-rose-300',
+    defaultVolume: 0.26
   }
+];
+
+const presets = [
+  { id: 'rainy-night', translationKey: 'rainyNightFireplace', icon: 'Flame' as IconName },
+  { id: 'forest-morning', translationKey: 'forestMorning', icon: 'Bird' as IconName },
+  { id: 'deep-masking', translationKey: 'deepMasking', icon: 'AudioLines' as IconName }
 ];
 ---
 
@@ -98,8 +136,32 @@ const sounds = [
       <p id="sound-status" class="sr-only" aria-live="polite"></p>
     </div>
 
+    <section class="max-w-4xl mx-auto mb-8 animate-fade-in-up delay-100" aria-labelledby="presets-title">
+      <h2 id="presets-title" class="text-sm font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">
+        {t('relax.sounds.presetsTitle', lang)}
+      </h2>
+      <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
+        {t('relax.sounds.presetsHint', lang)}
+      </p>
+      <div class="mt-4 grid gap-3 sm:grid-cols-3">
+        {presets.map((preset) => (
+          <button
+            type="button"
+            class="preset-btn flex items-center gap-3 rounded-xl border border-gray-200 bg-white px-4 py-3 text-left text-sm font-medium text-gray-700 shadow-sm transition hover:-translate-y-0.5 hover:border-amber-300 hover:shadow-md dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:hover:border-amber-500"
+            data-preset={preset.id}
+            aria-pressed="false"
+          >
+            <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300">
+              <Icon name={preset.icon} size={18} />
+            </span>
+            {t(`relax.sounds.${preset.translationKey}`, lang)}
+          </button>
+        ))}
+      </div>
+    </section>
+
     <div
-      class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-4xl mx-auto animate-fade-in-up delay-100"
+      class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-4xl mx-auto animate-fade-in-up delay-200"
     >
       {
         sounds.map((sound) => (
@@ -137,6 +199,7 @@ const sounds = [
                   value={sound.defaultVolume}
                   class="volume-slider w-full accent-gray-900 dark:accent-white"
                   data-sound={sound.id}
+                  data-default-volume={sound.defaultVolume}
                   aria-label={`${t('relax.sounds.volume', lang)} — ${t(`relax.sounds.${sound.translationKey}`, lang)}`}
                 />
               </div>
@@ -153,6 +216,9 @@ const sounds = [
         <Icon name="WifiOff" size={20} className="shrink-0" />
         <p set:html={t('relax.sounds.offlineNote', lang)} />
       </div>
+      <p class="mt-3 pl-8 text-blue-700/80 dark:text-blue-200/80">
+        {t('relax.sounds.volumeSafety', lang)}
+      </p>
     </div>
   </div>
 </BaseLayout>
@@ -165,7 +231,13 @@ const sounds = [
     | 'wind-in-trees'
     | 'water-droplets'
     | 'flowing-river'
-    | 'ocean-waves';
+    | 'ocean-waves'
+    | 'forest-birds'
+    | 'rain-on-window'
+    | 'fireplace'
+    | 'pink-noise';
+
+  type PresetId = 'rainy-night' | 'forest-morning' | 'deep-masking';
 
   interface Track {
     howl: Howl;
@@ -195,7 +267,29 @@ const sounds = [
     'ocean-waves': [
       '/sounds/ocean-waves.webm',
       '/sounds/ocean-waves.mp3'
+    ],
+    'forest-birds': [
+      '/sounds/forest-birds.webm',
+      '/sounds/forest-birds.mp3'
+    ],
+    'rain-on-window': [
+      '/sounds/rain-on-window.webm',
+      '/sounds/rain-on-window.mp3'
+    ],
+    fireplace: [
+      '/sounds/fireplace.webm',
+      '/sounds/fireplace.mp3'
+    ],
+    'pink-noise': [
+      '/sounds/pink-noise.webm',
+      '/sounds/pink-noise.mp3'
     ]
+  };
+
+  const presetMixes: Record<PresetId, Partial<Record<SoundId, number>>> = {
+    'rainy-night': { 'gentle-rain': 0.42, fireplace: 0.3 },
+    'forest-morning': { 'forest-birds': 0.32, 'wind-in-trees': 0.18, 'flowing-river': 0.24 },
+    'deep-masking': { 'pink-noise': 0.28, 'gentle-rain': 0.16, 'ocean-waves': 0.12 }
   };
 
   const app = document.querySelector<HTMLElement>('#soundscape-app');
@@ -206,6 +300,7 @@ const sounds = [
   const tracks = new Map<SoundId, Track>();
   const buttons = document.querySelectorAll('.play-btn');
   const sliders = document.querySelectorAll('.volume-slider');
+  const presetButtons = document.querySelectorAll<HTMLButtonElement>('.preset-btn');
   const stopAllButton = document.querySelector<HTMLButtonElement>('#stop-all-btn');
   const status = document.querySelector<HTMLElement>('#sound-status');
 
@@ -217,6 +312,33 @@ const sounds = [
 
   function isSoundId(value: string | undefined): value is SoundId {
     return Boolean(value && value in soundSources);
+  }
+
+  function isPresetId(value: string | undefined): value is PresetId {
+    return Boolean(value && value in presetMixes);
+  }
+
+  function setActivePreset(id: PresetId | null) {
+    presetButtons.forEach((button) => {
+      const active = button.dataset.preset === id;
+      button.ariaPressed = String(active);
+      button.classList.toggle('border-amber-400', active);
+      button.classList.toggle('bg-amber-50', active);
+      button.classList.toggle('dark:border-amber-500', active);
+      button.classList.toggle('dark:bg-amber-900/20', active);
+    });
+  }
+
+  function resetVolumes() {
+    sliders.forEach((slider) => {
+      const input = slider as HTMLInputElement;
+      const id = input.dataset.sound;
+      if (!isSoundId(id)) return;
+      const defaultVolume = Number(input.dataset.defaultVolume || 0.5);
+      input.value = String(defaultVolume);
+      const track = tracks.get(id);
+      if (track) track.targetVolume = defaultVolume;
+    });
   }
 
   function sliderFor(id: SoundId) {
@@ -338,6 +460,7 @@ const sounds = [
 
   buttons.forEach((button) => {
     button.addEventListener('click', () => {
+      setActivePreset(null);
       const id = (button as HTMLElement).dataset.sound;
       if (!isSoundId(id)) return;
       const track = tracks.get(id);
@@ -348,6 +471,7 @@ const sounds = [
 
   sliders.forEach((slider) => {
     slider.addEventListener('input', (e) => {
+      setActivePreset(null);
       const id = (e.target as HTMLElement).dataset.sound;
       if (!isSoundId(id)) return;
       const track = tracks.get(id);
@@ -359,7 +483,42 @@ const sounds = [
     });
   });
 
+  presetButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      const presetId = button.dataset.preset;
+      if (!isPresetId(presetId)) return;
+
+      if (button.ariaPressed === 'true') {
+        setActivePreset(null);
+        resetVolumes();
+        tracks.forEach((_track, id) => stopTrack(id));
+        return;
+      }
+
+      const mix = presetMixes[presetId];
+      (Object.keys(soundSources) as SoundId[]).forEach((id) => {
+        const volume = mix[id];
+        if (volume === undefined) {
+          stopTrack(id);
+          return;
+        }
+
+        const slider = sliderFor(id);
+        if (slider) slider.value = String(volume);
+        const track = tracks.get(id);
+        if (track?.active && track.playbackId !== null) {
+          track.targetVolume = volume;
+          track.howl.volume(volume, track.playbackId);
+        } else {
+          startTrack(id);
+        }
+      });
+      setActivePreset(presetId);
+    });
+  });
+
   stopAllButton?.addEventListener('click', () => {
+    setActivePreset(null);
     tracks.forEach((_track, id) => stopTrack(id));
   });
 

@@ -29,6 +29,9 @@ import {
   Music,
   BookOpen,
   WifiOff,
+  Bird,
+  Flame,
+  AudioLines,
 } from 'lucide-react';
 import type { LucideProps } from 'lucide-react';
 
@@ -60,6 +63,9 @@ const iconMap = {
   Music,
   BookOpen,
   WifiOff,
+  Bird,
+  Flame,
+  AudioLines,
 } as const;
 
 export type IconName = keyof typeof iconMap;
