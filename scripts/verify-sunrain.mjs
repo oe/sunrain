@@ -81,6 +81,7 @@ assert.match(resourcesPage, /resources\.languageNotice/);
 const soundscapePage = readText('src/pages/relax/sounds.astro');
 assert.match(soundscapePage, /from 'howler'/);
 assert.doesNotMatch(soundscapePage, /createNoiseBuffer|Math\.random\(\) \* 2 - 1/);
+assert.match(soundscapePage, /\?v=20260904-2/, 'sound URLs must invalidate the previous cached loops');
 for (const sound of [
   'gentle-rain',
   'wind-in-trees',

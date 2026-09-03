@@ -16,9 +16,9 @@ domain under [Creative Commons CC0 1.0](https://creativecommons.org/publicdomain
 | `fireplace` | Campfire 01 | HECKFRICKER | [Freesound 729395](https://freesound.org/s/729395/) |
 
 Sunrain derived the shipped WebM/Opus and MP3 files from the Freesound preview
-audio by trimming long recordings, adding a gentle loop-boundary crossfade,
-normalizing loudness, and encoding browser-ready formats. The source recordings
-were retrieved on 2026-09-04.
+audio by trimming long recordings, normalizing loudness, applying an equal-power
+loop-boundary crossfade with a clean guard segment, and encoding browser-ready
+formats. The source recordings were retrieved on 2026-09-04.
 
 The `pink-noise` asset was generated locally by Sunrain as a fixed, seamless
 audio file and does not include third-party source material.

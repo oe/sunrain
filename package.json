@@ -9,6 +9,7 @@
     "build": "astro check && astro build",
     "preview": "astro preview",
     "lint": "astro check",
+    "audit:audio": "node scripts/audit-audio-loops.mjs",
     "verify:sunrain": "node scripts/verify-sunrain.mjs"
   },
   "dependencies": {
