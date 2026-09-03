@@ -5,6 +5,9 @@
 import {
   CloudSun,
   CloudRain,
+  Droplets,
+  Trees,
+  Waves,
   ClipboardList,
   Wind,
   Phone,
@@ -33,6 +36,9 @@ import type { LucideProps } from 'lucide-react';
 const iconMap = {
   CloudSun,
   CloudRain,
+  Droplets,
+  Trees,
+  Waves,
   ClipboardList,
   Wind,
   Phone,

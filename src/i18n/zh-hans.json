@@ -122,14 +122,20 @@
     },
     "sounds": {
       "title": "环境音效",
-      "description": "专注与放松的白噪音",
-      "whiteNoise": "白噪音",
-      "pinkNoise": "粉红噪音",
-      "brownNoise": "红噪音",
-      "offlineNote": "<strong>注意：</strong> 这些声音是由浏览器使用 Web Audio API 实时生成的。加载后不消耗网络流量，可离线播放。",
+      "description": "帮助专注与放松的自然实景录音",
+      "gentleRain": "绵绵细雨",
+      "windInTrees": "林间风声",
+      "waterDroplets": "清澈水滴",
+      "flowingRiver": "潺潺溪流",
+      "oceanWaves": "舒缓海浪",
+      "mixHint": "可以同时播放多种声音，调出属于你的安静氛围。",
+      "stopAll": "全部停止",
+      "offlineNote": "<strong>关于音频：</strong>高品质自然录音会在首次播放时从 Sunrain 加载。我们不会录制或上传你设备上的任何声音。",
       "play": "播放",
       "pause": "暂停",
-      "volume": "音量"
+      "volume": "音量",
+      "loading": "正在加载音频",
+      "unavailable": "音频暂时无法播放"
     }
   },
   "resources": {

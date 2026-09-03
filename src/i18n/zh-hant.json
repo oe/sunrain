@@ -122,14 +122,20 @@
     },
     "sounds": {
       "title": "環境音效",
-      "description": "專注與放鬆的白噪音",
-      "whiteNoise": "白噪音",
-      "pinkNoise": "粉紅噪音",
-      "brownNoise": "紅噪音",
-      "offlineNote": "<strong>注意：</strong> 這些聲音是由瀏覽器使用 Web Audio API 實時生成的。加載後不消耗網絡流量，可離線播放。",
+      "description": "幫助專注與放鬆的自然實景錄音",
+      "gentleRain": "綿綿細雨",
+      "windInTrees": "林間風聲",
+      "waterDroplets": "清澈水滴",
+      "flowingRiver": "潺潺溪流",
+      "oceanWaves": "舒緩海浪",
+      "mixHint": "可以同時播放多種聲音，調出屬於你的安靜氛圍。",
+      "stopAll": "全部停止",
+      "offlineNote": "<strong>關於音訊：</strong>高品質自然錄音會在首次播放時從 Sunrain 載入。我們不會錄製或上傳你裝置上的任何聲音。",
       "play": "播放",
       "pause": "暫停",
-      "volume": "音量"
+      "volume": "音量",
+      "loading": "正在載入音訊",
+      "unavailable": "音訊暫時無法播放"
     }
   },
   "resources": {

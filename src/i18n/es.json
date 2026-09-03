@@ -122,14 +122,20 @@
     },
     "sounds": {
       "title": "Paisajes Sonoros",
-      "description": "Sonidos ambientales para el enfoque y la relajación",
-      "whiteNoise": "Ruido Blanco",
-      "pinkNoise": "Ruido Rosa",
-      "brownNoise": "Ruido Marrón",
-      "offlineNote": "<strong>Nota:</strong> Estos sonidos son generados en tiempo real por tu navegador usando la API de Web Audio. No consumen ancho de banda una vez cargados y pueden reproducirse sin conexión.",
+      "description": "Grabaciones naturales para concentrarse y relajarse",
+      "gentleRain": "Lluvia Suave",
+      "windInTrees": "Viento entre los Árboles",
+      "waterDroplets": "Gotas de Agua",
+      "flowingRiver": "Río Fluyendo",
+      "oceanWaves": "Olas del Océano",
+      "mixHint": "Reproduce varios sonidos a la vez y crea tu propia mezcla tranquila.",
+      "stopAll": "Detener todo",
+      "offlineNote": "<strong>Sobre el audio:</strong> Las grabaciones naturales de alta calidad se cargan desde Sunrain al reproducirlas por primera vez. Nunca grabamos ni subimos audio de tu dispositivo.",
       "play": "Reproducir",
       "pause": "Pausa",
-      "volume": "Volumen"
+      "volume": "Volumen",
+      "loading": "Cargando sonido",
+      "unavailable": "Sonido no disponible"
     }
   },
   "resources": {

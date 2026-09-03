@@ -122,14 +122,20 @@
     },
     "sounds": {
       "title": "Soundscapes",
-      "description": "Ambient sounds for focus and relaxation",
-      "whiteNoise": "White Noise",
-      "pinkNoise": "Pink Noise",
-      "brownNoise": "Brown Noise",
-      "offlineNote": "<strong>Note:</strong> These sounds are generated in real-time by your browser using the Web Audio API. They don't use any internet bandwidth once loaded and can be played offline.",
+      "description": "Natural field recordings for focus and relaxation",
+      "gentleRain": "Gentle Rain",
+      "windInTrees": "Wind in the Trees",
+      "waterDroplets": "Water Droplets",
+      "flowingRiver": "Flowing River",
+      "oceanWaves": "Ocean Waves",
+      "mixHint": "Play several sounds together and shape your own calm mix.",
+      "stopAll": "Stop all",
+      "offlineNote": "<strong>About the audio:</strong> High-quality nature recordings load from Sunrain when first played. We never record or upload audio from your device.",
       "play": "Play",
       "pause": "Pause",
-      "volume": "Volume"
+      "volume": "Volume",
+      "loading": "Loading sound",
+      "unavailable": "Sound unavailable"
     }
   },
   "resources": {

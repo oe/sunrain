@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { readFileSync, readdirSync } from 'node:fs';
+import { readFileSync, readdirSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 
 const root = new URL('..', import.meta.url);
@@ -77,6 +77,24 @@ assertNoMatch(
 );
 const resourcesPage = readText('src/pages/resources.astro');
 assert.match(resourcesPage, /resources\.languageNotice/);
+
+const soundscapePage = readText('src/pages/relax/sounds.astro');
+assert.match(soundscapePage, /from 'howler'/);
+assert.doesNotMatch(soundscapePage, /createNoiseBuffer|Math\.random\(\) \* 2 - 1/);
+for (const sound of [
+  'gentle-rain',
+  'wind-in-trees',
+  'water-droplets',
+  'flowing-river',
+  'ocean-waves'
+]) {
+  assert.match(soundscapePage, new RegExp(`/sounds/${sound}\\.webm`));
+  assert.match(soundscapePage, new RegExp(`/sounds/${sound}\\.mp3`));
+  for (const extension of ['webm', 'mp3']) {
+    const asset = new URL(`public/sounds/${sound}.${extension}`, root);
+    assert.ok(statSync(asset).size > 100_000, `${sound}.${extension} is missing or too small`);
+  }
+}
 
 assertNoMatch(
   'src/pages/index.astro',
