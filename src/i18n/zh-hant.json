@@ -145,7 +145,28 @@
       "pause": "暫停",
       "volume": "音量",
       "loading": "正在載入音訊",
-      "unavailable": "音訊暫時無法播放"
+      "unavailable": "音訊暫時無法播放",
+      "immersive": {
+        "enter": "進入沉浸畫面",
+        "auto": "桌面端自動進入",
+        "desktopHint": "播放後 20 秒無操作，自動進入畫面。退出畫面後聲音繼續播放。",
+        "mobileHint": "先播放聲音，再隨時手動開啟畫面。",
+        "eyebrow": "給自己一點放鬆的空間",
+        "hint": "快速移動滑鼠可退出；輕觸或緩慢移動可顯示控制。Esc 隨時可退出。",
+        "lockedHint": "已鎖定。點擊解鎖可顯示控制，Esc 隨時可退出。",
+        "exit": "返回聲音選擇",
+        "stop": "停止聲音",
+        "lock": "鎖定控制",
+        "unlock": "解鎖控制",
+        "fullscreen": "全螢幕",
+        "exitFullscreen": "退出全螢幕",
+        "fullscreenError": "目前無法全螢幕，仍可使用沉浸畫面。",
+        "volume": "混音音量",
+        "loadError": "畫面載入失敗，聲音仍在播放，請重試。",
+        "loading": "正在開啟畫面…",
+        "touchHint": "輕觸畫面可顯示控制。退出畫面後聲音繼續播放。",
+        "lockedTouchHint": "已鎖定，點擊解鎖控制可顯示其他按鈕。"
+      }
     }
   },
   "resources": {

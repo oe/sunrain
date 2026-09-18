@@ -145,7 +145,28 @@
       "pause": "Pause",
       "volume": "Volume",
       "loading": "Loading sound",
-      "unavailable": "Sound unavailable"
+      "unavailable": "Sound unavailable",
+      "immersive": {
+        "enter": "Enter immersive view",
+        "auto": "Enter automatically on desktop",
+        "desktopHint": "After 20 seconds of listening without interaction, the scene opens. Leaving keeps your sounds playing.",
+        "mobileHint": "Start a sound, then open a scene whenever you like.",
+        "eyebrow": "A little space to unwind",
+        "hint": "Move your mouse quickly to leave. Tap or move gently for controls. Esc always leaves.",
+        "lockedHint": "Locked. Use Unlock to show controls. Esc always leaves.",
+        "exit": "Back to sounds",
+        "stop": "Stop sounds",
+        "lock": "Lock controls",
+        "unlock": "Unlock controls",
+        "fullscreen": "Fullscreen",
+        "exitFullscreen": "Leave fullscreen",
+        "fullscreenError": "Fullscreen is unavailable here. You can still use the immersive view.",
+        "volume": "Mix volume",
+        "loadError": "The scene could not load. Your sounds are still playing; try again.",
+        "loading": "Opening scene…",
+        "touchHint": "Tap the scene to show controls. Sounds keep playing when you leave.",
+        "lockedTouchHint": "Locked. Tap Unlock controls to show the other controls."
+      }
     }
   },
   "resources": {

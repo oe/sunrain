@@ -86,6 +86,27 @@ const sounds = [
   }
 ];
 
+const immersiveLabels = Object.fromEntries(
+  [
+    'enter',
+    'eyebrow',
+    'hint',
+    'lockedHint',
+    'touchHint',
+    'lockedTouchHint',
+    'exit',
+    'stop',
+    'lock',
+    'unlock',
+    'fullscreen',
+    'exitFullscreen',
+    'fullscreenError',
+    'volume',
+    'loadError',
+    'loading'
+  ].map((key) => [key, t(`relax.sounds.immersive.${key}`, lang)])
+);
+
 const presets = [
   { id: 'rainy-night', translationKey: 'rainyNightFireplace', icon: 'Flame' as IconName },
   { id: 'forest-morning', translationKey: 'forestMorning', icon: 'Bird' as IconName },
@@ -104,6 +125,7 @@ const presets = [
     data-pause={t('relax.sounds.pause', lang)}
     data-loading={t('relax.sounds.loading', lang)}
     data-unavailable={t('relax.sounds.unavailable', lang)}
+    data-immersive-labels={JSON.stringify(immersiveLabels)}
   >
     <div class="max-w-4xl mx-auto mb-8 animate-fade-in-up">
       <a
@@ -133,6 +155,22 @@ const presets = [
           {t('relax.sounds.stopAll', lang)}
         </button>
       </div>
+      <div class="mt-6 rounded-2xl border border-slate-200 bg-slate-50 p-4 dark:border-slate-700 dark:bg-slate-800/50">
+        <div class="flex flex-wrap items-center gap-4">
+          <button id="immersive-enter" type="button" disabled class="rounded-full bg-slate-800 px-5 py-3 text-sm font-medium text-white transition hover:bg-slate-700 disabled:opacity-40 dark:bg-slate-100 dark:text-slate-900">{t('relax.sounds.immersive.enter', lang)}</button>
+          <label id="immersive-auto-label" hidden class="items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
+            <input id="immersive-auto" type="checkbox" checked class="accent-amber-600" />
+            {t('relax.sounds.immersive.auto', lang)}
+          </label>
+        </div>
+        <p id="immersive-desktop-hint" hidden class="mt-3 text-sm text-gray-500 dark:text-gray-400">{t('relax.sounds.immersive.desktopHint', lang)}</p>
+        <p id="immersive-mobile-hint" class="mt-3 text-sm text-gray-500 dark:text-gray-400">{t('relax.sounds.immersive.mobileHint', lang)}</p>
+        <p id="immersive-status" role="status" class="mt-2 text-sm text-amber-700 dark:text-amber-300"></p>
+      </div>
+      <label class="mt-4 flex items-center gap-3 text-sm text-gray-500 dark:text-gray-400">
+        {t('relax.sounds.immersive.volume', lang)}
+        <input id="soundscape-master" type="range" min="0" max="1" step="0.01" value="1" class="w-28 accent-amber-600" aria-label={t('relax.sounds.immersive.volume', lang)} />
+      </label>
       <p id="sound-status" class="sr-only" aria-live="polite"></p>
     </div>
 
@@ -304,6 +342,180 @@ const presets = [
   const stopAllButton = document.querySelector<HTMLButtonElement>('#stop-all-btn');
   const status = document.querySelector<HTMLElement>('#sound-status');
 
+  // Only this small gate is eager. Scene, renderer and stylesheet are dynamically imported.
+  const enterButton = document.querySelector<HTMLButtonElement>('#immersive-enter')!;
+  const autoInput = document.querySelector<HTMLInputElement>('#immersive-auto')!;
+  const roomStatus = document.querySelector<HTMLElement>('#immersive-status')!;
+  const labels: Record<string, string> = JSON.parse(app?.dataset.immersiveLabels || '{}');
+  const desktop = matchMedia(
+    '(min-width: 1024px) and (hover: hover) and (pointer: fine)'
+  );
+  const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+  let room:
+    | ReturnType<typeof import('../../lib/soundscape/immersive').createRoom>
+    | undefined;
+  let requestedManually = false;
+  let loadingRoom = false,
+    dismissed = false,
+    disposed = false,
+    loadGeneration = 0;
+  let idleTimer = 0,
+    lastActivity = Date.now(),
+    masterVolume = 1;
+  const masterInput = document.querySelector<HTMLInputElement>('#soundscape-master')!;
+  function setMasterVolume(value: number) {
+    masterVolume = value;
+    masterInput.value = String(value);
+    tracks.forEach((track) => {
+      if (track.playbackId !== null)
+        track.howl.volume(track.targetVolume * value, track.playbackId);
+    });
+    scheduleRoom();
+  }
+  masterInput.addEventListener('input', () => setMasterVolume(Number(masterInput.value)));
+  function audibleSounds() {
+    return [...tracks.entries()]
+      .filter(
+        ([, track]) =>
+          track.active &&
+          track.targetVolume > 0 &&
+          track.playbackId !== null &&
+          track.howl.playing(track.playbackId)
+      )
+      .map(([id]) => id);
+  }
+  function sceneTitle() {
+    const preset = [...presetButtons].find((button) => button.ariaPressed === 'true');
+    return (
+      preset?.textContent?.trim() ||
+      audibleSounds()
+        .map((id) => buttonFor(id)?.dataset.label)
+        .filter(Boolean)
+        .join(' · ')
+    );
+  }
+  function scheduleRoom() {
+    clearTimeout(idleTimer);
+    if (
+      disposed ||
+      document.hidden ||
+      room?.active ||
+      loadingRoom ||
+      dismissed ||
+      !autoInput.checked ||
+      !desktop.matches ||
+      reducedMotion.matches ||
+      !audibleSounds().length ||
+      masterVolume === 0
+    )
+      return;
+    idleTimer = window.setTimeout(
+      () => {
+        if (Date.now() - lastActivity >= 20000) void openRoom(false);
+        else scheduleRoom();
+      },
+      Math.max(100, 20000 - (Date.now() - lastActivity))
+    );
+  }
+  async function openRoom(manual: boolean) {
+    if (loadingRoom || room?.active || !audibleSounds().length || disposed) return;
+    requestedManually = manual;
+    const generation = ++loadGeneration;
+    loadingRoom = true;
+    enterButton.disabled = true;
+    roomStatus.textContent = labels.loading;
+    try {
+      const { createRoom } = await import('../../lib/soundscape/immersive');
+      if (
+        disposed ||
+        generation !== loadGeneration ||
+        !audibleSounds().length ||
+        (!manual &&
+          (document.hidden ||
+            !desktop.matches ||
+            !autoInput.checked ||
+            reducedMotion.matches ||
+            dismissed ||
+            Date.now() - lastActivity < 20000))
+      )
+        return;
+      room ??= createRoom({
+        labels,
+        canEnter: () =>
+          !disposed &&
+          audibleSounds().length > 0 &&
+          (requestedManually ||
+            (!document.hidden &&
+              desktop.matches &&
+              autoInput.checked &&
+              !reducedMotion.matches &&
+              !dismissed &&
+              Date.now() - lastActivity >= 20000)),
+        sounds: audibleSounds,
+        title: sceneTitle,
+        stop: () => {
+          setActivePreset(null);
+          tracks.forEach((_track, id) => stopTrack(id));
+        },
+        volume: setMasterVolume,
+        getVolume: () => masterVolume,
+        onExit: () => {
+          dismissed = true;
+          lastActivity = Date.now();
+        }
+      });
+      await room.open();
+    } catch {
+      roomStatus.textContent = labels.loadError;
+      dismissed = true;
+    } finally {
+      loadingRoom = false;
+      if (roomStatus.textContent === labels.loading) roomStatus.textContent = '';
+      enterButton.disabled = !audibleSounds().length;
+      scheduleRoom();
+    }
+  }
+  function syncRoom() {
+    enterButton.disabled = loadingRoom || !audibleSounds().length;
+    room?.update();
+    if (![...tracks.values()].some((track) => track.active)) {
+      dismissed = false;
+      lastActivity = Date.now();
+    }
+    scheduleRoom();
+  }
+  function activity() {
+    lastActivity = Date.now();
+    scheduleRoom();
+  }
+  function deviceChanged() {
+    document.querySelector<HTMLElement>('#immersive-auto-label')!.hidden =
+      !desktop.matches;
+    document.querySelector<HTMLElement>('#immersive-desktop-hint')!.hidden =
+      !desktop.matches;
+    document.querySelector<HTMLElement>('#immersive-mobile-hint')!.hidden =
+      desktop.matches;
+    scheduleRoom();
+  }
+  try {
+    autoInput.checked = localStorage.getItem('sunrain-immersive-auto') !== 'off';
+  } catch {
+    /* Storage is optional. */
+  }
+  autoInput.addEventListener('change', () => {
+    try {
+      localStorage.setItem('sunrain-immersive-auto', autoInput.checked ? 'on' : 'off');
+    } catch {}
+    activity();
+  });
+  enterButton.addEventListener('click', () => void openRoom(true));
+  for (const event of ['pointermove', 'pointerdown', 'keydown', 'wheel'] as const)
+    document.addEventListener(event, activity, { passive: true });
+  document.addEventListener('visibilitychange', activity);
+  desktop.addEventListener('change', deviceChanged);
+  reducedMotion.addEventListener('change', deviceChanged);
+  deviceChanged();
+
   // SVG for icons
   const PLAY_ICON =
     '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" class="ml-1" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>';
@@ -394,7 +606,9 @@ const presets = [
             return;
           }
           track.howl.volume(0, playbackId);
-          track.howl.fade(0, track.targetVolume, 700, playbackId);
+          track.howl.fade(0, track.targetVolume * masterVolume, 700, playbackId);
+          lastActivity = Date.now();
+          syncRoom();
         },
         onloaderror: () => {
           stopTrack(id, true);
@@ -442,6 +656,7 @@ const presets = [
 
     track.active = false;
     setButtonState(id, false);
+    syncRoom();
     if (track.playbackId === null) return;
 
     const playbackId = track.playbackId;
@@ -478,8 +693,9 @@ const presets = [
       const volume = Number((e.target as HTMLInputElement).value);
       if (track) track.targetVolume = volume;
       if (track?.active && track.playbackId !== null) {
-        track.howl.volume(volume, track.playbackId);
+        track.howl.volume(volume * masterVolume, track.playbackId);
       }
+      syncRoom();
     });
   });
 
@@ -508,12 +724,13 @@ const presets = [
         const track = tracks.get(id);
         if (track?.active && track.playbackId !== null) {
           track.targetVolume = volume;
-          track.howl.volume(volume, track.playbackId);
+          track.howl.volume(volume * masterVolume, track.playbackId);
         } else {
           startTrack(id);
         }
       });
       setActivePreset(presetId);
+      syncRoom();
     });
   });
 
@@ -522,7 +739,9 @@ const presets = [
     tracks.forEach((_track, id) => stopTrack(id));
   });
 
+  window.addEventListener('pageshow', () => { disposed = false; activity(); });
   window.addEventListener('pagehide', () => {
-    tracks.forEach((track) => track.howl.unload());
+    disposed = true; ++loadGeneration; clearTimeout(idleTimer); room?.exit();
+    tracks.forEach((_track, id) => stopTrack(id, true));
   });
 </script>
