@@ -1,11 +1,24 @@
-/** Photoreal base + restrained local micro motion. No video, GPU dependency or audio capture. */
+/** Photoreal base plates with restrained, material-specific local motion. */
 type SceneKind = 'rain' | 'fire' | 'forest' | 'water' | 'quiet';
+
+interface SceneAssets {
+  base?: HTMLImageElement;
+  fireFrame?: HTMLImageElement;
+  waterFrame?: HTMLImageElement;
+}
+
 const files: Record<Exclude<SceneKind, 'quiet'>, string> = {
   rain: '/scenes/rain-window.webp',
   fire: '/scenes/rain-fireplace.webp',
   forest: '/scenes/forest-stream.webp',
   water: '/scenes/ocean.webp'
 };
+
+const FIRE_FRAME = '/scenes/rain-fireplace-flame-b.png';
+const WATER_FRAME = '/scenes/ocean-wave-b.webp';
+const FIRE_FRAME_RECT = { x: 1332, y: 520, width: 220, height: 210 };
+const WATER_FRAME_RECT = { x: 0, y: 450, width: 1672, height: 330 };
+
 function kindFor(ids: string[]): SceneKind {
   if (ids.includes('fireplace')) return 'fire';
   if (ids.some((id) => id.includes('rain'))) return 'rain';
@@ -22,22 +35,50 @@ function kindFor(ids: string[]): SceneKind {
   if (ids.includes('ocean-waves')) return 'water';
   return 'quiet';
 }
-async function load(kind: SceneKind) {
-  if (kind === 'quiet') return undefined;
+
+async function loadImage(source: string) {
   const image = new Image();
-  image.src = files[kind];
+  image.src = source;
   await image.decode();
   return image;
 }
+
+async function loadAssets(
+  kind: SceneKind,
+  includeMotion = true
+): Promise<SceneAssets> {
+  if (kind === 'quiet') return {};
+  const base = await loadImage(files[kind]);
+  if (!includeMotion) return { base };
+  if (kind === 'water') {
+    const waterFrame = await loadImage(WATER_FRAME).catch(() => undefined);
+    return { base, waterFrame };
+  }
+  if (kind !== 'fire') return { base };
+  const fireFrame = await loadImage(FIRE_FRAME).catch(() => undefined);
+  return { base, fireFrame };
+}
+
+function smoothstep(from: number, to: number, value: number) {
+  const position = Math.max(0, Math.min(1, (value - from) / (to - from)));
+  return position * position * (3 - 2 * position);
+}
+
+function seeded(index: number) {
+  const value = Math.sin(index * 127.1 + 311.7) * 43758.5453;
+  return value - Math.floor(value);
+}
+
 export async function createScene(
   canvas: HTMLCanvasElement,
   sounds: () => string[]
 ) {
   const ctx = canvas.getContext('2d');
   if (!ctx) throw new Error('Canvas unavailable');
+
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
-  let kind = kindFor(sounds()),
-    image = await load(kind);
+  let kind = kindFor(sounds());
+  let assets = await loadAssets(kind, !reduced.matches);
   let width = 0,
     height = 0,
     frame = 0,
@@ -47,10 +88,7 @@ export async function createScene(
   let scale = 1,
     offsetX = 0,
     offsetY = 0;
-  const seeds = Array.from({ length: 48 }, (_, i) => {
-    const x = Math.sin(i * 127.1 + 311.7) * 43758.5453;
-    return x - Math.floor(x);
-  });
+
   function resize() {
     width = innerWidth;
     height = innerHeight;
@@ -60,201 +98,233 @@ export async function createScene(
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     draw(performance.now());
   }
+
   function glow(x: number, y: number, radius: number, color: string) {
-    const g = ctx.createRadialGradient(x, y, 0, x, y, radius);
-    g.addColorStop(0, color);
-    g.addColorStop(1, 'transparent');
-    ctx.fillStyle = g;
+    const gradient = ctx.createRadialGradient(x, y, 0, x, y, radius);
+    gradient.addColorStop(0, color);
+    gradient.addColorStop(1, 'transparent');
+    ctx.fillStyle = gradient;
     ctx.fillRect(0, 0, width, height);
   }
-  function draw(now: number) {
-    const t = reduced.matches ? 0 : now / 1000;
-    const ids = sounds();
-    if (image) {
-      // Cover crop uses the same transform for photograph and effects, including portrait viewports.
-      scale = Math.max(width / image.width, height / image.height);
-      const focusX = kind === 'fire' ? 0.8 : kind === 'rain' ? 0.32 : 0.5;
-      offsetX = Math.min(
-        0,
-        Math.max(
-          width - image.width * scale,
-          width / 2 - image.width * scale * focusX
-        )
-      );
-      offsetY = (height - image.height * scale) / 2;
-      ctx.drawImage(
-        image,
-        offsetX,
-        offsetY,
-        image.width * scale,
-        image.height * scale
-      );
-    } else {
-      const g = ctx.createLinearGradient(0, 0, width, height);
-      g.addColorStop(0, '#202831');
-      g.addColorStop(1, '#0b171e');
-      ctx.fillStyle = g;
+
+  function drawBase(time: number) {
+    const base = assets.base;
+    if (!base) {
+      const background = ctx.createLinearGradient(0, 0, width, height);
+      background.addColorStop(0, '#202831');
+      background.addColorStop(1, '#0b171e');
+      ctx.fillStyle = background;
       ctx.fillRect(0, 0, width, height);
       glow(
-        width * (0.4 + Math.sin(t * 0.05) * 0.08),
+        width * 0.42,
         height * 0.45,
         width * 0.7,
-        '#a68c702b'
+        `rgba(166,140,112,${0.13 + Math.sin(time * 0.09) * 0.01})`
       );
+      return;
     }
-    if (reduced.matches || !image) return;
+
+    scale = Math.max(width / base.width, height / base.height);
+    const focusX = kind === 'fire' ? 0.8 : kind === 'rain' ? 0.32 : 0.5;
+    offsetX = Math.min(
+      0,
+      Math.max(
+        width - base.width * scale,
+        width / 2 - base.width * scale * focusX
+      )
+    );
+    offsetY = (height - base.height * scale) / 2;
+    ctx.drawImage(
+      base,
+      offsetX,
+      offsetY,
+      base.width * scale,
+      base.height * scale
+    );
+  }
+
+  function drawRain(time: number, base: HTMLImageElement) {
+    // These bounds follow the actual glass, so refraction never crosses the frame.
     ctx.save();
-    ctx.translate(offsetX, offsetY);
-    ctx.scale(scale, scale);
-    const w = image.width,
-      h = image.height;
-    if (
-      (kind === 'rain' || kind === 'fire') &&
-      ids.some((id) => id.includes('rain'))
-    ) {
-      // Polygon follows the actual pane; rain never drifts across furniture or wood frames.
+    ctx.beginPath();
+    ctx.moveTo(base.width * 0.059, base.height * 0.073);
+    ctx.lineTo(base.width * 0.565, base.height * 0.145);
+    ctx.lineTo(base.width * 0.565, base.height * 0.66);
+    ctx.lineTo(base.width * 0.06, base.height * 0.65);
+    ctx.closePath();
+    ctx.clip();
+
+    for (let index = 0; index < 11; index++) {
+      const cycle = 8 + seeded(index + 40) * 9;
+      const phase = (time / cycle + seeded(index + 70)) % 1;
+      const movement = smoothstep(0.7, 0.94, phase);
+      const fadeIn = smoothstep(0.02, 0.12, phase);
+      const fadeOut = 1 - smoothstep(0.9, 0.99, phase);
+      const opacity = fadeIn * fadeOut;
+      if (opacity <= 0.01) continue;
+
+      const x = base.width * (0.085 + seeded(index) * 0.455);
+      const restingY = base.height * (0.16 + seeded(index + 15) * 0.35);
+      const travel = base.height * (0.07 + seeded(index + 28) * 0.1);
+      const curve =
+        Math.sin(movement * Math.PI) * (seeded(index + 4) - 0.5) * 5;
+      const y = restingY + movement * travel;
+      const radius = 1.1 + seeded(index + 22) * 1.3;
+
+      // A one-pixel sample offset creates refraction rather than a drawn white dot.
       ctx.save();
       ctx.beginPath();
-      ctx.moveTo(w * 0.059, h * 0.073);
-      ctx.lineTo(w * 0.565, h * 0.145);
-      ctx.lineTo(w * 0.565, h * 0.66);
-      ctx.lineTo(w * 0.06, h * 0.65);
-      ctx.closePath();
+      ctx.ellipse(x, y, radius, radius * 1.7, 0, 0, Math.PI * 2);
       ctx.clip();
-      for (let i = 0; i < 32; i++) {
-        const x = w * (0.07 + seeds[i] * 0.49);
-        const y =
-          h *
-          (0.12 +
-            ((seeds[(i + 13) % 48] + t * (0.003 + seeds[i] * 0.005)) % 1) *
-              0.55);
-        const length = 6 + seeds[i] * 18;
-        ctx.strokeStyle = '#d1e0e02b';
-        ctx.lineWidth = 0.7 + seeds[i] * 0.6;
+      ctx.globalAlpha = opacity * 0.72;
+      ctx.drawImage(base, 1.2, 0, base.width, base.height);
+      ctx.restore();
+
+      if (phase > 0.7 && phase < 0.97) {
+        const tail = 4 + movement * 14;
+        const tailGradient = ctx.createLinearGradient(x, y - tail, x, y);
+        tailGradient.addColorStop(0, 'rgba(205,225,229,0)');
+        tailGradient.addColorStop(1, `rgba(205,225,229,${opacity * 0.24})`);
+        ctx.strokeStyle = tailGradient;
+        ctx.lineWidth = Math.max(0.55, radius * 0.55);
         ctx.beginPath();
-        ctx.moveTo(x, y - length);
-        ctx.bezierCurveTo(
-          x - 1,
-          y - length * 0.6,
-          x + 1.4,
-          y - length * 0.3,
-          x,
-          y
-        );
+        ctx.moveTo(x - curve * 0.3, y - tail);
+        ctx.quadraticCurveTo(x + curve, y - tail * 0.4, x, y);
         ctx.stroke();
-        ctx.fillStyle = '#d1e0e045';
-        ctx.beginPath();
-        ctx.ellipse(x, y, 1, 1.7, 0, 0, Math.PI * 2);
-        ctx.fill();
       }
-      ctx.restore();
-    }
-    if (kind === 'fire') {
-      const pulse =
-        0.025 + Math.sin(t * 1.6) * 0.008 + Math.sin(t * 2.7 + 0.4) * 0.006;
-      const g = ctx.createRadialGradient(
-        w * 0.875,
-        h * 0.72,
-        0,
-        w * 0.875,
-        h * 0.72,
-        w * 0.3
-      );
-      g.addColorStop(0, `rgba(255,154,56,${pulse})`);
-      g.addColorStop(1, 'transparent');
-      ctx.fillStyle = g;
-      ctx.fillRect(0, 0, w, h);
-      // Tiny shimmer confined to the flame interior; the camera and architectural edges stay fixed.
-      ctx.save();
+
+      ctx.strokeStyle = `rgba(224,237,239,${opacity * 0.24})`;
+      ctx.lineWidth = 0.55;
       ctx.beginPath();
-      ctx.ellipse(
-        w * 0.886,
-        h * 0.674,
-        w * 0.031,
-        h * 0.085,
-        0,
-        0,
-        Math.PI * 2
-      );
-      ctx.clip();
-      for (let y = Math.floor(h * 0.585); y < h * 0.76; y += 3) {
-        const shift = Math.sin(t * 1.7 + y * 0.09) * 1.4;
-        ctx.drawImage(
-          image,
-          w * 0.84,
-          y,
-          w * 0.09,
-          3,
-          w * 0.84 + shift,
-          y,
-          w * 0.09,
-          3
-        );
-      }
-      ctx.restore();
-    }
-    if (kind === 'forest') {
-      const g = ctx.createRadialGradient(
-        w * (0.49 + Math.sin(t * 0.06) * 0.02),
-        h * 0.45,
-        0,
-        w * 0.5,
-        h * 0.45,
-        w * 0.5
-      );
-      g.addColorStop(
-        0,
-        `rgba(218,230,218,${0.016 + Math.sin(t * 0.13) * 0.006})`
-      );
-      g.addColorStop(1, 'transparent');
-      ctx.fillStyle = g;
-      ctx.fillRect(0, 0, w, h);
-    }
-    if (
-      (kind === 'forest' &&
-        ids.some((id) => id === 'flowing-river' || id === 'water-droplets')) ||
-      kind === 'water'
-    ) {
-      ctx.save();
-      ctx.beginPath();
-      if (kind === 'water') ctx.rect(0, h * 0.54, w, h * 0.4);
-      else {
-        ctx.moveTo(w * 0.51, h * 0.7);
-        ctx.lineTo(w * 0.65, h * 0.72);
-        ctx.lineTo(w * 0.42, h * 0.94);
-        ctx.lineTo(w * 0.24, h * 0.86);
-        ctx.closePath();
-      }
-      ctx.clip();
-      const start = kind === 'water' ? 0.54 : 0.7;
-      for (let y = Math.floor(h * start); y < h * 0.94; y += 4) {
-        const taper = Math.sin((Math.PI * (y / h - start)) / (0.94 - start));
-        const shift = Math.sin(t * 0.65 + y * 0.045) * taper * 0.9;
-        ctx.drawImage(image, 0, y, w, 4, shift, y, w, 4);
-      }
-      ctx.restore();
-    }
-    if (kind === 'water') {
-      // A barely perceptible wash follows the shore's slow swell; no zoom or parallax.
-      const g = ctx.createLinearGradient(0, h * 0.52, 0, h);
-      g.addColorStop(0, 'transparent');
-      g.addColorStop(
-        0.6,
-        `rgba(186,213,218,${0.012 + Math.sin(t * 0.5) * 0.009})`
-      );
-      g.addColorStop(1, 'transparent');
-      ctx.fillStyle = g;
-      ctx.fillRect(0, 0, w, h);
+      ctx.ellipse(x, y, radius, radius * 1.7, 0, 0, Math.PI * 2);
+      ctx.stroke();
     }
     ctx.restore();
   }
+
+  function drawFire(time: number, base: HTMLImageElement) {
+    const alternate = assets.fireFrame;
+    if (alternate) {
+      const phase = (time % 11) / 11;
+      let blend = 0;
+      if (phase < 0.16) blend = smoothstep(0, 0.16, phase);
+      else if (phase < 0.52) blend = 1;
+      else if (phase < 0.68) blend = 1 - smoothstep(0.52, 0.68, phase);
+      if (blend > 0) {
+        ctx.globalAlpha = blend;
+        ctx.drawImage(
+          alternate,
+          FIRE_FRAME_RECT.x,
+          FIRE_FRAME_RECT.y,
+          FIRE_FRAME_RECT.width,
+          FIRE_FRAME_RECT.height
+        );
+        ctx.globalAlpha = 1;
+      }
+    }
+
+    const pulse =
+      0.018 + Math.sin(time * 1.1) * 0.004 + Math.sin(time * 1.9) * 0.003;
+    const light = ctx.createRadialGradient(
+      base.width * 0.875,
+      base.height * 0.7,
+      0,
+      base.width * 0.875,
+      base.height * 0.7,
+      base.width * 0.3
+    );
+    light.addColorStop(0, `rgba(255,151,58,${pulse})`);
+    light.addColorStop(1, 'transparent');
+    ctx.fillStyle = light;
+    ctx.fillRect(0, 0, base.width, base.height);
+  }
+
+  function drawWater(time: number, base: HTMLImageElement) {
+    const alternate = assets.waterFrame;
+    if (alternate) {
+      const phase = (time % 14) / 14;
+      let blend = 0;
+      if (phase < 0.18) blend = smoothstep(0, 0.18, phase);
+      else if (phase < 0.54) blend = 1;
+      else if (phase < 0.72) blend = 1 - smoothstep(0.54, 0.72, phase);
+      if (blend > 0) {
+        ctx.globalAlpha = blend;
+        ctx.drawImage(
+          alternate,
+          WATER_FRAME_RECT.x,
+          WATER_FRAME_RECT.y,
+          WATER_FRAME_RECT.width,
+          WATER_FRAME_RECT.height
+        );
+        ctx.globalAlpha = 1;
+      }
+    }
+
+    const reflection = ctx.createRadialGradient(
+      base.width * (0.76 + Math.sin(time * 0.08) * 0.004),
+      base.height * 0.63,
+      0,
+      base.width * 0.76,
+      base.height * 0.63,
+      base.width * 0.24
+    );
+    reflection.addColorStop(
+      0,
+      `rgba(222,202,175,${0.009 + Math.sin(time * 0.23) * 0.003})`
+    );
+    reflection.addColorStop(1, 'transparent');
+    ctx.fillStyle = reflection;
+    ctx.fillRect(0, 0, base.width, base.height);
+  }
+  function drawAtmosphere(time: number, base: HTMLImageElement) {
+    if (kind === 'forest') {
+      const mist = ctx.createRadialGradient(
+        base.width * 0.52,
+        base.height * 0.44,
+        0,
+        base.width * 0.5,
+        base.height * 0.45,
+        base.width * 0.46
+      );
+      mist.addColorStop(
+        0,
+        `rgba(218,230,218,${0.009 + Math.sin(time * 0.11) * 0.003})`
+      );
+      mist.addColorStop(1, 'transparent');
+      ctx.fillStyle = mist;
+      ctx.fillRect(0, 0, base.width, base.height);
+    }
+  }
+
+  function draw(now: number) {
+    const time = reduced.matches ? 0 : now / 1000;
+    drawBase(time);
+    const base = assets.base;
+    if (reduced.matches || !base) return;
+
+    ctx.save();
+    ctx.translate(offsetX, offsetY);
+    ctx.scale(scale, scale);
+    const ids = sounds();
+    if (
+      (kind === 'rain' || kind === 'fire') &&
+      ids.some((id) => id.includes('rain'))
+    )
+      drawRain(time, base);
+    if (kind === 'fire') drawFire(time, base);
+    if (kind === 'water') drawWater(time, base);
+    drawAtmosphere(time, base);
+    ctx.restore();
+  }
+
   function tick(now: number) {
-    if (now - previous > 65 && !document.hidden && !reduced.matches) {
+    if (now - previous > 50 && !document.hidden && !reduced.matches) {
       draw(now);
       previous = now;
     }
     frame = requestAnimationFrame(tick);
   }
+
   const observer = new ResizeObserver(resize);
   observer.observe(canvas);
   function restart() {
@@ -266,18 +336,19 @@ export async function createScene(
   reduced.addEventListener('change', restart);
   document.addEventListener('visibilitychange', restart);
   restart();
+
   return {
     async update() {
       const next = kindFor(sounds());
       if (next !== kind) {
-        const id = ++revision;
+        const updateRevision = ++revision;
         try {
-          const nextImage = await load(next);
-          if (disposed || id !== revision) return;
+          const nextAssets = await loadAssets(next, !reduced.matches);
+          if (disposed || updateRevision !== revision) return;
           kind = next;
-          image = nextImage;
+          assets = nextAssets;
         } catch {
-          /* Keep the last valid scene if a later asset fails. */
+          // Keep the last fully decoded scene when a later optional scene fails.
         }
       }
       if (!disposed) draw(performance.now());

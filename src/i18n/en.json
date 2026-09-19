@@ -152,8 +152,8 @@
         "desktopHint": "After 20 seconds of listening without interaction, the scene opens. Leaving keeps your sounds playing.",
         "mobileHint": "Start a sound, then open a scene whenever you like.",
         "eyebrow": "A little space to unwind",
-        "hint": "Move your mouse quickly to leave. Tap or move gently for controls. Esc always leaves.",
-        "lockedHint": "Locked. Use Unlock to show controls. Esc always leaves.",
+        "hint": "Move your mouse or press any key to bring the controls back. Esc always leaves.",
+        "lockedHint": "Controls are locked. Move your mouse or press any key to show Unlock. Esc always leaves.",
         "exit": "Back to sounds",
         "stop": "Stop sounds",
         "lock": "Lock controls",
@@ -164,8 +164,8 @@
         "volume": "Mix volume",
         "loadError": "The scene could not load. Your sounds are still playing; try again.",
         "loading": "Opening scene…",
-        "touchHint": "Tap the scene to show controls. Sounds keep playing when you leave.",
-        "lockedTouchHint": "Locked. Tap Unlock controls to show the other controls."
+        "touchHint": "Tap the scene to bring the controls back. Sounds keep playing when you leave.",
+        "lockedTouchHint": "Controls are locked. Tap the scene to show Unlock."
       }
     }
   },

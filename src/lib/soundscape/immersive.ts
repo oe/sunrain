@@ -51,23 +51,25 @@ export function createRoom(options: RoomOptions) {
     return b;
   }
   let scene: Awaited<ReturnType<typeof createScene>> | undefined;
+  const INTRO_VISIBLE_MS = 6500;
+  const IDLE_HIDE_MS = 3200;
   let locked = false,
     hideTimer = 0,
-    openedAt = 0;
-  let previous: { x: number; y: number; time: number } | undefined;
-  let motionStart = 0,
-    distance = 0;
+    minimumVisibleUntil = 0;
   let origin: HTMLElement | null = null;
   let bodyOverflow = '',
     openRevision = 0;
+  function hideChrome() {
+    dialog.classList.add('controls-hidden');
+  }
   function reveal() {
     dialog.classList.remove('controls-hidden');
     clearTimeout(hideTimer);
-    if (!controls.contains(document.activeElement))
-      hideTimer = window.setTimeout(
-        () => dialog.classList.add('controls-hidden'),
-        5500
-      );
+    const delay = Math.max(
+      IDLE_HIDE_MS,
+      minimumVisibleUntil - performance.now()
+    );
+    hideTimer = window.setTimeout(hideChrome, delay);
   }
   function exit() {
     ++openRevision;
@@ -104,10 +106,7 @@ export function createRoom(options: RoomOptions) {
     lockButton.ariaPressed = String(locked);
     dialog.classList.toggle('locked', locked);
     hint.textContent = locked ? lockedHint() : normalHint();
-    previous = undefined;
-    distance = 0;
     reveal();
-    if (locked) lockButton.focus();
   });
   lockButton.className = 'room-lock';
   lockButton.ariaPressed = 'false';
@@ -131,48 +130,19 @@ export function createRoom(options: RoomOptions) {
     e.preventDefault();
     exit();
   });
-  dialog.addEventListener('pointerdown', reveal);
-  dialog.addEventListener('focusin', reveal);
-  dialog.addEventListener('focusout', () => setTimeout(reveal, 0));
-  dialog.addEventListener('keydown', reveal);
-  dialog.addEventListener('pointermove', (e) => {
-    if (e.pointerType !== 'mouse') return;
-    const now = performance.now();
-    if (
-      locked ||
-      now - openedAt < 1200 ||
-      (e.target as Element).closest('button,input,.room-controls')
-    ) {
-      previous = undefined;
-      distance = 0;
-      reveal();
-      return;
-    }
-    if (previous) {
-      const elapsed = now - previous.time;
-      const delta = Math.hypot(e.clientX - previous.x, e.clientY - previous.y);
-      if (elapsed > 150 || now - motionStart > 350) {
-        motionStart = now;
-        distance = 0;
-      }
-      if (elapsed > 0 && delta / elapsed > 0.7) distance += delta;
-      if (distance > 240) {
-        exit();
-        return;
-      }
-    } else {
-      motionStart = now;
-      distance = 0;
-    }
-    previous = { x: e.clientX, y: e.clientY, time: now };
-    reveal();
+  dialog.addEventListener('pointerdown', () => reveal());
+  dialog.addEventListener('pointermove', (event) => {
+    if (event.pointerType === 'mouse') reveal();
   });
+  dialog.addEventListener('focusin', () => reveal());
+  dialog.addEventListener('keydown', () => reveal());
+  dialog.addEventListener('wheel', () => reveal(), { passive: true });
   const fullscreenChange = () => {
     fullButton.textContent =
       document.fullscreenElement === stage
         ? labels.exitFullscreen
         : labels.fullscreen;
-    previous = undefined;
+    reveal();
   };
   document.addEventListener('fullscreenchange', fullscreenChange);
   return {
@@ -198,13 +168,11 @@ export function createRoom(options: RoomOptions) {
       hint.textContent = normalHint();
       volume.value = String(options.getVolume());
       message.textContent = '';
-      previous = undefined;
-      distance = 0;
-      openedAt = performance.now();
       title.textContent = options.title();
       dialog.showModal();
       dialog.focus({ preventScroll: true });
 
+      minimumVisibleUntil = performance.now() + INTRO_VISIBLE_MS;
       requestAnimationFrame(() => dialog.classList.add('ready'));
       reveal();
     },

@@ -13,7 +13,7 @@
   overflow: hidden;
   font-family: inherit;
   opacity: 0;
-  transition: opacity 1.2s;
+  transition: opacity 900ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .sound-room[open] {
@@ -121,14 +121,24 @@
 }
 
 .room-header,
-.room-controls {
-  transition: opacity 0.7s;
+.room-controls,
+.room-lock,
+.room-message {
+  transition: opacity 180ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.sound-room.controls-hidden {
+  cursor: none;
 }
 
 .sound-room.controls-hidden .room-header,
-.sound-room.controls-hidden .room-controls {
+.sound-room.controls-hidden .room-controls,
+.sound-room.controls-hidden .room-lock,
+.sound-room.controls-hidden .room-message {
   opacity: 0;
   pointer-events: none;
+  transition-duration: 420ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .sound-room.locked .room-controls {
@@ -185,7 +195,9 @@
 @media (prefers-reduced-motion: reduce) {
   .sound-room,
   .room-header,
-  .room-controls {
+  .room-controls,
+  .room-lock,
+  .room-message {
     transition: none;
   }
 }

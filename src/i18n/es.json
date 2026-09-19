@@ -152,8 +152,8 @@
         "desktopHint": "Tras 20 segundos de escucha sin interacción, se abre la escena. Al salir, el sonido continúa.",
         "mobileHint": "Reproduce un sonido y abre la escena cuando quieras.",
         "eyebrow": "Un espacio para relajarte",
-        "hint": "Mueve el ratón rápidamente para salir. Toca o muévelo despacio para ver los controles. Esc siempre permite salir.",
-        "lockedHint": "Bloqueado. Desbloquea para mostrar los controles. Esc siempre permite salir.",
+        "hint": "Mueve el ratón o pulsa una tecla para mostrar los controles. Esc siempre permite salir.",
+        "lockedHint": "Los controles están bloqueados. Mueve el ratón o pulsa una tecla para mostrar Desbloquear. Esc siempre permite salir.",
         "exit": "Volver a los sonidos",
         "stop": "Detener sonidos",
         "lock": "Bloquear controles",
@@ -165,7 +165,7 @@
         "loadError": "No se pudo cargar la escena. El sonido continúa; inténtalo de nuevo.",
         "loading": "Abriendo escena…",
         "touchHint": "Toca la escena para mostrar los controles. El sonido continúa al salir.",
-        "lockedTouchHint": "Bloqueado. Toca Desbloquear controles para mostrar los demás botones."
+        "lockedTouchHint": "Los controles están bloqueados. Toca la escena para mostrar Desbloquear."
       }
     }
   },
