@@ -1,365 +1,324 @@
-/** Photoreal base plates with restrained, material-specific local motion. */
+import { fragmentSource, vertexSource, streamMask } from './materials';
+
 type SceneKind = 'rain' | 'fire' | 'forest' | 'water' | 'quiet';
-
-interface SceneAssets {
-  base?: HTMLImageElement;
-  fireFrame?: HTMLImageElement;
-  waterFrame?: HTMLImageElement;
-}
-
-const files: Record<Exclude<SceneKind, 'quiet'>, string> = {
+const files = {
   rain: '/scenes/rain-window.webp',
   fire: '/scenes/rain-fireplace.webp',
   forest: '/scenes/forest-stream.webp',
   water: '/scenes/ocean.webp'
 };
-
-const FIRE_FRAME = '/scenes/rain-fireplace-flame-b.png';
-const WATER_FRAME = '/scenes/ocean-wave-b.webp';
-const FIRE_FRAME_RECT = { x: 1332, y: 520, width: 220, height: 210 };
-const WATER_FRAME_RECT = { x: 0, y: 450, width: 1672, height: 330 };
-
+const codes = { quiet: 0, rain: 1, fire: 2, forest: 3, water: 4 };
 function kindFor(ids: string[]): SceneKind {
   if (ids.includes('fireplace')) return 'fire';
   if (ids.some((id) => id.includes('rain'))) return 'rain';
   if (
-    ids.some(
-      (id) =>
-        id === 'forest-birds' ||
-        id === 'wind-in-trees' ||
-        id === 'flowing-river' ||
-        id === 'water-droplets'
+    ids.some((id) =>
+      [
+        'forest-birds',
+        'wind-in-trees',
+        'flowing-river',
+        'water-droplets'
+      ].includes(id)
     )
   )
     return 'forest';
   if (ids.includes('ocean-waves')) return 'water';
   return 'quiet';
 }
-
-async function loadImage(source: string) {
+async function load(kind: SceneKind) {
+  if (kind === 'quiet') return undefined;
   const image = new Image();
-  image.src = source;
+  image.src = files[kind];
   await image.decode();
   return image;
-}
-
-async function loadAssets(
-  kind: SceneKind,
-  includeMotion = true
-): Promise<SceneAssets> {
-  if (kind === 'quiet') return {};
-  const base = await loadImage(files[kind]);
-  if (!includeMotion) return { base };
-  if (kind === 'water') {
-    const waterFrame = await loadImage(WATER_FRAME).catch(() => undefined);
-    return { base, waterFrame };
-  }
-  if (kind !== 'fire') return { base };
-  const fireFrame = await loadImage(FIRE_FRAME).catch(() => undefined);
-  return { base, fireFrame };
-}
-
-function smoothstep(from: number, to: number, value: number) {
-  const position = Math.max(0, Math.min(1, (value - from) / (to - from)));
-  return position * position * (3 - 2 * position);
-}
-
-function seeded(index: number) {
-  const value = Math.sin(index * 127.1 + 311.7) * 43758.5453;
-  return value - Math.floor(value);
 }
 
 export async function createScene(
   canvas: HTMLCanvasElement,
   sounds: () => string[]
 ) {
-  const ctx = canvas.getContext('2d');
-  if (!ctx) throw new Error('Canvas unavailable');
-
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   let kind = kindFor(sounds());
-  let assets = await loadAssets(kind, !reduced.matches);
-  let width = 0,
-    height = 0,
+  let base = await load(kind);
+  let disposed = false,
+    revision = 0,
     frame = 0,
-    previous = 0,
-    disposed = false,
-    revision = 0;
-  let scale = 1,
-    offsetX = 0,
-    offsetY = 0;
+    last = 0,
+    elapsed = 0;
+  let gl: WebGLRenderingContext | null = null;
+  let program: WebGLProgram | null = null;
+  let buffer: WebGLBuffer | null = null;
+  let textures: WebGLTexture[] = [];
+  let uniforms: Record<string, WebGLUniformLocation | null> = {};
+  let mask: HTMLCanvasElement | undefined;
+  let lost = false;
 
-  function resize() {
-    width = innerWidth;
-    height = innerHeight;
-    const dpr = Math.min(devicePixelRatio, width < 700 ? 1 : 1.5);
-    canvas.width = Math.round(width * dpr);
-    canvas.height = Math.round(height * dpr);
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    draw(performance.now());
+  // CSS fallback also remains visible while a GPU context is lost.
+  function fallback() {
+    canvas.style.backgroundColor = '#14232b';
+    canvas.style.backgroundImage = base ? `url("${base.src}")` : 'none';
+    canvas.style.backgroundSize = 'cover';
+    canvas.style.backgroundPosition = `${kind === 'fire' ? 80 : kind === 'rain' ? 32 : 50}% center`;
   }
-
-  function glow(x: number, y: number, radius: number, color: string) {
-    const gradient = ctx.createRadialGradient(x, y, 0, x, y, radius);
-    gradient.addColorStop(0, color);
-    gradient.addColorStop(1, 'transparent');
-    ctx.fillStyle = gradient;
-    ctx.fillRect(0, 0, width, height);
+  function release() {
+    if (!gl) return;
+    textures.forEach((texture) => gl!.deleteTexture(texture));
+    textures = [];
+    if (buffer) gl.deleteBuffer(buffer);
+    if (program) gl.deleteProgram(program);
+    buffer = null;
+    program = null;
   }
-
-  function drawBase(time: number) {
-    const base = assets.base;
-    if (!base) {
-      const background = ctx.createLinearGradient(0, 0, width, height);
-      background.addColorStop(0, '#202831');
-      background.addColorStop(1, '#0b171e');
-      ctx.fillStyle = background;
-      ctx.fillRect(0, 0, width, height);
-      glow(
-        width * 0.42,
-        height * 0.45,
-        width * 0.7,
-        `rgba(166,140,112,${0.13 + Math.sin(time * 0.09) * 0.01})`
-      );
-      return;
-    }
-
-    scale = Math.max(width / base.width, height / base.height);
-    const focusX = kind === 'fire' ? 0.8 : kind === 'rain' ? 0.32 : 0.5;
-    offsetX = Math.min(
-      0,
-      Math.max(
-        width - base.width * scale,
-        width / 2 - base.width * scale * focusX
-      )
-    );
-    offsetY = (height - base.height * scale) / 2;
-    ctx.drawImage(
-      base,
-      offsetX,
-      offsetY,
-      base.width * scale,
-      base.height * scale
-    );
-  }
-
-  function drawRain(time: number, base: HTMLImageElement) {
-    // These bounds follow the actual glass, so refraction never crosses the frame.
-    ctx.save();
-    ctx.beginPath();
-    ctx.moveTo(base.width * 0.059, base.height * 0.073);
-    ctx.lineTo(base.width * 0.565, base.height * 0.145);
-    ctx.lineTo(base.width * 0.565, base.height * 0.66);
-    ctx.lineTo(base.width * 0.06, base.height * 0.65);
-    ctx.closePath();
-    ctx.clip();
-
-    for (let index = 0; index < 11; index++) {
-      const cycle = 8 + seeded(index + 40) * 9;
-      const phase = (time / cycle + seeded(index + 70)) % 1;
-      const movement = smoothstep(0.7, 0.94, phase);
-      const fadeIn = smoothstep(0.02, 0.12, phase);
-      const fadeOut = 1 - smoothstep(0.9, 0.99, phase);
-      const opacity = fadeIn * fadeOut;
-      if (opacity <= 0.01) continue;
-
-      const x = base.width * (0.085 + seeded(index) * 0.455);
-      const restingY = base.height * (0.16 + seeded(index + 15) * 0.35);
-      const travel = base.height * (0.07 + seeded(index + 28) * 0.1);
-      const curve =
-        Math.sin(movement * Math.PI) * (seeded(index + 4) - 0.5) * 5;
-      const y = restingY + movement * travel;
-      const radius = 1.1 + seeded(index + 22) * 1.3;
-
-      // A one-pixel sample offset creates refraction rather than a drawn white dot.
-      ctx.save();
-      ctx.beginPath();
-      ctx.ellipse(x, y, radius, radius * 1.7, 0, 0, Math.PI * 2);
-      ctx.clip();
-      ctx.globalAlpha = opacity * 0.72;
-      ctx.drawImage(base, 1.2, 0, base.width, base.height);
-      ctx.restore();
-
-      if (phase > 0.7 && phase < 0.97) {
-        const tail = 4 + movement * 14;
-        const tailGradient = ctx.createLinearGradient(x, y - tail, x, y);
-        tailGradient.addColorStop(0, 'rgba(205,225,229,0)');
-        tailGradient.addColorStop(1, `rgba(205,225,229,${opacity * 0.24})`);
-        ctx.strokeStyle = tailGradient;
-        ctx.lineWidth = Math.max(0.55, radius * 0.55);
-        ctx.beginPath();
-        ctx.moveTo(x - curve * 0.3, y - tail);
-        ctx.quadraticCurveTo(x + curve, y - tail * 0.4, x, y);
-        ctx.stroke();
-      }
-
-      ctx.strokeStyle = `rgba(224,237,239,${opacity * 0.24})`;
-      ctx.lineWidth = 0.55;
-      ctx.beginPath();
-      ctx.ellipse(x, y, radius, radius * 1.7, 0, 0, Math.PI * 2);
-      ctx.stroke();
-    }
-    ctx.restore();
-  }
-
-  function drawFire(time: number, base: HTMLImageElement) {
-    const alternate = assets.fireFrame;
-    if (alternate) {
-      const phase = (time % 11) / 11;
-      let blend = 0;
-      if (phase < 0.16) blend = smoothstep(0, 0.16, phase);
-      else if (phase < 0.52) blend = 1;
-      else if (phase < 0.68) blend = 1 - smoothstep(0.52, 0.68, phase);
-      if (blend > 0) {
-        ctx.globalAlpha = blend;
-        ctx.drawImage(
-          alternate,
-          FIRE_FRAME_RECT.x,
-          FIRE_FRAME_RECT.y,
-          FIRE_FRAME_RECT.width,
-          FIRE_FRAME_RECT.height
-        );
-        ctx.globalAlpha = 1;
-      }
-    }
-
-    const pulse =
-      0.018 + Math.sin(time * 1.1) * 0.004 + Math.sin(time * 1.9) * 0.003;
-    const light = ctx.createRadialGradient(
-      base.width * 0.875,
-      base.height * 0.7,
-      0,
-      base.width * 0.875,
-      base.height * 0.7,
-      base.width * 0.3
-    );
-    light.addColorStop(0, `rgba(255,151,58,${pulse})`);
-    light.addColorStop(1, 'transparent');
-    ctx.fillStyle = light;
-    ctx.fillRect(0, 0, base.width, base.height);
-  }
-
-  function drawWater(time: number, base: HTMLImageElement) {
-    const alternate = assets.waterFrame;
-    if (alternate) {
-      const phase = (time % 14) / 14;
-      let blend = 0;
-      if (phase < 0.18) blend = smoothstep(0, 0.18, phase);
-      else if (phase < 0.54) blend = 1;
-      else if (phase < 0.72) blend = 1 - smoothstep(0.54, 0.72, phase);
-      if (blend > 0) {
-        ctx.globalAlpha = blend;
-        ctx.drawImage(
-          alternate,
-          WATER_FRAME_RECT.x,
-          WATER_FRAME_RECT.y,
-          WATER_FRAME_RECT.width,
-          WATER_FRAME_RECT.height
-        );
-        ctx.globalAlpha = 1;
-      }
-    }
-
-    const reflection = ctx.createRadialGradient(
-      base.width * (0.76 + Math.sin(time * 0.08) * 0.004),
-      base.height * 0.63,
-      0,
-      base.width * 0.76,
-      base.height * 0.63,
-      base.width * 0.24
-    );
-    reflection.addColorStop(
-      0,
-      `rgba(222,202,175,${0.009 + Math.sin(time * 0.23) * 0.003})`
-    );
-    reflection.addColorStop(1, 'transparent');
-    ctx.fillStyle = reflection;
-    ctx.fillRect(0, 0, base.width, base.height);
-  }
-  function drawAtmosphere(time: number, base: HTMLImageElement) {
-    if (kind === 'forest') {
-      const mist = ctx.createRadialGradient(
-        base.width * 0.52,
-        base.height * 0.44,
+  function texture(source: TexImageSource | undefined, unit: number) {
+    const t = gl!.createTexture();
+    if (!t) throw new Error('Texture unavailable');
+    textures.push(t);
+    gl!.activeTexture(gl!.TEXTURE0 + unit);
+    gl!.bindTexture(gl!.TEXTURE_2D, t);
+    gl!.texParameteri(gl!.TEXTURE_2D, gl!.TEXTURE_MIN_FILTER, gl!.LINEAR);
+    gl!.texParameteri(gl!.TEXTURE_2D, gl!.TEXTURE_MAG_FILTER, gl!.LINEAR);
+    gl!.texParameteri(gl!.TEXTURE_2D, gl!.TEXTURE_WRAP_S, gl!.CLAMP_TO_EDGE);
+    gl!.texParameteri(gl!.TEXTURE_2D, gl!.TEXTURE_WRAP_T, gl!.CLAMP_TO_EDGE);
+    if (source)
+      gl!.texImage2D(
+        gl!.TEXTURE_2D,
         0,
-        base.width * 0.5,
-        base.height * 0.45,
-        base.width * 0.46
+        gl!.RGBA,
+        gl!.RGBA,
+        gl!.UNSIGNED_BYTE,
+        source
       );
-      mist.addColorStop(
+    else
+      gl!.texImage2D(
+        gl!.TEXTURE_2D,
         0,
-        `rgba(218,230,218,${0.009 + Math.sin(time * 0.11) * 0.003})`
+        gl!.RGBA,
+        1,
+        1,
+        0,
+        gl!.RGBA,
+        gl!.UNSIGNED_BYTE,
+        new Uint8Array([0, 0, 0, 255])
       );
-      mist.addColorStop(1, 'transparent');
-      ctx.fillStyle = mist;
-      ctx.fillRect(0, 0, base.width, base.height);
+  }
+  function upload() {
+    if (!gl || !program || lost) return;
+    textures.forEach((t) => gl!.deleteTexture(t));
+    textures = [];
+    texture(base, 0);
+    if (kind === 'forest') mask ??= streamMask();
+    texture(kind === 'forest' ? mask : undefined, 1);
+  }
+  function init() {
+    canvas.dataset.renderer = 'static';
+    try {
+      gl = canvas.getContext('webgl', {
+        alpha: true,
+        antialias: false,
+        depth: false,
+        stencil: false,
+        powerPreference: 'low-power'
+      });
+      if (!gl) return;
+      const shaders: WebGLShader[] = [];
+      try {
+        program = gl.createProgram();
+        if (!program) throw new Error('Program unavailable');
+        for (const [type, source] of [
+          [gl.VERTEX_SHADER, vertexSource],
+          [gl.FRAGMENT_SHADER, fragmentSource]
+        ] as const) {
+          const shader = gl.createShader(type)!;
+          shaders.push(shader);
+          gl.shaderSource(shader, source);
+          gl.compileShader(shader);
+          if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS))
+            throw new Error(gl.getShaderInfoLog(shader) || 'Shader failed');
+          gl.attachShader(program, shader);
+        }
+        gl.linkProgram(program);
+        if (!gl.getProgramParameter(program, gl.LINK_STATUS))
+          throw new Error('Link failed');
+      } finally {
+        shaders.forEach((shader) => gl!.deleteShader(shader));
+      }
+      gl.useProgram(program);
+      buffer = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+      gl.bufferData(
+        gl.ARRAY_BUFFER,
+        new Float32Array([-1, -1, 1, -1, -1, 1, -1, 1, 1, -1, 1, 1]),
+        gl.STATIC_DRAW
+      );
+      const position = gl.getAttribLocation(program!, 'position');
+      gl.enableVertexAttribArray(position);
+      gl.vertexAttribPointer(position, 2, gl.FLOAT, false, 0, 0);
+      uniforms = Object.fromEntries(
+        [
+          'plate',
+          'regions',
+          'cropScale',
+          'cropOffset',
+          'time',
+          'scene',
+          'rain',
+          'motion'
+        ].map((name) => [name, gl!.getUniformLocation(program!, name)])
+      );
+      gl.uniform1i(uniforms.plate, 0);
+      gl.uniform1i(uniforms.regions, 1);
+      upload();
+      canvas.dataset.renderer = 'webgl';
+    } catch (error) {
+      console.warn('Soundscape uses a static fallback:', error);
+      release();
     }
   }
-
-  function draw(now: number) {
-    const time = reduced.matches ? 0 : now / 1000;
-    drawBase(time);
-    const base = assets.base;
-    if (reduced.matches || !base) return;
-
-    ctx.save();
-    ctx.translate(offsetX, offsetY);
-    ctx.scale(scale, scale);
-    const ids = sounds();
+  function draw() {
+    if (!gl || !program || lost || disposed) return;
+    const w = canvas.width,
+      h = canvas.height;
+    const iw = base?.width || w,
+      ih = base?.height || h;
+    const scale = Math.max(w / iw, h / ih);
+    const focus = kind === 'fire' ? 0.8 : kind === 'rain' ? 0.32 : 0.5;
+    const left = Math.min(
+      0,
+      Math.max(w - iw * scale, w / 2 - iw * scale * focus)
+    );
+    gl.viewport(0, 0, w, h);
+    gl.uniform2f(uniforms.cropScale, w / (iw * scale), h / (ih * scale));
+    gl.uniform2f(
+      uniforms.cropOffset,
+      -left / (iw * scale),
+      (ih * scale - h) / (2 * ih * scale)
+    );
+    gl.uniform1f(uniforms.time, elapsed);
+    gl.uniform1f(uniforms.scene, codes[kind]);
+    gl.uniform1f(
+      uniforms.rain,
+      sounds().some((id) => id.includes('rain')) ? 1 : 0
+    );
+    gl.uniform1f(uniforms.motion, reduced.matches ? 0 : 1);
+    gl.drawArrays(gl.TRIANGLES, 0, 6);
+  }
+  function animate(now: number) {
+    frame = 0;
     if (
-      (kind === 'rain' || kind === 'fire') &&
-      ids.some((id) => id.includes('rain'))
+      disposed ||
+      lost ||
+      document.hidden ||
+      reduced.matches ||
+      !program ||
+      kind === 'quiet'
     )
-      drawRain(time, base);
-    if (kind === 'fire') drawFire(time, base);
-    if (kind === 'water') drawWater(time, base);
-    drawAtmosphere(time, base);
-    ctx.restore();
-  }
-
-  function tick(now: number) {
-    if (now - previous > 50 && !document.hidden && !reduced.matches) {
-      draw(now);
-      previous = now;
+      return;
+    if (!last || now - last >= 1000 / 30) {
+      if (last) elapsed += Math.min((now - last) / 1000, 0.1);
+      last = now;
+      draw();
     }
-    frame = requestAnimationFrame(tick);
+    frame = requestAnimationFrame(animate);
   }
-
-  const observer = new ResizeObserver(resize);
-  observer.observe(canvas);
   function restart() {
     cancelAnimationFrame(frame);
-    resize();
-    if (!document.hidden && !reduced.matches)
-      frame = requestAnimationFrame(tick);
+    frame = 0;
+    last = 0;
+    draw();
+    if (
+      !disposed &&
+      !document.hidden &&
+      !reduced.matches &&
+      !lost &&
+      program &&
+      kind !== 'quiet'
+    )
+      frame = requestAnimationFrame(animate);
   }
+  function resize() {
+    const width = canvas.clientWidth || innerWidth,
+      height = canvas.clientHeight || innerHeight;
+    // A bounded framebuffer avoids a 4K/Retina fragment workload.
+    const dpr = Math.min(
+      devicePixelRatio,
+      width < 700 ? 1 : 1.5,
+      1920 / width,
+      1200 / height
+    );
+    canvas.width = Math.max(1, Math.round(width * dpr));
+    canvas.height = Math.max(1, Math.round(height * dpr));
+    if (base) {
+      const scale = Math.max(width / base.width, height / base.height);
+      const focus = kind === 'fire' ? 0.8 : kind === 'rain' ? 0.32 : 0.5;
+      const left = Math.min(
+        0,
+        Math.max(
+          width - base.width * scale,
+          width / 2 - base.width * scale * focus
+        )
+      );
+      canvas.style.backgroundSize = `${base.width * scale}px ${base.height * scale}px`;
+      canvas.style.backgroundPosition = `${left}px ${(height - base.height * scale) / 2}px`;
+    }
+    restart();
+  }
+  function contextLost(event: Event) {
+    event.preventDefault();
+    lost = true;
+    program = null;
+    buffer = null;
+    textures = [];
+    cancelAnimationFrame(frame);
+    canvas.dataset.renderer = 'static';
+  }
+  function contextRestored() {
+    if (disposed) return;
+    lost = false;
+    release();
+    init();
+    resize();
+  }
+  canvas.addEventListener('webglcontextlost', contextLost);
+  canvas.addEventListener('webglcontextrestored', contextRestored);
   reduced.addEventListener('change', restart);
   document.addEventListener('visibilitychange', restart);
-  restart();
-
+  const observer = new ResizeObserver(resize);
+  observer.observe(canvas);
+  fallback();
+  init();
+  resize();
   return {
     async update() {
+      const token = ++revision;
       const next = kindFor(sounds());
-      if (next !== kind) {
-        const updateRevision = ++revision;
-        try {
-          const nextAssets = await loadAssets(next, !reduced.matches);
-          if (disposed || updateRevision !== revision) return;
-          kind = next;
-          assets = nextAssets;
-        } catch {
-          // Keep the last fully decoded scene when a later optional scene fails.
-        }
+      if (next === kind) {
+        restart();
+        return;
       }
-      if (!disposed) draw(performance.now());
+      try {
+        const image = await load(next);
+        if (disposed || token !== revision) return;
+        kind = next;
+        base = image;
+        elapsed = 0;
+        fallback();
+        upload();
+        resize();
+      } catch {
+        /* Keep the last decoded scene and audio if an asset fails. */
+      }
     },
     dispose() {
       disposed = true;
-      ++revision;
+      revision++;
       cancelAnimationFrame(frame);
       observer.disconnect();
       reduced.removeEventListener('change', restart);
       document.removeEventListener('visibilitychange', restart);
+      canvas.removeEventListener('webglcontextlost', contextLost);
+      canvas.removeEventListener('webglcontextrestored', contextRestored);
+      release();
+      mask = undefined;
     }
   };
 }

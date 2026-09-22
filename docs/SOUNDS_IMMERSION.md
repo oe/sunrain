@@ -1,7 +1,7 @@
 # Soundscape immersion
 
 The immersive view uses fixed, photorealistic generated artwork with small local
-Canvas effects. It is a calm environment rather than an audio spectrum visualizer.
+WebGL material effects. It is a calm environment rather than an audio spectrum visualizer.
 
 ## Interaction
 
@@ -32,25 +32,43 @@ finishes before opening; state is checked again after loading to prevent stale
 automatic entry. An initial asset failure leaves audio and the original page
 usable, with a retryable message.
 
-The renderer caps pixel density to 1 on small screens and 1.5 on desktop, and draws
-at approximately 20fps. It stops rendering in hidden tabs and uses a static frame
-for reduced motion. Scene exit disposes animation and resize listeners. Scene
-selection prioritizes fireplace, then rain, woodland/stream, ocean, then a neutral
-noise backdrop. In portrait orientation, the crop centers the relevant subject.
-Multiple tracks form one environment instead of switching scenes per sound.
+The renderer uses a single WebGL pass with source-image coordinates, so material
+masks stay registered under responsive cover crops. Pixel density is capped at 1
+on small screens and 1.5 on desktop, with a maximum 1920 × 1200 framebuffer. It
+targets 30fps, stops in hidden tabs, and renders a static frame for reduced motion.
+Textures upload only on scene changes. Exit deletes buffers, textures, programs,
+animation callbacks and listeners; the reusable canvas keeps its single context.
+No WebGL or a lost context shows the same photo using CSS; context restoration
+rebuilds GPU resources. These are workload limits, not a hardware FPS guarantee.
 
-Effects are intentionally small and material-specific. Rain droplets pause, gather,
-refract the view, then slide with non-linear timing. The fireplace alternates two
-locally masked flame states with a feathered boundary and restrained warm-light
-variation. Forest mist changes optically without deforming scene geometry. The ocean uses a
-second, locally masked wave state with feathered horizontal boundaries. They reflect the kind of sound; they do not synchronize individual
-recorded drops or wave crests. A future Blender workflow can replace these local
-states with short masked loops without changing the controls. Three.js/WASM remain
-unnecessary for the current fixed camera.
+Scene selection prioritizes fireplace, rain, woodland/stream, ocean, then a neutral
+noise backdrop. Portrait crops center the relevant subject. Rain in a fireplace
+mix also enables the glass effect; fire alone does not animate the rain. Multiple
+tracks form one environment instead of switching scenes per sound.
+
+- **Glass:** independently paced droplets descend along gently wandering paths.
+  Each drop refracts the underlying photograph and leaves a tapering wet trail;
+  window edges and foreground furniture are excluded. The photograph's existing
+  small droplets provide the stationary layer.
+- **Fire:** upward-travelling multiscale turbulence deforms the photographed flame
+  texture. Bright flame regions move and fluctuate while masks protect the dark
+  logs, firebox and room. This is texture animation, not a combustion simulation.
+- **Stream:** two offset advection phases move the water texture downstream without
+  a hard loop reset. Perspective adjusts speed; fine ripples perturb reflections.
+  Hand-traced water/rock masks live in `materials.ts`; source-sample checks prevent
+  rock pixels from being pulled into the water. The upper forest remains still.
+- **Ocean:** localized travelling ripples affect the water, with a fixed horizon
+  and sky. It is a secondary effect, not a simulated breaking-wave cycle.
+
+`materials.ts` contains the GLSL and the authored water mask; `scene.ts` owns GPU
+resources and lifecycle. No Three.js, WASM, extra image frames or new dependencies
+are needed for this fixed-camera treatment. The effects correspond to the material
+heard, not individual events in the recording. This remains a 2.5D photographic
+scene: new camera angles would need new plates and masks.
 
 ## Artwork provenance and reproduction
 
-The six visual assets in `public/scenes/` were made with the built-in imagegen tool,
+The four photographic assets in `public/scenes/` were made with the built-in imagegen tool,
 then converted to WebP at quality 85 with Sharp. Their generated dimensions are
 1672×941 (approximately 16:9); responsive cover crops are intentional. There are
 no external image services in the product and no microphone/audio-analysis access.
@@ -61,9 +79,6 @@ Prompt specifications:
   rain-wet dark-wood window on the left looking toward blue-grey woodland, real
   stone fireplace and modest flames on the right, believable glass/materials,
   quiet restrained exposure. No people, text, UI, watermark or fantasy effects.
-- `rain-fireplace-flame-b.png`: alternate frame generated from the fireplace plate;
-  only the inner flames and ember intensity change. The runtime uses its small,
-  feathered local crop, so generated lighting drift outside the firebox is absent.
 - `rain-window.webp`: edit the same camera and architecture; extinguish the
   fireplace and embers, remove orange firelight, retain soft cool window light.
 - `forest-stream.webp`: photorealistic fixed-camera temperate forest at dawn,
@@ -74,9 +89,16 @@ Prompt specifications:
   breaking waves, wet sand, horizon around 45%, slate sky and restrained warm
   dusk light. Central portrait crop includes sky, sea and shore. No people,
   boats, buildings, tropical-ad colors, text, UI or watermark.
-- `ocean-wave-b.webp`: alternate frame derived from the ocean plate; only the
-  lower water band advances a calm breaking wave. Its alpha feather keeps the
-  horizon, sky, camera, and shoreline stable during the local transition.
 
 New interface copy is provided in all eight site languages; non-Chinese/English
 translations should receive native-language review before being treated as final.
+
+## Renderer verification (2026-09-22)
+
+Browser plugin not available; used bundled Playwright Chromium against the local
+Astro app. Desktop and mobile interaction checks passed, including idle hiding,
+mouse/keyboard/touch wake, lock/unlock and Escape preserving audio. Rendered frame
+comparisons checked moving rain/flame/water regions against fixed wall/log/rock
+regions. Lifecycle checks cover reduced motion, context loss/restoration, repeated
+opening, stale image-load cancellation, framebuffer limits and WebGL fallback.
+Headless Chromium uses SwiftShader; this does not certify real-device GPU speed.
