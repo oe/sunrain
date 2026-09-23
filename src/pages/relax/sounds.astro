@@ -120,59 +120,61 @@ const presets = [
 >
   <div
     id="soundscape-app"
-    class="container mx-auto px-4 py-16"
+    class="container mx-auto px-4 py-10 sm:py-12"
     data-play={t('relax.sounds.play', lang)}
     data-pause={t('relax.sounds.pause', lang)}
     data-loading={t('relax.sounds.loading', lang)}
     data-unavailable={t('relax.sounds.unavailable', lang)}
     data-immersive-labels={JSON.stringify(immersiveLabels)}
   >
-    <div class="max-w-4xl mx-auto mb-8 animate-fade-in-up">
+    <div class="max-w-4xl mx-auto mb-7 animate-fade-in-up">
       <a
         href={getLocalizedPath('/relax/', lang)}
-        class="inline-flex items-center text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors mb-6"
+        class="inline-flex items-center text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors mb-5"
       >
         <Icon name="ArrowRight" size={20} className="rotate-180 mr-2" />
         {t('common.back', lang)}
       </a>
 
-      <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+      <h1 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-2">
         {t('relax.sounds.title', lang)}
       </h1>
-      <p class="text-xl text-gray-600 dark:text-gray-300">
+      <p class="text-base sm:text-lg text-gray-600 dark:text-gray-300">
         {t('relax.sounds.description', lang)}
       </p>
-      <div class="mt-5 flex flex-wrap items-center gap-3">
+      <div class="mt-3 flex flex-wrap items-center gap-3">
         <p class="text-sm text-gray-500 dark:text-gray-400">
           {t('relax.sounds.mixHint', lang)}
         </p>
-        <button
-          id="stop-all-btn"
-          type="button"
-          disabled
-          class="rounded-full border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm transition hover:border-gray-300 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-40 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700"
-        >
-          {t('relax.sounds.stopAll', lang)}
-        </button>
       </div>
-      <div class="mt-6 rounded-2xl border border-slate-200 bg-slate-50 p-4 dark:border-slate-700 dark:bg-slate-800/50">
-        <div class="flex flex-wrap items-center gap-4">
-          <button id="immersive-enter" type="button" disabled class="rounded-full bg-slate-800 px-5 py-3 text-sm font-medium text-white transition hover:bg-slate-700 disabled:opacity-40 dark:bg-slate-100 dark:text-slate-900">{t('relax.sounds.immersive.enter', lang)}</button>
-          <label id="immersive-auto-label" hidden class="items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
+      <p id="sound-status" class="sr-only" aria-live="polite"></p>
+    </div>
+
+    <aside id="soundscape-dock" hidden aria-label={t('relax.sounds.title', lang)} class="soundscape-dock fixed inset-x-0 bottom-0 z-40 border-t border-gray-200 bg-white/95 shadow-[0_-8px_32px_rgba(15,23,42,0.12)] backdrop-blur-lg dark:border-gray-700 dark:bg-gray-900/95">
+      <div class="mx-auto flex max-w-6xl flex-wrap items-center gap-x-4 gap-y-2 px-4 py-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] sm:flex-nowrap">
+        <div class="flex min-w-0 flex-1 items-center gap-3">
+          <span aria-hidden="true" class="h-2 w-2 shrink-0 rounded-full bg-amber-500"></span>
+          <span id="soundscape-current" class="truncate text-sm font-medium text-gray-900 dark:text-white"></span>
+        </div>
+        <label class="flex shrink-0 items-center gap-2 text-xs text-gray-600 dark:text-gray-300">
+          {t('relax.sounds.immersive.volume', lang)}
+          <input id="soundscape-master" type="range" min="0" max="1" step="0.01" value="1" class="w-20 accent-amber-600 sm:w-24" aria-label={t('relax.sounds.immersive.volume', lang)} />
+        </label>
+        <div class="flex w-full items-center justify-between gap-3 sm:w-auto sm:justify-end">
+          <label id="immersive-auto-label" hidden class="flex shrink-0 items-center gap-2 whitespace-nowrap text-xs text-gray-600 dark:text-gray-300">
             <input id="immersive-auto" type="checkbox" checked class="accent-amber-600" />
             {t('relax.sounds.immersive.auto', lang)}
           </label>
+          <div class="flex w-full items-center justify-between gap-2 sm:w-auto sm:justify-end">
+            <button id="stop-all-btn" type="button" disabled class="whitespace-nowrap rounded-full px-3 py-2 text-xs font-medium text-gray-600 transition hover:bg-gray-100 disabled:opacity-40 dark:text-gray-300 dark:hover:bg-gray-800">{t('relax.sounds.stopAll', lang)}</button>
+            <button id="immersive-enter" type="button" disabled class="whitespace-nowrap rounded-full bg-slate-800 px-4 py-2 text-xs font-medium text-white transition hover:bg-slate-700 disabled:opacity-40 dark:bg-slate-100 dark:text-slate-900">{t('relax.sounds.immersive.enter', lang)}</button>
+          </div>
         </div>
-        <p id="immersive-desktop-hint" hidden class="mt-3 text-sm text-gray-500 dark:text-gray-400">{t('relax.sounds.immersive.desktopHint', lang)}</p>
-        <p id="immersive-mobile-hint" class="mt-3 text-sm text-gray-500 dark:text-gray-400">{t('relax.sounds.immersive.mobileHint', lang)}</p>
-        <p id="immersive-status" role="status" class="mt-2 text-sm text-amber-700 dark:text-amber-300"></p>
       </div>
-      <label class="mt-4 flex items-center gap-3 text-sm text-gray-500 dark:text-gray-400">
-        {t('relax.sounds.immersive.volume', lang)}
-        <input id="soundscape-master" type="range" min="0" max="1" step="0.01" value="1" class="w-28 accent-amber-600" aria-label={t('relax.sounds.immersive.volume', lang)} />
-      </label>
-      <p id="sound-status" class="sr-only" aria-live="polite"></p>
-    </div>
+      <p id="immersive-desktop-hint" hidden class="sr-only">{t('relax.sounds.immersive.desktopHint', lang)}</p>
+      <p id="immersive-mobile-hint" class="sr-only">{t('relax.sounds.immersive.mobileHint', lang)}</p>
+      <p id="immersive-status" role="status" class="sr-only"></p>
+    </aside>
 
     <section class="max-w-4xl mx-auto mb-8 animate-fade-in-up delay-100" aria-labelledby="presets-title">
       <h2 id="presets-title" class="text-sm font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">
@@ -260,6 +262,13 @@ const presets = [
     </div>
   </div>
 </BaseLayout>
+
+<style>
+  #soundscape-dock[hidden],
+  #immersive-auto-label[hidden] {
+    display: none;
+  }
+</style>
 
 <script>
   import { Howl } from 'howler';
@@ -477,12 +486,25 @@ const presets = [
   }
   function syncRoom() {
     enterButton.disabled = loadingRoom || !audibleSounds().length;
+    syncDock();
     room?.update();
     if (![...tracks.values()].some((track) => track.active)) {
       dismissed = false;
       lastActivity = Date.now();
     }
     scheduleRoom();
+  }
+  function syncDock() {
+    const active = [...tracks.values()].some((track) => track.active);
+    const dock = document.querySelector<HTMLElement>('#soundscape-dock')!;
+    const focusWasInDock = dock.contains(document.activeElement);
+    dock.hidden = !active;
+    if (app) app.style.paddingBottom = active ? '10rem' : '';
+    if (active) {
+      const current = document.querySelector<HTMLElement>('#soundscape-current')!;
+      current.textContent = sceneTitle();
+      current.title = current.textContent;
+    } else if (focusWasInDock) presetButtons[0]?.focus();
   }
   function activity() {
     lastActivity = Date.now();
@@ -581,6 +603,7 @@ const presets = [
     button.classList.toggle('dark:bg-white', !active);
     button.classList.toggle('dark:text-gray-900', !active);
     stopAllButton!.disabled = ![...tracks.values()].some((track) => track.active);
+    syncDock();
   }
 
   function getTrack(id: SoundId): Track {

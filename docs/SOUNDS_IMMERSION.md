@@ -5,6 +5,9 @@ WebGL material effects. It is a calm environment rather than an audio spectrum v
 
 ## Interaction
 
+- The selection page shows presets and sounds first. Playback reveals a compact
+  bottom control bar with the active mix, master volume, stop, immersive entry,
+  and the desktop automatic-entry setting. Stopping all sounds hides it again.
 - Actual, non-muted playback and 20 seconds without pointer, keyboard or wheel
   activity permit automatic entry on viewports at least 1024px wide with a fine
   pointer and hover. Hidden tabs and reduced-motion preferences prevent entry.
@@ -102,3 +105,35 @@ comparisons checked moving rain/flame/water regions against fixed wall/log/rock
 regions. Lifecycle checks cover reduced motion, context loss/restoration, repeated
 opening, stale image-load cancellation, framebuffer limits and WebGL fallback.
 Headless Chromium uses SwiftShader; this does not certify real-device GPU speed.
+
+## Visual-quality assessment (2026-09-24)
+
+The current stream animation is still visibly artificial. It advects and blends
+samples from one static photograph. Its two phases can repeat the same foam and
+reflection shapes, while the water mask only approximates irregular rock edges.
+Frame differences and stable-rock checks measure motion and boundary stability;
+they do not demonstrate convincing fluid motion. The same source-frame limit
+affects the flame and droplet effects to a lesser degree.
+
+Produce one stream pilot before further shader tuning. Use a fixed-camera
+continuous scene with real temporal water frames, matching the existing calm
+framing. A controlled real-water shoot is the first choice; a generated video is
+acceptable only if rocks, banks, tree silhouettes, perspective and lighting stay
+registered over time. Replace the still plate with the entire approved scene
+clip, rather than warping or compositing new water over an unrelated single
+frame. Reject the clip if foam reverses, eddies repeat visibly, rocks shimmer,
+or the loop has a flash or motion jump at normal playback speed.
+
+Then produce rain and fire from scene-specific motion sources: rain needs
+droplets that form, merge and run down the glass while the frame remains fixed;
+fire needs flame tongues rising from the logs and corresponding local light
+change. A physically based Blender render is useful when the whole matching
+scene can be built and rendered. Three.js or WASM do not recover missing
+temporal information from a still photograph.
+
+The approved clips should be silent; Howler remains the audio source. Load only
+the selected scene after entry, show the current WebP as poster and reduced-motion
+fallback, pause when hidden, release media on exit, and offer codec variants only
+after checking device decoding support. Evaluate each pilot for natural motion,
+loop continuity, asset size, start latency, and dropped frames on a real desktop
+and phone before replacing another scene.
