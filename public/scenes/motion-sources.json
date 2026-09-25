@@ -1,0 +1,34 @@
+{
+  "license": "Mixkit Stock Video Free License",
+  "licenseUrl": "https://mixkit.co/license/#videoFree",
+  "verifiedOn": "2026-09-25",
+  "scenes": [
+    {
+      "id": "stream",
+      "title": "A picturesque small creek with calm waters and steam at sunrise",
+      "sourcePage": "https://mixkit.co/free-stock-video/a-picturesque-small-creek-with-calm-waters-and-steam-at-51662/",
+      "download": "https://assets.mixkit.co/videos/51662/51662-1080.mp4",
+      "input": "stream-source.mp4",
+      "length": 10.75,
+      "overlap": 1.25
+    },
+    {
+      "id": "fire",
+      "title": "Wood burning in a fireplace",
+      "sourcePage": "https://mixkit.co/free-stock-video/wood-burning-in-a-fireplace-1242/",
+      "download": "https://assets.mixkit.co/videos/1242/1242-1080.mp4",
+      "input": "fire-source-1242.mp4",
+      "length": 8.75,
+      "overlap": 0.75
+    },
+    {
+      "id": "ocean",
+      "title": "View from a calm beach during a sunset",
+      "sourcePage": "https://mixkit.co/free-stock-video/view-from-a-calm-beach-during-a-sunset-44498/",
+      "download": "https://assets.mixkit.co/videos/44498/44498-1080.mp4",
+      "input": "ocean-source-44498.mp4",
+      "length": 8,
+      "overlap": 1
+    }
+  ]
+}

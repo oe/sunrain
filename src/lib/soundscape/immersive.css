@@ -28,22 +28,26 @@
   background: #101619;
 }
 
-.sound-room canvas {
+.sound-room canvas,
+.sound-room .room-motion {
   position: absolute;
   width: 100%;
   height: 100%;
   inset: 0;
 }
 
+.room-motion {
+  object-fit: cover;
+  pointer-events: none;
+}
+
 .room-vignette {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background: radial-gradient(
-    ellipse at 50% 40%,
-    transparent 25%,
-    #070b0e80 100%
-  );
+  background:
+    linear-gradient(#070b0e70, transparent 28%, transparent 70%, #070b0e50),
+    radial-gradient(ellipse at 50% 40%, transparent 25%, #070b0e80 100%);
 }
 
 .room-header {
@@ -51,6 +55,7 @@
   top: max(32px, env(safe-area-inset-top));
   left: clamp(24px, 5vw, 80px);
   pointer-events: none;
+  text-shadow: 0 1px 12px #000b;
 }
 
 .room-eyebrow {

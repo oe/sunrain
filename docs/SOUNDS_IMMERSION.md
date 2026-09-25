@@ -1,7 +1,8 @@
 # Soundscape immersion
 
-The immersive view uses fixed, photorealistic generated artwork with small local
-WebGL material effects. It is a calm environment rather than an audio spectrum visualizer.
+The immersive view combines a generated rain-room plate with Three.js droplets
+and licensed, edited temporal footage for the stream, fireplace, and sea.
+Motion follows the sound environment rather than an audio spectrum.
 
 ## Interaction
 
@@ -29,111 +30,111 @@ WebGL material effects. It is a calm environment rather than an audio spectrum v
 
 ## Loading and rendering
 
-`sounds.astro` keeps a small interaction/playback gate. `immersive.ts`, its CSS,
-`scene.ts`, and exactly the selected WebP are loaded on demand. Image decoding
-finishes before opening; state is checked again after loading to prevent stale
-automatic entry. An initial asset failure leaves audio and the original page
-usable, with a retryable message.
+`sounds.astro` loads the room only on entry. `scene.ts` then loads only the selected
+renderer and assets. Rain imports `photo-world.ts`, Three.js, and the rain-room
+WebP. The other natural scenes import `media-world.ts`, a matching poster, and
+one silent MP4. Video scenes do not download Three.js. Quiet noise uses a static
+CSS gradient and does not initialize a GPU renderer.
 
-The renderer uses a single WebGL pass with source-image coordinates, so material
-masks stay registered under responsive cover crops. Pixel density is capped at 1
-on small screens and 1.5 on desktop, with a maximum 1920 × 1200 framebuffer. It
-targets 30fps, stops in hidden tabs, and renders a static frame for reduced motion.
-Textures upload only on scene changes. Exit deletes buffers, textures, programs,
-animation callbacks and listeners; the reusable canvas keeps its single context.
-No WebGL or a lost context shows the same photo using CSS; context restoration
-rebuilds GPU resources. These are workload limits, not a hardware FPS guarantee.
+- **Rain:** 72 instanced refractive beads have individual position, size, velocity,
+  growth, and age. Small beads stick; larger beads accelerate, merge approximately
+  by volume, and leave narrow trails. New beads fade in, and exiting beads fade
+  out above the furniture. Each bead samples the background through its own
+  curved lens. Window frames and furniture are not deformed.
+- **Stream / woodland:** real water, reflections, drifting mist, and nearby
+  foliage move together in a registered, fixed-camera scene. Rocks stay fixed.
+- **Fire:** actual flame tongues rise, split, and disappear, with corresponding
+  light on the firebox. There is no displacement of a photographed flame.
+- **Ocean:** shore waves advance and recede at sunset, with a fixed horizon. The
+  earlier clip that contained only retreating foam was rejected for its seam.
 
-Scene selection prioritizes fireplace, rain, woodland/stream, ocean, then a neutral
-noise backdrop. Portrait crops center the relevant subject. Rain in a fireplace
-mix also enables the glass effect; fire alone does not animate the rain. Multiple
-tracks form one environment instead of switching scenes per sound.
+Rain targets 30fps with bounded drawing-buffer density (1 on small screens, 1.5
+on desktop, maximum 1920 by 1200). The video scenes use native muted `playsinline`
+playback at 24fps. This avoids re-uploading full video frames through WebGL.
+Desktop assets are 1920 by 1080; viewports under 700px choose the 1280 by 720
+variant once on entry. Portrait cover crops are centered on the scene.
 
-- **Glass:** independently paced droplets descend along gently wandering paths.
-  Each drop refracts the underlying photograph and leaves a tapering wet trail;
-  window edges and foreground furniture are excluded. The photograph's existing
-  small droplets provide the stationary layer.
-- **Fire:** upward-travelling multiscale turbulence deforms the photographed flame
-  texture. Bright flame regions move and fluctuate while masks protect the dark
-  logs, firebox and room. This is texture animation, not a combustion simulation.
-- **Stream:** two offset advection phases move the water texture downstream without
-  a hard loop reset. Perspective adjusts speed; fine ripples perturb reflections.
-  Hand-traced water/rock masks live in `materials.ts`; source-sample checks prevent
-  rock pixels from being pulled into the water. The upper forest remains still.
-- **Ocean:** localized travelling ripples affect the water, with a fixed horizon
-  and sky. It is a secondary effect, not a simulated breaking-wave cycle.
+The videos have no audio track. Howler remains the sole sound source. Only the
+active video exists; exit pauses it, removes its source, resets the media element,
+and removes it. Scene preparation uses revisions so a stale completion cannot
+replace a newer scene or leak a player after exit.
 
-`materials.ts` contains the GLSL and the authored water mask; `scene.ts` owns GPU
-resources and lifecycle. No Three.js, WASM, extra image frames or new dependencies
-are needed for this fixed-camera treatment. The effects correspond to the material
-heard, not individual events in the recording. This remains a 2.5D photographic
-scene: new camera angles would need new plates and masks.
+With reduced motion already enabled, entering a video scene fetches only its
+poster; it does not fetch the video. Changing the preference while playing freezes
+the current frame. Hidden tabs pause playback and the rain loop. Returning resumes
+without a catch-up jump. Rain renders once for reduced motion. WebGL failure,
+context loss, media-load failure, or denied autoplay retains the matching static
+background. Rendering limits are workload controls, not universal FPS guarantees.
 
-## Artwork provenance and reproduction
+## Motion sources and reproduction
 
-The four photographic assets in `public/scenes/` were made with the built-in imagegen tool,
-then converted to WebP at quality 85 with Sharp. Their generated dimensions are
-1672×941 (approximately 16:9); responsive cover crops are intentional. There are
-no external image services in the product and no microphone/audio-analysis access.
+The rain room was generated with imagegen at 1672 by 941, then converted to WebP.
+The three temporal sources are **real footage**, not AI-generated video or fluid
+simulations. They were selected after rejecting a procedural 3D creek pilot whose
+banks and stones still looked artificial, and a fire clip with a moving camera.
 
-Prompt specifications:
+The exact source pages, download URLs, approved license, and loop parameters are
+recorded in `public/scenes/motion-sources.json`. On 2026-09-25, each selected item
+page displayed **Mixkit Stock Video Free License**; the linked license permits
+commercial projects and editing. Candidates under the **Restricted License**
+were excluded. Attribution is optional under the license; provenance is retained
+here and in the manifest. See https://mixkit.co/license/#videoFree and
+https://mixkit.co/terms/ for the applicable terms. Originals are not committed.
 
-- `rain-fireplace.webp`: photorealistic fixed eye-level evening room, large
-  rain-wet dark-wood window on the left looking toward blue-grey woodland, real
-  stone fireplace and modest flames on the right, believable glass/materials,
-  quiet restrained exposure. No people, text, UI, watermark or fantasy effects.
-- `rain-window.webp`: edit the same camera and architecture; extinguish the
-  fireplace and embers, remove orange firelight, retain soft cool window light.
-- `forest-stream.webp`: photorealistic fixed-camera temperate forest at dawn,
-  realistic foliage, moss and ferns, fine mist and a shallow clear stream in the
-  lower third; stream remains visible in a central portrait crop. No people,
-  animals, buildings, dramatic light rays, text, UI or watermark.
-- `ocean.webp`: photorealistic quiet sandy beach at blue hour, small natural
-  breaking waves, wet sand, horizon around 45%, slate sky and restrained warm
-  dusk light. Central portrait crop includes sky, sea and shore. No people,
-  boats, buildings, tropical-ad colors, text, UI or watermark.
+The processing keeps forward motion throughout. A trimmed middle segment is
+followed by a short dissolve from the source tail into its head; the next loop
+continues at the next head frame. No ping-pong/reverse playback is used. Modest
+color adjustment is baked into both resolutions. The first encoded frame becomes
+the poster, avoiding a composition change as playback starts. A dissolve is an
+editorial loop seam, not a physical continuation of the source recording.
 
-New interface copy is provided in all eight site languages; non-Chinese/English
-translations should receive native-language review before being treated as final.
+To reproduce, download the three manifest URLs into a local source directory,
+using the manifest's `input` filenames, then run:
 
-## Renderer verification (2026-09-22)
+```sh
+python3 scripts/build-scene-loops.py /path/to/originals
+pnpm audit:scenes
+pnpm build
+pnpm verify:sunrain
+git diff --check
+```
 
-Browser plugin not available; used bundled Playwright Chromium against the local
-Astro app. Desktop and mobile interaction checks passed, including idle hiding,
-mouse/keyboard/touch wake, lock/unlock and Escape preserving audio. Rendered frame
-comparisons checked moving rain/flame/water regions against fixed wall/log/rock
-regions. Lifecycle checks cover reduced motion, context loss/restoration, repeated
-opening, stale image-load cancellation, framebuffer limits and WebGL fallback.
-Headless Chromium uses SwiftShader; this does not certify real-device GPU speed.
+The asset scripts require ffmpeg and ffprobe. `audit:scenes` checks H.264/yuv420p,
+24fps, both dimensions, silent streams, duration, file budgets, MP4 faststart, and
+the decoded final-to-first frame difference relative to ordinary internal changes.
+That numerical check catches flashes and cuts; it does not prove visual realism.
+Visual review must also check normal forward motion, fixed geometry, the dissolve,
+portrait crops, and interaction at actual playback speed.
 
-## Visual-quality assessment (2026-09-24)
+## Browser acceptance
 
-The current stream animation is still visibly artificial. It advects and blends
-samples from one static photograph. Its two phases can repeat the same foam and
-reflection shapes, while the water mask only approximates irregular rock edges.
-Frame differences and stable-rock checks measure motion and boundary stability;
-they do not demonstrate convincing fluid motion. The same source-frame limit
-affects the flame and droplet effects to a lesser degree.
+The acceptance flow is: choose a sound, enter immersion, observe motion, let the
+controls hide, restore them with input, lock/unlock, exit while preserving audio,
+and stop playback. Repeat on desktop and a touch-sized viewport. Also exercise
+reduced motion, asset failure, hidden/resumed playback, repeated entry/exit, rapid
+scene changes, WebGL context loss/restoration, and a cold initial resource list.
 
-Produce one stream pilot before further shader tuning. Use a fixed-camera
-continuous scene with real temporal water frames, matching the existing calm
-framing. A controlled real-water shoot is the first choice; a generated video is
-acceptable only if rocks, banks, tree silhouettes, perspective and lighting stay
-registered over time. Replace the still plate with the entire approved scene
-clip, rather than warping or compositing new water over an unrelated single
-frame. Reject the clip if foam reverses, eddies repeat visibly, rocks shimmer,
-or the loop has a flash or motion jump at normal playback speed.
+The Browser plugin is not available in this environment; browser checks use
+bundled Playwright with installed Chrome. Hardware-backed desktop rendering can
+be checked via `WEBGL_debug_renderer_info`. Mobile emulation verifies layout and
+interaction only; it does not certify a physical phone's decoder, GPU, or battery
+use. Native iOS Safari and physical Android still need device coverage.
 
-Then produce rain and fire from scene-specific motion sources: rain needs
-droplets that form, merge and run down the glass while the frame remains fixed;
-fire needs flame tongues rising from the logs and corresponding local light
-change. A physically based Blender render is useful when the whole matching
-scene can be built and rendered. Three.js or WASM do not recover missing
-temporal information from a still photograph.
+### Verified on 2026-09-25
 
-The approved clips should be silent; Howler remains the audio source. Load only
-the selected scene after entry, show the current WebP as poster and reduced-motion
-fallback, pause when hidden, release media on exit, and offer codec variants only
-after checking device decoding support. Evaluate each pilot for natural motion,
-loop continuity, asset size, start latency, and dropped frames on a real desktop
-and phone before replacing another scene.
+Production-build Chrome checks passed at 1440×900 on Apple M2 / ANGLE Metal,
+plus a 390×844 touch viewport at DPR 2. The run verified cold-load asset isolation,
+actual-audio desktop automatic entry, mobile manual-only entry, all four scene
+renderers, idle cursor/control hiding, mouse/keyboard/touch wake, lock/unlock,
+Escape preserving audio, explicit fullscreen, repeated player disposal, failed
+video poster fallback, cancellation during delayed preparation, reduced-motion
+cold entry and live preference changes, and real WebGL context loss/restoration.
+The clean production run reported no application console or runtime errors.
+The three video observations each advanced roughly 180 frames with zero dropped
+frames in that run; this is one-device evidence, not a general performance claim.
+
+Frame and portrait-crop review accepted the fixed geometry and natural movement.
+All six encoded variants passed the loop-boundary audit. Build/type checks and
+`verify:sunrain` passed. The checks also exposed a Howler loop event resetting the
+20-second idle timer and restarting the audio fade; only requested starts now do
+that. Real playback automatic entry and rapid pause/resume volume were retested.

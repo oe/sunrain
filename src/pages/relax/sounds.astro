@@ -290,6 +290,7 @@ const presets = [
     howl: Howl;
     playbackId: number | null;
     active: boolean;
+    awaitingStart: boolean;
     fadeTimer: number | null;
     targetVolume: number;
   }
@@ -628,6 +629,10 @@ const presets = [
             track.howl.pause(playbackId);
             return;
           }
+          // Howler emits `play` again on every loop. Only a requested start
+          // should fade in or reset the user's idle timer.
+          if (!track.awaitingStart) return;
+          track.awaitingStart = false;
           track.howl.volume(0, playbackId);
           track.howl.fade(0, track.targetVolume * masterVolume, 700, playbackId);
           lastActivity = Date.now();
@@ -644,6 +649,7 @@ const presets = [
       }),
       playbackId: null,
       active: false,
+      awaitingStart: false,
       fadeTimer: null,
       targetVolume: Number(sliderFor(id)?.value || 0.5)
     };
@@ -668,7 +674,18 @@ const presets = [
 
     if (track.howl.state() === 'unloaded') track.howl.load();
     if (track.playbackId === null || !track.howl.playing(track.playbackId)) {
+      track.awaitingStart = true;
       track.playbackId = track.howl.play(track.playbackId ?? undefined);
+    } else {
+      // A rapid resume can arrive before the scheduled fade-out pause.
+      track.awaitingStart = false;
+      track.howl.fade(
+        track.howl.volume(track.playbackId) as number,
+        track.targetVolume * masterVolume,
+        250,
+        track.playbackId
+      );
+      syncRoom();
     }
   }
 
@@ -678,6 +695,7 @@ const presets = [
     if (track.fadeTimer !== null) window.clearTimeout(track.fadeTimer);
 
     track.active = false;
+    track.awaitingStart = false;
     setButtonState(id, false);
     syncRoom();
     if (track.playbackId === null) return;
