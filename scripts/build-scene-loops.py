@@ -9,12 +9,15 @@ import argparse
 import json
 import pathlib
 import subprocess
+import sys
+import tempfile
 
 parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument('sources', type=pathlib.Path)
 parser.add_argument('--only', choices=['stream', 'fire', 'ocean'])
 args = parser.parse_args()
 root = pathlib.Path(__file__).resolve().parents[1] / 'public' / 'scenes'
+work = tempfile.TemporaryDirectory(prefix='sunrain-loops-')
 manifest = json.loads((root / 'motion-sources.json').read_text())
 
 def run(*arguments):
@@ -24,9 +27,16 @@ for spec in manifest['scenes']:
     name, length, seam = spec['id'], spec['length'], spec['overlap']
     if args.only and name != args.only:
         continue
+    source = args.sources / spec['input']
+    if spec.get('registration'):
+        prepared = pathlib.Path(work.name) / f'{name}-registered.mp4'
+        subprocess.run([sys.executable, str(pathlib.Path(__file__).with_name('register-scene.py')),
+                        spec['registration'], str(source), str(prepared)], check=True)
+        source = prepared
+    start = spec.get('start', 0)
     weight = f"(0.5-0.5*cos(PI*min(1,T/{seam-1/24})))"
     graph = (
-        '[0:v]fps=24,scale=1920:1080:force_original_aspect_ratio=increase,'
+        f'[0:v]fps=24,trim=start={start},setpts=PTS-STARTPTS,scale=1920:1080:force_original_aspect_ratio=increase,'
         'crop=1920:1080,setsar=1,format=yuv420p,'
         'eq=saturation=0.9:brightness=-0.015,split=3[a][b][c];'
         f'[a]trim=start={seam}:end={length-seam},setpts=PTS-STARTPTS[mid];'
@@ -36,10 +46,12 @@ for spec in manifest['scenes']:
         '[mid][seam]concat=n=2:v=1:a=0[v]'
     )
     out = root / f'{name}-loop.mp4'
-    run('-i', args.sources / spec['input'], '-filter_complex_threads', '2',
+    run('-i', source, '-filter_complex_threads', '2',
         '-filter_complex', graph, '-map', '[v]', '-an', '-c:v', 'libx264',
         '-preset', 'slow', '-crf', '24', '-pix_fmt', 'yuv420p', '-movflags', '+faststart', out)
     run('-i', out, '-vf', 'scale=1280:720', '-an', '-c:v', 'libx264',
         '-preset', 'slow', '-crf', '25', '-movflags', '+faststart', root / f'{name}-loop-mobile.mp4')
     run('-i', out, '-frames:v', '1', '-vf', 'scale=1600:900', '-q:v', '2', root / f'{name}-poster.jpg')
     print(name, out.stat().st_size, flush=True)
+
+work.cleanup()

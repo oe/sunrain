@@ -52,7 +52,7 @@ export async function createPhotoWorld(
     seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0;
     return seed / 4294967296;
   };
-  const drops = Array.from({ length: 72 }, () => ({
+  const drops = Array.from({ length: 112 }, () => ({
     x: 0,
     y: 0,
     r: 0,
@@ -62,10 +62,13 @@ export async function createPhotoWorld(
     phase: random() * 6,
   }));
   function reset(d: (typeof drops)[number], initial = false) {
-    d.x = 0.078 + random() * 0.463;
-    d.y = initial ? 0.16 + random() * 0.37 : 0.15;
-    d.r = 0.0013 + Math.pow(random(), 2) * 0.003;
-    d.v = 0;
+    d.x = 0.077 + random() * 0.468;
+    const top = 0.09 + d.x * 0.15;
+    const bottom = d.x < 0.3 ? 0.59 : 0.65;
+    d.y = initial ? top + random() * (bottom - top) : top;
+    // A mix of pinned beads and clearly visible rivulets, all in plate UV space.
+    d.r = 0.0018 + Math.pow(random(), 1.4) * 0.0045;
+    d.v = initial && d.r > 0.003 ? 0.015 + random() * 0.025 : 0;
     d.trail = 0;
     d.age = initial ? 10 : 0;
   }
@@ -84,12 +87,21 @@ export async function createPhotoWorld(
   );
   life.setUsage(THREE.DynamicDrawUsage);
   dropGeometry.setAttribute("life", life);
+  dropGeometry.setAttribute(
+    "phase",
+    new THREE.InstancedBufferAttribute(
+      new Float32Array(drops.map((d) => d.phase)),
+      1,
+    ),
+  );
   dropGeometry.setAttribute("drop", attributes);
   dropGeometry.instanceCount = drops.length;
   const dropMaterial = new THREE.RawShaderMaterial({
     uniforms,
     vertexShader: dropVertex,
     fragmentShader: dropFragment,
+    // Top-left plate UVs invert Y in the vertex shader, reversing winding.
+    side: THREE.DoubleSide,
     transparent: true,
     depthTest: false,
     depthWrite: false,
@@ -140,19 +152,19 @@ export async function createPhotoWorld(
             d.age += dt;
             // Small beads pin to the glass. Larger beads accelerate under gravity;
             // surface tension intermittently arrests them rather than resetting time.
-            const moving = d.r > 0.0021;
+            const moving = d.r > 0.003;
             if (moving) {
               const drag = 0.7 + 0.3 * Math.sin(t * 0.9 + d.phase);
               d.v = Math.min(
-                0.075,
-                (d.v + dt * (0.008 + d.r * 3)) * Math.pow(0.98, dt * 30),
+                0.085,
+                (d.v + dt * (0.016 + d.r * 4)) * Math.pow(0.98, dt * 30),
               );
               const travel = d.v * drag * dt;
               d.y += travel;
-              d.trail = Math.min(0.095, d.trail + travel);
+              d.trail = Math.min(0.15, d.trail + travel);
               d.x += Math.sin(d.y * 45 + d.phase) * travel * 0.08;
             } else d.r += dt * 0.000012;
-            if (d.y > 0.56) reset(d);
+            if (d.y > (d.x < 0.3 ? 0.6 : 0.66)) reset(d);
             // Coalescence conserves the approximate bead volume.
             for (let j = 0; j < i; j++) {
               const b = drops[j];
@@ -160,7 +172,7 @@ export async function createPhotoWorld(
                 Math.hypot((d.x - b.x) * 1.7778, d.y - b.y) <
                 (d.r + b.r) * 0.75
               ) {
-                d.r = Math.min(0.005, Math.cbrt(d.r ** 3 + b.r ** 3));
+                d.r = Math.min(0.0075, Math.cbrt(d.r ** 3 + b.r ** 3));
                 reset(b);
               }
             }

@@ -36,15 +36,16 @@ WebP. The other natural scenes import `media-world.ts`, a matching poster, and
 one silent MP4. Video scenes do not download Three.js. Quiet noise uses a static
 CSS gradient and does not initialize a GPU renderer.
 
-- **Rain:** 72 instanced refractive beads have individual position, size, velocity,
+- **Rain:** 112 instanced refractive beads have individual position, size, velocity,
   growth, and age. Small beads stick; larger beads accelerate, merge approximately
   by volume, and leave narrow trails. New beads fade in, and exiting beads fade
   out above the furniture. Each bead samples the background through its own
   curved lens. Window frames and furniture are not deformed.
-- **Stream / woodland:** real water, reflections, drifting mist, and nearby
-  foliage move together in a registered, fixed-camera scene. Rocks stay fixed.
-- **Fire:** actual flame tongues rise, split, and disappear, with corresponding
-  light on the firebox. There is no displacement of a photographed flame.
+- **Stream / woodland:** registered temporal water, reflections, and drifting mist
+  remain live through a feathered mask. A fixed bank/canopy plate removes residual
+  near/far parallax, so the shore no longer sways with the source camera.
+- **Fire:** the camera is registered to brick/log reference patches before encoding.
+  Actual flame tongues rise, split, and disappear with their original firelight. There is no displacement of a photographed flame.
 - **Ocean:** shore waves advance and recede at sunset, with a fixed horizon. The
   earlier clip that contained only retreating foam was rejected for its seam.
 
@@ -99,9 +100,16 @@ pnpm verify:sunrain
 git diff --check
 ```
 
-The asset scripts require ffmpeg and ffprobe. `audit:scenes` checks H.264/yuv420p,
+The asset scripts require ffmpeg and ffprobe. Stream/fire registration additionally
+requires Python packages `numpy` and `opencv-python-headless` (validated with NumPy
+2.3.5 and OpenCV 4.13.0). These are offline tools, never browser dependencies.
+`register-scene.py` verifies source hashes, applies calibrated affine tracks and
+a fixed crop, and composites the stream bank. See `scripts/scene-registration/`
+for the calibration data and its limitations. `audit:scenes` checks H.264/yuv420p,
 24fps, both dimensions, silent streams, duration, file budgets, MP4 faststart, and
 the decoded final-to-first frame difference relative to ordinary internal changes.
+It also checks the stream bank against its fixed plate and tracks a
+brightness-normalized firebox mortar edge across every frame.
 That numerical check catches flashes and cuts; it does not prove visual realism.
 Visual review must also check normal forward motion, fixed geometry, the dissolve,
 portrait crops, and interaction at actual playback speed.
@@ -133,8 +141,44 @@ The clean production run reported no application console or runtime errors.
 The three video observations each advanced roughly 180 frames with zero dropped
 frames in that run; this is one-device evidence, not a general performance claim.
 
-Frame and portrait-crop review accepted the fixed geometry and natural movement.
+**Superseded visual verdict:** the initial frame/crop review missed camera drift
+and a back-face-culling error in the rain layer. The checks below replace that
+acceptance; loading a renderer and comparing only a loop boundary were inadequate.
 All six encoded variants passed the loop-boundary audit. Build/type checks and
 `verify:sunrain` passed. The checks also exposed a Howler loop event resetting the
 20-second idle timer and restarting the audio fade; only requested starts now do
 that. Real playback automatic entry and rapid pause/resume volume were retested.
+
+
+### Corrections verified on 2026-09-28
+
+- Source camera motion is corrected offline, with one constant crop throughout.
+  The stream's fixed shore no longer moves during the dissolve. Fire retains the
+  source flame pixels and illumination; a flame-keying experiment was rejected
+  because it damaged soft flame edges.
+- Loop windows were reselected by comparing full overlap sequences, including
+  temporal differences, after registration. Stream uses a 7-second loop with a
+  1-second overlap; fire uses 6.125 seconds with a 0.5-second overlap. These remain
+  editorial dissolves, not physically synthesized continuations. No reversal or
+  animated zoom is used. Versioned URLs invalidate the previous videos/posters.
+- Top-left plate coordinates reverse the rain quads' winding. The droplet material
+  now renders both sides, fixing the invisible layer. Droplets have visible sizes,
+  curved refractive trails and a glass-only mask; furniture remains unchanged.
+- Desktop (1440×900) and touch (390×844) Chrome frames one second apart contained
+  4,886 and 1,739 visibly changed pixels respectively. Desktop furniture outside
+  the glass stayed identical. With reduced motion, both viewport pairs were
+  identical. These checks demonstrate actual rain motion, not just a running RAF.
+- The new structural audit rejects the previous assets: the old fire's mortar edge
+  stayed aligned in only 27.6% of sampled frames, versus 100% now under the same
+  coarse audit. The fixed stream-bank difference remains below the codec-noise
+  threshold throughout the new loop. This is sampled structural evidence, not a
+  guarantee that every pixel is stationary; water, flame and illumination should move.
+
+Production Chrome playback crossed three actual loop boundaries per scene without
+application errors. Measured presentation intervals at the native
+video rewind were 50–84ms; native `video.loop` still has a small decoder rewind
+cost, so this is not a claim of sample-perfect gapless playback. The visual camera
+jump and the misregistered dissolve are addressed by the assets above.
+
+Browser checks use the production preview plus the existing Playwright fallback.
+Physical iPhone/Android performance remains untested.

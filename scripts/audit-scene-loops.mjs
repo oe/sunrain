@@ -25,6 +25,28 @@ function difference(frames, a, b) {
     sum += Math.abs(frames[a * frameSize + i] - frames[b * frameSize + i]);
   return sum / frameSize;
 }
+function correlation(a, b) {
+  const ma = a.reduce((s, v) => s + v, 0) / a.length;
+  const mb = b.reduce((s, v) => s + v, 0) / b.length;
+  let dot = 0,
+    aa = 0,
+    bb = 0;
+  for (let i = 0; i < a.length; i++) {
+    const x = a[i] - ma,
+      y = b[i] - mb;
+    dot += x * y;
+    aa += x * x;
+    bb += y * y;
+  }
+  return dot / Math.max(1e-8, Math.sqrt(aa * bb));
+}
+function patch(frames, frame, x, y, w, h) {
+  return Array.from(
+    { length: w * h },
+    (_, i) =>
+      frames[frame * frameSize + (y + Math.floor(i / w)) * 160 + x + (i % w)],
+  );
+}
 for (const scene of manifest.scenes) {
   for (const mobile of [false, true]) {
     const name = `${scene.id}-loop${mobile ? "-mobile" : ""}.mp4`;
@@ -77,6 +99,35 @@ for (const scene of manifest.scenes) {
       { maxBuffer: 24 * 1024 * 1024 },
     );
     const count = frames.length / frameSize;
+    if (scene.id === "stream") {
+      const reference = patch(frames, 0, 4, 58, 18, 25);
+      const drift = Math.max(
+        ...Array.from({ length: count }, (_, f) => {
+          const current = patch(frames, f, 4, 58, 18, 25);
+          return (
+            current.reduce((s, v, i) => s + Math.abs(v - reference[i]), 0) /
+            current.length
+          );
+        }),
+      );
+      assert.ok(drift < 0.5, `${name}: fixed bank changes (${drift})`);
+    }
+    if (scene.id === "fire") {
+      // Brightness-normalized mortar edge: test every frame, not just the seam.
+      const reference = patch(frames, Math.floor(count / 2), 1, 72, 6, 12);
+      let fixed = 0;
+      for (let f = 0; f < count; f++) {
+        const scores = [-2, -1, 0, 1, 2].map((dy) =>
+          correlation(reference, patch(frames, f, 1, 72 + dy, 6, 12)),
+        );
+        if (scores[2] > 0.85 && scores[2] >= Math.max(...scores) - 0.015)
+          fixed++;
+      }
+      assert.ok(
+        fixed / count > 0.9,
+        `${name}: mortar edge drifts (${fixed}/${count} stable frames)`,
+      );
+    }
     const differences = Array.from({ length: count - 1 }, (_, i) =>
       difference(frames, i, i + 1),
     ).sort((a, b) => a - b);
