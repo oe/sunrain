@@ -1,5 +1,7 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
+import { fileURLToPath } from 'node:url';
+import { buildMetadata } from './scripts/build-metadata.mjs';
 
 import react from '@astrojs/react';
 import tailwind from '@astrojs/tailwind';
@@ -29,6 +31,7 @@ export default defineConfig({
     format: "directory",
   },
   integrations: [
+    buildMetadata(fileURLToPath(new URL('.', import.meta.url))),
     react(),
     tailwind(),
     i18n({

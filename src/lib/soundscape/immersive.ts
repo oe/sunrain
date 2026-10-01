@@ -57,6 +57,8 @@ export function createRoom(options: RoomOptions) {
     hideTimer = 0,
     minimumVisibleUntil = 0;
   let origin: HTMLElement | null = null;
+  const viewport = document.querySelector<HTMLMetaElement>('meta[name="viewport"]');
+  let viewportContent: string | null = null;
   let bodyOverflow = '',
     openRevision = 0;
   function hideChrome() {
@@ -82,6 +84,10 @@ export function createRoom(options: RoomOptions) {
     scene = undefined;
     clearTimeout(hideTimer);
     document.body.style.overflow = bodyOverflow;
+    if (viewport && viewportContent !== null) {
+      viewport.content = viewportContent;
+      viewportContent = null;
+    }
     origin?.focus({ preventScroll: true });
     options.onExit();
   }
@@ -161,6 +167,10 @@ export function createRoom(options: RoomOptions) {
           : null;
       bodyOverflow = document.body.style.overflow;
       document.body.style.overflow = 'hidden';
+      if (viewport) {
+        viewportContent = viewport.content;
+        viewport.content = `${viewportContent.replace(/,?\s*viewport-fit=[^,]*/g, '')}, viewport-fit=cover`;
+      }
       locked = false;
       dialog.classList.remove('locked', 'controls-hidden');
       lockButton.textContent = labels.lock;

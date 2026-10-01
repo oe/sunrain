@@ -1,0 +1,85 @@
+name: Validate Sunrain
+
+on:
+  push:
+    # main is validated by the deployment workflow using this same job.
+    branches-ignore: [main]
+  pull_request:
+  workflow_call:
+    inputs:
+      upload-pages-artifact:
+        description: Upload the exact tested build for the deployment job
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Build and regression tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.12.1
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.1.0
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Install test browsers
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: Unit tests
+        run: pnpm test:unit
+
+      - name: Typecheck and build
+        run: pnpm build
+
+      - name: Verify source contracts
+        run: pnpm verify:sunrain
+
+      - name: Verify clean build identity
+        run: |
+          node --input-type=module <<'NODE'
+          import assert from 'node:assert/strict';
+          import { readFileSync } from 'node:fs';
+          import { readBuildMetadata } from './scripts/build-metadata.mjs';
+          const built = JSON.parse(readFileSync('dist/build-metadata.json', 'utf8'));
+          assert.deepEqual(built, readBuildMetadata(process.cwd()));
+          assert.equal(built.commit, process.env.GITHUB_SHA);
+          assert.equal(built.sourceState, 'clean');
+          assert.match(built.sourceHash, /^[a-f0-9]{64}$/);
+          NODE
+
+      - name: Browser regressions against production build
+        run: pnpm test:e2e
+
+      - name: Upload regression evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: regression-evidence-${{ github.sha }}
+          path: |
+            playwright-report/
+            test-results/
+            dist/build-metadata.json
+          if-no-files-found: warn
+          retention-days: 14
+
+      - name: Upload validated Pages artifact
+        if: inputs.upload-pages-artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./dist

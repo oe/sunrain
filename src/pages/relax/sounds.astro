@@ -151,7 +151,7 @@ const presets = [
     </div>
 
     <aside id="soundscape-dock" hidden aria-label={t('relax.sounds.title', lang)} class="soundscape-dock fixed inset-x-0 bottom-0 z-40 border-t border-gray-200 bg-white/95 shadow-[0_-8px_32px_rgba(15,23,42,0.12)] backdrop-blur-lg dark:border-gray-700 dark:bg-gray-900/95">
-      <div class="mx-auto flex max-w-6xl flex-wrap items-center gap-x-4 gap-y-2 px-4 py-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] sm:flex-nowrap">
+      <div class="soundscape-dock-content mx-auto flex max-w-6xl flex-wrap items-center gap-x-4 gap-y-2 px-4 py-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] sm:flex-nowrap">
         <div class="flex min-w-0 flex-1 items-center gap-3">
           <span aria-hidden="true" class="h-2 w-2 shrink-0 rounded-full bg-amber-500"></span>
           <span id="soundscape-current" class="truncate text-sm font-medium text-gray-900 dark:text-white"></span>
@@ -264,6 +264,10 @@ const presets = [
 </BaseLayout>
 
 <style>
+  .soundscape-dock-content {
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
+  }
   #soundscape-dock[hidden],
   #immersive-auto-label[hidden] {
     display: none;
@@ -271,7 +275,8 @@ const presets = [
 </style>
 
 <script>
-  import { Howl } from 'howler';
+  import { Howl, Howler } from 'howler';
+  import { createAudioRecovery } from '../../lib/soundscape/audio-recovery';
 
   type SoundId =
     | 'gentle-rain'
@@ -377,7 +382,7 @@ const presets = [
     masterVolume = value;
     masterInput.value = String(value);
     tracks.forEach((track) => {
-      if (track.playbackId !== null)
+      if (track.active && track.playbackId !== null)
         track.howl.volume(track.targetVolume * value, track.playbackId);
     });
     scheduleRoom();
@@ -507,6 +512,15 @@ const presets = [
       current.title = current.textContent;
     } else if (focusWasInDock) presetButtons[0]?.focus();
   }
+  const recoverAudio = createAudioRecovery(
+    () => Howler.ctx,
+    () => !disposed && !document.hidden && [...tracks.values()].some((track) => track.active),
+    syncRoom
+  );
+  // Visibility recovery is best effort; these gestures retry if autoplay policy blocks it.
+  for (const event of ['pointerdown', 'keydown'] as const)
+    document.addEventListener(event, () => void recoverAudio(), { passive: true });
+  document.addEventListener('visibilitychange', () => void recoverAudio());
   function activity() {
     lastActivity = Date.now();
     scheduleRoom();
@@ -780,7 +794,7 @@ const presets = [
     tracks.forEach((_track, id) => stopTrack(id));
   });
 
-  window.addEventListener('pageshow', () => { disposed = false; activity(); });
+  window.addEventListener('pageshow', () => { disposed = false; activity(); void recoverAudio(); });
   window.addEventListener('pagehide', () => {
     disposed = true; ++loadGeneration; clearTimeout(idleTimer); room?.exit();
     tracks.forEach((_track, id) => stopTrack(id, true));

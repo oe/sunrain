@@ -182,3 +182,55 @@ jump and the misregistered dissolve are addressed by the assets above.
 
 Browser checks use the production preview plus the existing Playwright fallback.
 Physical iPhone/Android performance remains untested.
+
+## Repeatable regression checks
+
+Use Node 24.1 or newer and the repository's pinned pnpm version:
+
+```sh
+pnpm install --frozen-lockfile
+pnpm exec playwright install chromium
+pnpm test:unit
+pnpm build
+pnpm verify:sunrain
+pnpm test:e2e
+git diff --check
+```
+
+`test:e2e` starts a fresh production preview on `127.0.0.1:4362` and launches
+isolated desktop and touch-emulated Chromium contexts. It never attaches to an
+existing browser. `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH` may select an installed
+Chromium binary. Do not substitute a production URL for the local preview.
+
+The suite covers real Web Audio output signal, mix/master ratios, rapid
+pause/resume, Back versus Stop, repeated entry/disposal, scene changes,
+lock/unlock, native fullscreen when available, portrait/landscape control bounds,
+synthetic asymmetric safe areas, reduced-motion cold/live changes, and simulated
+visibility/page lifecycle interruptions. A real-time pink-noise check samples
+output through an actual loop boundary; it detects software silence, not clicks,
+subjective quality, physical speaker output, or every sound's seam. The Node suite
+uses isolated browser/world substitutes to exercise interrupted/suspended audio,
+gesture retry, cancellation, stale scene preparation, poster failure and cleanup.
+
+On foreground return, an existing active audio session now attempts to resume a
+suspended or interrupted AudioContext. If browser autoplay policy rejects this,
+the next pointer/key gesture retries. Stopped sounds are not restarted. Scene
+preparation reconciles with the current mix before opening; failed scene changes
+release the old renderer and select the requested scene's static background.
+Immersion temporarily opts into edge-to-edge viewport coverage, restores the
+original viewport on exit, and lays out controls inside asymmetric safe insets.
+
+Every production build emits `/build-metadata.json` with its full commit,
+clean/dirty/unknown source state, and a deterministic source fingerprint. The
+fingerprint covers tracked and non-ignored source files, not dependencies,
+ignored local environment files, or a checksum of output bytes. A dirty build
+must not be reported as validation of its commit alone. Builds fail if source
+changes during generation. Browser results attach that exact metadata and reject
+an outdated build. CI retains metadata, console logs, screenshots and failure
+traces in `regression-evidence-<commit>` for 14 days; deployments use the same
+validated build artifact.
+
+These checks do not certify physical iPhone/Android backgrounding, OS screen
+lock, native Safari fullscreen behavior, audible listening quality, heat or
+battery use. Device acceptance must record device/OS/browser, tested URL and
+`build-metadata.json`, then manually cover those cases before claiming them.

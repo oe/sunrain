@@ -1,4 +1,8 @@
 .sound-room {
+  --room-safe-top: env(safe-area-inset-top, 0px);
+  --room-safe-right: env(safe-area-inset-right, 0px);
+  --room-safe-bottom: env(safe-area-inset-bottom, 0px);
+  --room-safe-left: env(safe-area-inset-left, 0px);
   position: fixed;
   inset: 0;
   width: 100%;
@@ -52,8 +56,9 @@
 
 .room-header {
   position: absolute;
-  top: max(32px, env(safe-area-inset-top));
-  left: clamp(24px, 5vw, 80px);
+  top: max(32px, var(--room-safe-top));
+  left: max(clamp(24px, 5vw, 80px), var(--room-safe-left));
+  right: max(112px, var(--room-safe-right));
   pointer-events: none;
   text-shadow: 0 1px 12px #000b;
 }
@@ -82,9 +87,10 @@
 
 .room-controls {
   position: absolute;
-  bottom: max(28px, env(safe-area-inset-bottom));
-  left: 50%;
-  transform: translateX(-50%);
+  bottom: max(28px, var(--room-safe-bottom));
+  left: max(16px, var(--room-safe-left));
+  right: max(16px, var(--room-safe-right));
+  margin-inline: auto;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -95,7 +101,7 @@
   background: #11181bcc;
   backdrop-filter: blur(14px);
   width: max-content;
-  max-width: calc(100% - 32px);
+  max-width: calc(100% - max(16px, var(--room-safe-left)) - max(16px, var(--room-safe-right)));
 }
 
 .sound-room button {
@@ -121,8 +127,8 @@
 
 .room-lock {
   position: absolute;
-  top: max(28px, env(safe-area-inset-top));
-  right: clamp(24px, 5vw, 80px);
+  top: max(28px, var(--room-safe-top));
+  right: max(clamp(24px, 5vw, 80px), var(--room-safe-right));
 }
 
 .room-header,
@@ -180,7 +186,8 @@
 
 @media (max-width: 600px) {
   .room-header {
-    top: 90px;
+    top: max(90px, calc(var(--room-safe-top) + 62px));
+    right: max(24px, var(--room-safe-right));
   }
   .room-controls {
     border-radius: 18px;
@@ -193,7 +200,7 @@
     justify-content: center;
   }
   .room-lock {
-    right: 20px;
+    right: max(20px, var(--room-safe-right));
   }
 }
 

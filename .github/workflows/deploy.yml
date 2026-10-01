@@ -15,38 +15,15 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  build:
-    name: Build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 10.12.1
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 24.1.0
-          cache: pnpm
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: Build site
-        run: pnpm run build
-
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: ./dist
+  validate:
+    name: Validate production build
+    uses: ./.github/workflows/ci.yml
+    with:
+      upload-pages-artifact: true
 
   deploy:
     name: Deploy
-    needs: build
+    needs: validate
     runs-on: ubuntu-latest
     environment:
       name: github-pages

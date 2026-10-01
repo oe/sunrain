@@ -128,11 +128,31 @@ export async function createScene(
     resize();
   }
   fallback();
-  try {
-    world = await prepare(kind);
-    world.activate();
-  } catch (error) {
-    console.warn("Soundscape uses a static fallback:", error);
+  // The mix can change while the first poster or texture is loading, before
+  // callers have a scene to update. Only activate a world for the latest mix.
+  while (true) {
+    try {
+      world = await prepare(kind);
+    } catch (error) {
+      console.warn("Soundscape uses a static fallback:", error);
+    }
+    const latest = kindFor(sounds());
+    if (latest !== kind) {
+      world?.dispose();
+      world = undefined;
+      kind = latest;
+      fallback();
+      continue;
+    }
+    try {
+      world?.activate();
+    } catch (error) {
+      world?.dispose();
+      world = undefined;
+      fallback();
+      console.warn("Soundscape uses a static fallback:", error);
+    }
+    break;
   }
   canvas.addEventListener("webglcontextlost", contextLost);
   canvas.addEventListener("webglcontextrestored", contextRestored);
@@ -164,6 +184,14 @@ export async function createScene(
         world.activate();
         resize();
       } catch (error) {
+        if (disposed || token !== revision) return;
+        world?.dispose();
+        world = undefined;
+        kind = next;
+        elapsed = 0;
+        lost = false;
+        fallback();
+        restart();
         console.warn("Could not change soundscape:", error);
       }
     },
