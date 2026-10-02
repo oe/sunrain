@@ -35,13 +35,13 @@ async function audioState(page: Page) {
     const p = (window as any).__audioProbe;
     const active = p.sources.filter((entry: any) => !entry.ended);
     let peak = 0;
-    for (const analyser of p.analysers) {
+    for (const analyser of p.analysers.filter((node: AnalyserNode) => node.context.state !== 'closed')) {
       const samples = new Float32Array(analyser.fftSize);
       analyser.getFloatTimeDomainData(samples);
       peak = Math.max(peak, ...samples.map(Math.abs));
     }
     return { active: active.length, gains: active.map((entry: any) => entry.gain.gain.value), peak,
-      states: p.contexts.map((ctx: AudioContext) => ctx.state),
+      states: p.contexts.filter((ctx: AudioContext) => ctx.state !== 'closed').map((ctx: AudioContext) => ctx.state),
       durations: active.map((entry: any) => entry.source.buffer?.duration) };
   });
 }
@@ -148,14 +148,14 @@ test('background/resume restarts motion and suspended audio, but never stopped a
   await expect.poll(() => video.evaluate((v: HTMLVideoElement) => !v.paused && v.currentTime > 0)).toBe(true);
   await visibility(page, true);
   await expect.poll(() => video.evaluate((v: HTMLVideoElement) => v.paused)).toBe(true);
-  await page.evaluate(async () => { await (window as any).__audioProbe.contexts[0].suspend(); });
+  await page.evaluate(async () => { await (window as any).__audioProbe.contexts.find((ctx: AudioContext) => ctx.state !== 'closed').suspend(); });
   await visibility(page, false);
   await expect.poll(async () => (await audioState(page)).states).toEqual(['running']);
   await expect.poll(() => video.evaluate((v: HTMLVideoElement) => !v.paused)).toBe(true);
   await expectAudio(page, 1);
   await page.locator('.room-controls button').nth(1).click();
   await expectAudio(page, 0);
-  await page.evaluate(async () => { await (window as any).__audioProbe.contexts[0].suspend(); });
+  await page.evaluate(async () => { await (window as any).__audioProbe.contexts.find((ctx: AudioContext) => ctx.state !== 'closed').suspend(); });
   await visibility(page, true);
   await visibility(page, false);
   await expectAudio(page, 0);
@@ -257,7 +257,9 @@ test('real audio stays non-silent across a natural loop boundary', async ({ page
   expect(duration).toBeLessThan(60);
   await page.waitForTimeout((duration - 1) * 1000);
   const signal = await page.evaluate(async () => {
-    const analyser = (window as any).__audioProbe.analysers[0] as AnalyserNode;
+    // Howler may replace its initial context when the device uses 48 kHz.
+    // Sample the live graph rather than its closed startup analyser.
+    const analyser = (window as any).__audioProbe.analysers.find((node: AnalyserNode) => node.context.state === 'running') as AnalyserNode;
     const samples = new Float32Array(analyser.fftSize);
     const readings: number[] = [];
     const until = performance.now() + 2500;
