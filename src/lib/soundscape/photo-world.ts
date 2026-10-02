@@ -52,7 +52,7 @@ export async function createPhotoWorld(
     seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0;
     return seed / 4294967296;
   };
-  const drops = Array.from({ length: 112 }, () => ({
+  const drops = Array.from({ length: 144 }, () => ({
     x: 0,
     y: 0,
     r: 0,
@@ -66,9 +66,11 @@ export async function createPhotoWorld(
     const top = 0.09 + d.x * 0.15;
     const bottom = d.x < 0.3 ? 0.59 : 0.65;
     d.y = initial ? top + random() * (bottom - top) : top;
-    // A mix of pinned beads and clearly visible rivulets, all in plate UV space.
-    d.r = 0.0018 + Math.pow(random(), 1.4) * 0.0045;
-    d.v = initial && d.r > 0.003 ? 0.015 + random() * 0.025 : 0;
+    // Calibrate to the 941px source plate, whose existing beads are about 1–3px.
+    // Most beads stay pinned; the remaining beads form slim running droplets.
+    const running = random() < 0.4;
+    d.r = (running ? 1.0 + random() * 0.35 : 0.45 + random() * 0.35) / 941;
+    d.v = initial && running ? 0.004 + random() * 0.008 : 0;
     d.trail = 0;
     d.age = initial ? 10 : 0;
   }
@@ -152,18 +154,18 @@ export async function createPhotoWorld(
             d.age += dt;
             // Small beads pin to the glass. Larger beads accelerate under gravity;
             // surface tension intermittently arrests them rather than resetting time.
-            const moving = d.r > 0.003;
+            const moving = d.r > 0.95 / 941;
             if (moving) {
               const drag = 0.7 + 0.3 * Math.sin(t * 0.9 + d.phase);
               d.v = Math.min(
-                0.085,
-                (d.v + dt * (0.016 + d.r * 4)) * Math.pow(0.98, dt * 30),
+                0.02,
+                (d.v + dt * (0.003 + d.r)) * Math.pow(0.98, dt * 30),
               );
               const travel = d.v * drag * dt;
               d.y += travel;
-              d.trail = Math.min(0.15, d.trail + travel);
+              d.trail = Math.min(0.03, d.trail + travel);
               d.x += Math.sin(d.y * 45 + d.phase) * travel * 0.08;
-            } else d.r += dt * 0.000012;
+            } else d.r += dt * 0.000001;
             if (d.y > (d.x < 0.3 ? 0.6 : 0.66)) reset(d);
             // Coalescence conserves the approximate bead volume.
             for (let j = 0; j < i; j++) {
@@ -172,7 +174,7 @@ export async function createPhotoWorld(
                 Math.hypot((d.x - b.x) * 1.7778, d.y - b.y) <
                 (d.r + b.r) * 0.75
               ) {
-                d.r = Math.min(0.0075, Math.cbrt(d.r ** 3 + b.r ** 3));
+                d.r = Math.min(1.6 / 941, Math.cbrt(d.r ** 3 + b.r ** 3));
                 reset(b);
               }
             }

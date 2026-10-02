@@ -48,6 +48,41 @@ function patch(frames, frame, x, y, w, h) {
   );
 }
 for (const scene of manifest.scenes) {
+  if (scene.id === "stream") {
+    // A frozen bank can conceal a bad camera fit while its water layer jitters.
+    // Check acceleration over the moving water, not only the static composite.
+    const track = JSON.parse(
+      readFileSync(new URL("scene-registration/stream.json", import.meta.url)),
+    );
+    let worst = 0;
+    for (const [x, y] of [
+      [300, 320],
+      [600, 400],
+      [850, 490],
+    ]) {
+      const positions = track.transforms.map((m) => [
+        m[0][0] * x + m[0][1] * y + m[0][2],
+        m[1][0] * x + m[1][1] * y + m[1][2],
+      ]);
+      for (let i = 1; i < positions.length - 1; i++) {
+        const ax =
+          positions[i + 1][0] - 2 * positions[i][0] + positions[i - 1][0];
+        const ay =
+          positions[i + 1][1] - 2 * positions[i][1] + positions[i - 1][1];
+        worst = Math.max(
+          worst,
+          ((Math.hypot(ax, ay) * 1920) / (track.crop[2] - track.crop[0])) * 2,
+        );
+      }
+    }
+    assert.ok(
+      worst < 1,
+      `Stream registration jolts the water (${worst} px/frame²)`,
+    );
+    console.log(
+      `Stream water registration: max acceleration ${worst.toFixed(2)} px/frame² — PASS`,
+    );
+  }
   for (const mobile of [false, true]) {
     const name = `${scene.id}-loop${mobile ? "-mobile" : ""}.mp4`;
     const path = new URL(name, root).pathname;

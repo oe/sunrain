@@ -56,13 +56,13 @@ void main(){
  float trail=(1.-smoothstep(.55,1.,abs(side)))*step(d.y,-bead.z)*taper;
  float alpha=strength*pane*max(body,trail*.7);
  if(alpha<.005)discard;
- vec2 lens=q*bead.z*3.8*body;
- lens.x+=side*bead.z*1.6*trail;
+ vec2 lens=q*bead.z*2.7*body;
+ lens.x+=side*bead.z*.7*trail;
  vec3 color=texture2D(plate,clamp(uv+lens,vec2(0.),vec2(1.))).rgb;
  float rim=smoothstep(.65,.94,r)*(1.-smoothstep(.94,1.,r))*body;
- color*=1.-rim*.12-trail*.04;
+ color*=1.-rim*.035-trail*.015;
  float shine=pow(max(0.,1.-length(q-vec2(-.35,-.45))*2.),5.);
- color+=vec3(.32,.36,.38)*shine+vec3(.035,.04,.045)*trail*max(0.,-side);
- gl_FragColor=vec4(color,alpha*.94);
+ color+=vec3(.08,.09,.10)*shine+vec3(.035,.04,.045)*trail*max(0.,-side);
+ gl_FragColor=vec4(color,alpha*.78);
 }
 `;

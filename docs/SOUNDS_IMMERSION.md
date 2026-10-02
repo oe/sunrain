@@ -36,8 +36,10 @@ WebP. The other natural scenes import `media-world.ts`, a matching poster, and
 one silent MP4. Video scenes do not download Three.js. Quiet noise uses a static
 CSS gradient and does not initialize a GPU renderer.
 
-- **Rain:** 112 instanced refractive beads have individual position, size, velocity,
-  growth, and age. Small beads stick; larger beads accelerate, merge approximately
+- **Rain:** 144 instanced refractive beads have individual position, size, velocity,
+  growth, and age. Radii are calibrated in source-image pixels (0.45–1.35px at
+  941px image height, capped at 1.6px after merging), rather than enlarged to make
+  motion obvious. Most beads stick; larger beads accelerate, merge approximately
   by volume, and leave narrow trails. New beads fade in, and exiting beads fade
   out above the furniture. Each bead samples the background through its own
   curved lens. Window frames and furniture are not deformed.
@@ -182,6 +184,35 @@ jump and the misregistered dissolve are addressed by the assets above.
 
 Browser checks use the production preview plus the existing Playwright fallback.
 Physical iPhone/Android performance remains untested.
+
+### Corrections verified on 2026-10-02
+
+The September 28 static-bank checks concealed motion defects in the live water.
+The previous registration could switch between foreground and distant feature
+fits, creating abrupt corrections in a water layer composited over a frozen bank.
+The stream track now uses a single near-bank rock region, forward/backward feature
+validation, a 0.8px robust-fit tolerance and seven-frame temporal filtering. The
+input video and its forward-moving water remain unchanged; no water deformation,
+reversal or optical-flow interpolation is added to the rendered scene.
+
+`audit:scenes` additionally bounds registration acceleration at three positions
+across the live water. The largest is 0.94px/frame² after output scaling; the
+previous track fails this check. In a sampled interior-water region of the encoded
+video (excluding the dissolve), median-flow change P95 fell from 1.68 to 0.67px,
+and its maximum from 8.13 to 0.78px. These are motion diagnostics, not a substitute
+for reviewing playback or a claim that natural ripples should be motionless.
+
+The earlier rain was visibly oversized even though it passed a motion-presence
+check. The new source-pixel calibration reduces maximum bead radius from about
+7 source pixels to 1.6; trails are capped at 0.03 of plate height instead of 0.15.
+Sliding speed, outline contrast and lens displacement are reduced with the size.
+The material stays double-sided to retain the invisible-layer fix.
+
+Chrome checks at 1440×900 and a 390×844 touch viewport verified actual rain motion,
+unchanged furniture pixels, identical reduced-motion frames, and working exit.
+A one-second pair contained 176/68 changed pixels above a 4-level threshold; the
+motion is deliberately subtler, so a larger changed-pixel count is not a quality
+objective. The stream uses a new asset version to avoid stale cached footage.
 
 ## Repeatable regression checks
 

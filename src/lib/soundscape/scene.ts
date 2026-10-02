@@ -4,12 +4,12 @@ type SceneKind = "rain" | "fire" | "forest" | "water" | "quiet";
 const files = {
   rain: "/scenes/rain-window.webp",
   fire: "/scenes/fire-poster.jpg?v=20260928",
-  forest: "/scenes/stream-poster.jpg?v=20260928",
+  forest: "/scenes/stream-poster.jpg?v=20261002",
   water: "/scenes/ocean-poster.jpg",
 };
 const movies = {
   fire: "/scenes/fire-loop.mp4?v=20260928",
-  forest: "/scenes/stream-loop.mp4?v=20260928",
+  forest: "/scenes/stream-loop.mp4?v=20261002",
   water: "/scenes/ocean-loop.mp4",
 };
 export function kindFor(ids: string[]): SceneKind {
