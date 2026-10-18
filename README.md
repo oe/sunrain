@@ -16,9 +16,9 @@ English | 简体中文 | 繁體中文 | Español | 日本語 | 한국어 | ह�
 
 ## 🔒 Privacy First
 
-- All data is stored locally on your device
-- No cookies for tracking
-- No personal information collected
+- Assessment answers and scores stay on your device
+- No account or advertising trackers
+- Hosting and CDN providers may process basic traffic and performance data
 
 ## 🚀 Getting Started
 
@@ -61,6 +61,11 @@ src/
 
 - [Requirements](./docs/REQUIREMENTS.md)
 - [Design](./docs/DESIGN.md)
+- [Mental health check-in specification](./docs/MENTAL_HEALTH_CHECK_IN.md) — planned user flow, result boundaries, privacy, and disclaimer drafts
+- [Clinical evidence and verification status](./docs/CLINICAL_EVIDENCE.md)
+- [Current roadmap](./docs/ROADMAP.md)
+
+The check-in documents describe planned work; they do not indicate that the flow has shipped or received professional clinical review.
 
 ## 🤝 Contributing
 
