@@ -13,7 +13,7 @@ const Title=embedded ? 'h3' : 'h1';
 <div data-guided-activity>
   <Title data-activity-title tabindex="-1">{guide.title}</Title><p>{guide.purpose}</p>
   <p>{c.common.stop}</p>
-  {embedded && <button class="button" type="button" data-activity-close>{c.ui.back}</button>}
+  {embedded && <div class="actions"><button class="button" type="button" data-activity-close>{c.ui.back}</button></div>}
   <section class="support-card" id="guided-activity" data-step-label={c.flow.step}>
     <p class="muted" id="guide-progress" tabindex="-1" aria-live="polite" hidden></p>
     <ol>{guide.steps.map((step,i)=><li data-guide-step tabindex="-1">

@@ -263,7 +263,7 @@ const breathingModes = [
                 data-exhale={mode.exhale}
                 data-hold-after={mode.holdAfter || 0}
                 class:list={[
-                  'mode-btn group p-4 rounded-2xl text-left transition-all duration-300 hover:scale-[1.02]',
+                  'mode-btn group flex flex-col items-stretch justify-start p-4 rounded-2xl text-start transition-all duration-300 hover:scale-[1.02]',
                   index === 0
                     ? 'bg-gradient-to-br from-teal-100 to-cyan-100 dark:from-teal-900/40 dark:to-cyan-900/40 ring-2 ring-teal-500'
                     : 'bg-gray-50 dark:bg-gray-700/50 hover:bg-gray-100 dark:hover:bg-gray-700'
@@ -272,7 +272,7 @@ const breathingModes = [
                 <div class="flex items-center gap-2 mb-1">
                   <span
                     class:list={[
-                      'w-2 h-2 rounded-full',
+                      'w-2 h-2 shrink-0 rounded-full',
                       `bg-${mode.color}-500`
                     ]}
                     style={`background-color: var(--color-${mode.color}, #14b8a6)`}

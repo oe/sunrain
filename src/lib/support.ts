@@ -9,6 +9,8 @@ export function getSupportCopy(lang: Language) {
 }
 
 export const supportSources = {
+  youthHelp: { name: 'NHS · Mental health support for children and young people (England, English)', url: 'https://www.nhs.uk/mental-health/children-and-young-adults/mental-health-support/how-to-get-support/where-to-get-support/' },
+  teenHelp: { name: 'NIMH · Teen Depression: More Than Just Moodiness (US, English)', url: 'https://www.nimh.nih.gov/health/publications/teen-depression' },
   selfCare: { name: 'NIMH · Caring for Your Mental Health', url: 'https://www.nimh.nih.gov/health/topics/caring-for-your-mental-health' },
   conversation: { name: 'NIMH · Tips for Talking With a Health Care Provider', url: 'https://www.nimh.nih.gov/health/publications/tips-for-talking-with-your-health-care-provider' },
   help: { name: 'NIMH · Help for Mental Illnesses', url: 'https://www.nimh.nih.gov/health/find-help' },

@@ -49,7 +49,7 @@ const lang = getLanguageFromPath(Astro.url.pathname) as Language;
             class="inline-flex items-center gap-2 text-teal-600 dark:text-teal-400 font-bold group-hover:gap-3 transition-all duration-300"
           >
             {t('breathing.start', lang) || 'Start'}
-            <Icon name="ArrowRight" size={20} />
+            <Icon name="ArrowRight" size={20} className="rtl:rotate-180" />
           </div>
         </div>
       </a>
@@ -75,7 +75,7 @@ const lang = getLanguageFromPath(Astro.url.pathname) as Language;
             class="inline-flex items-center gap-2 text-indigo-600 dark:text-indigo-400 font-bold group-hover:gap-3 transition-all duration-300"
           >
             {t('relax.sounds.play', lang)}
-            <Icon name="ArrowRight" size={20} />
+            <Icon name="ArrowRight" size={20} className="rtl:rotate-180" />
           </div>
         </div>
       </a>

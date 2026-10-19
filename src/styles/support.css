@@ -8,9 +8,15 @@
 .support-shell .muted{color:var(--support-muted,#4b5563)}
 .support-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,18rem),1fr));gap:1.25rem;margin:1.5rem 0}
 .support-card{padding:1.5rem;border:1px solid var(--support-border,#d9dce1);border-radius:1.25rem;background:var(--support-card,#fff);margin-bottom:1.5rem;min-width:0}
-.support-shell .actions{display:flex;flex-wrap:wrap;gap:.75rem;align-items:center;margin:1rem 0}
-.support-shell .button{display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--support-border,#7d8490);border-radius:.75rem;padding:.75rem 1.1rem;min-height:44px;font-weight:650;line-height:1.5;text-align:center;white-space:normal;max-width:100%;background:var(--support-card,#fff)}
+.support-shell .actions{display:flex;flex-wrap:wrap;gap:.75rem;align-items:stretch;margin:1rem 0}
+.support-shell .button{display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--support-border,#7d8490);border-radius:.75rem;padding:.75rem 1.1rem;min-height:44px;min-width:0;font:inherit;font-weight:650;line-height:1.5;text-align:center;white-space:normal;overflow-wrap:anywhere;max-width:100%;background:var(--support-card,#fff);cursor:pointer}
+.support-shell .step-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));max-width:32rem}
+/* Card actions share a baseline even when translations wrap differently. */
+.support-grid>.support-card{display:flex;flex-direction:column;margin-bottom:0}
+.support-grid>.support-card>.button{align-self:flex-start;margin-top:auto}
+.support-grid>.support-card>.actions{margin-top:auto;margin-bottom:0}
 .support-shell .primary{background:#92400e;color:#fff;border-color:#92400e}
+.support-shell .button:has(svg){gap:.5rem}
 .support-shell .urgent{border-inline-start:4px solid #b91c1c;padding:1rem 1.25rem;background:#fff1f2;color:#881337;border-radius:.5rem;margin:1.5rem 0}
 .dark .support-shell .urgent{background:#3c1422;color:#ffe4e6}
 .support-shell a:not(.button){text-decoration:underline;text-underline-offset:3px;overflow-wrap:anywhere}

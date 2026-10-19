@@ -25,16 +25,15 @@ const impacts = ['manageable','disruptive','basicNeeds'] as const;
       <section data-step="0">
         <h2 tabindex="-1">{c.ui.disclaimer}</h2>
         <p>{c.flow.scopeShort}</p>
-        <label class="choice"><input id="adult-check" type="checkbox" />{c.ui.adult}</label>
-        <button class="button primary" data-forward type="button" disabled hidden>{c.ui.start}</button>
-        <p class="muted">{c.ui.younger}</p>
+        <p class="muted" data-youth-support>{c.ui.younger}</p>
+        <div class="actions"><button class="button primary" data-forward type="button" hidden>{c.ui.start}</button></div>
       </section>
       <section data-step="1" hidden>
         <fieldset><legend tabindex="-1"><span class="step-label" data-progress>{c.flow.step.replace('{current}','1').replace('{total}','2')}</span>{c.ui.concerns}</legend>
           <p class="muted">{c.flow.multiple}</p>
           {concerns.map(key => <label class="choice"><input type="checkbox" name="concern" value={key} data-label={c.ui[key]} />{c.ui[key]}</label>)}
         </fieldset>
-        <div class="actions"><button class="button" data-back type="button">{c.ui.back}</button><button class="button primary" data-forward type="button">{c.ui.next}</button></div>
+        <div class="actions step-actions"><button class="button" data-back type="button">{c.ui.back}</button><button class="button primary" data-forward type="button">{c.ui.next}</button></div>
         <button class="text-button" data-skip type="button">{c.ui.skip}</button>
       </section>
       <section data-step="2" hidden>
@@ -44,7 +43,7 @@ const impacts = ['manageable','disruptive','basicNeeds'] as const;
         <fieldset><legend>{c.ui.impact}</legend>
           {impacts.map(key => <label class="choice"><input type="radio" name="impact" value={key} data-label={c.ui[key]} />{c.ui[key]}</label>)}
         </fieldset>
-        <div class="actions"><button class="button" data-back type="button">{c.ui.back}</button><button class="button primary" type="submit">{c.ui.finish}</button></div>
+        <div class="actions step-actions"><button class="button" data-back type="button">{c.ui.back}</button><button class="button primary" type="submit">{c.ui.finish}</button></div>
         <button class="text-button" data-skip type="button">{c.ui.skip}</button>
       </section>
     </form>
@@ -69,13 +68,12 @@ const impacts = ['manageable','disruptive','basicNeeds'] as const;
       <HelpPreparation kind="check-in-appointment" />
     </section>
   </div>
-  <ContentSources sources={['selfCare','bipolar','conversation']} />
+  <ContentSources sources={['selfCare','bipolar','conversation','youthHelp','teenHelp']} />
 </SupportLayout>
 <script>
   import { initGuidedActivities } from '@/scripts/guided-activity';
   const app = document.querySelector<HTMLElement>('#check-in-app');
   const form = document.querySelector<HTMLFormElement>('#check-in-form');
-  const adult = document.querySelector<HTMLInputElement>('#adult-check');
   const labels = JSON.parse(app.dataset.labels);
   const steps = [...app.querySelectorAll<HTMLElement>('[data-step]')];
   let index = 0;
@@ -103,7 +101,6 @@ const impacts = ['manageable','disruptive','basicNeeds'] as const;
   inlineActivity.addEventListener('click',event=>{if((event.target as Element).closest('[data-activity-close]'))closeActivity();});
   form.reset();
   first.hidden = false;
-  adult.addEventListener('change', () => first.disabled = !adult.checked);
   function showStep(next: number) {
     index = next;
     inlineActivity.replaceChildren();delete inlineActivity.dataset.guide;inlineActivity.hidden=true;
@@ -115,7 +112,6 @@ const impacts = ['manageable','disruptive','basicNeeds'] as const;
     heading?.scrollIntoView({block:'start',behavior:'instant'});
   }
   app.querySelectorAll('[data-forward]').forEach(button => button.addEventListener('click', () => {
-    if(index === 0 && !adult.checked) return;
     showStep(Math.min(index+1,2));
   }));
   app.querySelectorAll('[data-back]').forEach(button => button.addEventListener('click', () => showStep(Math.max(0,index-1))));
@@ -126,7 +122,7 @@ const impacts = ['manageable','disruptive','basicNeeds'] as const;
   let summary = '';
   form.addEventListener('submit', event => {
     event.preventDefault();
-    if(index !== 2 || !adult.checked) return;
+    if(index !== 2) return;
     const selected = (name: string) => [...form.querySelectorAll<HTMLInputElement>(`input[name="${name}"]:checked`)];
     summary = ['concern','duration','impact'].map((name,i) => `${[labels.concerns,labels.duration,labels.impact][i]}\n${selected(name).map(v => v.dataset.label).join(' · ') || labels.skip}`).join('\n\n');
     app.querySelector<HTMLElement>('#result-summary').textContent = summary;
@@ -153,5 +149,5 @@ const impacts = ['manageable','disruptive','basicNeeds'] as const;
   });
   document.getElementById('revise-check-in').addEventListener('click', () => showStep(1));
   // Back/forward cache must not unexpectedly reveal a previous person's selections.
-  window.addEventListener('pageshow', event => { if(event.persisted) { form.reset(); summary=''; app.querySelector<HTMLElement>('#result-summary').textContent=''; first.disabled=true; showStep(0); } });
+  window.addEventListener('pageshow', event => { if(event.persisted) { form.reset(); summary=''; app.querySelector<HTMLElement>('#result-summary').textContent=''; showStep(0); } });
 </script>
