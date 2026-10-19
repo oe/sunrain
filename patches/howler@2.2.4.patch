@@ -1,0 +1,26 @@
+diff --git a/dist/howler.js b/dist/howler.js
+index bb5a463ec7e0724df30d2ecc539612396ef7297c..539c876513a4af32a6483def59b1721bed878f33 100644
+--- a/dist/howler.js
++++ b/dist/howler.js
+@@ -1260,14 +1260,18 @@
+           sound = self._soundById(id[i]);
+ 
+           if (sound) {
+-            sound._volume = vol;
+-
+-            // Stop currently running fades.
++            // Cancel before storing: _stopFade can recursively restore its old target.
+             if (!args[2]) {
+               self._stopFade(id[i]);
+             }
++            sound._volume = vol;
+ 
+             if (self._webAudio && sound._node && !sound._muted) {
++              // The bookkeeping interval can finish before the native ramp.
++              // Explicit volume changes must cancel that remaining automation too.
++              if (!args[2]) {
++                sound._node.gain.cancelScheduledValues(Howler.ctx.currentTime);
++              }
+               sound._node.gain.setValueAtTime(vol, Howler.ctx.currentTime);
+             } else if (sound._node && !sound._muted) {
+               sound._node.volume = vol * Howler.volume();
