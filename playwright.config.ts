@@ -22,7 +22,7 @@ export default defineConfig({
     { name: 'mobile-chromium', use: { ...devices['Pixel 7'], viewport: { width: 390, height: 844 } } },
   ],
   webServer: {
-    command: 'pnpm preview --host 127.0.0.1 --port 4362',
+    command: 'node node_modules/astro/bin/astro.mjs preview --ignore-lock --host 127.0.0.1 --port 4362',
     url: 'http://127.0.0.1:4362/relax/sounds/',
     reuseExistingServer: false,
     timeout: 30_000,

@@ -1,5 +1,7 @@
 # Sunrain 需求文档
 
+当前实现与发布边界见 [RELEASING.md](./RELEASING.md)：一般支持流程已接入八语页面；医学评分关闭，独立专业和母语审阅仍待完成。
+
 > 版本: 2.1 | 更新日期: 2026-10-19
 
 本文件描述需求，不代表所有功能已经实现。心理状态初筛与自助入口的详细流程、发布条件和免责声明草案见 [MENTAL_HEALTH_CHECK_IN.md](./MENTAL_HEALTH_CHECK_IN.md)，资料与核验状态见 [CLINICAL_EVIDENCE.md](./CLINICAL_EVIDENCE.md)。

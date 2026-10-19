@@ -27,6 +27,9 @@ const {
 const pathname = Astro.url.pathname;
 const lang = getLanguageFromPath(pathname) as Language;
 const dir = isRTL(lang) ? 'rtl' : 'ltr';
+// No third-party analytics on pages where people reflect on their health.
+const privatePage = /\/(check-in|assessment|support|self-help|crisis|disclaimer)(\/|$)/.test(pathname);
+const canonicalUrl = new URL(pathname.replace(/^\/en(?=\/|$)/,'') || '/', Astro.site).href;
 
 const siteTitle = title
   ? `${title} | Sunrain`
@@ -53,13 +56,14 @@ const alternateLinks = SUPPORTED_LANGUAGES.map((locale) => {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={siteDescription} />
+    <meta name="referrer" content="no-referrer" />
     <link rel="icon" type="image/png" href="/favicon.png" />
     <meta name="generator" content={Astro.generator} />
     <title>{siteTitle}</title>
 
     <!-- SEO -->
-    <meta name="robots" content="index, follow" />
-    <link rel="canonical" href={Astro.url.href} />
+    <meta name="robots" content={privatePage ? 'noindex, follow' : 'index, follow'} />
+    <link rel="canonical" href={canonicalUrl} />
     <link rel="sitemap" type="application/xml" href="/sitemap-index.xml" />
 
     <!-- Hreflang Links -->
@@ -78,7 +82,7 @@ const alternateLinks = SUPPORTED_LANGUAGES.map((locale) => {
     <meta property="og:title" content={siteTitle} />
     <meta property="og:description" content={siteDescription} />
     <meta property="og:type" content={type} />
-    <meta property="og:url" content={Astro.url.href} />
+    <meta property="og:url" content={canonicalUrl} />
     <meta property="og:image" content={siteImage} />
     <meta
       property="og:locale"
@@ -111,7 +115,8 @@ const alternateLinks = SUPPORTED_LANGUAGES.map((locale) => {
     <!-- Theme initialization -->
     <script is:inline>
       (function () {
-        const savedTheme = localStorage.getItem('theme');
+        let savedTheme = null;
+        try { savedTheme = localStorage.getItem('theme'); } catch {}
         const prefersDark = window.matchMedia(
           '(prefers-color-scheme: dark)'
         ).matches;
@@ -136,17 +141,18 @@ const alternateLinks = SUPPORTED_LANGUAGES.map((locale) => {
   <body
     class="min-h-screen bg-white dark:bg-gray-900 flex flex-col font-sans antialiased"
   >
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[100] focus:bg-white focus:text-gray-900 focus:p-3 focus:rounded-lg">{t('common.skipToContent',lang)}</a>
     <Header lang={lang} />
-    <main class="flex-1 pt-16">
+    <main id="main-content" class="flex-1 pt-16" tabindex="-1">
       <slot />
     </main>
     <Footer lang={lang} />
     <!-- Cloudflare Web Analytics: anonymous page and performance measurements only. -->
-    <script
+    {!privatePage && <script
       is:inline
       type="module"
       src="https://static.cloudflareinsights.com/beacon.min.js"
       data-cf-beacon='{"token": "684ad3417be54b9f94e54af82b4169c0"}'
-    ></script>
+    ></script>}
   </body>
 </html>

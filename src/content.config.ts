@@ -1,4 +1,6 @@
-import { defineCollection, z } from 'astro:content';
+import { defineCollection } from 'astro:content';
+import { z } from 'astro/zod';
+import { glob, file } from 'astro/loaders';
 
 // Multi-language text schema
 // en is required, others are optional (fallback handled in code)
@@ -11,7 +13,7 @@ const multiLangText = z.object({
   ko: z.string().optional(),
   hi: z.string().optional(),
   ar: z.string().optional(),
-}).passthrough(); // Allow additional language keys
+});
 
 // Questionnaire option schema
 const optionSchema = z.object({
@@ -41,7 +43,7 @@ const interpretationSchema = z.object({
 
 // Questionnaire collection
 const questionnairesCollection = defineCollection({
-  type: 'data',
+  loader: glob({ pattern: '**/*.yaml', base: './src/content/questionnaires' }),
   schema: z.object({
     id: z.string(),
     version: z.string(),
@@ -68,7 +70,7 @@ const questionnairesCollection = defineCollection({
 });
 
 const resourcesCollection = defineCollection({
-  type: 'data',
+  loader: file('./src/content/resources/crisis.json', { parser: text => Object.entries(JSON.parse(text) as Record<string,object>).map(([id,data])=>({id,...data})) }),
   schema: z.record(z.string(), z.unknown()),
 });
 

@@ -6,9 +6,13 @@ An open-source, free, and privacy-focused mental health self-help platform.
 
 ## ✨ Features
 
-- **Self-Assessment** - PHQ-9 (depression screening) / GAD-7 (anxiety screening)
-- **Breathing Exercise** - Customizable guided breathing
-- **Crisis Hotlines** - Resources from 30+ countries/regions worldwide
+- **Check-in** — privately organise several concerns and choose practical support, without a diagnosis or combined health score.
+- **Self-help** — four complete activities: grounding, one manageable step, a sleep routine and organising a worry; plus guided breathing and soundscapes.
+- **Find support** — six-step guidance, editable contact text, appointment preparation and official service entry points for England and the US; local-care guidance for other regions.
+- **Privacy controls** — explicit save, load, export and deletion, with no automatic saving or upload of responses.
+- **Crisis support** — maintained external country directory, with a direct emergency-services instruction.
+
+All of these paths and the full scope/privacy statement have eight-language content. This is general education, not a validated treatment programme. Independent clinical and native-language review remains pending. PHQ-9 and GAD-7 public scoring is closed while exact versions, translations, rights and professional review are verified; existing bookmarks lead to sources and working support options.
 
 ## 🌍 Languages
 
@@ -16,15 +20,18 @@ English | 简体中文 | 繁體中文 | Español | 日本語 | 한국어 | ह�
 
 ## 🔒 Privacy First
 
-- Assessment answers and scores stay on your device
+- Check-in responses and notes stay in page memory unless you explicitly save or download them
 - No account or advertising trackers
-- Hosting and CDN providers may process basic traffic and performance data
+- Health reflection pages exclude third-party analytics and remote fonts
+- Hosting/CDN providers can process IP addresses, browser details and requests; some general pages retain Cloudflare page analytics
 
 ## 🚀 Getting Started
 
+Use Node 24 (minimum 22.22) and the pnpm version declared in `package.json`.
+
 ```bash
 # Install dependencies
-pnpm install
+corepack pnpm install --frozen-lockfile
 
 # Development
 pnpm dev
@@ -40,7 +47,8 @@ pnpm preview
 
 ```
 src/
-├── content/           # Content data (questionnaires/crisis hotlines)
+├── content/           # Unpublished candidate instruments and historical resource data
+├── data/              # Runtime support copy and screening review registry
 ├── i18n/              # UI translation files
 ├── lib/               # Core utilities
 ├── layouts/           # Page layouts
@@ -61,12 +69,14 @@ src/
 
 - [Requirements](./docs/REQUIREMENTS.md)
 - [Design](./docs/DESIGN.md)
-- [Mental health check-in specification](./docs/MENTAL_HEALTH_CHECK_IN.md) — planned user flow, result boundaries, privacy, and disclaimer drafts
+- [Mental health check-in specification](./docs/MENTAL_HEALTH_CHECK_IN.md) — target screening design and current non-diagnostic implementation boundary
 - [Clinical evidence and verification status](./docs/CLINICAL_EVIDENCE.md)
-- [Self-help and help-seeking content delivery](./docs/SUPPORT_CONTENT.md) — full route mapping and eight-language content drafts
+- [Self-help and help-seeking content delivery](./docs/SUPPORT_CONTENT.md) — content references and the original design
 - [Current roadmap](./docs/ROADMAP.md)
 
-The check-in documents describe planned work; they do not indicate that the flow has shipped or received professional clinical review.
+- [Release and clinical-review gates](./docs/RELEASING.md)
+
+The runtime copy is `src/data/support-copy.json`. The earlier content pack under `docs/content/` is a design draft. Code in this branch implements the general-support paths; a merge or deployed production release and clinical approval must be verified separately.
 
 ## 🤝 Contributing
 
@@ -80,5 +90,5 @@ If you are experiencing a mental health crisis, please contact your local crisis
 
 ## 📜 License
 
-[MIT](./LICENSE)
+[MIT](./LICENSE) for original project code. Third-party materials retain their own rights and attribution requirements; an unverified instrument or translation is not licensed for publication merely by being in this repository.
 

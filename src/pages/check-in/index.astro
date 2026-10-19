@@ -1,0 +1,123 @@
+---
+import SupportLayout from '@/layouts/SupportLayout.astro';
+import ContentSources from '@/components/ContentSources.astro';
+import PrivateNotes from '@/components/PrivateNotes.astro';
+import { getLanguageFromPath, getLocalizedPath, t } from '@/lib/i18n';
+import { getSupportCopy } from '@/lib/support';
+const lang = getLanguageFromPath(Astro.url.pathname);
+const c = getSupportCopy(lang);
+const concerns = ['mood','worry','sleep','energy','other'] as const;
+const durations = ['recent','weeks','months','unsure'] as const;
+const impacts = ['manageable','disruptive','basicNeeds'] as const;
+---
+<SupportLayout title={c.entry.title}>
+  <h1>{c.entry.title}</h1>
+  <p>{c.ui.intro}</p>
+  <p class="muted">{c.ui.privacy}</p>
+  <div class="actions">
+    <a class="button" href={getLocalizedPath('/self-help/',lang)}>{c.ui.selfHelp}</a>
+    <a class="button" href={getLocalizedPath('/support/',lang)}>{c.ui.support}</a>
+    <a class="button" href={getLocalizedPath('/crisis/',lang)}>{t('nav.crisis',lang)}</a>
+  </div>
+  <div class="support-card" id="check-in-app" data-labels={JSON.stringify({ concerns:c.ui.concerns,duration:c.ui.duration,impact:c.ui.impact,skip:c.ui.skip,limits:c.ui.limits,download:c.ui.download })}>
+    <form id="check-in-form" autocomplete="off">
+      <section data-step="0">
+        <h2 tabindex="-1">{c.ui.disclaimer}</h2>
+        <p>{c.disclaimer.scope}</p><p>{c.disclaimer.safety}</p>
+        <label class="choice"><input id="adult-check" type="checkbox" />{c.ui.adult}</label>
+        <p class="muted">{c.ui.younger}</p>
+        <button class="button primary" data-forward type="button" disabled hidden>{c.ui.start}</button>
+      </section>
+      <section data-step="1" hidden>
+        <fieldset><legend tabindex="-1">{c.ui.concerns}</legend>
+          {concerns.map(key => <label class="choice"><input type="checkbox" name="concern" value={key} data-label={c.ui[key]} />{c.ui[key]}</label>)}
+        </fieldset>
+        <div class="actions"><button class="button" data-back type="button">{c.ui.back}</button><button class="button primary" data-forward type="button">{c.ui.next}</button></div>
+        <p class="muted">{c.ui.skip}</p>
+      </section>
+      <section data-step="2" hidden>
+        <fieldset><legend tabindex="-1">{c.ui.duration}</legend>
+          {durations.map(key => <label class="choice"><input type="radio" name="duration" value={key} data-label={c.ui[key]} />{c.ui[key]}</label>)}
+        </fieldset>
+        <fieldset><legend>{c.ui.impact}</legend>
+          {impacts.map(key => <label class="choice"><input type="radio" name="impact" value={key} data-label={c.ui[key]} />{c.ui[key]}</label>)}
+        </fieldset>
+        <div class="actions"><button class="button" data-back type="button">{c.ui.back}</button><button class="button primary" type="submit">{c.ui.finish}</button></div>
+        <p class="muted">{c.ui.skip}</p>
+      </section>
+    </form>
+    <section id="check-in-result" hidden>
+      <h2 id="result-title" tabindex="-1">{c.ui.result}</h2>
+      <p>{c.ui.limits}</p>
+      <p id="result-summary" class="result-summary"></p>
+      <aside class="urgent" id="energy-care" hidden><p>{c.ui.energyCare}</p><a href={getLocalizedPath('/support/',lang)}>{c.ui.support}</a></aside>
+      <p>{c.ui.care}</p>
+      <div class="support-grid">
+        <article class="support-card" data-action="grounding"><h3>{c.guides.grounding.title}</h3><p>{c.guides.grounding.purpose}</p><a class="button" href={getLocalizedPath('/self-help/grounding/',lang)}>{c.ui.start}</a></article>
+        <article class="support-card" data-action="one-step"><h3>{c.guides.smallStep.title}</h3><p>{c.guides.smallStep.purpose}</p><a class="button" href={getLocalizedPath('/self-help/one-step/',lang)}>{c.ui.start}</a></article>
+        <article class="support-card" data-action="sleep"><h3>{c.guides.sleepRoutine.title}</h3><p>{c.guides.sleepRoutine.purpose}</p><a class="button" href={getLocalizedPath('/self-help/sleep/',lang)}>{c.ui.start}</a></article>
+        <article class="support-card" data-action="worry"><h3>{c.guides.worryPlan.title}</h3><p>{c.guides.worryPlan.purpose}</p><a class="button" href={getLocalizedPath('/self-help/worry/',lang)}>{c.ui.start}</a></article>
+        <article class="support-card"><h3>{c.seekHelp.title}</h3><p>{c.seekHelp.provider}</p><a class="button primary" href={getLocalizedPath('/support/',lang)}>{c.ui.support}</a></article>
+      </div>
+      <p>{c.ui.toolsPending}</p>
+      <PrivateNotes kind="check-in-appointment" labels={c.seekHelp.summaryLabels} template={c.seekHelp.contactTemplate} />
+      <div class="actions"><button class="button" id="download-summary" type="button">{c.ui.download}</button><button class="button" id="revise-check-in" type="button">{c.ui.back}</button></div>
+    </section>
+  </div>
+  <ContentSources sources={['selfCare','bipolar','conversation']} />
+</SupportLayout>
+<script>
+  const app = document.querySelector<HTMLElement>('#check-in-app');
+  const form = document.querySelector<HTMLFormElement>('#check-in-form');
+  const adult = document.querySelector<HTMLInputElement>('#adult-check');
+  const labels = JSON.parse(app.dataset.labels);
+  const steps = [...app.querySelectorAll<HTMLElement>('[data-step]')];
+  let index = 0;
+  const result = app.querySelector<HTMLElement>('#check-in-result');
+  const first = steps[0].querySelector<HTMLButtonElement>('[data-forward]');
+  form.reset();
+  first.hidden = false;
+  adult.addEventListener('change', () => first.disabled = !adult.checked);
+  function showStep(next: number) {
+    index = next;
+    result.hidden = true; form.hidden = false;
+    steps.forEach((step,i) => step.hidden = i !== index);
+    steps[index].querySelector<HTMLElement>('[tabindex="-1"]')?.focus();
+  }
+  app.querySelectorAll('[data-forward]').forEach(button => button.addEventListener('click', () => {
+    if(index === 0 && !adult.checked) return;
+    showStep(Math.min(index+1,2));
+  }));
+  app.querySelectorAll('[data-back]').forEach(button => button.addEventListener('click', () => showStep(Math.max(0,index-1))));
+  let summary = '';
+  form.addEventListener('submit', event => {
+    event.preventDefault();
+    if(index !== 2 || !adult.checked) return;
+    const selected = (name: string) => [...form.querySelectorAll<HTMLInputElement>(`input[name="${name}"]:checked`)];
+    summary = ['concern','duration','impact'].map((name,i) => `${[labels.concerns,labels.duration,labels.impact][i]}\n${selected(name).map(v => v.dataset.label).join(' · ') || labels.skip}`).join('\n\n');
+    app.querySelector<HTMLElement>('#result-summary').textContent = summary;
+    const notes=[...result.querySelectorAll<HTMLTextAreaElement>('[data-note-field]')];
+    ['concern','duration','impact'].forEach((name,i)=>{
+      notes[i].value=selected(name).map(value=>value.dataset.label).join(' · ');
+      notes[i].dispatchEvent(new Event('input',{bubbles:true}));
+    });
+    const needsCare = selected('concern').some(v => v.value === 'energy') || selected('impact').some(v => v.value === 'basicNeeds');
+    app.querySelector<HTMLElement>('#energy-care').hidden = !selected('concern').some(v => v.value === 'energy');
+    // Offer self-care according to the user's concern; never assign a diagnosis or risk grade.
+    const showAll = selected('concern').length === 0 || selected('concern').some(v => v.value === 'other');
+    app.querySelector<HTMLElement>('[data-action="grounding"]').hidden = needsCare || !(showAll || selected('concern').some(v => v.value === 'worry'));
+    app.querySelector<HTMLElement>('[data-action="one-step"]').hidden = needsCare || !(showAll || selected('concern').some(v => v.value === 'mood'));
+    app.querySelector<HTMLElement>('[data-action="sleep"]').hidden = needsCare || !(showAll || selected('concern').some(v => v.value === 'sleep'));
+    app.querySelector<HTMLElement>('[data-action="worry"]').hidden = needsCare || !(showAll || selected('concern').some(v => v.value === 'worry'));
+    form.hidden = true; result.hidden = false;
+    document.getElementById('result-title').focus();
+  });
+  document.getElementById('revise-check-in').addEventListener('click', () => showStep(1));
+  document.getElementById('download-summary').addEventListener('click', () => {
+    const url = URL.createObjectURL(new Blob([`${labels.limits}\n\n${summary}`],{type:'text/plain;charset=utf-8'}));
+    const a = document.createElement('a'); a.href=url; a.download='sunrain-check-in.txt'; a.click();
+    setTimeout(()=>URL.revokeObjectURL(url),1000);
+  });
+  // Back/forward cache must not unexpectedly reveal a previous person's selections.
+  window.addEventListener('pageshow', event => { if(event.persisted) { form.reset(); summary=''; app.querySelector<HTMLElement>('#result-summary').textContent=''; first.disabled=true; showStep(0); } });
+</script>

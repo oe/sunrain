@@ -44,7 +44,7 @@ assert.match(requirements, /\|\s*zh-hans\s*\|\s*简体中文\s*\|/);
 assert.match(requirements, /\|\s*zh-hant\s*\|\s*繁體中文\s*\|/);
 assert.doesNotMatch(requirements, /\|\s*zh\s*\|\s*中文\s*\|/);
 
-const contentConfig = readText('src/content/config.ts');
+const contentConfig = readText('src/content.config.ts');
 assert.match(contentConfig, /resources\s*:/, 'resources collection must be explicit');
 
 const baseLayout = readText('src/layouts/BaseLayout.astro');
@@ -57,14 +57,12 @@ assertNoMatch(
   'assessment flow text must use translations'
 );
 const assessmentPage = readText('src/pages/assessment/[id].astro');
-assert.match(assessmentPage, /assessment\.results\.nextSteps\.title/);
-assert.match(assessmentPage, /function hasSafetySignal\(\)/);
-assert.match(assessmentPage, /result-safety-notice/);
-assert.match(assessmentPage, /resultSafetyNotice\?\.focus\(\)/);
-assert.match(assessmentPage, /assessmentLabels\.safetyScoreContext/);
-assert.match(assessmentPage, /\/breathing\//);
-assert.match(assessmentPage, /\/resources\//);
-assert.match(assessmentPage, /\/crisis\//);
+assert.match(assessmentPage, /data-screening-status="unavailable"/);
+assert.doesNotMatch(assessmentPage, /getCollection|localizeQuestionnaire|localStorage/,
+  'Unreviewed screening forms must not be shipped to the client');
+for (const tool of Object.values(readJson('src/data/screening-registry.json').tools)) {
+  assert.equal(tool.clinicalReview.status, 'pending');
+}
 assertNoMatch(
   'src/pages/assessment/index.astro',
   /innerHTML|Score:|Are you sure you want to clear all history\?/,

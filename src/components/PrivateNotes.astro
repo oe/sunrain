@@ -1,0 +1,67 @@
+---
+import { getLanguageFromPath } from '@/lib/i18n';
+import { getSupportCopy } from '@/lib/support';
+interface Props { kind: string; labels?: string[]; template?: string; }
+const { kind, labels, template } = Astro.props;
+const lang = getLanguageFromPath(Astro.url.pathname);
+const c = getSupportCopy(lang);
+const fields = labels || [c.ui.note];
+---
+<section class="support-card private-notes" data-kind={kind} data-language={lang} data-template={template} data-saved={c.ui.saved} data-failed={c.ui.failed} data-deleted={c.ui.deleted} data-empty={c.ui.empty}>
+  <h2>{c.ui.summary}</h2>
+  <p>{c.common.save} {c.ui.unavailable}</p>
+  {fields.map((label,i) => <label for={`note-${kind}-${i}`}>{label}<textarea id={`note-${kind}-${i}`} maxlength="2000" autocomplete="off" data-note-field spellcheck="false" data-1p-ignore data-lpignore="true"></textarea></label>)}
+  {template && <div><h3>{c.ui.contact}</h3><p class="result-summary" data-contact-preview>{template}</p></div>}
+  <div class="actions" data-note-controls hidden>
+    <button type="button" class="button" data-note-action="download">{c.ui.download}</button>
+    <button type="button" class="button" data-note-action="save">{c.ui.save}</button>
+    <button type="button" class="button" data-note-action="load">{c.ui.load}</button>
+    <button type="button" class="button" data-note-action="clear">{c.ui.clear}</button>
+  </div>
+  <p class="status" role="status" data-note-status></p>
+</section>
+<script>
+  import { makeNote, parseNote } from '@/lib/private-notes.mjs';
+  for (const container of document.querySelectorAll<HTMLElement>('.private-notes')) {
+    const {kind,language} = container.dataset;
+    const key = `sunrain_note_v1:${kind}:${language}`;
+    const fields = [...container.querySelectorAll<HTMLTextAreaElement>('[data-note-field]')];
+    const status = container.querySelector<HTMLElement>('[data-note-status]');
+    const preview = container.querySelector<HTMLElement>('[data-contact-preview]');
+    function updatePreview() {
+      if (!preview) return;
+      preview.textContent = container.dataset.template.replace(/\{(concern|duration|impact)\}/g, (match,key) => fields[['concern','duration','impact'].indexOf(key)].value || match);
+    }
+    fields.forEach(field => field.addEventListener('input',updatePreview));
+    window.addEventListener('pageshow', event => {
+      if (event.persisted) { fields.forEach(field => field.value=''); updatePreview(); status.textContent=''; }
+    });
+    container.querySelector<HTMLElement>('[data-note-controls]').hidden = false;
+    container.querySelectorAll<HTMLButtonElement>('[data-note-action]').forEach(button => button.addEventListener('click', () => {
+      try {
+        const action = button.dataset.noteAction;
+        if(action === 'download') {
+          const body = fields.map(field => `${field.labels?.[0]?.firstChild?.textContent || ''}\n${field.value}`).join('\n\n') + (preview ? `\n\n${preview.textContent}` : '');
+          const url = URL.createObjectURL(new Blob([body], {type:'text/plain;charset=utf-8'}));
+          const a = document.createElement('a'); a.href = url; a.download = 'sunrain-private-note.txt'; a.click();
+          setTimeout(() => URL.revokeObjectURL(url), 1000);
+        } else if(action === 'save') {
+          localStorage.setItem(key, JSON.stringify(makeNote(fields.map(f => f.value),kind,language)));
+          status.textContent = container.dataset.saved;
+        } else if(action === 'load') {
+          const raw = localStorage.getItem(key);
+          if(raw === null) { status.textContent = container.dataset.empty; return; }
+          const note = parseNote(raw,kind,language,fields.length);
+          if(!note) throw new Error('Invalid saved note');
+          fields.forEach((f,i) => f.value = note[i]);
+          updatePreview();
+          status.textContent = container.dataset.saved;
+        } else if(action === 'clear') {
+          localStorage.removeItem(key); fields.forEach(f => f.value = '');
+          updatePreview();
+          status.textContent = container.dataset.deleted;
+        }
+      } catch { status.textContent = container.dataset.failed; }
+    }));
+  }
+</script>

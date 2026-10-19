@@ -1,0 +1,34 @@
+---
+import SupportLayout from '@/layouts/SupportLayout.astro';
+import ContentSources from '@/components/ContentSources.astro';
+import PrivateNotes from '@/components/PrivateNotes.astro';
+import { getLanguageFromPath } from '@/lib/i18n';
+import { getSupportCopy } from '@/lib/support';
+const lang=getLanguageFromPath(Astro.url.pathname);
+const c=getSupportCopy(lang);
+---
+<SupportLayout title={c.ui.support}>
+  <h1>{c.seekHelp.title}</h1><p>{c.seekHelp.provider}</p>
+  <section class="support-card"><ol>{c.seekHelp.steps.map(step=><li>{step}</li>)}</ol></section>
+  <section class="support-card">
+    <h2><label for="support-region">{c.ui.region}</label></h2>
+    <select id="support-region"><option value="">{c.ui.chooseRegion}</option><option value="GB-ENG">{c.ui.england}</option><option value="US">{c.ui.us}</option><option value="other">{c.ui.otherRegion}</option></select>
+    <p>{c.ui.external}</p>
+    <div data-service-region="GB-ENG" hidden><h3>{c.ui.england}</h3><a href="https://www.nhs.uk/nhs-services/mental-health-services/find-nhs-talking-therapies-for-anxiety-and-depression/" rel="noreferrer" target="_blank">NHS · Talking therapies ({c.ui.english})</a></div>
+    <div data-service-region="US" hidden><h3>{c.ui.us}</h3><a href="https://findtreatment.gov/" rel="noreferrer" target="_blank">SAMHSA · FindTreatment.gov ({c.ui.english})</a></div>
+    <p id="service-fallback">{c.seekHelp.noService}</p>
+    <noscript><p>{c.ui.england}: <a href="https://www.nhs.uk/nhs-services/mental-health-services/find-nhs-talking-therapies-for-anxiety-and-depression/" rel="noreferrer">NHS</a> · {c.ui.us}: <a href="https://findtreatment.gov/" rel="noreferrer">SAMHSA</a></p></noscript>
+  </section>
+  <PrivateNotes kind="appointment" labels={c.seekHelp.summaryLabels} template={c.seekHelp.contactTemplate} />
+  <section class="support-card"><p>{c.seekHelp.cost}</p><p>{c.seekHelp.waiting}</p><p>{c.seekHelp.existingCare}</p></section>
+  <ContentSources sources={['conversation','help']} />
+</SupportLayout>
+<script>
+  const region=document.getElementById('support-region') as HTMLSelectElement;
+  function updateRegion(){
+    document.querySelectorAll<HTMLElement>('[data-service-region]').forEach(service=>service.hidden=service.dataset.serviceRegion!==region.value);
+    document.getElementById('service-fallback').hidden=['US','GB-ENG'].includes(region.value);
+  }
+  region.addEventListener('change',updateRegion);
+  window.addEventListener('pageshow',updateRegion);
+</script>

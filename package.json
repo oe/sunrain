@@ -6,7 +6,7 @@
   "description": "Mental health resources website built with Astro",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro check && astro build",
+    "build": "astro check && astro build && node scripts/verify-support-build.mjs",
     "preview": "astro preview",
     "lint": "astro check",
     "audit:audio": "node scripts/audit-audio-loops.mjs",
@@ -16,28 +16,30 @@
     "test:e2e": "playwright test"
   },
   "dependencies": {
-    "@astrojs/react": "^4.3.0",
-    "@astrojs/sitemap": "^3.4.1",
-    "@astrojs/tailwind": "^5.1.2",
-    "astro": "^5.11.0",
-    "astro-i18n-aut": "^0.7.0",
-    "daisyui": "^4.12.14",
+    "@astrojs/react": "^7.1.0",
+    "@astrojs/sitemap": "^3.7.4",
+    "astro": "^7.4.0",
     "howler": "^2.2.4",
     "lucide-react": "^0.468.0",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0",
-    "tailwindcss": "^3.4.0",
-    "three": "0.186.1"
+    "oxc-transform-react": "^0.152.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "tailwindcss": "^4.3.3",
+    "three": "0.186.1",
+    "@tailwindcss/vite": "^4.3.3"
   },
   "devDependencies": {
-    "@astrojs/check": "^0.9.4",
+    "@astrojs/check": "^0.9.10",
     "@types/howler": "^2.2.13",
-    "@types/node": "^20.10.0",
-    "@types/react": "^19.1.0",
-    "@types/react-dom": "^19.1.0",
+    "@types/node": "^20.19.43",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
     "@types/three": "^0.185.4",
-    "typescript": "^5.3.0",
-    "playwright": "1.62.1"
+    "playwright": "1.62.1",
+    "typescript": "^5.9.3"
   },
-  "packageManager": "pnpm@10.12.1"
+  "packageManager": "pnpm@10.12.1",
+  "engines": {
+    "node": ">=22.22.0"
+  }
 }

@@ -1,5 +1,7 @@
 # Sunrain 产品实施路线图
 
+当前实现与发布边界见 [RELEASING.md](./RELEASING.md)：一般支持流程已接入八语页面；医学评分关闭，独立专业和母语审阅仍待完成。
+
 更新日期：2026-10-19。当前实施依据为 [心理状态初筛与自助入口规格](./MENTAL_HEALTH_CHECK_IN.md) 和 [医学依据记录](./CLINICAL_EVIDENCE.md)。[原八周执行计划](./EXECUTION_PLAN.md) 为历史版本，不代表任务已经完成。
 
 ## 产品方向

@@ -4,8 +4,8 @@ import { fileURLToPath } from 'node:url';
 import { buildMetadata } from './scripts/build-metadata.mjs';
 
 import react from '@astrojs/react';
-import tailwind from '@astrojs/tailwind';
-import { i18n, filterSitemapByDefaultLocale } from "astro-i18n-aut/integration";
+import tailwindcss from '@tailwindcss/vite';
+import { localizedRoutes } from './scripts/localized-routes.mjs';
 import sitemap from '@astrojs/sitemap';
 
 const defaultLocale = "en";
@@ -30,20 +30,17 @@ export default defineConfig({
   build: {
     format: "directory",
   },
+  vite: { plugins: [tailwindcss()] },
   integrations: [
     buildMetadata(fileURLToPath(new URL('.', import.meta.url))),
     react(),
-    tailwind(),
-    i18n({
-      locales,
-      defaultLocale,
-    }),
+    localizedRoutes(Object.keys(locales), defaultLocale),
     sitemap({
+      filter: page => !new URL(page).pathname.startsWith('/en/'),
       i18n: {
         locales,
         defaultLocale,
       },
-      filter: filterSitemapByDefaultLocale({ defaultLocale }),
     }),
   ]
 });

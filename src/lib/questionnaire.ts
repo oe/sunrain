@@ -4,11 +4,13 @@
  */
 
 import type { Language } from './i18n';
-import { DEFAULT_LANGUAGE } from './i18n';
+import { calculateScore, getInterpretation } from './screening.mjs';
+export { calculateScore, getInterpretation } from './screening.mjs';
 
 // Types
 export interface LocalizedQuestionnaire {
   id: string;
+  version: string;
   title: string;
   description: string;
   instruction: string;
@@ -45,22 +47,14 @@ export interface AssessmentResult {
 
 /**
  * Get localized text from multi-language object
- * Handles fallback: zh-hant -> zh-hans -> en -> first available
+ * Health questionnaires must use the exact verified locale, with no fallback.
  */
 function getLocalizedText(
   obj: Record<string, string> | undefined,
   lang: Language
 ): string {
-  if (!obj) return '';
-  
-  // Direct match
-  if (obj[lang]) return obj[lang];
-  
-  // Fallback for Traditional Chinese to Simplified Chinese
-  if (lang === 'zh-hant' && obj['zh-hans']) return obj['zh-hans'];
-  
-  // Fallback to English, then first available
-  return obj[DEFAULT_LANGUAGE] || Object.values(obj)[0] || '';
+  if (typeof obj?.[lang] !== 'string' || !obj[lang].trim()) throw new Error(`Missing questionnaire translation: ${lang}`);
+  return obj[lang];
 }
 
 /**
@@ -72,6 +66,7 @@ export function localizeQuestionnaire(
 ): LocalizedQuestionnaire {
   return {
     id: data.id,
+    version: data.version,
     title: getLocalizedText(data.meta?.title, lang),
     description: getLocalizedText(data.meta?.description, lang),
     instruction: getLocalizedText(data.meta?.instruction, lang),
@@ -102,21 +97,10 @@ export function localizeQuestionnaire(
 /**
  * Calculate total score from answers
  */
-export function calculateScore(answers: number[]): number {
-  return answers.reduce((sum, val) => sum + (val || 0), 0);
-}
 
 /**
  * Get interpretation based on score
  */
-export function getInterpretation(
-  score: number,
-  interpretations: LocalizedQuestionnaire['interpretations']
-) {
-  return interpretations.find(
-    (i) => score >= i.range[0] && score <= i.range[1]
-  ) || interpretations[interpretations.length - 1];
-}
 
 /**
  * Generate unique result ID
@@ -133,8 +117,9 @@ export function createAssessmentResult(
   answers: number[],
   lang: Language
 ): AssessmentResult {
-  const score = calculateScore(answers);
+  const score = calculateScore(answers, questionnaire.questions.length, questionnaire.options.map(o=>o.value));
   const interpretation = getInterpretation(score, questionnaire.interpretations);
+  if (!interpretation) throw new Error('No unambiguous score interpretation');
   
   return {
     id: generateResultId(),

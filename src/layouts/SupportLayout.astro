@@ -1,0 +1,25 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import { getLanguageFromPath, getLocalizedPath } from '@/lib/i18n';
+import { getSupportCopy } from '@/lib/support';
+import '@/styles/support.css';
+interface Props { title: string; }
+const { title } = Astro.props;
+const lang = getLanguageFromPath(Astro.url.pathname);
+const copy = getSupportCopy(lang);
+---
+<BaseLayout title={title}>
+  <div class="support-shell">
+    <slot />
+    <aside class="urgent" aria-label={copy.ui.support}>
+      <p>{copy.common.urgent}</p>
+      <a href={getLocalizedPath('/crisis/', lang)}>{copy.ui.crisisDirectory}</a>
+    </aside>
+    <details>
+      <summary>{copy.ui.disclaimer}</summary>
+      <p>{copy.disclaimer.scope}</p><p>{copy.disclaimer.safety}</p>
+      <a href={getLocalizedPath('/disclaimer/', lang)}>{copy.ui.disclaimer}</a>
+    </details>
+    <noscript><p>{copy.ui.noscript}</p></noscript>
+  </div>
+</BaseLayout>
