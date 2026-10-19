@@ -45,6 +45,8 @@ All screenshot and comparison filenames below are relative to `/workspace/artifa
 - All 12 initial-page observations recorded zero page errors and no horizontal overflow. The three final manual journeys likewise recorded zero page errors and no overflow. Evidence: `preview-observations.json` and `final-smoke-results.json`.
 - Automated verification at this review: 31 unit tests passed; 32 focused desktop/mobile browser cases passed; the build checked all 104 localized support pages. Full cross-engine regression status is reported by the PR checks rather than inferred from these focused tests.
 
+The auxiliary-page pass also inspected Chinese/Arabic mobile About pages, Spanish About at 1280px, the mobile resource index and the 404 view. Old colored About cards now use open rows and shared navy/paper tokens; the 404 action uses the shared primary button. All five captures recorded no page errors or overflow, and the resource disclosure opened its links. Evidence: `auxiliary-observations.json`, `about-zh-mobile.png`, `about-es-desktop.png`, `about-ar-mobile.png`, `resources-zh-mobile.png` and `404-mobile.png`. These pages are extensions of the supplied homepage direction.
+
 ## Intentional deviations and limits
 
 - The reference supplies a Chinese desktop homepage only. Mobile, RTL, dark mode and inner pages are responsive product extensions rather than additional supplied mocks.

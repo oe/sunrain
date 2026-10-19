@@ -22,6 +22,19 @@
 .platform footer :is(p,a){color:var(--platform-muted)}
 .platform footer a:hover{color:var(--platform-blue)}
 .platform footer .border-t{border-color:var(--platform-line);padding-top:16px;margin-top:20px}
+.platform .about-page h1{font-size:clamp(2rem,4vw,3.25rem);letter-spacing:-.035em;color:var(--platform-ink)}
+.platform .about-page h2,.platform .about-page h3{color:var(--platform-ink)}
+.platform .about-page p{color:var(--platform-muted);line-height:1.9}
+.platform .about-page svg{color:var(--platform-blue)}
+.platform .about-page .grid>div{background:none;border-block-start:1px solid var(--platform-line);border-radius:0;padding:24px 0}
+.platform .about-page section.bg-amber-50{background:var(--platform-soft);border-color:var(--platform-line);border-radius:18px}
+.platform .about-page .grid>a{background:none;border-block-start:1px solid var(--platform-line);border-radius:0;padding:24px 0;min-height:96px}
+.platform .about-page .grid>a:hover{color:var(--platform-blue)}
+.platform .about-page section:last-child>a{background:#123f80;color:white;min-height:48px}
+.platform .about-page section:last-child>a svg{color:currentColor}
+.platform .not-found-page{color:var(--platform-ink)}
+.platform .not-found-page h1{color:inherit}
+.platform .not-found-page p{color:var(--platform-muted);max-width:42ch}
 .platform-hero{position:relative;isolation:isolate;overflow:hidden;background:#fffdf9}
 .hero-art{position:absolute;inset:0;z-index:-1;pointer-events:none}
 .hero-art img{width:100%;height:100%;object-fit:cover;object-position:center;display:block}
