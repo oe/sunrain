@@ -241,7 +241,8 @@ test('Japanese K6 preserves source option order, 30-day recall and complete care
   await expect(card.locator('[data-report-next]')).toContainText('専門家に相談');
   await expect(page.locator('[data-screening-report="phq-9"] [data-report-score]')).toHaveText(screeningCopy.ja.notSelected);
   await page.locator('#result-options [data-prepare-support]').click();
-  await expect(page.locator('#prepare-support [data-note-field]').nth(1)).toHaveValue('過去30日間');
+  await expect(page.locator('#prepare-support [data-note-field]').nth(1)).toHaveValue('');
+  await expect(page.locator('#prepare-support [data-note-field]').first()).toHaveValue(/過去30日間/);
   const pending=page.waitForEvent('download');await page.locator('#screening-export').click();
   const record=await readFile(await (await pending).path(),'utf8');
   expect(record).toContain('24 / 24');expect(record).toContain('過去30日間');
@@ -311,10 +312,13 @@ for(const locale of locales){
     await expect(notes.nth(0)).toHaveValue(/phqscreeners-201412/);
     await expect(notes.nth(0)).toHaveValue(/https:\/\/www.phqscreeners.com/);
     expect((await notes.nth(0).inputValue()).length).toBeLessThanOrEqual(2000);
+    await expect(notes.nth(1)).toHaveValue('');
+    await expect(notes.nth(0)).toHaveValue(new RegExp(screeningCopy[locale].twoWeeks));
     if(locale==='ja'){
-      await expect(notes.nth(1)).toHaveValue(/PHQ-9: 過去2週間.*K6: 過去30日間/);
+      await expect(notes.nth(0)).toHaveValue(/過去30日間/);
       await expect(page.locator('[data-screening-report="k6"] [data-report-band]')).toBeHidden();
-    }else await expect(notes.nth(1)).toHaveValue(screeningCopy[locale].twoWeeks);
+    }
+    await notes.nth(1).fill('Started several months ago');
     await notes.nth(0).fill('My own care summary');
     await page.locator('[data-action="one-step"] a').click();
     await expect(page.locator('#inline-activity')).toBeVisible();
@@ -333,6 +337,7 @@ for(const locale of locales){
     await page.locator('#screening-finish').click();
     await expect(page.locator('[data-screening-report="phq-9"] [data-report-score]')).toHaveText('0 / 27');
     await expect(notes.nth(0)).toHaveValue('My own care summary');
+    await expect(notes.nth(1)).toHaveValue('Started several months ago');
     await expect(page.locator('[data-action="choose"]')).toBeVisible();
     expect(await page.title()).toBe(title);expect(new URL(page.url()).search).toBe('');expect(new URL(page.url()).hash).toBe('');
     expect(await page.evaluate(()=>Object.keys(localStorage).filter(k=>k.startsWith('sunrain')))).toEqual([]);
