@@ -65,6 +65,48 @@
 - 支持范围：出版说明列出了具体内容和实施资源，并说明多项试验中的效果是在受训非专科支持者每周提供简短支持的条件下得到的。
 - 产品决定：可用于考察有连续支持的内容方向；不能将其试验结果直接转给自行编写、完全无人支持的短课程。完整资源、授权与交付条件尚待核验。
 
+### E10 感官练习参考
+
+- 来源：[NHS inform Grounding exercises](https://www.nhsinform.scot/healthy-living/mental-wellbeing/breathing-and-relaxation-exercises/grounding-exercises/)；补充：[Royal United Hospitals Bath 感官与正念练习手册](https://www.ruh.nhs.uk/patients/patient_information/PAE129_Mindfulness_and_grounding_exercises.pdf)，2024-09，第 1 页。
+- 支持范围：感官定位方法的参考；后者面向特定患者，不是适用于所有情境的治疗证据。NHS inform 完整页面当前读取受限；医院 PDF 已读取。
+- 产品决定：S01 为简短教育内容草案，睁眼选项、跳过不适用感官、不要求品尝物品和结束分支是 Sunrain 的产品适配，尚待专业审阅。不能宣称该八语改编由来源机构认可。
+- 权利：未复制图片或完整手册；全文转载、翻译及具体改编的使用条件尚待核验。
+
+### E11 日常自我照顾参考
+
+- 来源：[NIMH Caring for Your Mental Health](https://www.nimh.nih.gov/health/topics/caring-for-your-mental-health)，页面审阅日期 2026-04。定位：Set goals and priorities、Stay connected、When should I seek professional help。
+- 支持范围：日常自我照顾、选择优先事项和寻求实际支持的教育建议，不是疾病治疗课程。
+- 产品决定：S02 的小计划和回顾结构是 Sunrain 的实现草案；不据此宣称等同于行为激活治疗或可以替代照护计划。
+- 权利：页面说明文字通常属公共领域，可使用并注明 NIMH；不包括图片。该说明不证明我们翻译的准确性，仍需逐语言审阅。
+
+### E12 首次沟通准备参考
+
+- 来源：[NIMH Tips for Talking With a Health Care Provider About Your Mental Health](https://www.nimh.nih.gov/health/publications/tips-for-talking-with-your-health-care-provider)，出版号 22-MH-8094。
+- 支持范围：咨询初级医疗、预先整理问题与相关信息、可选择由信任的人陪同、在就诊时提问。
+- 产品决定：用于 H01 沟通准备。预约模板为 Sunrain 原创草案；不能当作诊断访谈或自动发送给服务方。
+- 权利：页面文字说明可按公共领域使用并注明 NIMH，不包含图片；不能把翻译标为 NIMH 官方译本。
+
+### E13 一般服务查找与障碍处理
+
+- 来源：[NIMH Help for Mental Illnesses](https://www.nimh.nih.gov/health/find-help)，页面审阅日期 2026-04。定位：How can I find a health care provider or treatment、How do I know if a provider is right for me。
+- 支持范围：医疗、官方目录、保险及可能的学校或员工支持途径，联系服务前核对费用与适合程度；页面的具体服务主要适用于美国。
+- 产品决定：H01 的一般准备可跨语言呈现，地区服务与资格仍分别核实。美国 FindTreatment.gov 已由该官方页面引用，但其交互查询和预约未测试；不得宣称已验证所有机构。
+
+### E14 WHO 压力管理指南的语言覆盖
+
+- 来源：[Doing What Matters in Times of Stress 官方资源页](https://www.who.int/publications/i/item/9789240003927)，2020-04-29。定位：Language 与 Audio exercises 表。
+- 支持范围：官方页面列出英文、简中、繁中、西语、日语、韩语、印地语、阿拉伯语指南；部分语言有音频。不能据此声称所有语言均有音频。
+- 核验状态：官方资源页已读取；尝试各指南下载时出现访问限制或超时，未完成完整文件和许可核验。使用官方资源页作为备选入口，不将下载标为可用性已验证。
+- 产品决定：后续优先核验现有正式版本，避免擅自将自助课程从英文整套翻译。当前八语内容包是 Sunrain 草案，不是 WHO 课程的转载或官方翻译。
+
+### E15 英格兰一般心理支持入口
+
+- 来源：[NHS Find talking therapies for anxiety and depression](https://www.nhs.uk/nhs-services/mental-health-services/find-nhs-talking-therapies-for-anxiety-and-depression/)，页面审阅日期 2025-02-14。
+- 支持范围：英格兰居民通常满 18 岁可自我转介，部分地区接收较年轻用户；无需先有正式诊断。具体范围以服务当时条件为准，不能用于其他国家或推定服务语言。
+- 产品决定：仅收录官方查找入口和其地区条件，未实际提交查询、转介或预约。不自动把英文用户定位到英格兰。
+
+新内容的源文字、翻译和 UI 适配分别记录。八语草案与逐出口内容见 [SUPPORT_CONTENT.md](./SUPPORT_CONTENT.md)。
+
 ## 每项内容的发布记录
 
 每个工具、目标语言版本、自助内容及结果响应分别记录：
