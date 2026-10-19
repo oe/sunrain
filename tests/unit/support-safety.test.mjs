@@ -1,7 +1,8 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { calculateScore, getInterpretation, hasSafetySignal, canPublishScreening } from '../../src/lib/screening.mjs';
+import { createHash } from 'node:crypto';
+import { calculateScore, getInterpretation, hasSafetySignal, canPublishScreening, makeScreeningReport } from '../../src/lib/screening.mjs';
 import { parseNote, makeNote, formatContact } from '../../src/lib/private-notes.mjs';
 const read = path => JSON.parse(readFileSync(new URL(path,import.meta.url),'utf8'));
 const pack = read('../../src/data/support-copy.json');
@@ -68,12 +69,55 @@ test('any nonzero PHQ safety response is independent of total score; missing is 
   for(const value of [1,2,3]) assert.equal(hasSafetySignal([...Array(8).fill(0),value],ids,triggers),true);
   for(const value of [0,null,undefined]) assert.equal(hasSafetySignal([...Array(8).fill(3),value],ids,triggers),false);
 });
-test('unverified tools and unverified locales cannot be published',()=>{
-  for(const tool of Object.values(registry.tools)) for(const lang of locales) assert.equal(canPublishScreening(tool,lang),false);
-  const approved={version:'v1',source:'https://example.org/original',population:'adults',recallDays:14,rights:{status:'verified',evidence:'signed permission'},clinicalReview:{status:'approved',reviewer:'qualified reviewer',date:'2026-10-19'},locales:{en:{status:'verified',source:'original',reviewer:'reviewer',version:'v1'}}};
-  assert.equal(canPublishScreening(approved,'en'),true);
-  assert.equal(canPublishScreening(approved,'ar'),false);
-  for(const field of ['clinicalReview','rights','version','source']) { const tool=structuredClone(approved); delete tool[field]; assert.equal(canPublishScreening(tool,'en'),false); }
+test('only exact source-checked reference forms are admitted; restricted Japanese GAD-7 stays absent',()=>{
+  const forms=read('../../src/data/screening-forms.json');
+  for(const [id,tool] of Object.entries(registry.tools)) for(const lang of locales) {
+    const available=!(id==='gad-7'&&lang==='ja');
+    assert.equal(canPublishScreening(tool,lang),available);
+    assert.equal(tool.clinicalReview.status,'pending');
+    if(!available){assert.equal(forms[id][lang],undefined);continue;}
+    assert.equal(createHash('sha256').update(JSON.stringify(forms[id][lang])).digest('hex'),tool.locales[lang].formSha256);
+    assert.equal(forms[id][lang].questions.length,id==='phq-9'?9:7);
+    assert.equal(forms[id][lang].options.length,4);
+    assert.equal(new URL(tool.locales[lang].source).hostname,'www.phqscreeners.com');
+  }
+  const admitted=registry.tools['phq-9'];
+  for(const field of ['mode','sourceCheck','rights','version','source']) { const tool=structuredClone(admitted); delete tool[field]; assert.equal(canPublishScreening(tool,'en'),false); }
+  for(const field of ['formSha256','sourceSha256','version','status','source']) {const tool=structuredClone(admitted);delete tool.locales.en[field];assert.equal(canPublishScreening(tool,'en'),false);}
+  const wrong=structuredClone(admitted);wrong.locales.en.version='different';assert.equal(canPublishScreening(wrong,'en'),false);
+  assert.equal(canPublishScreening(admitted,'unknown'),false);
+});
+test('screening reports preserve completeness and never apply adult severity bands to youth',()=>{
+  for(const [id,count,max]of [['phq-9',9,27],['gad-7',7,21]]){
+    const youth=makeScreeningReport(id,Array(count).fill(3),'youth');
+    assert.equal(youth.score,max);assert.equal(youth.band,null);
+    assert.equal(makeScreeningReport(id,Array(count).fill(3),'adult').band,4);
+    for(const age of ['child','declined','',null])assert.throws(()=>makeScreeningReport(id,Array(count).fill(0),age));
+    for(const answers of [Array(count),Array(count).fill(null),Array(count-1).fill(0),Array(count).fill('0')])assert.throws(()=>makeScreeningReport(id,answers,'adult'));
+    for(const status of ['skipped','notSelected','unavailable']){
+      const report=makeScreeningReport(id,[], 'adult',status);
+      assert.equal(report.score,null);assert.equal(report.band,null);assert.equal(report.status,status);
+    }
+  }
+  assert.equal(makeScreeningReport('phq-9',[0,0,0,0,0,0,0,0,1],'adult').safety,true);
+  assert.equal(makeScreeningReport('phq-9',[0,0,0,0,0,0,0,0,1],'adult').band,0);
+  assert.equal(makeScreeningReport('gad-7',Array(7).fill(0),'adult').safety,false);
+});
+test('screening guidance and disclaimers are complete in all eight languages',()=>{
+  const copy=read('../../src/data/screening-copy.json');
+  assert.deepEqual(Object.keys(copy).sort(),[...locales].sort());
+  for(const locale of locales){
+    assert.deepEqual(paths(copy[locale]),paths(copy.en));
+    for(const key of paths(copy.en))assert.ok(key.split('.').reduce((v,k)=>v[k],copy[locale]).trim(),`${locale}.${key}`);
+    assert.equal(copy[locale].bands.length,5);assert.equal(copy[locale].ageOptions.length,5);
+  }
+});
+test('every original-manual boundary has the expected adult band and no youth band',()=>{
+  for(const[id,count,pairs]of [['phq-9',9,[[0,0],[4,0],[5,1],[9,1],[10,2],[14,2],[15,3],[19,3],[20,4],[27,4]]],['gad-7',7,[[0,0],[4,0],[5,1],[9,1],[10,2],[14,2],[15,4],[21,4]]]])for(const[total,band]of pairs){
+    let left=total;const answers=Array.from({length:count},()=>{const value=Math.min(left,3);left-=value;return value;});
+    assert.equal(makeScreeningReport(id,answers,'adult').band,band,`${id}/${total}`);
+    assert.equal(makeScreeningReport(id,answers,'youth').band,null,`${id}/${total}/youth`);
+  }
 });
 test('private saved notes reject corrupt, oversized, wrong-version and wrong-locale data',()=>{
   const note=makeNote(['hello'],'grounding','ar');

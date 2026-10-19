@@ -3,30 +3,35 @@ import SupportLayout from '@/layouts/SupportLayout.astro';
 import ContentSources from '@/components/ContentSources.astro';
 import HelpPreparation from '@/components/HelpPreparation.astro';
 import GuidedActivity from '@/components/GuidedActivity.astro';
+import ScreeningFlow from '@/components/ScreeningFlow.astro';
+import {getScreeningContent} from '@/lib/screening-content';
 import { getLanguageFromPath, getLocalizedPath, t } from '@/lib/i18n';
 import { getSupportCopy } from '@/lib/support';
 const lang = getLanguageFromPath(Astro.url.pathname);
 const c = getSupportCopy(lang);
+const {copy:s} = getScreeningContent(lang);
 const concerns = ['mood','worry','sleep','energy','other'] as const;
 const durations = ['recent','weeks','months','unsure'] as const;
 const impacts = ['manageable','disruptive','basicNeeds'] as const;
 ---
 <SupportLayout title={c.entry.title}>
   <h1>{c.entry.title}</h1>
-  <p>{c.flow.outcome}</p>
+  <p>{s.intro}</p>
   <p class="muted">{c.ui.privacy}</p>
   <div class="actions">
     <a class="button" href={getLocalizedPath('/self-help/',lang)}>{c.ui.selfHelp}</a>
     <a class="button" href={getLocalizedPath('/support/',lang)}>{c.ui.support}</a>
     <a class="button" href={getLocalizedPath('/crisis/',lang)}>{t('nav.crisis',lang)}</a>
   </div>
-  <div class="support-card" id="check-in-app" data-labels={JSON.stringify({ concerns:c.ui.concerns,duration:c.ui.duration,impact:c.ui.impact,skip:c.ui.skip,step:c.flow.step })}>
+  <div class="support-card" id="check-in-app" data-step-label={c.flow.step} data-energy-label={c.ui.energy} data-function-label={c.ui.basicNeeds} data-labels={JSON.stringify({ concerns:c.ui.concerns,duration:c.ui.duration,impact:c.ui.impact,skip:c.ui.skip,step:c.flow.step,result:c.ui.result,actionReason:c.flow.actionReason,recordTruncated:c.flow.recordTruncated })}>
+    <ScreeningFlow />
     <form id="check-in-form" autocomplete="off">
       <section data-step="0">
-        <h2 tabindex="-1">{c.ui.disclaimer}</h2>
+        <h2 tabindex="-1">{s.begin}</h2>
         <p>{c.flow.scopeShort}</p>
+        <div class="actions"><button class="button primary" id="start-screening" type="button" hidden>{s.begin}</button><button class="button" data-forward type="button" hidden>{s.general}</button></div>
         <p class="muted" data-youth-support>{c.ui.younger}</p>
-        <div class="actions"><button class="button primary" data-forward type="button" hidden>{c.ui.start}</button></div>
+        <p>{s.coverage}</p>
       </section>
       <section data-step="1" hidden>
         <fieldset><legend tabindex="-1"><span class="step-label" data-progress>{c.flow.step.replace('{current}','1').replace('{total}','2')}</span>{c.ui.concerns}</legend>
@@ -49,7 +54,7 @@ const impacts = ['manageable','disruptive','basicNeeds'] as const;
     </form>
     <section id="check-in-result" hidden>
       <h2 id="result-title" tabindex="-1">{c.ui.result}</h2>
-      <p class="muted">{c.flow.scopeShort}</p>
+      <p class="muted" id="general-result-scope">{c.flow.scopeShort}</p>
       <aside class="urgent" id="energy-care" hidden><p>{c.ui.energyCare}</p><a class="button primary" href="#prepare-support" data-prepare-support>{c.flow.prepare}</a></aside>
       <aside class="urgent" id="function-care" hidden><p>{c.flow.functionCare}</p><a class="button primary" href="#prepare-support" data-prepare-support>{c.flow.prepare}</a></aside>
       <p id="action-reason">{c.flow.actionReason}</p>
@@ -77,6 +82,8 @@ const impacts = ['manageable','disruptive','basicNeeds'] as const;
   const labels = JSON.parse(app.dataset.labels);
   const steps = [...app.querySelectorAll<HTMLElement>('[data-step]')];
   let index = 0;
+  let screeningActive = false;
+  const preparedScreeningFields=new Map<HTMLTextAreaElement,string>();
   const result = app.querySelector<HTMLElement>('#check-in-result');
   const first = steps[0].querySelector<HTMLButtonElement>('[data-forward]');
   const inlineActivity=document.getElementById('inline-activity');
@@ -102,6 +109,10 @@ const impacts = ['manageable','disruptive','basicNeeds'] as const;
   form.reset();
   first.hidden = false;
   function showStep(next: number) {
+    screeningActive=false;
+    document.getElementById('screening-results')?.remove();
+    document.getElementById('screening-flow').hidden=true;
+    document.getElementById('general-result-scope').hidden=false;
     index = next;
     inlineActivity.replaceChildren();delete inlineActivity.dataset.guide;inlineActivity.hidden=true;
     document.getElementById('result-options').hidden=false;
@@ -123,12 +134,18 @@ const impacts = ['manageable','disruptive','basicNeeds'] as const;
   form.addEventListener('submit', event => {
     event.preventDefault();
     if(index !== 2) return;
+    screeningActive=false;
+    document.getElementById('screening-results')?.remove();
+    document.getElementById('general-result-scope').hidden=false;
+    document.getElementById('result-title').textContent=labels.result;
+    document.getElementById('action-reason').textContent=labels.actionReason;
     const selected = (name: string) => [...form.querySelectorAll<HTMLInputElement>(`input[name="${name}"]:checked`)];
     summary = ['concern','duration','impact'].map((name,i) => `${[labels.concerns,labels.duration,labels.impact][i]}\n${selected(name).map(v => v.dataset.label).join(' · ') || labels.skip}`).join('\n\n');
     app.querySelector<HTMLElement>('#result-summary').textContent = summary;
     const notes=[...result.querySelectorAll<HTMLTextAreaElement>('#prepare-support [data-note-field]')];
     ['concern','duration','impact'].forEach((name,i)=>{
       notes[i].value=selected(name).map(value=>value.dataset.label).join(' · ');
+      preparedScreeningFields.set(notes[i],notes[i].value);
       notes[i].dispatchEvent(new Event('input',{bubbles:true}));
     });
     const needsCare = selected('concern').some(v => v.value === 'energy') || selected('impact').some(v => v.value === 'basicNeeds');
@@ -147,7 +164,37 @@ const impacts = ['manageable','disruptive','basicNeeds'] as const;
     title.focus({preventScroll:true});
     title.scrollIntoView({block:'start',behavior:'instant'});
   });
-  document.getElementById('revise-check-in').addEventListener('click', () => showStep(1));
+  app.addEventListener('sunrain:general-support',()=>showStep(1));
+  app.addEventListener('sunrain:screening-complete',(event:CustomEvent)=>{
+    const detail=event.detail;
+    screeningActive=true;
+    summary=detail.summary;
+    document.getElementById('result-summary').textContent=summary;
+    document.getElementById('general-result-scope').hidden=true;
+    document.getElementById('result-title').textContent=detail.title;
+    const fields=[...result.querySelectorAll<HTMLTextAreaElement>('#prepare-support [data-note-field]')];
+    // Do not overwrite a person's edits when revising a questionnaire.
+    [detail.summary,detail.duration,detail.impact].forEach((value,i)=>{
+      if(!fields[i].value||fields[i].value===preparedScreeningFields.get(fields[i])){
+        fields[i].value=value.slice(0,2000).replace(/[\uD800-\uDBFF]$/,'');preparedScreeningFields.set(fields[i],fields[i].value);
+        if(value.length>2000)document.getElementById('preparation-status').textContent=labels.recordTruncated;
+        fields[i].dispatchEvent(new Event('input',{bubbles:true}));
+      }
+    });
+    document.getElementById('energy-care').hidden=!detail.energy;
+    document.getElementById('function-care').hidden=!detail.basicNeeds;
+    const needsCare=detail.energy||detail.basicNeeds;
+    const actions=detail.concerns.map((concern:string)=>({mood:'one-step',worry:'worry'})[concern]);
+    app.querySelectorAll<HTMLElement>('[data-action]').forEach(card=>card.hidden=needsCare || !(actions.length?actions.includes(card.dataset.action):card.dataset.action==='choose'));
+    document.getElementById('action-reason').hidden=true;
+    inlineActivity.replaceChildren();delete inlineActivity.dataset.guide;inlineActivity.hidden=true;
+    document.getElementById('result-options').hidden=false;
+    form.hidden=true;result.hidden=false;
+    const title=document.getElementById('result-title');title.focus({preventScroll:true});title.scrollIntoView({block:'start',behavior:'instant'});
+  });
+  document.getElementById('revise-check-in').addEventListener('click', () => {
+    if(screeningActive)document.getElementById('screening-revise').click();else showStep(1);
+  });
   // Back/forward cache must not unexpectedly reveal a previous person's selections.
-  window.addEventListener('pageshow', event => { if(event.persisted) { form.reset(); summary=''; app.querySelector<HTMLElement>('#result-summary').textContent=''; showStep(0); } });
+  window.addEventListener('pageshow', event => { if(event.persisted) { form.reset(); summary=''; preparedScreeningFields.clear(); app.querySelector<HTMLElement>('#result-summary').textContent=''; showStep(0); } });
 </script>

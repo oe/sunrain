@@ -1,0 +1,77 @@
+{
+  "phq-9": {
+    "en": {
+      "title": "Patient Health Questionnaire-9 (PHQ-9)",
+      "instruction": "Over the last 2 weeks, how often have you been bothered by any of the following problems?",
+      "options": ["Not at all", "Several days", "More than half the days", "Nearly every day"],
+      "questions": ["Little interest or pleasure in doing things", "Feeling down, depressed, or hopeless", "Trouble falling or staying asleep, or sleeping too much", "Feeling tired or having little energy", "Poor appetite or overeating", "Feeling bad about yourself — or that you are a failure or have let yourself or your family down", "Trouble concentrating on things, such as reading the newspaper or watching television", "Moving or speaking so slowly that other people could have noticed? Or the opposite — being so fidgety or restless that you have been moving around a lot more than usual", "Thoughts that you would be better off dead or of hurting yourself in some way"],
+      "impact": "If you checked off any problems, how difficult have these problems made it for you to do your work, take care of things at home, or get along with other people?",
+      "impactOptions": ["Not difficult at all", "Somewhat difficult", "Very difficult", "Extremely difficult"]
+    },
+    "zh-hans": {
+      "title": "病人健康状况问卷－9 (PHQ-9)",
+      "instruction": "在过去两周，您经常受到以下问题的困扰吗？",
+      "options": ["从来沒有", "有几天", "刚超过一半天数", "接近每天"],
+      "questions": ["做任何事都觉得沉闷或者根本不想做任何事", "情绪低落、抑郁或绝望", "难于入睡；半夜会醒，或相反，睡觉时间过多", "觉得疲倦或沒有活力", "胃口极差或饮食过量", "不喜欢自己──觉得自己做得不好、对自己失望或有负家人期望", "难于集中精神做事，例如看报纸或看电视", "其它人反映你行动或说话迟缓；或者相反，你比平常活动更多──坐立不安、停不下来", "想到自己最好去死或者自残"],
+      "impact": "如果你选出以上任何问题，这些问题对你的工作、处理家中事务或与人相处时来说造成多大困难？",
+      "impactOptions": ["完全沒有困难", "有一些困难", "非常困难", "极度困难"]
+    },
+    "zh-hant": {
+      "title": "病人健康狀況問卷－9 (PHQ-9)",
+      "instruction": "在過去兩個星期，你有多經常受以下問題困擾？",
+      "options": ["完全沒有", "幾天", "一半以上的天數", "近乎每天"],
+      "questions": ["做任何事都覺得沉悶或者根本不想做任何事", "情緒低落、抑鬱或絕望", "難於入睡；半夜會醒或相反地睡覺時間過多", "覺得疲倦或活力不足", "胃口極差或進食過量", "不喜歡自己──覺得自己做得不好、對自己失望或有負家人期望", "難於集中精神做事，例如看報紙或看電視", "其他人反映你行動或說話遲緩；或者相反地，你比平常活動更多──坐立不安、停不下來", "想到自己最好去死或者自殘"],
+      "impact": "如果你剔選出以上任何問題，這些問題對你的工作、處理家中事務或與人相處時來說有多少困難？",
+      "impactOptions": ["完全沒有困難", "有一些困難", "非常困難", "極度困難"]
+    },
+    "es": {
+      "title": "Cuestionario de Salud del Paciente-9 (PHQ-9)",
+      "instruction": "Durante las últimas 2 semanas ¿con qué frecuencia le ha molestado alguno de los siguientes problemas?",
+      "options": ["Nunca", "Varios días", "Más de la mitad de los días", "Casi cada día"],
+      "questions": ["Poco interés o alegría por hacer cosas", "Sensación de estar decaído/a, deprimido/a o desesperanzado/a", "Problemas para quedarse dormido/a, para seguir durmiendo o dormir demasiado", "Sensación de cansancio o de tener poca energía", "Poco apetito o comer demasiado", "Sentirse mal consigo mismo/a; sentir que es un/a fracasado/a o que ha decepcionado a su familia o a sí mismo/a", "Problemas para concentrarse en algo, como leer el periódico o ver la televisión", "Moverse o hablar tan despacio que los demás pueden haberlo notado. O lo contrario: estar tan inquieto/a o agitado/a que se ha estado moviendo de un lado a otro más de lo habitual", "Pensamientos de que estaría mejor muerto/a o de querer hacerse daño de algún modo"],
+      "impact": "Si ha marcado alguno de los problemas de este cuestionario, ¿hasta qué punto estos problemas le han creado dificultades para hacer su trabajo, ocuparse de la casa o relacionarse con los demás?",
+      "impactOptions": ["Ninguna dificultad", "Algunas dificultades", "Muchas dificultades", "Muchísimas dificultades"]
+    },
+    "ja": {
+      "title": "患者さんの健康に関する質問票-9 (PHQ-9)",
+      "instruction": "この2週間、次のような問題にどのくらい頻繁に悩まされていますか?",
+      "options": ["全くない", "数日", "半分以上", "ほとんど毎日"],
+      "questions": ["物事に対してほとんど興味がない、または楽しめない", "気分が落ち込む、憂うつになる、または絶望的な気持ちになる", "寝付きが悪い、途中で目がさめる、または逆に眠り過ぎる", "疲れた感じがする、または気力がない", "あまり食欲がない、または食べ過ぎる", "自分はダメな人間だ、人生の敗北者だと気に病む、または自分自身あるいは家族に申し訳がないと感じる", "新聞を読む、またはテレビを見ることなどに集中することが難しい", "他人が気づくぐらいに動きや話し方が遅くなる、あるいはこれと反対に、そわそわしたり、落ちつかず、普段よりも動き回ることがある", "死んだほうがましだ、あるいは自分を何らかの方法で傷つけようと思ったことがある"],
+      "impact": "一つでも問題に当てはまる場合、仕事をしたり、家事をしたり、他の人と仲良くやっていくことがどのくらい困難になっていますか?",
+      "impactOptions": ["全く困難でない", "やや困難", "大変困難", "極端に困難"]
+    },
+    "ko": {
+      "title": "환자 건강 질문지-9 (PHQ-9)",
+      "instruction": "지난 2주일 동안 당신은 다음의 문제들로 인해서 얼마나 자주 방해를 받았습니까?",
+      "options": ["전혀 방해 받지 않았다", "며칠 동안 방해 받았다", "7일 이상 방해 받았다", "거의 매일 방해 받았다"],
+      "questions": ["일 또는 여가 활동을 하는 데 흥미나 즐거움을 느끼지 못함", "기분이 가라앉거나, 우울하거나, 희망이 없음", "잠이 들거나 계속 잠을 자는 것이 어려움, 또는 잠을 너무 많이 잠", "피곤하다고 느끼거나 기운이 거의 없음", "입맛이 없거나 과식을 함", "자신을 부정적으로 봄 - 혹은 자신이 실패자라고 느끼거나 자신 또는 가족을 실망시킴", "신문을 읽거나 텔레비전 보는 것과 같은 일에 집중하는 것이 어려움", "다른 사람들이 주목할 정도로 너무 느리게 움직이거나 말을 함. 또는 반대로 평상시보다 많이 움직여서, 너무 안절부절 못하거나 들떠 있음", "자신이 죽는 것이 더 낫다고 생각하거나 어떤 식으로든 자신을 해칠 것이라고 생각함"],
+      "impact": "만일 당신이 위의 문제 중 하나 이상 \"예\" 라고 응답하셨으면, 이러한 문제들로 인해서 당신은 일을 하거나 가정일을 돌보거나 다른 사람과 어울리는 것이 얼마나 어려웠습니까?",
+      "impactOptions": ["전혀 어렵지 않았다", "약간 어려웠다", "많이 어려웠다", "매우 많이 어려웠다"]
+    },
+    "hi": {
+      "title": "रोगी स्वास्थ्य प्रश्नावली – 9 (PHQ-9)",
+      "instruction": "पिछले 2 सप्ताहों में, आप इन समस्याओं में से किसी से भी कितनी बार परेशान रहे/रही हैं?",
+      "options": ["बिल्कुल नहीं", "कई दिन", "आधे से अधिक दिन", "लगभग हर दिन"],
+      "questions": ["कुछ करने में बहुत कम दिलचस्पी या मज़ा आना", "उदास, अवसादग्रस्त या निराश महसूस करना", "नींद आने या सोये रहने में परेशानी, या फिर बहुत अधिक सोना", "थकान महसूस करना या बहुत कम ऊर्जा होना", "भूख कम लगना या ज़्यादा खाना", "अपने बारे में बुरा महसूस करना - या ऐसा महसूस करना कि आप नाकाम इंसान हैं और आपने खुद को और अपने परिवार को नीचा दिखाया है", "अखबार पढ़ने या टेलीविज़न देखने जैसी चीज़ों पर ध्यान देने में परेशानी", "इतना धीमे चलना-फिरना या बोलना कि लोगों का ध्यान जाये? या इसका उल्टा - इतना अस्थिर या बेचैन होना कि आप सामान्य से काफ़ी ज़्यादा हिलते-डुलते और चलते-फिरते रहे हैं", "ऐसे विचार कि आप मर जाते तो अच्छा होता या किसी ढंग से ख़ुद को नुकसान पहुंचाना"],
+      "impact": "अगर आपने किन्हीं समस्याओं पर निशान लगाया है, तो बतायें कि इन समस्याओं ने आपके लिए काम करना, घर पर चीज़ों की देखभाल करना, या दूसरे लोगों के साथ मेल-जोल रखना कितना मुश्किल किया है?",
+      "impactOptions": ["बिल्कुल मुश्किल नहीं", "थोड़ा-बहुत मुश्किल", "बहुत मुश्किल", "बेहद मुश्किल"]
+    },
+    "ar": {
+      "title": "استبيان حول صحة المريض-9 (PHQ-9)",
+      "instruction": "كم عانيت من المشاكل التالية خلال الأسبوعين الماضيين؟",
+      "options": ["أبدًا", "بعض الأيام", "أكثر من نصف الأيام", "كل يوم تقريبًا"],
+      "questions": ["قلة الاهتمام أو الاستمتاع بممارسة الأشياء.", "الشعور بالحزن أو ضيق الصدر أو اليأس.", "الصعوبة في الركون إلى النوم أو النوم بانتظام أو النوم أكثر من العادة.", "الشعور بالتعب أو بقلة الحيوية.", "قلة الشهية أو كثرة الأكل.", "الشعور بعدم الرضا عن النفس أو بالفشل أو الإحباط تجاه ذويك.", "الصعوبة في التركيز على الأشياء، مثل قراءة الصحف أو مشاهدة التلفزيون.", "بطء في الحركة أو الكلام بدرجة ملحوظة من الآخرين؟ أو على العكس من ذلك كثرة التململ والتحرك إلى درجة فوق العادة.", "الشعور بتفضيل الموت عن الحياة أو بإيذاء النفس بطريقة ما."],
+      "impact": "إذا حددت أي مشاكل، إلى أي مدى منعتك هذه المشاكل من القيام بعملك أو الاعتناء بشؤونك المنزلية أو التعامل مع الناس؟",
+      "impactOptions": ["غير صعب بالمرة", "صعب نوعا ما", "صعب جدا", "صعب للغاية"]
+    }
+  },
+  "gad-7": {
+    "en": {"title":"GAD-7","instruction":"Over the last 2 weeks, how often have you been bothered by the following problems?","options":["Not at all","Several days","More than half the days","Nearly every day"],"questions":["Feeling nervous, anxious or on edge","Not being able to stop or control worrying","Worrying too much about different things","Trouble relaxing","Being so restless that it is hard to sit still","Becoming easily annoyed or irritable","Feeling afraid as if something awful might happen"]},
+    "zh-hans": {"title":"GAD-7","instruction":"在过去两周，您经常受到以下问题的困扰吗？","options":["从来没有","有几天","刚超过一半天数","接近每天"],"questions":["感觉心神不安、焦虑或高度紧张","不能停止或控制担心","为各种各样的事情过度担心","难以放松","非常不安静以至于难以坐定","变得易恼火或易急躁","害怕发生可怕的事情"]},
+    "zh-hant": {"title":"GAD-7","instruction":"在過去兩個星期，你有多經常受以下問題困擾？","options":["完全沒有","幾天","超過一半或以上的天數","近乎每天"],"questions":["感到緊張、不安或煩躁","無法停止或控制憂慮","過份憂慮不同的事情","難以放鬆","心緒不寧以至坐立不安","容易心煩或易怒","感到害怕，就像要發生可怕的事情"]},
+    "es": {"title":"GAD-7","instruction":"En los últimos 14 días, ¿con qué frecuencia le han supuesto una molestia los siguientes problemas?","options":["Nunca","Varios días","Más de la mitad de los días","Casi cada día"],"questions":["Sentirse nervioso/a, angustiado/a o muy tenso/a","Ser incapaz de dejar de preocuparse o de controlar la preocupación","Preocuparse demasiado por diferentes cuestiones","Tener problemas para relajarse","Estar tan inquieto/a que le resulta difícil permanecer sentado/a","Enfadarse o irritarse con facilidad","Sentir miedo de que algo terrible pueda ocurrir"]},
+    "ko": {"title":"GAD-7","instruction":"지난 2주 동안 당신은 다음의 문제들로 인해서 얼마나 자주 방해를 받았습니까?","options":["전혀 방해 받지 않았다","며칠 동안 방해 받았다","2주중 절반 이상 방해 받았다","거의 매일 방해 받았다"],"questions":["초조하거나 불안하거나 조마조마하게 느낀다","걱정하는 것을 멈추거나 조절할 수가 없다","여러 가지 것들에 대해 걱정을 너무 많이 한다","편하게 있기가 어렵다","너무 안절부절못해서 가만히 있기가 힘들다","쉽게 짜증이 나거나 쉽게 성을 내게 된다","마치 끔찍한 일이 생길 것처럼 두렵게 느껴진다"]},
+    "hi": {"title":"GAD-7","instruction":"पिछले 2 सप्ताहों के दौरान, आप निम्नलिखित समस्याओं से कितनी बार परेशान हुए?","options":["बिल्कुल नहीं","कई दिनों तक","आधे से ज़्यादा दिनों तक","लगभग रोज़ाना"],"questions":["बेचैनी, चिंता या तनाव महसूस करना","चिंता रोकने या नियंत्रित कर सकने में असफल रहना","विभिन्न चीज़ों के लिए बहुत ज़्यादा चिंता करना","आराम करने में परेशानी","इतनी ज़्यादा बेचैनी, कि स्थिर बैठना मुश्किल हो जाता है","आसानी से चिढ़ना या खिजना","डर महसूस होना कि शायद कुछ बहुत बुरा हो सकता है"]},
+    "ar": {"title":"GAD-7","instruction":"خلال الأسبوعين الماضيين، كم مرّة أقلقتك المشاكل التّالية؟","options":["أبدًا","بعض الأيام","أكثر من نصف الأيام","كل يوم تقريبًا"],"questions":["الشعور بالغضب أو القلق أو الانفعال الشديد.","عدم القدرة على إنهاء القلق أو التحكّم فيه.","القلق المفرط على أشياء مختلفة.","الصعوبة في الاسترخاء.","شدة الاضطراب لدرجة صعوبة البقاء في هدوء.","السرعة في الانزعاج أو الانفعال.","الشّعور بالخوف كما لو أن شيئًا فظيعًا قد يحدث."]}
+  }
+}

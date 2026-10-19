@@ -1,23 +1,206 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
+  "mode": "symptom-reference",
+  "checkedAt": "2026-10-19",
+  "manual": {
+    "tool": "instructions",
+    "locale": "en",
+    "label": "Official instructions",
+    "url": "https://www.phqscreeners.com/images/sites/g/files/g10016261/f/201412/instructions.pdf",
+    "sha256": "6ed2f00f97e438c1168cd702d38d31fc923031445c720653005f138aa424228a",
+    "bytes": 134493,
+    "textStatus": 0
+  },
   "tools": {
     "phq-9": {
-      "version": "standard-2-week",
+      "version": "phqscreeners-201412",
+      "mode": "symptom-reference",
       "source": "https://pubmed.ncbi.nlm.nih.gov/11556941/",
-      "population": "adults",
+      "population": "adult-reference-and-adolescent-record",
       "recallDays": 14,
-      "rights": { "status": "pending", "evidence": null },
-      "clinicalReview": { "status": "pending", "reviewer": null, "date": null },
-      "locales": {}
+      "questionCount": 9,
+      "rights": {
+        "status": "verified",
+        "evidence": "https://www.phqscreeners.com/select-screener",
+        "terms": "https://www.phqscreeners.com/terms"
+      },
+      "sourceCheck": {
+        "status": "checked",
+        "method": "AI comparison against source PDFs; Hindi visually transcribed; no independent clinical or native-speaker approval",
+        "date": "2026-10-19"
+      },
+      "clinicalReview": {
+        "status": "pending",
+        "reviewer": null,
+        "date": null
+      },
+      "locales": {
+        "en": {
+          "status": "source-checked",
+          "version": "phqscreeners-201412",
+          "source": "https://www.phqscreeners.com/images/sites/g/files/g10060481/f/201412/PHQ-9_English.pdf",
+          "sourceLabel": "English",
+          "sourceSha256": "e3fb5b8853e3530c9025c822b99fd4f4bc17da49eefda5ed689c49238c132a46",
+          "formSha256": "c807485bc684b61216eebef4caa952ca167fd18190fa1cacff90943dace2c6a9",
+          "checkedAt": "2026-10-19"
+        },
+        "zh-hans": {
+          "status": "source-checked",
+          "version": "phqscreeners-201412",
+          "source": "https://www.phqscreeners.com/images/sites/g/files/g10060481/f/201412/PHQ9_Simplified%20Chinese%20for%20Mainland%20China.pdf",
+          "sourceLabel": "Simplified Chinese for Mainland China",
+          "sourceSha256": "09a8afdec1546b54162850faae7b9bc43d53879e9cbe8b8e1263e67ff254b095",
+          "formSha256": "f4011d5cab79b8cd3cfcc744c6133f98ad26fcaa16d32e1defa7a5ea28110326",
+          "checkedAt": "2026-10-19"
+        },
+        "zh-hant": {
+          "status": "source-checked",
+          "version": "phqscreeners-201412",
+          "source": "https://www.phqscreeners.com/images/sites/g/files/g10060481/f/201412/PHQ9_Traditional%20Chinese%20for%20Hong%20Kong.pdf",
+          "sourceLabel": "Traditional Chinese for Hong Kong",
+          "sourceSha256": "353cf974972c6d297dbdafbc3291b58362c5c8704960d849efac61626165f9a7",
+          "formSha256": "aba1c0ffc8f52d6adc1854ec0a7d2c9b13420de897daf34420117f4ed70f20f4",
+          "checkedAt": "2026-10-19"
+        },
+        "es": {
+          "status": "source-checked",
+          "version": "phqscreeners-201412",
+          "source": "https://www.phqscreeners.com/images/sites/g/files/g10060481/f/201412/PHQ9_Spanish%20for%20Spain.pdf",
+          "sourceLabel": "Spanish for Spain",
+          "sourceSha256": "bbd51fb21874ca593870f2ea4bc96b14286f104f02ea435d4907cc7f92ab88ae",
+          "formSha256": "7a9943bb6fbb8254eeeaccb3a8555d9f1a3a21d429deab891a1bcee28b2c0ed7",
+          "checkedAt": "2026-10-19"
+        },
+        "ja": {
+          "status": "source-checked",
+          "version": "phqscreeners-201412",
+          "source": "https://www.phqscreeners.com/images/sites/g/files/g10060481/f/201412/PHQ9_Japanese%20for%20Japan.pdf",
+          "sourceLabel": "Japanese for Japan",
+          "sourceSha256": "4552f7b2f7047dbea8b9244ce3340bd3ca287153913c0ce0298443bfef91bdab",
+          "formSha256": "073b53e5b0f7ea95a9234669032b2fd6fb0ade6c1553ef9d538d28f4aa927f10",
+          "checkedAt": "2026-10-19"
+        },
+        "ko": {
+          "status": "source-checked",
+          "version": "phqscreeners-201412",
+          "source": "https://www.phqscreeners.com/images/sites/g/files/g10060481/f/201412/PHQ9_Korean%20for%20Korea.pdf",
+          "sourceLabel": "Korean for Korea",
+          "sourceSha256": "effeeb0890d7612738dcff9f02a4520911f599bf234ddb94418f07151e5ed6c2",
+          "formSha256": "2035f8581786a1edc61004a56c6bae3bf10c56a892ec2d90e6b6c7057516eb95",
+          "checkedAt": "2026-10-19"
+        },
+        "hi": {
+          "status": "source-checked",
+          "version": "phqscreeners-201412",
+          "source": "https://www.phqscreeners.com/images/sites/g/files/g10060481/f/201412/PHQ9_Hindi%20for%20India.pdf",
+          "sourceLabel": "Hindi for India",
+          "sourceSha256": "df0908016e4c9bc39ea614dd5081051500be9281b4c8b477a4f9716300fe3311",
+          "formSha256": "92bf657d82823ad3ced2bd69c2c0970ce126c70ce61cf7289b0bb02e884dbc25",
+          "checkedAt": "2026-10-19"
+        },
+        "ar": {
+          "status": "source-checked",
+          "version": "phqscreeners-201412",
+          "source": "https://www.phqscreeners.com/images/sites/g/files/g10060481/f/201412/PHQ9_Arabic%20for%20Tunisia.pdf",
+          "sourceLabel": "Arabic for Tunisia",
+          "sourceSha256": "243f28533255efa0910c6653b59f5ce612800a79c1800c3e616d665d11b4fa7c",
+          "formSha256": "2d80f670919fe23922478cd302c450bba4ccb6204e6d44b3c79447884ac8d1b4",
+          "checkedAt": "2026-10-19"
+        }
+      }
     },
     "gad-7": {
-      "version": "standard-2-week",
+      "version": "phqscreeners-201412",
+      "mode": "symptom-reference",
       "source": "https://pubmed.ncbi.nlm.nih.gov/16717171/",
-      "population": "adults",
+      "population": "adult-reference-and-adolescent-record",
       "recallDays": 14,
-      "rights": { "status": "pending", "evidence": null },
-      "clinicalReview": { "status": "pending", "reviewer": null, "date": null },
-      "locales": {}
+      "questionCount": 7,
+      "rights": {
+        "status": "verified",
+        "evidence": "https://www.phqscreeners.com/select-screener",
+        "terms": "https://www.phqscreeners.com/terms"
+      },
+      "sourceCheck": {
+        "status": "checked",
+        "method": "AI comparison against source PDFs; Hindi visually transcribed; no independent clinical or native-speaker approval",
+        "date": "2026-10-19"
+      },
+      "clinicalReview": {
+        "status": "pending",
+        "reviewer": null,
+        "date": null
+      },
+      "locales": {
+        "en": {
+          "status": "source-checked",
+          "version": "phqscreeners-201412",
+          "source": "https://www.phqscreeners.com/images/sites/g/files/g10060481/f/201412/GAD-7_English.pdf",
+          "sourceLabel": "English",
+          "sourceSha256": "180538a8e3f2f3cb012f9991d1b307d3d14720e82bf0593f8853f4885740ce48",
+          "formSha256": "ce1459acf40c7cbbf311f2bda8ca72e79ee32bde32566a599eeab167d2dd0ecf",
+          "checkedAt": "2026-10-19"
+        },
+        "zh-hans": {
+          "status": "source-checked",
+          "version": "phqscreeners-201412",
+          "source": "https://www.phqscreeners.com/images/sites/g/files/g10060481/f/201412/GAD7_Simplified%20Chinese%20for%20Mainland%20China.pdf",
+          "sourceLabel": "Simplified Chinese for Mainland China",
+          "sourceSha256": "d5ce79b071f5648876bf23a5640236746bd567571c6c5095046a76806884557f",
+          "formSha256": "150c3a399da99b28106375eda9238224815609a18840aaba675af724a0670d2e",
+          "checkedAt": "2026-10-19"
+        },
+        "zh-hant": {
+          "status": "source-checked",
+          "version": "phqscreeners-201412",
+          "source": "https://www.phqscreeners.com/images/sites/g/files/g10060481/f/201412/GAD7_Traditional%20Chinese%20for%20Hong%20Kong.pdf",
+          "sourceLabel": "Traditional Chinese for Hong Kong",
+          "sourceSha256": "dcbcb68e6176da317b135dcad05d629b54ae59691fef878287ff20b8f7743089",
+          "formSha256": "77ab3b40c7d03ef7d8b9c23d138b32bb5011fbefd2954974600b2511143aaabb",
+          "checkedAt": "2026-10-19"
+        },
+        "es": {
+          "status": "source-checked",
+          "version": "phqscreeners-201412",
+          "source": "https://www.phqscreeners.com/images/sites/g/files/g10060481/f/201412/GAD7_Spanish%20for%20Spain.pdf",
+          "sourceLabel": "Spanish for Spain",
+          "sourceSha256": "63f132c2244c3154482eaf919742faaa693d8dbf958ba1af9971ece9941df16d",
+          "formSha256": "0e00b4a74ca5f3baea9e459086207f56488cb09802f81bbfea4f422c46af4186",
+          "checkedAt": "2026-10-19"
+        },
+        "ko": {
+          "status": "source-checked",
+          "version": "phqscreeners-201412",
+          "source": "https://www.phqscreeners.com/images/sites/g/files/g10060481/f/201412/GAD7_Korean%20for%20Korea.pdf",
+          "sourceLabel": "Korean for Korea",
+          "sourceSha256": "5313f43027b6185d63c4bdd9f832441a5f4193213dd644c469b4511046ee2549",
+          "formSha256": "45da85c0a146da6432976105459486f9fa9f8801c3f0761a344a5918c4f6bd1f",
+          "checkedAt": "2026-10-19"
+        },
+        "hi": {
+          "status": "source-checked",
+          "version": "phqscreeners-201412",
+          "source": "https://www.phqscreeners.com/images/sites/g/files/g10060481/f/201412/GAD7_Hindi%20for%20India.pdf",
+          "sourceLabel": "Hindi for India",
+          "sourceSha256": "c2b2da119bff837741f18f3acbc58d69d2bc339d355f3e2643616ce535a503b6",
+          "formSha256": "8823d0d2ccbd191c60c06d5ca84d7d07f46b1366d825de8a93781ef5c5b01cb4",
+          "checkedAt": "2026-10-19"
+        },
+        "ar": {
+          "status": "source-checked",
+          "version": "phqscreeners-201412",
+          "source": "https://www.phqscreeners.com/images/sites/g/files/g10060481/f/201412/GAD7_Arabic%20for%20Tunisia.pdf",
+          "sourceLabel": "Arabic for Tunisia",
+          "sourceSha256": "2922342f058db448ba36e6da79fd55e7cc2beabba218f57d26c40ac73fe1b0bd",
+          "formSha256": "256969a9583ab7ce8e63475bdee868e251a0239a68d3e2a424e473f6054658d9",
+          "checkedAt": "2026-10-19"
+        },
+        "ja": {
+          "status": "unavailable",
+          "source": "https://jpsad.jp/other_work/research-2012/files/jpsad_gad7.pdf",
+          "reason": "Japanese 2025 form explicitly prohibits unauthorized reproduction and electronic use; no permission obtained."
+        }
+      }
     }
   }
 }

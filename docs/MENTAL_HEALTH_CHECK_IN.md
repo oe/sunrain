@@ -1,6 +1,6 @@
 # Sunrain 心理状态初筛与自助入口规格
 
-更新日期：2026-10-19。状态：目标规格与当前实现有差异。一般支持版本已发布，包含单页近况梳理、四项站内行动、沟通准备及八语声明；医学评分保持关闭，独立专业审阅未完成。当前线上版本以 `/build-metadata.json` 为准。发布边界见 [RELEASING.md](./RELEASING.md)。医学内容、译本与授权的核验状态见 [CLINICAL_EVIDENCE.md](./CLINICAL_EVIDENCE.md)。本文中的未来医学筛查规格不代表功能已上线或已经专业人士审阅。
+更新日期：2026-10-19。此前发布版本仅提供一般支持，未满足“先初筛、解释症状，再连接自助”的核心目标。本次实施以 [SCREENING_IMPLEMENTATION.md](./SCREENING_IMPLEMENTATION.md) 为准：原版量表的症状参考、分开解释、自助与求助闭环；独立专业审阅仍未完成。当前线上版本以 `/build-metadata.json` 为准。以下保留原目标与更进一步的临床功能规格；其中旧实现观察、评分全部关闭与统一专业准入要求不代表本次症状参考版的状态。发布边界见 [RELEASING.md](./RELEASING.md)，来源见 [CLINICAL_EVIDENCE.md](./CLINICAL_EVIDENCE.md)。
 
 ## 1. 用户任务和产品承诺
 

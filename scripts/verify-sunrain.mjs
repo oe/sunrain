@@ -57,9 +57,9 @@ assertNoMatch(
   'assessment flow text must use translations'
 );
 const assessmentPage = readText('src/pages/assessment/[id].astro');
-assert.match(assessmentPage, /data-screening-status="unavailable"/);
+assert.match(assessmentPage, /data-screening-status=\{available\?'available':'unavailable'\}/);
 assert.doesNotMatch(assessmentPage, /getCollection|localizeQuestionnaire|localStorage/,
-  'Unreviewed screening forms must not be shipped to the client');
+  'Legacy bookmarks must lead to the central flow, not ship old questionnaire data');
 for (const tool of Object.values(readJson('src/data/screening-registry.json').tools)) {
   assert.equal(tool.clinicalReview.status, 'pending');
 }
