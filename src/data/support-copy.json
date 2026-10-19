@@ -46,7 +46,7 @@
           "title": "Notice what is around you",
           "purpose": "A brief sensory exercise for when stress feels overwhelming. It does not treat a mental health condition.",
           "steps": [
-            "Find a comfortable position. Keep your eyes open if you prefer.",
+            "Find a comfortable position. Keep your eyes open if you prefer. Skip any sense that is unavailable or uncomfortable.",
             "Notice five things you can see, four you can feel, and three you can hear.",
             "Notice two smells and one taste already present. Do not taste unknown substances. Skip any sense that is unavailable or uncomfortable.",
             "Pause and decide whether to stop, return to a simple activity, or choose more support."
@@ -127,14 +127,17 @@
           "What is troubling me",
           "When it started",
           "Effect on daily life",
-          "What I have already tried",
+          "Support I have tried or am considering",
           "Questions I want to ask"
         ]
       },
       "review": {
         "professional": "pending",
         "language": "pending",
-        "direction": "ltr"
+        "direction": "ltr",
+        "sourceConsistency": "checked_by_ai_not_clinical_approval",
+        "languageConsistency": "checked_by_ai_not_native_review",
+        "automatedCheckedAt": "2026-10-19"
       },
       "result": {
         "title": "Understand your results",
@@ -175,7 +178,7 @@
         "result": "Your next steps",
         "limits": "This summary reflects your selections. It does not identify or rule out any condition, and several concerns do not mean several diagnoses. Other concerns have not been assessed.",
         "care": "If symptoms persist, worsen, or affect daily life, contact a qualified health professional. You can ask for help at any time, including before trying self-help.",
-        "energyCare": "Unusually high energy together with much less need for sleep deserves prompt professional assessment. This page cannot tell whether it is bipolar disorder or something else. Contact your clinician or a local health service; use urgent services if there is immediate danger.",
+        "energyCare": "You selected unusually high energy or much less need for sleep. These changes deserve professional assessment, especially when they occur together. This page cannot tell whether the cause is bipolar disorder or something else. Contact your clinician or a local health service; use urgent services if there is immediate danger.",
         "toolsPending": "Clinical screening is temporarily unavailable while the exact versions, translation evidence, permissions and professional review are verified. You can still use check-in, self-help and help-seeking guidance.",
         "sources": "Sources & content status",
         "review": "General education written for Sunrain using the references below. It is not a validated treatment programme. Independent clinical and native-language review is pending. The source organisations have not reviewed or endorsed this page.",
@@ -281,7 +284,8 @@
         "copyMessage": "Copy message",
         "copied": "Message copied.",
         "copyFailed": "Copy was unavailable. Select the message or download it.",
-        "linkProblem": "Link unavailable or no suitable service?"
+        "linkProblem": "Link unavailable or no suitable service?",
+        "recordTruncated": "This activity record is too long to include in full. Only the beginning was added; your complete plan remains above and can be downloaded separately."
       }
     },
     "zh-hans": {
@@ -306,7 +310,7 @@
           "title": "把注意力带回身边",
           "purpose": "在压力让你难以承受时，尝试一段简短的感官练习。这不是心理疾病治疗。",
           "steps": [
-            "找一个舒服的姿势，可以保持睁眼。",
+            "找一个舒服的姿势，可以保持睁眼。不适用或让你不舒服的感官步骤可以直接跳过。",
             "留意五样看得到的东西、四种触感和三种声音。",
             "留意两种气味和一种已经存在的味道，不要尝不明物品。某种感官不适用或让你不舒服时可以跳过。",
             "停一下，决定是结束、回到一件简单的日常活动，还是选择更多支持。"
@@ -387,14 +391,17 @@
           "最困扰我的事",
           "从什么时候开始",
           "对日常生活的影响",
-          "已经尝试过什么",
+          "已经尝试或正在考虑的支持",
           "我想问的问题"
         ]
       },
       "review": {
         "professional": "pending",
         "language": "pending",
-        "direction": "ltr"
+        "direction": "ltr",
+        "sourceConsistency": "checked_by_ai_not_clinical_approval",
+        "languageConsistency": "checked_by_ai_not_native_review",
+        "automatedCheckedAt": "2026-10-19"
       },
       "result": {
         "title": "理解本次结果",
@@ -435,7 +442,7 @@
         "result": "接下来可以怎么做",
         "limits": "这份整理只反映你的选择，不能识别或排除任何疾病；多个困扰也不代表多种诊断。其他问题尚未评估。",
         "care": "如果困扰持续、加重或影响日常生活，请联系合格的专业人士。任何时候都可以求助，不必先尝试自助。",
-        "energyCare": "精力异常高涨、同时明显减少睡眠需求，值得尽快接受专业评估。本站无法判断是否为双相障碍或其他原因。请联系现有医生或当地医疗服务；有立即危险时使用紧急服务。",
+        "energyCare": "你选择了精力异常高涨或睡眠需求明显减少。这些变化值得接受专业评估，同时出现时尤其需要留意。本站无法判断是否为双相障碍或其他原因。请联系现有医生或当地医疗服务；有立即危险时使用紧急服务。",
         "toolsPending": "医学量表暂未开放：具体版本、译本依据、使用权限和专业审阅仍在核验。你仍可使用近况梳理、自助与求助指引。",
         "sources": "内容依据与状态",
         "review": "这些是 Sunrain 根据下列参考资料编写的一般教育内容，不是经验证的治疗课程。独立专业与母语审阅尚未完成，来源机构未审阅或认可本站内容。",
@@ -541,7 +548,8 @@
         "copyMessage": "复制联系内容",
         "copied": "已复制联系内容。",
         "copyFailed": "无法自动复制，请选中文字复制，或下载文本。",
-        "linkProblem": "链接打不开或没有找到合适服务？"
+        "linkProblem": "链接打不开或没有找到合适服务？",
+        "recordTruncated": "行动记录较长，目前只带入了开头部分。完整计划仍保留在上方，可以单独下载。"
       }
     },
     "zh-hant": {
@@ -566,7 +574,7 @@
           "title": "把注意力帶回身邊",
           "purpose": "在壓力讓你難以承受時，嘗試一段簡短的感官練習。這不是心理疾病治療。",
           "steps": [
-            "找一個舒服的姿勢，可以保持睜眼。",
+            "找一個舒服的姿勢，可以保持睜眼。不適用或讓你不舒服的感官步驟可以直接跳過。",
             "留意五樣看得到的東西、四種觸感和三種聲音。",
             "留意兩種氣味和一種已經存在的味道，不要嘗不明物品。某種感官不適用或讓你不舒服時可以跳過。",
             "停一下，決定是結束、回到一件簡單的日常活動，還是選擇更多支持。"
@@ -647,14 +655,17 @@
           "最困擾我的事",
           "從什麼時候開始",
           "對日常生活的影響",
-          "已經嘗試過什麼",
+          "已經嘗試或正在考慮的支持",
           "我想問的問題"
         ]
       },
       "review": {
         "professional": "pending",
         "language": "pending",
-        "direction": "ltr"
+        "direction": "ltr",
+        "sourceConsistency": "checked_by_ai_not_clinical_approval",
+        "languageConsistency": "checked_by_ai_not_native_review",
+        "automatedCheckedAt": "2026-10-19"
       },
       "result": {
         "title": "理解本次結果",
@@ -695,7 +706,7 @@
         "result": "接下來可以怎麼做",
         "limits": "這份整理只反映你的選擇，不能識別或排除任何疾病；多個困擾也不代表多種診斷。其他問題尚未評估。",
         "care": "如果困擾持續、加重或影響日常生活，請聯絡合格的專業人士。任何時候都可以求助，不必先嘗試自助。",
-        "energyCare": "精力異常高漲、同時明顯減少睡眠需求，值得儘快接受專業評估。本站無法判斷是否為雙相障礙或其他原因。請聯絡現有醫師或當地醫療服務；有立即危險時使用緊急服務。",
+        "energyCare": "你選擇了精力異常高漲或睡眠需求明顯減少。這些變化值得接受專業評估，同時出現時尤其需要留意。本站無法判斷是否為雙相障礙或其他原因。請聯絡現有醫師或當地醫療服務；有立即危險時使用緊急服務。",
         "toolsPending": "醫學量表暫未開放：具體版本、譯本依據、使用權限和專業審閱仍在核驗。你仍可使用近況整理、自助與求助指引。",
         "sources": "內容依據與狀態",
         "review": "這些是 Sunrain 根據下列參考資料編寫的一般教育內容，不是經驗證的治療課程。獨立專業與母語審閱尚未完成，來源機構未審閱或認可本站內容。",
@@ -801,7 +812,8 @@
         "copyMessage": "複製聯絡內容",
         "copied": "已複製聯絡內容。",
         "copyFailed": "無法自動複製，請選取文字複製，或下載文字檔。",
-        "linkProblem": "連結無法開啟或找不到合適服務？"
+        "linkProblem": "連結無法開啟或找不到合適服務？",
+        "recordTruncated": "行動記錄較長，目前只帶入了開頭部分。完整計畫仍保留在上方，可以單獨下載。"
       }
     },
     "es": {
@@ -826,7 +838,7 @@
           "title": "Presta atención a tu entorno",
           "purpose": "Un ejercicio sensorial breve para momentos de estrés abrumador. No es un tratamiento para una afección de salud mental.",
           "steps": [
-            "Busca una postura cómoda. Puedes mantener los ojos abiertos.",
+            "Busca una postura cómoda. Puedes mantener los ojos abiertos. Omite cualquier sentido que no puedas usar o te incomode.",
             "Observa cinco cosas que ves, cuatro sensaciones de contacto y tres sonidos.",
             "Percibe dos olores y un sabor ya presente. No pruebes sustancias desconocidas. Omite cualquier sentido que no puedas usar o te incomode.",
             "Haz una pausa y decide si quieres terminar, volver a una actividad sencilla o buscar más apoyo."
@@ -907,14 +919,17 @@
           "Qué me preocupa",
           "Cuándo empezó",
           "Cómo afecta a mi vida",
-          "Qué he intentado",
+          "Apoyo que he probado o estoy considerando",
           "Qué quiero preguntar"
         ]
       },
       "review": {
         "professional": "pending",
         "language": "pending",
-        "direction": "ltr"
+        "direction": "ltr",
+        "sourceConsistency": "checked_by_ai_not_clinical_approval",
+        "languageConsistency": "checked_by_ai_not_native_review",
+        "automatedCheckedAt": "2026-10-19"
       },
       "result": {
         "title": "Comprende tus resultados",
@@ -955,7 +970,7 @@
         "result": "Tus próximos pasos",
         "limits": "Este resumen refleja tus selecciones. No identifica ni descarta ninguna afección. Varias dificultades no equivalen a varios diagnósticos. No se han evaluado otros problemas.",
         "care": "Si los síntomas persisten, empeoran o afectan a tu vida diaria, contacta con un profesional cualificado. Puedes pedir ayuda antes de probar la autoayuda.",
-        "energyCare": "Una energía inusualmente alta junto con mucha menos necesidad de dormir merece una evaluación profesional pronta. Esta página no puede determinar si se trata de un trastorno bipolar u otra causa. Contacta con tu equipo o servicio de salud; usa urgencias ante un peligro inmediato.",
+        "energyCare": "Has elegido una energía inusualmente alta o mucha menos necesidad de dormir. Estos cambios merecen una evaluación profesional, especialmente si aparecen juntos. Esta página no puede determinar si la causa es un trastorno bipolar u otra. Contacta con tu equipo o servicio de salud; usa urgencias ante un peligro inmediato.",
         "toolsPending": "El cribado clínico no está disponible mientras verificamos versiones, traducciones, permisos y revisión profesional. Puedes usar la orientación, la autoayuda y la guía para pedir ayuda.",
         "sources": "Fuentes y estado del contenido",
         "review": "Educación general redactada por Sunrain a partir de las referencias. No es un programa de tratamiento validado. La revisión clínica independiente y lingüística está pendiente. Las entidades citadas no han revisado ni avalado esta página.",
@@ -1061,7 +1076,8 @@
         "copyMessage": "Copiar mensaje",
         "copied": "Mensaje copiado.",
         "copyFailed": "No se pudo copiar. Selecciona el texto o descárgalo.",
-        "linkProblem": "¿El enlace no funciona o no encuentras un servicio adecuado?"
+        "linkProblem": "¿El enlace no funciona o no encuentras un servicio adecuado?",
+        "recordTruncated": "El registro es demasiado largo para incluirlo completo. Solo se añadió el principio; el plan completo sigue arriba y puedes descargarlo por separado."
       }
     },
     "ja": {
@@ -1086,7 +1102,7 @@
           "title": "周囲に意識を向ける",
           "purpose": "ストレスが強いときの短い感覚の練習です。精神疾患を治療するものではありません。",
           "steps": [
-            "楽な姿勢をとります。目を開けたままでもかまいません。",
+            "楽な姿勢をとります。目を開けたままでもかまいません。使えない感覚や不快な感覚のステップは飛ばせます。",
             "見えるものを五つ、触れて感じるものを四つ、聞こえる音を三つ見つけます。",
             "においを二つ、すでに口の中にある味を一つ意識します。知らない物を口に入れないでください。使えない感覚や不快な感覚は飛ばせます。",
             "少し止まり、ここで終えるか、簡単な日常の活動に戻るか、別の支援を選ぶかを決めます。"
@@ -1167,14 +1183,17 @@
           "一番困っていること",
           "いつからか",
           "生活への影響",
-          "試したこと",
+          "試した支援・これから検討している支援",
           "聞きたいこと"
         ]
       },
       "review": {
         "professional": "pending",
         "language": "pending",
-        "direction": "ltr"
+        "direction": "ltr",
+        "sourceConsistency": "checked_by_ai_not_clinical_approval",
+        "languageConsistency": "checked_by_ai_not_native_review",
+        "automatedCheckedAt": "2026-10-19"
       },
       "result": {
         "title": "今回の結果を理解する",
@@ -1201,7 +1220,7 @@
         "mood": "気分の落ち込み・興味の低下",
         "worry": "心配・ストレス・パニック",
         "sleep": "睡眠の問題",
-        "energy": "普段と違う活力の高まり・睡眠が大幅に少なくても平気",
+        "energy": "普段と違う活力の高まり、または睡眠が大幅に少なくても平気",
         "other": "その他・よく分からない",
         "duration": "いつから気になっていますか？",
         "recent": "数日前から",
@@ -1215,7 +1234,7 @@
         "result": "次にできること",
         "limits": "選んだ内容の整理であり、病気の特定や除外はできません。複数の困りごとが複数の診断を意味するわけではありません。他の問題は評価していません。",
         "care": "困りごとが続く、悪化する、生活に影響する場合は資格のある専門家に相談してください。セルフケアを試す前でも相談できます。",
-        "energyCare": "普段と違う活力の高まりと睡眠の必要性の大きな低下は、早めの専門的評価が必要です。双極性障害か別の原因かはこの画面では判断できません。担当医や地域の医療機関に相談し、差し迫った危険があれば救急を利用してください。",
+        "energyCare": "普段と違う活力の高まり、または睡眠の必要性の大きな低下を選択しました。特に同時に現れる場合は、専門家に評価してもらうことが大切です。双極性障害か別の原因かはこの画面では判断できません。担当医や地域の医療機関に相談し、差し迫った危険があれば救急を利用してください。",
         "toolsPending": "医学的な質問票は、版・翻訳の根拠・使用許可・専門的確認が済むまで公開を停止しています。状態の整理やセルフケア、相談の準備は利用できます。",
         "sources": "参考資料と内容の状態",
         "review": "参考資料に基づく Sunrain の一般向け情報です。効果が検証された治療プログラムではありません。独立した医療・母語話者の確認は未完了で、出典機関の審査や推奨を受けたものではありません。",
@@ -1321,7 +1340,8 @@
         "copyMessage": "連絡文をコピー",
         "copied": "連絡文をコピーしました。",
         "copyFailed": "コピーできませんでした。文章を選択してコピーするか、ダウンロードしてください。",
-        "linkProblem": "リンクが開かない・適切な相談先が見つからない場合"
+        "linkProblem": "リンクが開かない・適切な相談先が見つからない場合",
+        "recordTruncated": "活動の記録が長いため、最初の部分だけを追加しました。計画の全文は上に残っており、別にダウンロードできます。"
       }
     },
     "ko": {
@@ -1346,7 +1366,7 @@
           "title": "주변으로 주의를 돌리기",
           "purpose": "스트레스가 압도적으로 느껴질 때 시도할 수 있는 짧은 감각 활동입니다. 정신질환 치료는 아닙니다.",
           "steps": [
-            "편안한 자세를 취하세요. 원하면 눈을 뜬 채로 해도 됩니다.",
+            "편안한 자세를 취하세요. 원하면 눈을 뜬 채로 해도 됩니다. 사용할 수 없거나 불편한 감각 단계는 건너뛰세요.",
             "보이는 것 다섯 가지, 느껴지는 촉감 네 가지, 들리는 소리 세 가지를 알아차려 보세요.",
             "냄새 두 가지와 이미 입안에 있는 맛 한 가지를 알아차려 보세요. 모르는 물질을 맛보지 마세요. 사용할 수 없거나 불편한 감각은 건너뛰세요.",
             "잠시 멈추고 마칠지, 간단한 일상 활동으로 돌아갈지, 다른 도움을 받을지 결정하세요."
@@ -1427,14 +1447,17 @@
           "가장 힘든 점",
           "시작된 시기",
           "일상생활에 미치는 영향",
-          "이미 시도한 것",
+          "시도했거나 고려 중인 지원",
           "묻고 싶은 질문"
         ]
       },
       "review": {
         "professional": "pending",
         "language": "pending",
-        "direction": "ltr"
+        "direction": "ltr",
+        "sourceConsistency": "checked_by_ai_not_clinical_approval",
+        "languageConsistency": "checked_by_ai_not_native_review",
+        "automatedCheckedAt": "2026-10-19"
       },
       "result": {
         "title": "이번 결과 이해하기",
@@ -1475,7 +1498,7 @@
         "result": "다음에 할 수 있는 일",
         "limits": "선택한 내용을 정리한 것으로, 질환을 알아내거나 배제할 수 없습니다. 여러 어려움이 여러 진단을 뜻하지 않습니다. 다른 문제는 평가하지 않았습니다.",
         "care": "증상이 지속되거나 심해지거나 일상에 영향을 주면 자격 있는 전문가에게 연락하세요. 자가 돌봄을 시도하기 전에도 도움을 요청할 수 있습니다.",
-        "energyCare": "평소와 다르게 높은 에너지와 수면 필요의 큰 감소가 함께 나타나면 빠른 전문 평가가 필요합니다. 이 페이지는 양극성 장애인지 다른 원인인지 판단할 수 없습니다. 담당 의료진이나 지역 의료 서비스에 연락하고, 즉각적인 위험이 있으면 응급 서비스를 이용하세요.",
+        "energyCare": "평소와 다르게 높은 에너지 또는 수면 필요의 큰 감소를 선택했습니다. 이런 변화는 특히 함께 나타날 때 전문 평가를 받아볼 필요가 있습니다. 이 페이지는 양극성 장애인지 다른 원인인지 판단할 수 없습니다. 담당 의료진이나 지역 의료 서비스에 연락하고, 즉각적인 위험이 있으면 응급 서비스를 이용하세요.",
         "toolsPending": "의학적 선별 검사는 버전, 번역 근거, 사용 권한과 전문가 검토를 확인하는 동안 제공하지 않습니다. 상태 정리, 자가 돌봄과 도움 요청 안내는 이용할 수 있습니다.",
         "sources": "출처와 콘텐츠 상태",
         "review": "아래 자료를 참고해 Sunrain이 작성한 일반 교육 정보입니다. 검증된 치료 프로그램이 아닙니다. 독립적인 의료 및 원어민 검토는 아직 완료되지 않았으며 출처 기관이 이 페이지를 검토하거나 보증하지 않았습니다.",
@@ -1581,7 +1604,8 @@
         "copyMessage": "연락 내용 복사",
         "copied": "연락 내용을 복사했습니다.",
         "copyFailed": "복사할 수 없습니다. 내용을 선택하거나 내려받으세요.",
-        "linkProblem": "링크가 열리지 않거나 적절한 기관을 찾지 못했나요?"
+        "linkProblem": "링크가 열리지 않거나 적절한 기관을 찾지 못했나요?",
+        "recordTruncated": "활동 기록이 길어 앞부분만 추가했습니다. 전체 계획은 위에 남아 있으며 별도로 내려받을 수 있습니다."
       }
     },
     "hi": {
@@ -1606,7 +1630,7 @@
           "title": "अपने आसपास पर ध्यान दें",
           "purpose": "जब तनाव बहुत अधिक लगे, तब एक छोटा संवेदी अभ्यास। यह मानसिक स्वास्थ्य की किसी बीमारी का उपचार नहीं है।",
           "steps": [
-            "आरामदायक स्थिति में रहें। चाहें तो आँखें खुली रखें।",
+            "आरामदायक स्थिति में रहें। चाहें तो आँखें खुली रखें। कोई इंद्रिय उपलब्ध न हो या असहज लगे, तो उसका कदम छोड़ दें।",
             "पाँच दिखाई देने वाली चीज़ों, चार स्पर्श-संवेदनाओं और तीन आवाज़ों पर ध्यान दें।",
             "दो गंधों और पहले से मौजूद एक स्वाद पर ध्यान दें। अज्ञात पदार्थ न चखें। कोई इंद्रिय उपलब्ध न हो या असहज लगे, तो उसे छोड़ दें।",
             "रुककर चुनें: यहीं समाप्त करना है, किसी सरल दैनिक काम पर लौटना है या अधिक सहायता लेनी है।"
@@ -1687,14 +1711,17 @@
           "मेरी मुख्य परेशानी",
           "यह कब शुरू हुई",
           "दैनिक जीवन पर असर",
-          "मैंने क्या आज़माया",
+          "जो सहायता आज़माई है या जिस पर विचार कर रहा/रही हूँ",
           "मेरे प्रश्न"
         ]
       },
       "review": {
         "professional": "pending",
         "language": "pending",
-        "direction": "ltr"
+        "direction": "ltr",
+        "sourceConsistency": "checked_by_ai_not_clinical_approval",
+        "languageConsistency": "checked_by_ai_not_native_review",
+        "automatedCheckedAt": "2026-10-19"
       },
       "result": {
         "title": "अपने परिणाम समझें",
@@ -1735,7 +1762,7 @@
         "result": "आपके अगले कदम",
         "limits": "यह सार आपके चुने उत्तरों पर आधारित है। इससे किसी बीमारी की पहचान या उसे खारिज नहीं किया जा सकता। कई परेशानियाँ कई निदान नहीं हैं। अन्य समस्याओं का मूल्यांकन नहीं हुआ है।",
         "care": "लक्षण बने रहें, बढ़ें या जीवन पर असर डालें तो योग्य स्वास्थ्य पेशेवर से संपर्क करें। स्वयं की देखभाल आज़माने से पहले भी सहायता माँग सकते हैं।",
-        "energyCare": "असामान्य रूप से अधिक ऊर्जा के साथ नींद की ज़रूरत बहुत कम होना जल्द पेशेवर मूल्यांकन का कारण है। यह पृष्ठ नहीं बता सकता कि कारण बाइपोलर डिसऑर्डर है या कुछ और। अपने चिकित्सक या स्थानीय स्वास्थ्य सेवा से संपर्क करें; तुरंत खतरे में आपात सेवा लें।",
+        "energyCare": "आपने असामान्य रूप से अधिक ऊर्जा या बहुत कम नींद की ज़रूरत चुनी है। इन बदलावों का पेशेवर आकलन उपयोगी है, खासकर साथ दिखाई देने पर। यह पृष्ठ नहीं बता सकता कि कारण बाइपोलर डिसऑर्डर है या कुछ और। अपने चिकित्सक या स्थानीय स्वास्थ्य सेवा से संपर्क करें; तुरंत खतरे में आपात सेवा लें।",
         "toolsPending": "सटीक संस्करण, अनुवाद के प्रमाण, अनुमति और पेशेवर समीक्षा की जाँच होने तक चिकित्सकीय स्क्रीनिंग उपलब्ध नहीं है। स्थिति समझने, स्वयं की देखभाल और सहायता लेने का मार्गदर्शन उपलब्ध है।",
         "sources": "स्रोत और सामग्री की स्थिति",
         "review": "Sunrain की सामान्य शैक्षिक सामग्री नीचे दिए संदर्भों पर आधारित है। यह प्रमाणित उपचार कार्यक्रम नहीं है। स्वतंत्र चिकित्सकीय और मातृभाषा समीक्षा बाकी है। स्रोत संस्थाओं ने इस पृष्ठ की समीक्षा या समर्थन नहीं किया है।",
@@ -1841,7 +1868,8 @@
         "copyMessage": "संदेश कॉपी करें",
         "copied": "संदेश कॉपी हो गया।",
         "copyFailed": "कॉपी नहीं हो सका। संदेश चुनकर कॉपी करें या डाउनलोड करें।",
-        "linkProblem": "लिंक न खुले या उपयुक्त सेवा न मिले तो?"
+        "linkProblem": "लिंक न खुले या उपयुक्त सेवा न मिले तो?",
+        "recordTruncated": "गतिविधि का रिकॉर्ड लंबा है, इसलिए केवल शुरुआती हिस्सा जोड़ा गया। पूरी योजना ऊपर मौजूद है और अलग से डाउनलोड की जा सकती है।"
       }
     },
     "ar": {
@@ -1866,7 +1894,7 @@
           "title": "لاحظ ما يحيط بك",
           "purpose": "تمرين حسي قصير عندما يبدو الضغط شديداً. ليس علاجاً لاضطراب نفسي.",
           "steps": [
-            "اتخذ وضعية مريحة. يمكنك إبقاء عينيك مفتوحتين.",
+            "اتخذ وضعية مريحة. يمكنك إبقاء عينيك مفتوحتين. تجاوز أي خطوة تستخدم حاسة غير متاحة لك أو تسبب لك انزعاجاً.",
             "لاحظ خمسة أشياء تراها، وأربعة أحاسيس باللمس، وثلاثة أصوات تسمعها.",
             "لاحظ رائحتين وطعماً موجوداً بالفعل. لا تتذوق مواد مجهولة. تجاوز أي حاسة لا يمكنك استخدامها أو تسبب لك انزعاجاً.",
             "توقف قليلاً واختر إن كنت تريد الانتهاء، أو العودة إلى نشاط يومي بسيط، أو طلب مزيد من الدعم."
@@ -1947,14 +1975,17 @@
           "ما الذي يزعجني",
           "متى بدأ",
           "تأثيره في حياتي اليومية",
-          "ما الذي جرّبته",
+          "الدعم الذي جرّبته أو أفكر في تجربته",
           "الأسئلة التي أود طرحها"
         ]
       },
       "review": {
         "professional": "pending",
         "language": "pending",
-        "direction": "rtl"
+        "direction": "rtl",
+        "sourceConsistency": "checked_by_ai_not_clinical_approval",
+        "languageConsistency": "checked_by_ai_not_native_review",
+        "automatedCheckedAt": "2026-10-19"
       },
       "result": {
         "title": "افهم نتائجك",
@@ -1995,7 +2026,7 @@
         "result": "خطواتك التالية",
         "limits": "يعكس الملخص اختياراتك فقط. لا يحدد أي اضطراب ولا يستبعده. وجود عدة صعوبات لا يعني وجود عدة تشخيصات. لم تُقيّم مشكلات أخرى.",
         "care": "إذا استمرت الأعراض أو ازدادت أو أثرت على حياتك اليومية، تواصل مع مختص مؤهل. يمكنك طلب المساعدة قبل تجربة المساعدة الذاتية أيضًا.",
-        "energyCare": "الطاقة المرتفعة بشكل غير معتاد مع انخفاض كبير في الحاجة إلى النوم تستدعي تقييمًا مهنيًا قريبًا. لا تستطيع هذه الصفحة تحديد إن كان السبب اضطرابًا ثنائي القطب أو غيره. تواصل مع طبيبك أو خدمة صحية محلية؛ واستخدم الطوارئ عند وجود خطر فوري.",
+        "energyCare": "اخترت طاقة مرتفعة على غير المعتاد أو حاجة أقل بكثير للنوم. تستحق هذه التغيرات تقييماً مهنياً، خصوصاً إذا ظهرت معاً. لا تستطيع هذه الصفحة تحديد إن كان السبب اضطراباً ثنائي القطب أو غيره. تواصل مع طبيبك أو خدمة صحية محلية؛ واستخدم الطوارئ عند وجود خطر فوري.",
         "toolsPending": "الفحص السريري غير متاح مؤقتًا إلى حين التحقق من الإصدارات والترجمات والأذونات والمراجعة المهنية. يمكنك استخدام تفقّد الحال والمساعدة الذاتية وإرشادات طلب الدعم.",
         "sources": "المصادر وحالة المحتوى",
         "review": "معلومات تثقيفية عامة كتبها Sunrain بالاستناد إلى المراجع أدناه. ليست برنامج علاج مثبتًا. المراجعة السريرية المستقلة ومراجعة المتحدثين الأصليين لم تكتمل بعد. لم تراجع الجهات المذكورة هذه الصفحة ولم تعتمدها.",
@@ -2101,7 +2132,8 @@
         "copyMessage": "نسخ الرسالة",
         "copied": "تم نسخ الرسالة.",
         "copyFailed": "تعذر النسخ. حدد النص لنسخه أو نزّله.",
-        "linkProblem": "الرابط لا يعمل أو لم تجد خدمة مناسبة؟"
+        "linkProblem": "الرابط لا يعمل أو لم تجد خدمة مناسبة؟",
+        "recordTruncated": "سجل النشاط طويل، لذا أُضيفت بدايته فقط. لا تزال الخطة الكاملة أعلاه ويمكن تنزيلها بشكل منفصل."
       }
     }
   }

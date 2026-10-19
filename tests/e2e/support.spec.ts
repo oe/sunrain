@@ -5,9 +5,14 @@ import { join } from 'node:path';
 const locales=['en','zh-hans','zh-hant','es','ja','ko','hi','ar'];
 const copy=JSON.parse(await readFile(new URL('../../src/data/support-copy.json',import.meta.url),'utf8')).locales;
 const path=(locale:string,route:string)=>`${locale==='en'?'':`/${locale}`}${route}`;
-// Production build, isolated Chromium. The Browser skill is present but its js
+// Production build, isolated browser engines. The Browser skill is present but its js
 // connection is not callable in this environment; repository Playwright is used.
 // Flow: home -> check-in -> select concerns -> practical support -> prepare help.
+test.beforeEach(async({page})=>{
+  // Home retains analytics. Do not send localhost test traffic to its provider;
+  // health-page script exclusion is still asserted below and in build checks.
+  await page.route('https://static.cloudflareinsights.com/**',route=>route.fulfill({status:204}));
+});
 for(const locale of locales) {
   test(`${locale}: check-in, self-help, help-seeking and disclaimer are connected`,async({page})=>{
     const errors:string[]=[];page.on('pageerror',error=>errors.push(error.message));
@@ -201,4 +206,48 @@ test('privacy page deletes notes across languages without touching unrelated sto
 test('legacy English bookmarks remain available with a canonical default-language URL',async({page})=>{
   await page.goto('/en/crisis/');await expect(page.locator('h1')).toContainText('Crisis');
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href','https://sunrain.me/crisis/');
+});
+
+test('long activity plans remain intact and personal edits survive another preparation',async({page})=>{
+  await page.goto('/self-help/one-step/');
+  const fields=page.locator('[data-activity-note] [data-note-field]');
+  const plan='Example plan '.repeat(150);
+  const timing='Example timing '.repeat(100);
+  await fields.nth(0).fill(plan);await fields.nth(1).fill(timing);
+  await page.locator('input[value="same"]').check();
+  await page.locator('#activity-reflection [data-prepare-support]').click();
+  await expect(page.locator('#preparation-status')).toHaveText(copy.en.flow.recordTruncated);
+  await expect(fields.nth(0)).toHaveValue(plan);await expect(fields.nth(1)).toHaveValue(timing);
+  const carried=page.locator('#prepare-support [data-note-field]').nth(3);
+  expect((await carried.inputValue()).length).toBeLessThanOrEqual(2000);
+  await carried.fill('My own edited account');
+  await page.locator('input[value="better"]').check();
+  await page.locator('#activity-reflection [data-prepare-support]').click();
+  await expect(carried).toHaveValue('My own edited account');
+  await expect(page.locator('#preparation-status')).toBeEmpty();
+  expect(await page.evaluate(()=>Object.keys(localStorage).filter(k=>k.startsWith('sunrain')))).toEqual([]);
+});
+
+test('keyboard alone can reach, complete and carry a check-in into help preparation',async({page})=>{
+  await page.goto('/check-in/');
+  async function tabTo(selector:string){
+    const control=page.locator(selector);
+    for(let i=0;i<40;i++){
+      if(await control.evaluate(el=>el===document.activeElement))return;
+      await page.keyboard.press('Tab');
+    }
+    await expect(control).toBeFocused();
+  }
+  await tabTo('#adult-check');await page.keyboard.press('Space');
+  await tabTo('[data-step="0"] [data-forward]');await page.keyboard.press('Enter');
+  await tabTo('input[value="mood"]');await page.keyboard.press('Space');
+  await tabTo('[data-step="1"] [data-forward]');await page.keyboard.press('Enter');
+  await tabTo('input[value="recent"]');await page.keyboard.press('Space');
+  await tabTo('input[value="manageable"]');await page.keyboard.press('ArrowDown');
+  await tabTo('button[type="submit"]');await page.keyboard.press('Enter');
+  await expect(page.locator('#result-title')).toBeFocused();
+  await tabTo('#result-options [data-prepare-support]');await page.keyboard.press('Enter');
+  await expect(page.locator('#preparation-title')).toBeFocused();
+  await expect(page.locator('#prepare-support [data-note-field]').first()).toHaveValue(copy.en.ui.mood);
+  await expect(page.locator('#prepare-support [data-note-field]').nth(2)).toHaveValue(copy.en.ui.disruptive);
 });
