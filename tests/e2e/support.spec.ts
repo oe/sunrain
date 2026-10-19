@@ -5,6 +5,13 @@ import { join } from 'node:path';
 const locales=['en','zh-hans','zh-hant','es','ja','ko','hi','ar'];
 const copy=JSON.parse(await readFile(new URL('../../src/data/support-copy.json',import.meta.url),'utf8')).locales;
 const path=(locale:string,route:string)=>`${locale==='en'?'':`/${locale}`}${route}`;
+async function entranceSettled(page:Page,selector='body'){
+  await page.locator(selector).evaluate(async el=>{
+    await Promise.all(el.getAnimations({subtree:true})
+      .filter(animation=>animation.effect?.getTiming().iterations!==Infinity)
+      .map(animation=>animation.finished.catch(()=>{})));
+  });
+}
 async function alignedStepActions(page:Page,step:number){
   const actions=page.locator(`[data-step="${step}"] .step-actions`);
   await actions.scrollIntoViewIfNeeded();
@@ -291,12 +298,16 @@ test('320px layouts keep navigation intact and translated Back actions on one ro
   for(const [i,locale] of locales.entries()){
     await page.emulateMedia({colorScheme:i%2?'dark':'light',reducedMotion:'reduce'});
     await page.goto(path(locale,'/check-in/'));
+    // Desktop systems may reserve a wider scrollbar than this machine's 6px
+    // default. Exercise the available content width, not only innerWidth.
+    await page.addStyleTag({content:'::-webkit-scrollbar{width:15px}'});
     const logo=page.locator('#main-header img');
     expect((await logo.boundingBox()).width).toBe(32);
     const brand=await page.locator('#main-header nav > a').boundingBox();
     const controls=await page.locator('#main-header nav > div').last().boundingBox();
     expect(locale==='ar'?controls.x+controls.width<=brand.x:brand.x+brand.width<=controls.x).toBe(true);
     await page.locator('#theme-toggle').click();
+    await entranceSettled(page,'#theme-menu');
     const menu=await page.locator('#theme-menu').boundingBox();
     expect(menu.x).toBeGreaterThanOrEqual(0);expect(menu.x+menu.width).toBeLessThanOrEqual(320);
     for(const button of await page.locator('#theme-menu button').all())expect((await button.boundingBox()).height).toBeGreaterThanOrEqual(44);
@@ -311,10 +322,18 @@ test('320px layouts keep navigation intact and translated Back actions on one ro
     const backHeight=(await page.locator('#soundscape-app a').first().boundingBox()).height;
     expect(Math.round(backHeight*1000)/1000).toBeGreaterThanOrEqual(44);
     await page.goto(path(locale,'/breathing/'));
-    const firstRow=await page.locator('.mode-btn > div').all();
-    const first=await firstRow[0].boundingBox(),second=await firstRow[1].boundingBox();
-    expect(Math.abs(first.y-second.y)).toBeLessThanOrEqual(1);
-    expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+    await page.addStyleTag({content:'::-webkit-scrollbar{width:15px}'});
+    await entranceSettled(page);
+    const offsets=await page.locator('.mode-btn').evaluateAll(buttons=>buttons.map(button=>
+      button.firstElementChild.getBoundingClientRect().top-button.getBoundingClientRect().top));
+    expect(Math.max(...offsets)-Math.min(...offsets)).toBeLessThanOrEqual(1);
+    const start=await page.locator('#start-btn').boundingBox(),reset=await page.locator('#reset-btn').boundingBox();
+    expect(Math.abs(start.y-reset.y)).toBeLessThanOrEqual(1);
+    expect(Math.abs(start.height-reset.height)).toBeLessThanOrEqual(1);
+    expect(await page.evaluate(()=>document.documentElement.scrollWidth<=document.documentElement.clientWidth)).toBe(true);
+    await page.locator('#start-btn').click();await expect(page.locator('#pause-btn')).toBeVisible();
+    await page.locator('#reset-btn').click();await expect(page.locator('#start-btn')).toBeVisible();
+    expect(await page.evaluate(()=>document.documentElement.scrollWidth<=document.documentElement.clientWidth)).toBe(true);
   }
 });
 
