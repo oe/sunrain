@@ -76,6 +76,8 @@
 
 ## 6. 结果页面与行动内容
 
+具体的自助、一般求助、候诊和失败处理见 [完整内容交付](./SUPPORT_CONTENT.md)，八语逐步文案见 [support-copy.json](./content/support-copy.json)。这些内容草案已存在，但相应站内页面尚未实现。
+
 结果页依次展示：当前回答触发的关怀提示、评估范围、各工具结果与局限、可执行的下一步、保存或导出选项。需要及时帮助的提示优先展示，不要求用户继续课程。
 
 示例结果文案仅用于说明结构，不是对任何实际用户的判断：
@@ -92,21 +94,57 @@
 
 练习结束可选择“有帮助”“没变化”“不适合我”，允许退出或换一种支持；反馈不被当作临床疗效，也不因未完成而责备用户。
 
-## 7. 免责声明文案草案
+## 7. 八语免责声明文案草案
 
-以下内容须与实际功能一致，专业审阅和所在地要求的核对尚未完成。
+以下覆盖站点全部八种语言，与 [八语内容包](./content/support-copy.json) 保持一致。均为待专业及母语审阅的草案，不是已审阅或已发布的声明。免责声明、结果说明、自助内容、求助指引和异常出口须在每个开放语言中完整交付，不能静默回退英语。
 
-### 简体中文
+### English (en)
 
-> Sunrain 是心理健康教育与自助辅助网站，不是医疗或心理诊疗机构。本工具仅提供症状初筛与信息参考，不能诊断、确认或排除任何心理疾病，也不能替代合格专业人士的评估、治疗或建议。请勿依据结果自行开始、停止或调整治疗。
+> Sunrain provides mental health education and self-help support. It is not a medical or mental health care provider. Screening cannot diagnose, confirm, or rule out a condition, or replace professional assessment or treatment. Do not start, stop, or change treatment based on these results.
 >
-> 若你正面临立即危险，请直接联系当地紧急服务或专业危机支持。本站不提供实时监护或紧急救援。
+> If you are in immediate danger, contact local emergency services or crisis support directly. Sunrain does not provide real-time monitoring or emergency response.
 
-### English
+### 简体中文 (zh-hans)
 
-> Sunrain provides mental health education and self-help support. It is not a medical or mental health care provider. This tool offers symptom screening and information only. It cannot diagnose, confirm, or rule out any mental health condition, and it does not replace assessment, treatment, or advice from a qualified professional. Do not start, stop, or change treatment based on these results.
+> Sunrain 是心理健康教育与自助辅助网站，不是医疗或心理诊疗机构。初筛不能诊断、确认或排除疾病，也不能替代专业评估或治疗。请勿依据结果自行开始、停止或调整治疗。
 >
-> If you are in immediate danger, contact local emergency services or crisis support directly. This website does not provide real-time monitoring or emergency response.
+> 若你正面临立即危险，请直接联系当地紧急服务或专业危机支持。Sunrain 不提供实时监护或紧急救援。
+
+### 繁體中文 (zh-hant)
+
+> Sunrain 是心理健康教育與自助輔助網站，不是醫療或心理診療機構。初步篩檢不能診斷、確認或排除疾病，也不能取代專業評估或治療。請勿依據結果自行開始、停止或調整治療。
+>
+> 若你正面臨立即危險，請直接聯絡當地緊急服務或專業危機支持。Sunrain 不提供即時監護或緊急救援。
+
+### Español (es)
+
+> Sunrain ofrece educación sobre salud mental y apoyo de autoayuda. No es un proveedor de atención médica ni psicológica. El cribado no permite diagnosticar, confirmar ni descartar una afección, ni sustituye la evaluación o el tratamiento profesional. No inicies, suspendas ni cambies un tratamiento basándote en estos resultados.
+>
+> Si estás en peligro inmediato, contacta directamente con los servicios de emergencia o de apoyo en crisis de tu zona. Sunrain no ofrece supervisión en tiempo real ni respuesta a emergencias.
+
+### 日本語 (ja)
+
+> Sunrain は心の健康に関する情報とセルフヘルプの支援を提供するサイトであり、医療機関や心理ケアの提供機関ではありません。スクリーニングで病気を診断、確定、否定することはできず、専門家による評価や治療に代わるものではありません。結果に基づいて自分で治療を開始、中止、変更しないでください。
+>
+> 差し迫った危険がある場合は、地域の緊急サービスや危機支援窓口に直接連絡してください。Sunrain はリアルタイムの見守りや緊急対応を行いません。
+
+### 한국어 (ko)
+
+> Sunrain은 정신건강 교육과 자가 도움을 지원하는 웹사이트이며 의료기관이나 심리치료 기관이 아닙니다. 선별검사로 질환을 진단하거나 확정 또는 배제할 수 없으며 전문가의 평가나 치료를 대신하지 않습니다. 결과를 근거로 스스로 치료를 시작하거나 중단하거나 변경하지 마세요.
+>
+> 당장 위험한 상황이라면 지역 응급 서비스나 전문 위기 지원 기관에 직접 연락하세요. Sunrain은 실시간 관찰이나 응급 대응을 제공하지 않습니다.
+
+### हिन्दी (hi)
+
+> Sunrain मानसिक स्वास्थ्य संबंधी जानकारी और स्व-सहायता का समर्थन देने वाली वेबसाइट है, चिकित्सा या मानसिक स्वास्थ्य उपचार संस्था नहीं। स्क्रीनिंग किसी स्थिति का निदान, पुष्टि या खंडन नहीं कर सकती और पेशेवर आकलन या उपचार का विकल्प नहीं है। इन परिणामों के आधार पर स्वयं उपचार शुरू, बंद या परिवर्तित न करें।
+>
+> यदि तत्काल खतरा है, तो स्थानीय आपातकालीन सेवा या संकट सहायता से सीधे संपर्क करें। Sunrain वास्तविक समय की निगरानी या आपातकालीन प्रतिक्रिया प्रदान नहीं करता।
+
+### العربية (ar)
+
+> يقدّم Sunrain معلومات عن الصحة النفسية ودعماً للمساعدة الذاتية، وليس جهة لتقديم الرعاية الطبية أو العلاج النفسي. لا يمكن للفحص الأولي تشخيص حالة أو تأكيدها أو استبعادها، ولا يحل محل التقييم أو العلاج المهني. لا تبدأ علاجاً أو توقفه أو تغيّره بناءً على هذه النتائج.
+>
+> إذا كنت في خطر فوري، فاتصل مباشرة بخدمات الطوارئ أو دعم الأزمات المحلية. لا يوفّر Sunrain مراقبة فورية أو استجابة للطوارئ.
 
 开始前和结果页显示简短说明，完整说明在相关页面可查。不用必须勾选的免责声明代替安全设计，也不因引用来源显示“机构认证本网站”等表述。
 
@@ -146,5 +184,7 @@
 | 5 | 专业审阅后的用户体验验证 | 能理解初筛局限、找到下一步、主动保存及删除；观察困难并修正 |
 
 实现后应检查：零分但存在安全回答；多个工具同时有提示；仅完成一个工具；全部跳过；非法值或缺失；语言切换；存储禁用；共用设备删除；直接访问结果页；键盘及屏幕阅读器；网络请求和 URL 不泄露回答。这些是待实现的验收场景，不是本次已通过的测试。
+
+开放某语言的流程前，验证该语言从入口到行动、求助、异常出口和保存删除均可完成；阿拉伯语验证 RTL。工具译本、服务地区及服务语言分别核验，不能由界面语言推定。
 
 先用自愿的成年人验证可用性和主观帮助，避免要求披露诊断或危机经历。关注用户是否理解结果、能否完成所选行动，以及是否更清楚如何求助；放弃测评并成功进入支持也可以是成功。重复使用、页面比例和主观反馈均不单独证明治疗效果。新增领域、语言和持续课程依据这些证据逐步扩展。
