@@ -156,8 +156,7 @@
         "back": "Back",
         "next": "Continue",
         "finish": "See my next steps",
-        "adult": "I am 18 or older",
-        "younger": "Under 18? A trusted adult or local youth health service can help you find age-appropriate support. General support links remain available.",
+        "younger": "Under 18? You can use this general support too. It is for reference and cannot diagnose a condition. Seek professional help early; a trusted adult you feel safe with or a youth health service can also help you find support.",
         "intro": "A private way to organise what feels difficult and choose support. This is not a diagnostic test. You can select several concerns, skip questions, or leave at any time.",
         "privacy": "Responses stay in this page’s memory and disappear on reload. Nothing is saved unless you choose it. Changing language starts again.",
         "concerns": "What would you like support with?",
@@ -217,7 +216,9 @@
       "services": {
         "GB-ENG": {
           "region": "England",
-          "instructions": "For adults in England, NHS talking therapies offers self-referral or a GP referral. Check local eligibility; other difficulties may need a different service."
+          "instructions": "For adults in England, NHS talking therapies offers self-referral or a GP referral. Check local eligibility; other difficulties may need a different service.",
+          "youthInstructions": "Under 18? Use the NHS children and young people’s guidance to find an age-appropriate route in England. Eligibility, referral and consent requirements depend on the local service.",
+          "youthLink": "NHS youth support (England, English)"
         },
         "US": {
           "region": "United States",
@@ -420,8 +421,7 @@
         "back": "返回",
         "next": "继续",
         "finish": "查看下一步",
-        "adult": "我已满18岁",
-        "younger": "未满18岁？可以请信任的成年人或当地青少年健康服务协助寻找适龄支持，也可以直接使用一般求助入口。",
+        "younger": "未满 18 岁也可以使用这里的一般支持。内容仅供参考，不能诊断疾病。建议尽早寻求专业帮助；也可以向让你感到安全的可信任成年人或青少年健康服务求助。",
         "intro": "在私密的页面中整理困扰、选择支持方式。这不是诊断测试。可以多选、跳过问题，或随时离开。",
         "privacy": "回答只保留在当前页面内存中，刷新即清除。只有你主动选择才保存。切换语言会重新开始。",
         "concerns": "你希望哪方面得到支持？",
@@ -481,7 +481,9 @@
       "services": {
         "GB-ENG": {
           "region": "英格兰",
-          "instructions": "面向英格兰成年人的 NHS 谈话治疗可接受自我转介或全科医生转介。请核对当地条件；其他困扰可能需要不同服务。"
+          "instructions": "面向英格兰成年人的 NHS 谈话治疗可接受自我转介或全科医生转介。请核对当地条件；其他困扰可能需要不同服务。",
+          "youthInstructions": "未满 18 岁？可通过 NHS 儿童与青少年指引了解英格兰适合相应年龄的求助途径。具体资格、转介和同意要求以当地服务为准。",
+          "youthLink": "NHS 青少年支持（英格兰，英语）"
         },
         "US": {
           "region": "美国",
@@ -684,8 +686,7 @@
         "back": "返回",
         "next": "繼續",
         "finish": "查看下一步",
-        "adult": "我已滿18歲",
-        "younger": "未滿18歲？可以請信任的成年人或當地青少年健康服務協助尋找適齡支持，也可以直接使用一般求助入口。",
+        "younger": "未滿 18 歲也可以使用這裡的一般支持。內容僅供參考，不能診斷疾病。建議儘早尋求專業協助；也可以向讓你感到安全的可信任成年人或青少年健康服務求助。",
         "intro": "在私密的頁面中整理困擾、選擇支持方式。這不是診斷測試。可以複選、跳過問題，或隨時離開。",
         "privacy": "回答只保留在目前頁面的記憶體中，重新整理即清除。只有你主動選擇才儲存。切換語言會重新開始。",
         "concerns": "你希望哪方面得到支持？",
@@ -745,7 +746,9 @@
       "services": {
         "GB-ENG": {
           "region": "英格蘭",
-          "instructions": "面向英格蘭成年人的 NHS 談話治療可接受自我轉介或家庭醫師轉介。請核對當地條件；其他困擾可能需要不同服務。"
+          "instructions": "面向英格蘭成年人的 NHS 談話治療可接受自我轉介或家庭醫師轉介。請核對當地條件；其他困擾可能需要不同服務。",
+          "youthInstructions": "未滿 18 歲？可透過 NHS 兒童與青少年指引了解英格蘭適合相應年齡的求助途徑。具體資格、轉介和同意要求以當地服務為準。",
+          "youthLink": "NHS 青少年支援（英格蘭，英語）"
         },
         "US": {
           "region": "美國",
@@ -948,8 +951,7 @@
         "back": "Volver",
         "next": "Continuar",
         "finish": "Ver próximos pasos",
-        "adult": "Tengo 18 años o más",
-        "younger": "¿Menor de 18? Una persona adulta de confianza o un servicio de salud juvenil puede ayudarte a encontrar apoyo adecuado. Los enlaces generales siguen disponibles.",
+        "younger": "¿Tienes menos de 18 años? También puedes usar este apoyo general. Es orientativo y no permite diagnosticar. Busca ayuda profesional pronto; una persona adulta de confianza con la que te sientas a salvo o un servicio de salud juvenil también puede ayudarte a encontrar apoyo.",
         "intro": "Un espacio privado para ordenar tus dificultades y elegir apoyo. No es una prueba diagnóstica. Puedes elegir varias opciones, omitir preguntas o salir cuando quieras.",
         "privacy": "Las respuestas quedan en la memoria de esta página y desaparecen al recargar. Solo se guardan si lo eliges. Cambiar de idioma reinicia el proceso.",
         "concerns": "¿En qué te gustaría recibir apoyo?",
@@ -1009,7 +1011,9 @@
       "services": {
         "GB-ENG": {
           "region": "Inglaterra",
-          "instructions": "NHS talking therapies acepta solicitudes directas o derivaciones del médico de cabecera para adultos en Inglaterra. Confirma los requisitos locales; otras dificultades pueden necesitar otro servicio."
+          "instructions": "NHS talking therapies acepta solicitudes directas o derivaciones del médico de cabecera para adultos en Inglaterra. Confirma los requisitos locales; otras dificultades pueden necesitar otro servicio.",
+          "youthInstructions": "¿Tienes menos de 18 años? Consulta la guía del NHS para niños y jóvenes para encontrar apoyo adecuado a tu edad en Inglaterra. Los requisitos de acceso, derivación y consentimiento dependen del servicio local.",
+          "youthLink": "Apoyo juvenil del NHS (Inglaterra, en inglés)"
         },
         "US": {
           "region": "Estados Unidos",
@@ -1212,8 +1216,7 @@
         "back": "戻る",
         "next": "続ける",
         "finish": "次の行動を見る",
-        "adult": "18歳以上です",
-        "younger": "18歳未満の方は、信頼できる大人や地域の若者向け保健サービスに相談してください。一般の相談先リンクも利用できます。",
+        "younger": "18歳未満の方も、ここで一般的なサポートを利用できます。内容は参考情報であり、診断はできません。早めに専門家に相談してください。安心して話せる信頼できる大人や、子ども・若者向けの保健サービスに相談することもできます。",
         "intro": "困っていることを自分だけの画面で整理し、支援を選びます。診断テストではありません。複数選択、質問の省略、途中終了ができます。",
         "privacy": "回答はこのページのメモリ内だけに保持され、再読み込みで消えます。自分で選ぶまで保存されません。言語を変えると最初からになります。",
         "concerns": "どんなことで支援が必要ですか？",
@@ -1273,7 +1276,9 @@
       "services": {
         "GB-ENG": {
           "region": "イングランド",
-          "instructions": "成人向け NHS talking therapies は本人からの申込み、または家庭医からの紹介で利用できます。イングランドの対象条件を確認してください。別の困りごとには別の支援が必要な場合があります。"
+          "instructions": "成人向け NHS talking therapies は本人からの申込み、または家庭医からの紹介で利用できます。イングランドの対象条件を確認してください。別の困りごとには別の支援が必要な場合があります。",
+          "youthInstructions": "18歳未満の方は、NHSの子ども・若者向け案内から、イングランドで年齢に合う相談先を探せます。利用資格、紹介、同意の要件は地域のサービスによって異なります。",
+          "youthLink": "NHSの若者向けサポート（イングランド・英語）"
         },
         "US": {
           "region": "米国",
@@ -1476,8 +1481,7 @@
         "back": "뒤로",
         "next": "계속",
         "finish": "다음 단계 보기",
-        "adult": "만 18세 이상입니다",
-        "younger": "18세 미만이라면 믿을 수 있는 어른이나 지역 청소년 보건 서비스에서 나이에 맞는 도움을 찾아보세요. 일반 도움 링크는 이용할 수 있습니다.",
+        "younger": "18세 미만도 이곳의 일반적인 지원을 이용할 수 있습니다. 내용은 참고용이며 진단을 내릴 수 없습니다. 가능한 한 일찍 전문가에게 도움을 요청하세요. 안전하다고 느끼는 믿을 만한 어른이나 청소년 보건 서비스에 도움을 요청할 수도 있습니다.",
         "intro": "지금 어려운 점을 개인 화면에서 정리하고 도움을 고릅니다. 진단 검사가 아닙니다. 여러 항목 선택, 질문 건너뛰기, 중단이 가능합니다.",
         "privacy": "답변은 이 페이지 메모리에만 있고 새로고침하면 사라집니다. 직접 선택해야 저장됩니다. 언어를 바꾸면 처음부터 시작합니다.",
         "concerns": "어떤 부분에 도움이 필요한가요?",
@@ -1537,7 +1541,9 @@
       "services": {
         "GB-ENG": {
           "region": "잉글랜드",
-          "instructions": "잉글랜드 성인은 NHS talking therapies에 직접 신청하거나 주치의의 의뢰를 받을 수 있습니다. 지역별 대상 조건을 확인하세요. 다른 어려움은 다른 서비스가 필요할 수 있습니다."
+          "instructions": "잉글랜드 성인은 NHS talking therapies에 직접 신청하거나 주치의의 의뢰를 받을 수 있습니다. 지역별 대상 조건을 확인하세요. 다른 어려움은 다른 서비스가 필요할 수 있습니다.",
+          "youthInstructions": "18세 미만이라면 NHS 아동·청소년 안내에서 잉글랜드의 연령에 맞는 지원 경로를 찾아보세요. 이용 자격, 의뢰 및 동의 요건은 지역 서비스에 따라 다릅니다.",
+          "youthLink": "NHS 청소년 지원(잉글랜드, 영어)"
         },
         "US": {
           "region": "미국",
@@ -1740,8 +1746,7 @@
         "back": "पीछे",
         "next": "आगे",
         "finish": "अगले कदम देखें",
-        "adult": "मेरी उम्र 18 वर्ष या अधिक है",
-        "younger": "18 से कम उम्र है? किसी विश्वसनीय वयस्क या स्थानीय युवा स्वास्थ्य सेवा से आयु के अनुरूप सहायता खोजें। सामान्य सहायता के लिंक उपलब्ध हैं।",
+        "younger": "18 वर्ष से कम उम्र के लोग भी यहाँ सामान्य सहायता का उपयोग कर सकते हैं। यह जानकारी केवल संदर्भ के लिए है और निदान नहीं कर सकती। जल्द ही पेशेवर सहायता लें। किसी ऐसे भरोसेमंद वयस्क से, जिसके साथ आप सुरक्षित महसूस करते हों, या युवा स्वास्थ्य सेवा से भी मदद माँग सकते हैं।",
         "intro": "परेशानियों को निजी रूप से व्यवस्थित करने और सहायता चुनने की जगह। यह निदान की जाँच नहीं है। कई विकल्प चुन सकते हैं, सवाल छोड़ सकते हैं या कभी भी रुक सकते हैं।",
         "privacy": "उत्तर केवल इस पृष्ठ की मेमोरी में रहते हैं और रीफ़्रेश पर मिट जाते हैं। आपकी पसंद के बिना कुछ सहेजा नहीं जाता। भाषा बदलने पर फिर शुरू होगा।",
         "concerns": "आप किस बात के लिए सहायता चाहते हैं?",
@@ -1801,7 +1806,9 @@
       "services": {
         "GB-ENG": {
           "region": "इंग्लैंड",
-          "instructions": "इंग्लैंड के वयस्क NHS talking therapies के लिए सीधे आवेदन या GP रेफ़रल ले सकते हैं। स्थानीय पात्रता जाँचें; अन्य कठिनाइयों के लिए दूसरी सेवा चाहिए हो सकती है।"
+          "instructions": "इंग्लैंड के वयस्क NHS talking therapies के लिए सीधे आवेदन या GP रेफ़रल ले सकते हैं। स्थानीय पात्रता जाँचें; अन्य कठिनाइयों के लिए दूसरी सेवा चाहिए हो सकती है।",
+          "youthInstructions": "18 वर्ष से कम उम्र है? इंग्लैंड में अपनी उम्र के अनुरूप सहायता खोजने के लिए बच्चों और युवाओं के लिए NHS की जानकारी देखें। पात्रता, रेफ़रल और सहमति की शर्तें स्थानीय सेवा पर निर्भर करती हैं।",
+          "youthLink": "NHS युवा सहायता (इंग्लैंड, अंग्रेज़ी में)"
         },
         "US": {
           "region": "संयुक्त राज्य अमेरिका",
@@ -2004,8 +2011,7 @@
         "back": "رجوع",
         "next": "متابعة",
         "finish": "عرض الخطوات التالية",
-        "adult": "عمري 18 سنة أو أكثر",
-        "younger": "إذا كنت دون 18 عامًا، يمكن لشخص بالغ موثوق أو خدمة صحية للشباب مساعدتك في إيجاد دعم مناسب لعمرك. تبقى روابط الدعم العامة متاحة.",
+        "younger": "هل عمرك أقل من 18 عاماً؟ يمكنك أيضاً استخدام هذا الدعم العام. المعلومات للاستئناس ولا يمكنها تشخيص حالة مرضية. اطلب مساعدة متخصصة مبكراً؛ ويمكنك أيضاً طلب الدعم من شخص بالغ تثق به وتشعر معه بالأمان أو من خدمة صحية للشباب.",
         "intro": "مساحة خاصة لترتيب ما يزعجك واختيار الدعم. ليست اختبارًا تشخيصيًا. يمكنك اختيار عدة أمور أو تجاوز الأسئلة أو المغادرة في أي وقت.",
         "privacy": "تبقى الإجابات في ذاكرة هذه الصفحة وتختفي عند إعادة تحميلها. لا تُحفظ إلا باختيارك. تغيير اللغة يبدأ العملية من جديد.",
         "concerns": "في أي جانب تريد الدعم؟",
@@ -2065,7 +2071,9 @@
       "services": {
         "GB-ENG": {
           "region": "إنجلترا",
-          "instructions": "يمكن للبالغين في إنجلترا التقدم مباشرة إلى NHS talking therapies أو بإحالة من طبيب عام. تحقق من شروط المنطقة؛ قد تتطلب صعوبات أخرى خدمة مختلفة."
+          "instructions": "يمكن للبالغين في إنجلترا التقدم مباشرة إلى NHS talking therapies أو بإحالة من طبيب عام. تحقق من شروط المنطقة؛ قد تتطلب صعوبات أخرى خدمة مختلفة.",
+          "youthInstructions": "هل عمرك أقل من 18 عاماً؟ راجع إرشادات NHS للأطفال والشباب للعثور على دعم مناسب لعمرك في إنجلترا. تختلف شروط الأهلية والإحالة والموافقة حسب الخدمة المحلية.",
+          "youthLink": "دعم الشباب من NHS (إنجلترا، بالإنجليزية)"
         },
         "US": {
           "region": "الولايات المتحدة",

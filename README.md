@@ -6,7 +6,7 @@ An open-source, free, and privacy-focused mental health self-help platform.
 
 ## ✨ Features
 
-- **Check-in** — privately organise several concerns and choose practical support, without a diagnosis or combined health score.
+- **Check-in** — privately organise several concerns and choose practical support, without a diagnosis or combined health score. General support is open without age confirmation, with eight-language youth support guidance.
 - **Self-help** — four complete activities: grounding, one manageable step, a sleep routine and organising a worry; plus guided breathing and soundscapes.
 - **Find support** — six-step guidance, editable contact text, appointment preparation and official service entry points for England, the US, Japan, South Korea, Spain and Hong Kong, plus one hospital's booking information in Beijing. Other regions receive local-care guidance; directory links do not guarantee appointments or service availability.
 - **Privacy controls** — explicit save, load, export and deletion, with no automatic saving or upload of responses.

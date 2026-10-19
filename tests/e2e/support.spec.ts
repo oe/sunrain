@@ -1,10 +1,35 @@
-import { test, expect } from 'playwright/test';
+import { test, expect, type Page } from 'playwright/test';
 import { readFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 const locales=['en','zh-hans','zh-hant','es','ja','ko','hi','ar'];
 const copy=JSON.parse(await readFile(new URL('../../src/data/support-copy.json',import.meta.url),'utf8')).locales;
 const path=(locale:string,route:string)=>`${locale==='en'?'':`/${locale}`}${route}`;
+async function entranceSettled(page:Page,selector='body'){
+  await page.locator(selector).evaluate(async el=>{
+    await Promise.all(el.getAnimations({subtree:true})
+      .filter(animation=>animation.effect?.getTiming().iterations!==Infinity)
+      .map(animation=>animation.finished.catch(()=>{})));
+  });
+}
+async function alignedStepActions(page:Page,step:number){
+  const actions=page.locator(`[data-step="${step}"] .step-actions`);
+  await actions.scrollIntoViewIfNeeded();
+  const buttons=actions.locator('button');
+  const back=await buttons.nth(0).boundingBox(),next=await buttons.nth(1).boundingBox();
+  expect(Math.abs(back.y-next.y)).toBeLessThanOrEqual(1);
+  expect(Math.abs(back.height-next.height)).toBeLessThanOrEqual(1);
+  expect(back.height).toBeGreaterThanOrEqual(44);
+  expect(back.width).toBeGreaterThanOrEqual(44);
+  const rtl=await page.locator('html').getAttribute('dir')==='rtl';
+  expect(rtl?back.x>next.x:back.x<next.x).toBe(true);
+  // WebKit may scroll a target during hover. Compare document coordinates so
+  // normal scrolling is not mistaken for a button moving within its row.
+  const documentTop=await buttons.nth(0).evaluate(el=>el.getBoundingClientRect().top+scrollY);
+  await buttons.nth(0).hover();
+  const hoveredTop=await buttons.nth(0).evaluate(el=>el.getBoundingClientRect().top+scrollY);
+  expect(Math.abs(hoveredTop-documentTop)).toBeLessThanOrEqual(1);
+}
 // Production build, isolated browser engines. The Browser skill is present but its js
 // connection is not callable in this environment; repository Playwright is used.
 // Flow: home -> check-in -> select concerns -> practical support -> prepare help.
@@ -25,14 +50,21 @@ for(const locale of locales) {
     await expect(page.locator('html')).toHaveAttribute('lang',locale);
     await expect(page.locator('html')).toHaveAttribute('dir',locale==='ar'?'rtl':'ltr');
     const title=await page.title();
-    await expect(page.locator('[data-step="0"] [data-forward]')).toBeDisabled();
-    await page.locator('#adult-check').check();
+    await expect(page.locator('[data-step="0"] [data-forward]')).toBeEnabled();
+    await expect(page.locator('[data-step="0"] input')).toHaveCount(0);
+    await expect(page.locator('#adult-check')).toHaveCount(0);
+    await expect(page.locator('[data-step="0"] [data-youth-support]')).toHaveText(copy[locale].ui.younger);
     await page.locator('[data-step="0"] [data-forward]').click();
     const questionBounds=await page.locator('[data-step="1"] legend').boundingBox();
     const navigationBounds=await page.locator('#main-header').boundingBox();
     expect(questionBounds.y).toBeGreaterThanOrEqual(navigationBounds.y+navigationBounds.height+8);
+    await alignedStepActions(page,1);
     await page.locator('input[value="mood"]').check();
     await page.locator('input[value="worry"]').check();
+    await page.locator('[data-step="1"] [data-forward]').click();
+    await alignedStepActions(page,2);
+    await page.locator('[data-step="2"] [data-back]').click();
+    await expect(page.locator('input[value="mood"]')).toBeChecked();
     await page.locator('[data-step="1"] [data-forward]').click();
     await page.locator('input[value="weeks"]').check();
     await page.locator('input[value="disruptive"]').check();
@@ -63,6 +95,9 @@ for(const locale of locales) {
     expect(await page.evaluate(()=>Object.keys(sessionStorage))).toEqual([]);
     await page.locator('[data-action="one-step"] a').click();
     await expect(page.locator('#inline-activity')).toBeVisible();
+    const activityBack=await page.locator('[data-activity-close]').boundingBox();
+    const activityCard=await page.locator('#guided-activity').boundingBox();
+    expect(activityCard.y-activityBack.y-activityBack.height).toBeGreaterThanOrEqual(15.99);
     await expect(page).toHaveURL(new RegExp(`${path(locale,'/check-in/')}.*$`));
     await expect(page.locator('#guided-activity ol li')).toHaveCount(4);
     const example=page.locator('input[name="activity-example"]').first();
@@ -85,6 +120,9 @@ for(const locale of locales) {
     await expect(page.locator('#support-region')).toHaveValue('');
     await expect(page.locator('ol li')).toHaveCount(6);
     await expect(page.locator('[data-note-field]')).toHaveCount(5);
+    await page.locator('#support-region').selectOption('GB-ENG');
+    await expect(page.locator('[data-youth-service] a')).toHaveAttribute('href','https://www.nhs.uk/mental-health/children-and-young-adults/mental-health-support/how-to-get-support/where-to-get-support/');
+    await expect(page.locator('[data-youth-service]')).toContainText(copy[locale].services['GB-ENG'].youthInstructions);
     await page.locator('#support-region').selectOption('US');
     await expect(page.locator('[data-service-region="US"]')).toBeVisible();
     await expect(page.locator('[data-service-region="GB-ENG"]')).toBeHidden();
@@ -102,16 +140,16 @@ for(const locale of locales) {
   });
 }
 test('skipping questions shows no score; reload clears responses',async({page})=>{
-  await page.goto('/check-in/');await page.locator('#adult-check').check();await page.locator('[data-step="0"] [data-forward]').click();await page.locator('[data-step="1"] [data-forward]').click();await page.locator('button[type="submit"]').click();
+  await page.goto('/check-in/');await page.locator('[data-step="0"] [data-forward]').click();await page.locator('[data-step="1"] [data-forward]').click();await page.locator('button[type="submit"]').click();
   await expect(page.locator('#check-in-result')).toBeVisible();
   await expect(page.locator('#result-summary')).toContainText('Skip / leave unanswered');
   await expect(page.locator('[data-action="choose"]')).toBeVisible();
   await expect(page.locator('[data-action="one-step"]')).toBeHidden();
   await expect(page.locator('[data-action="grounding"]')).toBeHidden();
-  await page.reload();await expect(page.locator('#check-in-result')).toBeHidden();await expect(page.locator('#adult-check')).not.toBeChecked();
+  await page.reload();await expect(page.locator('#check-in-result')).toBeHidden();await expect(page.locator('[data-step="0"] [data-forward]')).toBeEnabled();
 });
 test('unusually high energy directs to care and does not present a diagnosis',async({page})=>{
-  await page.goto('/check-in/');await page.locator('#adult-check').check();await page.locator('[data-step="0"] [data-forward]').click();await page.locator('input[value="energy"]').check();await page.locator('[data-step="1"] [data-forward]').click();await page.locator('button[type="submit"]').click();
+  await page.goto('/check-in/');await page.locator('[data-step="0"] [data-forward]').click();await page.locator('input[value="energy"]').check();await page.locator('[data-step="1"] [data-forward]').click();await page.locator('button[type="submit"]').click();
   await expect(page.locator('#energy-care')).toBeVisible();await expect(page.locator('[data-action="grounding"]')).toBeHidden();await expect(page.locator('[data-action="one-step"]')).toBeHidden();
   await expect(page.locator('#energy-care')).toContainText('cannot tell');
   await expect(page.locator('[data-action="sleep"]')).toBeHidden();
@@ -166,10 +204,11 @@ test('unreviewed assessment deep links expose no form; legacy data can be delete
 test('self-help and provider instructions remain available without JavaScript',async({browser})=>{
   const context=await browser.newContext({javaScriptEnabled:false});const page=await context.newPage();
   await page.goto('http://127.0.0.1:4362/zh-hans/self-help/grounding/');await expect(page.locator('#guided-activity ol li')).toHaveCount(4);
-  await page.goto('http://127.0.0.1:4362/zh-hans/support/');await expect(page.locator('ol li')).toHaveCount(6);await expect(page.locator('noscript a[href="https://findtreatment.gov/"]')).toBeVisible();await context.close();
+  await page.goto('http://127.0.0.1:4362/zh-hans/support/');await expect(page.locator('ol li')).toHaveCount(6);await expect(page.locator('noscript a[href="https://findtreatment.gov/"]')).toBeVisible();
+  await expect(page.locator('noscript a[href="https://www.nhs.uk/mental-health/children-and-young-adults/mental-health-support/how-to-get-support/where-to-get-support/"]')).toBeVisible();await context.close();
 });
 test('Arabic responsive layout and visible flow screenshots',async({page},testInfo)=>{
-  await page.goto('/ar/check-in/');await page.locator('#adult-check').check();await page.locator('[data-step="0"] [data-forward]').click();
+  await page.goto('/ar/check-in/');await page.locator('[data-step="0"] [data-forward]').click();
   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
   const file=join(tmpdir(),`sunrain-check-in-ar-${testInfo.project.name}.png`);await page.screenshot({path:file,fullPage:true});
   await testInfo.attach('Arabic check-in',{path:file,contentType:'image/png'});
@@ -186,7 +225,7 @@ test('sleep and worry lead to specific four-step guides, with care available thr
 });
 
 test('explicit skip clears selected answers and all basic-needs results offer care first',async({page})=>{
-  await page.goto('/check-in/');await page.locator('#adult-check').check();await page.locator('[data-step="0"] [data-forward]').click();
+  await page.goto('/check-in/');await page.locator('[data-step="0"] [data-forward]').click();
   await page.locator('input[value="mood"]').check();await page.locator('[data-step="1"] [data-skip]').click();
   await page.locator('input[value="basicNeeds"]').check();await page.locator('button[type="submit"]').click();
   await expect(page.locator('#function-care')).toBeVisible();
@@ -241,7 +280,6 @@ test('keyboard alone can reach, complete and carry a check-in into help preparat
     }
     await expect(control).toBeFocused();
   }
-  await tabTo('#adult-check');await page.keyboard.press('Space');
   await tabTo('[data-step="0"] [data-forward]');await page.keyboard.press('Enter');
   await tabTo('input[value="mood"]');await page.keyboard.press('Space');
   await tabTo('[data-step="1"] [data-forward]');await page.keyboard.press('Enter');
@@ -253,4 +291,64 @@ test('keyboard alone can reach, complete and carry a check-in into help preparat
   await expect(page.locator('#preparation-title')).toBeFocused();
   await expect(page.locator('#prepare-support [data-note-field]').first()).toHaveValue(copy.en.ui.mood);
   await expect(page.locator('#prepare-support [data-note-field]').nth(2)).toHaveValue(copy.en.ui.disruptive);
+});
+
+test('320px layouts keep navigation intact and translated Back actions on one row',async({page})=>{
+  await page.setViewportSize({width:320,height:720});
+  for(const [i,locale] of locales.entries()){
+    await page.emulateMedia({colorScheme:i%2?'dark':'light',reducedMotion:'reduce'});
+    await page.goto(path(locale,'/check-in/'));
+    // Desktop systems may reserve a wider scrollbar than this machine's 6px
+    // default. Exercise the available content width, not only innerWidth.
+    await page.addStyleTag({content:'::-webkit-scrollbar{width:15px}'});
+    const logo=page.locator('#main-header img');
+    expect((await logo.boundingBox()).width).toBe(32);
+    const brand=await page.locator('#main-header nav > a').boundingBox();
+    const controls=await page.locator('#main-header nav > div').last().boundingBox();
+    expect(locale==='ar'?controls.x+controls.width<=brand.x:brand.x+brand.width<=controls.x).toBe(true);
+    await page.locator('#theme-toggle').click();
+    await entranceSettled(page,'#theme-menu');
+    const menu=await page.locator('#theme-menu').boundingBox();
+    expect(menu.x).toBeGreaterThanOrEqual(0);expect(menu.x+menu.width).toBeLessThanOrEqual(320);
+    for(const button of await page.locator('#theme-menu button').all())expect((await button.boundingBox()).height).toBeGreaterThanOrEqual(44);
+    await page.keyboard.press('Escape');
+    await expect(page.locator('#theme-toggle')).toBeFocused();
+    await page.locator('[data-step="0"] [data-forward]').click();await alignedStepActions(page,1);
+    await page.locator('[data-step="1"] [data-forward]').click();await alignedStepActions(page,2);
+    expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+    await page.goto(path(locale,'/relax/sounds/'));
+    // Animated translation can produce a 43.99999px rectangle for a 44px
+    // target; round floating-point measurement noise to a thousandth of a px.
+    const backHeight=(await page.locator('#soundscape-app a').first().boundingBox()).height;
+    expect(Math.round(backHeight*1000)/1000).toBeGreaterThanOrEqual(44);
+    await page.goto(path(locale,'/breathing/'));
+    await page.addStyleTag({content:'::-webkit-scrollbar{width:15px}'});
+    await entranceSettled(page);
+    const offsets=await page.locator('.mode-btn').evaluateAll(buttons=>buttons.map(button=>
+      button.firstElementChild.getBoundingClientRect().top-button.getBoundingClientRect().top));
+    expect(Math.max(...offsets)-Math.min(...offsets)).toBeLessThanOrEqual(1);
+    const start=await page.locator('#start-btn').boundingBox(),reset=await page.locator('#reset-btn').boundingBox();
+    expect(Math.abs(start.y-reset.y)).toBeLessThanOrEqual(1);
+    expect(Math.abs(start.height-reset.height)).toBeLessThanOrEqual(1);
+    expect(await page.evaluate(()=>document.documentElement.scrollWidth<=document.documentElement.clientWidth)).toBe(true);
+    await page.locator('#start-btn').click();await expect(page.locator('#pause-btn')).toBeVisible();
+    await page.locator('#reset-btn').click();await expect(page.locator('#start-btn')).toBeVisible();
+    expect(await page.evaluate(()=>document.documentElement.scrollWidth<=document.documentElement.clientWidth)).toBe(true);
+  }
+});
+
+test('activity cards align their final action across translated desktop rows',async({page})=>{
+  await page.setViewportSize({width:1440,height:900});
+  for(const locale of locales){
+    await page.goto(path(locale,'/self-help/'));
+    const cards=page.locator('.support-grid > .support-card');
+    const rows=new Map<number,number[]>();
+    for(const card of await cards.all()){
+      const bounds=await card.boundingBox();
+      const action=await card.locator('.button').last().boundingBox();
+      const row=Math.round(bounds.y),bottom=action.y+action.height;
+      rows.set(row,[...(rows.get(row)||[]),bottom]);
+    }
+    for(const bottoms of rows.values())expect(Math.max(...bottoms)-Math.min(...bottoms)).toBeLessThanOrEqual(1);
+  }
 });

@@ -130,9 +130,9 @@ const presets = [
     <div class="max-w-4xl mx-auto mb-7 animate-fade-in-up">
       <a
         href={getLocalizedPath('/relax/', lang)}
-        class="inline-flex items-center text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors mb-5"
+        class="inline-flex min-h-11 items-center gap-2 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors mb-5"
       >
-        <Icon name="ArrowRight" size={20} className="rotate-180 mr-2" />
+        <Icon name="ArrowRight" size={20} className="rotate-180 rtl:rotate-0 shrink-0" />
         {t('common.back', lang)}
       </a>
 
@@ -187,7 +187,7 @@ const presets = [
         {presets.map((preset) => (
           <button
             type="button"
-            class="preset-btn flex items-center gap-3 rounded-xl border border-gray-200 bg-white px-4 py-3 text-left text-sm font-medium text-gray-700 shadow-sm transition hover:-translate-y-0.5 hover:border-amber-300 hover:shadow-md dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:hover:border-amber-500"
+            class="preset-btn flex items-center gap-3 rounded-xl border border-gray-200 bg-white px-4 py-3 text-start text-sm font-medium text-gray-700 shadow-sm transition hover:-translate-y-0.5 hover:border-amber-300 hover:shadow-md dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:hover:border-amber-500"
             data-preset={preset.id}
             aria-pressed="false"
           >
@@ -380,10 +380,8 @@ const presets = [
   const masterInput = document.querySelector<HTMLInputElement>('#soundscape-master')!;
   function setTrackVolume(track: Track, value: number) {
     if (track.playbackId === null) return;
-    // Howler 2.2.4 cancels a fade by restoring its old target internally.
-    // Reapply the public setter so the stored volume also matches the gain
-    // when Howler starts the next loop.
-    track.howl.volume(value, track.playbackId);
+    // The pinned Howler patch cancels remaining native ramps and preserves
+    // the requested stored volume when it stops a fade.
     track.howl.volume(value, track.playbackId);
   }
   function setMasterVolume(value: number) {

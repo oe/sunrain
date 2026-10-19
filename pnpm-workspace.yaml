@@ -3,9 +3,11 @@ onlyBuiltDependencies:
   - '@parcel/watcher'
   - esbuild
 
+patchedDependencies:
+  howler@2.2.4: patches/howler@2.2.4.patch
+
 # Integration 7.1.0 delegates transformation to plugin-react 6.1.2 (0.152.x);
 # its own older peer range is metadata only. The production build is exercised.
 peerDependencyRules:
   allowedVersions:
     oxc-transform-react: ^0.152.0
-

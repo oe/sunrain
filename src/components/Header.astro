@@ -50,24 +50,24 @@ function isActive(itemHref: string): boolean {
   </div>
 
   <nav
-    class="container mx-auto px-4 h-16 flex items-center justify-between relative z-10"
+    class="container mx-auto px-2.5 sm:px-4 h-16 flex items-center justify-between gap-1 sm:gap-2 relative z-10"
   >
     <!-- Logo -->
     <a
       href={getLocalizedPath('/', lang)}
-      class="flex items-center gap-2.5 text-xl font-bold text-gray-900 dark:text-white group"
+      class="flex shrink-0 items-center gap-2 sm:gap-2.5 text-base sm:text-xl font-bold text-gray-900 dark:text-white group"
     >
       <div class="relative">
         <div
           class="absolute -inset-1 bg-gradient-to-r from-amber-400 to-orange-400 rounded-full blur opacity-0 group-hover:opacity-50 transition-opacity duration-300"
         >
         </div>
-        <picture>
+        <picture class="block shrink-0">
           <source srcset="/logo.avif" type="image/avif" />
           <img
             src="/logo.png"
             alt="Sunrain"
-            class="relative w-8 h-8 group-hover:scale-110 transition-transform duration-300"
+            class="relative block w-8 h-8 group-hover:scale-110 transition-transform duration-300"
           />
         </picture>
       </div>
@@ -100,13 +100,13 @@ function isActive(itemHref: string): boolean {
     </div>
 
     <!-- Right side: Language + Theme -->
-    <div class="flex items-center gap-2">
+    <div class="flex shrink-0 items-center gap-1 sm:gap-2">
       <!-- Language Selector -->
       <div class="relative">
         <select
           id="lang-select"
           aria-label={t('common.language', lang) || 'Select Language'}
-          class="appearance-none bg-gray-100/50 dark:bg-gray-800/50 px-3 py-1.5 pr-7 rounded-lg text-sm text-gray-600 dark:text-gray-400 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-amber-500/50 transition-all duration-200"
+          class="appearance-none w-21 sm:w-auto min-h-11 bg-gray-100/50 dark:bg-gray-800/50 ps-2 sm:ps-3 py-1.5 pe-6 sm:pe-7 rounded-lg text-sm text-gray-600 dark:text-gray-400 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-amber-500/50 transition-all duration-200"
         >
           {
             SUPPORTED_LANGUAGES.map((l) => (
@@ -117,7 +117,7 @@ function isActive(itemHref: string): boolean {
           }
         </select>
         <span
-          class="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400 dark:text-gray-500 text-xs"
+          class="absolute end-2 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400 dark:text-gray-500 text-xs"
         >
           ▼
         </span>
@@ -127,7 +127,7 @@ function isActive(itemHref: string): boolean {
       <div class="relative">
         <button
           id="theme-toggle"
-          class="p-2.5 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-gray-100/50 dark:hover:bg-gray-800/50 transition-all duration-200"
+          class="flex items-center justify-center min-w-11 min-h-11 p-2.5 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-gray-100/50 dark:hover:bg-gray-800/50 transition-all duration-200"
           aria-label={t('common.theme.toggle', lang)}
           aria-expanded="false"
           aria-controls="theme-menu"
@@ -151,11 +151,11 @@ function isActive(itemHref: string): boolean {
         <!-- Dropdown menu -->
         <div
           id="theme-menu"
-          class="hidden absolute right-0 mt-2 w-36 rounded-xl py-1.5 z-50 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-xl animate-fade-in-scale"
+          class="hidden absolute end-0 mt-2 w-36 rounded-xl py-1.5 z-50 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-xl animate-fade-in-scale"
         >
           <button
             data-value="light"
-            class="theme-option w-full px-3 py-2 text-left text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center gap-2 transition-colors"
+            class="theme-option w-full min-h-11 px-3 py-2 text-start text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center gap-2 transition-colors"
           >
             <svg
               class="w-4 h-4"
@@ -174,7 +174,7 @@ function isActive(itemHref: string): boolean {
           </button>
           <button
             data-value="dark"
-            class="theme-option w-full px-3 py-2 text-left text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center gap-2 transition-colors"
+            class="theme-option w-full min-h-11 px-3 py-2 text-start text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center gap-2 transition-colors"
           >
             <svg
               class="w-4 h-4"
@@ -193,7 +193,7 @@ function isActive(itemHref: string): boolean {
           </button>
           <button
             data-value="system"
-            class="theme-option w-full px-3 py-2 text-left text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center gap-2 transition-colors"
+            class="theme-option w-full min-h-11 px-3 py-2 text-start text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center gap-2 transition-colors"
           >
             <svg
               class="w-4 h-4"
@@ -245,7 +245,7 @@ function isActive(itemHref: string): boolean {
     style="max-height: 0;"
   >
     <div
-      class="bg-white/95 dark:bg-gray-900/95 backdrop-blur-md border-t border-gray-200/50 dark:border-gray-700/50"
+      class="max-h-[calc(100dvh-4rem)] overflow-y-auto bg-white/95 dark:bg-gray-900/95 backdrop-blur-md border-t border-gray-200/50 dark:border-gray-700/50"
     >
       <div class="container mx-auto px-4 py-4 flex flex-col gap-1">
         {

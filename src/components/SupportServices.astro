@@ -1,7 +1,8 @@
 ---
 import catalog from '@/data/support-services.json';
+import ExternalLinkIcon from '@/components/ExternalLinkIcon.astro';
 import { getLanguageFromPath } from '@/lib/i18n';
-import { getSupportCopy } from '@/lib/support';
+import { getSupportCopy, supportSources } from '@/lib/support';
 const c=getSupportCopy(getLanguageFromPath(Astro.url.pathname));
 ---
 <section class="support-card service-picker">
@@ -16,7 +17,8 @@ const c=getSupportCopy(getLanguageFromPath(Astro.url.pathname));
     {catalog.entries.map(service=><article data-service-region={service.region} hidden>
       <h3>{c.services[service.region].region}</h3>
       <p>{c.services[service.region].instructions}</p>
-      <a class="button primary" href={service.url} target="_blank" rel="noreferrer">{service.name} ↗</a>
+      {service.region==='GB-ENG' && <p data-youth-service>{c.services['GB-ENG'].youthInstructions} <a href={supportSources.youthHelp.url} target="_blank" rel="noreferrer">{c.services['GB-ENG'].youthLink}</a></p>}
+      <a class="button primary" href={service.url} target="_blank" rel="noreferrer">{service.name}<ExternalLinkIcon /></a>
       <p class="muted">{c.flow.websiteLanguage}: <bdi>{service.websiteLanguages}</bdi><br/>{c.flow.checked}: <time dir="ltr" datetime={catalog.checkedAt}>{catalog.checkedAt}</time></p>
       <p class="muted">{c.flow.verification}</p>
     </article>)}
@@ -25,7 +27,7 @@ const c=getSupportCopy(getLanguageFromPath(Astro.url.pathname));
   <div class="actions"><a class="button" href="#contact-note">{c.ui.contact}</a></div>
   <details><summary>{c.flow.linkProblem}</summary><p>{c.seekHelp.noService}</p><p>{c.seekHelp.waiting}</p><p>{c.seekHelp.cost}</p></details>
   <p class="muted">{c.ui.external}</p>
-  <noscript><ul>{catalog.entries.map(service=><li>{c.services[service.region].region}: <a href={service.url} rel="noreferrer">{service.name}</a> — {c.services[service.region].instructions}</li>)}</ul></noscript>
+  <noscript><ul>{catalog.entries.map(service=><li>{c.services[service.region].region}: <a href={service.url} rel="noreferrer">{service.name}</a> — {c.services[service.region].instructions}{service.region==='GB-ENG' && <p>{c.services['GB-ENG'].youthInstructions} <a href={supportSources.youthHelp.url} rel="noreferrer">{c.services['GB-ENG'].youthLink}</a></p>}</li>)}</ul></noscript>
 </section>
 <script>
   const region=document.getElementById('support-region') as HTMLSelectElement;

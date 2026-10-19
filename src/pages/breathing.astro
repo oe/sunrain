@@ -146,7 +146,7 @@ const breathingModes = [
         </div>
 
         <!-- Main breathing circle - overflow hidden to contain shadow -->
-        <div class="relative w-72 h-72 mx-auto overflow-hidden rounded-full">
+        <div class="relative w-full max-w-72 aspect-square mx-auto overflow-hidden rounded-full">
           <!-- Background rings -->
           <div
             class="absolute inset-0 rounded-full border-4 border-teal-200/30 dark:border-teal-700/30"
@@ -222,27 +222,27 @@ const breathingModes = [
       </p>
 
       <!-- Controls -->
-      <div class="flex justify-center gap-4 mb-10 animate-fade-in-up delay-400">
+      <div class="grid grid-cols-2 max-w-sm mx-auto gap-3 sm:gap-4 mb-10 animate-fade-in-up delay-400">
         <button
           id="start-btn"
-          class="group relative px-8 py-3.5 bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-600 hover:to-cyan-600 text-white font-semibold rounded-2xl shadow-lg shadow-teal-500/25 hover:shadow-xl hover:shadow-teal-500/30 transition-all duration-300 hover:-translate-y-0.5 flex items-center gap-2"
+          class="group relative min-w-0 justify-center px-3 sm:px-8 py-3.5 bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-600 hover:to-cyan-600 text-white font-semibold rounded-2xl shadow-lg shadow-teal-500/25 hover:shadow-xl hover:shadow-teal-500/30 transition-all duration-300 hover:-translate-y-0.5 flex items-center gap-2"
         >
-          <Icon name="Play" size={20} />
-          {t('breathing.start', lang)}
+          <Icon name="Play" size={20} className="shrink-0" />
+          <span class="min-w-0 break-words">{t('breathing.start', lang)}</span>
         </button>
         <button
           id="pause-btn"
-          class="hidden group relative px-8 py-3.5 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-semibold rounded-2xl shadow-lg shadow-amber-500/25 hover:shadow-xl hover:shadow-amber-500/30 transition-all duration-300 hover:-translate-y-0.5 flex items-center gap-2"
+          class="hidden group relative min-w-0 justify-center px-3 sm:px-8 py-3.5 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-semibold rounded-2xl shadow-lg shadow-amber-500/25 hover:shadow-xl hover:shadow-amber-500/30 transition-all duration-300 hover:-translate-y-0.5 flex items-center gap-2"
         >
-          <Icon name="Pause" size={20} />
-          {t('breathing.pause', lang)}
+          <Icon name="Pause" size={20} className="shrink-0" />
+          <span class="min-w-0 break-words">{t('breathing.pause', lang)}</span>
         </button>
         <button
           id="reset-btn"
-          class="px-8 py-3.5 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm text-gray-700 dark:text-gray-200 font-semibold rounded-2xl shadow-md hover:shadow-lg border border-gray-200/50 dark:border-gray-700/50 transition-all duration-300 hover:-translate-y-0.5 flex items-center gap-2"
+          class="min-w-0 justify-center px-3 sm:px-8 py-3.5 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm text-gray-700 dark:text-gray-200 font-semibold rounded-2xl shadow-md hover:shadow-lg border border-gray-200/50 dark:border-gray-700/50 transition-all duration-300 hover:-translate-y-0.5 flex items-center gap-2"
         >
-          <Icon name="RotateCcw" size={20} />
-          {t('breathing.reset', lang)}
+          <Icon name="RotateCcw" size={20} className="shrink-0" />
+          <span class="min-w-0 break-words">{t('breathing.reset', lang)}</span>
         </button>
       </div>
 
@@ -253,7 +253,7 @@ const breathingModes = [
         <h3 class="font-semibold text-gray-900 dark:text-white mb-4">
           {t('breathing.modes.title', lang) || 'Breathing Mode'}
         </h3>
-        <div id="modes-container" class="grid grid-cols-2 gap-3">
+        <div id="modes-container" class="grid grid-cols-1 min-[360px]:grid-cols-2 gap-3">
           {
             breathingModes.map((mode, index) => (
               <button
@@ -263,7 +263,7 @@ const breathingModes = [
                 data-exhale={mode.exhale}
                 data-hold-after={mode.holdAfter || 0}
                 class:list={[
-                  'mode-btn group p-4 rounded-2xl text-left transition-all duration-300 hover:scale-[1.02]',
+                  'mode-btn group min-w-0 flex flex-col items-stretch justify-start p-4 rounded-2xl text-start transition-all duration-300 hover:scale-[1.02]',
                   index === 0
                     ? 'bg-gradient-to-br from-teal-100 to-cyan-100 dark:from-teal-900/40 dark:to-cyan-900/40 ring-2 ring-teal-500'
                     : 'bg-gray-50 dark:bg-gray-700/50 hover:bg-gray-100 dark:hover:bg-gray-700'
@@ -272,12 +272,12 @@ const breathingModes = [
                 <div class="flex items-center gap-2 mb-1">
                   <span
                     class:list={[
-                      'w-2 h-2 rounded-full',
+                      'w-2 h-2 shrink-0 rounded-full',
                       `bg-${mode.color}-500`
                     ]}
                     style={`background-color: var(--color-${mode.color}, #14b8a6)`}
                   />
-                  <span class="font-medium text-gray-900 dark:text-white text-sm">
+                  <span class="min-w-0 break-words font-medium text-gray-900 dark:text-white text-sm">
                     {mode.name[lang] || mode.name.en}
                   </span>
                 </div>

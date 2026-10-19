@@ -157,6 +157,28 @@ test('changing master or track volume during fade preserves the volume used by l
   await expectVolume(0.2);
 });
 
+test('volume remains correct when fade bookkeeping finishes before the native ramp',async({page})=>{
+  // Force the timer/audio-clock divergence that can otherwise appear only
+  // under load. The real native 700ms ramp remains scheduled by public fade().
+  await page.evaluate(()=>{
+    const prototype=(window as any).Howl.prototype;
+    const original=prototype._startFadeInterval;
+    prototype._startFadeInterval=function(sound:any,from:number,to:number,length:number,id:number,group:boolean){
+      return original.call(this,sound,from,to,length>0?10:length,id,group);
+    };
+  });
+  await play(page,'pink-noise');await expectAudio(page,1);
+  await expect.poll(()=>page.evaluate(()=>(window as any).Howler._howls
+    .flatMap((howl:any)=>howl._sounds.filter((sound:any)=>!sound._paused))
+    .every((sound:any)=>sound._interval===null&&sound._volume===0.26))).toBe(true);
+  await setRange(page,'#soundscape-master',0.5);
+  await expect.poll(async()=>(await audioState(page)).gains).toEqual([Math.fround(0.13)]);
+  // Check beyond the old native ramp's endpoint, when it used to overwrite
+  // the user's latest choice despite the stored value already being correct.
+  await page.waitForTimeout(800);
+  expect((await audioState(page)).gains).toEqual([Math.fround(0.13)]);
+});
+
 test('rapid pause/resume cancels the old fade-out timer', async ({ page }) => {
   await play(page, 'pink-noise');
   await expectAudio(page, 1);

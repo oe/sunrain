@@ -4,6 +4,11 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+patchedDependencies:
+  howler@2.2.4:
+    hash: 319b1434837fe7ccdff3d1455340d2d6668f498e061bf915f32bce4a1993c42e
+    path: patches/howler@2.2.4.patch
+
 importers:
 
   .:
@@ -22,7 +27,7 @@ importers:
         version: 7.4.0(@types/node@20.19.43)(jiti@2.7.0)(sass@1.93.3)(tsx@4.20.6)(yaml@2.9.1)
       howler:
         specifier: ^2.2.4
-        version: 2.2.4
+        version: 2.2.4(patch_hash=319b1434837fe7ccdff3d1455340d2d6668f498e061bf915f32bce4a1993c42e)
       lucide-react:
         specifier: ^0.468.0
         version: 0.468.0(react@19.3.1)
@@ -3529,7 +3534,7 @@ snapshots:
     dependencies:
       '@types/hast': 3.0.5
 
-  howler@2.2.4: {}
+  howler@2.2.4(patch_hash=319b1434837fe7ccdff3d1455340d2d6668f498e061bf915f32bce4a1993c42e): {}
 
   html-escaper@3.0.3: {}
 
