@@ -4,6 +4,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 const locales=['en','zh-hans','zh-hant','es','ja','ko','hi','ar'];
 const copy=JSON.parse(await readFile(new URL('../../src/data/support-copy.json',import.meta.url),'utf8')).locales;
+const screeningCopy=JSON.parse(await readFile(new URL('../../src/data/screening-copy.json',import.meta.url),'utf8'));
 const path=(locale:string,route:string)=>`${locale==='en'?'':`/${locale}`}${route}`;
 async function entranceSettled(page:Page,selector='body'){
   await page.locator(selector).evaluate(async el=>{
@@ -195,11 +196,169 @@ test('clipboard denial retains the message and offers a working local download',
   expect(message).toContain('Example appointment concern');expect(message).toContain('Question about cost');
   expect(await page.evaluate(()=>Object.keys(localStorage).filter(k=>k.startsWith('sunrain')))).toEqual([]);
 });
-test('unreviewed assessment deep links expose no form; legacy data can be deleted',async({page})=>{
+test('assessment bookmarks explain exact locale availability and preserve legacy deletion',async({page})=>{
   for(const locale of locales) for(const id of ['phq-9','gad-7']) {
-    await page.goto(path(locale,`/assessment/${id}/`));await expect(page.locator('[data-screening-status="unavailable"]')).toBeVisible();await expect(page.locator('input[type="radio"]')).toHaveCount(0);
+    await page.goto(path(locale,`/assessment/${id}/`));await expect(page.locator(`[data-screening-status="${locale==='ja'&&id==='gad-7'?'unavailable':'available'}"]`)).toBeVisible();await expect(page.locator('input[type="radio"]')).toHaveCount(0);
   }
   await page.goto('/assessment/');await page.evaluate(()=>localStorage.setItem('sunrain_assessment_results','[{"answers":[3]}]'));await page.locator('#clear-legacy-history').click();expect(await page.evaluate(()=>localStorage.getItem('sunrain_assessment_results'))).toBeNull();
+});
+
+async function startScreening(page:Page,locale='en',age='adult'){
+  await page.goto(path(locale,'/check-in/'));
+  await page.locator('#start-screening').click();
+  await page.locator('#screening-age').selectOption(age);
+  await page.locator('#screening-start-tools').click();
+}
+async function answerTool(page:Page,id:string,answers:number[]){
+  for(const [i,value]of answers.entries())await page.locator(`input[name="screening-${id}-${i}"][value="${value}"]`).check();
+  await page.locator(`[data-screen-stage="${id}"] [data-screening-next]`).click();
+}
+for(const locale of locales){
+  test(`${locale}: source screening connects separate results to inline self-help and care`,async({page})=>{
+    const errors:string[]=[],requests:string[]=[];
+    page.on('pageerror',e=>errors.push(e.message));page.on('request',r=>requests.push(r.url()));
+    await startScreening(page,locale);
+    const title=await page.title();
+    await expect(page.locator('[data-screen-stage="phq-9"]')).toBeVisible();
+    await answerTool(page,'phq-9',[2,2,2,2,2,2,2,2,0]);
+    if(locale==='ja'){
+      await expect(page.locator('[data-screen-stage="gad-7"]')).toHaveCount(0);
+      await expect(page.locator('[data-screen-stage="context"]')).toBeVisible();
+    }else await answerTool(page,'gad-7',Array(7).fill(1));
+    await page.locator('#screening-finish').click();
+    await expect(page.locator('#result-title')).toHaveText(screeningCopy[locale].results);
+    await expect(page.locator('[data-screening-report="phq-9"] [data-report-score]')).toHaveText('16 / 27');
+    await expect(page.locator('[data-screening-report="phq-9"] [data-report-band]')).toContainText(screeningCopy[locale].bands[3]);
+    await expect(page.locator('[data-screening-report="gad-7"] [data-report-score]')).toHaveText(locale==='ja'?screeningCopy[locale].availability:'7 / 21');
+    await expect(page.locator('[data-action="one-step"]')).toBeVisible();
+    if(locale!=='ja')await expect(page.locator('[data-action="worry"]')).toBeVisible();
+    await expect(page.locator('#screening-result-safety')).toBeHidden();
+    // The same private document carries scores, exact version and sources into
+    // an editable care record. Only explicit save/download persists that record.
+    await page.locator('#result-options [data-prepare-support]').click();
+    const notes=page.locator('#prepare-support [data-note-field]');
+    await expect(notes.nth(0)).toHaveValue(/16 \/ 27/);
+    await expect(notes.nth(0)).toHaveValue(/phqscreeners-201412/);
+    await expect(notes.nth(0)).toHaveValue(/https:\/\/www.phqscreeners.com/);
+    expect((await notes.nth(0).inputValue()).length).toBeLessThanOrEqual(2000);
+    await expect(notes.nth(1)).toHaveValue(screeningCopy[locale].twoWeeks);
+    await notes.nth(0).fill('My own care summary');
+    await page.locator('[data-action="one-step"] a').click();
+    await expect(page.locator('#inline-activity')).toBeVisible();
+    for(let i=0;i<3;i++)await page.locator('#guide-next').click();
+    await page.locator('#guide-finish').click();
+    await page.locator('input[value="same"]').check();
+    await page.locator('#activity-reflection [data-prepare-support]').click();
+    await expect(notes.nth(0)).toHaveValue('My own care summary');
+    // Questionnaire revision cannot resurrect stale results or overwrite edits.
+    await page.locator('[data-activity-close]').click();
+    await page.locator('#screening-revise').click();
+    await page.locator('#screening-start-tools').click();
+    await expect(page.locator('input[name="screening-phq-9-0"][value="2"]')).toBeChecked();
+    await answerTool(page,'phq-9',Array(9).fill(0));
+    if(locale!=='ja')await answerTool(page,'gad-7',Array(7).fill(0));
+    await page.locator('#screening-finish').click();
+    await expect(page.locator('[data-screening-report="phq-9"] [data-report-score]')).toHaveText('0 / 27');
+    await expect(notes.nth(0)).toHaveValue('My own care summary');
+    await expect(page.locator('[data-action="choose"]')).toBeVisible();
+    expect(await page.title()).toBe(title);expect(new URL(page.url()).search).toBe('');expect(new URL(page.url()).hash).toBe('');
+    expect(await page.evaluate(()=>Object.keys(localStorage).filter(k=>k.startsWith('sunrain')))).toEqual([]);
+    expect(await page.evaluate(()=>Object.keys(sessionStorage))).toEqual([]);
+    expect(requests.some(url=>/screening|answers|score=|symptoms=/.test(new URL(url).search))).toBe(false);
+    expect(requests.filter(url=>new URL(url).origin!=='http://127.0.0.1:4362')).toEqual([]);
+    expect(errors).toEqual([]);
+    await page.reload();await expect(page.locator('#check-in-result')).toBeHidden();
+    await expect(page.locator('#screening-age')).toHaveValue('');
+    await expect(page.locator('#screening-flow input[type="radio"]:checked')).toHaveCount(0);
+    await expect(notes.nth(0)).toHaveValue('');
+  });
+}
+test('partial and skipped forms never become normal; item-9 support survives skipping with a low total',async({page})=>{
+  await startScreening(page);
+  await page.locator('[data-screen-stage="phq-9"] [data-screening-next]').click();
+  await expect(page.locator('[data-screen-stage="phq-9"] [data-screening-error]')).toHaveText(screeningCopy.en.answerError);
+  await expect(page.locator('input[name="screening-phq-9-0"][value="0"]')).toBeFocused();
+  await page.locator('input[name="screening-phq-9-8"][value="1"]').check();
+  await expect(page.locator('#screening-live-safety')).toBeVisible();
+  await page.locator('[data-screen-stage="phq-9"] [data-screening-skip]').click();
+  await answerTool(page,'gad-7',Array(7).fill(0));await page.locator('#screening-finish').click();
+  await expect(page.locator('[data-screening-report="phq-9"] [data-report-score]')).toHaveText(screeningCopy.en.unanswered);
+  await expect(page.locator('[data-screening-report="phq-9"] [data-report-band]')).toBeHidden();
+  await expect(page.locator('#screening-result-safety')).toBeVisible();
+  await page.locator('#screening-revise').click();await page.locator('#screening-start-tools').click();
+  await answerTool(page,'phq-9',[0,0,0,0,0,0,0,0,1]);await answerTool(page,'gad-7',Array(7).fill(0));
+  await page.locator('#screening-finish').click();
+  await expect(page.locator('[data-screening-report="phq-9"] [data-report-score]')).toHaveText('1 / 27');
+  await expect(page.locator('#screening-result-safety')).toBeVisible();
+  await expect(page.locator('[data-screening-report="gad-7"] [data-report-score]')).toHaveText('0 / 21');
+});
+test('youth records have scores without adult bands and declining age keeps general support accessible',async({page})=>{
+  await startScreening(page,'zh-hans','youth');
+  await answerTool(page,'phq-9',Array(9).fill(3));await answerTool(page,'gad-7',Array(7).fill(3));await page.locator('#screening-finish').click();
+  await expect(page.locator('[data-screening-report="phq-9"] [data-report-score]')).toHaveText('27 / 27');
+  await expect(page.locator('[data-screening-report="phq-9"] [data-report-next]')).toHaveText(screeningCopy['zh-hans'].youthResult);
+  await expect(page.locator('[data-report-band]:visible')).toHaveCount(0);
+  await expect(page.locator('#screening-result-safety')).toBeVisible();
+  for(const age of ['child','declined']){
+    await page.goto('/check-in/');await page.locator('#start-screening').click();await page.locator('#screening-age').selectOption(age);
+    await expect(page.locator('#screening-start-tools')).toBeDisabled();await expect(page.locator('#screening-age-alternative')).toBeVisible();
+    await page.locator('[data-screening-exit]').click();await expect(page.locator('[data-step="1"]')).toBeVisible();
+    await expect(page.locator('#screening-age')).toHaveValue('');
+  }
+});
+test('function and elevated-energy context prioritise care independently of totals',async({page})=>{
+  await startScreening(page);
+  for(let i=0;i<9;i++)await page.locator(`input[name="screening-phq-9-${i}"][value="0"]`).check();
+  await page.locator('input[name="screening-impact"][value="3"]').check();
+  await page.locator('[data-screen-stage="phq-9"] [data-screening-next]').click();
+  await answerTool(page,'gad-7',Array(7).fill(0));await page.locator('#screening-energy').check();await page.locator('#screening-finish').click();
+  await expect(page.locator('#screening-functional-care')).toBeVisible();await expect(page.locator('#energy-care')).toBeVisible();
+  await expect(page.locator('[data-action]:visible')).toHaveCount(0);
+  await expect(page.locator('[data-screening-report="phq-9"] [data-report-score]')).toHaveText('0 / 27');
+  await page.locator('#energy-care [data-prepare-support]').click();await expect(page.locator('#prepare-support')).toHaveAttribute('open','');
+});
+test('unselected tools and all-skipped screens remain unassessed',async({page})=>{
+  await page.goto('/check-in/');await page.locator('#start-screening').click();await page.locator('#screening-start-tools').click();
+  await expect(page.locator('#screening-selection-error')).toHaveText(screeningCopy.en.selectError);
+  await page.locator('#screening-age').selectOption('adult');await page.locator('input[name="screening-tool"][value="gad-7"]').uncheck();
+  await page.locator('#screening-start-tools').click();await page.locator('[data-screen-stage="phq-9"] [data-screening-skip]').click();await page.locator('#screening-finish').click();
+  await expect(page.locator('[data-screening-report="phq-9"] [data-report-score]')).toHaveText(screeningCopy.en.unanswered);
+  await expect(page.locator('[data-screening-report="gad-7"] [data-report-score]')).toHaveText(screeningCopy.en.notSelected);
+  await expect(page.locator('[data-report-band]:visible')).toHaveCount(0);
+});
+test('complete response export is explicit, includes sources and answers, and does not save browser history',async({page})=>{
+  await startScreening(page);
+  await answerTool(page,'phq-9',[1,1,1,1,1,1,1,1,0]);await answerTool(page,'gad-7',Array(7).fill(1));await page.locator('#screening-finish').click();
+  const pending=page.waitForEvent('download');await page.locator('#screening-export').click();
+  const download=await pending;expect(download.suggestedFilename()).toBe('sunrain-screening-record.txt');
+  const record=await readFile(await download.path(),'utf8');
+  expect(record).toContain('8 / 27');expect(record).toContain('7 / 21');
+  expect(record).toContain('Little interest or pleasure in doing things\nSeveral days');
+  expect(record).toContain('Thoughts that you would be better off dead or of hurting yourself in some way\nNot at all');
+  expect(record).toContain('https://www.phqscreeners.com/');expect(record).toContain(screeningCopy.en.notes);
+  expect(await page.evaluate(()=>Object.keys(localStorage).filter(k=>k.startsWith('sunrain')))).toEqual([]);
+  await page.locator('#result-options [data-prepare-support]').click();
+  await page.locator('#prepare-support [data-note-action="save"]').click();
+  expect(await page.evaluate(()=>Object.keys(localStorage).filter(k=>k.startsWith('sunrain')))).toEqual(['sunrain_note_v1:check-in-appointment:en']);
+  await page.goto('/disclaimer/');await page.locator('#delete-all-notes').click();
+  expect(await page.evaluate(()=>Object.keys(localStorage).filter(k=>k.startsWith('sunrain')))).toEqual([]);
+});
+test('screening radio options and results work by keyboard and remain within a narrow RTL layout',async({page})=>{
+  await page.setViewportSize({width:320,height:720});
+  await startScreening(page,'ar');
+  await page.addStyleTag({content:'::-webkit-scrollbar{width:15px}'});
+  await entranceSettled(page);
+  const number=await page.locator('[data-screen-stage="phq-9"] legend bdi').first().boundingBox();
+  const stem=await page.locator('[data-screen-stage="phq-9"] [data-question-text]').first().boundingBox();
+  expect(Math.abs(number.y-stem.y)).toBeLessThanOrEqual(1);
+  expect(number.x).toBeGreaterThanOrEqual(stem.x+stem.width);
+  const first=page.locator('input[name="screening-phq-9-0"][value="0"]');
+  await first.focus();await page.keyboard.press('Space');await expect(first).toBeChecked();
+  await page.keyboard.press('ArrowDown');await expect(page.locator('input[name="screening-phq-9-0"][value="1"]')).toBeChecked();
+  await answerTool(page,'phq-9',Array(9).fill(0));
+  await answerTool(page,'gad-7',Array(7).fill(0));await page.locator('#screening-finish').click();
+  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=document.documentElement.clientWidth)).toBe(true);
+  await expect(page.locator('#result-title')).toBeFocused();
 });
 test('self-help and provider instructions remain available without JavaScript',async({browser})=>{
   const context=await browser.newContext({javaScriptEnabled:false});const page=await context.newPage();

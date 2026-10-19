@@ -27,7 +27,7 @@
     "en": {
       "entry": {
         "title": "I'm not feeling okay",
-        "description": "Explore support in your language. You can start with a practical activity or prepare to ask for help without taking an assessment."
+        "description": "Use standard questionnaires to explore depression and anxiety symptoms, then choose self-help or prepare to seek care. This is an initial screen, not a diagnosis or a check for every condition."
       },
       "disclaimer": {
         "scope": "Sunrain provides mental health education and self-help support. It is not a medical or mental health care provider. Screening cannot diagnose, confirm, or rule out a condition, or replace professional assessment or treatment. Do not start, stop, or change treatment based on these results.",
@@ -178,7 +178,6 @@
         "limits": "This summary reflects your selections. It does not identify or rule out any condition, and several concerns do not mean several diagnoses. Other concerns have not been assessed.",
         "care": "If symptoms persist, worsen, or affect daily life, contact a qualified health professional. You can ask for help at any time, including before trying self-help.",
         "energyCare": "You selected unusually high energy or much less need for sleep. These changes deserve professional assessment, especially when they occur together. This page cannot tell whether the cause is bipolar disorder or something else. Contact your clinician or a local health service; use urgent services if there is immediate danger.",
-        "toolsPending": "Clinical screening is temporarily unavailable while the exact versions, translation evidence, permissions and professional review are verified. You can still use check-in, self-help and help-seeking guidance.",
         "sources": "Sources & content status",
         "review": "General education written for Sunrain using the references below. It is not a validated treatment programme. Independent clinical and native-language review is pending. The source organisations have not reviewed or endorsed this page.",
         "save": "Save on this device",
@@ -292,7 +291,7 @@
     "zh-hans": {
       "entry": {
         "title": "我最近不太好",
-        "description": "用你选择的语言寻找支持。无需先做测评，也可以直接尝试一个行动，或准备向他人求助。"
+        "description": "通过标准问卷初步了解抑郁和焦虑相关症状，再选择自助或准备求助。这是初筛，不能诊断，也不是对所有心理疾病的检查。"
       },
       "disclaimer": {
         "scope": "Sunrain 是心理健康教育与自助辅助网站，不是医疗或心理诊疗机构。初筛不能诊断、确认或排除疾病，也不能替代专业评估或治疗。请勿依据结果自行开始、停止或调整治疗。",
@@ -443,7 +442,6 @@
         "limits": "这份整理只反映你的选择，不能识别或排除任何疾病；多个困扰也不代表多种诊断。其他问题尚未评估。",
         "care": "如果困扰持续、加重或影响日常生活，请联系合格的专业人士。任何时候都可以求助，不必先尝试自助。",
         "energyCare": "你选择了精力异常高涨或睡眠需求明显减少。这些变化值得接受专业评估，同时出现时尤其需要留意。本站无法判断是否为双相障碍或其他原因。请联系现有医生或当地医疗服务；有立即危险时使用紧急服务。",
-        "toolsPending": "医学量表暂未开放：具体版本、译本依据、使用权限和专业审阅仍在核验。你仍可使用近况梳理、自助与求助指引。",
         "sources": "内容依据与状态",
         "review": "这些是 Sunrain 根据下列参考资料编写的一般教育内容，不是经验证的治疗课程。独立专业与母语审阅尚未完成，来源机构未审阅或认可本站内容。",
         "save": "保存到此设备",
@@ -557,7 +555,7 @@
     "zh-hant": {
       "entry": {
         "title": "我最近不太好",
-        "description": "用你選擇的語言尋找支持。無需先做評估，也可以直接嘗試一個行動，或準備向他人求助。"
+        "description": "透過標準問卷初步了解抑鬱和焦慮相關症狀，再選擇自助或準備求助。這是初步篩檢，不能診斷，也不是對所有心理疾病的檢查。"
       },
       "disclaimer": {
         "scope": "Sunrain 是心理健康教育與自助輔助網站，不是醫療或心理診療機構。初步篩檢不能診斷、確認或排除疾病，也不能取代專業評估或治療。請勿依據結果自行開始、停止或調整治療。",
@@ -708,7 +706,6 @@
         "limits": "這份整理只反映你的選擇，不能識別或排除任何疾病；多個困擾也不代表多種診斷。其他問題尚未評估。",
         "care": "如果困擾持續、加重或影響日常生活，請聯絡合格的專業人士。任何時候都可以求助，不必先嘗試自助。",
         "energyCare": "你選擇了精力異常高漲或睡眠需求明顯減少。這些變化值得接受專業評估，同時出現時尤其需要留意。本站無法判斷是否為雙相障礙或其他原因。請聯絡現有醫師或當地醫療服務；有立即危險時使用緊急服務。",
-        "toolsPending": "醫學量表暫未開放：具體版本、譯本依據、使用權限和專業審閱仍在核驗。你仍可使用近況整理、自助與求助指引。",
         "sources": "內容依據與狀態",
         "review": "這些是 Sunrain 根據下列參考資料編寫的一般教育內容，不是經驗證的治療課程。獨立專業與母語審閱尚未完成，來源機構未審閱或認可本站內容。",
         "save": "儲存到此裝置",
@@ -822,7 +819,7 @@
     "es": {
       "entry": {
         "title": "No me encuentro bien",
-        "description": "Explora apoyo en tu idioma. Puedes empezar con una actividad práctica o preparar una solicitud de ayuda sin hacer una evaluación."
+        "description": "Explora síntomas de depresión y ansiedad mediante cuestionarios estándar y elige autoayuda o prepara cómo pedir atención. Es un cribado inicial, no un diagnóstico ni una evaluación de todas las afecciones."
       },
       "disclaimer": {
         "scope": "Sunrain ofrece educación sobre salud mental y apoyo de autoayuda. No es un proveedor de atención médica ni psicológica. El cribado no permite diagnosticar, confirmar ni descartar una afección, ni sustituye la evaluación o el tratamiento profesional. No inicies, suspendas ni cambies un tratamiento basándote en estos resultados.",
@@ -973,7 +970,6 @@
         "limits": "Este resumen refleja tus selecciones. No identifica ni descarta ninguna afección. Varias dificultades no equivalen a varios diagnósticos. No se han evaluado otros problemas.",
         "care": "Si los síntomas persisten, empeoran o afectan a tu vida diaria, contacta con un profesional cualificado. Puedes pedir ayuda antes de probar la autoayuda.",
         "energyCare": "Has elegido una energía inusualmente alta o mucha menos necesidad de dormir. Estos cambios merecen una evaluación profesional, especialmente si aparecen juntos. Esta página no puede determinar si la causa es un trastorno bipolar u otra. Contacta con tu equipo o servicio de salud; usa urgencias ante un peligro inmediato.",
-        "toolsPending": "El cribado clínico no está disponible mientras verificamos versiones, traducciones, permisos y revisión profesional. Puedes usar la orientación, la autoayuda y la guía para pedir ayuda.",
         "sources": "Fuentes y estado del contenido",
         "review": "Educación general redactada por Sunrain a partir de las referencias. No es un programa de tratamiento validado. La revisión clínica independiente y lingüística está pendiente. Las entidades citadas no han revisado ni avalado esta página.",
         "save": "Guardar en este dispositivo",
@@ -1087,7 +1083,7 @@
     "ja": {
       "entry": {
         "title": "最近、心の調子がよくない",
-        "description": "選んだ言語でサポートを探せます。チェックを受けずに、実践できる活動を試したり、相談の準備をしたりすることもできます。"
+        "description": "標準的なPHQ-9で抑うつに関する症状を確認し、セルフヘルプや相談の準備につなげます。不安については一般的な支援を利用できます。これは初期スクリーニングであり、診断やすべての病気の検査ではありません。"
       },
       "disclaimer": {
         "scope": "Sunrain は心の健康に関する情報とセルフヘルプの支援を提供するサイトであり、医療機関や心理ケアの提供機関ではありません。スクリーニングで病気を診断、確定、否定することはできず、専門家による評価や治療に代わるものではありません。結果に基づいて自分で治療を開始、中止、変更しないでください。",
@@ -1238,7 +1234,6 @@
         "limits": "選んだ内容の整理であり、病気の特定や除外はできません。複数の困りごとが複数の診断を意味するわけではありません。他の問題は評価していません。",
         "care": "困りごとが続く、悪化する、生活に影響する場合は資格のある専門家に相談してください。セルフケアを試す前でも相談できます。",
         "energyCare": "普段と違う活力の高まり、または睡眠の必要性の大きな低下を選択しました。特に同時に現れる場合は、専門家に評価してもらうことが大切です。双極性障害か別の原因かはこの画面では判断できません。担当医や地域の医療機関に相談し、差し迫った危険があれば救急を利用してください。",
-        "toolsPending": "医学的な質問票は、版・翻訳の根拠・使用許可・専門的確認が済むまで公開を停止しています。状態の整理やセルフケア、相談の準備は利用できます。",
         "sources": "参考資料と内容の状態",
         "review": "参考資料に基づく Sunrain の一般向け情報です。効果が検証された治療プログラムではありません。独立した医療・母語話者の確認は未完了で、出典機関の審査や推奨を受けたものではありません。",
         "save": "この端末に保存",
@@ -1352,7 +1347,7 @@
     "ko": {
       "entry": {
         "title": "요즘 마음이 괜찮지 않아요",
-        "description": "선택한 언어로 도움을 살펴보세요. 평가를 받지 않고도 실천할 활동을 해 보거나 도움을 요청할 준비를 할 수 있습니다."
+        "description": "표준 질문지로 우울 및 불안 관련 증상을 살펴본 뒤 자가 도움이나 상담 준비를 선택하세요. 초기 선별이며 진단이나 모든 질환에 대한 검사가 아닙니다."
       },
       "disclaimer": {
         "scope": "Sunrain은 정신건강 교육과 자가 도움을 지원하는 웹사이트이며 의료기관이나 심리치료 기관이 아닙니다. 선별검사로 질환을 진단하거나 확정 또는 배제할 수 없으며 전문가의 평가나 치료를 대신하지 않습니다. 결과를 근거로 스스로 치료를 시작하거나 중단하거나 변경하지 마세요.",
@@ -1503,7 +1498,6 @@
         "limits": "선택한 내용을 정리한 것으로, 질환을 알아내거나 배제할 수 없습니다. 여러 어려움이 여러 진단을 뜻하지 않습니다. 다른 문제는 평가하지 않았습니다.",
         "care": "증상이 지속되거나 심해지거나 일상에 영향을 주면 자격 있는 전문가에게 연락하세요. 자가 돌봄을 시도하기 전에도 도움을 요청할 수 있습니다.",
         "energyCare": "평소와 다르게 높은 에너지 또는 수면 필요의 큰 감소를 선택했습니다. 이런 변화는 특히 함께 나타날 때 전문 평가를 받아볼 필요가 있습니다. 이 페이지는 양극성 장애인지 다른 원인인지 판단할 수 없습니다. 담당 의료진이나 지역 의료 서비스에 연락하고, 즉각적인 위험이 있으면 응급 서비스를 이용하세요.",
-        "toolsPending": "의학적 선별 검사는 버전, 번역 근거, 사용 권한과 전문가 검토를 확인하는 동안 제공하지 않습니다. 상태 정리, 자가 돌봄과 도움 요청 안내는 이용할 수 있습니다.",
         "sources": "출처와 콘텐츠 상태",
         "review": "아래 자료를 참고해 Sunrain이 작성한 일반 교육 정보입니다. 검증된 치료 프로그램이 아닙니다. 독립적인 의료 및 원어민 검토는 아직 완료되지 않았으며 출처 기관이 이 페이지를 검토하거나 보증하지 않았습니다.",
         "save": "이 기기에 저장",
@@ -1617,7 +1611,7 @@
     "hi": {
       "entry": {
         "title": "मैं इन दिनों ठीक महसूस नहीं कर रहा/रही हूँ",
-        "description": "अपनी चुनी हुई भाषा में सहायता देखें। आकलन किए बिना भी कोई व्यावहारिक गतिविधि आज़मा सकते हैं या मदद माँगने की तैयारी कर सकते हैं।"
+        "description": "मानक प्रश्नावलियों से अवसाद और चिंता के लक्षण समझें, फिर स्व-सहायता या देखभाल माँगने की तैयारी चुनें। यह शुरुआती स्क्रीनिंग है, निदान या हर मानसिक स्थिति की जाँच नहीं।"
       },
       "disclaimer": {
         "scope": "Sunrain मानसिक स्वास्थ्य संबंधी जानकारी और स्व-सहायता का समर्थन देने वाली वेबसाइट है, चिकित्सा या मानसिक स्वास्थ्य उपचार संस्था नहीं। स्क्रीनिंग किसी स्थिति का निदान, पुष्टि या खंडन नहीं कर सकती और पेशेवर आकलन या उपचार का विकल्प नहीं है। इन परिणामों के आधार पर स्वयं उपचार शुरू, बंद या परिवर्तित न करें।",
@@ -1768,7 +1762,6 @@
         "limits": "यह सार आपके चुने उत्तरों पर आधारित है। इससे किसी बीमारी की पहचान या उसे खारिज नहीं किया जा सकता। कई परेशानियाँ कई निदान नहीं हैं। अन्य समस्याओं का मूल्यांकन नहीं हुआ है।",
         "care": "लक्षण बने रहें, बढ़ें या जीवन पर असर डालें तो योग्य स्वास्थ्य पेशेवर से संपर्क करें। स्वयं की देखभाल आज़माने से पहले भी सहायता माँग सकते हैं।",
         "energyCare": "आपने असामान्य रूप से अधिक ऊर्जा या बहुत कम नींद की ज़रूरत चुनी है। इन बदलावों का पेशेवर आकलन उपयोगी है, खासकर साथ दिखाई देने पर। यह पृष्ठ नहीं बता सकता कि कारण बाइपोलर डिसऑर्डर है या कुछ और। अपने चिकित्सक या स्थानीय स्वास्थ्य सेवा से संपर्क करें; तुरंत खतरे में आपात सेवा लें।",
-        "toolsPending": "सटीक संस्करण, अनुवाद के प्रमाण, अनुमति और पेशेवर समीक्षा की जाँच होने तक चिकित्सकीय स्क्रीनिंग उपलब्ध नहीं है। स्थिति समझने, स्वयं की देखभाल और सहायता लेने का मार्गदर्शन उपलब्ध है।",
         "sources": "स्रोत और सामग्री की स्थिति",
         "review": "Sunrain की सामान्य शैक्षिक सामग्री नीचे दिए संदर्भों पर आधारित है। यह प्रमाणित उपचार कार्यक्रम नहीं है। स्वतंत्र चिकित्सकीय और मातृभाषा समीक्षा बाकी है। स्रोत संस्थाओं ने इस पृष्ठ की समीक्षा या समर्थन नहीं किया है।",
         "save": "इस डिवाइस पर सहेजें",
@@ -1882,7 +1875,7 @@
     "ar": {
       "entry": {
         "title": "لا أشعر أنني بخير",
-        "description": "استكشف الدعم بلغتك المختارة. يمكنك تجربة نشاط عملي أو الاستعداد لطلب المساعدة دون إكمال تقييم."
+        "description": "استكشف أعراض الاكتئاب والقلق باستبيانات معيارية، ثم اختر المساعدة الذاتية أو الاستعداد لطلب الرعاية. هذا فحص أولي وليس تشخيصاً أو فحصاً لكل الحالات."
       },
       "disclaimer": {
         "scope": "يقدّم Sunrain معلومات عن الصحة النفسية ودعماً للمساعدة الذاتية، وليس جهة لتقديم الرعاية الطبية أو العلاج النفسي. لا يمكن للفحص الأولي تشخيص حالة أو تأكيدها أو استبعادها، ولا يحل محل التقييم أو العلاج المهني. لا تبدأ علاجاً أو توقفه أو تغيّره بناءً على هذه النتائج.",
@@ -2033,7 +2026,6 @@
         "limits": "يعكس الملخص اختياراتك فقط. لا يحدد أي اضطراب ولا يستبعده. وجود عدة صعوبات لا يعني وجود عدة تشخيصات. لم تُقيّم مشكلات أخرى.",
         "care": "إذا استمرت الأعراض أو ازدادت أو أثرت على حياتك اليومية، تواصل مع مختص مؤهل. يمكنك طلب المساعدة قبل تجربة المساعدة الذاتية أيضًا.",
         "energyCare": "اخترت طاقة مرتفعة على غير المعتاد أو حاجة أقل بكثير للنوم. تستحق هذه التغيرات تقييماً مهنياً، خصوصاً إذا ظهرت معاً. لا تستطيع هذه الصفحة تحديد إن كان السبب اضطراباً ثنائي القطب أو غيره. تواصل مع طبيبك أو خدمة صحية محلية؛ واستخدم الطوارئ عند وجود خطر فوري.",
-        "toolsPending": "الفحص السريري غير متاح مؤقتًا إلى حين التحقق من الإصدارات والترجمات والأذونات والمراجعة المهنية. يمكنك استخدام تفقّد الحال والمساعدة الذاتية وإرشادات طلب الدعم.",
         "sources": "المصادر وحالة المحتوى",
         "review": "معلومات تثقيفية عامة كتبها Sunrain بالاستناد إلى المراجع أدناه. ليست برنامج علاج مثبتًا. المراجعة السريرية المستقلة ومراجعة المتحدثين الأصليين لم تكتمل بعد. لم تراجع الجهات المذكورة هذه الصفحة ولم تعتمدها.",
         "save": "حفظ على هذا الجهاز",

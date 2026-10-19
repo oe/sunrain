@@ -6,13 +6,13 @@ An open-source, free, and privacy-focused mental health self-help platform.
 
 ## ✨ Features
 
-- **Check-in** — privately organise several concerns and choose practical support, without a diagnosis or combined health score. General support is open without age confirmation, with eight-language youth support guidance.
+- **Check-in** — source-backed depression/anxiety symptom screening, separate results, complete response export, related coping activities and editable care preparation on one private URL. General reflection remains accessible without an age answer; youth records do not use adult severity bands. No diagnosis or combined health score.
 - **Self-help** — four complete activities: grounding, one manageable step, a sleep routine and organising a worry; plus guided breathing and soundscapes.
 - **Find support** — six-step guidance, editable contact text, appointment preparation and official service entry points for England, the US, Japan, South Korea, Spain and Hong Kong, plus one hospital's booking information in Beijing. Other regions receive local-care guidance; directory links do not guarantee appointments or service availability.
 - **Privacy controls** — explicit save, load, export and deletion, with no automatic saving or upload of responses.
 - **Crisis support** — maintained external country directory, with a direct emergency-services instruction.
 
-All of these paths and the full scope/privacy statement have eight-language content. This edition publishes general education, self-care and help navigation; it is not a professional mental-health service or validated treatment programme. The content has not received independent clinical or native-language review. References, AI source/meaning checks and software validation are recorded without implying expert approval. PHQ-9 and GAD-7 public scoring stays closed while exact versions, translations, rights and professional review are verified; existing bookmarks lead to sources and working support options. General-support publication and future medical-screening approval are separate decisions; see [Releasing Sunrain](./docs/RELEASING.md).
+All of these paths and the full scope/privacy statement have eight-language content. This edition publishes general education, self-care and help navigation; it is not a professional mental-health service or validated treatment programme. The content has not received independent clinical or native-language review. References, AI source/meaning checks and software validation are recorded without implying expert approval. The symptom-reference implementation uses pinned original PHQ-9 forms in eight languages and GAD-7 in seven; the restricted Japanese GAD-7 stays unavailable. Adult symptom bands and youth records are separate, with no diagnosis or combined score. See [implementation and source limits](./docs/SCREENING_IMPLEMENTATION.md) and [release policy](./docs/RELEASING.md). The public build metadata identifies which commit is actually deployed.
 
 ## 🌍 Languages
 

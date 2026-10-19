@@ -3,15 +3,17 @@ import SupportLayout from '@/layouts/SupportLayout.astro';
 import { getLanguageFromPath,getLocalizedPath } from '@/lib/i18n';
 import { getSupportCopy } from '@/lib/support';
 import registry from '@/data/screening-registry.json';
-// Kept as explicit routes for existing bookmarks. Unverified forms and translations
-// are never serialized into the published HTML or client bundles.
+import {getScreeningContent} from '@/lib/screening-content';
+// Keep bookmarks; all answers and combined results use the private check-in URL.
 export function getStaticPaths(){return ['phq-9','gad-7'].map(id=>({params:{id}}));}
 const lang=getLanguageFromPath(Astro.url.pathname);
 const c=getSupportCopy(lang);
 const tool=registry.tools[Astro.params.id];
+const {forms,copy:s}=getScreeningContent(lang);
+const available=Boolean(forms[Astro.params.id]);
 ---
 <SupportLayout title={c.ui.checkIn}>
-  <h1>{c.ui.checkIn}</h1>
-  <div class="support-card" data-screening-status="unavailable"><p>{c.ui.toolsPending}</p><a href={tool.source} rel="noreferrer" target="_blank">{Astro.params.id.toUpperCase()} · {c.ui.sources}</a></div>
-  <div class="actions"><a class="button primary" href={getLocalizedPath('/check-in/',lang)}>{c.entry.title}</a><a class="button" href={getLocalizedPath('/self-help/',lang)}>{c.ui.selfHelp}</a><a class="button" href={getLocalizedPath('/support/',lang)}>{c.ui.support}</a></div>
+  <h1>{Astro.params.id==='phq-9'?s.depression:s.anxiety}</h1>
+  <div class="support-card" data-screening-status={available?'available':'unavailable'}><p>{available?s.intro:s.availability}</p><p>{s.reference}</p><a href={available?forms[Astro.params.id].source:tool.locales[lang]?.source||tool.source} rel="noreferrer" target="_blank">{Astro.params.id.toUpperCase()} · {c.ui.sources}</a></div>
+  <div class="actions"><a class="button primary" href={getLocalizedPath('/check-in/',lang)}>{s.begin}</a><a class="button" href={getLocalizedPath('/self-help/',lang)}>{c.ui.selfHelp}</a><a class="button" href={getLocalizedPath('/support/',lang)}>{c.ui.support}</a></div>
 </SupportLayout>

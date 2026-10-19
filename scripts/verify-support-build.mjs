@@ -16,8 +16,15 @@ for(const lang of locales) for(const route of routes) {
     assert.doesNotMatch(html,/static\.cloudflareinsights|fonts\.googleapis/,'Health pages must not load third-party telemetry or fonts');
   }
   if(route.startsWith('/assessment/')&&route!=='/assessment/') {
-    assert.match(html,/data-screening-status="unavailable"/);
+    const unavailable=lang==='ja'&&route==='/assessment/gad-7/';
+    assert.match(html,new RegExp(`data-screening-status="${unavailable?'unavailable':'available'}"`));
     assert.doesNotMatch(html,/name="answer"|questionnaire\.questions|"questionId"/);
+  }
+  if(route==='/check-in/') {
+    assert.match(html,/id="start-screening"/);
+    assert.match(html,/data-screen-stage="phq-9"/);
+    if(lang==='ja')assert.doesNotMatch(html,/data-screen-stage="gad-7"/);
+    else assert.match(html,/data-screen-stage="gad-7"/);
   }
   for(const match of html.matchAll(/<(?:a|link)\b[^>]*?href=(?:"([^"]+)"|'([^']+)'|([^\s>]+))/g)) {
     const href=match[1]||match[2]||match[3];

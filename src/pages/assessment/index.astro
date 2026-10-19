@@ -2,11 +2,13 @@
 import SupportLayout from '@/layouts/SupportLayout.astro';
 import { getLanguageFromPath,getLocalizedPath,t } from '@/lib/i18n';
 import { getSupportCopy } from '@/lib/support';
+import {getScreeningContent} from '@/lib/screening-content';
 const lang=getLanguageFromPath(Astro.url.pathname);
 const c=getSupportCopy(lang);
+const {copy:s}=getScreeningContent(lang);
 ---
 <SupportLayout title={c.ui.checkIn}>
-  <h1>{c.ui.checkIn}</h1><p>{c.ui.toolsPending}</p>
+  <h1>{s.begin}</h1><p>{s.intro}</p><p>{s.coverage}</p><p>{s.reference}</p>
   <div class="actions"><a class="button primary" href={getLocalizedPath('/check-in/',lang)}>{c.entry.title}</a><a class="button" href={getLocalizedPath('/self-help/',lang)}>{c.ui.selfHelp}</a><a class="button" href={getLocalizedPath('/support/',lang)}>{c.ui.support}</a></div>
   <p>{c.ui.limits}</p>
   <div class="support-card"><h2>{t('assessment.history.title',lang)}</h2><p>{c.ui.unavailable}</p><button id="clear-legacy-history" class="button" data-deleted={c.ui.deleted} data-failed={c.ui.failed} hidden>{t('assessment.history.clearAll',lang)}</button><p id="history-status" role="status"></p></div>
