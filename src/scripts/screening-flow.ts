@@ -74,7 +74,8 @@ if(app) {
       error.textContent=copy.answerError;
       unanswered.forEach(q=>q.setAttribute('aria-invalid','true'));
       // An inline alert explains the error; focus locates the first missing item.
-      focus(unanswered[0].querySelector<HTMLInputElement>('input'));return;
+      unanswered[0].querySelector<HTMLInputElement>('input').focus({preventScroll:true});
+      unanswered[0].scrollIntoView({block:'start',behavior:'instant'});return;
     }
     error.textContent='';skipped.delete(stage.dataset.screenStage);advance();
   }));

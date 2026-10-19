@@ -210,7 +210,13 @@ async function startScreening(page:Page,locale='en',age='adult'){
   await page.locator('#screening-start-tools').click();
 }
 async function answerTool(page:Page,id:string,answers:number[]){
-  for(const [i,value]of answers.entries())await page.locator(`input[name="screening-${id}-${i}"][value="${value}"]`).check();
+  for(const [i,value]of answers.entries()){
+    const input=page.locator(`input[name="screening-${id}-${i}"][value="${value}"]`);
+    // Exercise the complete labelled touch target. WebKit's native radio
+    // quads can disagree with its hit-test coordinates with a forced 15px RTL
+    // scrollbar; the full label remains the correct accessible user target.
+    await input.locator('..').click();await expect(input).toBeChecked();
+  }
   await page.locator(`[data-screen-stage="${id}"] [data-screening-next]`).click();
 }
 for(const locale of locales){
@@ -278,6 +284,11 @@ test('partial and skipped forms never become normal; item-9 support survives ski
   await page.locator('[data-screen-stage="phq-9"] [data-screening-next]').click();
   await expect(page.locator('[data-screen-stage="phq-9"] [data-screening-error]')).toHaveText(screeningCopy.en.answerError);
   await expect(page.locator('input[name="screening-phq-9-0"][value="0"]')).toBeFocused();
+  const focused=await page.locator('input[name="screening-phq-9-0"][value="0"]').boundingBox();
+  const header=await page.locator('#main-header').boundingBox();
+  expect(focused.y).toBeGreaterThanOrEqual(header.y+header.height+8);
+  const question=await page.locator('[data-screen-stage="phq-9"] [data-question-text]').first().boundingBox();
+  expect(question.y).toBeGreaterThanOrEqual(header.y+header.height+8);
   await page.locator('input[name="screening-phq-9-8"][value="1"]').check();
   await expect(page.locator('#screening-live-safety')).toBeVisible();
   await page.locator('[data-screen-stage="phq-9"] [data-screening-skip]').click();
