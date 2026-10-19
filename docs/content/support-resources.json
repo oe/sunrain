@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 2,
+  "updatedAt": "2026-10-19",
+  "status": "official_entry_pages_checked_not_appointments",
+  "runtimeCatalog": "../../src/data/support-services.json",
+  "localizedInstructions": "../../src/data/support-copy.json#/locales/*/services",
+  "countryMustBeSelectedSeparatelyFromLanguage": true,
+  "verificationScope": "Official information pages and directory entry screens read; searches, appointment availability and acceptance not tested.",
+  "entries": [
+    {
+      "region": "GB-ENG",
+      "url": "https://www.nhs.uk/nhs-services/mental-health-services/find-nhs-talking-therapies-for-anxiety-and-depression/",
+      "kind": "directory",
+      "sourceCheckedAt": "2026-10-19",
+      "verification": "official_information_or_directory_entry_page_read",
+      "appointmentTested": false
+    },
+    {
+      "region": "US",
+      "url": "https://findtreatment.gov/",
+      "kind": "directory",
+      "sourceCheckedAt": "2026-10-19",
+      "verification": "official_information_or_directory_entry_page_read",
+      "appointmentTested": false
+    },
+    {
+      "region": "JP",
+      "url": "https://www.iryou.teikyouseido.mhlw.go.jp/znk-web/juminkanja/S2300/initialize",
+      "kind": "directory",
+      "sourceCheckedAt": "2026-10-19",
+      "verification": "official_information_or_directory_entry_page_read",
+      "appointmentTested": false
+    },
+    {
+      "region": "KR",
+      "url": "https://www.mentalhealth.go.kr/portal/health/fac/PotalHealthFacListTab1.do",
+      "kind": "directory",
+      "sourceCheckedAt": "2026-10-19",
+      "verification": "official_information_or_directory_entry_page_read",
+      "appointmentTested": false
+    },
+    {
+      "region": "ES",
+      "url": "https://regcess.mscbs.es/regcessWeb/inicioBuscarCentrosAction.do",
+      "kind": "directory",
+      "sourceCheckedAt": "2026-10-19",
+      "verification": "official_information_or_directory_entry_page_read",
+      "appointmentTested": false
+    },
+    {
+      "region": "HK",
+      "url": "https://www.ha.org.hk/visitor/ha_visitor_index.asp?Content_ID=10053&Lang=CHIB5&Dimension=100&Parent_ID=10042",
+      "kind": "public_service_information",
+      "sourceCheckedAt": "2026-10-19",
+      "verification": "official_information_or_directory_entry_page_read",
+      "appointmentTested": false
+    },
+    {
+      "region": "CN-BJ",
+      "url": "https://www.pkuh6.cn/Html/Mobile/Articles/4914.html",
+      "kind": "single_provider_information",
+      "sourceCheckedAt": "2026-10-19",
+      "verification": "official_information_or_directory_entry_page_read",
+      "appointmentTested": false
+    }
+  ],
+  "uncoveredRegionBehavior": "Show the selected-language help guide and contact template. Explain the coverage gap and suggest contacting local primary care or public health services; do not infer a country from language or fabricate a provider.",
+  "externalLinkBehavior": "Open only after user action. Do not transmit answers, scores, health concerns or notes. Show the destination region and actual website language when verified; otherwise state that language availability is unverified."
+}

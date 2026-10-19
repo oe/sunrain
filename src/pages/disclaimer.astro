@@ -1,0 +1,26 @@
+---
+import SupportLayout from '@/layouts/SupportLayout.astro';
+import ContentSources from '@/components/ContentSources.astro';
+import { getLanguageFromPath,t } from '@/lib/i18n';
+import { getSupportCopy } from '@/lib/support';
+const lang=getLanguageFromPath(Astro.url.pathname);
+const c=getSupportCopy(lang);
+---
+<SupportLayout title={c.ui.disclaimer}>
+  <h1>{c.ui.disclaimer}</h1>
+  <section class="support-card"><p>{c.disclaimer.scope}</p><p>{c.disclaimer.safety}</p><p>{c.ui.limits}</p><p>{c.ui.toolsPending}</p></section>
+  <section class="support-card"><h2>{t('home.privacy.title',lang)}</h2><p>{c.ui.privacy}</p><p>{c.common.save}</p><p>{c.ui.unavailable}</p><p>{t('home.privacy.description',lang)}</p><p>{c.ui.external}</p></section>
+  <section class="support-card"><h2>{c.ui.deleteAllNotes}</h2><p>{c.ui.unavailable}</p><button class="button" id="delete-all-notes" data-deleted={c.ui.deleted} data-failed={c.ui.failed} hidden>{c.ui.deleteAllNotes}</button><p id="delete-status" role="status"></p></section>
+  <ContentSources sources={['selfCare','conversation','help','who']} />
+</SupportLayout>
+<script>
+  const button=document.getElementById('delete-all-notes');
+  button.hidden=false;
+  button.addEventListener('click',()=>{
+    const status=document.getElementById('delete-status');
+    try {
+      const keys=Object.keys(localStorage).filter(key=>key.startsWith('sunrain_note_v1:')||key==='sunrain_assessment_results');
+      keys.forEach(key=>localStorage.removeItem(key));status.textContent=button.dataset.deleted;
+    } catch {status.textContent=button.dataset.failed;}
+  });
+</script>

@@ -1,0 +1,27 @@
+---
+import { getLanguageFromPath } from '@/lib/i18n';
+import { getSupportCopy } from '@/lib/support';
+interface Props { kind: string; labels?: string[]; template?: string; title?: string; }
+const { kind, labels, template, title } = Astro.props;
+const lang = getLanguageFromPath(Astro.url.pathname);
+const c = getSupportCopy(lang);
+const fields = labels || [c.ui.note];
+---
+<section id={template ? 'contact-note' : undefined} class="support-card private-notes" data-kind={kind} data-language={lang} data-template={template} data-labels={JSON.stringify(fields)} data-saved={c.ui.saved} data-failed={c.ui.failed} data-deleted={c.ui.deleted} data-empty={c.ui.empty} data-copied={c.flow.copied} data-copy-failed={c.flow.copyFailed}>
+  <h2>{title || c.ui.summary}</h2>
+  <p class="muted">{c.flow.notePrivacy}</p>
+  {fields.map((label,i) => <label for={`note-${kind}-${i}`}>{label}<textarea id={`note-${kind}-${i}`} maxlength="2000" autocomplete="off" data-note-field spellcheck="false" data-1p-ignore data-lpignore="true"></textarea></label>)}
+  {template && <div><h3>{c.ui.contact}</h3><p class="result-summary" data-contact-preview>{template}</p></div>}
+  <div class="actions" data-note-controls hidden>
+    {template && <button type="button" class="button primary" data-note-action="copy">{c.flow.copyMessage}</button>}
+    <button type="button" class="button" data-note-action="download">{c.ui.download}</button>
+    <button type="button" class="button" data-note-action="save">{c.ui.save}</button>
+    <button type="button" class="button" data-note-action="load">{c.ui.load}</button>
+    <button type="button" class="button" data-note-action="clear">{c.ui.clear}</button>
+  </div>
+  <p class="status" role="status" data-note-status></p>
+</section>
+<script>
+  import { initPrivateNotes } from '@/scripts/private-notes';
+  initPrivateNotes();
+</script>

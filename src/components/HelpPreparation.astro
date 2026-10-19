@@ -1,0 +1,47 @@
+---
+import SupportServices from './SupportServices.astro';
+import PrivateNotes from './PrivateNotes.astro';
+import { getLanguageFromPath } from '@/lib/i18n';
+import { getSupportCopy } from '@/lib/support';
+interface Props { kind: string; }
+const {kind}=Astro.props;
+const c=getSupportCopy(getLanguageFromPath(Astro.url.pathname));
+---
+<details id="prepare-support" class="help-preparation" data-preparation-kind={kind} data-record-truncated={c.flow.recordTruncated}>
+  <summary>{c.flow.prepare}</summary>
+  <h2 id="preparation-title" tabindex="-1">{c.flow.keepSummary}</h2>
+  <p>{c.flow.samePage}</p>
+  <p id="preparation-status" role="status"></p>
+  <SupportServices />
+  <PrivateNotes kind={kind} labels={c.seekHelp.summaryLabels} template={c.seekHelp.contactTemplate} />
+  <details class="support-card"><summary>{c.flow.bookingChecklist}</summary><ol>{c.seekHelp.steps.map(step=><li>{step}</li>)}</ol><p>{c.seekHelp.cost}</p><p>{c.seekHelp.waiting}</p><p>{c.seekHelp.existingCare}</p></details>
+</details>
+<script>
+  const preparation=document.querySelector<HTMLDetailsElement>('#prepare-support');
+  let lastPrepared='';
+  document.addEventListener('click',event=>{
+    const link=(event.target as Element).closest<HTMLAnchorElement>('[data-prepare-support]');
+    if(!link)return;
+    event.preventDefault();
+    const status=preparation.querySelector<HTMLElement>('#preparation-status');
+    status.textContent='';
+    const activityContainer=link.closest<HTMLElement>('[data-guided-activity]');
+    const activity=activityContainer?.querySelector<HTMLElement>('[data-activity-title]');
+    if(activity){
+      const target=preparation.querySelectorAll<HTMLTextAreaElement>('[data-note-field]')[3];
+      if(!target.value || target.value===lastPrepared){
+        const notes=[...activityContainer.querySelectorAll<HTMLTextAreaElement>('[data-activity-note] [data-note-field]')].filter(field=>field.value.trim()).map(field=>`${field.labels?.[0]?.firstChild?.textContent?.trim() || ''}: ${field.value}`);
+        const feedback=activityContainer.querySelector<HTMLInputElement>('input[name="feedback"]:checked');
+        const record=[activity.textContent,feedback?.labels?.[0]?.textContent,...notes].filter(Boolean).join('\n');
+        target.value=record.slice(0,2000).replace(/[\uD800-\uDBFF]$/,'');
+        if(record.length>2000)status.textContent=preparation.dataset.recordTruncated;
+        lastPrepared=target.value;
+        target.dispatchEvent(new Event('input',{bubbles:true}));
+      }
+    }
+    preparation.open=true;
+    const heading=preparation.querySelector<HTMLElement>('#preparation-title');
+    heading.focus({preventScroll:true});heading.scrollIntoView({block:'start',behavior:'instant'});
+  });
+  window.addEventListener('pageshow',event=>{if(event.persisted)preparation.open=false;});
+</script>

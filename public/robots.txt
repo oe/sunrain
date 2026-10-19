@@ -10,8 +10,8 @@ Disallow: /.astro/
 Disallow: /node_modules/
 
 # Allow all language versions
-Allow: /en/
-Allow: /zh/
+Allow: /zh-hans/
+Allow: /zh-hant/
 Allow: /es/
 Allow: /ja/
 Allow: /hi/

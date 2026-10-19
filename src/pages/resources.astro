@@ -1,12 +1,14 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import { t, getLanguageFromPath, type Language } from '@/lib/i18n';
+import { t, getLanguageFromPath, getLocalizedPath, type Language } from '@/lib/i18n';
+import { getSupportCopy } from '@/lib/support';
 import { Icon } from '@/components/Icon';
 import { getResources } from '@/data/resources';
 
 const lang = getLanguageFromPath(Astro.url.pathname) as Language;
 const categories = getResources(lang);
 const showLanguageNotice = lang !== 'en';
+const support=getSupportCopy(lang);
 ---
 
 <BaseLayout
@@ -14,6 +16,7 @@ const showLanguageNotice = lang !== 'en';
   description={t('resources.subtitle', lang)}
 >
   <div class="container mx-auto px-4 py-16">
+    <div class="max-w-4xl mx-auto mb-8 flex flex-wrap gap-4"><a class="px-4 py-3 rounded-xl border border-gray-400 text-gray-900 dark:text-white" href={getLocalizedPath('/self-help/',lang)}>{support.ui.selfHelp}</a><a class="px-4 py-3 rounded-xl border border-gray-400 text-gray-900 dark:text-white" href={getLocalizedPath('/support/',lang)}>{support.ui.support}</a></div>
     <div class="max-w-4xl mx-auto text-center mb-16 animate-fade-in-up">
       <h1
         class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6"

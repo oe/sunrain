@@ -10,7 +10,11 @@
     "relax": "Relax",
     "resources": "Resources",
     "crisis": "Crisis Help",
-    "about": "About"
+    "about": "About",
+    "checkIn": "Check in",
+    "selfHelp": "Self-help",
+    "support": "Find support",
+    "disclaimer": "Scope & privacy"
   },
   "home": {
     "hero": {
@@ -25,9 +29,9 @@
       "sectionTitle": "Core Features",
       "sectionSubtitle": "Tools designed to support your mental wellness journey",
       "assessment": {
-        "title": "Self-Assessment",
-        "description": "Understand your mental health with scientifically validated questionnaires",
-        "button": "Start Assessment"
+        "title": "Check in",
+        "description": "A private way to organise what feels difficult and choose support. This is not a diagnostic test. You can select several concerns, skip questions, or leave at any time.",
+        "button": "I'm not feeling okay"
       },
       "breathing": {
         "title": "Breathing Exercise",
@@ -36,18 +40,18 @@
       },
       "crisis": {
         "title": "Crisis Support",
-        "description": "24/7 crisis hotlines and mental health resources worldwide",
+        "description": "This directory is external. Choose your actual location and check contact method, hours and language. It is not an emergency dispatch service.",
         "button": "Get Help"
       }
     },
     "privacy": {
       "title": "Your Privacy, Protected",
-      "description": "Your assessment answers and scores stay on this device. No account or advertising trackers. We never upload your mental health responses. Our hosting and CDN providers may process basic, anonymous traffic and performance data."
+      "description": "Your check-in responses and notes are processed in this browser and are not uploaded by Sunrain. Saving and downloading are optional. There is no account or advertising tracking. Hosting and CDN providers may process IP addresses, browser details and requests. Some public pages use Cloudflare page analytics; check-in, self-help, support, assessment, crisis and privacy pages exclude it."
     }
   },
   "assessment": {
     "title": "Mental Health Assessment",
-    "subtitle": "Understand your mental health status through scientific assessment tools",
+    "subtitle": "Clinical screening is temporarily unavailable while the exact versions, translation evidence, permissions and professional review are verified. You can still use check-in, self-help and help-seeking guidance.",
     "startButton": "Start Assessment",
     "minutes": "minutes",
     "questions": "questions",
@@ -89,7 +93,7 @@
     },
     "disclaimer": {
       "title": "Important Notice",
-      "message": "These assessments are for self-understanding only and cannot replace professional mental health diagnosis. If you feel distressed, please consult a professional."
+      "message": "Sunrain provides mental health education and self-help support. It is not a medical or mental health care provider. Screening cannot diagnose, confirm, or rule out a condition, or replace professional assessment or treatment. Do not start, stop, or change treatment based on these results."
     }
   },
   "breathing": {
@@ -183,7 +187,7 @@
   },
   "crisis": {
     "title": "Crisis Hotlines",
-    "subtitle": "You are not alone. Help is available 24/7.",
+    "subtitle": "If you are in immediate danger, contact local emergency services or crisis support directly. Sunrain does not provide real-time monitoring or emergency response.",
     "description": "Find mental health crisis support hotlines in your country or region.",
     "emergency": {
       "title": "In Immediate Danger?",
@@ -206,7 +210,7 @@
     "values": {
       "privacy": {
         "title": "Privacy First",
-        "description": "Your assessment answers and scores stay on this device. No account or advertising trackers. We never upload your mental health responses. Our hosting and CDN providers may process basic, anonymous traffic and performance data."
+        "description": "Your check-in responses and notes are processed in this browser and are not uploaded by Sunrain. Saving and downloading are optional. There is no account or advertising tracking. Hosting and CDN providers may process IP addresses, browser details and requests. Some public pages use Cloudflare page analytics; check-in, self-help, support, assessment, crisis and privacy pages exclude it."
       },
       "accessibility": {
         "title": "Accessible",
@@ -214,12 +218,12 @@
       },
       "evidence": {
         "title": "Evidence-Based",
-        "description": "Our assessments use scientifically validated questionnaires."
+        "description": "General education written for Sunrain using the references below. It is not a validated treatment programme. Independent clinical and native-language review is pending. The source organisations have not reviewed or endorsed this page."
       }
     },
     "disclaimer": {
       "title": "Disclaimer",
-      "message": "Sunrain is not a substitute for professional mental health care. If you're experiencing a mental health crisis, please contact a mental health professional or crisis hotline."
+      "message": "Sunrain provides mental health education and self-help support. It is not a medical or mental health care provider. Screening cannot diagnose, confirm, or rule out a condition, or replace professional assessment or treatment. Do not start, stop, or change treatment based on these results."
     },
     "opensource": {
       "title": "Open Source",
@@ -255,7 +259,9 @@
       "light": "Light",
       "dark": "Dark",
       "system": "System"
-    }
+    },
+    "menu": "Menu",
+    "skipToContent": "Skip to content"
   },
   "errors": {
     "notFound": {

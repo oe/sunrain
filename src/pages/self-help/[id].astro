@@ -1,0 +1,17 @@
+---
+import SupportLayout from '@/layouts/SupportLayout.astro';
+import GuidedActivity from '@/components/GuidedActivity.astro';
+import HelpPreparation from '@/components/HelpPreparation.astro';
+import { getLanguageFromPath,getLocalizedPath } from '@/lib/i18n';
+import { getSupportCopy } from '@/lib/support';
+export function getStaticPaths(){return ['grounding','one-step','sleep','worry'].map(id=>({params:{id}}));}
+const lang=getLanguageFromPath(Astro.url.pathname);
+const c=getSupportCopy(lang);
+const id=Astro.params.id;
+const guide=({'grounding':c.guides.grounding,'one-step':c.guides.smallStep,'sleep':c.guides.sleepRoutine,'worry':c.guides.worryPlan})[id];
+---
+<SupportLayout title={guide.title}>
+  <a href={getLocalizedPath('/self-help/',lang)}>← {c.ui.selfHelp}</a>
+  <GuidedActivity id={id}/>
+  <HelpPreparation kind="activity-appointment" />
+</SupportLayout>

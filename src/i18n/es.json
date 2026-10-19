@@ -10,7 +10,11 @@
     "relax": "Relajarse",
     "resources": "Recursos",
     "crisis": "Ayuda en Crisis",
-    "about": "Acerca de"
+    "about": "Acerca de",
+    "checkIn": "Revisar cómo estoy",
+    "selfHelp": "Autoayuda",
+    "support": "Buscar apoyo",
+    "disclaimer": "Alcance y privacidad"
   },
   "home": {
     "hero": {
@@ -25,9 +29,9 @@
       "sectionTitle": "Características Principales",
       "sectionSubtitle": "Herramientas diseñadas para apoyar tu viaje de bienestar mental",
       "assessment": {
-        "title": "Autoevaluación",
-        "description": "Comprende tu salud mental con cuestionarios científicamente validados",
-        "button": "Iniciar Evaluación"
+        "title": "Revisar cómo estoy",
+        "description": "Un espacio privado para ordenar tus dificultades y elegir apoyo. No es una prueba diagnóstica. Puedes elegir varias opciones, omitir preguntas o salir cuando quieras.",
+        "button": "No me encuentro bien"
       },
       "breathing": {
         "title": "Ejercicio de Respiración",
@@ -36,18 +40,18 @@
       },
       "crisis": {
         "title": "Apoyo en Crisis",
-        "description": "Líneas de crisis 24/7 y recursos de salud mental en todo el mundo",
+        "description": "Este directorio es externo. Elige tu ubicación real y comprueba el medio de contacto, horario e idioma. No es un servicio de emergencias.",
         "button": "Obtener Ayuda"
       }
     },
     "privacy": {
       "title": "Tu Privacidad, Protegida",
-      "description": "Tus respuestas y puntuaciones se guardan solo en este dispositivo. No necesitas una cuenta ni usamos rastreadores publicitarios. Nunca subimos tus respuestas de salud mental. Nuestros proveedores de alojamiento y CDN pueden procesar datos básicos y anónimos de tráfico y rendimiento."
+      "description": "Tus respuestas y notas se procesan en este navegador; Sunrain no las sube a un servidor. Guardar y descargar es opcional. No hay cuentas ni seguimiento publicitario. El alojamiento y la CDN pueden procesar la dirección IP, datos del navegador y solicitudes. Algunas páginas públicas usan estadísticas de Cloudflare; las páginas de orientación, autoayuda, apoyo, evaluación, crisis y privacidad las excluyen."
     }
   },
   "assessment": {
     "title": "Evaluación de Salud Mental",
-    "subtitle": "Comprende tu estado de salud mental a través de herramientas de evaluación científicas",
+    "subtitle": "El cribado clínico no está disponible mientras verificamos versiones, traducciones, permisos y revisión profesional. Puedes usar la orientación, la autoayuda y la guía para pedir ayuda.",
     "startButton": "Iniciar Evaluación",
     "minutes": "minutos",
     "questions": "preguntas",
@@ -89,7 +93,7 @@
     },
     "disclaimer": {
       "title": "Aviso Importante",
-      "message": "Estas evaluaciones son solo para autoconocimiento y no pueden reemplazar un diagnóstico profesional de salud mental."
+      "message": "Sunrain ofrece educación sobre salud mental y apoyo de autoayuda. No es un proveedor de atención médica ni psicológica. El cribado no permite diagnosticar, confirmar ni descartar una afección, ni sustituye la evaluación o el tratamiento profesional. No inicies, suspendas ni cambies un tratamiento basándote en estos resultados."
     }
   },
   "breathing": {
@@ -183,7 +187,7 @@
   },
   "crisis": {
     "title": "Líneas de Crisis",
-    "subtitle": "No estás solo/a. La ayuda está disponible 24/7.",
+    "subtitle": "Si estás en peligro inmediato, contacta directamente con los servicios de emergencia o de apoyo en crisis de tu zona. Sunrain no ofrece supervisión en tiempo real ni respuesta a emergencias.",
     "description": "Encuentra líneas de apoyo de crisis de salud mental en tu país o región.",
     "emergency": {
       "title": "¿En Peligro Inmediato?",
@@ -206,7 +210,7 @@
     "values": {
       "privacy": {
         "title": "Privacidad Primero",
-        "description": "Tus respuestas y puntuaciones se guardan solo en este dispositivo. No necesitas una cuenta ni usamos rastreadores publicitarios. Nunca subimos tus respuestas de salud mental. Nuestros proveedores de alojamiento y CDN pueden procesar datos básicos y anónimos de tráfico y rendimiento."
+        "description": "Tus respuestas y notas se procesan en este navegador; Sunrain no las sube a un servidor. Guardar y descargar es opcional. No hay cuentas ni seguimiento publicitario. El alojamiento y la CDN pueden procesar la dirección IP, datos del navegador y solicitudes. Algunas páginas públicas usan estadísticas de Cloudflare; las páginas de orientación, autoayuda, apoyo, evaluación, crisis y privacidad las excluyen."
       },
       "accessibility": {
         "title": "Accesible",
@@ -214,12 +218,12 @@
       },
       "evidence": {
         "title": "Basado en Evidencia",
-        "description": "Nuestras evaluaciones utilizan cuestionarios científicamente validados."
+        "description": "Educación general redactada por Sunrain a partir de las referencias. No es un programa de tratamiento validado. La revisión clínica independiente y lingüística está pendiente. Las entidades citadas no han revisado ni avalado esta página."
       }
     },
     "disclaimer": {
       "title": "Descargo de Responsabilidad",
-      "message": "Sunrain no sustituye la atención profesional de salud mental. Si estás experimentando una crisis, contacta a un profesional o línea de crisis."
+      "message": "Sunrain ofrece educación sobre salud mental y apoyo de autoayuda. No es un proveedor de atención médica ni psicológica. El cribado no permite diagnosticar, confirmar ni descartar una afección, ni sustituye la evaluación o el tratamiento profesional. No inicies, suspendas ni cambies un tratamiento basándote en estos resultados."
     },
     "opensource": {
       "title": "Código Abierto",
@@ -255,7 +259,9 @@
       "light": "Claro",
       "dark": "Oscuro",
       "system": "Sistema"
-    }
+    },
+    "menu": "Menú",
+    "skipToContent": "Saltar al contenido"
   },
   "errors": {
     "notFound": {

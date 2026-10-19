@@ -23,9 +23,10 @@ const normalizedPath = getPathWithoutLang(currentPath);
 
 const navItems = [
   { key: 'nav.home', href: '/' },
-  { key: 'nav.assessment', href: '/assessment/' },
+  { key: 'nav.checkIn', href: '/check-in/' },
+  { key: 'nav.selfHelp', href: '/self-help/' },
+  { key: 'nav.support', href: '/support/' },
   { key: 'nav.relax', href: '/relax/' },
-  { key: 'nav.resources', href: '/resources/' },
   { key: 'nav.crisis', href: '/crisis/' },
   { key: 'nav.about', href: '/about/' }
 ];
@@ -77,13 +78,13 @@ function isActive(itemHref: string): boolean {
     </a>
 
     <!-- Desktop Nav -->
-    <div class="hidden md:flex items-center gap-1">
+    <div class="hidden xl:flex items-center gap-1">
       {
         navItems.map((item) => (
           <a
             href={getLocalizedPath(item.href, lang)}
             class:list={[
-              'relative px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200',
+              'relative px-2 py-2 rounded-lg text-sm font-medium transition-all duration-200',
               isActive(item.href)
                 ? 'text-amber-600 dark:text-amber-400'
                 : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100/50 dark:hover:bg-gray-800/50'
@@ -128,6 +129,8 @@ function isActive(itemHref: string): boolean {
           id="theme-toggle"
           class="p-2.5 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-gray-100/50 dark:hover:bg-gray-800/50 transition-all duration-200"
           aria-label={t('common.theme.toggle', lang)}
+          aria-expanded="false"
+          aria-controls="theme-menu"
         >
           <svg
             id="theme-icon"
@@ -213,8 +216,10 @@ function isActive(itemHref: string): boolean {
       <!-- Mobile Menu Button -->
       <button
         id="mobile-menu-btn"
-        class="md:hidden p-2.5 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-gray-100/50 dark:hover:bg-gray-800/50 transition-colors"
-        aria-label="Menu"
+        class="xl:hidden p-2.5 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-gray-100/50 dark:hover:bg-gray-800/50 transition-colors"
+        aria-label={t('common.menu',lang)}
+        aria-expanded="false"
+        aria-controls="mobile-menu"
       >
         <svg
           id="menu-icon"
@@ -236,7 +241,7 @@ function isActive(itemHref: string): boolean {
   <!-- Mobile Menu -->
   <div
     id="mobile-menu"
-    class="hidden md:hidden overflow-hidden transition-all duration-300"
+    class="hidden xl:hidden overflow-hidden transition-all duration-300"
     style="max-height: 0;"
   >
     <div
@@ -294,7 +299,7 @@ function isActive(itemHref: string): boolean {
   };
 
   function getThemeSetting(): string {
-    return localStorage.getItem('theme') || 'system';
+    try { return localStorage.getItem('theme') || 'system'; } catch { return 'system'; }
   }
 
   function systemPrefersDark(): boolean {
@@ -319,7 +324,7 @@ function isActive(itemHref: string): boolean {
       html.classList.add('dark');
     }
 
-    localStorage.setItem('theme', setting);
+    try { localStorage.setItem('theme', setting); } catch {}
     updateIcon(setting);
   }
 
@@ -330,6 +335,7 @@ function isActive(itemHref: string): boolean {
   themeToggle?.addEventListener('click', (e) => {
     e.stopPropagation();
     themeMenu?.classList.toggle('hidden');
+    themeToggle.setAttribute('aria-expanded',String(!themeMenu?.classList.contains('hidden')));
   });
 
   // Handle theme selection
@@ -337,6 +343,7 @@ function isActive(itemHref: string): boolean {
     btn.addEventListener('click', () => {
       const theme = (btn as HTMLElement).dataset.value || 'system';
       themeMenu?.classList.add('hidden');
+      themeToggle?.setAttribute('aria-expanded','false');
       applyTheme(theme);
     });
   });
@@ -348,6 +355,7 @@ function isActive(itemHref: string): boolean {
       !themeMenu?.contains(e.target as Node)
     ) {
       themeMenu?.classList.add('hidden');
+      themeToggle?.setAttribute('aria-expanded','false');
     }
   });
 
@@ -382,6 +390,7 @@ function isActive(itemHref: string): boolean {
 
   mobileMenuBtn?.addEventListener('click', () => {
     isMenuOpen = !isMenuOpen;
+    mobileMenuBtn.setAttribute('aria-expanded', String(isMenuOpen));
 
     if (isMenuOpen) {
       mobileMenu?.classList.remove('hidden');
@@ -399,5 +408,10 @@ function isActive(itemHref: string): boolean {
         }
       }, 300);
     }
+  });
+  document.addEventListener('keydown', event => {
+    if(event.key !== 'Escape') return;
+    if(!themeMenu?.classList.contains('hidden')) { themeMenu?.classList.add('hidden'); themeToggle?.setAttribute('aria-expanded','false'); themeToggle?.focus(); }
+    if(isMenuOpen) { isMenuOpen=false; mobileMenu!.style.maxHeight='0'; mobileMenu?.classList.add('hidden'); mobileMenuBtn?.setAttribute('aria-expanded','false'); menuIcon?.classList.remove('rotate-90'); mobileMenuBtn?.focus(); }
   });
 </script>

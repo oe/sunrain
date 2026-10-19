@@ -1,0 +1,13 @@
+---
+import { getLanguageFromPath } from '@/lib/i18n';
+import { getSupportCopy, supportSources } from '@/lib/support';
+interface Props { sources: Array<keyof typeof supportSources>; }
+const copy = getSupportCopy(getLanguageFromPath(Astro.url.pathname));
+const { sources } = Astro.props;
+---
+<details class="support-card">
+  <summary>{copy.ui.sources}</summary>
+  <p>{copy.ui.review}</p>
+  <ul>{sources.map(key => <li><a href={supportSources[key].url} rel="noreferrer" target="_blank">{supportSources[key].name}</a></li>)}</ul>
+  <p class="muted">2026-10-19 · {copy.ui.external}</p>
+</details>

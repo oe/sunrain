@@ -1,0 +1,11 @@
+# Native tools required by the compiler and file watcher.
+onlyBuiltDependencies:
+  - '@parcel/watcher'
+  - esbuild
+
+# Integration 7.1.0 delegates transformation to plugin-react 6.1.2 (0.152.x);
+# its own older peer range is metadata only. The production build is exercised.
+peerDependencyRules:
+  allowedVersions:
+    oxc-transform-react: ^0.152.0
+

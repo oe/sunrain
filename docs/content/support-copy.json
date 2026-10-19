@@ -1,0 +1,660 @@
+{
+  "schemaVersion": 1,
+  "updatedAt": "2026-10-19",
+  "status": "draft_not_patient_facing",
+  "scope": "Reviewable content for planned support routes; no runtime integration or deployment.",
+  "reviewRequirements": {
+    "professionalReview": "pending",
+    "nativeLanguageReview": "pending",
+    "rightsReview": "pending"
+  },
+  "sources": {
+    "grounding": [
+      "E10"
+    ],
+    "smallStep": [
+      "E11"
+    ],
+    "seekHelp": [
+      "E12",
+      "E13"
+    ],
+    "officialMultilingualResource": [
+      "E14"
+    ]
+  },
+  "locales": {
+    "en": {
+      "entry": {
+        "title": "I'm not feeling okay",
+        "description": "Explore support in your language. You can start with a practical activity or prepare to ask for help without taking an assessment."
+      },
+      "disclaimer": {
+        "scope": "Sunrain provides mental health education and self-help support. It is not a medical or mental health care provider. Screening cannot diagnose, confirm, or rule out a condition, or replace professional assessment or treatment. Do not start, stop, or change treatment based on these results.",
+        "safety": "If you are in immediate danger, contact local emergency services or crisis support directly. Sunrain does not provide real-time monitoring or emergency response."
+      },
+      "common": {
+        "before": "Choose an activity that feels manageable. Keep any existing care plan, and stop whenever you want.",
+        "stop": "If this feels uncomfortable or makes things worse, stop. Choose another form of support or contact a professional.",
+        "noChange": "No change is a valid outcome. You do not need to repeat the activity or finish an assessment before asking for help.",
+        "finish": "Choose what you need next: end here, keep a short note, try another option, or prepare to seek support.",
+        "save": "Notes stay in this session unless you choose to save or export them. Shared devices may expose saved notes.",
+        "urgent": "If you are in immediate danger, use local emergency services or go to the nearest emergency department. Do not wait for this website to respond."
+      },
+      "guides": {
+        "grounding": {
+          "title": "Notice what is around you",
+          "purpose": "A brief sensory exercise for when stress feels overwhelming. It does not treat a mental health condition.",
+          "steps": [
+            "Find a comfortable position. Keep your eyes open if you prefer.",
+            "Notice five things you can see, four you can feel, and three you can hear.",
+            "Notice two smells and one taste already present. Do not taste unknown substances. Skip any sense that is unavailable or uncomfortable.",
+            "Pause and decide whether to stop, return to a simple activity, or choose more support."
+          ],
+          "takeaway": "Keep one detail that helped you reconnect with your surroundings. Feeling calmer is not required."
+        },
+        "smallStep": {
+          "title": "Choose one manageable next step",
+          "purpose": "For when ordinary tasks feel hard to start. This is general self-care support, not a depression treatment programme.",
+          "steps": [
+            "Choose one everyday need or priority that matters to you.",
+            "Make it manageable: one small task, rest, or asking a trusted person for practical help. You do not need to increase your workload.",
+            "Decide what you will do and when. You can leave this as a plan or try it now.",
+            "Review what was possible. Keep, reduce, or change the step without judging yourself."
+          ],
+          "takeaway": "Your note: what I chose, when I might do it, and what help I need."
+        }
+      },
+      "seekHelp": {
+        "title": "Prepare to ask for help",
+        "provider": "You can start with local primary care, a public clinic, or a qualified mental health professional. Roles, qualifications, costs, and referral rules vary by location.",
+        "steps": [
+          "Choose your current country or region separately from your reading language. Use an official local health-service directory when one is verified.",
+          "Ask for an initial mental health appointment or ask primary care which service is appropriate. You do not need a self-diagnosis.",
+          "Before booking, ask about eligibility, qualifications, referral requirements, cost, language, accessibility, and waiting time.",
+          "Prepare a short account of what is difficult, how long it has lasted, and its effect on daily life. Include current treatment or medicines only if you choose to discuss them.",
+          "Bring questions and, if you want, someone you trust. Ask what the next step is and what to do if your situation changes.",
+          "After contacting a service, keep your own record of the reply and next appointment. Sunrain cannot book appointments or confirm that a provider has accepted you."
+        ],
+        "contactTemplate": "I would like an initial mental health assessment. I have been experiencing {concern} for {duration}, affecting {impact}. How can I arrange an appointment, and what are the costs and available languages?",
+        "cost": "If cost is a barrier, ask about public or community services, insurance coverage, or student/employee support if available. Availability and confidentiality rules must be checked with the service.",
+        "waiting": "If there is a wait, ask about interim support and whom to contact if things worsen. You can ask another appropriate service about availability.",
+        "noService": "If your area is not listed or a link fails, use the contact template with local primary care or a public health service. The absence of a directory entry does not mean support is unavailable.",
+        "existingCare": "If you already have a clinician or care team, contact them about changes and follow your agreed plan. Do not change treatment based on a website exercise.",
+        "summaryLabels": [
+          "What is troubling me",
+          "When it started",
+          "Effect on daily life",
+          "What I have already tried",
+          "Questions I want to ask"
+        ]
+      },
+      "review": {
+        "professional": "pending",
+        "language": "pending",
+        "direction": "ltr"
+      },
+      "result": {
+        "title": "Understand your results",
+        "explanation": "Each completed tool describes a limited set of recent symptoms. These results cannot identify a diagnosis or explain the cause.",
+        "lowSymptoms": "Few related symptoms were reported on the completed tool. Other difficulties may not be covered, and you can still seek support.",
+        "incomplete": "This tool is incomplete; no score or severity is shown.",
+        "notCovered": "Not assessed in this check-in. This does not mean the concern is absent.",
+        "chooseSupport": "Choose support for what matters to you now; several concerns may appear together."
+      }
+    },
+    "zh-hans": {
+      "entry": {
+        "title": "我最近不太好",
+        "description": "用你选择的语言寻找支持。无需先做测评，也可以直接尝试一个行动，或准备向他人求助。"
+      },
+      "disclaimer": {
+        "scope": "Sunrain 是心理健康教育与自助辅助网站，不是医疗或心理诊疗机构。初筛不能诊断、确认或排除疾病，也不能替代专业评估或治疗。请勿依据结果自行开始、停止或调整治疗。",
+        "safety": "若你正面临立即危险，请直接联系当地紧急服务或专业危机支持。Sunrain 不提供实时监护或紧急救援。"
+      },
+      "common": {
+        "before": "选择目前做起来合适的活动。有既定照护计划时继续遵循；任何时候都可以停止。",
+        "stop": "如果感到不舒服或情况加重，请停止。可以换一种支持方式，或联系专业人士。",
+        "noChange": "没有变化也是有效的反馈。无需反复练习或做完测评后才求助。",
+        "finish": "选择接下来需要什么：到这里结束、留一份简短记录、试试其他方式，或准备求助。",
+        "save": "记录默认仅在当前会话保留，由你选择是否保存或导出。共用设备上的已保存记录可能被他人看到。",
+        "urgent": "若有立即危险，请使用当地紧急服务或前往最近的急诊，不要等待本站回应。"
+      },
+      "guides": {
+        "grounding": {
+          "title": "把注意力带回身边",
+          "purpose": "在压力让你难以承受时，尝试一段简短的感官练习。这不是心理疾病治疗。",
+          "steps": [
+            "找一个舒服的姿势，可以保持睁眼。",
+            "留意五样看得到的东西、四种触感和三种声音。",
+            "留意两种气味和一种已经存在的味道，不要尝不明物品。某种感官不适用或让你不舒服时可以跳过。",
+            "停一下，决定是结束、回到一件简单的日常活动，还是选择更多支持。"
+          ],
+          "takeaway": "可以记住一个让你重新留意周围的细节。不要求练习后一定平静。"
+        },
+        "smallStep": {
+          "title": "选一个现在做得到的小步骤",
+          "purpose": "用于日常事情难以开始时的一点自我照顾支持，不是一套抑郁症治疗课程。",
+          "steps": [
+            "选一件对你重要的日常需要或优先事项。",
+            "把它减到目前能承受的程度：一件小事、休息，或请信任的人帮忙。不必给自己加更多任务。",
+            "想一想具体做什么、何时做。可以先留下计划，也可以现在尝试。",
+            "回顾实际能做到什么，保留、减小或换一个步骤，不用责备自己。"
+          ],
+          "takeaway": "可以留下：我选了什么、可能何时做、还需要什么帮助。"
+        }
+      },
+      "seekHelp": {
+        "title": "准备向别人求助",
+        "provider": "可以从当地基层医疗、公立门诊或具备相关资质的心理健康专业人士开始。不同地区的职责、资质、费用和转介规则可能不同。",
+        "steps": [
+          "分别选择当前所在国家或地区，以及阅读语言。有已核验的官方医疗服务目录时，从那里查找。",
+          "询问心理健康初次评估如何预约，或请基层医疗人员建议合适的服务。不需要先给自己诊断。",
+          "预约前问清适用条件、专业资质、是否需要转介、费用、服务语言、无障碍条件和候诊时间。",
+          "简要整理困扰是什么、持续多久、如何影响生活。已有治疗或药物情况可由你决定是否向专业人士说明。",
+          "准备想问的问题；愿意时可请信任的人陪同。问清后续步骤和情况变化时该联系谁。",
+          "联系服务后，自己记录回复和预约安排。Sunrain 无法代为预约，也不能确认机构已经接诊。"
+        ],
+        "contactTemplate": "我想预约一次心理健康初步评估。我已经有{duration}受到{concern}困扰，影响到{impact}。请问怎样预约、费用如何、提供哪些语言服务？",
+        "cost": "费用有困难时，可以询问公立或社区服务、医保或保险，以及可能提供的学校或员工支持。是否可用及保密规则须向服务方确认。",
+        "waiting": "需要候诊时，问清等待期间有哪些支持、加重时联系谁，也可以向其他合适的服务询问名额。",
+        "noService": "没有列出你的地区或链接失效时，可以用预约模板联系当地基层医疗或公立医疗服务。目录没有记录不代表当地没有帮助。",
+        "existingCare": "已有医生或照护团队时，可以联系他们讨论变化，并遵循既定计划。不要根据网站练习自行调整治疗。",
+        "summaryLabels": [
+          "最困扰我的事",
+          "从什么时候开始",
+          "对日常生活的影响",
+          "已经尝试过什么",
+          "我想问的问题"
+        ]
+      },
+      "review": {
+        "professional": "pending",
+        "language": "pending",
+        "direction": "ltr"
+      },
+      "result": {
+        "title": "理解本次结果",
+        "explanation": "每个已完成的工具只描述近期症状的一部分。结果不能确定诊断或解释原因。",
+        "lowSymptoms": "已完成的工具中相关症状报告较少，其他困难可能没有覆盖；你仍然可以寻求支持。",
+        "incomplete": "这个工具尚未完成，不显示分数或程度。",
+        "notCovered": "本次未评估这一方面，不代表该困扰不存在。",
+        "chooseSupport": "按目前最需要的事情选择支持，多个困扰方向可以同时出现。"
+      }
+    },
+    "zh-hant": {
+      "entry": {
+        "title": "我最近不太好",
+        "description": "用你選擇的語言尋找支持。無需先做評估，也可以直接嘗試一個行動，或準備向他人求助。"
+      },
+      "disclaimer": {
+        "scope": "Sunrain 是心理健康教育與自助輔助網站，不是醫療或心理診療機構。初步篩檢不能診斷、確認或排除疾病，也不能取代專業評估或治療。請勿依據結果自行開始、停止或調整治療。",
+        "safety": "若你正面臨立即危險，請直接聯絡當地緊急服務或專業危機支持。Sunrain 不提供即時監護或緊急救援。"
+      },
+      "common": {
+        "before": "選擇目前做起來合適的活動。有既定照護計畫時繼續遵循；任何時候都可以停止。",
+        "stop": "如果感到不舒服或情況加重，請停止。可以換一種支持方式，或聯絡專業人士。",
+        "noChange": "沒有變化也是有效的回饋。無需反覆練習或做完評估後才求助。",
+        "finish": "選擇接下來需要什麼：到這裡結束、留一份簡短紀錄、試試其他方式，或準備求助。",
+        "save": "紀錄預設僅在目前工作階段保留，由你選擇是否儲存或匯出。共用裝置上的已儲存紀錄可能被他人看到。",
+        "urgent": "若有立即危險，請使用當地緊急服務或前往最近的急診，不要等待本站回應。"
+      },
+      "guides": {
+        "grounding": {
+          "title": "把注意力帶回身邊",
+          "purpose": "在壓力讓你難以承受時，嘗試一段簡短的感官練習。這不是心理疾病治療。",
+          "steps": [
+            "找一個舒服的姿勢，可以保持睜眼。",
+            "留意五樣看得到的東西、四種觸感和三種聲音。",
+            "留意兩種氣味和一種已經存在的味道，不要嘗不明物品。某種感官不適用或讓你不舒服時可以跳過。",
+            "停一下，決定是結束、回到一件簡單的日常活動，還是選擇更多支持。"
+          ],
+          "takeaway": "可以記住一個讓你重新留意周圍的細節。不要求練習後一定平靜。"
+        },
+        "smallStep": {
+          "title": "選一個現在做得到的小步驟",
+          "purpose": "用於日常事情難以開始時的一點自我照顧支持，不是一套憂鬱症治療課程。",
+          "steps": [
+            "選一件對你重要的日常需要或優先事項。",
+            "把它減到目前能承受的程度：一件小事、休息，或請信任的人幫忙。不必給自己加更多任務。",
+            "想一想具體做什麼、何時做。可以先留下計畫，也可以現在嘗試。",
+            "回顧實際能做到什麼，保留、減小或換一個步驟，不用責備自己。"
+          ],
+          "takeaway": "可以留下：我選了什麼、可能何時做、還需要什麼幫助。"
+        }
+      },
+      "seekHelp": {
+        "title": "準備向別人求助",
+        "provider": "可以從當地基層醫療、公立門診或具備相關資格的心理健康專業人士開始。不同地區的職責、資格、費用和轉介規則可能不同。",
+        "steps": [
+          "分別選擇目前所在國家或地區，以及閱讀語言。有已核驗的官方醫療服務目錄時，從那裡查找。",
+          "詢問心理健康初次評估如何預約，或請基層醫療人員建議合適的服務。不需要先給自己診斷。",
+          "預約前問清適用條件、專業資格、是否需要轉介、費用、服務語言、無障礙條件和候診時間。",
+          "簡要整理困擾是什麼、持續多久、如何影響生活。已有治療或藥物情況可由你決定是否向專業人士說明。",
+          "準備想問的問題；願意時可請信任的人陪同。問清後續步驟和情況變化時該聯絡誰。",
+          "聯絡服務後，自己記錄回覆和預約安排。Sunrain 無法代為預約，也不能確認機構已經接診。"
+        ],
+        "contactTemplate": "我想預約一次心理健康初步評估。我已經有{duration}受到{concern}困擾，影響到{impact}。請問怎樣預約、費用如何、提供哪些語言服務？",
+        "cost": "費用有困難時，可以詢問公立或社區服務、醫療保險，以及可能提供的學校或員工支持。是否可用及保密規則須向服務方確認。",
+        "waiting": "需要候診時，問清等待期間有哪些支持、加重時聯絡誰，也可以向其他合適的服務詢問名額。",
+        "noService": "沒有列出你的地區或連結失效時，可以用預約範本聯絡當地基層醫療或公立醫療服務。目錄沒有紀錄不代表當地沒有幫助。",
+        "existingCare": "已有醫師或照護團隊時，可以聯絡他們討論變化，並遵循既定計畫。不要根據網站練習自行調整治療。",
+        "summaryLabels": [
+          "最困擾我的事",
+          "從什麼時候開始",
+          "對日常生活的影響",
+          "已經嘗試過什麼",
+          "我想問的問題"
+        ]
+      },
+      "review": {
+        "professional": "pending",
+        "language": "pending",
+        "direction": "ltr"
+      },
+      "result": {
+        "title": "理解本次結果",
+        "explanation": "每個已完成的工具只描述近期症狀的一部分。結果不能確定診斷或解釋原因。",
+        "lowSymptoms": "已完成的工具中相關症狀回報較少，其他困難可能沒有涵蓋；你仍然可以尋求支持。",
+        "incomplete": "這個工具尚未完成，不顯示分數或程度。",
+        "notCovered": "本次未評估這一方面，不代表該困擾不存在。",
+        "chooseSupport": "按目前最需要的事情選擇支持，多個困擾方向可以同時出現。"
+      }
+    },
+    "es": {
+      "entry": {
+        "title": "No me encuentro bien",
+        "description": "Explora apoyo en tu idioma. Puedes empezar con una actividad práctica o preparar una solicitud de ayuda sin hacer una evaluación."
+      },
+      "disclaimer": {
+        "scope": "Sunrain ofrece educación sobre salud mental y apoyo de autoayuda. No es un proveedor de atención médica ni psicológica. El cribado no permite diagnosticar, confirmar ni descartar una afección, ni sustituye la evaluación o el tratamiento profesional. No inicies, suspendas ni cambies un tratamiento basándote en estos resultados.",
+        "safety": "Si estás en peligro inmediato, contacta directamente con los servicios de emergencia o de apoyo en crisis de tu zona. Sunrain no ofrece supervisión en tiempo real ni respuesta a emergencias."
+      },
+      "common": {
+        "before": "Elige una actividad que te resulte manejable. Sigue cualquier plan de atención que ya tengas y para cuando quieras.",
+        "stop": "Si te resulta incómodo o empeoras, para. Puedes elegir otro apoyo o contactar con un profesional.",
+        "noChange": "No notar cambios también es una respuesta válida. No tienes que repetir la actividad ni terminar una evaluación para pedir ayuda.",
+        "finish": "Elige qué necesitas ahora: terminar, guardar una nota breve, probar otra opción o preparar una solicitud de ayuda.",
+        "save": "Las notas permanecen en esta sesión salvo que decidas guardarlas o exportarlas. Otras personas podrían verlas en un dispositivo compartido.",
+        "urgent": "Si hay peligro inmediato, utiliza los servicios de emergencia locales o acude a urgencias. No esperes una respuesta de este sitio."
+      },
+      "guides": {
+        "grounding": {
+          "title": "Presta atención a tu entorno",
+          "purpose": "Un ejercicio sensorial breve para momentos de estrés abrumador. No es un tratamiento para una afección de salud mental.",
+          "steps": [
+            "Busca una postura cómoda. Puedes mantener los ojos abiertos.",
+            "Observa cinco cosas que ves, cuatro sensaciones de contacto y tres sonidos.",
+            "Percibe dos olores y un sabor ya presente. No pruebes sustancias desconocidas. Omite cualquier sentido que no puedas usar o te incomode.",
+            "Haz una pausa y decide si quieres terminar, volver a una actividad sencilla o buscar más apoyo."
+          ],
+          "takeaway": "Puedes recordar un detalle que te haya conectado con tu entorno. No es obligatorio sentirte más tranquilo."
+        },
+        "smallStep": {
+          "title": "Elige un siguiente paso manejable",
+          "purpose": "Para cuando cuesta empezar las tareas cotidianas. Es apoyo general de autocuidado, no un programa de tratamiento de la depresión.",
+          "steps": [
+            "Elige una necesidad o prioridad cotidiana que te importe.",
+            "Hazla manejable: una tarea pequeña, descansar o pedir ayuda práctica a alguien de confianza. No necesitas añadir más obligaciones.",
+            "Decide qué harás y cuándo. Puedes dejarlo como plan o intentarlo ahora.",
+            "Revisa lo que fue posible. Mantén, reduce o cambia el paso sin juzgarte."
+          ],
+          "takeaway": "Tu nota: qué elegí, cuándo podría hacerlo y qué ayuda necesito."
+        }
+      },
+      "seekHelp": {
+        "title": "Prepara una solicitud de ayuda",
+        "provider": "Puedes empezar por atención primaria, un centro público o un profesional de salud mental cualificado. Las funciones, titulaciones, tarifas y reglas de derivación varían según el lugar.",
+        "steps": [
+          "Elige tu país o región actual por separado del idioma de lectura. Usa un directorio oficial local cuando esté verificado.",
+          "Pregunta cómo pedir una primera evaluación de salud mental o consulta en atención primaria qué servicio es adecuado. No necesitas autodiagnosticarte.",
+          "Antes de reservar, pregunta por los requisitos de acceso, las credenciales, las derivaciones, el coste, el idioma, la accesibilidad y la espera.",
+          "Resume qué te preocupa, desde cuándo y cómo afecta a tu vida. Tú decides qué información sobre tratamientos o medicamentos compartir con el profesional.",
+          "Prepara tus preguntas y, si quieres, pide a alguien de confianza que te acompañe. Pregunta por el siguiente paso y a quién contactar si tu situación cambia.",
+          "Anota la respuesta del servicio y las próximas citas. Sunrain no puede concertar citas ni confirmar que un servicio te haya aceptado."
+        ],
+        "contactTemplate": "Quisiera una primera evaluación de salud mental. Llevo {duration} con {concern}, que afecta a {impact}. ¿Cómo puedo pedir cita, cuánto cuesta y en qué idiomas atienden?",
+        "cost": "Si el coste es una barrera, pregunta por servicios públicos o comunitarios, cobertura de seguro o apoyo estudiantil o laboral si existe. Confirma con el servicio la disponibilidad y sus normas de confidencialidad.",
+        "waiting": "Si hay espera, pregunta por apoyo provisional y a quién contactar si empeoras. Puedes consultar la disponibilidad de otro servicio adecuado.",
+        "noService": "Si tu zona no aparece o un enlace falla, usa el mensaje de contacto con atención primaria o un servicio público local. Que no haya una entrada no significa que no exista ayuda.",
+        "existingCare": "Si ya tienes un profesional o equipo de atención, coméntales los cambios y sigue el plan acordado. No cambies el tratamiento basándote en un ejercicio web.",
+        "summaryLabels": [
+          "Qué me preocupa",
+          "Cuándo empezó",
+          "Cómo afecta a mi vida",
+          "Qué he intentado",
+          "Qué quiero preguntar"
+        ]
+      },
+      "review": {
+        "professional": "pending",
+        "language": "pending",
+        "direction": "ltr"
+      },
+      "result": {
+        "title": "Comprende tus resultados",
+        "explanation": "Cada herramienta completada describe un conjunto limitado de síntomas recientes. Los resultados no permiten establecer un diagnóstico ni explicar la causa.",
+        "lowSymptoms": "La herramienta completada muestra pocos síntomas relacionados. Otras dificultades pueden no estar cubiertas y puedes pedir apoyo igualmente.",
+        "incomplete": "Esta herramienta está incompleta; no se muestra puntuación ni nivel.",
+        "notCovered": "Este aspecto no se evaluó. No significa que la dificultad no exista.",
+        "chooseSupport": "Elige el apoyo que necesitas ahora; pueden aparecer varias preocupaciones a la vez."
+      }
+    },
+    "ja": {
+      "entry": {
+        "title": "最近、心の調子がよくない",
+        "description": "選んだ言語でサポートを探せます。チェックを受けずに、実践できる活動を試したり、相談の準備をしたりすることもできます。"
+      },
+      "disclaimer": {
+        "scope": "Sunrain は心の健康に関する情報とセルフヘルプの支援を提供するサイトであり、医療機関や心理ケアの提供機関ではありません。スクリーニングで病気を診断、確定、否定することはできず、専門家による評価や治療に代わるものではありません。結果に基づいて自分で治療を開始、中止、変更しないでください。",
+        "safety": "差し迫った危険がある場合は、地域の緊急サービスや危機支援窓口に直接連絡してください。Sunrain はリアルタイムの見守りや緊急対応を行いません。"
+      },
+      "common": {
+        "before": "今の自分に無理のない活動を選んでください。すでにあるケア計画に従い、いつでも中止できます。",
+        "stop": "不快に感じたり、つらさが増したりしたら中止してください。別の支援を選ぶか、専門家に相談できます。",
+        "noChange": "変化がなくても問題ありません。助けを求める前に、練習を繰り返したりチェックを終えたりする必要はありません。",
+        "finish": "ここで終える、短いメモを残す、別の方法を試す、相談の準備をする、の中から選んでください。",
+        "save": "自分で保存や書き出しを選ばない限り、メモはこのセッション内だけに残ります。共有端末では保存したメモを他人に見られる可能性があります。",
+        "urgent": "差し迫った危険がある場合は、地域の緊急サービスを利用するか、最寄りの救急外来を受診してください。このサイトからの返答を待たないでください。"
+      },
+      "guides": {
+        "grounding": {
+          "title": "周囲に意識を向ける",
+          "purpose": "ストレスが強いときの短い感覚の練習です。精神疾患を治療するものではありません。",
+          "steps": [
+            "楽な姿勢をとります。目を開けたままでもかまいません。",
+            "見えるものを五つ、触れて感じるものを四つ、聞こえる音を三つ見つけます。",
+            "においを二つ、すでに口の中にある味を一つ意識します。知らない物を口に入れないでください。使えない感覚や不快な感覚は飛ばせます。",
+            "少し止まり、ここで終えるか、簡単な日常の活動に戻るか、別の支援を選ぶかを決めます。"
+          ],
+          "takeaway": "周囲に意識を戻すきっかけになったものを一つ覚えておけます。落ち着くことを達成目標にする必要はありません。"
+        },
+        "smallStep": {
+          "title": "今できる小さな一歩を選ぶ",
+          "purpose": "日常のことを始めにくいときのセルフケア支援です。うつ病の治療プログラムではありません。",
+          "steps": [
+            "自分にとって大切な日常の必要や優先事項を一つ選びます。",
+            "小さな作業、休息、信頼できる人への具体的なお願いなど、無理のない形にします。仕事を増やす必要はありません。",
+            "何をいつするか考えます。計画として残しても、今試してもかまいません。",
+            "できた範囲を振り返ります。自分を責めずに、そのまま続ける、減らす、変えることができます。"
+          ],
+          "takeaway": "メモに残せること：選んだこと、いつできそうか、必要な助け。"
+        }
+      },
+      "seekHelp": {
+        "title": "相談の準備をする",
+        "provider": "地域のかかりつけ医、公的な医療機関、適切な資格を持つ心の健康の専門家などが相談先になります。役割、資格、費用、紹介の仕組みは地域によって異なります。",
+        "steps": [
+          "読む言語とは別に、今いる国や地域を選びます。確認済みの公的な医療サービス案内があれば利用します。",
+          "心の健康について初回の相談を予約する方法を尋ねるか、かかりつけ医などに適切な窓口を相談します。自分で病名を決める必要はありません。",
+          "予約前に、利用条件、資格、紹介状の要否、費用、対応言語、利用上の配慮、待ち時間を確認します。",
+          "何がつらいか、いつからか、生活への影響を短くまとめます。治療や薬の情報を専門家にどこまで伝えるかは自分で選べます。",
+          "聞きたいことを用意し、希望すれば信頼できる人に同行を頼めます。次の手順と、状態が変わったときの連絡先を確認します。",
+          "相手からの返答と予約を自分で記録します。Sunrain は予約の代行や受け入れの確認を行えません。"
+        ],
+        "contactTemplate": "心の健康について初めての相談を希望しています。{concern}が{duration}続き、{impact}に影響しています。予約方法、費用、対応言語を教えてください。",
+        "cost": "費用が難しい場合は、公的・地域のサービス、保険、利用できる学校や職場の支援について尋ねてください。利用条件や守秘の扱いは窓口に確認します。",
+        "waiting": "待ち時間がある場合は、その間の支援と、悪化したときの連絡先を尋ねます。他の適切な窓口にも空きを確認できます。",
+        "noService": "地域が掲載されていない、またはリンクが使えない場合は、相談文のひな型を使って地域の医療機関や公的窓口に連絡できます。掲載がないことは支援がないという意味ではありません。",
+        "existingCare": "すでに担当の専門家や支援チームがいる場合は、変化を伝え、合意した計画に従ってください。サイトの練習をもとに自分で治療を変えないでください。",
+        "summaryLabels": [
+          "一番困っていること",
+          "いつからか",
+          "生活への影響",
+          "試したこと",
+          "聞きたいこと"
+        ]
+      },
+      "review": {
+        "professional": "pending",
+        "language": "pending",
+        "direction": "ltr"
+      },
+      "result": {
+        "title": "今回の結果を理解する",
+        "explanation": "完了した各ツールが示すのは、最近の症状の一部です。診断や原因を確定することはできません。",
+        "lowSymptoms": "完了したツールでは関連する症状の報告が少ない結果でした。他の困りごとは含まれない場合があり、結果にかかわらず相談できます。",
+        "incomplete": "このツールは未完了のため、点数や程度は表示しません。",
+        "notCovered": "今回はこの点を評価していません。困りごとがないという意味ではありません。",
+        "chooseSupport": "今必要なことに合う支援を選べます。複数の困りごとが同時に示されることもあります。"
+      }
+    },
+    "ko": {
+      "entry": {
+        "title": "요즘 마음이 괜찮지 않아요",
+        "description": "선택한 언어로 도움을 살펴보세요. 평가를 받지 않고도 실천할 활동을 해 보거나 도움을 요청할 준비를 할 수 있습니다."
+      },
+      "disclaimer": {
+        "scope": "Sunrain은 정신건강 교육과 자가 도움을 지원하는 웹사이트이며 의료기관이나 심리치료 기관이 아닙니다. 선별검사로 질환을 진단하거나 확정 또는 배제할 수 없으며 전문가의 평가나 치료를 대신하지 않습니다. 결과를 근거로 스스로 치료를 시작하거나 중단하거나 변경하지 마세요.",
+        "safety": "당장 위험한 상황이라면 지역 응급 서비스나 전문 위기 지원 기관에 직접 연락하세요. Sunrain은 실시간 관찰이나 응급 대응을 제공하지 않습니다."
+      },
+      "common": {
+        "before": "지금 감당할 수 있는 활동을 선택하세요. 기존 돌봄 계획을 따르고 언제든 멈출 수 있습니다.",
+        "stop": "불편하거나 상태가 더 나빠지면 멈추세요. 다른 도움을 선택하거나 전문가에게 연락할 수 있습니다.",
+        "noChange": "변화가 없는 것도 유효한 반응입니다. 도움을 요청하기 전에 활동을 반복하거나 평가를 마칠 필요는 없습니다.",
+        "finish": "여기서 마치기, 짧은 메모 남기기, 다른 방법 시도하기, 도움 요청 준비하기 중에서 선택하세요.",
+        "save": "직접 저장하거나 내보내지 않으면 메모는 현재 세션에만 남습니다. 공유 기기에서는 저장된 메모를 다른 사람이 볼 수 있습니다.",
+        "urgent": "즉각적인 위험이 있다면 지역 응급 서비스를 이용하거나 가까운 응급실로 가세요. 이 웹사이트의 답변을 기다리지 마세요."
+      },
+      "guides": {
+        "grounding": {
+          "title": "주변으로 주의를 돌리기",
+          "purpose": "스트레스가 압도적으로 느껴질 때 시도할 수 있는 짧은 감각 활동입니다. 정신질환 치료는 아닙니다.",
+          "steps": [
+            "편안한 자세를 취하세요. 원하면 눈을 뜬 채로 해도 됩니다.",
+            "보이는 것 다섯 가지, 느껴지는 촉감 네 가지, 들리는 소리 세 가지를 알아차려 보세요.",
+            "냄새 두 가지와 이미 입안에 있는 맛 한 가지를 알아차려 보세요. 모르는 물질을 맛보지 마세요. 사용할 수 없거나 불편한 감각은 건너뛰세요.",
+            "잠시 멈추고 마칠지, 간단한 일상 활동으로 돌아갈지, 다른 도움을 받을지 결정하세요."
+          ],
+          "takeaway": "주변을 다시 알아차리는 데 도움이 된 한 가지를 기억해도 좋습니다. 꼭 차분해져야 하는 것은 아닙니다."
+        },
+        "smallStep": {
+          "title": "지금 가능한 작은 단계 고르기",
+          "purpose": "일상적인 일을 시작하기 어려울 때의 일반적인 자기돌봄 지원입니다. 우울증 치료 프로그램은 아닙니다.",
+          "steps": [
+            "자신에게 중요한 일상적 필요나 우선순위를 하나 고르세요.",
+            "작은 일, 휴식, 믿을 수 있는 사람에게 실질적인 도움 요청하기처럼 감당할 수 있게 줄이세요. 할 일을 늘릴 필요는 없습니다.",
+            "무엇을 언제 할지 정하세요. 계획으로만 남겨 두거나 지금 시도해도 됩니다.",
+            "가능했던 것을 돌아보세요. 자신을 비난하지 않고 단계를 유지하거나 줄이거나 바꿀 수 있습니다."
+          ],
+          "takeaway": "메모할 내용: 내가 고른 것, 언제 할 수 있을지, 필요한 도움."
+        }
+      },
+      "seekHelp": {
+        "title": "도움 요청 준비하기",
+        "provider": "지역 일차의료기관, 공공 진료기관 또는 적절한 자격을 갖춘 정신건강 전문가에게서 시작할 수 있습니다. 역할, 자격, 비용, 의뢰 규칙은 지역마다 다릅니다.",
+        "steps": [
+          "읽는 언어와 별도로 현재 국가나 지역을 선택하세요. 검증된 공식 지역 의료서비스 안내가 있다면 이용하세요.",
+          "정신건강 첫 평가의 예약 방법을 묻거나 일차의료 담당자에게 적합한 서비스를 물어보세요. 스스로 진단할 필요는 없습니다.",
+          "예약 전에 이용 조건, 전문 자격, 의뢰 필요 여부, 비용, 서비스 언어, 접근성, 대기 기간을 확인하세요.",
+          "어떤 어려움이 언제부터 있었고 일상에 어떤 영향을 주는지 간단히 정리하세요. 기존 치료나 약물에 대해 무엇을 전문가와 공유할지는 선택할 수 있습니다.",
+          "질문을 준비하고 원하면 믿을 수 있는 사람의 동행을 부탁하세요. 다음 절차와 상태가 바뀌었을 때 연락할 곳을 확인하세요.",
+          "서비스의 답변과 다음 예약을 직접 기록하세요. Sunrain은 예약을 대신하거나 기관의 접수 여부를 확인할 수 없습니다."
+        ],
+        "contactTemplate": "정신건강 첫 평가를 받고 싶습니다. {concern}이(가) {duration} 동안 이어져 {impact}에 영향을 주고 있습니다. 예약 방법, 비용, 가능한 서비스 언어를 알려 주세요.",
+        "cost": "비용이 부담된다면 공공·지역 서비스, 보험 적용, 이용 가능한 학교나 직장 지원을 문의하세요. 이용 가능 여부와 비밀보장 규칙은 서비스 기관에 확인해야 합니다.",
+        "waiting": "대기가 있다면 그동안의 지원과 악화 시 연락할 곳을 물어보세요. 다른 적절한 기관의 이용 가능 여부도 확인할 수 있습니다.",
+        "noService": "지역이 없거나 링크가 작동하지 않으면 연락 문구를 이용해 지역 일차의료기관이나 공공 의료서비스에 문의하세요. 목록에 없다고 도움이 없는 것은 아닙니다.",
+        "existingCare": "기존 담당 전문가나 돌봄팀이 있다면 변화를 알리고 합의된 계획을 따르세요. 웹사이트 활동을 근거로 스스로 치료를 바꾸지 마세요.",
+        "summaryLabels": [
+          "가장 힘든 점",
+          "시작된 시기",
+          "일상생활에 미치는 영향",
+          "이미 시도한 것",
+          "묻고 싶은 질문"
+        ]
+      },
+      "review": {
+        "professional": "pending",
+        "language": "pending",
+        "direction": "ltr"
+      },
+      "result": {
+        "title": "이번 결과 이해하기",
+        "explanation": "완료한 각 도구는 최근 증상의 일부만 설명합니다. 결과로 진단이나 원인을 확정할 수 없습니다.",
+        "lowSymptoms": "완료한 도구에서 관련 증상 보고가 적었습니다. 다른 어려움은 포함되지 않을 수 있으며 결과와 관계없이 도움을 구할 수 있습니다.",
+        "incomplete": "이 도구는 미완료 상태이므로 점수나 정도를 표시하지 않습니다.",
+        "notCovered": "이번에는 이 부분을 평가하지 않았습니다. 해당 어려움이 없다는 뜻은 아닙니다.",
+        "chooseSupport": "지금 필요한 도움을 선택하세요. 여러 어려움이 함께 나타날 수 있습니다."
+      }
+    },
+    "hi": {
+      "entry": {
+        "title": "मैं इन दिनों ठीक महसूस नहीं कर रहा/रही हूँ",
+        "description": "अपनी चुनी हुई भाषा में सहायता देखें। आकलन किए बिना भी कोई व्यावहारिक गतिविधि आज़मा सकते हैं या मदद माँगने की तैयारी कर सकते हैं।"
+      },
+      "disclaimer": {
+        "scope": "Sunrain मानसिक स्वास्थ्य संबंधी जानकारी और स्व-सहायता का समर्थन देने वाली वेबसाइट है, चिकित्सा या मानसिक स्वास्थ्य उपचार संस्था नहीं। स्क्रीनिंग किसी स्थिति का निदान, पुष्टि या खंडन नहीं कर सकती और पेशेवर आकलन या उपचार का विकल्प नहीं है। इन परिणामों के आधार पर स्वयं उपचार शुरू, बंद या परिवर्तित न करें।",
+        "safety": "यदि तत्काल खतरा है, तो स्थानीय आपातकालीन सेवा या संकट सहायता से सीधे संपर्क करें। Sunrain वास्तविक समय की निगरानी या आपातकालीन प्रतिक्रिया प्रदान नहीं करता।"
+      },
+      "common": {
+        "before": "ऐसी गतिविधि चुनें जो अभी संभव लगे। अपनी मौजूदा देखभाल योजना का पालन करें और जब चाहें रुकें।",
+        "stop": "यदि असहज लगे या स्थिति बिगड़े, तो रुकें। दूसरी सहायता चुन सकते हैं या किसी योग्य पेशेवर से संपर्क कर सकते हैं।",
+        "noChange": "कोई बदलाव न होना भी एक मान्य प्रतिक्रिया है। मदद माँगने से पहले गतिविधि दोहराना या आकलन पूरा करना ज़रूरी नहीं है।",
+        "finish": "अगला कदम चुनें: यहीं समाप्त करें, छोटा नोट रखें, दूसरा तरीका आज़माएँ या मदद माँगने की तैयारी करें।",
+        "save": "जब तक आप सहेजने या निर्यात करने का विकल्प न चुनें, नोट केवल इस सत्र में रहते हैं। साझा डिवाइस पर सहेजे नोट दूसरे लोग देख सकते हैं।",
+        "urgent": "तत्काल खतरा होने पर स्थानीय आपातकालीन सेवा लें या निकटतम आपातकालीन विभाग जाएँ। इस वेबसाइट के उत्तर का इंतज़ार न करें।"
+      },
+      "guides": {
+        "grounding": {
+          "title": "अपने आसपास पर ध्यान दें",
+          "purpose": "जब तनाव बहुत अधिक लगे, तब एक छोटा संवेदी अभ्यास। यह मानसिक स्वास्थ्य की किसी बीमारी का उपचार नहीं है।",
+          "steps": [
+            "आरामदायक स्थिति में रहें। चाहें तो आँखें खुली रखें।",
+            "पाँच दिखाई देने वाली चीज़ों, चार स्पर्श-संवेदनाओं और तीन आवाज़ों पर ध्यान दें।",
+            "दो गंधों और पहले से मौजूद एक स्वाद पर ध्यान दें। अज्ञात पदार्थ न चखें। कोई इंद्रिय उपलब्ध न हो या असहज लगे, तो उसे छोड़ दें।",
+            "रुककर चुनें: यहीं समाप्त करना है, किसी सरल दैनिक काम पर लौटना है या अधिक सहायता लेनी है।"
+          ],
+          "takeaway": "एक ऐसी चीज़ याद रख सकते हैं जिससे आसपास से जुड़ाव महसूस हुआ। शांत महसूस करना अनिवार्य नहीं है।"
+        },
+        "smallStep": {
+          "title": "अभी संभव एक छोटा कदम चुनें",
+          "purpose": "जब रोज़मर्रा के काम शुरू करना कठिन लगे, तब सामान्य स्व-देखभाल सहायता। यह अवसाद के उपचार का कार्यक्रम नहीं है।",
+          "steps": [
+            "अपनी एक महत्वपूर्ण दैनिक ज़रूरत या प्राथमिकता चुनें।",
+            "उसे संभालने योग्य बनाएँ: छोटा काम, आराम या भरोसेमंद व्यक्ति से व्यावहारिक मदद। काम का बोझ बढ़ाना ज़रूरी नहीं है।",
+            "तय करें कि क्या और कब करेंगे। इसे योजना के रूप में रख सकते हैं या अभी आज़मा सकते हैं।",
+            "देखें कि क्या संभव था। स्वयं को दोष दिए बिना कदम बनाए रखें, छोटा करें या बदलें।"
+          ],
+          "takeaway": "नोट में लिख सकते हैं: मैंने क्या चुना, कब कर सकता/सकती हूँ और किस मदद की ज़रूरत है।"
+        }
+      },
+      "seekHelp": {
+        "title": "मदद माँगने की तैयारी करें",
+        "provider": "स्थानीय प्राथमिक स्वास्थ्य सेवा, सार्वजनिक क्लिनिक या योग्य मानसिक स्वास्थ्य पेशेवर से शुरुआत कर सकते हैं। भूमिका, योग्यता, शुल्क और रेफरल के नियम स्थान के अनुसार बदलते हैं।",
+        "steps": [
+          "पढ़ने की भाषा से अलग अपना वर्तमान देश या क्षेत्र चुनें। सत्यापित आधिकारिक स्थानीय स्वास्थ्य सेवा निर्देशिका उपलब्ध हो तो उसका उपयोग करें।",
+          "प्रारंभिक मानसिक स्वास्थ्य आकलन का समय लेने का तरीका पूछें या प्राथमिक स्वास्थ्य सेवा से उपयुक्त सेवा पूछें। स्वयं निदान करना ज़रूरी नहीं है।",
+          "समय लेने से पहले पात्रता, योग्यता, रेफरल, शुल्क, सेवा की भाषा, सुगम्यता और प्रतीक्षा अवधि पूछें।",
+          "संक्षेप में तैयार करें कि परेशानी क्या है, कब से है और दैनिक जीवन पर क्या असर है। मौजूदा उपचार या दवाओं की कौन-सी जानकारी पेशेवर को देनी है, यह आप चुन सकते हैं।",
+          "अपने प्रश्न तैयार करें और चाहें तो भरोसेमंद व्यक्ति को साथ लाएँ। अगला कदम और स्थिति बदलने पर संपर्क कहाँ करना है, पूछें।",
+          "सेवा का उत्तर और अगली मुलाकात स्वयं दर्ज करें। Sunrain समय बुक नहीं कर सकता और यह पुष्टि नहीं कर सकता कि सेवा ने आपको स्वीकार किया है।"
+        ],
+        "contactTemplate": "मैं प्रारंभिक मानसिक स्वास्थ्य आकलन का समय लेना चाहता/चाहती हूँ। मुझे {duration} से {concern} की परेशानी है, जिससे {impact} प्रभावित है। समय कैसे मिलेगा, शुल्क क्या है और किन भाषाओं में सेवा उपलब्ध है?",
+        "cost": "शुल्क बाधा हो तो सार्वजनिक या सामुदायिक सेवा, बीमा या उपलब्ध छात्र/कर्मचारी सहायता के बारे में पूछें। उपलब्धता और गोपनीयता के नियम सेवा से जाँचें।",
+        "waiting": "प्रतीक्षा हो तो बीच की अवधि की सहायता और स्थिति बिगड़ने पर संपर्क पूछें। किसी अन्य उपयुक्त सेवा की उपलब्धता भी पूछ सकते हैं।",
+        "noService": "आपका क्षेत्र सूची में न हो या लिंक न खुले तो संपर्क संदेश का उपयोग करके स्थानीय प्राथमिक या सार्वजनिक स्वास्थ्य सेवा से संपर्क करें। सूची में न होना सहायता न होने का प्रमाण नहीं है।",
+        "existingCare": "पहले से चिकित्सक या देखभाल टीम हो तो बदलाव के बारे में उनसे बात करें और तय योजना का पालन करें। वेबसाइट के अभ्यास के आधार पर स्वयं उपचार न बदलें।",
+        "summaryLabels": [
+          "मेरी मुख्य परेशानी",
+          "यह कब शुरू हुई",
+          "दैनिक जीवन पर असर",
+          "मैंने क्या आज़माया",
+          "मेरे प्रश्न"
+        ]
+      },
+      "review": {
+        "professional": "pending",
+        "language": "pending",
+        "direction": "ltr"
+      },
+      "result": {
+        "title": "अपने परिणाम समझें",
+        "explanation": "पूरा किया गया प्रत्येक साधन हाल के लक्षणों के एक सीमित हिस्से का वर्णन करता है। परिणाम निदान या कारण तय नहीं कर सकते।",
+        "lowSymptoms": "पूरे किए साधन में संबंधित लक्षण कम बताए गए हैं। दूसरी कठिनाइयाँ शामिल नहीं हो सकतीं और आप फिर भी सहायता ले सकते हैं।",
+        "incomplete": "यह साधन अधूरा है; कोई स्कोर या गंभीरता का स्तर नहीं दिखाया जाता।",
+        "notCovered": "इस पहलू का आकलन नहीं हुआ। इसका अर्थ यह नहीं कि परेशानी नहीं है।",
+        "chooseSupport": "अभी अपनी ज़रूरत के अनुसार सहायता चुनें; कई कठिनाइयाँ साथ दिखाई दे सकती हैं।"
+      }
+    },
+    "ar": {
+      "entry": {
+        "title": "لا أشعر أنني بخير",
+        "description": "استكشف الدعم بلغتك المختارة. يمكنك تجربة نشاط عملي أو الاستعداد لطلب المساعدة دون إكمال تقييم."
+      },
+      "disclaimer": {
+        "scope": "يقدّم Sunrain معلومات عن الصحة النفسية ودعماً للمساعدة الذاتية، وليس جهة لتقديم الرعاية الطبية أو العلاج النفسي. لا يمكن للفحص الأولي تشخيص حالة أو تأكيدها أو استبعادها، ولا يحل محل التقييم أو العلاج المهني. لا تبدأ علاجاً أو توقفه أو تغيّره بناءً على هذه النتائج.",
+        "safety": "إذا كنت في خطر فوري، فاتصل مباشرة بخدمات الطوارئ أو دعم الأزمات المحلية. لا يوفّر Sunrain مراقبة فورية أو استجابة للطوارئ."
+      },
+      "common": {
+        "before": "اختر نشاطاً يمكنك التعامل معه الآن. اتبع أي خطة رعاية متفق عليها، ويمكنك التوقف متى شئت.",
+        "stop": "إذا شعرت بعدم الارتياح أو ساءت حالتك، فتوقف. يمكنك اختيار دعم آخر أو التواصل مع مختص.",
+        "noChange": "عدم حدوث تغيير نتيجة مقبولة أيضاً. لا تحتاج إلى تكرار النشاط أو إكمال التقييم قبل طلب المساعدة.",
+        "finish": "اختر ما تحتاجه بعد ذلك: الانتهاء هنا، أو الاحتفاظ بملاحظة قصيرة، أو تجربة خيار آخر، أو الاستعداد لطلب الدعم.",
+        "save": "تبقى الملاحظات في هذه الجلسة ما لم تختر حفظها أو تصديرها. قد يطّلع آخرون على الملاحظات المحفوظة في جهاز مشترك.",
+        "urgent": "إذا كان هناك خطر فوري، فاستخدم خدمات الطوارئ المحلية أو اذهب إلى أقرب قسم طوارئ. لا تنتظر رداً من هذا الموقع."
+      },
+      "guides": {
+        "grounding": {
+          "title": "لاحظ ما يحيط بك",
+          "purpose": "تمرين حسي قصير عندما يبدو الضغط شديداً. ليس علاجاً لاضطراب نفسي.",
+          "steps": [
+            "اتخذ وضعية مريحة. يمكنك إبقاء عينيك مفتوحتين.",
+            "لاحظ خمسة أشياء تراها، وأربعة أحاسيس باللمس، وثلاثة أصوات تسمعها.",
+            "لاحظ رائحتين وطعماً موجوداً بالفعل. لا تتذوق مواد مجهولة. تجاوز أي حاسة لا يمكنك استخدامها أو تسبب لك انزعاجاً.",
+            "توقف قليلاً واختر إن كنت تريد الانتهاء، أو العودة إلى نشاط يومي بسيط، أو طلب مزيد من الدعم."
+          ],
+          "takeaway": "يمكنك تذكّر تفصيل واحد ساعدك على ملاحظة محيطك. ليس مطلوباً أن تشعر بالهدوء بعد التمرين."
+        },
+        "smallStep": {
+          "title": "اختر خطوة صغيرة يمكنك القيام بها",
+          "purpose": "دعم عام للعناية بالنفس عندما يصعب بدء المهام اليومية. ليس برنامجاً لعلاج الاكتئاب.",
+          "steps": [
+            "اختر حاجة أو أولوية يومية مهمة لك.",
+            "اجعلها قابلة للتنفيذ: مهمة صغيرة، أو راحة، أو طلب مساعدة عملية من شخص تثق به. لا تحتاج إلى زيادة أعبائك.",
+            "حدّد ما ستفعله ومتى. يمكنك الاكتفاء بالخطة أو تجربتها الآن.",
+            "راجع ما كان ممكناً. يمكنك الإبقاء على الخطوة أو تقليلها أو تغييرها دون لوم نفسك."
+          ],
+          "takeaway": "ملاحظتك: ما الذي اخترته، ومتى قد تفعله، وما المساعدة التي تحتاجها."
+        }
+      },
+      "seekHelp": {
+        "title": "استعد لطلب المساعدة",
+        "provider": "يمكنك البدء بالرعاية الصحية الأولية المحلية أو عيادة عامة أو مختص مؤهل في الصحة النفسية. تختلف الأدوار والمؤهلات والتكاليف وقواعد الإحالة حسب المكان.",
+        "steps": [
+          "اختر بلدك أو منطقتك الحالية بشكل منفصل عن لغة القراءة. استخدم دليلاً صحياً محلياً رسمياً عندما يكون قد تم التحقق منه.",
+          "اسأل عن حجز تقييم أولي للصحة النفسية أو اطلب من الرعاية الأولية اقتراح الخدمة المناسبة. لا تحتاج إلى تشخيص نفسك.",
+          "قبل الحجز، اسأل عن الأهلية والمؤهلات والإحالة والتكلفة واللغة وإمكانية الوصول ووقت الانتظار.",
+          "حضّر وصفاً موجزاً لما يزعجك ومدته وتأثيره في حياتك. يمكنك اختيار ما تشاركه مع المختص عن علاجك أو أدويتك الحالية.",
+          "حضّر أسئلتك، ويمكن أن يرافقك شخص تثق به إن رغبت. اسأل عن الخطوة التالية والجهة التي تتواصل معها إذا تغيّرت حالتك.",
+          "سجّل بنفسك ردّ الخدمة والمواعيد المقبلة. لا يستطيع Sunrain حجز المواعيد أو تأكيد قبول جهة علاجية لك."
+        ],
+        "contactTemplate": "أرغب في تقييم أولي للصحة النفسية. أعاني من {concern} منذ {duration}، مما يؤثر في {impact}. كيف أحجز موعداً، وما التكلفة واللغات المتاحة؟",
+        "cost": "إذا كانت التكلفة عائقاً، فاسأل عن الخدمات العامة أو المجتمعية أو تغطية التأمين أو الدعم الطلابي أو الوظيفي إن توفر. تحقّق من التوفر وقواعد السرية لدى الخدمة.",
+        "waiting": "إذا كان هناك انتظار، فاسأل عن دعم مؤقت والجهة التي تتواصل معها إذا ساءت حالتك. يمكنك سؤال خدمة أخرى مناسبة عن المواعيد المتاحة.",
+        "noService": "إذا لم تكن منطقتك مدرجة أو تعطل الرابط، فاستخدم نموذج الرسالة للتواصل مع الرعاية الأولية أو خدمة صحية عامة محلية. غياب الإدراج لا يعني عدم وجود مساعدة.",
+        "existingCare": "إذا كان لديك مختص أو فريق رعاية، فتواصل معهم بشأن التغيّرات واتبع الخطة المتفق عليها. لا تغيّر العلاج بنفسك بناءً على تمرين في الموقع.",
+        "summaryLabels": [
+          "ما الذي يزعجني",
+          "متى بدأ",
+          "تأثيره في حياتي اليومية",
+          "ما الذي جرّبته",
+          "الأسئلة التي أود طرحها"
+        ]
+      },
+      "review": {
+        "professional": "pending",
+        "language": "pending",
+        "direction": "rtl"
+      },
+      "result": {
+        "title": "افهم نتائجك",
+        "explanation": "تصف كل أداة مكتملة جزءاً محدوداً من الأعراض الحديثة. لا يمكن للنتائج تحديد تشخيص أو تفسير السبب.",
+        "lowSymptoms": "أبلغت عن أعراض مرتبطة قليلة في الأداة المكتملة. قد لا تشمل صعوبات أخرى، ويمكنك طلب الدعم رغم ذلك.",
+        "incomplete": "هذه الأداة غير مكتملة؛ لا تُعرض درجة أو شدة.",
+        "notCovered": "لم يُقيّم هذا الجانب في هذه المراجعة. لا يعني ذلك عدم وجود الصعوبة.",
+        "chooseSupport": "اختر الدعم الذي يلبي حاجتك الآن؛ قد تظهر عدة صعوبات معاً."
+      }
+    }
+  }
+}

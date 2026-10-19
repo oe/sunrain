@@ -1,0 +1,17 @@
+---
+import SupportLayout from '@/layouts/SupportLayout.astro';
+import ContentSources from '@/components/ContentSources.astro';
+import PrivateNotes from '@/components/PrivateNotes.astro';
+import SupportServices from '@/components/SupportServices.astro';
+import { getLanguageFromPath } from '@/lib/i18n';
+import { getSupportCopy } from '@/lib/support';
+const lang=getLanguageFromPath(Astro.url.pathname);
+const c=getSupportCopy(lang);
+---
+<SupportLayout title={c.ui.support}>
+  <h1>{c.seekHelp.title}</h1><p>{c.flow.scopeShort}</p>
+  <SupportServices />
+  <PrivateNotes kind="appointment" labels={c.seekHelp.summaryLabels} template={c.seekHelp.contactTemplate} />
+  <details class="support-card"><summary>{c.flow.bookingChecklist}</summary><p>{c.seekHelp.provider}</p><ol>{c.seekHelp.steps.map(step=><li>{step}</li>)}</ol><p>{c.seekHelp.cost}</p><p>{c.seekHelp.waiting}</p><p>{c.seekHelp.existingCare}</p></details>
+  <ContentSources sources={['conversation','help']} />
+</SupportLayout>

@@ -30,7 +30,9 @@ const currentYear = new Date().getFullYear();
       </div>
 
       <!-- Links -->
-      <div class="flex items-center gap-6 text-sm">
+      <div class="flex flex-wrap justify-center items-center gap-6 text-sm">
+        <a href={getLocalizedPath('/disclaimer/',lang)} class="text-gray-600 dark:text-gray-300 hover:underline">{t('nav.disclaimer',lang)}</a>
+        <a href={getLocalizedPath('/support/',lang)} class="text-gray-600 dark:text-gray-300 hover:underline">{t('nav.support',lang)}</a>
         <a
           href={getLocalizedPath('/crisis/', lang)}
           class="flex items-center gap-1 text-red-600 dark:text-red-400 hover:underline font-medium"
