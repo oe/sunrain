@@ -219,6 +219,70 @@ async function answerTool(page:Page,id:string,answers:number[]){
   }
   await page.locator(`[data-screen-stage="${id}"] [data-screening-next]`).click();
 }
+async function startJapaneseK6(page:Page,age='adult'){
+  await page.goto('/ja/check-in/');await page.locator('#start-screening').click();
+  await page.locator('#screening-age').selectOption(age);
+  await page.locator('input[name="screening-tool"][value="phq-9"]').uncheck();
+  await page.locator('#screening-start-tools').click();
+}
+test('Japanese K6 preserves source option order, 30-day recall and complete care/export records',async({page})=>{
+  await startJapaneseK6(page);
+  const stage=page.locator('[data-screen-stage="k6"]');
+  await expect(stage).toContainText('過去30日');
+  const first=stage.locator('[data-screening-question="0"]');
+  await expect(first.locator('.choice')).toHaveText(['いつも','たいてい','ときどき','少しだけ','全くない']);
+  await expect(first.locator('input').first()).toHaveAttribute('type','radio');
+  expect(await first.locator('input').evaluateAll(inputs=>inputs.map(input=>(input as HTMLInputElement).value))).toEqual(['4','3','2','1','0']);
+  await answerTool(page,'k6',Array(6).fill(4));await page.locator('#screening-finish').click();
+  const card=page.locator('[data-screening-report="k6"]');
+  await expect(card.locator('[data-report-score]')).toHaveText('24 / 24');
+  await expect(card.locator('[data-report-band]')).toBeHidden();
+  await expect(card.locator('[data-report-meaning]')).toContainText('不安だけの検査ではなく');
+  await expect(card.locator('[data-report-next]')).toContainText('専門家に相談');
+  await expect(page.locator('[data-screening-report="phq-9"] [data-report-score]')).toHaveText(screeningCopy.ja.notSelected);
+  await page.locator('#result-options [data-prepare-support]').click();
+  await expect(page.locator('#prepare-support [data-note-field]').nth(1)).toHaveValue('過去30日間');
+  const pending=page.waitForEvent('download');await page.locator('#screening-export').click();
+  const record=await readFile(await (await pending).path(),'utf8');
+  expect(record).toContain('24 / 24');expect(record).toContain('過去30日間');
+  expect(record).toContain('神経過敏に感じましたか\nいつも');
+  expect(record).toContain('自分は価値のない人間だと感じましたか\nいつも');
+  expect(record).toContain('kessler-japanese-2007-core6');expect(record).toContain('© Ronald C. Kessler, PhD. 2007');
+  expect(record).toContain('https://rckessler.scholars.harvard.edu/');
+  await page.locator('#screening-revise').click();await page.locator('#screening-start-tools').click();
+  await answerTool(page,'k6',Array(6).fill(0));await page.locator('#screening-finish').click();
+  await expect(card.locator('[data-report-score]')).toHaveText('0 / 24');
+  await expect(card.locator('[data-report-next]')).toHaveText(screeningCopy.ja.low);
+  await expect(page.locator('[data-action="choose"]')).toBeVisible();
+  expect(await page.evaluate(()=>Object.keys(localStorage).filter(k=>k.startsWith('sunrain')))).toEqual([]);
+});
+test('Japanese K6 never scores missing or skipped responses and links reported concerns to optional support',async({page})=>{
+  await startJapaneseK6(page);
+  await page.locator('[data-screen-stage="k6"] [data-screening-next]').click();
+  await expect(page.locator('input[name="screening-k6-0"][value="4"]')).toBeFocused();
+  await expect(page.locator('[data-screen-stage="k6"] [data-screening-error]')).toHaveText(screeningCopy.ja.answerError);
+  await page.locator('input[name="screening-k6-0"][value="4"]').locator('..').click();
+  await page.locator('[data-screen-stage="k6"] [data-screening-skip]').click();await page.locator('#screening-finish').click();
+  await expect(page.locator('[data-screening-report="k6"] [data-report-score]')).toHaveText(screeningCopy.ja.unanswered);
+  await expect(page.locator('[data-action="choose"]')).toBeVisible();
+  await page.locator('#screening-revise').click();await page.locator('#screening-start-tools').click();
+  await answerTool(page,'k6',[4,0,0,0,0,0]);await page.locator('#screening-finish').click();
+  await expect(page.locator('[data-screening-report="k6"] [data-report-score]')).toHaveText('4 / 24');
+  await expect(page.locator('[data-action="worry"]')).toBeVisible();await expect(page.locator('[data-action="one-step"]')).toBeHidden();
+  await page.locator('[data-action="worry"] a').click();await expect(page.locator('#inline-activity')).toBeVisible();
+  await page.reload();await expect(page.locator('#check-in-result')).toBeHidden();
+  await expect(page.locator('#screening-flow input[type="radio"]:checked')).toHaveCount(0);
+});
+test('Japanese youth K6 stays a raw record and low PHQ total still shows item-nine support',async({page})=>{
+  await startScreening(page,'ja','youth');
+  await answerTool(page,'phq-9',[0,0,0,0,0,0,0,0,1]);await answerTool(page,'k6',Array(6).fill(4));
+  await page.locator('#screening-finish').click();
+  await expect(page.locator('[data-screening-report="phq-9"] [data-report-score]')).toHaveText('1 / 27');
+  await expect(page.locator('[data-screening-report="k6"] [data-report-score]')).toHaveText('24 / 24');
+  await expect(page.locator('[data-screening-report="k6"] [data-report-next]')).toHaveText(screeningCopy.ja.youthResult);
+  await expect(page.locator('[data-report-band]:visible')).toHaveCount(0);
+  await expect(page.locator('#screening-result-safety')).toBeVisible();
+});
 for(const locale of locales){
   test(`${locale}: source screening connects separate results to inline self-help and care`,async({page})=>{
     const errors:string[]=[],requests:string[]=[];
@@ -229,15 +293,15 @@ for(const locale of locales){
     await answerTool(page,'phq-9',[2,2,2,2,2,2,2,2,0]);
     if(locale==='ja'){
       await expect(page.locator('[data-screen-stage="gad-7"]')).toHaveCount(0);
-      await expect(page.locator('[data-screen-stage="context"]')).toBeVisible();
+      await answerTool(page,'k6',[4,3,2,1,0,4]);
     }else await answerTool(page,'gad-7',Array(7).fill(1));
     await page.locator('#screening-finish').click();
     await expect(page.locator('#result-title')).toHaveText(screeningCopy[locale].results);
     await expect(page.locator('[data-screening-report="phq-9"] [data-report-score]')).toHaveText('16 / 27');
     await expect(page.locator('[data-screening-report="phq-9"] [data-report-band]')).toContainText(screeningCopy[locale].bands[3]);
-    await expect(page.locator('[data-screening-report="gad-7"] [data-report-score]')).toHaveText(locale==='ja'?screeningCopy[locale].availability:'7 / 21');
+    await expect(page.locator(`[data-screening-report="${locale==='ja'?'k6':'gad-7'}"] [data-report-score]`)).toHaveText(locale==='ja'?'14 / 24':'7 / 21');
     await expect(page.locator('[data-action="one-step"]')).toBeVisible();
-    if(locale!=='ja')await expect(page.locator('[data-action="worry"]')).toBeVisible();
+    await expect(page.locator('[data-action="worry"]')).toBeVisible();
     await expect(page.locator('#screening-result-safety')).toBeHidden();
     // The same private document carries scores, exact version and sources into
     // an editable care record. Only explicit save/download persists that record.
@@ -247,7 +311,10 @@ for(const locale of locales){
     await expect(notes.nth(0)).toHaveValue(/phqscreeners-201412/);
     await expect(notes.nth(0)).toHaveValue(/https:\/\/www.phqscreeners.com/);
     expect((await notes.nth(0).inputValue()).length).toBeLessThanOrEqual(2000);
-    await expect(notes.nth(1)).toHaveValue(screeningCopy[locale].twoWeeks);
+    if(locale==='ja'){
+      await expect(notes.nth(1)).toHaveValue(/PHQ-9: 過去2週間.*K6: 過去30日間/);
+      await expect(page.locator('[data-screening-report="k6"] [data-report-band]')).toBeHidden();
+    }else await expect(notes.nth(1)).toHaveValue(screeningCopy[locale].twoWeeks);
     await notes.nth(0).fill('My own care summary');
     await page.locator('[data-action="one-step"] a').click();
     await expect(page.locator('#inline-activity')).toBeVisible();
@@ -262,7 +329,7 @@ for(const locale of locales){
     await page.locator('#screening-start-tools').click();
     await expect(page.locator('input[name="screening-phq-9-0"][value="2"]')).toBeChecked();
     await answerTool(page,'phq-9',Array(9).fill(0));
-    if(locale!=='ja')await answerTool(page,'gad-7',Array(7).fill(0));
+    if(locale==='ja')await answerTool(page,'k6',Array(6).fill(0));else await answerTool(page,'gad-7',Array(7).fill(0));
     await page.locator('#screening-finish').click();
     await expect(page.locator('[data-screening-report="phq-9"] [data-report-score]')).toHaveText('0 / 27');
     await expect(notes.nth(0)).toHaveValue('My own care summary');

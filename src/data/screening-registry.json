@@ -107,7 +107,8 @@
           "formSha256": "2d80f670919fe23922478cd302c450bba4ccb6204e6d44b3c79447884ac8d1b4",
           "checkedAt": "2026-10-19"
         }
-      }
+      },
+      "id": "phq-9"
     },
     "gad-7": {
       "version": "phqscreeners-201412",
@@ -199,6 +200,49 @@
           "status": "unavailable",
           "source": "https://jpsad.jp/other_work/research-2012/files/jpsad_gad7.pdf",
           "reason": "Japanese 2025 form explicitly prohibits unauthorized reproduction and electronic use; no permission obtained."
+        }
+      },
+      "id": "gad-7"
+    },
+    "k6": {
+      "id": "k6",
+      "version": "kessler-japanese-2007-core6",
+      "mode": "symptom-reference",
+      "source": "https://doi.org/10.1002/mpr.257",
+      "population": "adult-reference-and-adolescent-record",
+      "recallDays": 30,
+      "questionCount": 6,
+      "rights": {
+        "status": "verified",
+        "evidence": "https://rckessler.scholars.harvard.edu/k10-and-k6-scales",
+        "terms": "https://rckessler.scholars.harvard.edu/k10-and-k6-scales",
+        "checkedAt": "2026-10-19",
+        "note": "The current author page explicitly permits unrestricted use of its translations with copyright and Kessler et al. (2003) citation. The older 2007 PDF includes a permission-request footer; admission relies on the author’s current explicit grant, not on treating that PDF as public domain."
+      },
+      "manual": {
+        "url": "https://rckessler.scholars.harvard.edu/sites/g/files/omnuum8166/files/2026-03/Scoring_K6_K10.pdf",
+        "sha256": "936052ab2ea9cd7c6a9a6f099731e63b656891ee448503dfcf96a60f0fa595a4",
+        "bytes": 131686
+      },
+      "sourceCheck": {
+        "status": "checked",
+        "method": "AI comparison against the author-hosted Japanese PDF, including rendered page 1, and current permission/scoring pages; core six items only; no independent clinical or native-speaker approval",
+        "date": "2026-10-19"
+      },
+      "clinicalReview": {
+        "status": "pending",
+        "reviewer": null,
+        "date": null
+      },
+      "locales": {
+        "ja": {
+          "status": "source-checked",
+          "version": "kessler-japanese-2007-core6",
+          "source": "https://rckessler.scholars.harvard.edu/sites/g/files/omnuum8166/files/2026-03/Japanese_K6.pdf",
+          "sourceLabel": "Japanese K6+ (2007), six scored items only; Furukawa, Kawakami and Kim translation",
+          "sourceSha256": "bf312040d9c28f5cc39df1a03e5a8085bf75fd104beb1bdec93bc5dbb3fa4ba1",
+          "formSha256": "f68f7d7affd28d22b9f7893d1709c2547f67e7b89c7c3fb4f3afe7306ae97b5d",
+          "checkedAt": "2026-10-19"
         }
       }
     }

@@ -3,9 +3,11 @@
 // The build separately compares the exact form digest before serializing it.
 export function canPublishScreening(tool, locale) {
   const translation = tool?.locales?.[locale];
+  const spec = SCREENING_SPECS[tool?.id];
   return Boolean(tool?.mode === 'symptom-reference' && tool?.version && tool?.source?.startsWith('https://') &&
     tool?.population === 'adult-reference-and-adolescent-record' &&
-    tool?.recallDays === 14 && tool?.rights?.status === 'verified' && tool?.rights?.evidence &&
+    spec && tool.questionCount === spec.count && tool.recallDays === spec.recallDays &&
+    tool?.rights?.status === 'verified' && tool?.rights?.evidence &&
     tool?.sourceCheck?.status === 'checked' && /^\d{4}-\d{2}-\d{2}$/.test(tool?.sourceCheck?.date || '') &&
     translation?.status === 'source-checked' && translation?.source?.startsWith('https://') &&
     /^[a-f0-9]{64}$/.test(translation?.sourceSha256 || '') && /^[a-f0-9]{64}$/.test(translation?.formSha256 || '') &&
@@ -13,8 +15,11 @@ export function canPublishScreening(tool, locale) {
 }
 
 export const SCREENING_SPECS = {
-  'phq-9': { count:9, max:27, bands:[[0,4,0],[5,9,1],[10,14,2],[15,19,3],[20,27,4]] },
-  'gad-7': { count:7, max:21, bands:[[0,4,0],[5,9,1],[10,14,2],[15,21,4]] },
+  'phq-9': { count:9, max:27, recallDays:14, values:[0,1,2,3], optionValues:[0,1,2,3], bands:[[0,4,0],[5,9,1],[10,14,2],[15,19,3],[20,27,4]] },
+  'gad-7': { count:7, max:21, recallDays:14, values:[0,1,2,3], optionValues:[0,1,2,3], bands:[[0,4,0],[5,9,1],[10,14,2],[15,21,4]] },
+  // Source order is highest frequency first; the printed 1–5 codes are not scores.
+  // No imported PHQ/GAD bands or population-specific diagnostic cutoff.
+  'k6': { count:6, max:24, recallDays:30, values:[0,1,2,3,4], optionValues:[4,3,2,1,0], bands:[] },
 };
 
 // Missing and skipped questionnaires remain explicit. Adult bands must not
@@ -23,8 +28,8 @@ export function makeScreeningReport(id, answers, age, status = 'complete') {
   const spec=SCREENING_SPECS[id];
   if(!spec || !['adult','youth'].includes(age) || !['complete','skipped','notSelected','unavailable'].includes(status)) throw new Error('Invalid screening context');
   if(status !== 'complete') return {id,status,score:null,band:null,max:spec.max,safety:false};
-  const score=calculateScore(answers,spec.count);
-  const band=age==='adult' ? spec.bands.find(([min,max])=>score>=min&&score<=max)?.[2] : null;
+  const score=calculateScore(answers,spec.count,spec.values);
+  const band=age==='adult' ? spec.bands.find(([min,max])=>score>=min&&score<=max)?.[2] ?? null : null;
   return {id,status,score,band,max:spec.max,safety:id==='phq-9' && answers[8]>0};
 }
 

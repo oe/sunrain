@@ -11,7 +11,7 @@ if(app) {
   const chooseError=app.querySelector<HTMLElement>('#screening-selection-error');
   const begin=document.getElementById('start-screening');
   const stages=[...app.querySelectorAll<HTMLElement>('[data-screen-stage]')];
-  const ids=['phq-9','gad-7'];
+  const ids:string[]=JSON.parse(app.dataset.tools);
   let queue:string[]=[],position=-1;
   const skipped=new Set<string>();
   const focus=(el:HTMLElement)=>{el.focus({preventScroll:true});el.scrollIntoView({block:'start',behavior:'instant'});};
@@ -100,7 +100,7 @@ if(app) {
       const report=makeScreeningReport(id,answers,age.value,status);
       // An endorsed item remains a support signal even if the form was skipped.
       report.safety=id==='phq-9'&&queue.includes(id)&&Number(answers[8])>0;
-      return {...report,answers,title:stage?.dataset.toolTitle,version:stage?.dataset.version,source:stage?.dataset.source};
+      return {...report,answers,title:stage?.dataset.toolTitle,version:stage?.dataset.version,source:stage?.dataset.source,recall:stage?.dataset.recall};
     });
     const template=document.getElementById('screening-result-template') as HTMLTemplateElement;
     document.getElementById('screening-results')?.remove();
@@ -108,7 +108,10 @@ if(app) {
     // Functional impact is volunteered context, not part of the score. Keep
     // that answer and its care invitation even if the scored form is skipped.
     const impact=queue.includes('phq-9')?app.querySelector<HTMLInputElement>('input[name="screening-impact"]:checked'):null;
-    const summaries=[copy.notes,copy.twoWeeks];
+    const selectedReports=reports.filter(report=>queue.includes(report.id));
+    const recalls=[...new Set(selectedReports.map(report=>report.recall).filter(Boolean))];
+    const duration=recalls.length>1?selectedReports.map(report=>`${report.title}: ${report.recall}`).join(' · '):recalls[0]||'';
+    const summaries=[copy.notes];
     for(const report of reports){
       const card=fragment.querySelector<HTMLElement>(`[data-screening-report="${report.id}"]`);
       const score=card.querySelector<HTMLElement>('[data-report-score]');
@@ -119,13 +122,17 @@ if(app) {
       }else{
         score.textContent=`${report.score} / ${report.max}`;
         card.querySelector<HTMLElement>('[data-report-meaning]').hidden=report.score===0;
-        if(age.value==='adult'){
+        if(report.id==='k6'){
+          // K6 is a broad distress record, never an anxiety/depression diagnosis.
+          // Do not reuse the PHQ/GAD bands or their thresholds for this tool.
+          next.textContent=age.value==='youth'?copy.youthResult:report.score===0?copy.low:card.dataset.guidance;
+        }else if(age.value==='adult'){
           band.hidden=false;band.textContent=`${copy.adultBand} · ${copy.bands[report.band]}`;
           next.textContent=Number(impact?.value)>=2?copy.care:report.score<5?copy.low:report.score<10?copy.mild:copy.care;
         }else next.textContent=copy.youthResult;
       }
       // Only a compact, labelled record is carried into the editable care note.
-      summaries.push(`${card.querySelector('h3').textContent}${report.version?` · ${report.version}`:''}\n${score.textContent}${band.hidden?'':`\n${band.textContent}`}${age.value==='youth'&&report.status==='complete'?`\n${copy.ageOptions[1]}`:''}${report.source?`\n${report.source}`:''}${report.safety?`\n${copy.safety}`:''}`);
+      summaries.push(`${card.querySelector('h3').textContent}${report.version?` · ${report.version}`:''}${report.recall?`\n${report.recall}`:''}\n${score.textContent}${band.hidden?'':`\n${band.textContent}`}${age.value==='youth'&&report.status==='complete'?`\n${copy.ageOptions[1]}`:''}${report.source?`\n${report.source}`:''}${report.safety?`\n${copy.safety}`:''}`);
     }
     fragment.querySelector<HTMLElement>('#screening-result-safety').hidden=!reports.some(report=>report.safety);
     fragment.querySelector<HTMLElement>('#screening-functional-care').hidden=!(impact&&Number(impact.value)>=2);
@@ -140,6 +147,8 @@ if(app) {
       const stage=stages.find(stage=>stage.dataset.screenStage===report.id);
       if(!stage||!queue.includes(report.id))continue;
       fullRecord.push(stage.dataset.toolTitle);
+      const scope=fragment.querySelector<HTMLElement>(`[data-screening-report="${report.id}"] [data-report-scope]`);
+      if(scope)fullRecord.push(scope.textContent);
       for(const question of stage.querySelectorAll<HTMLElement>('[data-screening-question]')){
         const answer=question.querySelector<HTMLInputElement>('input:checked');
         fullRecord.push(`${question.querySelector('[data-question-text]').textContent}\n${answer?answer.labels[0].textContent:copy.unanswered}`);
@@ -154,10 +163,15 @@ if(app) {
       setTimeout(()=>URL.revokeObjectURL(url),1000);
     });
     result.querySelector('h2').after(fragment);
-    const concerns=reports.filter(r=>r.status==='complete'&&r.score>0).map(r=>r.id==='phq-9'?'mood':'worry');
+    const concerns=[...new Set(reports.filter(r=>r.status==='complete'&&r.score>0).flatMap(r=>{
+      if(r.id!=='k6')return [r.id==='phq-9'?'mood':'worry'];
+      // Match optional everyday support to reported items, not to a disease or total.
+      return [r.answers.some((value,i)=>[1,3,4,5].includes(i)&&value>0)?'mood':null,
+        r.answers.some((value,i)=>[0,2].includes(i)&&value>0)?'worry':null].filter(Boolean);
+    }))];
     app.hidden=true;
     host.dispatchEvent(new CustomEvent('sunrain:screening-complete',{detail:{
-      concerns,energy,basicNeeds,summary:summaries.join('\n\n'),duration:copy.twoWeeks,
+      concerns,energy,basicNeeds,summary:summaries.join('\n\n'),duration,
       impact:context,title:copy.results,
     }}));
   });
