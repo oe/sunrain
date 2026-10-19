@@ -19,6 +19,9 @@ for(const locale of locales) {
     await expect(page.locator('[data-step="0"] [data-forward]')).toBeDisabled();
     await page.locator('#adult-check').check();
     await page.locator('[data-step="0"] [data-forward]').click();
+    const questionBounds=await page.locator('[data-step="1"] legend').boundingBox();
+    const navigationBounds=await page.locator('#main-header').boundingBox();
+    expect(questionBounds.y).toBeGreaterThanOrEqual(navigationBounds.y+navigationBounds.height+8);
     await page.locator('input[value="mood"]').check();
     await page.locator('input[value="worry"]').check();
     await page.locator('[data-step="1"] [data-forward]').click();
@@ -27,6 +30,7 @@ for(const locale of locales) {
     await page.locator('button[type="submit"]').click();
     await expect(page.locator('#check-in-result')).toBeVisible();
     await expect(page.locator('#result-title')).toBeFocused();
+    expect((await page.locator('#result-title').boundingBox()).y).toBeGreaterThanOrEqual(navigationBounds.height+8);
     await expect(page.locator('[data-action="grounding"]')).toBeVisible();
     await expect(page.locator('[data-action="one-step"]')).toBeVisible();
     expect(await page.title()).toBe(title);

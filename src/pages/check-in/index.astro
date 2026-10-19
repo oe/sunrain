@@ -82,7 +82,9 @@ const impacts = ['manageable','disruptive','basicNeeds'] as const;
     index = next;
     result.hidden = true; form.hidden = false;
     steps.forEach((step,i) => step.hidden = i !== index);
-    steps[index].querySelector<HTMLElement>('[tabindex="-1"]')?.focus();
+    const heading=steps[index].querySelector<HTMLElement>('[tabindex="-1"]');
+    heading?.focus({preventScroll:true});
+    heading?.scrollIntoView({block:'start',behavior:'instant'});
   }
   app.querySelectorAll('[data-forward]').forEach(button => button.addEventListener('click', () => {
     if(index === 0 && !adult.checked) return;
@@ -110,7 +112,9 @@ const impacts = ['manageable','disruptive','basicNeeds'] as const;
     app.querySelector<HTMLElement>('[data-action="sleep"]').hidden = needsCare || !(showAll || selected('concern').some(v => v.value === 'sleep'));
     app.querySelector<HTMLElement>('[data-action="worry"]').hidden = needsCare || !(showAll || selected('concern').some(v => v.value === 'worry'));
     form.hidden = true; result.hidden = false;
-    document.getElementById('result-title').focus();
+    const title=document.getElementById('result-title');
+    title.focus({preventScroll:true});
+    title.scrollIntoView({block:'start',behavior:'instant'});
   });
   document.getElementById('revise-check-in').addEventListener('click', () => showStep(1));
   document.getElementById('download-summary').addEventListener('click', () => {
