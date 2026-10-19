@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "updatedAt": "2026-10-19",
+  "status": "draft_reference_catalog_not_patient_facing",
+  "countryMustBeSelectedSeparatelyFromLanguage": true,
+  "entries": [
+    {
+      "id": "nhs-england-talking-therapies",
+      "region": "GB-ENG",
+      "kind": "official_general_care_finder",
+      "name": "NHS talking therapies for anxiety and depression",
+      "url": "https://www.nhs.uk/nhs-services/mental-health-services/find-nhs-talking-therapies-for-anxiety-and-depression/",
+      "sourceId": "E15",
+      "sourceCheckedAt": "2026-10-19",
+      "verification": "official_information_page_read",
+      "eligibility": "Residents of England, normally age 18 or over; some areas accept younger users. Refer to the service for current criteria.",
+      "referral": "Self-referral or GP referral; no prior self-diagnosis required.",
+      "serviceLanguages": "confirm_with_service",
+      "cost": "check_current_service_terms",
+      "appointmentTested": false
+    },
+    {
+      "id": "samhsa-us-findtreatment",
+      "region": "US",
+      "kind": "official_general_care_finder",
+      "name": "SAMHSA FindTreatment.gov",
+      "url": "https://findtreatment.gov/",
+      "sourceId": "E13",
+      "sourceCheckedAt": "2026-10-19",
+      "verification": "linked_by_nimh_official_find_help_page; interactive_directory_not_tested",
+      "eligibility": "United States service finder; provider-specific eligibility must be confirmed.",
+      "referral": "confirm_with_selected_provider",
+      "serviceLanguages": "confirm_with_selected_provider",
+      "cost": "confirm_with_selected_provider",
+      "appointmentTested": false
+    }
+  ],
+  "uncoveredRegionBehavior": "Show the selected-language help guide and contact template. Explain the coverage gap and suggest contacting local primary care or public health services; do not infer a country from language or fabricate a provider.",
+  "externalLinkBehavior": "Open only after user action. Do not transmit answers, scores, health concerns or notes. Show the destination region and actual website language when verified; otherwise state that language availability is unverified."
+}
