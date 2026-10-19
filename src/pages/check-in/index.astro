@@ -59,6 +59,7 @@ const impacts = ['manageable','disruptive','basicNeeds'] as const;
         <article class="support-card" data-action="one-step"><h3>{c.guides.smallStep.title}</h3><p>{c.guides.smallStep.purpose}</p><a class="button primary" href={getLocalizedPath('/self-help/one-step/',lang)}>{c.flow.tryActivity}</a></article>
         <article class="support-card" data-action="sleep"><h3>{c.guides.sleepRoutine.title}</h3><p>{c.guides.sleepRoutine.purpose}</p><a class="button primary" href={getLocalizedPath('/self-help/sleep/',lang)}>{c.flow.tryActivity}</a></article>
         <article class="support-card" data-action="worry"><h3>{c.guides.worryPlan.title}</h3><p>{c.guides.worryPlan.purpose}</p><a class="button primary" href={getLocalizedPath('/self-help/worry/',lang)}>{c.flow.tryActivity}</a></article>
+        <article class="support-card" data-action="choose"><h3>{c.ui.selfHelp}</h3><p>{c.common.before}</p><a class="button primary" href={getLocalizedPath('/self-help/',lang)}>{c.ui.selfHelp}</a></article>
         <article class="support-card"><h3>{c.seekHelp.title}</h3><p>{c.ui.care}</p><a class="button" href="#prepare-support" data-prepare-support>{c.flow.prepare}</a></article>
       </div>
       <div id="inline-activity" hidden></div>
@@ -87,8 +88,9 @@ const impacts = ['manageable','disruptive','basicNeeds'] as const;
     document.getElementById('result-title').scrollIntoView({block:'start',behavior:'instant'});
   }
   app.querySelectorAll<HTMLAnchorElement>('[data-action] a').forEach(link=>link.addEventListener('click',event=>{
-    event.preventDefault();
     const id=link.closest<HTMLElement>('[data-action]').dataset.action;
+    if(id==='choose')return;
+    event.preventDefault();
     if(inlineActivity.dataset.guide!==id){
       const template=app.querySelector<HTMLTemplateElement>(`template[data-inline-guide="${id}"]`);
       inlineActivity.replaceChildren(template.content.cloneNode(true));
@@ -140,9 +142,9 @@ const impacts = ['manageable','disruptive','basicNeeds'] as const;
     // One optional starting point keeps the result manageable. This is not a
     // clinical ranking: the user can choose all activities or care directly.
     const firstConcern=selected('concern').find(value=>actions[value.value]);
-    const action=firstConcern ? actions[firstConcern.value] : 'one-step';
+    const action=firstConcern ? actions[firstConcern.value] : 'choose';
     app.querySelectorAll<HTMLElement>('[data-action]').forEach(card=>card.hidden=needsCare || card.dataset.action!==action);
-    app.querySelector<HTMLElement>('#action-reason').hidden=needsCare;
+    app.querySelector<HTMLElement>('#action-reason').hidden=needsCare || !firstConcern;
     app.querySelector<HTMLElement>('#function-care').hidden=!selected('impact').some(v=>v.value==='basicNeeds');
     form.hidden = true; result.hidden = false;
     const title=document.getElementById('result-title');

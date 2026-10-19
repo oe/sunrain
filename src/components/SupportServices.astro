@@ -17,7 +17,7 @@ const c=getSupportCopy(getLanguageFromPath(Astro.url.pathname));
       <h3>{c.services[service.region].region}</h3>
       <p>{c.services[service.region].instructions}</p>
       <a class="button primary" href={service.url} target="_blank" rel="noreferrer">{service.name} ↗</a>
-      <p class="muted">{c.flow.websiteLanguage}: <bdi>{service.websiteLanguages}</bdi><br/>{c.flow.checked}: <time datetime={catalog.checkedAt}>{catalog.checkedAt}</time></p>
+      <p class="muted">{c.flow.websiteLanguage}: <bdi>{service.websiteLanguages}</bdi><br/>{c.flow.checked}: <time dir="ltr" datetime={catalog.checkedAt}>{catalog.checkedAt}</time></p>
       <p class="muted">{c.flow.verification}</p>
     </article>)}
     <div id="service-fallback" hidden><p>{c.flow.notCovered}</p><p>{c.seekHelp.noService}</p></div>

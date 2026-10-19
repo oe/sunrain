@@ -37,6 +37,7 @@ export function initGuidedActivities(root:ParentNode=document){
   });
   byId('activity-feedback')?.addEventListener('change',event=>{
     const value=(event.target as HTMLInputElement).value;
+    byId('feedback-intro').hidden=true;
     byId('feedback-better').hidden=value!=='better';
     byId('feedback-same').hidden=value!=='same';
     byId('feedback-worse').hidden=value!=='worse';
@@ -47,6 +48,7 @@ export function initGuidedActivities(root:ParentNode=document){
     if(!event.persisted)return;
     container.querySelectorAll<HTMLInputElement>('input[type="radio"]').forEach(input=>input.checked=false);
     ['better','same','worse'].forEach(value=>byId(`feedback-${value}`).hidden=true);
+    byId('feedback-intro').hidden=false;
     byId('feedback-urgent').hidden=true;byId('other-activities').hidden=false;
     current=0;render();
   });

@@ -30,8 +30,9 @@ const Title=embedded ? 'h3' : 'h1';
   </section>
   <div data-activity-note><PrivateNotes kind={embedded ? `check-in-${id}` : id} title={c.flow.planTitle} labels={c.flow.planLabels} /></div>
   <section class="support-card" id="activity-reflection">
-    <h2 tabindex="-1">{c.flow.guideDone}</h2>
-    <fieldset id="activity-feedback"><legend>{c.ui.feedback}</legend>{['better','same','worse'].map(key=><label class="choice"><input type="radio" name="feedback" value={key} />{c.ui[key]}</label>)}</fieldset>
+    <h2 tabindex="-1">{c.ui.feedback}</h2>
+    <fieldset id="activity-feedback"><legend class="sr-only">{c.ui.feedback}</legend>{['better','same','worse'].map(key=><label class="choice"><input type="radio" name="feedback" value={key} />{c.ui[key]}</label>)}</fieldset>
+    <p class="muted" id="feedback-intro">{c.flow.guideDone}</p>
     <p id="feedback-better" hidden role="status">{c.flow.feedbackBetter}</p>
     <p id="feedback-same" hidden role="status">{c.common.noChange}</p>
     <p id="feedback-worse" hidden role="status">{c.ui.stop}</p>

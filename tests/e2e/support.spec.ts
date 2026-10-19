@@ -97,6 +97,9 @@ test('skipping questions shows no score; reload clears responses',async({page})=
   await page.goto('/check-in/');await page.locator('#adult-check').check();await page.locator('[data-step="0"] [data-forward]').click();await page.locator('[data-step="1"] [data-forward]').click();await page.locator('button[type="submit"]').click();
   await expect(page.locator('#check-in-result')).toBeVisible();
   await expect(page.locator('#result-summary')).toContainText('Skip / leave unanswered');
+  await expect(page.locator('[data-action="choose"]')).toBeVisible();
+  await expect(page.locator('[data-action="one-step"]')).toBeHidden();
+  await expect(page.locator('[data-action="grounding"]')).toBeHidden();
   await page.reload();await expect(page.locator('#check-in-result')).toBeHidden();await expect(page.locator('#adult-check')).not.toBeChecked();
 });
 test('unusually high energy directs to care and does not present a diagnosis',async({page})=>{
@@ -107,7 +110,7 @@ test('unusually high energy directs to care and does not present a diagnosis',as
   await expect(page.locator('[data-note-field]').first()).toHaveValue('Unusually high energy or needing much less sleep');
 });
 test('notes are voluntary, reload blank, load explicitly, export locally and delete',async({page})=>{
-  const requests:string[]=[];page.on('request',r=>requests.push(r.url()));
+  const requests:{url:string;body:string}[]=[];page.on('request',r=>requests.push({url:r.url(),body:r.postData()||''}));
   await page.goto('/support/');const fields=page.locator('[data-note-field]');
   await fields.nth(0).fill('<private concern>');await fields.nth(1).fill('three weeks');await fields.nth(2).fill('sleep');
   await expect(page.locator('[data-contact-preview]')).toContainText('<private concern>');
@@ -118,8 +121,12 @@ test('notes are voluntary, reload blank, load explicitly, export locally and del
   const pending=page.waitForEvent('download');await page.locator('[data-note-action="download"]').click();const download=await pending;const file=await download.path();expect(await readFile(file,'utf8')).toContain('<private concern>');
   await page.locator('[data-note-action="clear"]').click();await expect(fields.nth(0)).toHaveValue('');
   expect(await page.evaluate(()=>Object.keys(localStorage).filter(k=>k.startsWith('sunrain')))).toEqual([]);
-  expect(requests.filter(url=>!url.startsWith('http://127.0.0.1:4362/'))).toEqual([]);
-  expect(requests.some(url=>url.includes('private')||url.includes('three%20weeks'))).toBe(false);
+  expect(requests.filter(r=>!r.url.startsWith('http://127.0.0.1:4362/'))).toEqual([]);
+  // Match actual test values in URLs and request bodies. Public filenames such
+  // as private-notes.js are not the user's private content.
+  for(const value of ['<private concern>','three weeks']){
+    expect(requests.some(r=>[r.url,r.body].some(text=>text.includes(value)||text.includes(encodeURIComponent(value))))).toBe(false);
+  }
 });
 test('storage denial leaves theme, menu, notes and download usable',async({page})=>{
   const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));
