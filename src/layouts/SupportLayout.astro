@@ -11,10 +11,7 @@ const copy = getSupportCopy(lang);
 <BaseLayout title={title}>
   <div class="support-shell">
     <slot />
-    {!Astro.url.pathname.replace(/\/$/,'').endsWith('/crisis') && <aside class="urgent" aria-label={copy.ui.support}>
-      <p>{copy.common.urgent}</p>
-      <a href={getLocalizedPath('/crisis/', lang)}>{copy.ui.crisisDirectory}</a>
-    </aside>}
+    {!Astro.url.pathname.replace(/\/$/,'').endsWith('/crisis') && <p class="support-help-link"><a href={getLocalizedPath('/crisis/',lang)}>{copy.ui.crisisDirectory}</a></p>}
     <details>
       <summary>{copy.ui.disclaimer}</summary>
       <p>{copy.disclaimer.scope}</p><p>{copy.disclaimer.safety}</p>

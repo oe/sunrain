@@ -22,11 +22,14 @@ function getPathWithoutLang(path: string): string {
 const normalizedPath = getPathWithoutLang(currentPath);
 
 const navItems = [
+  { key: 'nav.selfHelp', href: '/self-help/' },
+  { key: 'nav.relax', href: '/relax/' },
+  { key: 'nav.support', href: '/support/' },
+];
+const menuItems = [
   { key: 'nav.home', href: '/' },
   { key: 'nav.checkIn', href: '/check-in/' },
-  { key: 'nav.selfHelp', href: '/self-help/' },
-  { key: 'nav.support', href: '/support/' },
-  { key: 'nav.relax', href: '/relax/' },
+  ...navItems,
   { key: 'nav.crisis', href: '/crisis/' },
   { key: 'nav.about', href: '/about/' }
 ];
@@ -78,7 +81,7 @@ function isActive(itemHref: string): boolean {
     </a>
 
     <!-- Desktop Nav -->
-    <div class="hidden xl:flex items-center gap-1">
+    <div class="desktop-navigation hidden xl:flex items-center gap-1">
       {
         navItems.map((item) => (
           <a
@@ -100,7 +103,8 @@ function isActive(itemHref: string): boolean {
     </div>
 
     <!-- Right side: Language + Theme -->
-    <div class="flex shrink-0 items-center gap-1 sm:gap-2">
+    <div class="header-controls flex shrink-0 items-center gap-1 sm:gap-2">
+      <a class="header-crisis" href={getLocalizedPath('/crisis/',lang)}>{t('nav.crisis',lang)}</a>
       <!-- Language Selector -->
       <div class="relative">
         <select
@@ -249,7 +253,7 @@ function isActive(itemHref: string): boolean {
     >
       <div class="container mx-auto px-4 py-4 flex flex-col gap-1">
         {
-          navItems.map((item) => (
+          menuItems.map((item) => (
             <a
               href={getLocalizedPath(item.href, lang)}
               class:list={[

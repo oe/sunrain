@@ -2,27 +2,30 @@
 import {getLanguageFromPath,getLocalizedPath} from '@/lib/i18n';
 import {getSupportCopy} from '@/lib/support';
 import {getScreeningContent} from '@/lib/screening-content';
+import {getPlatformCopy} from '@/lib/platform';
 const lang=getLanguageFromPath(Astro.url.pathname);
 const c=getSupportCopy(lang);
+const p=getPlatformCopy(lang);
 const {forms,ids,copy:s}=getScreeningContent(lang);
 ---
 <section id="screening-flow" hidden data-copy={JSON.stringify(s)} data-tools={JSON.stringify(ids)}>
-  <div class="actions"><a class="button" href={getLocalizedPath('/support/',lang)}>{c.ui.support}</a><a class="button" href={getLocalizedPath('/crisis/',lang)}>{c.ui.crisisDirectory}</a></div>
+  <div class="flow-links"><a href={getLocalizedPath('/support/',lang)}>{c.ui.support}</a><a href={getLocalizedPath('/crisis/',lang)}>{c.ui.crisisDirectory}</a></div>
   <section data-screen-stage="choose">
     <h2 tabindex="-1">{s.choose}</h2>
-    <p>{s.coverage}</p>
-    <p class="muted">{s.notice}</p>
+    <p>{p.screeningScope}</p>
+    <p class="muted">{p.boundary}</p>
     <label for="screening-age">{s.age}</label>
     <select id="screening-age" aria-describedby="screening-age-help">
       {['','youth','adult','child','declined'].map((key,i)=><option value={key}>{s.ageOptions[i]}</option>)}
     </select>
-    <p id="screening-age-help" class="muted">{s.ageHelp}</p>
+    <p id="screening-age-help" class="muted" hidden>{s.ageHelp}</p>
     <p id="screening-age-alternative" class="urgent" hidden>{s.ageAlternative}</p>
-    <fieldset id="screening-tool-choices"><legend>{s.choose}</legend>
+    <fieldset id="screening-tool-choices"><legend class="sr-only">{s.choose}</legend>
       {ids.map(id=>forms[id] ? <label class="choice"><input type="checkbox" name="screening-tool" value={id} checked />{forms[id].label} · {forms[id].recall}</label> : <p data-tool-unavailable={id}>{s.availability}</p>)}
     </fieldset>
     <p id="screening-selection-error" class="status" role="alert" tabindex="-1"></p>
     <div class="actions step-actions"><button class="button" type="button" data-screening-exit>{s.general}</button><button class="button primary" type="button" id="screening-start-tools">{c.ui.next}</button></div>
+    <details><summary>{p.details}</summary><p>{p.checkInIntro}</p><p>{s.notice}</p><p>{s.coverage}</p><p>{c.ui.privacy}</p><p data-youth-support>{c.ui.younger}</p></details>
   </section>
   {Object.entries(forms).map(([id,form])=><section data-screen-stage={id} hidden data-version={form.version} data-source={form.source} data-tool-title={form.label} data-recall={form.recall}>
     <p class="step-label" data-screening-progress></p>
@@ -57,21 +60,21 @@ const {forms,ids,copy:s}=getScreeningContent(lang);
   <section id="screening-results">
     <aside id="screening-result-safety" class="urgent" hidden><p>{s.safety}</p><div class="actions"><a class="button primary" href={getLocalizedPath('/crisis/',lang)}>{c.ui.crisisDirectory}</a><a class="button" href="#prepare-support" data-prepare-support>{c.flow.prepare}</a></div></aside>
     <aside id="screening-functional-care" class="urgent" hidden><p>{s.care}</p><a class="button" href="#prepare-support" data-prepare-support>{c.flow.prepare}</a></aside>
-    <p>{s.resultScope}</p><p class="muted">{s.reference}</p>
-    <div class="support-grid">
+    <p class="screening-result-scope">{s.resultScope}</p>
+    <div class="support-grid screening-report-grid">
       {ids.map(id=><article class="support-card" data-screening-report={id} data-guidance={forms[id]?.guidance}>
         <h3>{forms[id]?.label||(id==='phq-9'?s.depression:s.anxiety)}</h3>
         {forms[id]&&<p data-report-recall>{forms[id].recall}</p>}
-        <p data-report-score></p><p data-report-band hidden></p><p data-report-meaning hidden>{forms[id]?.meaning}</p>
-        {forms[id]?.scope&&<p class="muted" data-report-scope>{forms[id].scope}</p>}
+        <p data-report-score></p><p data-report-band hidden></p>
         <p data-report-next></p>
-        {forms[id]&&<p><a href={forms[id].source} target="_blank" rel="noreferrer">{s.source}</a></p>}
+        <details><summary>{p.resultsDetails}</summary><p data-report-meaning hidden>{forms[id]?.meaning}</p>{forms[id]?.scope&&<p class="muted" data-report-scope>{forms[id].scope}</p>}{forms[id]&&<p><a href={forms[id].source} target="_blank" rel="noreferrer">{s.source}</a></p>}</details>
       </article>)}
     </div>
-    <p>{s.coverage}</p>
-    <details><summary>{s.answers}</summary><pre class="result-summary" data-screening-record></pre></details>
-    <p class="muted">{c.common.save}</p>
-    <div class="actions"><button class="button" type="button" id="screening-revise">{s.edit}</button><button class="button" type="button" id="screening-export">{s.downloadRecord}</button></div>
+    <div data-screening-record-panel>
+    <details id="screening-record-options"><summary>{p.recordActions}</summary><p class="muted">{c.common.save}</p><details><summary>{s.answers}</summary><pre class="result-summary" data-screening-record></pre></details><button class="button" type="button" id="screening-export">{s.downloadRecord}</button></details>
+    <details><summary>{p.resultsDetails}</summary><p>{s.reference}</p><p>{s.coverage}</p></details>
+    <button class="text-button" type="button" id="screening-revise">{s.edit}</button>
+    </div>
     <h2>{s.actions}</h2><p>{s.actionHelp}</p>
   </section>
 </template>

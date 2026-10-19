@@ -7,9 +7,12 @@ import {
   type Language
 } from '@/lib/i18n';
 import { Icon } from '@/components/Icon';
+import { getPlatformCopy } from '@/lib/platform';
 import type { IconName } from '@/components/Icon';
 
 const lang = getLanguageFromPath(Astro.url.pathname) as Language;
+
+const p=getPlatformCopy(lang);
 
 const sounds = [
   {
@@ -200,9 +203,9 @@ const presets = [
       </div>
     </section>
 
-    <div
-      class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-4xl mx-auto animate-fade-in-up delay-200"
-    >
+    <details id="sound-mixer" class="settings-disclosure">
+      <summary>{p.mix}</summary><p>{p.mixDescription}</p>
+    <div class="sound-mixer-grid grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
       {
         sounds.map((sound) => (
           <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-gray-700 hover:shadow-md transition-all duration-300">
@@ -249,17 +252,9 @@ const presets = [
       }
     </div>
 
-    <div
-      class="max-w-4xl mx-auto mt-12 bg-blue-50 dark:bg-blue-900/20 rounded-xl p-6 text-sm text-blue-800 dark:text-blue-200 animate-fade-in-up delay-200"
-    >
-      <div class="flex gap-3">
-        <Icon name="WifiOff" size={20} className="shrink-0" />
-        <p set:html={t('relax.sounds.offlineNote', lang)} />
-      </div>
-      <p class="mt-3 pl-8 text-blue-700/80 dark:text-blue-200/80">
-        {t('relax.sounds.volumeSafety', lang)}
-      </p>
-    </div>
+    </details>
+    <p class="sound-volume-note">{t('relax.sounds.volumeSafety',lang)}</p>
+    <details class="settings-disclosure sound-audio-details"><summary>{p.audioDetails}</summary><p set:html={t('relax.sounds.offlineNote',lang)} /></details>
   </div>
 </BaseLayout>
 

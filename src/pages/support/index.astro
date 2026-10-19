@@ -5,14 +5,16 @@ import PrivateNotes from '@/components/PrivateNotes.astro';
 import SupportServices from '@/components/SupportServices.astro';
 import { getLanguageFromPath } from '@/lib/i18n';
 import { getSupportCopy } from '@/lib/support';
+import { getPlatformCopy } from '@/lib/platform';
 const lang=getLanguageFromPath(Astro.url.pathname);
 const c=getSupportCopy(lang);
+const p=getPlatformCopy(lang);
 ---
 <SupportLayout title={c.ui.support}>
-  <h1>{c.seekHelp.title}</h1><p>{c.flow.scopeShort}</p>
-  <p class="muted" data-youth-support>{c.ui.younger}</p>
+  <h1>{c.ui.support}</h1><p class="page-intro">{p.supportIntro}</p>
   <SupportServices />
-  <PrivateNotes kind="appointment" labels={c.seekHelp.summaryLabels} template={c.seekHelp.contactTemplate} />
+  <details id="contact-preparation" class="contact-preparation"><summary>{p.contact}</summary><PrivateNotes kind="appointment" labels={c.seekHelp.summaryLabels} template={c.seekHelp.contactTemplate} /></details>
+  <details><summary>{p.supportDetails}</summary><p>{p.boundary}</p><p class="muted" data-youth-support>{c.ui.younger}</p></details>
   <details class="support-card"><summary>{c.flow.bookingChecklist}</summary><p>{c.seekHelp.provider}</p><ol>{c.seekHelp.steps.map(step=><li>{step}</li>)}</ol><p>{c.seekHelp.cost}</p><p>{c.seekHelp.waiting}</p><p>{c.seekHelp.existingCare}</p></details>
   <ContentSources sources={['conversation','help','youthHelp','teenHelp']} />
 </SupportLayout>

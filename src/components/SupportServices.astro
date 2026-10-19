@@ -26,7 +26,7 @@ const c=getSupportCopy(getLanguageFromPath(Astro.url.pathname));
   </div>
   <div class="actions"><a class="button" href="#contact-note">{c.ui.contact}</a></div>
   <details><summary>{c.flow.linkProblem}</summary><p>{c.seekHelp.noService}</p><p>{c.seekHelp.waiting}</p><p>{c.seekHelp.cost}</p></details>
-  <p class="muted">{c.ui.external}</p>
+  <p class="muted" data-service-notice>{c.ui.external}</p>
   <noscript><ul>{catalog.entries.map(service=><li>{c.services[service.region].region}: <a href={service.url} rel="noreferrer">{service.name}</a> — {c.services[service.region].instructions}{service.region==='GB-ENG' && <p>{c.services['GB-ENG'].youthInstructions} <a href={supportSources.youthHelp.url} rel="noreferrer">{c.services['GB-ENG'].youthLink}</a></p>}</li>)}</ul></noscript>
 </section>
 <script>
@@ -34,7 +34,14 @@ const c=getSupportCopy(getLanguageFromPath(Astro.url.pathname));
   function updateRegion(){
     document.querySelectorAll<HTMLElement>('[data-service-region]').forEach(service=>service.hidden=service.dataset.serviceRegion!==region.value);
     document.getElementById('service-fallback').hidden=region.value!=='other';
+    document.querySelector<HTMLElement>('[data-service-notice]').hidden=region.value==='';
   }
   region.addEventListener('change',updateRegion);
+  document.addEventListener('click',event=>{
+    const link=(event.target as Element).closest('a[href="#contact-note"]');
+    if(!link)return;
+    const contact=document.querySelector<HTMLDetailsElement>('#contact-preparation');
+    if(contact){event.preventDefault();contact.open=true;const heading=contact.querySelector<HTMLElement>('h2');heading.tabIndex=-1;heading.focus({preventScroll:true});heading.scrollIntoView({block:'start',behavior:'instant'});}
+  });
   window.addEventListener('pageshow',()=>{region.value='';updateRegion();});
 </script>

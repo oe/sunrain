@@ -2,8 +2,11 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { t, getLanguageFromPath, type Language } from '@/lib/i18n';
 import { Icon } from '@/components/Icon';
+import { getPlatformCopy } from '@/lib/platform';
 
 const lang = getLanguageFromPath(Astro.url.pathname) as Language;
+
+const p=getPlatformCopy(lang);
 
 // Breathing modes configuration
 const breathingModes = [
@@ -92,14 +95,14 @@ const breathingModes = [
   {
     id: 'calming',
     name: {
-      en: 'Quick Calm',
-      'zh-hans': '快速平静',
-      'zh-hant': '快速平靜',
-      es: 'Calma Rápida',
-      ja: 'クイック・カーム',
-      ko: '빠른 진정',
-      hi: 'त्वरित शांति',
-      ar: 'هدوء سريع'
+      en: 'Longer exhale',
+      'zh-hans': '延长呼气',
+      'zh-hant': '延長呼氣',
+      es: 'Exhalación más larga',
+      ja: '長めに吐く',
+      ko: '길게 내쉬기',
+      hi: 'लंबी साँस छोड़ना',
+      ar: 'زفير أطول'
     },
     description: {
       en: 'For anxiety relief',
@@ -121,7 +124,7 @@ const breathingModes = [
 
 <BaseLayout title={t('breathing.title', lang)}>
   <div
-    class="min-h-[calc(100vh-4rem)] bg-gradient-to-b from-teal-50 via-cyan-50 to-blue-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 flex flex-col items-center justify-center p-4 pt-20"
+    id="breathing-page" class="min-h-[calc(100vh-4rem)] bg-gradient-to-b from-teal-50 via-cyan-50 to-blue-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 flex flex-col items-center justify-center p-4 pt-20"
   >
     <div class="max-w-xl w-full text-center">
       <!-- Header -->
@@ -133,7 +136,7 @@ const breathingModes = [
       <p
         class="text-gray-600 dark:text-gray-300 mb-8 animate-fade-in-up delay-100"
       >
-        {t('breathing.subtitle', lang)}
+        {p.breathingHint}
       </p>
 
       <!-- Breathing Circle Container -->
@@ -167,22 +170,21 @@ const breathingModes = [
             class="absolute inset-8 rounded-full flex items-center justify-center transition-all"
             style="background: radial-gradient(circle, rgba(20, 184, 166, 0.4) 0%, rgba(20, 184, 166, 0.2) 50%, rgba(20, 184, 166, 0.05) 100%);"
           >
-            <button
+            <div
               id="inner-circle"
-              type="button"
-              class="w-28 h-28 rounded-full bg-gradient-to-br from-teal-400 to-cyan-500 dark:from-teal-500 dark:to-cyan-600 flex items-center justify-center shadow-lg shadow-teal-500/30 transition-all cursor-pointer hover:scale-105 hover:shadow-xl hover:shadow-teal-500/40 focus:outline-none focus:ring-2 focus:ring-teal-400 focus:ring-offset-2"
-              aria-label="Start breathing exercise"
+              data-ready={p.breathingReady}
+              class="w-28 h-28 rounded-full bg-gradient-to-br from-teal-400 to-cyan-500 dark:from-teal-500 dark:to-cyan-600 flex items-center justify-center shadow-lg shadow-teal-500/30 transition-all  focus:outline-none focus:ring-2 focus:ring-teal-400 focus:ring-offset-2"
             >
               <div class="text-center text-white">
                 <span id="breathing-text" class="block text-xl font-semibold">
-                  {t('breathing.start', lang)}
+                  {p.breathingReady}
                 </span>
                 <span
                   id="timer-text"
                   class="block text-2xl font-bold mt-1 hidden">0</span
                 >
               </div>
-            </button>
+            </div>
           </div>
 
           <!-- Progress ring (SVG) -->
@@ -247,12 +249,9 @@ const breathingModes = [
       </div>
 
       <!-- Mode Selection -->
-      <div
-        class="bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-3xl p-6 shadow-lg border border-white/20 dark:border-gray-700/20 animate-fade-in-up delay-500"
-      >
-        <h3 class="font-semibold text-gray-900 dark:text-white mb-4">
-          {t('breathing.modes.title', lang) || 'Breathing Mode'}
-        </h3>
+      <details id="breathing-options" class="settings-disclosure">
+        <summary>{p.rhythm}</summary>
+
         <div id="modes-container" class="grid grid-cols-1 min-[360px]:grid-cols-2 gap-3">
           {
             breathingModes.map((mode, index) => (
@@ -281,9 +280,7 @@ const breathingModes = [
                     {mode.name[lang] || mode.name.en}
                   </span>
                 </div>
-                <p class="text-xs text-gray-500 dark:text-gray-400">
-                  {mode.description[lang] || mode.description.en}
-                </p>
+
                 <p class="text-xs text-gray-400 dark:text-gray-500 mt-1">
                   {mode.inhale}-{mode.hold}-{mode.exhale}
                   {mode.holdAfter ? `-${mode.holdAfter}` : ''}
@@ -292,7 +289,7 @@ const breathingModes = [
             ))
           }
         </div>
-      </div>
+      </details>
     </div>
   </div>
 </BaseLayout>
@@ -371,6 +368,13 @@ const breathingModes = [
   const pauseBtn = document.getElementById('pause-btn');
   const resetBtn = document.getElementById('reset-btn');
   const modeBtns = document.querySelectorAll('.mode-btn');
+  const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
+  motionPreference.addEventListener('change', () => {
+    if (motionPreference.matches) {
+      breathingCircle.style.transform = 'scale(1)';
+      glowRing.style.opacity = '0';
+    }
+  });
 
   // State
   let isRunning = false;
@@ -409,7 +413,7 @@ const breathingModes = [
   }
 
   function setCircleState(scale, text, timer = null) {
-    breathingCircle.style.transform = `scale(${scale})`;
+    breathingCircle.style.transform = `scale(${motionPreference.matches ? 1 : scale})`;
     breathingText.textContent = text;
 
     if (timer !== null) {
@@ -420,7 +424,7 @@ const breathingModes = [
     }
 
     // Glow effect
-    if (scale > 1) {
+    if (scale > 1 && !motionPreference.matches) {
       glowRing.style.opacity = '1';
       glowRing.style.boxShadow = `0 0 60px 20px ${currentColors.glow}`;
     } else {
@@ -536,7 +540,7 @@ const breathingModes = [
 
     breathingCircle.style.transition =
       'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
-    setCircleState(1, t.start);
+    setCircleState(1, innerCircle.dataset.ready);
     updateProgress(0);
     glowRing.style.opacity = '0';
   }
@@ -584,15 +588,6 @@ const breathingModes = [
   startBtn?.addEventListener('click', start);
   pauseBtn?.addEventListener('click', pause);
   resetBtn?.addEventListener('click', reset);
-
-  // Inner circle click handler - toggle start/pause
-  innerCircle?.addEventListener('click', () => {
-    if (currentPhase === 'ready' || !isRunning) {
-      start();
-    } else {
-      pause();
-    }
-  });
 
   modeBtns.forEach((btn) => {
     btn.addEventListener('click', () => selectMode(btn));
