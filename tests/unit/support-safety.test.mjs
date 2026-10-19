@@ -2,7 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { calculateScore, getInterpretation, hasSafetySignal, canPublishScreening } from '../../src/lib/screening.mjs';
-import { parseNote, makeNote } from '../../src/lib/private-notes.mjs';
+import { parseNote, makeNote, formatContact } from '../../src/lib/private-notes.mjs';
 const read = path => JSON.parse(readFileSync(new URL(path,import.meta.url),'utf8'));
 const pack = read('../../src/data/support-copy.json');
 const registry = read('../../src/data/screening-registry.json');
@@ -17,9 +17,31 @@ test('every supported language has complete nonempty health copy and templates',
     const copy=pack.locales[locale];
     assert.deepEqual(paths(copy),keys,locale);
     for(const key of keys) assert.ok(key.split('.').reduce((v,k)=>v[k],copy).trim(),`${locale}.${key}`);
-    for(const placeholder of ['concern','duration','impact']) assert.ok(copy.seekHelp.contactTemplate.includes(`{${placeholder}}`));
+    assert.doesNotMatch(copy.seekHelp.contactTemplate,/\{(?:concern|duration|impact)\}/);
     assert.equal(copy.review.professional,'pending');
     assert.equal(copy.review.direction,locale==='ar'?'rtl':'ltr');
+  }
+});
+test('contact messages include every supplied field and omit empty optional fields in every language',()=>{
+  for(const locale of locales){
+    const c=pack.locales[locale];
+    assert.equal(formatContact(c.seekHelp.contactTemplate,c.seekHelp.summaryLabels,Array(5).fill('')),c.seekHelp.contactTemplate);
+    const values=['<private concern>','three weeks','','tried resting','cost question'];
+    const message=formatContact(c.seekHelp.contactTemplate,c.seekHelp.summaryLabels,values);
+    for(const i of [0,1,3,4])assert.ok(message.includes(`${c.seekHelp.summaryLabels[i]}\n${values[i]}`));
+    assert.ok(!message.includes(c.seekHelp.summaryLabels[2]));
+  }
+});
+test('every listed service has localized instructions and an explicit coverage type',()=>{
+  const catalog=read('../../src/data/support-services.json');
+  assert.equal(new Set(catalog.entries.map(e=>e.region)).size,catalog.entries.length);
+  for(const entry of catalog.entries){
+    assert.equal(new URL(entry.url).protocol,'https:');
+    assert.ok(['directory','public_service_information','single_provider_information'].includes(entry.kind));
+    for(const locale of locales){
+      assert.ok(pack.locales[locale].services[entry.region].instructions.trim());
+      assert.ok(pack.locales[locale].services[entry.region].region.trim());
+    }
   }
 });
 test('incomplete, sparse, nonnumeric and out-of-range answers never produce a score',()=>{

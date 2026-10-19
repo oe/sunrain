@@ -15,3 +15,9 @@ export function makeNote(fields, kind, language) {
   if (!Array.isArray(fields) || !fields.every(v => typeof v === 'string' && v.length <= MAX_NOTE_LENGTH)) throw new Error('Invalid note');
   return { version: NOTE_VERSION, kind, language, fields, savedAt: new Date().toISOString() };
 }
+
+// Use labelled paragraphs rather than grammar-sensitive sentence interpolation.
+// Empty optional fields never leave implementation placeholders in a message.
+export function formatContact(template, labels, fields) {
+  return [template, ...fields.flatMap((value, i) => value.trim() ? [`${labels[i]}\n${value}`] : [])].join('\n\n');
+}

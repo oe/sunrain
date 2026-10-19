@@ -51,7 +51,12 @@
             "Notice two smells and one taste already present. Do not taste unknown substances. Skip any sense that is unavailable or uncomfortable.",
             "Pause and decide whether to stop, return to a simple activity, or choose more support."
           ],
-          "takeaway": "Keep one detail that helped you reconnect with your surroundings. Feeling calmer is not required."
+          "takeaway": "Keep one detail that helped you reconnect with your surroundings. Feeling calmer is not required.",
+          "examples": [
+            "Notice one object nearby",
+            "Notice where the chair supports me",
+            "Notice a sound around me"
+          ]
         },
         "smallStep": {
           "title": "Choose one manageable next step",
@@ -62,7 +67,12 @@
             "Decide what you will do and when. You can leave this as a plan or try it now.",
             "Review what was possible. Keep, reduce, or change the step without judging yourself."
           ],
-          "takeaway": "Your note: what I chose, when I might do it, and what help I need."
+          "takeaway": "Your note: what I chose, when I might do it, and what help I need.",
+          "examples": [
+            "Rest without adding another task",
+            "Ask someone I trust for practical help",
+            "Do one small part of an everyday task"
+          ]
         },
         "sleepRoutine": {
           "title": "Plan a gentler sleep routine",
@@ -73,7 +83,12 @@
             "Notice whether caffeine or alcohol affects your sleep. Do not use this guide to change prescribed medicines.",
             "If sleep problems continue or affect daily life, arrange professional advice. If you need much less sleep and feel unusually energised, seek prompt assessment instead of treating this as ordinary sleeplessness."
           ],
-          "takeaway": "Choose one change to try, without requiring yourself to fall asleep."
+          "takeaway": "Choose one change to try, without requiring yourself to fall asleep.",
+          "examples": [
+            "Choose a quiet activity before bed",
+            "Reduce bright screen use before bed",
+            "Choose a manageable regular waking time"
+          ]
         },
         "worryPlan": {
           "title": "Give one worry a practical next step",
@@ -84,7 +99,12 @@
             "If there is, choose one manageable action and when to take it, including asking for help.",
             "If there is no useful action now, acknowledge the uncertainty and return to a simple present activity. Stop if this makes distress worse."
           ],
-          "takeaway": "Keep one possible action or a reminder to ask for support."
+          "takeaway": "Keep one possible action or a reminder to ask for support.",
+          "examples": [
+            "Write one question about the problem",
+            "Ask for information I am missing",
+            "Ask someone to help plan one next step"
+          ]
         }
       },
       "seekHelp": {
@@ -98,7 +118,7 @@
           "Bring questions and, if you want, someone you trust. Ask what the next step is and what to do if your situation changes.",
           "After contacting a service, keep your own record of the reply and next appointment. Sunrain cannot book appointments or confirm that a provider has accepted you."
         ],
-        "contactTemplate": "I would like an initial mental health assessment. I have been experiencing {concern} for {duration}, affecting {impact}. How can I arrange an appointment, and what are the costs and available languages?",
+        "contactTemplate": "I would like an initial mental health appointment. How can I book, do I need a referral, what does it cost, and which languages are available?",
         "cost": "If cost is a barrier, ask about public or community services, insurance coverage, or student/employee support if available. Availability and confidentiality rules must be checked with the service.",
         "waiting": "If there is a wait, ask about interim support and whom to contact if things worsen. You can ask another appropriate service about availability.",
         "noService": "If your area is not listed or a link fails, use the contact template with local primary care or a public health service. The absence of a directory entry does not mean support is unavailable.",
@@ -190,6 +210,78 @@
         "us": "United States",
         "unavailable": "Saved notes can be read by others using this browser. Saving is optional; downloads are separate copies that this site cannot delete.",
         "deleteAllNotes": "Delete all Sunrain notes on this browser"
+      },
+      "services": {
+        "GB-ENG": {
+          "region": "England",
+          "instructions": "For adults in England, NHS talking therapies offers self-referral or a GP referral. Check local eligibility; other difficulties may need a different service."
+        },
+        "US": {
+          "region": "United States",
+          "instructions": "Search for mental health treatment by location. Ask the provider about eligibility, insurance, cost and language before booking."
+        },
+        "JP": {
+          "region": "Japan",
+          "instructions": "Search the official medical directory by location and department, such as psychiatry (精神科). Website translation does not guarantee treatment in that language."
+        },
+        "KR": {
+          "region": "South Korea",
+          "instructions": "Use the location-based institution search to find mental health centres or medical services; confirm which service can help with your needs."
+        },
+        "ES": {
+          "region": "Spain",
+          "instructions": "Use the official health-centre register to search by area and service. A registered centre is not a confirmed appointment or guarantee of suitability."
+        },
+        "HK": {
+          "region": "Hong Kong",
+          "instructions": "Read Hospital Authority specialist outpatient instructions. New appointments generally require a referral; confirm the psychiatric clinic, fees and booking requirements."
+        },
+        "CN-BJ": {
+          "region": "Beijing, China · one hospital",
+          "instructions": "Peking University Sixth Hospital provides its own booking guide. This is one Beijing hospital, not a nationwide directory; confirm current requirements and availability."
+        }
+      },
+      "flow": {
+        "heroTitle": "Find one next step for how you feel",
+        "scopeShort": "Sunrain offers general support, not medical care or diagnosis. Keep your existing care plan.",
+        "outcome": "Two optional question screens lead to an activity you can choose and an editable summary for asking for help.",
+        "multiple": "Choose any that fit. You can also continue without selecting anything.",
+        "step": "Step {current} of {total}",
+        "nowAction": "Try something now",
+        "tryActivity": "Try this activity",
+        "actionReason": "An optional starting point based on your selection. You can ask for help directly at any time.",
+        "viewSummary": "Review or edit my summary",
+        "prepare": "Prepare to contact support",
+        "keepSummary": "Continue with your summary",
+        "samePage": "Choose a service and prepare your message here. Your notes stay on this page; opening an external site does not send them.",
+        "bookingChecklist": "Before booking, costs and waiting",
+        "coverage": "Listed locations have official entry points below. Coverage is limited; your reading language does not determine your location.",
+        "websiteLanguage": "Website languages",
+        "checked": "Information checked",
+        "verification": "Official information checked; individual providers, appointments and service languages have not been tested. Confirm eligibility, referrals and fees directly.",
+        "notCovered": "We do not yet have a checked entry point for your area. You can still prepare a message below.",
+        "notePrivacy": "Unsaved notes stay on this page and clear on reload or leaving. Saving is optional; others using this browser may see saved notes. Downloads are separate copies you manage.",
+        "functionCare": "When basic needs or daily functioning are hard to manage, contact a health professional promptly. Use local emergency services if there is immediate danger.",
+        "examples": "Choose a starting point, or use your own",
+        "exampleHint": "These are optional everyday examples, not a prescribed treatment. Choose only what fits your situation.",
+        "planTitle": "A small plan to take with you",
+        "planLabels": [
+          "My action or a detail to remember",
+          "When I might try it (optional)",
+          "Help I might need (optional)"
+        ],
+        "guideNext": "Next step",
+        "guideFinish": "Finish and reflect",
+        "guideStop": "Stop here",
+        "guideDone": "You can end here, leave a small plan or choose more support. Completing every step is not required.",
+        "feedbackBetter": "You can finish here. You do not need to do another activity.",
+        "crisisFallback": "If the directory is unavailable or your location is missing, use local emergency services or the nearest emergency department when there is immediate danger. Do not wait for a directory, appointment or website reply.",
+        "crisisSeparate": "For non-urgent appointments, use the separate support page. Routine booking is not emergency assistance.",
+        "end": "Finish here",
+        "copyMessage": "Copy message",
+        "copied": "Message copied.",
+        "copyFailed": "Copy was unavailable. Select the message or download it.",
+        "linkProblem": "Link unavailable or no suitable service?"
       }
     },
     "zh-hans": {
@@ -219,7 +311,12 @@
             "留意两种气味和一种已经存在的味道，不要尝不明物品。某种感官不适用或让你不舒服时可以跳过。",
             "停一下，决定是结束、回到一件简单的日常活动，还是选择更多支持。"
           ],
-          "takeaway": "可以记住一个让你重新留意周围的细节。不要求练习后一定平静。"
+          "takeaway": "可以记住一个让你重新留意周围的细节。不要求练习后一定平静。",
+          "examples": [
+            "留意身边一件看得到的物品",
+            "留意椅子支撑身体的感觉",
+            "留意周围的一种声音"
+          ]
         },
         "smallStep": {
           "title": "选一个现在做得到的小步骤",
@@ -230,7 +327,12 @@
             "想一想具体做什么、何时做。可以先留下计划，也可以现在尝试。",
             "回顾实际能做到什么，保留、减小或换一个步骤，不用责备自己。"
           ],
-          "takeaway": "可以留下：我选了什么、可能何时做、还需要什么帮助。"
+          "takeaway": "可以留下：我选了什么、可能何时做、还需要什么帮助。",
+          "examples": [
+            "先休息，不增加新任务",
+            "请信任的人帮忙处理一件事",
+            "只做一件日常小事的一部分"
+          ]
         },
         "sleepRoutine": {
           "title": "给睡眠留一点余地",
@@ -241,7 +343,12 @@
             "留意咖啡因或酒精是否影响睡眠，不要依据此指引调整处方药。",
             "睡眠问题持续或影响生活时，安排专业咨询。若睡得明显更少却精力异常高涨，请尽快评估，不要仅当作普通失眠处理。"
           ],
-          "takeaway": "选一件想尝试的改变，不要求自己一定睡着。"
+          "takeaway": "选一件想尝试的改变，不要求自己一定睡着。",
+          "examples": [
+            "睡前选择一项安静活动",
+            "睡前减少明亮屏幕的使用",
+            "选一个目前做得到的规律起床时间"
+          ]
         },
         "worryPlan": {
           "title": "给一个担忧找到下一步",
@@ -252,7 +359,12 @@
             "如果有，选一个承受得了的行动和时间，也可以是请人帮忙。",
             "如果目前没有可做的行动，承认不确定性，把注意力带回一件简单的眼前活动。若更难受就停止。"
           ],
-          "takeaway": "留下一件可能做的事，或提醒自己寻找支持。"
+          "takeaway": "留下一件可能做的事，或提醒自己寻找支持。",
+          "examples": [
+            "写下关于这件事的一个问题",
+            "询问目前还缺少的信息",
+            "请人一起想一个可行的下一步"
+          ]
         }
       },
       "seekHelp": {
@@ -266,7 +378,7 @@
           "准备想问的问题；愿意时可请信任的人陪同。问清后续步骤和情况变化时该联系谁。",
           "联系服务后，自己记录回复和预约安排。Sunrain 无法代为预约，也不能确认机构已经接诊。"
         ],
-        "contactTemplate": "我想预约一次心理健康初步评估。我已经有{duration}受到{concern}困扰，影响到{impact}。请问怎样预约、费用如何、提供哪些语言服务？",
+        "contactTemplate": "我想预约一次心理健康初步评估。请问怎样预约、是否需要转介、费用如何，以及提供哪些语言服务？",
         "cost": "费用有困难时，可以询问公立或社区服务、医保或保险，以及可能提供的学校或员工支持。是否可用及保密规则须向服务方确认。",
         "waiting": "需要候诊时，问清等待期间有哪些支持、加重时联系谁，也可以向其他合适的服务询问名额。",
         "noService": "没有列出你的地区或链接失效时，可以用预约模板联系当地基层医疗或公立医疗服务。目录没有记录不代表当地没有帮助。",
@@ -302,7 +414,7 @@
         "next": "继续",
         "finish": "查看下一步",
         "adult": "我已满18岁",
-        "younger": "未满18岁？可以请信任的成年人或当地青少年健康服务协助寻找适龄支持。下方的一般求助入口仍可使用。",
+        "younger": "未满18岁？可以请信任的成年人或当地青少年健康服务协助寻找适龄支持，也可以直接使用一般求助入口。",
         "intro": "在私密的页面中整理困扰、选择支持方式。这不是诊断测试。可以多选、跳过问题，或随时离开。",
         "privacy": "回答只保留在当前页面内存中，刷新即清除。只有你主动选择才保存。切换语言会重新开始。",
         "concerns": "你希望哪方面得到支持？",
@@ -358,6 +470,78 @@
         "us": "美国",
         "unavailable": "同一浏览器的其他使用者可能看到已保存记录。保存完全自愿；下载文件是独立副本，本站无法替你删除。",
         "deleteAllNotes": "删除此浏览器内全部 Sunrain 记录"
+      },
+      "services": {
+        "GB-ENG": {
+          "region": "英格兰",
+          "instructions": "面向英格兰成年人的 NHS 谈话治疗可接受自我转介或全科医生转介。请核对当地条件；其他困扰可能需要不同服务。"
+        },
+        "US": {
+          "region": "美国",
+          "instructions": "按所在地寻找心理健康诊疗机构。预约前向机构确认适用条件、保险、费用和服务语言。"
+        },
+        "JP": {
+          "region": "日本",
+          "instructions": "在官方医疗目录中按地区和科室查找，例如精神科。网页提供翻译，不代表机构能以该语言接诊。"
+        },
+        "KR": {
+          "region": "韩国",
+          "instructions": "使用按位置查找机构的功能，寻找精神健康中心或医疗服务，再确认是否适合自己的需要。"
+        },
+        "ES": {
+          "region": "西班牙",
+          "instructions": "在官方医疗机构登记目录中按地区和服务查找。登记在册不代表已经预约成功或一定适合你。"
+        },
+        "HK": {
+          "region": "香港",
+          "instructions": "查看医院管理局专科门诊指引。新症通常需要转介信，请向精神科门诊确认费用和预约要求。"
+        },
+        "CN-BJ": {
+          "region": "中国北京 · 单一医院",
+          "instructions": "北京大学第六医院提供自身的预约挂号指引。这是一家北京医院，不是全国目录；请确认当前要求和号源。"
+        }
+      },
+      "flow": {
+        "heroTitle": "为此刻的感受，找到一个下一步",
+        "scopeShort": "Sunrain 提供一般心理支持，不是诊疗机构，不能诊断疾病。请继续遵循已有照护计划。",
+        "outcome": "两组可跳过的问题，帮你选择一个行动，并整理可编辑的求助摘要。",
+        "multiple": "可以多选，也可以不选，直接继续。",
+        "step": "第 {current} / {total} 步",
+        "nowAction": "现在先缓一缓",
+        "tryActivity": "尝试这个行动",
+        "actionReason": "根据你的选择提供一个可选起点。任何时候都可以直接求助。",
+        "viewSummary": "查看或修改我的摘要",
+        "prepare": "准备联系支持",
+        "keepSummary": "带着这份摘要继续",
+        "samePage": "在本页选择服务、准备联系内容。记录仍留在本页，打开外部网站不会发送这些内容。",
+        "bookingChecklist": "预约前要问什么、费用与候诊",
+        "coverage": "下列地区已有官方入口，覆盖范围仍有限。阅读语言不代表你的所在地。",
+        "websiteLanguage": "外部网站语言",
+        "checked": "信息核对日期",
+        "verification": "已核对官方说明，未测试具体机构接诊、预约或服务语言。请向服务方确认适用条件、转介和费用。",
+        "notCovered": "本站暂未收录你所在地区已核对的入口，仍可在下方准备联系内容。",
+        "notePrivacy": "未保存的记录仅留在本页，刷新或离开即清除。保存完全自愿，共用此浏览器的人可能看到保存内容；下载文件由你自行保管。",
+        "functionCare": "基本生活需要或日常功能难以维持时，请尽快联系医疗专业人员。有立即危险时，请使用当地紧急服务。",
+        "examples": "选一个起点，也可以用自己的想法",
+        "exampleHint": "这些是可选的日常例子，不是治疗处方，只选择适合你目前情况的。",
+        "planTitle": "留下一份小计划",
+        "planLabels": [
+          "我选择的行动或想记住的细节",
+          "可能什么时候尝试（可选）",
+          "需要什么帮助（可选）"
+        ],
+        "guideNext": "看下一步",
+        "guideFinish": "结束并回顾",
+        "guideStop": "先停在这里",
+        "guideDone": "可以到这里结束、留下一份小计划，或选择更多支持。不必完成全部步骤。",
+        "feedbackBetter": "可以到这里结束，不需要再完成其他练习。",
+        "crisisFallback": "如果目录打不开或没有列出你的所在地，且目前有立即危险，请直接使用当地紧急服务或前往最近的急诊。不要等待目录恢复、预约或本站回复。",
+        "crisisSeparate": "非紧急的就医预约可使用独立的求助页面。普通预约不能替代紧急援助。",
+        "end": "到这里结束",
+        "copyMessage": "复制联系内容",
+        "copied": "已复制联系内容。",
+        "copyFailed": "无法自动复制，请选中文字复制，或下载文本。",
+        "linkProblem": "链接打不开或没有找到合适服务？"
       }
     },
     "zh-hant": {
@@ -387,7 +571,12 @@
             "留意兩種氣味和一種已經存在的味道，不要嘗不明物品。某種感官不適用或讓你不舒服時可以跳過。",
             "停一下，決定是結束、回到一件簡單的日常活動，還是選擇更多支持。"
           ],
-          "takeaway": "可以記住一個讓你重新留意周圍的細節。不要求練習後一定平靜。"
+          "takeaway": "可以記住一個讓你重新留意周圍的細節。不要求練習後一定平靜。",
+          "examples": [
+            "留意身邊一件看得到的物品",
+            "留意椅子支撐身體的感覺",
+            "留意周圍的一種聲音"
+          ]
         },
         "smallStep": {
           "title": "選一個現在做得到的小步驟",
@@ -398,7 +587,12 @@
             "想一想具體做什麼、何時做。可以先留下計畫，也可以現在嘗試。",
             "回顧實際能做到什麼，保留、減小或換一個步驟，不用責備自己。"
           ],
-          "takeaway": "可以留下：我選了什麼、可能何時做、還需要什麼幫助。"
+          "takeaway": "可以留下：我選了什麼、可能何時做、還需要什麼幫助。",
+          "examples": [
+            "先休息，不增加新任務",
+            "請信任的人協助處理一件事",
+            "只做一件日常小事的一部分"
+          ]
         },
         "sleepRoutine": {
           "title": "給睡眠留一點餘地",
@@ -409,7 +603,12 @@
             "留意咖啡因或酒精是否影響睡眠，不要依據此指引調整處方藥。",
             "睡眠問題持續或影響生活時，安排專業諮詢。若睡得明顯更少卻精力異常高漲，請儘快評估，不要僅當作普通失眠處理。"
           ],
-          "takeaway": "選一件想嘗試的改變，不要求自己一定睡著。"
+          "takeaway": "選一件想嘗試的改變，不要求自己一定睡著。",
+          "examples": [
+            "睡前選擇一項安靜活動",
+            "睡前減少明亮螢幕的使用",
+            "選一個目前做得到的規律起床時間"
+          ]
         },
         "worryPlan": {
           "title": "給一個擔憂找到下一步",
@@ -420,7 +619,12 @@
             "如果有，選一個承受得了的行動和時間，也可以是請人幫忙。",
             "如果目前沒有可做的行動，承認不確定性，把注意力帶回一件簡單的眼前活動。若更難受就停止。"
           ],
-          "takeaway": "留下一件可能做的事，或提醒自己尋找支持。"
+          "takeaway": "留下一件可能做的事，或提醒自己尋找支持。",
+          "examples": [
+            "寫下關於這件事的一個問題",
+            "詢問目前還缺少的資訊",
+            "請人一起想一個可行的下一步"
+          ]
         }
       },
       "seekHelp": {
@@ -434,7 +638,7 @@
           "準備想問的問題；願意時可請信任的人陪同。問清後續步驟和情況變化時該聯絡誰。",
           "聯絡服務後，自己記錄回覆和預約安排。Sunrain 無法代為預約，也不能確認機構已經接診。"
         ],
-        "contactTemplate": "我想預約一次心理健康初步評估。我已經有{duration}受到{concern}困擾，影響到{impact}。請問怎樣預約、費用如何、提供哪些語言服務？",
+        "contactTemplate": "我想預約一次心理健康初步評估。請問如何預約、是否需要轉介、費用如何，以及提供哪些語言服務？",
         "cost": "費用有困難時，可以詢問公立或社區服務、醫療保險，以及可能提供的學校或員工支持。是否可用及保密規則須向服務方確認。",
         "waiting": "需要候診時，問清等待期間有哪些支持、加重時聯絡誰，也可以向其他合適的服務詢問名額。",
         "noService": "沒有列出你的地區或連結失效時，可以用預約範本聯絡當地基層醫療或公立醫療服務。目錄沒有紀錄不代表當地沒有幫助。",
@@ -470,7 +674,7 @@
         "next": "繼續",
         "finish": "查看下一步",
         "adult": "我已滿18歲",
-        "younger": "未滿18歲？可以請信任的成年人或當地青少年健康服務協助尋找適齡支持。下方的一般求助入口仍可使用。",
+        "younger": "未滿18歲？可以請信任的成年人或當地青少年健康服務協助尋找適齡支持，也可以直接使用一般求助入口。",
         "intro": "在私密的頁面中整理困擾、選擇支持方式。這不是診斷測試。可以複選、跳過問題，或隨時離開。",
         "privacy": "回答只保留在目前頁面的記憶體中，重新整理即清除。只有你主動選擇才儲存。切換語言會重新開始。",
         "concerns": "你希望哪方面得到支持？",
@@ -526,6 +730,78 @@
         "us": "美國",
         "unavailable": "同一瀏覽器的其他使用者可能看到已儲存紀錄。儲存完全自願；下載檔案是獨立副本，本站無法替你刪除。",
         "deleteAllNotes": "刪除此瀏覽器內全部 Sunrain 紀錄"
+      },
+      "services": {
+        "GB-ENG": {
+          "region": "英格蘭",
+          "instructions": "面向英格蘭成年人的 NHS 談話治療可接受自我轉介或家庭醫師轉介。請核對當地條件；其他困擾可能需要不同服務。"
+        },
+        "US": {
+          "region": "美國",
+          "instructions": "依所在地尋找心理健康診療機構。預約前向機構確認適用條件、保險、費用與服務語言。"
+        },
+        "JP": {
+          "region": "日本",
+          "instructions": "在官方醫療目錄中依地區和科別查找，例如精神科。網頁提供翻譯，不代表機構能以該語言接診。"
+        },
+        "KR": {
+          "region": "韓國",
+          "instructions": "使用依位置查找機構的功能，尋找精神健康中心或醫療服務，再確認是否適合自己的需要。"
+        },
+        "ES": {
+          "region": "西班牙",
+          "instructions": "在官方醫療機構登記目錄中依地區和服務查找。登記在冊不代表已經預約成功或一定適合你。"
+        },
+        "HK": {
+          "region": "香港",
+          "instructions": "查看醫院管理局專科門診指引。新症通常需要轉介信，請向精神科門診確認費用與預約要求。"
+        },
+        "CN-BJ": {
+          "region": "中國北京 · 單一醫院",
+          "instructions": "北京大學第六醫院提供自身的預約掛號指引。這是一家北京醫院，不是全國目錄；請確認目前要求與名額。"
+        }
+      },
+      "flow": {
+        "heroTitle": "為此刻的感受，找到一個下一步",
+        "scopeShort": "Sunrain 提供一般心理支持，不是診療機構，不能診斷疾病。請繼續遵循既有照護計畫。",
+        "outcome": "兩組可跳過的問題，幫你選擇一個行動，並整理可編輯的求助摘要。",
+        "multiple": "可以複選，也可以不選，直接繼續。",
+        "step": "第 {current} / {total} 步",
+        "nowAction": "現在先緩一緩",
+        "tryActivity": "嘗試這個行動",
+        "actionReason": "依你的選擇提供一個可選起點。任何時候都可以直接求助。",
+        "viewSummary": "查看或修改我的摘要",
+        "prepare": "準備聯絡支持服務",
+        "keepSummary": "帶著這份摘要繼續",
+        "samePage": "在本頁選擇服務、準備聯絡內容。記錄仍留在本頁，開啟外部網站不會傳送這些內容。",
+        "bookingChecklist": "預約前要問什麼、費用與候診",
+        "coverage": "下列地區已有官方入口，涵蓋範圍仍有限。閱讀語言不代表你的所在地。",
+        "websiteLanguage": "外部網站語言",
+        "checked": "資訊核對日期",
+        "verification": "已核對官方說明，未測試個別機構接診、預約或服務語言。請向服務方確認適用條件、轉介與費用。",
+        "notCovered": "本站暫未收錄你所在地已核對的入口，仍可在下方準備聯絡內容。",
+        "notePrivacy": "未儲存的記錄僅留在本頁，重新整理或離開即清除。儲存完全自願，共用此瀏覽器的人可能看到儲存內容；下載檔案由你自行保管。",
+        "functionCare": "基本生活需要或日常功能難以維持時，請儘快聯絡醫療專業人員。有立即危險時，請使用當地緊急服務。",
+        "examples": "選一個起點，也可以用自己的想法",
+        "exampleHint": "這些是可選的日常例子，不是治療處方，只選擇適合你目前情況的。",
+        "planTitle": "留下一份小計畫",
+        "planLabels": [
+          "我選擇的行動或想記住的細節",
+          "可能什麼時候嘗試（選填）",
+          "需要什麼協助（選填）"
+        ],
+        "guideNext": "看下一步",
+        "guideFinish": "結束並回顧",
+        "guideStop": "先停在這裡",
+        "guideDone": "可以到這裡結束、留下一份小計畫，或選擇更多支持。不必完成全部步驟。",
+        "feedbackBetter": "可以到這裡結束，不需要再完成其他練習。",
+        "crisisFallback": "如果目錄無法開啟或沒有列出你的所在地，且目前有立即危險，請直接使用當地緊急服務或前往最近的急診。不要等待目錄恢復、預約或本站回覆。",
+        "crisisSeparate": "非緊急的就醫預約可使用獨立的求助頁面。一般預約不能替代緊急援助。",
+        "end": "到這裡結束",
+        "copyMessage": "複製聯絡內容",
+        "copied": "已複製聯絡內容。",
+        "copyFailed": "無法自動複製，請選取文字複製，或下載文字檔。",
+        "linkProblem": "連結無法開啟或找不到合適服務？"
       }
     },
     "es": {
@@ -555,7 +831,12 @@
             "Percibe dos olores y un sabor ya presente. No pruebes sustancias desconocidas. Omite cualquier sentido que no puedas usar o te incomode.",
             "Haz una pausa y decide si quieres terminar, volver a una actividad sencilla o buscar más apoyo."
           ],
-          "takeaway": "Puedes recordar un detalle que te haya conectado con tu entorno. No es obligatorio sentirte más tranquilo."
+          "takeaway": "Puedes recordar un detalle que te haya conectado con tu entorno. No es obligatorio sentirte más tranquilo.",
+          "examples": [
+            "Observar un objeto cercano",
+            "Notar el apoyo de la silla",
+            "Escuchar un sonido a mi alrededor"
+          ]
         },
         "smallStep": {
           "title": "Elige un siguiente paso manejable",
@@ -566,7 +847,12 @@
             "Decide qué harás y cuándo. Puedes dejarlo como plan o intentarlo ahora.",
             "Revisa lo que fue posible. Mantén, reduce o cambia el paso sin juzgarte."
           ],
-          "takeaway": "Tu nota: qué elegí, cuándo podría hacerlo y qué ayuda necesito."
+          "takeaway": "Tu nota: qué elegí, cuándo podría hacerlo y qué ayuda necesito.",
+          "examples": [
+            "Descansar sin añadir otra tarea",
+            "Pedir ayuda práctica a alguien de confianza",
+            "Hacer una parte pequeña de una tarea cotidiana"
+          ]
         },
         "sleepRoutine": {
           "title": "Una rutina de sueño más amable",
@@ -577,7 +863,12 @@
             "Observa si la cafeína o el alcohol afectan al sueño. No cambies medicamentos recetados siguiendo esta guía.",
             "Si el problema persiste o afecta a tu vida, pide consejo profesional. Si necesitas dormir mucho menos y tienes una energía inusual, busca una evaluación pronta en vez de tratarlo como insomnio común."
           ],
-          "takeaway": "Elige un cambio sin exigirte quedarte dormido."
+          "takeaway": "Elige un cambio sin exigirte quedarte dormido.",
+          "examples": [
+            "Elegir una actividad tranquila antes de dormir",
+            "Reducir las pantallas brillantes antes de acostarme",
+            "Elegir una hora regular y viable para levantarme"
+          ]
         },
         "worryPlan": {
           "title": "Un próximo paso para una preocupación",
@@ -588,7 +879,12 @@
             "Si la hay, elige una acción manejable y cuándo hacerla, incluso pedir ayuda.",
             "Si ahora no hay una acción útil, reconoce la incertidumbre y vuelve a una actividad sencilla del presente. Detente si aumenta el malestar."
           ],
-          "takeaway": "Anota una posible acción o un recordatorio para pedir apoyo."
+          "takeaway": "Anota una posible acción o un recordatorio para pedir apoyo.",
+          "examples": [
+            "Escribir una pregunta sobre el problema",
+            "Pedir la información que me falta",
+            "Pedir ayuda para planear un siguiente paso"
+          ]
         }
       },
       "seekHelp": {
@@ -602,7 +898,7 @@
           "Prepara tus preguntas y, si quieres, pide a alguien de confianza que te acompañe. Pregunta por el siguiente paso y a quién contactar si tu situación cambia.",
           "Anota la respuesta del servicio y las próximas citas. Sunrain no puede concertar citas ni confirmar que un servicio te haya aceptado."
         ],
-        "contactTemplate": "Quisiera una primera evaluación de salud mental. Llevo {duration} con {concern}, que afecta a {impact}. ¿Cómo puedo pedir cita, cuánto cuesta y en qué idiomas atienden?",
+        "contactTemplate": "Quisiera una primera cita de salud mental. ¿Cómo puedo solicitarla? ¿Necesito derivación? ¿Qué coste tiene y en qué idiomas se ofrece?",
         "cost": "Si el coste es una barrera, pregunta por servicios públicos o comunitarios, cobertura de seguro o apoyo estudiantil o laboral si existe. Confirma con el servicio la disponibilidad y sus normas de confidencialidad.",
         "waiting": "Si hay espera, pregunta por apoyo provisional y a quién contactar si empeoras. Puedes consultar la disponibilidad de otro servicio adecuado.",
         "noService": "Si tu zona no aparece o un enlace falla, usa el mensaje de contacto con atención primaria o un servicio público local. Que no haya una entrada no significa que no exista ayuda.",
@@ -694,6 +990,78 @@
         "us": "Estados Unidos",
         "unavailable": "Otras personas que usen este navegador pueden leer las notas guardadas. Guardar es opcional; las descargas son copias que este sitio no puede borrar.",
         "deleteAllNotes": "Eliminar todas las notas de Sunrain de este navegador"
+      },
+      "services": {
+        "GB-ENG": {
+          "region": "Inglaterra",
+          "instructions": "NHS talking therapies acepta solicitudes directas o derivaciones del médico de cabecera para adultos en Inglaterra. Confirma los requisitos locales; otras dificultades pueden necesitar otro servicio."
+        },
+        "US": {
+          "region": "Estados Unidos",
+          "instructions": "Busca atención de salud mental por ubicación. Confirma requisitos, seguro, coste e idioma con el servicio antes de reservar."
+        },
+        "JP": {
+          "region": "Japón",
+          "instructions": "Busca en el directorio médico oficial por zona y especialidad, como psiquiatría (精神科). La traducción de la web no garantiza atención en ese idioma."
+        },
+        "KR": {
+          "region": "Corea del Sur",
+          "instructions": "Usa la búsqueda de centros por ubicación para encontrar servicios de salud mental y confirma si atienden tus necesidades."
+        },
+        "ES": {
+          "region": "España",
+          "instructions": "Busca por zona y servicio en el registro oficial de centros sanitarios. La inscripción no confirma una cita ni garantiza que el centro sea adecuado."
+        },
+        "HK": {
+          "region": "Hong Kong",
+          "instructions": "Consulta las instrucciones de consultas especializadas de Hospital Authority. Las primeras citas suelen requerir derivación; confirma la consulta de psiquiatría, costes y requisitos."
+        },
+        "CN-BJ": {
+          "region": "Pekín, China · un hospital",
+          "instructions": "El Sexto Hospital de la Universidad de Pekín ofrece su propia guía de citas. Es un hospital de Pekín, no un directorio nacional; confirma requisitos y disponibilidad."
+        }
+      },
+      "flow": {
+        "heroTitle": "Encuentra un siguiente paso para cómo te sientes",
+        "scopeShort": "Sunrain ofrece apoyo general, no atención médica ni diagnósticos. Mantén tu plan de atención actual.",
+        "outcome": "Dos pantallas de preguntas opcionales te llevan a una actividad y a un resumen editable para pedir ayuda.",
+        "multiple": "Puedes elegir varias opciones o continuar sin seleccionar ninguna.",
+        "step": "Paso {current} de {total}",
+        "nowAction": "Probar algo ahora",
+        "tryActivity": "Probar esta actividad",
+        "actionReason": "Un punto de partida opcional según tu selección. Puedes pedir ayuda directamente en cualquier momento.",
+        "viewSummary": "Revisar o editar mi resumen",
+        "prepare": "Preparar el contacto con un servicio",
+        "keepSummary": "Continuar con tu resumen",
+        "samePage": "Elige un servicio y prepara el mensaje aquí. Las notas permanecen en esta página y no se envían al abrir una web externa.",
+        "bookingChecklist": "Antes de reservar, costes y espera",
+        "coverage": "Las zonas listadas tienen accesos oficiales. La cobertura es limitada; el idioma de lectura no determina tu ubicación.",
+        "websiteLanguage": "Idiomas de la web",
+        "checked": "Información comprobada",
+        "verification": "Se ha revisado la información oficial, no la atención, las citas ni los idiomas de cada servicio. Confirma requisitos, derivaciones y costes.",
+        "notCovered": "Aún no tenemos un acceso comprobado para tu zona. Puedes preparar un mensaje abajo.",
+        "notePrivacy": "Las notas sin guardar se borran al recargar o salir. Guardarlas es opcional; otras personas que usen este navegador podrían verlas. Tú gestionas las copias descargadas.",
+        "functionCare": "Si resulta difícil cubrir necesidades básicas o desenvolverte a diario, contacta pronto con un profesional sanitario. Ante un peligro inmediato, utiliza los servicios de emergencia locales.",
+        "examples": "Elige un punto de partida o usa tu propia idea",
+        "exampleHint": "Son ejemplos cotidianos opcionales, no un tratamiento prescrito. Elige solo lo adecuado para tu situación.",
+        "planTitle": "Un pequeño plan para llevar contigo",
+        "planLabels": [
+          "Mi acción o un detalle que recordar",
+          "Cuándo podría intentarlo (opcional)",
+          "Ayuda que podría necesitar (opcional)"
+        ],
+        "guideNext": "Siguiente paso",
+        "guideFinish": "Terminar y reflexionar",
+        "guideStop": "Parar aquí",
+        "guideDone": "Puedes terminar, dejar un pequeño plan o buscar más apoyo. No es necesario completar todos los pasos.",
+        "feedbackBetter": "Puedes terminar aquí. No necesitas hacer otra actividad.",
+        "crisisFallback": "Si el directorio no funciona o no incluye tu ubicación y hay peligro inmediato, utiliza los servicios de emergencia locales o acude a urgencias. No esperes al directorio, a una cita ni a una respuesta de esta web.",
+        "crisisSeparate": "Para citas no urgentes, utiliza la página de apoyo. Una cita ordinaria no sustituye a la ayuda de emergencia.",
+        "end": "Terminar aquí",
+        "copyMessage": "Copiar mensaje",
+        "copied": "Mensaje copiado.",
+        "copyFailed": "No se pudo copiar. Selecciona el texto o descárgalo.",
+        "linkProblem": "¿El enlace no funciona o no encuentras un servicio adecuado?"
       }
     },
     "ja": {
@@ -723,7 +1091,12 @@
             "においを二つ、すでに口の中にある味を一つ意識します。知らない物を口に入れないでください。使えない感覚や不快な感覚は飛ばせます。",
             "少し止まり、ここで終えるか、簡単な日常の活動に戻るか、別の支援を選ぶかを決めます。"
           ],
-          "takeaway": "周囲に意識を戻すきっかけになったものを一つ覚えておけます。落ち着くことを達成目標にする必要はありません。"
+          "takeaway": "周囲に意識を戻すきっかけになったものを一つ覚えておけます。落ち着くことを達成目標にする必要はありません。",
+          "examples": [
+            "近くの物を一つ見る",
+            "椅子が体を支える感覚に気づく",
+            "周囲の音を一つ聞く"
+          ]
         },
         "smallStep": {
           "title": "今できる小さな一歩を選ぶ",
@@ -734,7 +1107,12 @@
             "何をいつするか考えます。計画として残しても、今試してもかまいません。",
             "できた範囲を振り返ります。自分を責めずに、そのまま続ける、減らす、変えることができます。"
           ],
-          "takeaway": "メモに残せること：選んだこと、いつできそうか、必要な助け。"
+          "takeaway": "メモに残せること：選んだこと、いつできそうか、必要な助け。",
+          "examples": [
+            "用事を増やさず休む",
+            "信頼する人に具体的な手助けを頼む",
+            "日常の用事の小さな一部分だけする"
+          ]
         },
         "sleepRoutine": {
           "title": "睡眠のための無理のない習慣",
@@ -745,7 +1123,12 @@
             "カフェインや飲酒が睡眠に影響していないか振り返ります。このガイドで処方薬を変更しないでください。",
             "問題が続く、生活に影響する場合は専門家へ。睡眠が大幅に少なくても普段と違う活力がある場合は、普通の寝不足と考えず早めに評価を受けてください。"
           ],
-          "takeaway": "眠れなければいけないと思わず、試せる変更を一つ選びます。"
+          "takeaway": "眠れなければいけないと思わず、試せる変更を一つ選びます。",
+          "examples": [
+            "寝る前に静かな活動を選ぶ",
+            "寝る前の明るい画面を減らす",
+            "無理のない一定の起床時刻を選ぶ"
+          ]
         },
         "worryPlan": {
           "title": "一つの心配に次の一歩を",
@@ -756,7 +1139,12 @@
             "あれば、無理のない行動と実行する時を決めます。助けを頼むことでも構いません。",
             "今できることがなければ、不確かさを認め、目の前の簡単な活動に戻ります。つらさが増したらやめてください。"
           ],
-          "takeaway": "できそうな行動か、相談するためのメモを残します。"
+          "takeaway": "できそうな行動か、相談するためのメモを残します。",
+          "examples": [
+            "問題について質問を一つ書く",
+            "足りない情報を尋ねる",
+            "次の一歩を考える手助けを頼む"
+          ]
         }
       },
       "seekHelp": {
@@ -770,7 +1158,7 @@
           "聞きたいことを用意し、希望すれば信頼できる人に同行を頼めます。次の手順と、状態が変わったときの連絡先を確認します。",
           "相手からの返答と予約を自分で記録します。Sunrain は予約の代行や受け入れの確認を行えません。"
         ],
-        "contactTemplate": "心の健康について初めての相談を希望しています。{concern}が{duration}続き、{impact}に影響しています。予約方法、費用、対応言語を教えてください。",
+        "contactTemplate": "心の健康について初回の相談を希望します。予約方法、紹介状の要否、費用、対応言語を教えてください。",
         "cost": "費用が難しい場合は、公的・地域のサービス、保険、利用できる学校や職場の支援について尋ねてください。利用条件や守秘の扱いは窓口に確認します。",
         "waiting": "待ち時間がある場合は、その間の支援と、悪化したときの連絡先を尋ねます。他の適切な窓口にも空きを確認できます。",
         "noService": "地域が掲載されていない、またはリンクが使えない場合は、相談文のひな型を使って地域の医療機関や公的窓口に連絡できます。掲載がないことは支援がないという意味ではありません。",
@@ -862,6 +1250,78 @@
         "us": "米国",
         "unavailable": "同じブラウザを使う人に保存メモを読まれる可能性があります。保存は任意です。ダウンロードした別のコピーを当サイトから削除することはできません。",
         "deleteAllNotes": "このブラウザの Sunrain メモをすべて削除"
+      },
+      "services": {
+        "GB-ENG": {
+          "region": "イングランド",
+          "instructions": "成人向け NHS talking therapies は本人からの申込み、または家庭医からの紹介で利用できます。イングランドの対象条件を確認してください。別の困りごとには別の支援が必要な場合があります。"
+        },
+        "US": {
+          "region": "米国",
+          "instructions": "所在地から精神保健の診療先を探せます。対象条件、保険、費用、言語を予約前に確認してください。"
+        },
+        "JP": {
+          "region": "日本",
+          "instructions": "公式の医療情報ネットで地域や精神科などの診療科から探せます。サイトの翻訳言語と受診時の対応言語は異なります。"
+        },
+        "KR": {
+          "region": "韓国",
+          "instructions": "位置情報に基づく施設検索で精神健康センターや医療機関を探し、必要な支援に対応できるか確認してください。"
+        },
+        "ES": {
+          "region": "スペイン",
+          "instructions": "公式の医療機関登録で地域やサービスから探せます。登録は予約や適合性の保証ではありません。"
+        },
+        "HK": {
+          "region": "香港",
+          "instructions": "Hospital Authority の専門外来案内をご覧ください。初診は通常紹介状が必要です。精神科外来の費用と予約条件を確認してください。"
+        },
+        "CN-BJ": {
+          "region": "中国・北京の１病院",
+          "instructions": "北京大学第六医院自身の予約案内です。全国の医療機関一覧ではありません。現在の条件と空き状況を確認してください。"
+        }
+      },
+      "flow": {
+        "heroTitle": "今の気持ちに合う、次の一歩を",
+        "scopeShort": "Sunrain は一般的な支援を提供するサイトで、医療機関ではなく診断も行いません。既存のケア計画を続けてください。",
+        "outcome": "任意の質問２画面から、選べる活動と相談用に編集できるまとめを作ります。",
+        "multiple": "複数選べます。何も選ばずに進むこともできます。",
+        "step": "ステップ {current} / {total}",
+        "nowAction": "今できることを試す",
+        "tryActivity": "この活動を試す",
+        "actionReason": "選択に基づく任意のきっかけです。いつでも直接相談できます。",
+        "viewSummary": "まとめを確認・編集する",
+        "prepare": "相談先への連絡を準備する",
+        "keepSummary": "まとめを使って次へ",
+        "samePage": "このページで相談先を選び、連絡文を準備できます。記録はページ内にとどまり、外部サイトを開いても送信されません。",
+        "bookingChecklist": "予約前の確認・費用・待ち時間",
+        "coverage": "掲載地域には公式の案内先があります。対応地域は限られ、閲覧言語から所在地を判断しません。",
+        "websiteLanguage": "外部サイトの言語",
+        "checked": "情報確認日",
+        "verification": "公式案内を確認していますが、個別の受診、予約、対応言語は未検証です。対象条件、紹介状、費用は相談先に確認してください。",
+        "notCovered": "お住まいの地域の確認済み案内先は未掲載です。下で連絡文を準備できます。",
+        "notePrivacy": "未保存の記録は再読み込みや移動で消えます。保存は任意で、同じブラウザの利用者に見える可能性があります。ダウンロードしたファイルはご自身で管理してください。",
+        "functionCare": "基本的な生活や日常の活動が難しい場合は、速やかに医療専門職に相談してください。差し迫った危険がある場合は地域の緊急サービスを利用してください。",
+        "examples": "例から選ぶか、自分で考える",
+        "exampleHint": "治療の処方ではなく、任意の日常的な例です。今の状況に合うものだけ選んでください。",
+        "planTitle": "持ち帰れる小さな計画",
+        "planLabels": [
+          "選んだ行動・覚えておきたいこと",
+          "試せそうな時期（任意）",
+          "必要な手助け（任意）"
+        ],
+        "guideNext": "次のステップ",
+        "guideFinish": "終えて振り返る",
+        "guideStop": "ここでやめる",
+        "guideDone": "ここで終える、計画を残す、別の支援を選ぶことができます。すべてを終える必要はありません。",
+        "feedbackBetter": "ここで終えてかまいません。別の活動をする必要はありません。",
+        "crisisFallback": "一覧が開けない、または所在地が見つからず、差し迫った危険がある場合は、地域の緊急サービスや最寄りの救急外来を利用してください。一覧の復旧、予約、サイトからの返信を待たないでください。",
+        "crisisSeparate": "緊急でない受診予約には別の相談ページを利用できます。通常の予約は緊急支援の代わりにはなりません。",
+        "end": "ここで終える",
+        "copyMessage": "連絡文をコピー",
+        "copied": "連絡文をコピーしました。",
+        "copyFailed": "コピーできませんでした。文章を選択してコピーするか、ダウンロードしてください。",
+        "linkProblem": "リンクが開かない・適切な相談先が見つからない場合"
       }
     },
     "ko": {
@@ -891,7 +1351,12 @@
             "냄새 두 가지와 이미 입안에 있는 맛 한 가지를 알아차려 보세요. 모르는 물질을 맛보지 마세요. 사용할 수 없거나 불편한 감각은 건너뛰세요.",
             "잠시 멈추고 마칠지, 간단한 일상 활동으로 돌아갈지, 다른 도움을 받을지 결정하세요."
           ],
-          "takeaway": "주변을 다시 알아차리는 데 도움이 된 한 가지를 기억해도 좋습니다. 꼭 차분해져야 하는 것은 아닙니다."
+          "takeaway": "주변을 다시 알아차리는 데 도움이 된 한 가지를 기억해도 좋습니다. 꼭 차분해져야 하는 것은 아닙니다.",
+          "examples": [
+            "가까이 있는 물건 하나 살펴보기",
+            "의자가 몸을 받쳐 주는 감각 느끼기",
+            "주변의 소리 하나 알아차리기"
+          ]
         },
         "smallStep": {
           "title": "지금 가능한 작은 단계 고르기",
@@ -902,7 +1367,12 @@
             "무엇을 언제 할지 정하세요. 계획으로만 남겨 두거나 지금 시도해도 됩니다.",
             "가능했던 것을 돌아보세요. 자신을 비난하지 않고 단계를 유지하거나 줄이거나 바꿀 수 있습니다."
           ],
-          "takeaway": "메모할 내용: 내가 고른 것, 언제 할 수 있을지, 필요한 도움."
+          "takeaway": "메모할 내용: 내가 고른 것, 언제 할 수 있을지, 필요한 도움.",
+          "examples": [
+            "새 일을 더하지 않고 쉬기",
+            "믿는 사람에게 실질적인 도움 요청하기",
+            "일상적인 일의 작은 부분만 하기"
+          ]
         },
         "sleepRoutine": {
           "title": "부담을 줄이는 수면 습관",
@@ -913,7 +1383,12 @@
             "카페인이나 술이 수면에 영향을 주는지 살펴보세요. 이 안내에 따라 처방약을 바꾸지 마세요.",
             "수면 문제가 지속되거나 생활에 영향을 주면 전문가에게 상담하세요. 잠이 훨씬 덜 필요한데 에너지가 비정상적으로 높다면 일반적인 불면으로 여기지 말고 빠르게 평가받으세요."
           ],
-          "takeaway": "반드시 잠들어야 한다는 부담 없이 변화 하나를 고르세요."
+          "takeaway": "반드시 잠들어야 한다는 부담 없이 변화 하나를 고르세요.",
+          "examples": [
+            "잠들기 전 조용한 활동 고르기",
+            "자기 전 밝은 화면 사용 줄이기",
+            "무리 없이 지킬 기상 시간 정하기"
+          ]
         },
         "worryPlan": {
           "title": "걱정 하나에 다음 단계 정하기",
@@ -924,7 +1399,12 @@
             "있다면 감당할 수 있는 행동 하나와 시간을 정하세요. 도움 요청도 가능합니다.",
             "지금 유용한 행동이 없다면 불확실함을 인정하고 간단한 현재 활동으로 돌아오세요. 더 힘들어지면 중단하세요."
           ],
-          "takeaway": "할 수 있을 법한 행동이나 도움을 구할 메모를 남기세요."
+          "takeaway": "할 수 있을 법한 행동이나 도움을 구할 메모를 남기세요.",
+          "examples": [
+            "문제에 대한 질문 하나 적기",
+            "부족한 정보 물어보기",
+            "다음 한 걸음을 계획할 도움 요청하기"
+          ]
         }
       },
       "seekHelp": {
@@ -938,7 +1418,7 @@
           "질문을 준비하고 원하면 믿을 수 있는 사람의 동행을 부탁하세요. 다음 절차와 상태가 바뀌었을 때 연락할 곳을 확인하세요.",
           "서비스의 답변과 다음 예약을 직접 기록하세요. Sunrain은 예약을 대신하거나 기관의 접수 여부를 확인할 수 없습니다."
         ],
-        "contactTemplate": "정신건강 첫 평가를 받고 싶습니다. {concern}이(가) {duration} 동안 이어져 {impact}에 영향을 주고 있습니다. 예약 방법, 비용, 가능한 서비스 언어를 알려 주세요.",
+        "contactTemplate": "정신건강 첫 상담을 예약하고 싶습니다. 예약 방법, 의뢰서 필요 여부, 비용, 가능한 언어를 알려 주세요.",
         "cost": "비용이 부담된다면 공공·지역 서비스, 보험 적용, 이용 가능한 학교나 직장 지원을 문의하세요. 이용 가능 여부와 비밀보장 규칙은 서비스 기관에 확인해야 합니다.",
         "waiting": "대기가 있다면 그동안의 지원과 악화 시 연락할 곳을 물어보세요. 다른 적절한 기관의 이용 가능 여부도 확인할 수 있습니다.",
         "noService": "지역이 없거나 링크가 작동하지 않으면 연락 문구를 이용해 지역 일차의료기관이나 공공 의료서비스에 문의하세요. 목록에 없다고 도움이 없는 것은 아닙니다.",
@@ -1030,6 +1510,78 @@
         "us": "미국",
         "unavailable": "같은 브라우저를 사용하는 사람이 저장된 메모를 읽을 수 있습니다. 저장은 선택 사항입니다. 다운로드한 별도 사본은 이 사이트에서 삭제할 수 없습니다.",
         "deleteAllNotes": "이 브라우저의 Sunrain 메모 모두 삭제"
+      },
+      "services": {
+        "GB-ENG": {
+          "region": "잉글랜드",
+          "instructions": "잉글랜드 성인은 NHS talking therapies에 직접 신청하거나 주치의의 의뢰를 받을 수 있습니다. 지역별 대상 조건을 확인하세요. 다른 어려움은 다른 서비스가 필요할 수 있습니다."
+        },
+        "US": {
+          "region": "미국",
+          "instructions": "위치로 정신건강 치료기관을 검색하세요. 예약 전에 대상 조건, 보험, 비용과 언어를 기관에 확인하세요."
+        },
+        "JP": {
+          "region": "일본",
+          "instructions": "공식 의료정보망에서 지역과 정신과(精神科) 등 진료과로 검색하세요. 웹사이트 번역이 해당 언어 진료를 보장하지는 않습니다."
+        },
+        "KR": {
+          "region": "대한민국",
+          "instructions": "위치기반 기관 검색에서 정신건강복지센터나 의료기관을 찾고 필요한 도움을 받을 수 있는지 확인하세요."
+        },
+        "ES": {
+          "region": "스페인",
+          "instructions": "공식 의료기관 등록부에서 지역과 서비스로 검색하세요. 등록은 예약 확정이나 적합성 보장이 아닙니다."
+        },
+        "HK": {
+          "region": "홍콩",
+          "instructions": "Hospital Authority 전문 외래 안내를 확인하세요. 초진은 보통 의뢰서가 필요합니다. 정신과 외래의 비용과 예약 조건을 확인하세요."
+        },
+        "CN-BJ": {
+          "region": "중국 베이징 · 병원 한 곳",
+          "instructions": "베이징대학교 제6병원의 자체 예약 안내입니다. 전국 기관 목록이 아닙니다. 현재 조건과 예약 가능 여부를 확인하세요."
+        }
+      },
+      "flow": {
+        "heroTitle": "지금의 마음에 맞는 다음 한 걸음",
+        "scopeShort": "Sunrain은 일반적인 도움을 제공하며 의료기관이나 진단 서비스가 아닙니다. 기존 돌봄 계획을 따라 주세요.",
+        "outcome": "건너뛸 수 있는 두 질문 화면을 통해 활동을 선택하고 도움 요청용 요약을 편집할 수 있습니다.",
+        "multiple": "여러 항목을 고르거나 아무것도 고르지 않고 계속할 수 있습니다.",
+        "step": "{total}단계 중 {current}단계",
+        "nowAction": "지금 할 수 있는 활동",
+        "tryActivity": "이 활동 해 보기",
+        "actionReason": "선택한 내용에 따른 선택 가능한 시작점입니다. 언제든 바로 도움을 요청할 수 있습니다.",
+        "viewSummary": "내 요약 확인 또는 수정",
+        "prepare": "지원 기관에 연락 준비",
+        "keepSummary": "이 요약으로 계속하기",
+        "samePage": "이 페이지에서 기관을 고르고 연락할 내용을 준비하세요. 기록은 이 페이지에 남으며 외부 사이트를 열어도 전송되지 않습니다.",
+        "bookingChecklist": "예약 전 확인, 비용과 대기",
+        "coverage": "목록의 지역에 공식 안내가 있습니다. 지원 지역은 제한적이며 읽는 언어로 위치를 추정하지 않습니다.",
+        "websiteLanguage": "외부 사이트 언어",
+        "checked": "정보 확인일",
+        "verification": "공식 안내를 확인했지만 개별 기관의 진료, 예약, 서비스 언어는 검증하지 않았습니다. 대상 조건, 의뢰와 비용은 기관에 확인하세요.",
+        "notCovered": "아직 해당 지역의 확인된 안내가 없습니다. 아래에서 연락할 내용을 준비할 수 있습니다.",
+        "notePrivacy": "저장하지 않은 기록은 새로고침하거나 떠나면 지워집니다. 저장은 선택이며 같은 브라우저를 쓰는 사람이 볼 수 있습니다. 내려받은 파일은 직접 관리하세요.",
+        "functionCare": "기본적인 생활이나 일상 기능을 유지하기 어렵다면 의료 전문가에게 신속히 연락하세요. 즉각적인 위험이 있다면 지역 응급 서비스를 이용하세요.",
+        "examples": "예시를 고르거나 직접 생각해 보세요",
+        "exampleHint": "치료 처방이 아닌 선택 가능한 일상 예시입니다. 현재 상황에 맞는 것만 선택하세요.",
+        "planTitle": "가져갈 수 있는 작은 계획",
+        "planLabels": [
+          "내가 선택한 행동 또는 기억할 내용",
+          "시도할 수 있는 때 (선택)",
+          "필요할 수 있는 도움 (선택)"
+        ],
+        "guideNext": "다음 단계",
+        "guideFinish": "마치고 돌아보기",
+        "guideStop": "여기서 멈추기",
+        "guideDone": "여기서 마치거나 작은 계획을 남기거나 다른 도움을 선택할 수 있습니다. 모든 단계를 마칠 필요는 없습니다.",
+        "feedbackBetter": "여기서 마쳐도 됩니다. 다른 활동을 할 필요는 없습니다.",
+        "crisisFallback": "목록이 열리지 않거나 지역이 없고 즉각적인 위험이 있다면 지역 응급 서비스나 가까운 응급실을 이용하세요. 목록 복구, 예약 또는 사이트 답변을 기다리지 마세요.",
+        "crisisSeparate": "응급 상황이 아닌 진료 예약은 별도의 지원 페이지를 이용하세요. 일반 예약은 응급 지원을 대신하지 않습니다.",
+        "end": "여기서 마치기",
+        "copyMessage": "연락 내용 복사",
+        "copied": "연락 내용을 복사했습니다.",
+        "copyFailed": "복사할 수 없습니다. 내용을 선택하거나 내려받으세요.",
+        "linkProblem": "링크가 열리지 않거나 적절한 기관을 찾지 못했나요?"
       }
     },
     "hi": {
@@ -1059,7 +1611,12 @@
             "दो गंधों और पहले से मौजूद एक स्वाद पर ध्यान दें। अज्ञात पदार्थ न चखें। कोई इंद्रिय उपलब्ध न हो या असहज लगे, तो उसे छोड़ दें।",
             "रुककर चुनें: यहीं समाप्त करना है, किसी सरल दैनिक काम पर लौटना है या अधिक सहायता लेनी है।"
           ],
-          "takeaway": "एक ऐसी चीज़ याद रख सकते हैं जिससे आसपास से जुड़ाव महसूस हुआ। शांत महसूस करना अनिवार्य नहीं है।"
+          "takeaway": "एक ऐसी चीज़ याद रख सकते हैं जिससे आसपास से जुड़ाव महसूस हुआ। शांत महसूस करना अनिवार्य नहीं है।",
+          "examples": [
+            "पास की एक वस्तु पर ध्यान दें",
+            "कुर्सी के सहारे को महसूस करें",
+            "आसपास की एक आवाज़ सुनें"
+          ]
         },
         "smallStep": {
           "title": "अभी संभव एक छोटा कदम चुनें",
@@ -1070,7 +1627,12 @@
             "तय करें कि क्या और कब करेंगे। इसे योजना के रूप में रख सकते हैं या अभी आज़मा सकते हैं।",
             "देखें कि क्या संभव था। स्वयं को दोष दिए बिना कदम बनाए रखें, छोटा करें या बदलें।"
           ],
-          "takeaway": "नोट में लिख सकते हैं: मैंने क्या चुना, कब कर सकता/सकती हूँ और किस मदद की ज़रूरत है।"
+          "takeaway": "नोट में लिख सकते हैं: मैंने क्या चुना, कब कर सकता/सकती हूँ और किस मदद की ज़रूरत है।",
+          "examples": [
+            "नया काम जोड़े बिना आराम करें",
+            "भरोसेमंद व्यक्ति से व्यावहारिक मदद माँगें",
+            "रोज़मर्रा के काम का छोटा हिस्सा करें"
+          ]
         },
         "sleepRoutine": {
           "title": "नींद के लिए सहज दिनचर्या",
@@ -1081,7 +1643,12 @@
             "देखें कि कैफीन या शराब नींद पर असर डालती है या नहीं। इस गाइड के आधार पर पर्चे की दवा न बदलें।",
             "समस्या बनी रहे या जीवन पर असर डाले तो पेशेवर सलाह लें। बहुत कम नींद की ज़रूरत के साथ असामान्य ऊर्जा हो तो इसे साधारण अनिद्रा न मानें और जल्द मूल्यांकन कराएँ।"
           ],
-          "takeaway": "एक बदलाव चुनें; खुद पर सो जाने का दबाव न डालें।"
+          "takeaway": "एक बदलाव चुनें; खुद पर सो जाने का दबाव न डालें।",
+          "examples": [
+            "सोने से पहले शांत गतिविधि चुनें",
+            "सोने से पहले चमकीली स्क्रीन कम करें",
+            "उठने का निभाने योग्य नियमित समय चुनें"
+          ]
         },
         "worryPlan": {
           "title": "एक चिंता के लिए अगला कदम",
@@ -1092,7 +1659,12 @@
             "अगर है, तो एक संभालने योग्य कदम और उसका समय चुनें। मदद माँगना भी एक कदम है।",
             "अभी कोई उपयोगी कदम न हो तो अनिश्चितता स्वीकारें और वर्तमान की सरल गतिविधि पर लौटें। परेशानी बढ़े तो रुकें।"
           ],
-          "takeaway": "एक संभावित कदम या सहायता माँगने का स्मरण रखें।"
+          "takeaway": "एक संभावित कदम या सहायता माँगने का स्मरण रखें।",
+          "examples": [
+            "समस्या पर एक सवाल लिखें",
+            "जो जानकारी नहीं है उसे पूछें",
+            "अगला कदम सोचने में मदद माँगें"
+          ]
         }
       },
       "seekHelp": {
@@ -1106,7 +1678,7 @@
           "अपने प्रश्न तैयार करें और चाहें तो भरोसेमंद व्यक्ति को साथ लाएँ। अगला कदम और स्थिति बदलने पर संपर्क कहाँ करना है, पूछें।",
           "सेवा का उत्तर और अगली मुलाकात स्वयं दर्ज करें। Sunrain समय बुक नहीं कर सकता और यह पुष्टि नहीं कर सकता कि सेवा ने आपको स्वीकार किया है।"
         ],
-        "contactTemplate": "मैं प्रारंभिक मानसिक स्वास्थ्य आकलन का समय लेना चाहता/चाहती हूँ। मुझे {duration} से {concern} की परेशानी है, जिससे {impact} प्रभावित है। समय कैसे मिलेगा, शुल्क क्या है और किन भाषाओं में सेवा उपलब्ध है?",
+        "contactTemplate": "मुझे मानसिक स्वास्थ्य के लिए पहली अपॉइंटमेंट चाहिए। बुकिंग कैसे हो सकती है, क्या रेफ़रल चाहिए, कितना खर्च है और कौन-सी भाषाएँ उपलब्ध हैं?",
         "cost": "शुल्क बाधा हो तो सार्वजनिक या सामुदायिक सेवा, बीमा या उपलब्ध छात्र/कर्मचारी सहायता के बारे में पूछें। उपलब्धता और गोपनीयता के नियम सेवा से जाँचें।",
         "waiting": "प्रतीक्षा हो तो बीच की अवधि की सहायता और स्थिति बिगड़ने पर संपर्क पूछें। किसी अन्य उपयुक्त सेवा की उपलब्धता भी पूछ सकते हैं।",
         "noService": "आपका क्षेत्र सूची में न हो या लिंक न खुले तो संपर्क संदेश का उपयोग करके स्थानीय प्राथमिक या सार्वजनिक स्वास्थ्य सेवा से संपर्क करें। सूची में न होना सहायता न होने का प्रमाण नहीं है।",
@@ -1198,6 +1770,78 @@
         "us": "संयुक्त राज्य अमेरिका",
         "unavailable": "इस ब्राउज़र को इस्तेमाल करने वाले अन्य लोग सहेजे नोट पढ़ सकते हैं। सहेजना वैकल्पिक है; डाउनलोड की अलग प्रतियाँ यह साइट नहीं मिटा सकती।",
         "deleteAllNotes": "इस ब्राउज़र के सभी Sunrain नोट मिटाएँ"
+      },
+      "services": {
+        "GB-ENG": {
+          "region": "इंग्लैंड",
+          "instructions": "इंग्लैंड के वयस्क NHS talking therapies के लिए सीधे आवेदन या GP रेफ़रल ले सकते हैं। स्थानीय पात्रता जाँचें; अन्य कठिनाइयों के लिए दूसरी सेवा चाहिए हो सकती है।"
+        },
+        "US": {
+          "region": "संयुक्त राज्य अमेरिका",
+          "instructions": "स्थान के अनुसार मानसिक स्वास्थ्य उपचार खोजें। बुकिंग से पहले पात्रता, बीमा, खर्च और भाषा सेवा से पूछें।"
+        },
+        "JP": {
+          "region": "जापान",
+          "instructions": "आधिकारिक चिकित्सा निर्देशिका में स्थान और मनोरोग (精神科) जैसे विभाग खोजें। वेबसाइट का अनुवाद उस भाषा में उपचार की गारंटी नहीं है।"
+        },
+        "KR": {
+          "region": "दक्षिण कोरिया",
+          "instructions": "स्थान-आधारित संस्था खोज से मानसिक स्वास्थ्य केंद्र या चिकित्सा सेवा ढूँढें और अपनी ज़रूरत के अनुसार सहायता की पुष्टि करें।"
+        },
+        "ES": {
+          "region": "स्पेन",
+          "instructions": "आधिकारिक स्वास्थ्य-केंद्र रजिस्टर में क्षेत्र और सेवा से खोजें। पंजीकरण अपॉइंटमेंट या उपयुक्तता की गारंटी नहीं है।"
+        },
+        "HK": {
+          "region": "हांगकांग",
+          "instructions": "Hospital Authority की विशेषज्ञ बाह्य-रोगी जानकारी देखें। पहली अपॉइंटमेंट के लिए आम तौर पर रेफ़रल चाहिए; मनोरोग क्लिनिक, खर्च और बुकिंग की शर्तें पूछें।"
+        },
+        "CN-BJ": {
+          "region": "बीजिंग, चीन · एक अस्पताल",
+          "instructions": "पेकिंग विश्वविद्यालय का छठा अस्पताल अपनी बुकिंग जानकारी देता है। यह एक बीजिंग अस्पताल है, राष्ट्रीय निर्देशिका नहीं; वर्तमान शर्तें और उपलब्धता पूछें।"
+        }
+      },
+      "flow": {
+        "heroTitle": "अभी जैसा महसूस हो रहा है, उसके लिए अगला कदम चुनें",
+        "scopeShort": "Sunrain सामान्य सहायता देता है, चिकित्सा या निदान नहीं। अपनी मौजूदा देखभाल योजना जारी रखें।",
+        "outcome": "वैकल्पिक सवालों की दो स्क्रीन से एक गतिविधि चुनें और मदद माँगने के लिए संपादन योग्य सार बनाएँ।",
+        "multiple": "कई विकल्प चुन सकते हैं या बिना चुने आगे बढ़ सकते हैं।",
+        "step": "कदम {current} / {total}",
+        "nowAction": "अभी कुछ आज़माएँ",
+        "tryActivity": "यह गतिविधि आज़माएँ",
+        "actionReason": "आपकी पसंद के अनुसार एक वैकल्पिक शुरुआत। आप कभी भी सीधे मदद माँग सकते हैं।",
+        "viewSummary": "मेरा सार देखें या बदलें",
+        "prepare": "सहायता से संपर्क की तैयारी",
+        "keepSummary": "अपने सार के साथ आगे बढ़ें",
+        "samePage": "यहीं सेवा चुनें और संदेश तैयार करें। नोट इसी पेज पर रहते हैं; बाहरी वेबसाइट खोलने से वे भेजे नहीं जाते।",
+        "bookingChecklist": "अपॉइंटमेंट से पहले, खर्च और प्रतीक्षा",
+        "coverage": "सूचीबद्ध स्थानों के आधिकारिक प्रवेश पेज उपलब्ध हैं। कवरेज सीमित है; पढ़ने की भाषा से स्थान तय नहीं होता।",
+        "websiteLanguage": "वेबसाइट की भाषाएँ",
+        "checked": "जानकारी जाँचने की तारीख",
+        "verification": "आधिकारिक जानकारी जाँची गई है; व्यक्तिगत सेवाओं, अपॉइंटमेंट या सेवा की भाषाओं का परीक्षण नहीं हुआ। पात्रता, रेफ़रल और खर्च सेवा से पूछें।",
+        "notCovered": "आपके क्षेत्र का जाँचा हुआ प्रवेश पेज अभी सूची में नहीं है। नीचे संदेश तैयार कर सकते हैं।",
+        "notePrivacy": "बिना सहेजे नोट पेज दोबारा खोलने या छोड़ने पर मिट जाते हैं। सहेजना वैकल्पिक है; इसी ब्राउज़र के दूसरे लोग सहेजे नोट देख सकते हैं। डाउनलोड की गई प्रतियाँ आप सँभालते हैं।",
+        "functionCare": "बुनियादी ज़रूरतें या रोज़मर्रा के काम सँभालना मुश्किल हो तो स्वास्थ्य पेशेवर से जल्द संपर्क करें। तत्काल खतरे में स्थानीय आपातकालीन सेवा लें।",
+        "examples": "एक शुरुआत चुनें या अपना विचार लें",
+        "exampleHint": "ये वैकल्पिक रोज़मर्रा के उदाहरण हैं, उपचार का नुस्खा नहीं। अपनी स्थिति के अनुकूल विकल्प ही चुनें।",
+        "planTitle": "अपने साथ ले जाने के लिए छोटी योजना",
+        "planLabels": [
+          "मेरा चुना काम या याद रखने की बात",
+          "कब आज़मा सकता/सकती हूँ (वैकल्पिक)",
+          "किस मदद की ज़रूरत हो सकती है (वैकल्पिक)"
+        ],
+        "guideNext": "अगला कदम",
+        "guideFinish": "समाप्त करके विचार करें",
+        "guideStop": "यहीं रुकें",
+        "guideDone": "यहीं समाप्त करें, छोटी योजना लिखें या और सहायता चुनें। हर कदम पूरा करना ज़रूरी नहीं।",
+        "feedbackBetter": "यहीं समाप्त कर सकते हैं। दूसरी गतिविधि करना ज़रूरी नहीं।",
+        "crisisFallback": "निर्देशिका न खुले या आपका स्थान न मिले और तत्काल खतरा हो, तो स्थानीय आपातकालीन सेवा या नज़दीकी आपात विभाग जाएँ। निर्देशिका, अपॉइंटमेंट या इस वेबसाइट के जवाब का इंतज़ार न करें।",
+        "crisisSeparate": "गैर-आपात अपॉइंटमेंट के लिए अलग सहायता पेज उपयोग करें। सामान्य अपॉइंटमेंट आपातकालीन मदद का विकल्प नहीं है।",
+        "end": "यहीं समाप्त करें",
+        "copyMessage": "संदेश कॉपी करें",
+        "copied": "संदेश कॉपी हो गया।",
+        "copyFailed": "कॉपी नहीं हो सका। संदेश चुनकर कॉपी करें या डाउनलोड करें।",
+        "linkProblem": "लिंक न खुले या उपयुक्त सेवा न मिले तो?"
       }
     },
     "ar": {
@@ -1227,7 +1871,12 @@
             "لاحظ رائحتين وطعماً موجوداً بالفعل. لا تتذوق مواد مجهولة. تجاوز أي حاسة لا يمكنك استخدامها أو تسبب لك انزعاجاً.",
             "توقف قليلاً واختر إن كنت تريد الانتهاء، أو العودة إلى نشاط يومي بسيط، أو طلب مزيد من الدعم."
           ],
-          "takeaway": "يمكنك تذكّر تفصيل واحد ساعدك على ملاحظة محيطك. ليس مطلوباً أن تشعر بالهدوء بعد التمرين."
+          "takeaway": "يمكنك تذكّر تفصيل واحد ساعدك على ملاحظة محيطك. ليس مطلوباً أن تشعر بالهدوء بعد التمرين.",
+          "examples": [
+            "ملاحظة شيء واحد قريب",
+            "ملاحظة كيف يسندني الكرسي",
+            "ملاحظة صوت من حولي"
+          ]
         },
         "smallStep": {
           "title": "اختر خطوة صغيرة يمكنك القيام بها",
@@ -1238,7 +1887,12 @@
             "حدّد ما ستفعله ومتى. يمكنك الاكتفاء بالخطة أو تجربتها الآن.",
             "راجع ما كان ممكناً. يمكنك الإبقاء على الخطوة أو تقليلها أو تغييرها دون لوم نفسك."
           ],
-          "takeaway": "ملاحظتك: ما الذي اخترته، ومتى قد تفعله، وما المساعدة التي تحتاجها."
+          "takeaway": "ملاحظتك: ما الذي اخترته، ومتى قد تفعله، وما المساعدة التي تحتاجها.",
+          "examples": [
+            "الراحة دون إضافة مهمة أخرى",
+            "طلب مساعدة عملية من شخص أثق به",
+            "القيام بجزء صغير من مهمة يومية"
+          ]
         },
         "sleepRoutine": {
           "title": "روتين نوم ألطف",
@@ -1249,7 +1903,12 @@
             "لاحظ تأثير الكافيين أو الكحول على نومك. لا تغيّر الأدوية الموصوفة اعتمادًا على هذا الدليل.",
             "إذا استمرت المشكلة أو أثرت على حياتك، اطلب مشورة مهنية. إذا قلّت حاجتك للنوم كثيرًا مع طاقة غير معتادة، فاطلب تقييمًا قريبًا بدل التعامل معها كأرق عادي."
           ],
-          "takeaway": "اختر تغييرًا واحدًا دون إلزام نفسك بالنوم."
+          "takeaway": "اختر تغييرًا واحدًا دون إلزام نفسك بالنوم.",
+          "examples": [
+            "اختيار نشاط هادئ قبل النوم",
+            "تقليل الشاشات الساطعة قبل النوم",
+            "اختيار وقت منتظم للاستيقاظ يمكنني الالتزام به"
+          ]
         },
         "worryPlan": {
           "title": "خطوة عملية لهمّ واحد",
@@ -1260,7 +1919,12 @@
             "إن وُجد، اختر فعلًا يمكن تحمّله ووقتًا له، بما في ذلك طلب المساعدة.",
             "إن لم يوجد فعل مفيد الآن، اعترف بعدم اليقين وعد إلى نشاط بسيط في الحاضر. توقف إذا زاد الضيق."
           ],
-          "takeaway": "احتفظ بخطوة ممكنة أو بتذكير لطلب الدعم."
+          "takeaway": "احتفظ بخطوة ممكنة أو بتذكير لطلب الدعم.",
+          "examples": [
+            "كتابة سؤال واحد عن المشكلة",
+            "طلب المعلومات التي تنقصني",
+            "طلب المساعدة لتخطيط خطوة تالية"
+          ]
         }
       },
       "seekHelp": {
@@ -1274,7 +1938,7 @@
           "حضّر أسئلتك، ويمكن أن يرافقك شخص تثق به إن رغبت. اسأل عن الخطوة التالية والجهة التي تتواصل معها إذا تغيّرت حالتك.",
           "سجّل بنفسك ردّ الخدمة والمواعيد المقبلة. لا يستطيع Sunrain حجز المواعيد أو تأكيد قبول جهة علاجية لك."
         ],
-        "contactTemplate": "أرغب في تقييم أولي للصحة النفسية. أعاني من {concern} منذ {duration}، مما يؤثر في {impact}. كيف أحجز موعداً، وما التكلفة واللغات المتاحة؟",
+        "contactTemplate": "أرغب في موعد أولي للصحة النفسية. كيف أحجز، وهل أحتاج إلى إحالة، وما التكلفة واللغات المتاحة؟",
         "cost": "إذا كانت التكلفة عائقاً، فاسأل عن الخدمات العامة أو المجتمعية أو تغطية التأمين أو الدعم الطلابي أو الوظيفي إن توفر. تحقّق من التوفر وقواعد السرية لدى الخدمة.",
         "waiting": "إذا كان هناك انتظار، فاسأل عن دعم مؤقت والجهة التي تتواصل معها إذا ساءت حالتك. يمكنك سؤال خدمة أخرى مناسبة عن المواعيد المتاحة.",
         "noService": "إذا لم تكن منطقتك مدرجة أو تعطل الرابط، فاستخدم نموذج الرسالة للتواصل مع الرعاية الأولية أو خدمة صحية عامة محلية. غياب الإدراج لا يعني عدم وجود مساعدة.",
@@ -1366,6 +2030,78 @@
         "us": "الولايات المتحدة",
         "unavailable": "يمكن للآخرين الذين يستخدمون هذا المتصفح قراءة الملاحظات المحفوظة. الحفظ اختياري؛ والتنزيلات نسخ منفصلة لا يستطيع الموقع حذفها.",
         "deleteAllNotes": "حذف كل ملاحظات Sunrain في هذا المتصفح"
+      },
+      "services": {
+        "GB-ENG": {
+          "region": "إنجلترا",
+          "instructions": "يمكن للبالغين في إنجلترا التقدم مباشرة إلى NHS talking therapies أو بإحالة من طبيب عام. تحقق من شروط المنطقة؛ قد تتطلب صعوبات أخرى خدمة مختلفة."
+        },
+        "US": {
+          "region": "الولايات المتحدة",
+          "instructions": "ابحث عن علاج للصحة النفسية حسب الموقع. تأكد من الأهلية والتأمين والتكلفة واللغة قبل الحجز."
+        },
+        "JP": {
+          "region": "اليابان",
+          "instructions": "ابحث في الدليل الطبي الرسمي حسب المنطقة والتخصص مثل الطب النفسي (精神科). ترجمة الموقع لا تضمن تقديم العلاج بتلك اللغة."
+        },
+        "KR": {
+          "region": "كوريا الجنوبية",
+          "instructions": "استخدم البحث عن المؤسسات حسب الموقع للعثور على مراكز الصحة النفسية أو الخدمات الطبية، وتأكد من ملاءمتها لاحتياجاتك."
+        },
+        "ES": {
+          "region": "إسبانيا",
+          "instructions": "ابحث حسب المنطقة والخدمة في السجل الرسمي للمراكز الصحية. التسجيل لا يؤكد موعداً أو يضمن الملاءمة."
+        },
+        "HK": {
+          "region": "هونغ كونغ",
+          "instructions": "راجع إرشادات العيادات التخصصية التابعة لـ Hospital Authority. تتطلب المواعيد الأولى عادة إحالة؛ تأكد من عيادة الطب النفسي والتكاليف وشروط الحجز."
+        },
+        "CN-BJ": {
+          "region": "بكين، الصين · مستشفى واحد",
+          "instructions": "يقدم المستشفى السادس لجامعة بكين دليله للحجز. هذا مستشفى واحد في بكين وليس دليلاً وطنياً؛ تأكد من الشروط والتوافر الحاليين."
+        }
+      },
+      "flow": {
+        "heroTitle": "خطوة تالية تناسب ما تشعر به الآن",
+        "scopeShort": "يقدم Sunrain دعماً عاماً، وليس رعاية طبية أو تشخيصاً. واصل خطة الرعاية الحالية.",
+        "outcome": "شاشتان من الأسئلة الاختيارية تساعدانك على اختيار نشاط وإعداد ملخص قابل للتعديل لطلب الدعم.",
+        "multiple": "يمكنك اختيار عدة إجابات أو المتابعة دون اختيار.",
+        "step": "الخطوة {current} من {total}",
+        "nowAction": "جرّب شيئاً الآن",
+        "tryActivity": "جرّب هذا النشاط",
+        "actionReason": "بداية اختيارية بناءً على اختيارك. يمكنك طلب المساعدة مباشرة في أي وقت.",
+        "viewSummary": "مراجعة ملخصي أو تعديله",
+        "prepare": "الاستعداد للتواصل مع الدعم",
+        "keepSummary": "تابع باستخدام ملخصك",
+        "samePage": "اختر خدمة وجهّز رسالتك هنا. تبقى الملاحظات في هذه الصفحة ولا تُرسل عند فتح موقع خارجي.",
+        "bookingChecklist": "قبل الحجز والتكاليف والانتظار",
+        "coverage": "تتوفر مداخل رسمية للمناطق المدرجة. التغطية محدودة، ولغة القراءة لا تحدد مكانك.",
+        "websiteLanguage": "لغات الموقع",
+        "checked": "تاريخ التحقق من المعلومات",
+        "verification": "تمت مراجعة المعلومات الرسمية، ولم تُختبر المواعيد أو قبول الحالات أو لغات كل خدمة. تأكد من الأهلية والإحالات والتكاليف مباشرة.",
+        "notCovered": "لا نملك بعد مدخلاً تم التحقق منه لمنطقتك. يمكنك إعداد رسالة أدناه.",
+        "notePrivacy": "تُمسح الملاحظات غير المحفوظة عند تحديث الصفحة أو مغادرتها. الحفظ اختياري، وقد يراها مستخدمون آخرون للمتصفح. أنت تدير النسخ التي تنزّلها.",
+        "functionCare": "إذا صَعُب تلبية الاحتياجات الأساسية أو أداء المهام اليومية، تواصل سريعاً مع مختص صحي. استخدم خدمات الطوارئ المحلية عند وجود خطر فوري.",
+        "examples": "اختر بداية أو استخدم فكرتك الخاصة",
+        "exampleHint": "هذه أمثلة يومية اختيارية وليست وصفة علاجية. اختر فقط ما يناسب وضعك.",
+        "planTitle": "خطة صغيرة يمكنك الاحتفاظ بها",
+        "planLabels": [
+          "الإجراء الذي اخترته أو تفصيل أود تذكره",
+          "متى قد أجرّبه (اختياري)",
+          "المساعدة التي قد أحتاجها (اختياري)"
+        ],
+        "guideNext": "الخطوة التالية",
+        "guideFinish": "الإنهاء والتأمل",
+        "guideStop": "التوقف هنا",
+        "guideDone": "يمكنك الانتهاء هنا أو كتابة خطة صغيرة أو اختيار دعم إضافي. لا يلزم إكمال جميع الخطوات.",
+        "feedbackBetter": "يمكنك الانتهاء هنا. لا يلزم القيام بنشاط آخر.",
+        "crisisFallback": "إذا تعذر فتح الدليل أو لم تجد موقعك وكان هناك خطر فوري، استخدم خدمات الطوارئ المحلية أو أقرب قسم طوارئ. لا تنتظر الدليل أو موعداً أو رداً من هذا الموقع.",
+        "crisisSeparate": "للمواعيد غير العاجلة استخدم صفحة الدعم المنفصلة. الحجز المعتاد ليس بديلاً عن المساعدة الطارئة.",
+        "end": "الانتهاء هنا",
+        "copyMessage": "نسخ الرسالة",
+        "copied": "تم نسخ الرسالة.",
+        "copyFailed": "تعذر النسخ. حدد النص لنسخه أو نزّله.",
+        "linkProblem": "الرابط لا يعمل أو لم تجد خدمة مناسبة؟"
       }
     }
   }

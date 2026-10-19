@@ -5,11 +5,12 @@ Sunrain is a static education and self-care site. A passing software build does 
 ## Supported scope
 
 - Eight interface languages, including Arabic RTL, with no English fallback in the support content pack.
-- A non-diagnostic check-in on one URL. Selections and notes stay in page memory; refresh, language changes and return from browser history clear unsaved content.
-- Four general activities: grounding, a manageable step, a sleep routine and organising a worry. Each includes stopping, feedback and onward support. These are not validated treatment programmes.
-- Help-seeking instructions, editable contact text, a five-field appointment preparation note, explicit device save/load/delete and local text download.
-- Official routine-care entry points for England and the US. Other regions receive local primary-care guidance. Country is never inferred from language. External appointment booking, acceptance, waiting time and service-language availability are not verified by this site.
-- Crisis support links to the maintained Find A Helpline directory. It is not emergency dispatch; immediate danger must go directly to local emergency services. The previous unverified phone/SMS list is retained only as source history, not rendered.
+- A non-diagnostic check-in on one URL, with visible progress and real skip controls. Results show one optional activity first; all selected concerns remain in the editable summary. This is a usability choice, not a clinical ranking of concerns.
+- Four general activities: grounding, a manageable step, a sleep routine and organising a worry. Each has optional everyday examples, four guided steps, an editable small plan, stopping, feedback and onward support. These are not validated treatment programmes. Without JavaScript, every instruction remains readable.
+- The recommended activity and help preparation can run inside the check-in page. Original answers, the small plan and feedback remain available when the user explicitly chooses to prepare contact. Direct activity pages also offer preparation on the same page. No cross-page storage or URL carries health information. Refresh, language changes, navigation away and return from browser history clear unsaved content.
+- Editable contact text includes all nonempty preparation fields, with no unresolved sentence placeholders. Copy, explicit device save/load/delete and local text download are available. Copy denial leaves the message and download available. An external link never sends the note.
+- Official routine-care entry points for England, the US, Japan, South Korea, Spain and Hong Kong, plus one hospital's own booking instructions in Beijing. The Beijing entry is explicitly a single provider, not China-wide coverage. `src/data/support-services.json` is the runtime catalog; its entry-page checks are recorded in `docs/content/support-resources.json`. Other regions receive an explicit coverage-gap message and local primary-care guidance. Country is never inferred from language. External appointment booking, acceptance, waiting time and service-language availability are not verified by this site.
+- Crisis support links to the maintained Find A Helpline directory. It is not emergency dispatch; immediate danger must go directly to local emergency services. If the directory is unavailable, the emergency path remains explicit and does not redirect to routine booking. The previous unverified phone/SMS list is retained only as source history, not rendered.
 
 ## Clinical and language gates
 

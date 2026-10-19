@@ -3,6 +3,7 @@ import { readFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 const locales=['en','zh-hans','zh-hant','es','ja','ko','hi','ar'];
+const copy=JSON.parse(await readFile(new URL('../../src/data/support-copy.json',import.meta.url),'utf8')).locales;
 const path=(locale:string,route:string)=>`${locale==='en'?'':`/${locale}`}${route}`;
 // Production build, isolated Chromium. The Browser skill is present but its js
 // connection is not callable in this environment; repository Playwright is used.
@@ -31,16 +32,47 @@ for(const locale of locales) {
     await expect(page.locator('#check-in-result')).toBeVisible();
     await expect(page.locator('#result-title')).toBeFocused();
     expect((await page.locator('#result-title').boundingBox()).y).toBeGreaterThanOrEqual(navigationBounds.height+8);
-    await expect(page.locator('[data-action="grounding"]')).toBeVisible();
+    await expect(page.locator('[data-action="grounding"]')).toBeHidden();
     await expect(page.locator('[data-action="one-step"]')).toBeVisible();
     expect(await page.title()).toBe(title);
     expect(new URL(page.url()).search).toBe('');expect(new URL(page.url()).hash).toBe('');
     expect(await page.evaluate(()=>Object.keys(localStorage).filter(k=>k.startsWith('sunrain')))).toEqual([]);
+    expect(await page.evaluate(()=>Object.keys(sessionStorage))).toEqual([]);
     await expect(page.locator('script[src*="cloudflareinsights"]')).toHaveCount(0);
-    await page.locator('[data-action="grounding"] a').click();
-    await expect(page.locator('ol li')).toHaveCount(4);
+    // Preparing care keeps the existing answers in the same document. No
+    // browser storage, URL parameters or external handoff carries health data.
+    await page.locator('#check-in-result .support-grid [data-prepare-support]').click();
+    await expect(page.locator('#prepare-support')).toHaveAttribute('open','');
+    const fields=page.locator('#prepare-support [data-note-field]');
+    await expect(fields.nth(0)).toHaveValue(`${copy[locale].ui.mood} · ${copy[locale].ui.worry}`);
+    await expect(fields.nth(1)).toHaveValue(copy[locale].ui.weeks);
+    await expect(fields.nth(2)).toHaveValue(copy[locale].ui.disruptive);
+    await page.locator('#support-region').selectOption('JP');
+    await expect(page.locator('[data-service-region="JP"]')).toBeVisible();
+    await expect(page).toHaveURL(new RegExp(`${path(locale,'/check-in/')}.*$`));
+    expect(new URL(page.url()).hash).toBe('');
+    expect(await page.evaluate(()=>Object.keys(localStorage).filter(k=>k.startsWith('sunrain')))).toEqual([]);
+    expect(await page.evaluate(()=>Object.keys(sessionStorage))).toEqual([]);
+    await page.locator('[data-action="one-step"] a').click();
+    await expect(page.locator('#inline-activity')).toBeVisible();
+    await expect(page).toHaveURL(new RegExp(`${path(locale,'/check-in/')}.*$`));
+    await expect(page.locator('#guided-activity ol li')).toHaveCount(4);
+    const example=page.locator('input[name="activity-example"]').first();
+    const chosen=await example.inputValue();await example.check();
+    await expect(page.locator('[data-activity-note] [data-note-field]').first()).toHaveValue(chosen);
+    for(let i=0;i<3;i++)await page.locator('#guide-next').click();
+    await expect(page.locator('#guide-finish')).toBeVisible();
+    await page.locator('#guide-finish').click();
     await page.locator('input[value="worse"]').check();
     await expect(page.locator('#feedback-worse')).toBeVisible();
+    await expect(page.locator('#feedback-urgent')).toBeVisible();
+    await expect(page.locator('#other-activities')).toBeHidden();
+    await page.locator('#activity-reflection [data-prepare-support]').click();
+    await expect(page.locator('#prepare-support [data-note-field]').nth(3)).toHaveValue(new RegExp(chosen.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')));
+    await expect(fields.nth(0)).toHaveValue(`${copy[locale].ui.mood} · ${copy[locale].ui.worry}`);
+    await expect(fields.nth(1)).toHaveValue(copy[locale].ui.weeks);
+    expect(await page.evaluate(()=>Object.keys(localStorage).filter(k=>k.startsWith('sunrain')))).toEqual([]);
+    expect(await page.evaluate(()=>Object.keys(sessionStorage))).toEqual([]);
     await page.goto(path(locale,'/support/'));
     await expect(page.locator('#support-region')).toHaveValue('');
     await expect(page.locator('ol li')).toHaveCount(6);
@@ -50,6 +82,10 @@ for(const locale of locales) {
     await expect(page.locator('[data-service-region="GB-ENG"]')).toBeHidden();
     await page.locator('#support-region').selectOption('other');
     await expect(page.locator('#service-fallback')).toBeVisible();
+    await expect(page.locator('[data-contact-preview]')).not.toContainText('{concern}');
+    await page.goto(path(locale,'/crisis/'));
+    await expect(page.locator('#crisis-fallback')).toHaveText(copy[locale].flow.crisisFallback);
+    await expect(page.locator('main')).not.toContainText(copy[locale].seekHelp.noService);
     await page.goto(path(locale,'/disclaimer/'));
     await expect(page.locator('h1')).not.toBeEmpty();
     await expect(page.locator('astro-error-overlay')).toHaveCount(0);
@@ -94,6 +130,18 @@ test('storage denial leaves theme, menu, notes and download usable',async({page}
   await page.locator('#theme-toggle').click();await expect(page.locator('#theme-menu')).toBeVisible();
   expect(errors).toEqual([]);
 });
+test('clipboard denial retains the message and offers a working local download',async({page})=>{
+  await page.addInitScript(()=>Object.defineProperty(navigator,'clipboard',{value:{writeText:async()=>{throw new DOMException('Blocked','NotAllowedError');}}}));
+  await page.goto('/support/');await page.locator('[data-note-field]').first().fill('Example appointment concern');
+  await page.locator('[data-note-field]').nth(4).fill('Question about cost');
+  await page.locator('[data-note-action="copy"]').click();
+  await expect(page.locator('[data-note-status]')).toHaveText(copy.en.flow.copyFailed);
+  await expect(page.locator('[data-contact-preview]')).toContainText('Question about cost');
+  const pending=page.waitForEvent('download');await page.locator('[data-note-action="download"]').click();
+  const download=await pending;const file=await download.path();const message=await readFile(file,'utf8');
+  expect(message).toContain('Example appointment concern');expect(message).toContain('Question about cost');
+  expect(await page.evaluate(()=>Object.keys(localStorage).filter(k=>k.startsWith('sunrain')))).toEqual([]);
+});
 test('unreviewed assessment deep links expose no form; legacy data can be deleted',async({page})=>{
   for(const locale of locales) for(const id of ['phq-9','gad-7']) {
     await page.goto(path(locale,`/assessment/${id}/`));await expect(page.locator('[data-screening-status="unavailable"]')).toBeVisible();await expect(page.locator('input[type="radio"]')).toHaveCount(0);
@@ -102,7 +150,7 @@ test('unreviewed assessment deep links expose no form; legacy data can be delete
 });
 test('self-help and provider instructions remain available without JavaScript',async({browser})=>{
   const context=await browser.newContext({javaScriptEnabled:false});const page=await context.newPage();
-  await page.goto('http://127.0.0.1:4362/zh-hans/self-help/grounding/');await expect(page.locator('ol li')).toHaveCount(4);
+  await page.goto('http://127.0.0.1:4362/zh-hans/self-help/grounding/');await expect(page.locator('#guided-activity ol li')).toHaveCount(4);
   await page.goto('http://127.0.0.1:4362/zh-hans/support/');await expect(page.locator('ol li')).toHaveCount(6);await expect(page.locator('noscript a[href="https://findtreatment.gov/"]')).toBeVisible();await context.close();
 });
 test('Arabic responsive layout and visible flow screenshots',async({page},testInfo)=>{
@@ -116,10 +164,23 @@ test('Arabic responsive layout and visible flow screenshots',async({page},testIn
 
 test('sleep and worry lead to specific four-step guides, with care available throughout',async({page})=>{
   for(const locale of locales) for(const id of ['sleep','worry']) {
-    await page.goto(path(locale,`/self-help/${id}/`));await expect(page.locator('ol li')).toHaveCount(4);
+    await page.goto(path(locale,`/self-help/${id}/`));await expect(page.locator('#guided-activity ol li')).toHaveCount(4);
     await page.locator('input[value="same"]').check();await expect(page.locator('#feedback-same')).toBeVisible();
-    await expect(page.locator('main a[href$="/support/"]').first()).toBeVisible();
+    await expect(page.locator('#activity-reflection [data-prepare-support]')).toBeVisible();
   }
+});
+
+test('explicit skip clears selected answers and all basic-needs results offer care first',async({page})=>{
+  await page.goto('/check-in/');await page.locator('#adult-check').check();await page.locator('[data-step="0"] [data-forward]').click();
+  await page.locator('input[value="mood"]').check();await page.locator('[data-step="1"] [data-skip]').click();
+  await page.locator('input[value="basicNeeds"]').check();await page.locator('button[type="submit"]').click();
+  await expect(page.locator('#function-care')).toBeVisible();
+  await expect(page.locator('[data-action]:visible')).toHaveCount(0);
+  await page.locator('#function-care [data-prepare-support]').click();
+  await expect(page.locator('#prepare-support [data-note-field]').first()).toHaveValue('');
+  await expect(page.locator('#prepare-support [data-note-field]').nth(2)).toHaveValue(copy.en.ui.basicNeeds);
+  await page.reload();await expect(page.locator('#check-in-result')).toBeHidden();
+  await expect(page.locator('#prepare-support [data-note-field]').nth(2)).toHaveValue('');
 });
 
 test('privacy page deletes notes across languages without touching unrelated storage',async({page})=>{

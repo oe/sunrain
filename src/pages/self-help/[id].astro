@@ -1,7 +1,7 @@
 ---
 import SupportLayout from '@/layouts/SupportLayout.astro';
-import ContentSources from '@/components/ContentSources.astro';
-import PrivateNotes from '@/components/PrivateNotes.astro';
+import GuidedActivity from '@/components/GuidedActivity.astro';
+import HelpPreparation from '@/components/HelpPreparation.astro';
 import { getLanguageFromPath,getLocalizedPath } from '@/lib/i18n';
 import { getSupportCopy } from '@/lib/support';
 export function getStaticPaths(){return ['grounding','one-step','sleep','worry'].map(id=>({params:{id}}));}
@@ -12,23 +12,6 @@ const guide=({'grounding':c.guides.grounding,'one-step':c.guides.smallStep,'slee
 ---
 <SupportLayout title={guide.title}>
   <a href={getLocalizedPath('/self-help/',lang)}>← {c.ui.selfHelp}</a>
-  <h1>{guide.title}</h1><p>{guide.purpose}</p>
-  <p>{c.common.before}</p><p>{c.common.stop}</p>
-  <section class="support-card"><ol>{guide.steps.map(step=><li>{step}</li>)}</ol><p>{guide.takeaway}</p></section>
-  <section class="support-card">
-    <fieldset id="activity-feedback"><legend>{c.ui.feedback}</legend>{['better','same','worse'].map(key=><label class="choice"><input type="radio" name="feedback" value={key} />{c.ui[key]}</label>)}</fieldset>
-    <p id="feedback-same" hidden role="status">{c.common.noChange}</p>
-    <p id="feedback-worse" hidden role="status">{c.ui.stop}</p>
-    <p>{c.common.finish}</p>
-    <div class="actions"><a class="button" href={getLocalizedPath('/self-help/',lang)}>{c.ui.selfHelp}</a><a class="button primary" href={getLocalizedPath('/support/',lang)}>{c.ui.support}</a></div>
-  </section>
-  <PrivateNotes kind={id} />
-  <ContentSources sources={id==='grounding'?['grounding','selfCare']:id==='worry'?['worries']:id==='sleep'?['selfCare','bipolar']:['selfCare']} />
+  <GuidedActivity id={id}/>
+  <HelpPreparation kind="activity-appointment" />
 </SupportLayout>
-<script>
-  document.getElementById('activity-feedback')?.addEventListener('change',event=>{
-    const value=(event.target as HTMLInputElement).value;
-    document.getElementById('feedback-same').hidden=value!=='same';
-    document.getElementById('feedback-worse').hidden=value!=='worse';
-  });
-</script>

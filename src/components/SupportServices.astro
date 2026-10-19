@@ -1,0 +1,38 @@
+---
+import catalog from '@/data/support-services.json';
+import { getLanguageFromPath } from '@/lib/i18n';
+import { getSupportCopy } from '@/lib/support';
+const c=getSupportCopy(getLanguageFromPath(Astro.url.pathname));
+---
+<section class="support-card service-picker">
+  <h2><label for="support-region">{c.ui.region}</label></h2>
+  <p class="muted">{c.flow.coverage}</p>
+  <select id="support-region" aria-controls="service-results">
+    <option value="">{c.ui.chooseRegion}</option>
+    {catalog.entries.map(service=><option value={service.region}>{c.services[service.region].region}</option>)}
+    <option value="other">{c.ui.otherRegion}</option>
+  </select>
+  <div id="service-results" aria-live="polite">
+    {catalog.entries.map(service=><article data-service-region={service.region} hidden>
+      <h3>{c.services[service.region].region}</h3>
+      <p>{c.services[service.region].instructions}</p>
+      <a class="button primary" href={service.url} target="_blank" rel="noreferrer">{service.name} ↗</a>
+      <p class="muted">{c.flow.websiteLanguage}: <bdi>{service.websiteLanguages}</bdi><br/>{c.flow.checked}: <time datetime={catalog.checkedAt}>{catalog.checkedAt}</time></p>
+      <p class="muted">{c.flow.verification}</p>
+    </article>)}
+    <div id="service-fallback" hidden><p>{c.flow.notCovered}</p><p>{c.seekHelp.noService}</p></div>
+  </div>
+  <div class="actions"><a class="button" href="#contact-note">{c.ui.contact}</a></div>
+  <details><summary>{c.flow.linkProblem}</summary><p>{c.seekHelp.noService}</p><p>{c.seekHelp.waiting}</p><p>{c.seekHelp.cost}</p></details>
+  <p class="muted">{c.ui.external}</p>
+  <noscript><ul>{catalog.entries.map(service=><li>{c.services[service.region].region}: <a href={service.url} rel="noreferrer">{service.name}</a> — {c.services[service.region].instructions}</li>)}</ul></noscript>
+</section>
+<script>
+  const region=document.getElementById('support-region') as HTMLSelectElement;
+  function updateRegion(){
+    document.querySelectorAll<HTMLElement>('[data-service-region]').forEach(service=>service.hidden=service.dataset.serviceRegion!==region.value);
+    document.getElementById('service-fallback').hidden=region.value!=='other';
+  }
+  region.addEventListener('change',updateRegion);
+  window.addEventListener('pageshow',()=>{region.value='';updateRegion();});
+</script>

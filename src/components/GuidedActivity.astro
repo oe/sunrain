@@ -1,0 +1,50 @@
+---
+import PrivateNotes from '@/components/PrivateNotes.astro';
+import ContentSources from '@/components/ContentSources.astro';
+import { getLanguageFromPath,getLocalizedPath } from '@/lib/i18n';
+import { getSupportCopy } from '@/lib/support';
+interface Props { id:string; embedded?:boolean; }
+const {id,embedded=false}=Astro.props;
+const lang=getLanguageFromPath(Astro.url.pathname);
+const c=getSupportCopy(lang);
+const guide=({'grounding':c.guides.grounding,'one-step':c.guides.smallStep,'sleep':c.guides.sleepRoutine,'worry':c.guides.worryPlan})[id];
+const Title=embedded ? 'h3' : 'h1';
+---
+<div data-guided-activity>
+  <Title data-activity-title tabindex="-1">{guide.title}</Title><p>{guide.purpose}</p>
+  <p>{c.common.stop}</p>
+  {embedded && <button class="button" type="button" data-activity-close>{c.ui.back}</button>}
+  <section class="support-card" id="guided-activity" data-step-label={c.flow.step}>
+    <p class="muted" id="guide-progress" tabindex="-1" aria-live="polite" hidden></p>
+    <ol>{guide.steps.map((step,i)=><li data-guide-step tabindex="-1">
+      <p>{step}</p>
+      {i===0 && <fieldset><legend>{c.flow.examples}</legend><p class="muted">{c.flow.exampleHint}</p>{guide.examples.map(example=><label class="choice"><input type="radio" name="activity-example" value={example} />{example}</label>)}</fieldset>}
+    </li>)}</ol>
+    <div class="actions" id="guide-controls" hidden>
+      <button class="button" id="guide-back" type="button">{c.ui.back}</button>
+      <button class="button primary" id="guide-next" type="button">{c.flow.guideNext}</button>
+      <button class="button primary" id="guide-finish" type="button" hidden>{c.flow.guideFinish}</button>
+      <button class="text-button" id="guide-stop" type="button">{c.flow.guideStop}</button>
+    </div>
+    <p>{guide.takeaway}</p>
+  </section>
+  <div data-activity-note><PrivateNotes kind={embedded ? `check-in-${id}` : id} title={c.flow.planTitle} labels={c.flow.planLabels} /></div>
+  <section class="support-card" id="activity-reflection">
+    <h2 tabindex="-1">{c.flow.guideDone}</h2>
+    <fieldset id="activity-feedback"><legend>{c.ui.feedback}</legend>{['better','same','worse'].map(key=><label class="choice"><input type="radio" name="feedback" value={key} />{c.ui[key]}</label>)}</fieldset>
+    <p id="feedback-better" hidden role="status">{c.flow.feedbackBetter}</p>
+    <p id="feedback-same" hidden role="status">{c.common.noChange}</p>
+    <p id="feedback-worse" hidden role="status">{c.ui.stop}</p>
+    <div class="actions">
+      <a class="button" href={getLocalizedPath('/',lang)}>{c.flow.end}</a>
+      <a class="button" id="other-activities" href={getLocalizedPath('/self-help/',lang)}>{c.ui.selfHelp}</a>
+      <a class="button primary" href="#prepare-support" data-prepare-support>{c.flow.prepare}</a>
+    </div>
+    <aside class="urgent" id="feedback-urgent" hidden><p>{c.common.urgent}</p><a class="button" href={getLocalizedPath('/crisis/',lang)}>{c.ui.crisisDirectory}</a></aside>
+  </section>
+  <ContentSources sources={id==='grounding'?['grounding','selfCare']:id==='worry'?['worries']:id==='sleep'?['selfCare','bipolar']:['selfCare']} />
+</div>
+<script>
+  import { initGuidedActivities } from '@/scripts/guided-activity';
+  initGuidedActivities();
+</script>

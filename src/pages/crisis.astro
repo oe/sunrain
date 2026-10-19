@@ -9,5 +9,6 @@ const c=getSupportCopy(lang);
   <h1>{t('nav.crisis',lang)}</h1>
   <section class="urgent"><h2>{c.common.urgent}</h2><p>{c.disclaimer.safety}</p></section>
   <section class="support-card"><h2>{c.ui.crisisDirectory}</h2><p>{c.ui.crisisNotice}</p><a class="button primary" href="https://findahelpline.com/" target="_blank" rel="noreferrer">Find A Helpline ↗</a><p class="muted">{c.ui.external}</p></section>
-  <section class="support-card"><p>{c.seekHelp.noService}</p><a class="button" href={getLocalizedPath('/support/',lang)}>{c.ui.support}</a></section>
+  <section class="urgent" id="crisis-fallback"><p>{c.flow.crisisFallback}</p></section>
+  <section class="support-card"><p>{c.flow.crisisSeparate}</p><a class="button" href={getLocalizedPath('/support/',lang)}>{c.ui.support}</a></section>
 </SupportLayout>

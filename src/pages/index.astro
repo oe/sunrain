@@ -8,12 +8,12 @@ const c=getSupportCopy(lang);
 ---
 <BaseLayout title={t('home.hero.title',lang)}>
   <section class="bg-gradient-to-br from-amber-50 via-orange-50 to-rose-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
-    <div class="support-shell text-center py-20">
+    <div class="support-shell text-center home-intro">
       <img src="/logo.png" alt="" width="80" height="80" class="mx-auto mb-8" />
       <p class="muted">{t('site.tagline',lang)}</p>
-      <h1>{t('home.hero.title',lang)}</h1><p>{c.entry.description}</p>
-      <div class="actions justify-center"><a class="button primary" id="home-check-in" href={getLocalizedPath('/check-in/',lang)}>{c.entry.title}</a><a class="button" href={getLocalizedPath('/support/',lang)}>{c.ui.support}</a></div>
-      <p class="muted">{c.disclaimer.scope}</p>
+      <h1>{c.flow.heroTitle}</h1><p>{c.entry.description}</p>
+      <div class="actions justify-center"><a class="button primary" id="home-check-in" href={getLocalizedPath('/check-in/',lang)}>{c.entry.title}</a><a class="button" href={getLocalizedPath('/self-help/grounding/',lang)}>{c.flow.nowAction}</a><a class="button" href={getLocalizedPath('/support/',lang)}>{c.ui.support}</a></div>
+      <p class="muted">{c.flow.scopeShort} <a href={getLocalizedPath('/disclaimer/',lang)}>{c.ui.disclaimer}</a></p>
       <a href={getLocalizedPath('/crisis/',lang)}>{t('nav.crisis',lang)}</a>
     </div>
   </section>
