@@ -11,7 +11,10 @@ const path=(locale:string,route:string)=>`${locale==='en'?'':`/${locale}`}${rout
 test.beforeEach(async({page})=>{
   // Home retains analytics. Do not send localhost test traffic to its provider;
   // health-page script exclusion is still asserted below and in build checks.
-  await page.route('https://static.cloudflareinsights.com/**',route=>route.fulfill({status:204}));
+  await page.route('https://static.cloudflareinsights.com/**',route=>route.fulfill({
+    status:200,contentType:'application/javascript',body:'',
+    headers:{'access-control-allow-origin':'*'},
+  }));
 });
 for(const locale of locales) {
   test(`${locale}: check-in, self-help, help-seeking and disclaimer are connected`,async({page})=>{
