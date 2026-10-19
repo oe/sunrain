@@ -108,9 +108,6 @@ if(app) {
     // Functional impact is volunteered context, not part of the score. Keep
     // that answer and its care invitation even if the scored form is skipped.
     const impact=queue.includes('phq-9')?app.querySelector<HTMLInputElement>('input[name="screening-impact"]:checked'):null;
-    const selectedReports=reports.filter(report=>queue.includes(report.id));
-    const recalls=[...new Set(selectedReports.map(report=>report.recall).filter(Boolean))];
-    const duration=recalls.length>1?selectedReports.map(report=>`${report.title}: ${report.recall}`).join(' · '):recalls[0]||'';
     const summaries=[copy.notes];
     for(const report of reports){
       const card=fragment.querySelector<HTMLElement>(`[data-screening-report="${report.id}"]`);
@@ -171,7 +168,8 @@ if(app) {
     }))];
     app.hidden=true;
     host.dispatchEvent(new CustomEvent('sunrain:screening-complete',{detail:{
-      concerns,energy,basicNeeds,summary:summaries.join('\n\n'),duration,
+      // A questionnaire recall window is not the person's symptom onset.
+      concerns,energy,basicNeeds,summary:summaries.join('\n\n'),duration:'',
       impact:context,title:copy.results,
     }}));
   });
