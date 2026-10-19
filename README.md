@@ -63,6 +63,7 @@ src/
 - [Design](./docs/DESIGN.md)
 - [Mental health check-in specification](./docs/MENTAL_HEALTH_CHECK_IN.md) — planned user flow, result boundaries, privacy, and disclaimer drafts
 - [Clinical evidence and verification status](./docs/CLINICAL_EVIDENCE.md)
+- [Self-help and help-seeking content delivery](./docs/SUPPORT_CONTENT.md) — full route mapping and eight-language content drafts
 - [Current roadmap](./docs/ROADMAP.md)
 
 The check-in documents describe planned work; they do not indicate that the flow has shipped or received professional clinical review.
