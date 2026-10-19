@@ -317,6 +317,19 @@ test('function and elevated-energy context prioritise care independently of tota
   await expect(page.locator('[data-screening-report="phq-9"] [data-report-score]')).toHaveText('0 / 27');
   await page.locator('#energy-care [data-prepare-support]').click();await expect(page.locator('#prepare-support')).toHaveAttribute('open','');
 });
+test('skipping a scored form retains volunteered functional difficulty in support and complete export',async({page})=>{
+  await startScreening(page);
+  await page.locator('input[name="screening-impact"][value="3"]').check();
+  await page.locator('[data-screen-stage="phq-9"] [data-screening-skip]').click();
+  await answerTool(page,'gad-7',Array(7).fill(0));await page.locator('#screening-finish').click();
+  await expect(page.locator('[data-screening-report="phq-9"] [data-report-score]')).toHaveText(screeningCopy.en.unanswered);
+  await expect(page.locator('#screening-functional-care')).toBeVisible();
+  await page.locator('#screening-functional-care [data-prepare-support]').click();
+  await expect(page.locator('#prepare-support [data-note-field]').nth(2)).toHaveValue('Extremely difficult');
+  const pending=page.waitForEvent('download');await page.locator('#screening-export').click();
+  const download=await pending;const record=await readFile(await download.path(),'utf8');
+  expect(record).toContain('If you checked off any problems, how difficult have these problems made it for you to do your work, take care of things at home, or get along with other people?\nExtremely difficult');
+});
 test('unselected tools and all-skipped screens remain unassessed',async({page})=>{
   await page.goto('/check-in/');await page.locator('#start-screening').click();await page.locator('#screening-start-tools').click();
   await expect(page.locator('#screening-selection-error')).toHaveText(screeningCopy.en.selectError);

@@ -34,7 +34,7 @@ Every scored item must have one integer answer from 0–3. Blank, sparse, corrup
 
 Any nonzero PHQ-9 item 9 answer immediately shows support, before completion. That notice also appears at the result even if the user skips the questionnaire after answering that item. It is a support rule, not a determination of present danger; no low-risk or “now safe” output exists. Crisis help is always available without completing a form.
 
-The PHQ impact item and optional context choices are separate from scoring. Marked functional difficulty gets an additional care invitation independent of the total. Unusually elevated energy/reduced need for sleep or difficulty meeting basic needs puts professional support before activity recommendations. It does not identify bipolar disorder. Existing care plans should continue.
+The PHQ impact item and optional context choices are separate from scoring. Marked functional difficulty gets an additional care invitation independent of the total, including when the user skips the scored questionnaire. The volunteered impact answer remains in the complete response export. Unusually elevated energy/reduced need for sleep or difficulty meeting basic needs puts professional support before activity recommendations. It does not identify bipolar disorder. Existing care plans should continue.
 
 Depression-related responses connect to a manageable step; anxiety-related responses connect to organising a worry. Both may appear together. These are optional general coping activities, not treatments prescribed by a score. Each can run inside check-in and lead to the existing editable care note, service finder, stop/feedback paths and explicit save/download/delete controls. Self-help is never a prerequisite to care.
 

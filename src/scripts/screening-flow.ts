@@ -104,7 +104,9 @@ if(app) {
     const template=document.getElementById('screening-result-template') as HTMLTemplateElement;
     document.getElementById('screening-results')?.remove();
     const fragment=template.content.cloneNode(true) as DocumentFragment;
-    const impact=queue.includes('phq-9')&&!skipped.has('phq-9')?app.querySelector<HTMLInputElement>('input[name="screening-impact"]:checked'):null;
+    // Functional impact is volunteered context, not part of the score. Keep
+    // that answer and its care invitation even if the scored form is skipped.
+    const impact=queue.includes('phq-9')?app.querySelector<HTMLInputElement>('input[name="screening-impact"]:checked'):null;
     const summaries=[copy.notes,copy.twoWeeks];
     for(const report of reports){
       const card=fragment.querySelector<HTMLElement>(`[data-screening-report="${report.id}"]`);
@@ -141,6 +143,7 @@ if(app) {
         const answer=question.querySelector<HTMLInputElement>('input:checked');
         fullRecord.push(`${question.querySelector('[data-question-text]').textContent}\n${answer?answer.labels[0].textContent:copy.unanswered}`);
       }
+      if(report.id==='phq-9'&&impact)fullRecord.push(`${stage.querySelector('.screening-impact legend').textContent}\n${impact.dataset.label}`);
     }
     const record=fullRecord.filter(Boolean).join('\n\n');
     fragment.querySelector<HTMLElement>('[data-screening-record]').textContent=record;

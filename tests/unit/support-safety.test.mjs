@@ -112,6 +112,13 @@ test('screening guidance and disclaimers are complete in all eight languages',()
     assert.equal(copy[locale].bands.length,5);assert.equal(copy[locale].ageOptions.length,5);
   }
 });
+test('every original-manual boundary has the expected adult band and no youth band',()=>{
+  for(const[id,count,pairs]of [['phq-9',9,[[0,0],[4,0],[5,1],[9,1],[10,2],[14,2],[15,3],[19,3],[20,4],[27,4]]],['gad-7',7,[[0,0],[4,0],[5,1],[9,1],[10,2],[14,2],[15,4],[21,4]]]])for(const[total,band]of pairs){
+    let left=total;const answers=Array.from({length:count},()=>{const value=Math.min(left,3);left-=value;return value;});
+    assert.equal(makeScreeningReport(id,answers,'adult').band,band,`${id}/${total}`);
+    assert.equal(makeScreeningReport(id,answers,'youth').band,null,`${id}/${total}/youth`);
+  }
+});
 test('private saved notes reject corrupt, oversized, wrong-version and wrong-locale data',()=>{
   const note=makeNote(['hello'],'grounding','ar');
   assert.deepEqual(parseNote(JSON.stringify(note),'grounding','ar',1),['hello']);
