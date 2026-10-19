@@ -129,6 +129,34 @@ test('mix ratios, master volume, return, repeated entry and stop preserve intent
   await expectAudio(page, 0);
 });
 
+test('changing master or track volume during fade preserves the volume used by later loops', async ({ page }) => {
+  // Stretch the real Howler transition so CI always exercises a user edit
+  // during a fade, rather than occasionally missing the 700ms start window.
+  await page.evaluate(() => {
+    const prototype=(window as any).Howl.prototype;
+    const original=prototype.fade;
+    prototype.fade=function(from:number,to:number,length:number,id:number){
+      return original.call(this,from,to,length>0?10_000:length,id);
+    };
+  });
+  async function expectVolume(value:number){
+    await expect.poll(async()=>page.evaluate(()=>{
+      const howler=(window as any).Howler;
+      return howler._howls.flatMap((howl:any)=>howl._sounds
+        .filter((sound:any)=>!sound._paused)
+        .map((sound:any)=>({stored:howl.volume(sound._id),gain:sound._node.gain.value})));
+    })).toEqual([{stored:value,gain:Math.fround(value)}]);
+  }
+  await play(page,'pink-noise');
+  await expectAudio(page,1);
+  await setRange(page,'#soundscape-master',0.5);
+  await expectVolume(0.13);
+  const button=page.locator('.play-btn[data-sound="pink-noise"]');
+  await button.click();await button.click();
+  await setRange(page,'.volume-slider[data-sound="pink-noise"]',0.4);
+  await expectVolume(0.2);
+});
+
 test('rapid pause/resume cancels the old fade-out timer', async ({ page }) => {
   await play(page, 'pink-noise');
   await expectAudio(page, 1);
