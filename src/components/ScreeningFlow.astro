@@ -4,10 +4,9 @@ import {getSupportCopy} from '@/lib/support';
 import {getScreeningContent} from '@/lib/screening-content';
 const lang=getLanguageFromPath(Astro.url.pathname);
 const c=getSupportCopy(lang);
-const {forms,copy:s,manual,rights}=getScreeningContent(lang);
-const ids=['phq-9','gad-7'];
+const {forms,ids,copy:s}=getScreeningContent(lang);
 ---
-<section id="screening-flow" hidden data-copy={JSON.stringify(s)}>
+<section id="screening-flow" hidden data-copy={JSON.stringify(s)} data-tools={JSON.stringify(ids)}>
   <div class="actions"><a class="button" href={getLocalizedPath('/support/',lang)}>{c.ui.support}</a><a class="button" href={getLocalizedPath('/crisis/',lang)}>{c.ui.crisisDirectory}</a></div>
   <section data-screen-stage="choose">
     <h2 tabindex="-1">{s.choose}</h2>
@@ -20,20 +19,21 @@ const ids=['phq-9','gad-7'];
     <p id="screening-age-help" class="muted">{s.ageHelp}</p>
     <p id="screening-age-alternative" class="urgent" hidden>{s.ageAlternative}</p>
     <fieldset id="screening-tool-choices"><legend>{s.choose}</legend>
-      {ids.map(id=>forms[id] ? <label class="choice"><input type="checkbox" name="screening-tool" value={id} checked />{id==='phq-9'?s.depression:s.anxiety}</label> : <p data-tool-unavailable={id}>{s.availability}</p>)}
+      {ids.map(id=>forms[id] ? <label class="choice"><input type="checkbox" name="screening-tool" value={id} checked />{forms[id].label} · {forms[id].recall}</label> : <p data-tool-unavailable={id}>{s.availability}</p>)}
     </fieldset>
     <p id="screening-selection-error" class="status" role="alert" tabindex="-1"></p>
     <div class="actions step-actions"><button class="button" type="button" data-screening-exit>{s.general}</button><button class="button primary" type="button" id="screening-start-tools">{c.ui.next}</button></div>
   </section>
-  {Object.entries(forms).map(([id,form])=><section data-screen-stage={id} hidden data-version={form.version} data-source={form.source} data-tool-title={id==='phq-9'?s.depression:s.anxiety}>
+  {Object.entries(forms).map(([id,form])=><section data-screen-stage={id} hidden data-version={form.version} data-source={form.source} data-tool-title={form.label} data-recall={form.recall}>
     <p class="step-label" data-screening-progress></p>
     <h2 tabindex="-1">{form.title}</h2>
     <p>{form.instruction}</p>
+    {form.scope&&<details><summary>{s.originals}</summary><p>{form.scope}</p></details>}
     <p class="muted">{s.answerError}</p>
     <ol class="screening-questions" role="list">
       {form.questions.map((question,i)=><li>
         <fieldset data-screening-question={i}><legend><span class="screening-question-title"><bdi dir="ltr">{i+1}.</bdi><span data-question-text>{question}</span></span></legend>
-          <div class="screening-options">{form.options.map((label,value)=><label class="choice"><input type="radio" name={`screening-${id}-${i}`} value={value} autocomplete="off" />{label}</label>)}</div>
+          <div class="screening-options" data-option-count={form.options.length}>{form.options.map((label,index)=><label class="choice"><input type="radio" name={`screening-${id}-${i}`} value={form.optionValues[index]} autocomplete="off" />{label}</label>)}</div>
         </fieldset>
         {id==='phq-9'&&i===8&&<aside id="screening-live-safety" class="urgent" role="status" hidden><p>{s.safety}</p><a class="button primary" href={getLocalizedPath('/crisis/',lang)}>{c.ui.crisisDirectory}</a><a class="button" href={getLocalizedPath('/support/',lang)}>{c.ui.support}</a></aside>}
       </li>)}
@@ -51,7 +51,7 @@ const ids=['phq-9','gad-7'];
     <div class="actions step-actions"><button class="button" type="button" data-screening-back>{c.ui.back}</button><button class="button primary" type="button" id="screening-finish">{c.ui.finish}</button></div>
   </section>
   <button class="text-button" type="button" id="screening-end" hidden>{s.general}</button>
-  <details><summary>{s.originals}</summary><p>{s.reference}</p><p>{s.attribution}</p><p><a href={manual} target="_blank" rel="noreferrer">{s.manual}</a> · <a href={rights} target="_blank" rel="noreferrer">{s.rights}</a></p></details>
+  <details><summary>{s.originals}</summary><p>{s.reference}</p><p>{s.attribution}</p>{Object.values(forms).map(form=><p>{form.label} · <a href={form.source} target="_blank" rel="noreferrer">{s.source}</a> · <a href={form.manual} target="_blank" rel="noreferrer">{s.manual}</a> · <a href={form.rights} target="_blank" rel="noreferrer">{s.rights}</a></p>)}</details>
 </section>
 <template id="screening-result-template">
   <section id="screening-results">
@@ -59,9 +59,12 @@ const ids=['phq-9','gad-7'];
     <aside id="screening-functional-care" class="urgent" hidden><p>{s.care}</p><a class="button" href="#prepare-support" data-prepare-support>{c.flow.prepare}</a></aside>
     <p>{s.resultScope}</p><p class="muted">{s.reference}</p>
     <div class="support-grid">
-      {ids.map(id=><article class="support-card" data-screening-report={id}>
-        <h3>{id==='phq-9'?s.depression:s.anxiety}</h3>
-        <p data-report-score></p><p data-report-band hidden></p><p data-report-meaning hidden>{id==='phq-9'?s.moodMeaning:s.worryMeaning}</p><p data-report-next></p>
+      {ids.map(id=><article class="support-card" data-screening-report={id} data-guidance={forms[id]?.guidance}>
+        <h3>{forms[id]?.label||(id==='phq-9'?s.depression:s.anxiety)}</h3>
+        {forms[id]&&<p data-report-recall>{forms[id].recall}</p>}
+        <p data-report-score></p><p data-report-band hidden></p><p data-report-meaning hidden>{forms[id]?.meaning}</p>
+        {forms[id]?.scope&&<p class="muted" data-report-scope>{forms[id].scope}</p>}
+        <p data-report-next></p>
         {forms[id]&&<p><a href={forms[id].source} target="_blank" rel="noreferrer">{s.source}</a></p>}
       </article>)}
     </div>

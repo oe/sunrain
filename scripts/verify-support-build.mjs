@@ -23,8 +23,15 @@ for(const lang of locales) for(const route of routes) {
   if(route==='/check-in/') {
     assert.match(html,/id="start-screening"/);
     assert.match(html,/data-screen-stage="phq-9"/);
-    if(lang==='ja')assert.doesNotMatch(html,/data-screen-stage="gad-7"/);
-    else assert.match(html,/data-screen-stage="gad-7"/);
+    if(lang==='ja'){
+      assert.doesNotMatch(html,/data-screen-stage="gad-7"/);
+      assert.match(html,/data-screen-stage="k6"/);
+      assert.match(html,/過去30日間/);
+      assert.match(html,/© Ronald C\. Kessler/);
+    }else {
+      assert.match(html,/data-screen-stage="gad-7"/);
+      assert.doesNotMatch(html,/data-screen-stage="k6"/);
+    }
   }
   for(const match of html.matchAll(/<(?:a|link)\b[^>]*?href=(?:"([^"]+)"|'([^']+)'|([^\s>]+))/g)) {
     const href=match[1]||match[2]||match[3];

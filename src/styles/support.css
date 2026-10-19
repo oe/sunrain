@@ -49,7 +49,9 @@
 .support-shell #screening-flow [data-screening-question]{scroll-margin-block-start:6rem}
 .support-shell .screening-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.5rem}
 .support-shell .screening-options .choice{margin:0;overflow-wrap:anywhere}
+.support-shell .screening-options[data-option-count="5"]{grid-template-columns:1fr}
 .support-shell [aria-invalid=true]{border-inline-start:3px solid #b91c1c;padding-inline-start:.75rem}
 @media(min-width:760px){.support-shell .screening-options{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(min-width:760px){.support-shell .screening-options[data-option-count="5"]{grid-template-columns:repeat(5,minmax(0,1fr))}}
 @media(max-width:359px){.support-shell .screening-options{grid-template-columns:1fr}}
 [hidden]{display:none!important}

@@ -2,7 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
-import { calculateScore, getInterpretation, hasSafetySignal, canPublishScreening, makeScreeningReport } from '../../src/lib/screening.mjs';
+import { calculateScore, getInterpretation, hasSafetySignal, canPublishScreening, makeScreeningReport, SCREENING_SPECS } from '../../src/lib/screening.mjs';
 import { parseNote, makeNote, formatContact } from '../../src/lib/private-notes.mjs';
 const read = path => JSON.parse(readFileSync(new URL(path,import.meta.url),'utf8'));
 const pack = read('../../src/data/support-copy.json');
@@ -72,20 +72,44 @@ test('any nonzero PHQ safety response is independent of total score; missing is 
 test('only exact source-checked reference forms are admitted; restricted Japanese GAD-7 stays absent',()=>{
   const forms=read('../../src/data/screening-forms.json');
   for(const [id,tool] of Object.entries(registry.tools)) for(const lang of locales) {
-    const available=!(id==='gad-7'&&lang==='ja');
+    const available=id==='k6'?lang==='ja':!(id==='gad-7'&&lang==='ja');
     assert.equal(canPublishScreening(tool,lang),available);
     assert.equal(tool.clinicalReview.status,'pending');
     if(!available){assert.equal(forms[id][lang],undefined);continue;}
     assert.equal(createHash('sha256').update(JSON.stringify(forms[id][lang])).digest('hex'),tool.locales[lang].formSha256);
-    assert.equal(forms[id][lang].questions.length,id==='phq-9'?9:7);
-    assert.equal(forms[id][lang].options.length,4);
-    assert.equal(new URL(tool.locales[lang].source).hostname,'www.phqscreeners.com');
+    assert.equal(forms[id][lang].questions.length,SCREENING_SPECS[id].count);
+    assert.equal(forms[id][lang].options.length,SCREENING_SPECS[id].optionValues.length);
+    assert.equal(new URL(tool.locales[lang].source).hostname,id==='k6'?'rckessler.scholars.harvard.edu':'www.phqscreeners.com');
   }
   const admitted=registry.tools['phq-9'];
-  for(const field of ['mode','sourceCheck','rights','version','source']) { const tool=structuredClone(admitted); delete tool[field]; assert.equal(canPublishScreening(tool,'en'),false); }
+  for(const field of ['id','questionCount','recallDays','mode','sourceCheck','rights','version','source']) { const tool=structuredClone(admitted); delete tool[field]; assert.equal(canPublishScreening(tool,'en'),false); }
   for(const field of ['formSha256','sourceSha256','version','status','source']) {const tool=structuredClone(admitted);delete tool.locales.en[field];assert.equal(canPublishScreening(tool,'en'),false);}
   const wrong=structuredClone(admitted);wrong.locales.en.version='different';assert.equal(canPublishScreening(wrong,'en'),false);
   assert.equal(canPublishScreening(admitted,'unknown'),false);
+});
+test('K6 uses six 0–4 responses in reverse source-option order, with no PHQ/GAD bands or diagnosis cutoffs',()=>{
+  assert.deepEqual(SCREENING_SPECS.k6.optionValues,[4,3,2,1,0]);
+  assert.equal(SCREENING_SPECS.k6.recallDays,30);
+  const form=read('../../src/data/screening-forms.json').k6.ja;
+  assert.deepEqual(form.options,['いつも','たいてい','ときどき','少しだけ','全くない']);
+  for(const age of ['adult','youth']){
+    assert.equal(makeScreeningReport('k6',Array(6).fill(4),age).score,24);
+    assert.equal(makeScreeningReport('k6',Array(6).fill(0),age).score,0);
+    assert.equal(makeScreeningReport('k6',[4,3,2,1,0,4],age).score,14);
+    for(let total=0;total<=24;total++){
+      let left=total;const answers=Array.from({length:6},()=>{const value=Math.min(left,4);left-=value;return value;});
+      const report=makeScreeningReport('k6',answers,age);
+      assert.equal(report.score,total);assert.equal(report.band,null);assert.equal(report.safety,false);
+    }
+    for(const answers of [[],Array(6),[0,0,0,0,0,null],[0,0,0,0,0,5],[0,0,0,0,0,-1],[0,0,0,0,0,'4']])assert.throws(()=>makeScreeningReport('k6',answers,age));
+    for(const status of ['skipped','notSelected','unavailable']){
+      const report=makeScreeningReport('k6',[],age,status);
+      assert.equal(report.score,null);assert.equal(report.band,null);
+    }
+  }
+  assert.throws(()=>makeScreeningReport('phq-9',Array(9).fill(4),'adult'));
+  const wrong=structuredClone(registry.tools.k6);wrong.recallDays=14;assert.equal(canPublishScreening(wrong,'ja'),false);
+  assert.match(read('../../src/data/screening-copy.json').ja.attribution,/© Ronald C\. Kessler, PhD\. 2007/);
 });
 test('screening reports preserve completeness and never apply adult severity bands to youth',()=>{
   for(const [id,count,max]of [['phq-9',9,27],['gad-7',7,21]]){
