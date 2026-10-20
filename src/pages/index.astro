@@ -1,28 +1,35 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import { t,getLocalizedPath,getLanguageFromPath } from '@/lib/i18n';
-import { getSupportCopy } from '@/lib/support';
-import '@/styles/support.css';
+import { Icon } from '@/components/Icon';
+import { getLocalizedPath,getLanguageFromPath } from '@/lib/i18n';
+import { getPlatformCopy } from '@/lib/platform';
 const lang=getLanguageFromPath(Astro.url.pathname);
-const c=getSupportCopy(lang);
+const p=getPlatformCopy(lang);
+const introduction=lang.startsWith('zh-') ? p.description.replace('，提供','，\n提供').split('\n') : [p.description];
 ---
-<BaseLayout title={t('home.hero.title',lang)}>
-  <section class="bg-gradient-to-br from-amber-50 via-orange-50 to-rose-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
-    <div class="support-shell text-center home-intro">
-      <img src="/logo.png" alt="" width="80" height="80" class="mx-auto mb-8" />
-      <p class="muted">{t('site.tagline',lang)}</p>
-      <h1>{c.flow.heroTitle}</h1><p>{c.entry.description}</p>
-      <div class="actions justify-center"><a class="button primary" id="home-check-in" href={getLocalizedPath('/check-in/',lang)}>{c.entry.title}</a><a class="button" href={getLocalizedPath('/self-help/grounding/',lang)}>{c.flow.nowAction}</a><a class="button" href={getLocalizedPath('/support/',lang)}>{c.ui.support}</a></div>
-      <p class="muted">{c.flow.scopeShort} <a href={getLocalizedPath('/disclaimer/',lang)}>{c.ui.disclaimer}</a></p>
-      <a href={getLocalizedPath('/crisis/',lang)}>{t('nav.crisis',lang)}</a>
+<BaseLayout title={p.headline.join(' ')} description={p.description}>
+  <section class="platform-hero" aria-labelledby="home-title">
+    <picture class="hero-art" aria-hidden="true">
+      <source type="image/webp" srcset="/images/platform/sunrain-hero-800.webp 800w, /images/platform/sunrain-hero-1200.webp 1200w, /images/platform/sunrain-hero-1600.webp 1600w" sizes="100vw" />
+      <img src="/images/platform/sunrain-hero-1600.webp" width="1600" height="850" alt="" fetchpriority="high" />
+    </picture>
+    <div class="platform-container hero-content">
+      <div class="hero-copy">
+        <h1 id="home-title">{p.headline.map(line => <span>{line}</span>)}</h1>
+        <p class="hero-description">{introduction.map(line=><span>{line}</span>)}</p>
+        <a class="platform-button primary" id="home-check-in" href={getLocalizedPath('/check-in/',lang)}>{p.start}<Icon name="ArrowRight" size={23} className="directional" /></a>
+        <p class="hero-boundary">{p.homeBoundary}</p>
+      </div>
     </div>
   </section>
-  <section class="support-shell">
-    <div class="support-grid">
-      <article class="support-card"><h2>{c.ui.selfHelp}</h2><p>{c.common.before}</p><a class="button" href={getLocalizedPath('/self-help/',lang)}>{c.ui.selfHelp}</a></article>
-      <article class="support-card"><h2>{t('nav.relax',lang)}</h2><p>{t('home.features.breathing.description',lang)}</p><div class="actions"><a class="button" href={getLocalizedPath('/breathing/',lang)}>{t('home.hero.tryBreathing',lang)}</a><a class="button" href={getLocalizedPath('/relax/',lang)}>{t('nav.relax',lang)}</a></div></article>
-      <article class="support-card"><h2>{c.ui.support}</h2><p>{c.seekHelp.provider}</p><a class="button" href={getLocalizedPath('/support/',lang)}>{c.seekHelp.title}</a></article>
-    </div>
-    <section class="support-card"><h2>{t('home.privacy.title',lang)}</h2><p>{t('home.privacy.description',lang)}</p><a href={getLocalizedPath('/disclaimer/',lang)}>{c.ui.disclaimer}</a></section>
+  <section class="platform-container home-paths" aria-label={p.selfHelp}>
+    <article>
+      <h2>{p.selfHelp}</h2><p>{p.selfHelpDescription}</p>
+      <a class="platform-link" href={getLocalizedPath('/self-help/',lang)}>{p.explore}<Icon name="ArrowRight" size={21} className="directional" /></a>
+    </article>
+    <article>
+      <h2>{p.support}</h2><p>{p.supportDescription}</p>
+      <a class="platform-link" href={getLocalizedPath('/support/',lang)}>{p.supportAction}<Icon name="ArrowRight" size={21} className="directional" /></a>
+    </article>
   </section>
 </BaseLayout>

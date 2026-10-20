@@ -10,82 +10,16 @@ const categories = getResources(lang);
 const showLanguageNotice = lang !== 'en';
 const support=getSupportCopy(lang);
 ---
-
-<BaseLayout
-  title={t('resources.title', lang)}
-  description={t('resources.subtitle', lang)}
->
-  <div class="container mx-auto px-4 py-16">
-    <div class="max-w-4xl mx-auto mb-8 flex flex-wrap gap-4"><a class="px-4 py-3 rounded-xl border border-gray-400 text-gray-900 dark:text-white" href={getLocalizedPath('/self-help/',lang)}>{support.ui.selfHelp}</a><a class="px-4 py-3 rounded-xl border border-gray-400 text-gray-900 dark:text-white" href={getLocalizedPath('/support/',lang)}>{support.ui.support}</a></div>
-    <div class="max-w-4xl mx-auto text-center mb-16 animate-fade-in-up">
-      <h1
-        class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6"
-      >
-        {t('resources.title', lang)}
-      </h1>
-      <p class="text-xl text-gray-600 dark:text-gray-300">
-        {t('resources.subtitle', lang)}
-      </p>
-      {
-        showLanguageNotice && (
-          <p class="mt-4 text-sm text-amber-700 dark:text-amber-300">
-            {t('resources.languageNotice', lang)}
-          </p>
-        )
-      }
+<BaseLayout title={t('resources.title',lang)} description={t('resources.subtitle',lang)}>
+  <div class="relax-page">
+    <header class="page-heading"><h1>{t('resources.title',lang)}</h1><p>{t('resources.subtitle',lang)}</p>{showLanguageNotice&&<p class="text-sm mt-4">{t('resources.languageNotice',lang)}</p>}</header>
+    <div class="resource-groups">
+      {categories.map(category=><details class="resource-group">
+        <summary><span class="resource-title"><Icon name={category.icon} size={24} /><h2>{t(`resources.categories.${category.id}`,lang)}</h2></span></summary>
+        <ul>{category.links.map(link=><li><a class="resource-link" href={link.url} target="_blank" rel="noreferrer"><span><span class="font-semibold">{link.title}</span><span class="block text-sm mt-1">{link.source}</span></span><Icon name="ArrowRight" size={19} className="directional" /></a></li>)}</ul>
+      </details>)}
     </div>
-
-    <div class="max-w-4xl mx-auto grid gap-8 animate-fade-in-up delay-100">
-      {
-        categories.map((category) => (
-          <div class="bg-white dark:bg-gray-800 rounded-3xl p-8 border border-gray-100 dark:border-gray-700 shadow-sm hover:shadow-md transition-shadow">
-            <div class="flex items-center gap-4 mb-6">
-              <div class="w-12 h-12 rounded-2xl bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center text-amber-600 dark:text-amber-400">
-                <Icon name={category.icon} size={24} />
-              </div>
-              <h2 class="text-2xl font-bold text-gray-900 dark:text-white">
-                {t(`resources.categories.${category.id}`, lang)}
-              </h2>
-            </div>
-
-            <div class="grid md:grid-cols-2 gap-4">
-              {category.links.map((link) => (
-                <a
-                  href={link.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="group block p-4 rounded-xl bg-gray-50 dark:bg-gray-700/50 hover:bg-amber-50 dark:hover:bg-amber-900/20 transition-colors border border-transparent hover:border-amber-200 dark:hover:border-amber-800/50"
-                >
-                  <div class="flex justify-between items-start mb-2">
-                    <span class="font-semibold text-gray-900 dark:text-white group-hover:text-amber-700 dark:group-hover:text-amber-300 transition-colors">
-                      {link.title}
-                    </span>
-                    <Icon
-                      name="ArrowRight"
-                      size={16}
-                      className="text-gray-400 -rotate-45 group-hover:text-amber-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all"
-                    />
-                  </div>
-                  <div class="text-sm text-gray-500 dark:text-gray-400">
-                    {link.source}
-                  </div>
-                </a>
-              ))}
-            </div>
-          </div>
-        ))
-      }
-    </div>
-
-    <div
-      class="max-w-4xl mx-auto mt-12 text-center text-sm text-gray-500 dark:text-gray-400 animate-fade-in-up delay-200"
-    >
-      <Icon
-        name="AlertCircle"
-        size={16}
-        className="inline-block mr-1 align-text-bottom"
-      />
-      {t('resources.disclaimer', lang)}
-    </div>
+    <p class="resource-notice">{t('resources.disclaimer',lang)}</p>
+    <div class="resource-actions"><a class="platform-link" href={getLocalizedPath('/self-help/',lang)}>{support.ui.selfHelp}<Icon name="ArrowRight" size={20} className="directional" /></a><a class="platform-link" href={getLocalizedPath('/support/',lang)}>{support.ui.support}<Icon name="ArrowRight" size={20} className="directional" /></a></div>
   </div>
 </BaseLayout>

@@ -6,6 +6,20 @@ const locales=['en','zh-hans','zh-hant','es','ja','ko','hi','ar'];
 const copy=JSON.parse(await readFile(new URL('../../src/data/support-copy.json',import.meta.url),'utf8')).locales;
 const screeningCopy=JSON.parse(await readFile(new URL('../../src/data/screening-copy.json',import.meta.url),'utf8'));
 const path=(locale:string,route:string)=>`${locale==='en'?'':`/${locale}`}${route}`;
+
+async function openDisclosure(page:Page,selector:string){
+  const disclosure=page.locator(selector);
+  if(await disclosure.getAttribute('open')===null)await disclosure.locator(':scope > summary').click();
+}
+async function beginScreening(page:Page){
+  // The homepage now enters the questionnaire choice directly.
+  await expect(page.locator('[data-screen-stage="choose"]')).toBeVisible();
+}
+async function beginGeneral(page:Page){
+  await page.locator('[data-screen-stage="choose"] [data-screening-exit]').click();
+  await expect(page.locator('[data-step="1"]')).toBeVisible();
+}
+
 async function entranceSettled(page:Page,selector='body'){
   await page.locator(selector).evaluate(async el=>{
     await Promise.all(el.getAnimations({subtree:true})
@@ -55,7 +69,7 @@ for(const locale of locales) {
     await expect(page.locator('[data-step="0"] input')).toHaveCount(0);
     await expect(page.locator('#adult-check')).toHaveCount(0);
     await expect(page.locator('[data-step="0"] [data-youth-support]')).toHaveText(copy[locale].ui.younger);
-    await page.locator('[data-step="0"] [data-forward]').click();
+    await beginGeneral(page);
     const questionBounds=await page.locator('[data-step="1"] legend').boundingBox();
     const navigationBounds=await page.locator('#main-header').boundingBox();
     expect(questionBounds.y).toBeGreaterThanOrEqual(navigationBounds.y+navigationBounds.height+8);
@@ -101,6 +115,7 @@ for(const locale of locales) {
     expect(activityCard.y-activityBack.y-activityBack.height).toBeGreaterThanOrEqual(15.99);
     await expect(page).toHaveURL(new RegExp(`${path(locale,'/check-in/')}.*$`));
     await expect(page.locator('#guided-activity ol li')).toHaveCount(4);
+    await openDisclosure(page,'.activity-examples');
     const example=page.locator('input[name="activity-example"]').first();
     const chosen=await example.inputValue();await example.check();
     await expect(page.locator('[data-activity-note] [data-note-field]').first()).toHaveValue(chosen);
@@ -117,7 +132,7 @@ for(const locale of locales) {
     await expect(fields.nth(1)).toHaveValue(copy[locale].ui.weeks);
     expect(await page.evaluate(()=>Object.keys(localStorage).filter(k=>k.startsWith('sunrain')))).toEqual([]);
     expect(await page.evaluate(()=>Object.keys(sessionStorage))).toEqual([]);
-    await page.goto(path(locale,'/support/'));
+    await page.goto(path(locale,'/support/'));await openDisclosure(page,'#contact-preparation');
     await expect(page.locator('#support-region')).toHaveValue('');
     await expect(page.locator('ol li')).toHaveCount(6);
     await expect(page.locator('[data-note-field]')).toHaveCount(5);
@@ -141,7 +156,7 @@ for(const locale of locales) {
   });
 }
 test('skipping questions shows no score; reload clears responses',async({page})=>{
-  await page.goto('/check-in/');await page.locator('[data-step="0"] [data-forward]').click();await page.locator('[data-step="1"] [data-forward]').click();await page.locator('button[type="submit"]').click();
+  await page.goto('/check-in/');await beginGeneral(page);await page.locator('[data-step="1"] [data-forward]').click();await page.locator('button[type="submit"]').click();
   await expect(page.locator('#check-in-result')).toBeVisible();
   await expect(page.locator('#result-summary')).toContainText('Skip / leave unanswered');
   await expect(page.locator('[data-action="choose"]')).toBeVisible();
@@ -150,7 +165,7 @@ test('skipping questions shows no score; reload clears responses',async({page})=
   await page.reload();await expect(page.locator('#check-in-result')).toBeHidden();await expect(page.locator('[data-step="0"] [data-forward]')).toBeEnabled();
 });
 test('unusually high energy directs to care and does not present a diagnosis',async({page})=>{
-  await page.goto('/check-in/');await page.locator('[data-step="0"] [data-forward]').click();await page.locator('input[value="energy"]').check();await page.locator('[data-step="1"] [data-forward]').click();await page.locator('button[type="submit"]').click();
+  await page.goto('/check-in/');await beginGeneral(page);await page.locator('input[value="energy"]').check();await page.locator('[data-step="1"] [data-forward]').click();await page.locator('button[type="submit"]').click();
   await expect(page.locator('#energy-care')).toBeVisible();await expect(page.locator('[data-action="grounding"]')).toBeHidden();await expect(page.locator('[data-action="one-step"]')).toBeHidden();
   await expect(page.locator('#energy-care')).toContainText('cannot tell');
   await expect(page.locator('[data-action="sleep"]')).toBeHidden();
@@ -158,12 +173,13 @@ test('unusually high energy directs to care and does not present a diagnosis',as
 });
 test('notes are voluntary, reload blank, load explicitly, export locally and delete',async({page})=>{
   const requests:{url:string;body:string}[]=[];page.on('request',r=>requests.push({url:r.url(),body:r.postData()||''}));
-  await page.goto('/support/');const fields=page.locator('[data-note-field]');
+  await page.goto('/support/');await openDisclosure(page,'#contact-preparation');const fields=page.locator('[data-note-field]');
   await fields.nth(0).fill('<private concern>');await fields.nth(1).fill('three weeks');await fields.nth(2).fill('sleep');
   await expect(page.locator('[data-contact-preview]')).toContainText('<private concern>');
   expect(await page.evaluate(()=>Object.keys(localStorage).filter(k=>k.startsWith('sunrain')))).toEqual([]);
   await page.locator('[data-note-action="save"]').click();await expect(page.locator('[data-note-status]')).toContainText('Saved on this device');
   await page.reload();await expect(fields.nth(0)).toHaveValue('');
+  await openDisclosure(page,'#contact-preparation');
   await page.locator('[data-note-action="load"]').click();await expect(fields.nth(0)).toHaveValue('<private concern>');
   const pending=page.waitForEvent('download');await page.locator('[data-note-action="download"]').click();const download=await pending;const file=await download.path();expect(await readFile(file,'utf8')).toContain('<private concern>');
   await page.locator('[data-note-action="clear"]').click();await expect(fields.nth(0)).toHaveValue('');
@@ -178,7 +194,7 @@ test('notes are voluntary, reload blank, load explicitly, export locally and del
 test('storage denial leaves theme, menu, notes and download usable',async({page})=>{
   const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));
   await page.addInitScript(()=>Object.defineProperty(window,'localStorage',{get(){throw new DOMException('Blocked','SecurityError');}}));
-  await page.goto('/support/');await page.locator('[data-note-field]').first().fill('private note');
+  await page.goto('/support/');await openDisclosure(page,'#contact-preparation');await page.locator('[data-note-field]').first().fill('private note');
   await page.locator('[data-note-action="save"]').click();await expect(page.locator('[data-note-status]')).toContainText('Could not save');
   const download=page.waitForEvent('download');await page.locator('[data-note-action="download"]').click();await download;
   await page.locator('#theme-toggle').click();await expect(page.locator('#theme-menu')).toBeVisible();
@@ -186,7 +202,7 @@ test('storage denial leaves theme, menu, notes and download usable',async({page}
 });
 test('clipboard denial retains the message and offers a working local download',async({page})=>{
   await page.addInitScript(()=>Object.defineProperty(navigator,'clipboard',{value:{writeText:async()=>{throw new DOMException('Blocked','NotAllowedError');}}}));
-  await page.goto('/support/');await page.locator('[data-note-field]').first().fill('Example appointment concern');
+  await page.goto('/support/');await openDisclosure(page,'#contact-preparation');await page.locator('[data-note-field]').first().fill('Example appointment concern');
   await page.locator('[data-note-field]').nth(4).fill('Question about cost');
   await page.locator('[data-note-action="copy"]').click();
   await expect(page.locator('[data-note-status]')).toHaveText(copy.en.flow.copyFailed);
@@ -205,7 +221,7 @@ test('assessment bookmarks explain exact locale availability and preserve legacy
 
 async function startScreening(page:Page,locale='en',age='adult'){
   await page.goto(path(locale,'/check-in/'));
-  await page.locator('#start-screening').click();
+  await beginScreening(page);
   await page.locator('#screening-age').selectOption(age);
   await page.locator('#screening-start-tools').click();
 }
@@ -220,7 +236,7 @@ async function answerTool(page:Page,id:string,answers:number[]){
   await page.locator(`[data-screen-stage="${id}"] [data-screening-next]`).click();
 }
 async function startJapaneseK6(page:Page,age='adult'){
-  await page.goto('/ja/check-in/');await page.locator('#start-screening').click();
+  await page.goto('/ja/check-in/');await beginScreening(page);
   await page.locator('#screening-age').selectOption(age);
   await page.locator('input[name="screening-tool"][value="phq-9"]').uncheck();
   await page.locator('#screening-start-tools').click();
@@ -243,7 +259,7 @@ test('Japanese K6 preserves source option order, 30-day recall and complete care
   await page.locator('#result-options [data-prepare-support]').click();
   await expect(page.locator('#prepare-support [data-note-field]').nth(1)).toHaveValue('');
   await expect(page.locator('#prepare-support [data-note-field]').first()).toHaveValue(/過去30日間/);
-  const pending=page.waitForEvent('download');await page.locator('#screening-export').click();
+  const pending=page.waitForEvent('download');await openDisclosure(page,'#screening-record-options');await page.locator('#screening-export').click();
   const record=await readFile(await (await pending).path(),'utf8');
   expect(record).toContain('24 / 24');expect(record).toContain('過去30日間');
   expect(record).toContain('神経過敏に感じましたか\nいつも');
@@ -324,7 +340,7 @@ for(const locale of locales){
     await expect(page.locator('#inline-activity')).toBeVisible();
     for(let i=0;i<3;i++)await page.locator('#guide-next').click();
     await page.locator('#guide-finish').click();
-    await page.locator('input[value="same"]').check();
+    if(!await page.locator('#activity-reflection').isVisible())await page.locator('#guide-stop').click();await page.locator('input[value="same"]').check();
     await page.locator('#activity-reflection [data-prepare-support]').click();
     await expect(notes.nth(0)).toHaveValue('My own care summary');
     // Questionnaire revision cannot resurrect stale results or overwrite edits.
@@ -383,7 +399,7 @@ test('youth records have scores without adult bands and declining age keeps gene
   await expect(page.locator('[data-report-band]:visible')).toHaveCount(0);
   await expect(page.locator('#screening-result-safety')).toBeVisible();
   for(const age of ['child','declined']){
-    await page.goto('/check-in/');await page.locator('#start-screening').click();await page.locator('#screening-age').selectOption(age);
+    await page.goto('/check-in/');await beginScreening(page);await page.locator('#screening-age').selectOption(age);
     await expect(page.locator('#screening-start-tools')).toBeDisabled();await expect(page.locator('#screening-age-alternative')).toBeVisible();
     await page.locator('[data-screening-exit]').click();await expect(page.locator('[data-step="1"]')).toBeVisible();
     await expect(page.locator('#screening-age')).toHaveValue('');
@@ -409,12 +425,12 @@ test('skipping a scored form retains volunteered functional difficulty in suppor
   await expect(page.locator('#screening-functional-care')).toBeVisible();
   await page.locator('#screening-functional-care [data-prepare-support]').click();
   await expect(page.locator('#prepare-support [data-note-field]').nth(2)).toHaveValue('Extremely difficult');
-  const pending=page.waitForEvent('download');await page.locator('#screening-export').click();
+  const pending=page.waitForEvent('download');await openDisclosure(page,'#screening-record-options');await page.locator('#screening-export').click();
   const download=await pending;const record=await readFile(await download.path(),'utf8');
   expect(record).toContain('If you checked off any problems, how difficult have these problems made it for you to do your work, take care of things at home, or get along with other people?\nExtremely difficult');
 });
 test('unselected tools and all-skipped screens remain unassessed',async({page})=>{
-  await page.goto('/check-in/');await page.locator('#start-screening').click();await page.locator('#screening-start-tools').click();
+  await page.goto('/check-in/');await beginScreening(page);await page.locator('#screening-start-tools').click();
   await expect(page.locator('#screening-selection-error')).toHaveText(screeningCopy.en.selectError);
   await page.locator('#screening-age').selectOption('adult');await page.locator('input[name="screening-tool"][value="gad-7"]').uncheck();
   await page.locator('#screening-start-tools').click();await page.locator('[data-screen-stage="phq-9"] [data-screening-skip]').click();await page.locator('#screening-finish').click();
@@ -425,7 +441,7 @@ test('unselected tools and all-skipped screens remain unassessed',async({page})=
 test('complete response export is explicit, includes sources and answers, and does not save browser history',async({page})=>{
   await startScreening(page);
   await answerTool(page,'phq-9',[1,1,1,1,1,1,1,1,0]);await answerTool(page,'gad-7',Array(7).fill(1));await page.locator('#screening-finish').click();
-  const pending=page.waitForEvent('download');await page.locator('#screening-export').click();
+  const pending=page.waitForEvent('download');await openDisclosure(page,'#screening-record-options');await page.locator('#screening-export').click();
   const download=await pending;expect(download.suggestedFilename()).toBe('sunrain-screening-record.txt');
   const record=await readFile(await download.path(),'utf8');
   expect(record).toContain('8 / 27');expect(record).toContain('7 / 21');
@@ -463,24 +479,24 @@ test('self-help and provider instructions remain available without JavaScript',a
   await expect(page.locator('noscript a[href="https://www.nhs.uk/mental-health/children-and-young-adults/mental-health-support/how-to-get-support/where-to-get-support/"]')).toBeVisible();await context.close();
 });
 test('Arabic responsive layout and visible flow screenshots',async({page},testInfo)=>{
-  await page.goto('/ar/check-in/');await page.locator('[data-step="0"] [data-forward]').click();
+  await page.goto('/ar/check-in/');await beginGeneral(page);
   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
   const file=join(tmpdir(),`sunrain-check-in-ar-${testInfo.project.name}.png`);await page.screenshot({path:file,fullPage:true});
   await testInfo.attach('Arabic check-in',{path:file,contentType:'image/png'});
-  await page.goto('/zh-hans/support/');await page.locator('#support-region').selectOption('US');await page.locator('[data-note-field]').first().fill('最近很难集中注意力');
+  await page.goto('/zh-hans/support/');await openDisclosure(page,'#contact-preparation');await page.locator('#support-region').selectOption('US');await page.locator('[data-note-field]').first().fill('最近很难集中注意力');
   const supportFile=join(tmpdir(),`sunrain-support-zh-${testInfo.project.name}.png`);await page.screenshot({path:supportFile,fullPage:true});await testInfo.attach('Help preparation',{path:supportFile,contentType:'image/png'});
 });
 
 test('sleep and worry lead to specific four-step guides, with care available throughout',async({page})=>{
   for(const locale of locales) for(const id of ['sleep','worry']) {
     await page.goto(path(locale,`/self-help/${id}/`));await expect(page.locator('#guided-activity ol li')).toHaveCount(4);
-    await page.locator('input[value="same"]').check();await expect(page.locator('#feedback-same')).toBeVisible();
+    if(!await page.locator('#activity-reflection').isVisible())await page.locator('#guide-stop').click();await page.locator('input[value="same"]').check();await expect(page.locator('#feedback-same')).toBeVisible();
     await expect(page.locator('#activity-reflection [data-prepare-support]')).toBeVisible();
   }
 });
 
 test('explicit skip clears selected answers and all basic-needs results offer care first',async({page})=>{
-  await page.goto('/check-in/');await page.locator('[data-step="0"] [data-forward]').click();
+  await page.goto('/check-in/');await beginGeneral(page);
   await page.locator('input[value="mood"]').check();await page.locator('[data-step="1"] [data-skip]').click();
   await page.locator('input[value="basicNeeds"]').check();await page.locator('button[type="submit"]').click();
   await expect(page.locator('#function-care')).toBeVisible();
@@ -506,12 +522,12 @@ test('legacy English bookmarks remain available with a canonical default-languag
 });
 
 test('long activity plans remain intact and personal edits survive another preparation',async({page})=>{
-  await page.goto('/self-help/one-step/');
+  await page.goto('/self-help/one-step/');await page.locator('#guide-stop').click();await openDisclosure(page,'[data-activity-note]');
   const fields=page.locator('[data-activity-note] [data-note-field]');
   const plan='Example plan '.repeat(150);
   const timing='Example timing '.repeat(100);
   await fields.nth(0).fill(plan);await fields.nth(1).fill(timing);
-  await page.locator('input[value="same"]').check();
+  if(!await page.locator('#activity-reflection').isVisible())await page.locator('#guide-stop').click();await page.locator('input[value="same"]').check();
   await page.locator('#activity-reflection [data-prepare-support]').click();
   await expect(page.locator('#preparation-status')).toHaveText(copy.en.flow.recordTruncated);
   await expect(fields.nth(0)).toHaveValue(plan);await expect(fields.nth(1)).toHaveValue(timing);
@@ -535,7 +551,7 @@ test('keyboard alone can reach, complete and carry a check-in into help preparat
     }
     await expect(control).toBeFocused();
   }
-  await tabTo('[data-step="0"] [data-forward]');await page.keyboard.press('Enter');
+  await tabTo('[data-screen-stage="choose"] [data-screening-exit]');await page.keyboard.press('Enter');
   await tabTo('input[value="mood"]');await page.keyboard.press('Space');
   await tabTo('[data-step="1"] [data-forward]');await page.keyboard.press('Enter');
   await tabTo('input[value="recent"]');await page.keyboard.press('Space');
@@ -568,7 +584,7 @@ test('320px layouts keep navigation intact and translated Back actions on one ro
     for(const button of await page.locator('#theme-menu button').all())expect((await button.boundingBox()).height).toBeGreaterThanOrEqual(44);
     await page.keyboard.press('Escape');
     await expect(page.locator('#theme-toggle')).toBeFocused();
-    await page.locator('[data-step="0"] [data-forward]').click();await alignedStepActions(page,1);
+    await beginGeneral(page);await alignedStepActions(page,1);
     await page.locator('[data-step="1"] [data-forward]').click();await alignedStepActions(page,2);
     expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
     await page.goto(path(locale,'/relax/sounds/'));
@@ -579,6 +595,7 @@ test('320px layouts keep navigation intact and translated Back actions on one ro
     await page.goto(path(locale,'/breathing/'));
     await page.addStyleTag({content:'::-webkit-scrollbar{width:15px}'});
     await entranceSettled(page);
+    await openDisclosure(page,'#breathing-options');
     const offsets=await page.locator('.mode-btn').evaluateAll(buttons=>buttons.map(button=>
       button.firstElementChild.getBoundingClientRect().top-button.getBoundingClientRect().top));
     expect(Math.max(...offsets)-Math.min(...offsets)).toBeLessThanOrEqual(1);
@@ -606,4 +623,70 @@ test('activity cards align their final action across translated desktop rows',as
     }
     for(const bottoms of rows.values())expect(Math.max(...bottoms)-Math.min(...bottoms)).toBeLessThanOrEqual(1);
   }
+});
+
+test('platform introduction keeps one primary self-check action in view in every language',async({page},testInfo)=>{
+  for(const locale of locales){
+    await page.goto(path(locale,'/'));
+    const hero=page.locator('.platform-hero');
+    await expect(hero.locator('h1')).toHaveCount(1);
+    await expect(hero.locator('a')).toHaveCount(1);
+    await expect(hero.locator('#home-check-in')).toHaveAttribute('href',path(locale,'/check-in/'));
+    await expect(hero.locator('.hero-description')).toContainText('Sunrain');
+    const button=await hero.locator('#home-check-in').boundingBox();
+    expect(button.height).toBeGreaterThanOrEqual(44);
+    expect(button.y+button.height).toBeLessThanOrEqual(await page.evaluate(()=>innerHeight));
+    expect(await hero.locator('img').evaluate((img:HTMLImageElement)=>img.complete&&img.naturalWidth>0)).toBe(true);
+    expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+    await testInfo.attach(`home-${locale}`,{body:await page.screenshot(),contentType:'image/png'});
+  }
+});
+
+test('guided activity reveals reflection and an optional note after finishing or stopping',async({page})=>{
+  await page.goto('/self-help/grounding/');
+  await expect(page.locator('#activity-reflection')).toBeHidden();
+  await expect(page.locator('[data-activity-note]')).toBeHidden();
+  await expect(page.locator('.activity-examples')).not.toHaveAttribute('open','');
+  await expect(page.locator('#guide-next')).toBeVisible();
+  await page.locator('#guide-stop').click();
+  await expect(page.locator('#activity-reflection')).toBeVisible();
+  await expect(page.locator('[data-activity-note]')).toBeVisible();
+  await expect(page.locator('[data-activity-note] [data-note-field]').first()).toBeHidden();
+  await openDisclosure(page,'[data-activity-note]');
+  await expect(page.locator('[data-activity-note] [data-note-field]').first()).toBeVisible();
+  await page.reload();
+  await expect(page.locator('#activity-reflection')).toBeHidden();
+  await expect(page.locator('[data-activity-note]')).toBeHidden();
+});
+
+test('service finding keeps the optional conversation form separate and opens it explicitly',async({page})=>{
+  await page.goto('/support/');
+  await expect(page.locator('#contact-preparation')).not.toHaveAttribute('open','');
+  await expect(page.locator('#contact-note')).toBeHidden();
+  await page.locator('#support-region').selectOption('US');
+  await expect(page.locator('[data-service-region="US"]')).toBeVisible();
+  await expect(page.locator('#contact-note')).toBeHidden();
+  await page.locator('.service-picker a[href="#contact-note"]').click();
+  await expect(page.locator('#contact-preparation')).toHaveAttribute('open','');
+  await expect(page.locator('#contact-note [data-note-field]').first()).toBeVisible();
+  expect(new URL(page.url()).hash).toBe('');
+});
+
+test('sound mixing and breathing settings start closed and remain keyboard accessible',async({page})=>{
+  await page.goto('/relax/sounds/');
+  await expect(page.locator('#sound-mixer')).not.toHaveAttribute('open','');
+  await expect(page.locator('.preset-btn').first()).toBeVisible();
+  await expect(page.locator('.play-btn').first()).toBeHidden();
+  await page.locator('#sound-mixer > summary').focus();await page.keyboard.press('Enter');
+  await expect(page.locator('.play-btn').first()).toBeVisible();
+  await page.goto('/breathing/');
+  await expect(page.locator('#breathing-options')).not.toHaveAttribute('open','');
+  await expect(page.locator('.mode-btn').first()).toBeHidden();
+  await page.locator('#breathing-options > summary').focus();await page.keyboard.press('Enter');
+  await expect(page.locator('.mode-btn').first()).toBeVisible();
+  await page.emulateMedia({reducedMotion:'reduce'});
+  await page.locator('#start-btn').click();
+  await expect(page.locator('#timer-text')).toHaveText('3');
+  await expect(page.locator('#breathing-circle')).toHaveCSS('transform','matrix(1, 0, 0, 1, 0, 0)');
+  await page.locator('#reset-btn').click();
 });

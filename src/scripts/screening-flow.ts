@@ -15,14 +15,14 @@ if(app) {
   let queue:string[]=[],position=-1;
   const skipped=new Set<string>();
   const focus=(el:HTMLElement)=>{el.focus({preventScroll:true});el.scrollIntoView({block:'start',behavior:'instant'});};
-  function show(id:string) {
+  function show(id:string,moveFocus=true) {
     general.hidden=true;result.hidden=true;app.hidden=false;
     stages.forEach(stage=>stage.hidden=stage.dataset.screenStage!==id);
     app.querySelector<HTMLElement>('#screening-end').hidden=id==='choose';
     const stage=stages.find(stage=>stage.dataset.screenStage===id);
     const progress=stage.querySelector<HTMLElement>('[data-screening-progress]');
     if(progress)progress.textContent=host.dataset.stepLabel.replace('{current}',String(position+1)).replace('{total}',String(queue.length));
-    focus(stage.querySelector<HTMLElement>('h2'));
+    if(moveFocus)focus(stage.querySelector<HTMLElement>('h2'));
   }
   function reset() {
     age.value='';queue=[];position=-1;skipped.clear();chooseError.textContent='';
@@ -30,6 +30,7 @@ if(app) {
     app.querySelectorAll<HTMLElement>('[data-screening-error]').forEach(el=>el.textContent='');
     const safety=app.querySelector<HTMLElement>('#screening-live-safety');if(safety)safety.hidden=true;
     app.querySelector<HTMLElement>('#screening-age-alternative').hidden=true;
+    app.querySelector<HTMLElement>('#screening-age-help').hidden=true;
     app.querySelector<HTMLElement>('#screening-tool-choices').hidden=false;
     app.querySelector<HTMLButtonElement>('#screening-start-tools').disabled=false;
   }
@@ -43,6 +44,7 @@ if(app) {
   age.addEventListener('change',()=>{
     const alternative=['child','declined'].includes(age.value);
     app.querySelector<HTMLElement>('#screening-age-alternative').hidden=!alternative;
+    app.querySelector<HTMLElement>('#screening-age-help').hidden=age.value===''||age.value==='adult';
     app.querySelector<HTMLElement>('#screening-tool-choices').hidden=alternative;
     app.querySelector<HTMLButtonElement>('#screening-start-tools').disabled=alternative;
     chooseError.textContent='';
@@ -103,7 +105,7 @@ if(app) {
       return {...report,answers,title:stage?.dataset.toolTitle,version:stage?.dataset.version,source:stage?.dataset.source,recall:stage?.dataset.recall};
     });
     const template=document.getElementById('screening-result-template') as HTMLTemplateElement;
-    document.getElementById('screening-results')?.remove();
+    document.querySelectorAll('#screening-results,[data-screening-record-panel]').forEach(el=>el.remove());
     const fragment=template.content.cloneNode(true) as DocumentFragment;
     // Functional impact is volunteered context, not part of the score. Keep
     // that answer and its care invitation even if the scored form is skipped.
@@ -159,6 +161,10 @@ if(app) {
       const link=document.createElement('a');link.href=url;link.download='sunrain-screening-record.txt';link.click();
       setTimeout(()=>URL.revokeObjectURL(url),1000);
     });
+    // Optional record management follows the practical next steps in reading order.
+    // Move the existing nodes so export/revision listeners keep their state.
+    const recordPanel=fragment.querySelector<HTMLElement>('[data-screening-record-panel]');
+    recordPanel.remove();result.querySelector('#result-options').after(recordPanel);
     result.querySelector('h2').after(fragment);
     const concerns=[...new Set(reports.filter(r=>r.status==='complete'&&r.score>0).flatMap(r=>{
       if(r.id!=='k6')return [r.id==='phq-9'?'mood':'worry'];
@@ -173,6 +179,6 @@ if(app) {
       impact:context,title:copy.results,
     }}));
   });
-  reset();
-  window.addEventListener('pageshow',event=>{if(event.persisted){reset();app.hidden=true;document.getElementById('screening-results')?.remove();}});
+  reset();show('choose',false);
+  window.addEventListener('pageshow',event=>{if(event.persisted){reset();app.hidden=true;document.querySelectorAll('#screening-results,[data-screening-record-panel]').forEach(el=>el.remove());}});
 }

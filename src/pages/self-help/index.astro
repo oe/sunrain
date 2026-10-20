@@ -3,17 +3,19 @@ import SupportLayout from '@/layouts/SupportLayout.astro';
 import ContentSources from '@/components/ContentSources.astro';
 import { getLanguageFromPath,getLocalizedPath,t } from '@/lib/i18n';
 import { getSupportCopy,supportSources } from '@/lib/support';
+import { getPlatformCopy } from '@/lib/platform';
 const lang=getLanguageFromPath(Astro.url.pathname);
 const c=getSupportCopy(lang);
+const p=getPlatformCopy(lang);
 ---
 <SupportLayout title={c.ui.selfHelp}>
   <h1>{c.ui.selfHelp}</h1>
-  <p>{c.common.before}</p><p>{c.common.stop}</p>
+  <p class="page-intro">{p.guidesIntro}</p>
   <div class="support-grid">
-    {[['grounding',c.guides.grounding],['one-step',c.guides.smallStep],['sleep',c.guides.sleepRoutine],['worry',c.guides.worryPlan]].map(([id,guide]) => <article class="support-card"><h2>{(guide as typeof c.guides.grounding).title}</h2><p>{(guide as typeof c.guides.grounding).purpose}</p><a class="button primary" href={getLocalizedPath(`/self-help/${id}/`,lang)}>{c.flow.tryActivity}</a></article>)}
+    {[['grounding',c.guides.grounding,p.grounding],['one-step',c.guides.smallStep,p.oneStep],['sleep',c.guides.sleepRoutine,p.sleep],['worry',c.guides.worryPlan,p.worry]].map(([id,guide,purpose]) => <article class="support-card"><h2>{(guide as typeof c.guides.grounding).title}</h2><p>{purpose as string}</p><a class="button" href={getLocalizedPath(`/self-help/${id}/`,lang)}>{c.flow.tryActivity}</a></article>)}
     <article class="support-card"><h2>{t('nav.relax',lang)}</h2><p>{t('relax.subtitle',lang)}</p><div class="actions"><a class="button" href={getLocalizedPath('/breathing/',lang)}>{t('home.hero.tryBreathing',lang)}</a><a class="button" href={getLocalizedPath('/relax/sounds/',lang)}>{t('nav.relax',lang)}</a></div></article>
   </div>
-  <div class="support-card"><h2>{c.ui.who}</h2><p>{c.ui.external}</p><a href={supportSources.who.url} target="_blank" rel="noreferrer">WHO · Doing What Matters in Times of Stress</a></div>
-  <p>{c.common.noChange}</p><a class="button" href={getLocalizedPath('/support/',lang)}>{c.ui.support}</a>
+  <details><summary>{c.ui.who}</summary><p>{c.ui.external}</p><a href={supportSources.who.url} target="_blank" rel="noreferrer">WHO · Doing What Matters in Times of Stress</a></details>
+  <details><summary>{p.guideTips}</summary><p>{c.common.before}</p><p>{c.common.stop}</p><p>{c.common.noChange}</p></details>
   <ContentSources sources={['selfCare','who']} />
 </SupportLayout>

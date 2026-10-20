@@ -7,7 +7,7 @@ const lang = getLanguageFromPath(Astro.url.pathname) as Language;
 ---
 
 <BaseLayout title={t('errors.notFound.title', lang)}>
-  <div class="min-h-[60vh] flex items-center justify-center">
+  <div class="not-found-page min-h-[60vh] flex items-center justify-center px-6 py-16">
     <div class="text-center">
       <div class="flex justify-center mb-6">
         <Icon name="CloudRain" size={80} className="text-gray-400 dark:text-gray-500"  />
@@ -20,7 +20,7 @@ const lang = getLanguageFromPath(Astro.url.pathname) as Language;
       </p>
       <a
         href={getLocalizedPath('/', lang)}
-        class="inline-flex items-center px-6 py-3 bg-amber-500 hover:bg-amber-600 text-white font-medium rounded-full transition-colors"
+        class="platform-button primary"
       >
         {t('errors.notFound.backHome', lang)}
       </a>

@@ -5,33 +5,29 @@ import HelpPreparation from '@/components/HelpPreparation.astro';
 import GuidedActivity from '@/components/GuidedActivity.astro';
 import ScreeningFlow from '@/components/ScreeningFlow.astro';
 import {getScreeningContent} from '@/lib/screening-content';
-import { getLanguageFromPath, getLocalizedPath, t } from '@/lib/i18n';
+import { getLanguageFromPath, getLocalizedPath } from '@/lib/i18n';
 import { getSupportCopy } from '@/lib/support';
+import { getPlatformCopy } from '@/lib/platform';
 const lang = getLanguageFromPath(Astro.url.pathname);
 const c = getSupportCopy(lang);
+const p = getPlatformCopy(lang);
 const {copy:s} = getScreeningContent(lang);
 const concerns = ['mood','worry','sleep','energy','other'] as const;
 const durations = ['recent','weeks','months','unsure'] as const;
 const impacts = ['manageable','disruptive','basicNeeds'] as const;
 ---
 <SupportLayout title={c.entry.title}>
-  <h1>{c.entry.title}</h1>
-  <p>{s.intro}</p>
-  <p class="muted">{c.ui.privacy}</p>
-  <div class="actions">
-    <a class="button" href={getLocalizedPath('/self-help/',lang)}>{c.ui.selfHelp}</a>
-    <a class="button" href={getLocalizedPath('/support/',lang)}>{c.ui.support}</a>
-    <a class="button" href={getLocalizedPath('/crisis/',lang)}>{t('nav.crisis',lang)}</a>
-  </div>
+  <h1>{p.start}</h1>
+  <p class="muted flow-privacy">{p.privacy}</p>
   <div class="support-card" id="check-in-app" data-step-label={c.flow.step} data-energy-label={c.ui.energy} data-function-label={c.ui.basicNeeds} data-labels={JSON.stringify({ concerns:c.ui.concerns,duration:c.ui.duration,impact:c.ui.impact,skip:c.ui.skip,step:c.flow.step,result:c.ui.result,actionReason:c.flow.actionReason,recordTruncated:c.flow.recordTruncated })}>
     <ScreeningFlow />
     <form id="check-in-form" autocomplete="off">
       <section data-step="0">
-        <h2 tabindex="-1">{s.begin}</h2>
-        <p>{c.flow.scopeShort}</p>
+        <h2 tabindex="-1">{s.general}</h2>
+        <p>{p.boundary}</p>
         <div class="actions"><button class="button primary" id="start-screening" type="button" hidden>{s.begin}</button><button class="button" data-forward type="button" hidden>{s.general}</button></div>
         <p class="muted" data-youth-support>{c.ui.younger}</p>
-        <p>{s.coverage}</p>
+        <details><summary>{p.details}</summary><p>{s.coverage}</p><p>{s.intro}</p></details>
       </section>
       <section data-step="1" hidden>
         <fieldset><legend tabindex="-1"><span class="step-label" data-progress>{c.flow.step.replace('{current}','1').replace('{total}','2')}</span>{c.ui.concerns}</legend>
@@ -59,11 +55,11 @@ const impacts = ['manageable','disruptive','basicNeeds'] as const;
       <aside class="urgent" id="function-care" hidden><p>{c.flow.functionCare}</p><a class="button primary" href="#prepare-support" data-prepare-support>{c.flow.prepare}</a></aside>
       <p id="action-reason">{c.flow.actionReason}</p>
       <div id="result-options" class="support-grid">
-        <article class="support-card" data-action="grounding"><h3>{c.guides.grounding.title}</h3><p>{c.guides.grounding.purpose}</p><a class="button primary" href={getLocalizedPath('/self-help/grounding/',lang)}>{c.flow.tryActivity}</a></article>
-        <article class="support-card" data-action="one-step"><h3>{c.guides.smallStep.title}</h3><p>{c.guides.smallStep.purpose}</p><a class="button primary" href={getLocalizedPath('/self-help/one-step/',lang)}>{c.flow.tryActivity}</a></article>
-        <article class="support-card" data-action="sleep"><h3>{c.guides.sleepRoutine.title}</h3><p>{c.guides.sleepRoutine.purpose}</p><a class="button primary" href={getLocalizedPath('/self-help/sleep/',lang)}>{c.flow.tryActivity}</a></article>
-        <article class="support-card" data-action="worry"><h3>{c.guides.worryPlan.title}</h3><p>{c.guides.worryPlan.purpose}</p><a class="button primary" href={getLocalizedPath('/self-help/worry/',lang)}>{c.flow.tryActivity}</a></article>
-        <article class="support-card" data-action="choose"><h3>{c.ui.selfHelp}</h3><p>{c.common.before}</p><a class="button primary" href={getLocalizedPath('/self-help/',lang)}>{c.ui.selfHelp}</a></article>
+        <article class="support-card" data-action="grounding"><h3>{c.guides.grounding.title}</h3><p>{p.grounding}</p><a class="button primary" href={getLocalizedPath('/self-help/grounding/',lang)}>{c.flow.tryActivity}</a></article>
+        <article class="support-card" data-action="one-step"><h3>{c.guides.smallStep.title}</h3><p>{p.oneStep}</p><a class="button primary" href={getLocalizedPath('/self-help/one-step/',lang)}>{c.flow.tryActivity}</a></article>
+        <article class="support-card" data-action="sleep"><h3>{c.guides.sleepRoutine.title}</h3><p>{p.sleep}</p><a class="button primary" href={getLocalizedPath('/self-help/sleep/',lang)}>{c.flow.tryActivity}</a></article>
+        <article class="support-card" data-action="worry"><h3>{c.guides.worryPlan.title}</h3><p>{p.worry}</p><a class="button primary" href={getLocalizedPath('/self-help/worry/',lang)}>{c.flow.tryActivity}</a></article>
+        <article class="support-card" data-action="choose"><h3>{c.ui.selfHelp}</h3><p>{p.guidesIntro}</p><a class="button primary" href={getLocalizedPath('/self-help/',lang)}>{c.ui.selfHelp}</a></article>
         <article class="support-card"><h3>{c.seekHelp.title}</h3><p>{c.ui.care}</p><a class="button" href="#prepare-support" data-prepare-support>{c.flow.prepare}</a></article>
       </div>
       <div id="inline-activity" hidden></div>
@@ -89,6 +85,7 @@ const impacts = ['manageable','disruptive','basicNeeds'] as const;
   const inlineActivity=document.getElementById('inline-activity');
   function closeActivity(){
     inlineActivity.hidden=true;document.getElementById('result-options').hidden=false;
+    const records=document.querySelector<HTMLElement>('[data-screening-record-panel]');if(records)records.hidden=false;
     document.getElementById('result-title').focus({preventScroll:true});
     document.getElementById('result-title').scrollIntoView({block:'start',behavior:'instant'});
   }
@@ -102,6 +99,7 @@ const impacts = ['manageable','disruptive','basicNeeds'] as const;
       inlineActivity.dataset.guide=id;initGuidedActivities(inlineActivity);
     }
     document.getElementById('result-options').hidden=true;inlineActivity.hidden=false;
+    const records=document.querySelector<HTMLElement>('[data-screening-record-panel]');if(records)records.hidden=true;
     const title=inlineActivity.querySelector<HTMLElement>('[data-activity-title]');
     title.focus({preventScroll:true});title.scrollIntoView({block:'start',behavior:'instant'});
   }));
@@ -110,7 +108,7 @@ const impacts = ['manageable','disruptive','basicNeeds'] as const;
   first.hidden = false;
   function showStep(next: number) {
     screeningActive=false;
-    document.getElementById('screening-results')?.remove();
+    document.querySelectorAll('#screening-results,[data-screening-record-panel]').forEach(el=>el.remove());
     document.getElementById('screening-flow').hidden=true;
     document.getElementById('general-result-scope').hidden=false;
     index = next;
@@ -135,7 +133,7 @@ const impacts = ['manageable','disruptive','basicNeeds'] as const;
     event.preventDefault();
     if(index !== 2) return;
     screeningActive=false;
-    document.getElementById('screening-results')?.remove();
+    document.querySelectorAll('#screening-results,[data-screening-record-panel]').forEach(el=>el.remove());
     document.getElementById('general-result-scope').hidden=false;
     document.getElementById('result-title').textContent=labels.result;
     document.getElementById('action-reason').textContent=labels.actionReason;

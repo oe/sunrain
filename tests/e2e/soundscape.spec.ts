@@ -51,6 +51,7 @@ async function expectAudio(page: Page, active: number) {
   else await expect.poll(async () => (await audioState(page)).peak).toBeLessThan(0.0001);
 }
 async function play(page: Page, id: string) {
+  if(await page.locator('#sound-mixer').getAttribute('open')===null)await page.locator('#sound-mixer > summary').click();
   const button = page.locator(`.play-btn[data-sound="${id}"]`);
   await button.click();
   await expect(button).toHaveAttribute('aria-pressed', 'true');

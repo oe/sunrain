@@ -9,6 +9,10 @@ export function initGuidedActivities(root:ParentNode=document){
   const activity=byId('guided-activity');
   const steps=[...activity.querySelectorAll<HTMLElement>('[data-guide-step]')];
   const progress=byId('guide-progress');
+  const reflection=byId('activity-reflection');
+  const note=container.querySelector<HTMLDetailsElement>('[data-activity-note]');
+  // Progressive enhancement: the complete guide remains available without JS.
+  reflection.hidden=true;note.hidden=true;
   let current=0;
   function render(focus=false){
     steps.forEach((step,i)=>step.hidden=i!==current);
@@ -22,6 +26,7 @@ export function initGuidedActivities(root:ParentNode=document){
   byId('guide-back').addEventListener('click',()=>{current=Math.max(0,current-1);render(true);});
   byId('guide-next').addEventListener('click',()=>{current=Math.min(steps.length-1,current+1);render(true);});
   function reflect(){
+    reflection.hidden=false;note.hidden=false;
     const title=container.querySelector<HTMLElement>('#activity-reflection h2');
     title.focus({preventScroll:true});title.scrollIntoView({block:'start',behavior:'instant'});
   }
@@ -51,6 +56,7 @@ export function initGuidedActivities(root:ParentNode=document){
     byId('feedback-intro').hidden=false;
     byId('feedback-urgent').hidden=true;byId('other-activities').hidden=false;
     current=0;render();
+    reflection.hidden=true;note.hidden=true;note.open=false;
   });
 
   }
