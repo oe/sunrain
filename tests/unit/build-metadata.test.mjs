@@ -6,6 +6,7 @@ import { join } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { test } from 'node:test';
 import { buildMetadata, readBuildMetadata } from '../../scripts/build-metadata.mjs';
+import { verifyBuildIdentity } from '../../scripts/verify-build-identity.mjs';
 
 function fixture(t, withGit = true) {
   const root = mkdtempSync(join(tmpdir(), 'sunrain-metadata-'));
@@ -94,4 +95,24 @@ test('production hook rejects source edits during a build', (t) => {
   writeFileSync(join(root, 'source.txt'), 'changed while building');
   assert.throws(() => integration.hooks['astro:build:done']({ dir: pathToFileURL(`${root}/`) }),
     /Source changed during the build/);
+});
+
+test('artifact verification rejects another commit even when source contents match', (t) => {
+  const { root, git } = fixture(t);
+  const initial = readBuildMetadata(root);
+  mkdirSync(join(root, 'dist'));
+  writeFileSync(join(root, 'dist/build-metadata.json'), JSON.stringify(initial));
+  assert.deepEqual(verifyBuildIdentity(root, initial.commit), initial);
+  assert.throws(() => verifyBuildIdentity(root, 'a'.repeat(40)), /different CI commit/);
+  git('commit', '--allow-empty', '-m', 'Different commit, identical files');
+  assert.equal(readBuildMetadata(root).sourceHash, initial.sourceHash);
+  assert.throws(() => verifyBuildIdentity(root, git('rev-parse', 'HEAD')), /differs from the checked-out source/);
+});
+
+test('an artifact that truthfully records dirty source still cannot be published', (t) => {
+  const { root } = fixture(t);
+  writeFileSync(join(root, 'source.txt'), 'uncommitted changes');
+  mkdirSync(join(root, 'dist'));
+  writeFileSync(join(root, 'dist/build-metadata.json'), JSON.stringify(readBuildMetadata(root)));
+  assert.throws(() => verifyBuildIdentity(root), /require clean source/);
 });
