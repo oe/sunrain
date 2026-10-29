@@ -24,7 +24,9 @@ const sections=[['signs',c.signs],['today',c.steps],['treatment',c.treatment],['
     <section id="signs" aria-labelledby="signs-heading" class="understand-section">
       <h2 id="signs-heading">{c.signs}</h2>
       <div class="understand-signs">{topic.signs.map((text,i)=><div><Icon name={icons[i]} size={25} /><p>{text}</p></div>)}</div>
-      <details class="understand-context"><summary>{c.context}</summary><p>{topic.context}</p></details>
+      {id==='anxiety'
+        ? <aside class="understand-context understand-context-visible" data-context-always-visible><h3>{c.context}</h3><p>{topic.context}</p></aside>
+        : <details class="understand-context"><summary>{c.context}</summary><p>{topic.context}</p></details>}
     </section>
     <section id="today" aria-labelledby="today-heading" class="understand-section">
       <h2 id="today-heading">{c.steps}</h2><p class="understand-muted">{c.stepsIntro}</p>

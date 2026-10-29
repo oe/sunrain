@@ -39,6 +39,8 @@ art, not medical diagrams or recovery forecasts. They have empty alt attributes;
 all essential information is ordinary, translated HTML. Three short symptom
 cards and an ordered set of small steps offer visual structure without invented
 statistics, curves, disease probabilities or a promised recovery timeline.
+The anxiety guide's warning about new/severe chest pain, fainting and major
+breathing difficulty is directly visible, rather than hidden in a disclosure.
 
 The pages reuse the site's paper/blue palette and existing self-help and help
 routes. Source and treatment details remain readable without JavaScript. Index,

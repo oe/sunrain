@@ -14,6 +14,7 @@ test('every language connects illustrated topic reading to practical support wit
     await expect(page.locator('[data-understand-topic]')).toHaveAttribute('data-understand-topic',topics[i%4]);
     await expect(page.locator('h1')).not.toBeEmpty();
     await expect(page.locator('input,textarea')).toHaveCount(0);
+    if(topics[i%4]==='anxiety')await expect(page.locator('[data-context-always-visible]')).toBeVisible();
     await expect(page.locator('script[src*="cloudflareinsights"]')).toHaveCount(0);
     const art=page.locator('.understand-hero img');
     await expect(art).toHaveAttribute('alt','');

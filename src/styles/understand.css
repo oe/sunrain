@@ -37,6 +37,7 @@ html[dir=rtl] .understand-back-icon{transform:none}
 .understand-context{margin-top:24px;border-block-start:1px solid var(--platform-line)}
 .understand-context summary{padding-block:16px;cursor:pointer;min-height:52px;font-size:15px;font-weight:600}
 .understand-context p{padding-block:4px 14px;color:var(--platform-muted);font-size:16px}
+.understand-context-visible h3{font-size:15px;padding-top:18px;margin-bottom:12px}
 .understand-page .understand-muted{color:var(--platform-muted);font-size:16px;margin-block:-8px 26px}
 .understand-steps{list-style:none;padding:0;display:grid;gap:24px;margin:32px 0}
 .understand-steps li{display:flex;gap:20px;align-items:flex-start;max-width:780px}
