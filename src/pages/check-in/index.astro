@@ -8,9 +8,11 @@ import {getScreeningContent} from '@/lib/screening-content';
 import { getLanguageFromPath, getLocalizedPath } from '@/lib/i18n';
 import { getSupportCopy } from '@/lib/support';
 import { getPlatformCopy } from '@/lib/platform';
+import { getUnderstandingCopy } from '@/lib/understand';
 const lang = getLanguageFromPath(Astro.url.pathname);
 const c = getSupportCopy(lang);
 const p = getPlatformCopy(lang);
+const u = getUnderstandingCopy(lang).common;
 const {copy:s} = getScreeningContent(lang);
 const concerns = ['mood','worry','sleep','energy','other'] as const;
 const durations = ['recent','weeks','months','unsure'] as const;
@@ -65,6 +67,7 @@ const impacts = ['manageable','disruptive','basicNeeds'] as const;
       <div id="inline-activity" hidden></div>
       {['grounding','one-step','sleep','worry'].map(id=><template data-inline-guide={id}><GuidedActivity id={id} embedded /></template>)}
       <a href={getLocalizedPath('/self-help/',lang)}>{c.ui.selfHelp}</a>
+      <p><a href={getLocalizedPath('/understand/',lang)} target="_blank" rel="noopener noreferrer" title={u.newTab}>{u.learnLink}<span aria-hidden="true"> ↗</span><span class="sr-only"> · {u.newTab}</span></a></p>
       <details><summary>{c.flow.viewSummary}</summary><p>{c.ui.limits}</p><p id="result-summary" class="result-summary"></p><button class="button" id="revise-check-in" type="button">{c.ui.back}</button></details>
       <HelpPreparation kind="check-in-appointment" />
     </section>

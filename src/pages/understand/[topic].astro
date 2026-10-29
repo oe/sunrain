@@ -1,0 +1,51 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { getLanguageFromPath, getLocalizedPath } from '@/lib/i18n';
+import { getUnderstandingCopy, UNDERSTAND_TOPICS, understandingSources, UNDERSTANDING_CHECKED, type UnderstandingTopic } from '@/lib/understand';
+import { Icon } from '@/components/Icon';
+import '@/styles/understand.css';
+export function getStaticPaths() { return Object.keys(UNDERSTAND_TOPICS).map(topic=>({params:{topic}})); }
+const id=Astro.params.topic as UnderstandingTopic;
+const lang=getLanguageFromPath(Astro.url.pathname);
+const {common:c, topics}=getUnderstandingCopy(lang);
+const topic=topics[id], meta=UNDERSTAND_TOPICS[id];
+const sources: Array<keyof typeof understandingSources>=[...meta.sources];
+const icons=['Heart','Wind','Clock'] as const;
+const sections=[['signs',c.signs],['today',c.steps],['treatment',c.treatment],['care',c.care],['references',c.references]];
+---
+<BaseLayout title={topic.title} description={topic.teaser} image={`/images/understand/${id}.webp`} type="article">
+  <article class="understand-page understand-article" data-understand-topic={id}>
+    <a class="understand-back" href={getLocalizedPath('/understand/',lang)}><Icon name="ArrowRight" size={18} className="understand-back-icon directional" />{c.back}</a>
+    <header class="understand-hero">
+      <div><p class="understand-eyebrow">{c.nav}</p><h1>{topic.title}</h1><p class="understand-lead">{topic.intro}</p><a class="platform-link" href="#today">{c.steps}<Icon name="ArrowRight" size={19} className="directional" /></a></div>
+      <img src={`/images/understand/${id}.webp`} width="1000" height="667" alt="" fetchpriority="high" decoding="async" />
+    </header>
+    <nav class="understand-sections" aria-label={c.browse}>{sections.map(([anchor,label])=><a href={`#${anchor}`}>{label}</a>)}</nav>
+    <section id="signs" aria-labelledby="signs-heading" class="understand-section">
+      <h2 id="signs-heading">{c.signs}</h2>
+      <div class="understand-signs">{topic.signs.map((text,i)=><div><Icon name={icons[i]} size={25} /><p>{text}</p></div>)}</div>
+      <details class="understand-context"><summary>{c.context}</summary><p>{topic.context}</p></details>
+    </section>
+    <section id="today" aria-labelledby="today-heading" class="understand-section">
+      <h2 id="today-heading">{c.steps}</h2><p class="understand-muted">{c.stepsIntro}</p>
+      <ol class="understand-steps">{topic.steps.map((text,i)=><li><span class="understand-step-number" aria-hidden="true">{new Intl.NumberFormat(lang).format(i+1)}</span><p>{text}</p></li>)}</ol>
+      <a class="platform-link" href={getLocalizedPath(id==='bipolar'?'/support/':meta.activity,lang)}>{id==='bipolar'?c.support:c.activity}<Icon name="ArrowRight" size={19} className="directional" /></a>
+    </section>
+    <section id="treatment" aria-labelledby="treatment-heading" class="understand-section">
+      <h2 id="treatment-heading">{c.treatment}</h2><p class="understand-muted">{c.treatmentNote}</p>
+      <div class="understand-treatment">{topic.treatments.map(treatment=><div><h3>{treatment.title}</h3><p>{treatment.body}</p></div>)}</div>
+    </section>
+    <section id="care" aria-labelledby="care-heading" class="understand-section">
+      <h2 id="care-heading">{c.care}</h2><p>{topic.care}</p>
+      <a class="platform-button primary" href={getLocalizedPath('/support/',lang)}>{c.support}<Icon name="ArrowRight" size={20} className="directional" /></a>
+      <details class="understand-context"><summary>{c.young}</summary><p>{c.youngText}</p></details>
+      <aside class="understand-urgent"><p>{c.urgent}</p><a href={getLocalizedPath('/crisis/',lang)}>{c.crisis}<Icon name="ArrowRight" size={18} className="directional" /></a></aside>
+    </section>
+    <p class="understand-more"><a href={getLocalizedPath('/understand/',lang)}>{c.more}<Icon name="ArrowRight" size={19} className="directional" /></a></p>
+    <section id="references" aria-labelledby="references-heading" class="understand-references">
+      <h2 id="references-heading">{c.references}</h2><p>{c.referenceIntro}</p>
+      <ol>{sources.map(key=><li><a href={understandingSources[key].url} target="_blank" rel="noreferrer" lang="en">{understandingSources[key].title}<Icon name="ArrowRight" size={16} /></a><span>{c.sourcesLanguage}</span></li>)}</ol>
+      <p>{c.checked} · <time datetime={UNDERSTANDING_CHECKED}>{new Intl.DateTimeFormat(lang,{dateStyle:'long',timeZone:'UTC'}).format(new Date(`${UNDERSTANDING_CHECKED}T00:00:00Z`))}</time></p><p>{c.review}</p>
+    </section>
+  </article>
+</BaseLayout>

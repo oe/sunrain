@@ -1,0 +1,146 @@
+{
+  "common": {
+    "nav": "Understand",
+    "title": "Make sense of what you’re feeling",
+    "intro": "A little understanding can make the next step feel clearer. Explore common experiences, what may help and how treatment works.",
+    "browse": "Explore a topic",
+    "back": "All topics",
+    "open": "Explore this topic",
+    "signs": "What you might notice",
+    "context": "Look at the whole picture",
+    "steps": "One small step for today",
+    "stepsIntro": "Choose what feels manageable. You can stop, adapt it or ask for support instead.",
+    "treatment": "How treatment can help",
+    "care": "When to ask for support",
+    "references": "References & further reading",
+    "referenceIntro": "These are the original sources used for this guide. The linked pages below are in English; this page is Sunrain’s own summary, not an official translation or endorsement.",
+    "checked": "Sources checked",
+    "review": "Independent clinical and native-language review is still pending. These summaries are educational, not a diagnosis or a personal treatment plan.",
+    "scope": "Understanding and everyday support. You do not need a diagnosis to ask for help.",
+    "young": "For younger readers",
+    "youngText": "You can use these pages at any age. Treatment choices depend on age and circumstances. A youth health professional or a safe, trusted adult can help you find support; the adult treatment guidelines below should not be applied directly to children.",
+    "next": "Where would you like to go next?",
+    "activity": "Choose a self-help activity",
+    "support": "Prepare to ask for help",
+    "checkIn": "Explore a symptom questionnaire",
+    "checkInScope": "Our questionnaires cover limited symptom areas, not every topic here. They cannot confirm or rule out a condition.",
+    "crisis": "Get urgent support",
+    "urgent": "If you might act on thoughts of harming yourself, cannot keep yourself safe or are in immediate danger, contact local emergency services or crisis support now.",
+    "learnLink": "Understand the feelings behind it",
+    "more": "Explore other topics",
+    "treatmentNote": "The options below describe professional care. Our short activities can support daily coping; they are not complete treatment programmes.",
+    "selfHelpLink": "Explore everyday self-help",
+    "sourcesLanguage": "English original",
+    "newTab": "Opens in a new tab"
+  },
+  "topics": {
+    "depression": {
+      "title": "Low mood & depression",
+      "teaser": "When sadness, numbness or loss of interest starts to take up more space.",
+      "intro": "Depression can affect feelings, thinking and the body. It is treatable, and it is not a failure of effort or character.",
+      "signs": [
+        "Feeling low, empty or irritable, or losing interest in things that usually matter.",
+        "Changes in sleep, appetite, energy or concentration; ordinary tasks may feel much harder.",
+        "A pattern that persists and affects daily life. Depression often involves symptoms most days for at least two weeks."
+      ],
+      "context": "Low mood can also relate to stress, grief, physical illness or medicines. A depression questionnaire cannot distinguish depression from a depressive episode in bipolar disorder.",
+      "steps": [
+        "Choose one small, meaningful activity, such as eating something or messaging someone you trust.",
+        "Make the step smaller if needed. Notice what was possible without grading yourself.",
+        "Write down changes in sleep, interest and daily functioning to discuss with a professional."
+      ],
+      "treatments": [
+        {
+          "title": "Psychological support",
+          "body": "Options include cognitive behavioural therapy (CBT) and behavioural activation. Some structured self-help programmes include a trained practitioner who supports you and reviews progress."
+        },
+        {
+          "title": "Medication when appropriate",
+          "body": "A clinician may discuss antidepressants depending on symptoms, needs and preferences. Benefits, side effects and follow-up matter; this page does not recommend a medicine or changing a prescription."
+        }
+      ],
+      "care": "Ask for an assessment if symptoms persist, worsen or affect everyday life. You do not need to wait two weeks if you are struggling, unsafe or unable to manage basic needs."
+    },
+    "anxiety": {
+      "title": "Anxiety, worry & panic",
+      "teaser": "When worry feels hard to switch off, or fear arrives in a sudden wave.",
+      "intro": "Anxiety can affect both thoughts and the body. Persistent worry and panic attacks are different experiences; an assessment can help explain what is happening.",
+      "signs": [
+        "Worry that is difficult to control, feeling on edge or repeatedly expecting something bad.",
+        "Muscle tension, restlessness, poor sleep or trouble concentrating.",
+        "A sudden surge of fear with sensations such as a racing heart, shaking or breathlessness. A panic attack alone does not establish panic disorder."
+      ],
+      "context": "Anxiety-like symptoms can have physical or medicine-related causes. New or severe chest pain, fainting or major breathing difficulty needs urgent medical attention, not an assumption that it is panic.",
+      "steps": [
+        "Notice your surroundings and let breathing stay comfortable; there is no need to force deep breaths.",
+        "Separate one worry into what you can influence and what you cannot solve right now.",
+        "Choose a small practical action or tell someone how the worry is affecting your day."
+      ],
+      "treatments": [
+        {
+          "title": "Structured psychological help",
+          "body": "CBT helps people work with patterns of thinking and behaviour. Some anxiety treatments use structured self-help materials, with or without practitioner support depending on the situation."
+        },
+        {
+          "title": "Other care options",
+          "body": "A professional may discuss further psychological treatment or medication when symptoms are persistent or limiting. Treatment is chosen together, rather than by an online score alone."
+        }
+      ],
+      "care": "Seek support when worry, attacks or avoidance disrupt daily life or keep returning. Sudden unfamiliar physical symptoms may need a medical check first."
+    },
+    "sleep": {
+      "title": "Trouble sleeping",
+      "teaser": "Difficulty falling asleep, waking often or feeling unrefreshed.",
+      "intro": "Sleep difficulties can be brief or persistent. Understanding the pattern and its causes is more useful than putting pressure on yourself to sleep perfectly.",
+      "signs": [
+        "Finding it hard to fall asleep, stay asleep or return to sleep after waking early.",
+        "Feeling tired, irritable or less able to concentrate during the day.",
+        "A recurring pattern that affects life. Insomnia lasting three months or more is considered long-term."
+      ],
+      "context": "Stress, pain, medicines and other sleep conditions can affect rest. Sleeping much less while feeling unusually energised or impulsive needs prompt assessment; it is not the same as ordinary tired insomnia.",
+      "steps": [
+        "Choose a reasonably consistent getting-up time and a quiet wind-down activity you can manage.",
+        "Notice whether caffeine or alcohol affects your sleep. Avoid changing prescribed medicines yourself.",
+        "Keep a brief sleep note if helpful: sleep timing, daytime effects and questions for your appointment."
+      ],
+      "treatments": [
+        {
+          "title": "Finding the cause",
+          "body": "A health professional can check causes such as pain, medicines or another sleep disorder, and discuss support that fits your circumstances."
+        },
+        {
+          "title": "CBT for insomnia",
+          "body": "CBT for insomnia works on thoughts and behaviours that maintain sleep problems. It may be offered with a therapist or through a suitable programme. Relaxation and soundscapes are comfort tools, not a full insomnia treatment."
+        }
+      ],
+      "care": "Ask for help when sleep problems persist, affect daily life or come with loud snoring or interrupted breathing. Seek prompt assessment for markedly reduced sleep with unusual energy."
+    },
+    "bipolar": {
+      "title": "Mood, energy & bipolar disorder",
+      "teaser": "Understanding sustained changes in mood, activity and need for sleep.",
+      "intro": "Bipolar disorder involves episodes of depression and mania or hypomania. It is more than ordinary day-to-day mood changes, and effective treatment can help.",
+      "signs": [
+        "During a high-energy episode: unusually elevated or irritable mood, increased activity and a reduced need for sleep.",
+        "Racing thoughts, faster speech, unusually strong confidence or impulsive decisions may appear together.",
+        "Depressive episodes can involve low mood, lost interest and low energy. A person may be relatively well between episodes."
+      ],
+      "context": "Symptoms overlap with other conditions. Diagnosis needs a professional history of episodes, sleep, medicines and their impact. A depression score or a simple mood chart cannot establish bipolar disorder.",
+      "steps": [
+        "Keep daily rhythms as steady as possible and ask for help if sleep and energy change markedly.",
+        "Write down changes you or a trusted person have noticed, including timing and effects on everyday life.",
+        "If already receiving care, follow the agreed plan and contact your care team about changes; do not stop or change medication on your own."
+      ],
+      "treatments": [
+        {
+          "title": "Ongoing professional treatment",
+          "body": "Bipolar disorder usually needs long-term treatment. Medication is often central, with choices and monitoring tailored by a clinician."
+        },
+        {
+          "title": "Psychological and everyday support",
+          "body": "Psychotherapy, education, routines and an agreed plan for early warning signs can support recovery alongside treatment. Self-care alone is not a cure."
+        }
+      ],
+      "care": "Seek prompt assessment for unusually high energy, little need for sleep, risky behaviour or a marked change others notice. If someone is unsafe, severely confused or losing contact with reality, get urgent help."
+    }
+  }
+}

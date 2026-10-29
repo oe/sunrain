@@ -1,0 +1,146 @@
+{
+  "common": {
+    "nav": "Comprender",
+    "title": "Entender lo que estás sintiendo",
+    "intro": "Comprender un poco más puede aclarar el siguiente paso. Explora experiencias frecuentes, qué puede ayudar y cómo funciona el tratamiento.",
+    "browse": "Explora un tema",
+    "back": "Todos los temas",
+    "open": "Explorar este tema",
+    "signs": "Qué podrías notar",
+    "context": "Mirar el conjunto",
+    "steps": "Un pequeño paso para hoy",
+    "stepsIntro": "Elige lo que puedas manejar. Puedes parar, adaptarlo o pedir apoyo directamente.",
+    "treatment": "Cómo puede ayudar el tratamiento",
+    "care": "Cuándo pedir apoyo",
+    "references": "Referencias y otras lecturas",
+    "referenceIntro": "Estas son las fuentes originales de esta guía. Los enlaces están en inglés; esta página es un resumen propio de Sunrain, no una traducción oficial ni un aval institucional.",
+    "checked": "Fuentes comprobadas",
+    "review": "La revisión clínica y por hablantes nativos independientes sigue pendiente. Estos resúmenes son educativos; no son un diagnóstico ni un plan de tratamiento personal.",
+    "scope": "Comprensión y apoyo cotidiano. No necesitas un diagnóstico para pedir ayuda.",
+    "young": "Para lectores jóvenes",
+    "youngText": "Puedes leer estas páginas a cualquier edad. El tratamiento depende de la edad y las circunstancias. Un profesional de salud juvenil o una persona adulta segura y de confianza puede ayudarte; las guías para adultos citadas no deben aplicarse directamente a niños.",
+    "next": "¿Por dónde te gustaría seguir?",
+    "activity": "Elegir una actividad de autocuidado",
+    "support": "Prepararte para pedir ayuda",
+    "checkIn": "Explorar un cuestionario de síntomas",
+    "checkInScope": "Nuestros cuestionarios cubren áreas limitadas de síntomas, no todos estos temas. No pueden confirmar ni descartar un trastorno.",
+    "crisis": "Obtener apoyo urgente",
+    "urgent": "Si podrías actuar para hacerte daño, no puedes mantenerte a salvo o estás en peligro inmediato, contacta ahora con emergencias locales o apoyo en crisis.",
+    "learnLink": "Comprender estas experiencias",
+    "more": "Explorar otros temas",
+    "treatmentNote": "Estas opciones describen atención profesional. Nuestras actividades breves apoyan el afrontamiento cotidiano; no son programas de tratamiento completos.",
+    "selfHelpLink": "Explorar el autocuidado cotidiano",
+    "sourcesLanguage": "Original en inglés",
+    "newTab": "Se abre en otra pestaña"
+  },
+  "topics": {
+    "depression": {
+      "title": "Ánimo bajo y depresión",
+      "teaser": "Cuando la tristeza, el vacío o la pérdida de interés ocupan más espacio.",
+      "intro": "La depresión puede afectar a las emociones, el pensamiento y el cuerpo. Tiene tratamiento y no es un fallo de esfuerzo o de carácter.",
+      "signs": [
+        "Sentirse triste, vacío o irritable, o perder interés por cosas importantes.",
+        "Cambios en sueño, apetito, energía o concentración; las tareas habituales pueden costar más.",
+        "Un patrón persistente que afecta a la vida diaria. La depresión suele implicar síntomas la mayoría de los días durante al menos dos semanas."
+      ],
+      "context": "El ánimo bajo también puede relacionarse con estrés, duelo, enfermedades físicas o medicamentos. Un cuestionario no distingue la depresión de un episodio depresivo del trastorno bipolar.",
+      "steps": [
+        "Elige una actividad pequeña y significativa: comer algo o escribir a alguien de confianza.",
+        "Reduce el paso si lo necesitas. Observa qué fue posible sin ponerte una nota.",
+        "Anota cambios en sueño, interés y funcionamiento cotidiano para comentarlos con un profesional."
+      ],
+      "treatments": [
+        {
+          "title": "Apoyo y terapia psicológica",
+          "body": "Las opciones incluyen terapia cognitivo-conductual (TCC) y activación conductual. Algunos programas estructurados de autoayuda cuentan con una persona formada que apoya y revisa los avances."
+        },
+        {
+          "title": "Medicación cuando corresponda",
+          "body": "Un profesional puede hablar de antidepresivos según los síntomas, necesidades y preferencias, incluidos beneficios, efectos secundarios y seguimiento. Esta página no recomienda medicamentos ni cambios de receta."
+        }
+      ],
+      "care": "Pide una evaluación si los síntomas persisten, empeoran o afectan a tu vida. No necesitas esperar dos semanas si estás desbordado, no cubres necesidades básicas o no estás a salvo."
+    },
+    "anxiety": {
+      "title": "Ansiedad, preocupación y pánico",
+      "teaser": "Cuando cuesta desconectar de la preocupación o el miedo llega de golpe.",
+      "intro": "La ansiedad puede afectar al pensamiento y al cuerpo. La preocupación persistente y los ataques de pánico son experiencias distintas; una evaluación ayuda a entenderlas.",
+      "signs": [
+        "Preocupación difícil de controlar, tensión o esperar repetidamente que ocurra algo malo.",
+        "Tensión muscular, inquietud, problemas para dormir o concentrarse.",
+        "Una oleada de miedo con palpitaciones, temblor o falta de aire. Un ataque aislado no establece un trastorno de pánico."
+      ],
+      "context": "Estos síntomas también pueden tener causas físicas o farmacológicas. Dolor torácico nuevo o intenso, desmayo o dificultad importante para respirar requieren atención médica urgente; no deben atribuirse directamente al pánico.",
+      "steps": [
+        "Observa tu entorno y deja que la respiración sea cómoda; no hace falta forzar respiraciones profundas.",
+        "Separa una preocupación en lo que puedes influir y lo que no puedes resolver ahora.",
+        "Elige una pequeña acción práctica o cuenta a alguien cómo está afectando a tu día."
+      ],
+      "treatments": [
+        {
+          "title": "Ayuda psicológica estructurada",
+          "body": "La TCC trabaja con patrones de pensamiento y conducta. Algunas intervenciones para la ansiedad usan materiales estructurados de autoayuda, con o sin apoyo profesional según la situación."
+        },
+        {
+          "title": "Otras opciones de atención",
+          "body": "Si los síntomas persisten o limitan la vida, un profesional puede valorar más terapia o medicación. La elección se hace conjuntamente, no solo mediante una puntuación en internet."
+        }
+      ],
+      "care": "Busca apoyo si la preocupación, los ataques o la evitación reaparecen o interfieren en la vida diaria. Los síntomas físicos repentinos y desconocidos pueden necesitar primero una revisión médica."
+    },
+    "sleep": {
+      "title": "Dificultades para dormir",
+      "teaser": "Cuesta conciliar el sueño, te despiertas a menudo o no descansas.",
+      "intro": "Las dificultades de sueño pueden ser breves o persistentes. Entender el patrón y sus causas ayuda más que exigirse dormir perfectamente.",
+      "signs": [
+        "Dificultad para conciliar o mantener el sueño, o para volver a dormir tras despertar temprano.",
+        "Cansancio, irritabilidad o menor concentración durante el día.",
+        "Un patrón recurrente que afecta a la vida. El insomnio de tres meses o más se considera de larga duración."
+      ],
+      "context": "El estrés, el dolor, los medicamentos y otros trastornos del sueño pueden influir. Dormir mucho menos con energía o impulsividad inusuales requiere evaluación pronta; no es lo mismo que el insomnio con cansancio.",
+      "steps": [
+        "Elige una hora de levantarte bastante regular y una actividad tranquila antes de acostarte.",
+        "Observa si la cafeína o el alcohol afectan a tu sueño. No cambies medicación recetada por tu cuenta.",
+        "Si ayuda, anota horarios, efectos durante el día y preguntas para una consulta."
+      ],
+      "treatments": [
+        {
+          "title": "Buscar la causa",
+          "body": "Un profesional puede revisar causas como dolor, medicamentos u otro trastorno del sueño y comentar opciones adecuadas para ti."
+        },
+        {
+          "title": "TCC para el insomnio",
+          "body": "Trabaja con pensamientos y conductas que mantienen el problema, con un terapeuta o un programa adecuado. La relajación y los sonidos pueden aportar comodidad, pero no constituyen un tratamiento completo del insomnio."
+        }
+      ],
+      "care": "Pide ayuda si persiste, afecta al día o se acompaña de ronquidos fuertes o pausas respiratorias. Una reducción marcada del sueño con energía inusual merece evaluación pronta."
+    },
+    "bipolar": {
+      "title": "Ánimo, energía y trastorno bipolar",
+      "teaser": "Comprender cambios sostenidos del ánimo, la actividad y la necesidad de sueño.",
+      "intro": "El trastorno bipolar implica episodios de depresión y manía o hipomanía. Va más allá de los cambios cotidianos de humor y puede mejorar con tratamiento adecuado.",
+      "signs": [
+        "Durante un episodio de energía alta: ánimo inusualmente elevado o irritable, más actividad y menor necesidad de sueño.",
+        "Pueden aparecer juntos pensamientos acelerados, habla rápida, confianza excesiva o decisiones impulsivas.",
+        "Los episodios depresivos pueden incluir ánimo bajo, pérdida de interés y poca energía. Entre episodios puede haber estabilidad relativa."
+      ],
+      "context": "Los síntomas se solapan con otras condiciones. El diagnóstico necesita una historia profesional de episodios, sueño, medicamentos e impacto. Una puntuación de depresión o un gráfico sencillo de ánimo no establece el trastorno bipolar.",
+      "steps": [
+        "Mantén ritmos cotidianos lo más estables posible y pide ayuda si cambian claramente el sueño y la energía.",
+        "Anota cambios observados por ti o alguien de confianza, cuándo ocurrieron y sus efectos.",
+        "Si recibes atención, sigue el plan acordado y contacta con tu equipo ante cambios; no suspendas ni ajustes medicamentos por tu cuenta."
+      ],
+      "treatments": [
+        {
+          "title": "Tratamiento profesional continuado",
+          "body": "El trastorno bipolar suele necesitar tratamiento a largo plazo. La medicación a menudo es central y su elección y seguimiento se adaptan con un profesional."
+        },
+        {
+          "title": "Apoyo psicológico y cotidiano",
+          "body": "La psicoterapia, la información, las rutinas y un plan compartido para señales tempranas apoyan la recuperación junto al tratamiento. El autocuidado por sí solo no es una cura."
+        }
+      ],
+      "care": "Pide evaluación pronta ante energía inusual, poca necesidad de sueño, conductas de riesgo o cambios marcados que otras personas notan. Si hay peligro, confusión grave o pérdida de contacto con la realidad, busca ayuda urgente."
+    }
+  }
+}

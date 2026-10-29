@@ -3,6 +3,7 @@ import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 const locales=['en','zh-hans','zh-hant','es','ja','ko','hi','ar'];
 const routes=['/','/check-in/','/self-help/','/self-help/grounding/','/self-help/one-step/','/self-help/sleep/','/self-help/worry/','/support/','/disclaimer/','/crisis/','/assessment/','/assessment/phq-9/','/assessment/gad-7/'];
+routes.push('/understand/','/understand/depression/','/understand/anxiety/','/understand/sleep/','/understand/bipolar/');
 const root=new URL('../dist/',import.meta.url);
 let checked=0;
 for(const lang of locales) for(const route of routes) {
@@ -32,6 +33,16 @@ for(const lang of locales) for(const route of routes) {
       assert.match(html,/data-screen-stage="gad-7"/);
       assert.doesNotMatch(html,/data-screen-stage="k6"/);
     }
+  }
+  if(route.startsWith('/understand/')&&route!=='/understand/') {
+    assert.match(html,/id="references"/,'Each topic must include its references');
+    const sources=html.slice(html.indexOf('id="references"'));
+    const authoritativeLinks=[...sources.matchAll(/href="(https:\/\/(?:www\.)?(?:nimh\.nih\.gov|nice\.org\.uk|nhs\.uk)\/[^\"]+)"/g)];
+    assert.ok(authoritativeLinks.length>=2,`${local}: missing authoritative references`);
+    assert.match(html,/<img[^>]+\/images\/understand\/[^>]+alt=""/,'Topic art is decorative; essential text belongs in HTML');
+    assert.match(html,/id="today"/);
+    assert.match(html,/id="treatment"/);
+    assert.match(html,/id="care"/);
   }
   for(const match of html.matchAll(/<(?:a|link)\b[^>]*?href=(?:"([^"]+)"|'([^']+)'|([^\s>]+))/g)) {
     const href=match[1]||match[2]||match[3];

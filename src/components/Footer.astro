@@ -31,6 +31,7 @@ const currentYear = new Date().getFullYear();
 
       <!-- Links -->
       <div class="flex flex-wrap justify-center items-center gap-6 text-sm">
+        <a href={getLocalizedPath('/understand/',lang)} class="text-gray-600 dark:text-gray-300 hover:underline">{t('nav.understand',lang)}</a>
         <a href={getLocalizedPath('/about/',lang)} class="text-gray-600 dark:text-gray-300 hover:underline">{t('nav.about',lang)}</a>
         <a href={getLocalizedPath('/resources/',lang)} class="text-gray-600 dark:text-gray-300 hover:underline">{t('nav.resources',lang)}</a>
         <a href={getLocalizedPath('/disclaimer/',lang)} class="text-gray-600 dark:text-gray-300 hover:underline">{t('nav.disclaimer',lang)}</a>

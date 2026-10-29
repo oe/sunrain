@@ -1,0 +1,66 @@
+.understand-page{max-width:1120px;margin-inline:auto;padding:52px 28px 72px;color:var(--platform-ink)}
+.understand-page h1{font-size:clamp(2rem,4.5vw,3.5rem);font-weight:700;line-height:1.22;letter-spacing:-.035em;text-wrap:balance;margin:12px 0 24px}
+.understand-page h2{font-size:clamp(1.45rem,2.5vw,1.9rem);font-weight:650;line-height:1.4;letter-spacing:-.02em;margin-bottom:24px;text-wrap:balance}
+.understand-page h3{font-size:19px;font-weight:650;line-height:1.5;margin-bottom:12px}
+.understand-page p{font-size:17px;line-height:1.9;max-width:68ch;overflow-wrap:break-word}
+.understand-page a{color:var(--platform-blue);text-underline-offset:4px;overflow-wrap:anywhere}
+.understand-page a:hover{text-decoration:underline}
+.understand-page :is(a,summary){scroll-margin-top:104px}
+.understand-eyebrow{font-size:14px!important;letter-spacing:.06em;color:var(--platform-muted)}
+.understand-page .understand-lead{font-size:20px;line-height:1.8;color:var(--platform-muted);max-width:48ch}
+.understand-heading{max-width:760px;margin-block:16px 48px}
+.understand-topics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:44px 36px}
+.understand-topic{display:flex;flex-direction:column;color:var(--platform-ink)!important;text-decoration:none!important;border-radius:24px;min-width:0}
+.understand-topic img{width:100%;height:auto;aspect-ratio:1000/667;object-fit:cover;border-radius:24px;background:#fffdf9;transition:opacity .2s}
+.understand-topic:hover img{opacity:.88}
+.understand-topic>div{display:flex;flex-direction:column;flex:1;padding:24px 4px 0}
+.understand-topic h2{margin-bottom:10px;font-size:25px}
+.understand-topic p{color:var(--platform-muted);font-size:17px;margin-bottom:20px}
+.understand-read{display:inline-flex;align-items:center;gap:12px;margin-top:auto;min-height:44px;color:var(--platform-blue);font-weight:600}
+.understand-index-support{display:flex;align-items:flex-start;gap:20px;border-block-start:1px solid var(--platform-line);padding-block-start:32px;margin-block-start:56px}
+.understand-index-support>svg{flex-shrink:0;margin-top:5px;color:var(--platform-blue)}
+.understand-index-support a{display:inline-flex;align-items:center;gap:12px;min-height:44px;font-weight:600;margin-top:12px}
+.understand-back{display:inline-flex;gap:10px;align-items:center;min-height:44px;font-size:15px;margin-bottom:28px}
+.understand-back-icon{transform:rotate(180deg)}
+html[dir=rtl] .understand-back-icon{transform:none}
+.understand-hero{display:grid;grid-template-columns:1.05fr 1fr;align-items:center;gap:44px;margin-bottom:44px}
+.understand-hero h1{font-size:clamp(2rem,4vw,3.1rem)}
+.understand-hero .platform-link{margin-top:20px;min-height:44px;font-size:16px;display:inline-flex;align-items:center;gap:12px}
+.understand-hero img{width:100%;height:auto;aspect-ratio:1000/667;object-fit:cover;border-radius:28px;background:#fffdf9}
+.understand-sections{display:flex;flex-wrap:wrap;gap:6px 24px;border-block:1px solid var(--platform-line);padding-block:12px;margin-block:8px 12px}
+.understand-sections a{min-height:44px;display:inline-flex;align-items:center;font-size:14px}
+.understand-section{padding-block:44px;border-block-end:1px solid var(--platform-line);scroll-margin-top:88px}
+.understand-signs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+.understand-signs>div{min-width:0;border-radius:20px;background:var(--platform-soft);padding:24px}
+.understand-signs svg{color:var(--platform-blue);margin-bottom:20px}
+.understand-signs p{font-size:16px}
+.understand-context{margin-top:24px;border-block-start:1px solid var(--platform-line)}
+.understand-context summary{padding-block:16px;cursor:pointer;min-height:52px;font-size:15px;font-weight:600}
+.understand-context p{padding-block:4px 14px;color:var(--platform-muted);font-size:16px}
+.understand-page .understand-muted{color:var(--platform-muted);font-size:16px;margin-block:-8px 26px}
+.understand-steps{list-style:none;padding:0;display:grid;gap:24px;margin:32px 0}
+.understand-steps li{display:flex;gap:20px;align-items:flex-start;max-width:780px}
+.understand-step-number{display:grid;place-items:center;flex:0 0 36px;height:36px;background:var(--platform-soft);border-radius:50%;color:var(--platform-blue);font-weight:650;font-size:15px;margin-top:3px}
+.understand-section>.platform-link{display:inline-flex;align-items:center;gap:12px;min-height:44px;font-size:16px}
+.understand-treatment{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:36px;margin-top:32px}
+.understand-treatment>div{border-inline-start:2px solid var(--platform-line);padding-inline-start:24px;min-width:0}
+.understand-treatment p{font-size:16px;color:var(--platform-muted)}
+.understand-section>.platform-button{display:inline-flex;align-items:center;justify-content:center;gap:12px;border-radius:999px;background:#123f80;color:white;min-height:52px;padding:12px 24px;font-size:16px;margin-top:28px;max-width:100%;line-height:1.5;text-align:center}
+.dark .understand-section>.platform-button{background:#a6ccff;color:#10223e}
+.understand-urgent{border-inline-start:3px solid var(--platform-blue);background:var(--platform-soft);padding:22px 24px;border-radius:0 16px 16px 0;margin-top:28px}
+html[dir=rtl] .understand-urgent{border-radius:16px 0 0 16px}
+.understand-urgent p{font-size:15px}
+.understand-urgent a,.understand-more a{display:inline-flex;align-items:center;gap:12px;min-height:44px;margin-top:8px;font-weight:600;font-size:15px}
+.understand-more{padding-block:24px}
+.understand-references{padding-top:28px;border-block-start:1px solid var(--platform-line);scroll-margin-top:104px}
+.understand-references h2{font-size:23px;margin-bottom:20px}
+.understand-references p{font-size:14px;color:var(--platform-muted)}
+.understand-references ol{list-style:decimal;padding-inline-start:24px;margin-block:24px}
+.understand-references li{padding-inline-start:6px;margin-block:16px}
+.understand-references li a{display:inline-flex;align-items:center;gap:10px;font-size:15px;min-height:44px}
+.understand-references li a svg{flex-shrink:0}
+.understand-references li span{display:block;color:var(--platform-muted);font-size:12px;margin-block-start:-4px}
+.understand-inline{margin-block:18px;color:var(--platform-muted);font-size:15px}
+.understand-entry{display:flex;align-items:center;gap:12px;min-height:44px;font-size:16px;margin-block:20px}
+@media(max-width:760px){.understand-page{padding:28px 24px 48px}.understand-heading{margin-block:12px 32px}.understand-page .understand-lead{font-size:18px}.understand-topics{grid-template-columns:1fr;gap:36px}.understand-topic>div{padding-top:20px}.understand-topic h2{font-size:24px}.understand-hero{grid-template-columns:1fr;gap:28px;margin-bottom:28px}.understand-hero img{max-height:260px;object-fit:cover}.understand-back{margin-bottom:20px}.understand-sections{gap:2px 20px}.understand-section{padding-block:32px;scroll-margin-top:76px}.understand-signs{grid-template-columns:1fr;gap:12px}.understand-signs>div{display:flex;align-items:flex-start;gap:18px;padding:20px}.understand-signs svg{flex-shrink:0;margin-top:4px;margin-bottom:0}.understand-treatment{grid-template-columns:1fr;gap:28px}.understand-steps{gap:24px}.understand-steps li{gap:14px}.understand-page p{font-size:16px}.understand-index-support{margin-top:40px;gap:16px}.understand-section>.platform-button{width:auto}.understand-references li a{align-items:flex-start;padding-block:10px}.understand-references li a svg{margin-top:3px}.understand-references li span{margin-block-start:0}}
+@media(prefers-reduced-motion:reduce){.understand-topic img{transition:none}}
