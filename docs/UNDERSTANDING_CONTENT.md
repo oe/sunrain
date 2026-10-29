@@ -25,12 +25,18 @@ native-language review is pending and is stated on every guide.
 | Sleep | NHS Insomnia: symptoms, three-month long-term definition, ordinary sleep care, causes and CBT. NIMH Bipolar Disorder: reduced need for sleep with unusual energy calls for assessment rather than an insomnia-only interpretation. |
 | Bipolar | NIMH Bipolar Disorder and NICE CG185: episodic changes, professional assessment, ongoing medication/psychological care and adjunctive everyday support. No simple cycle graphic or screening score is used to label bipolar disorder. |
 
-Adult guideline recommendations are not applied directly to children. The youth
+Adult guideline recommendations are not applied directly to children or teenagers. The youth
 note keeps reading and support accessible without an age gate and points to safe,
 trusted support. Medicines are introduced as options to discuss with clinicians;
 there are no drug selections, doses, tapering instructions, DIY exposure protocols
 or sleep-restriction prescriptions. Symptoms can overlap and cannot establish or
 exclude a diagnosis here. The existing questionnaire forms and scoring are separate.
+
+The pre-merge content review clarified that depressive episodes are not required
+for every bipolar type (NIMH's bipolar I/II distinction), explicitly included both
+children and teenagers in the age-appropriate-care note, and expanded CBT/TCC on
+first use in each affected language and topic. These are editorial/source checks;
+they do not change the disclosed independent professional-review status.
 
 ## Reading and illustration contract
 

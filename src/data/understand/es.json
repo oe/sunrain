@@ -18,7 +18,7 @@
     "review": "La revisión clínica y por hablantes nativos independientes sigue pendiente. Estos resúmenes son educativos; no son un diagnóstico ni un plan de tratamiento personal.",
     "scope": "Comprensión y apoyo cotidiano. No necesitas un diagnóstico para pedir ayuda.",
     "young": "Para lectores jóvenes",
-    "youngText": "Puedes leer estas páginas a cualquier edad. El tratamiento depende de la edad y las circunstancias. Un profesional de salud juvenil o una persona adulta segura y de confianza puede ayudarte; las guías para adultos citadas no deben aplicarse directamente a niños.",
+    "youngText": "Puedes leer estas páginas a cualquier edad. El tratamiento depende de la edad y las circunstancias. Un profesional de salud juvenil o una persona adulta segura y de confianza puede ayudarte. Algunas referencias son guías para adultos; niños y adolescentes necesitan evaluación y atención adecuadas a su edad.",
     "next": "¿Por dónde te gustaría seguir?",
     "activity": "Elegir una actividad de autocuidado",
     "support": "Prepararte para pedir ayuda",
@@ -52,7 +52,7 @@
       "treatments": [
         {
           "title": "Apoyo y terapia psicológica",
-          "body": "La TCC trabaja con patrones de pensamiento y conducta; la activación conductual ayuda a retomar actividades significativas. La autoayuda guiada usa materiales estructurados con apoyo y revisión de una persona formada."
+          "body": "La terapia cognitivo-conductual (TCC) trabaja con patrones de pensamiento y conducta; la activación conductual ayuda a retomar actividades significativas. La autoayuda guiada usa materiales estructurados con apoyo y revisión de una persona formada."
         },
         {
           "title": "Medicación cuando corresponda",
@@ -79,7 +79,7 @@
       "treatments": [
         {
           "title": "Ayuda psicológica estructurada",
-          "body": "La TCC trabaja con patrones de pensamiento y conducta. Algunas intervenciones para la ansiedad usan materiales estructurados de autoayuda, con o sin apoyo profesional según la situación."
+          "body": "La terapia cognitivo-conductual (TCC) trabaja con patrones de pensamiento y conducta. Algunas intervenciones para la ansiedad usan materiales estructurados de autoayuda, con o sin apoyo profesional según la situación."
         },
         {
           "title": "Otras opciones de atención",
@@ -110,7 +110,7 @@
         },
         {
           "title": "TCC para el insomnio",
-          "body": "Trabaja con pensamientos y conductas que mantienen el problema, con un terapeuta o un programa adecuado. La relajación y los sonidos pueden aportar comodidad, pero no constituyen un tratamiento completo del insomnio."
+          "body": "La terapia cognitivo-conductual para el insomnio trabaja con pensamientos y conductas que mantienen el problema, con un terapeuta o un programa adecuado. La relajación y los sonidos pueden aportar comodidad, pero no constituyen un tratamiento completo del insomnio."
         }
       ],
       "care": "Pide ayuda si persiste, afecta al día o se acompaña de ronquidos fuertes o pausas respiratorias. Una reducción marcada del sueño con energía inusual merece evaluación pronta."
@@ -118,7 +118,7 @@
     "bipolar": {
       "title": "Ánimo, energía y trastorno bipolar",
       "teaser": "Comprender cambios sostenidos del ánimo, la actividad y la necesidad de sueño.",
-      "intro": "El trastorno bipolar implica episodios de depresión y manía o hipomanía. Va más allá de los cambios cotidianos de humor y puede mejorar con tratamiento adecuado.",
+      "intro": "El trastorno bipolar presenta distintos patrones de síntomas maníacos, hipomaníacos y depresivos. No todos los tipos requieren un episodio depresivo. Estos cambios superan las variaciones cotidianas de ánimo, y el tratamiento puede ayudar.",
       "signs": [
         "Durante un episodio de energía alta: ánimo inusualmente elevado o irritable, más actividad y menor necesidad de sueño.",
         "Pueden aparecer juntos pensamientos acelerados, habla rápida, confianza excesiva o decisiones impulsivas.",

@@ -18,7 +18,7 @@
     "review": "Independent clinical and native-language review is still pending. These summaries are educational, not a diagnosis or a personal treatment plan.",
     "scope": "Understanding and everyday support. You do not need a diagnosis to ask for help.",
     "young": "For younger readers",
-    "youngText": "You can use these pages at any age. Treatment choices depend on age and circumstances. A youth health professional or a safe, trusted adult can help you find support; the adult treatment guidelines below should not be applied directly to children.",
+    "youngText": "You can use these pages at any age. Treatment choices depend on age and circumstances. A youth health professional or a safe, trusted adult can help you find support. Some references below are adult guidelines; children and teenagers need age-appropriate assessment and care.",
     "next": "Where would you like to go next?",
     "activity": "Choose a self-help activity",
     "support": "Prepare to ask for help",
@@ -52,7 +52,7 @@
       "treatments": [
         {
           "title": "Psychological support",
-          "body": "CBT works with patterns of thinking and behaviour; behavioural activation helps rebuild meaningful activities. Guided self-help uses structured materials with support from a trained practitioner who reviews progress."
+          "body": "Cognitive behavioural therapy (CBT) works with patterns of thinking and behaviour; behavioural activation helps rebuild meaningful activities. Guided self-help uses structured materials with support from a trained practitioner who reviews progress."
         },
         {
           "title": "Medication when appropriate",
@@ -79,7 +79,7 @@
       "treatments": [
         {
           "title": "Structured psychological help",
-          "body": "CBT helps people work with patterns of thinking and behaviour. Some anxiety treatments use structured self-help materials, with or without practitioner support depending on the situation."
+          "body": "Cognitive behavioural therapy (CBT) helps people work with patterns of thinking and behaviour. Some anxiety treatments use structured self-help materials, with or without practitioner support depending on the situation."
         },
         {
           "title": "Other care options",
@@ -110,7 +110,7 @@
         },
         {
           "title": "CBT for insomnia",
-          "body": "CBT for insomnia works on thoughts and behaviours that maintain sleep problems. It may be offered with a therapist or through a suitable programme. Relaxation and soundscapes are comfort tools, not a full insomnia treatment."
+          "body": "Cognitive behavioural therapy for insomnia (CBT-I) works on thoughts and behaviours that maintain sleep problems. It may be offered with a therapist or through a suitable programme. Relaxation and soundscapes are comfort tools, not a full insomnia treatment."
         }
       ],
       "care": "Ask for help when sleep problems persist, affect daily life or come with loud snoring or interrupted breathing. Seek prompt assessment for markedly reduced sleep with unusual energy."
@@ -118,7 +118,7 @@
     "bipolar": {
       "title": "Mood, energy & bipolar disorder",
       "teaser": "Understanding sustained changes in mood, activity and need for sleep.",
-      "intro": "Bipolar disorder involves episodes of depression and mania or hypomania. It is more than ordinary day-to-day mood changes, and effective treatment can help.",
+      "intro": "Bipolar disorder includes different patterns of manic, hypomanic and depressive symptoms. A depressive episode is not required for every type. These changes go beyond ordinary mood shifts, and treatment can help.",
       "signs": [
         "During a high-energy episode: unusually elevated or irritable mood, increased activity and a reduced need for sleep.",
         "Racing thoughts, faster speech, unusually strong confidence or impulsive decisions may appear together.",
