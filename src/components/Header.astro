@@ -1,5 +1,6 @@
 ---
 import { brandAssets } from '@/lib/branding';
+import { getPlatformCopy } from '@/lib/platform';
 import {
   t,
   getLocalizedPath,
@@ -13,6 +14,7 @@ interface Props {
 }
 
 const { lang } = Astro.props;
+const platform=getPlatformCopy(lang);
 const currentPath = Astro.url.pathname;
 
 // Get the path without language prefix for comparison
@@ -29,10 +31,10 @@ const navItems = [
   { key: 'nav.support', href: '/support/' },
 ];
 const menuItems = [
+  { key: 'nav.crisis', href: '/crisis/' },
   { key: 'nav.home', href: '/' },
   { key: 'nav.checkIn', href: '/check-in/' },
   ...navItems,
-  { key: 'nav.crisis', href: '/crisis/' },
   { key: 'nav.about', href: '/about/' }
 ];
 
@@ -265,7 +267,7 @@ function isActive(itemHref: string): boolean {
                   : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'
               ]}
             >
-              {t(item.key, lang)}
+              {item.href==='/check-in/'?platform.start:t(item.key, lang)}
             </a>
           ))
         }
@@ -392,6 +394,7 @@ function isActive(itemHref: string): boolean {
   const mobileMenuBtn = document.getElementById('mobile-menu-btn');
   const mobileMenu = document.getElementById('mobile-menu');
   const menuIcon = document.getElementById('menu-icon');
+  const setMenuIcon=(open:boolean)=>menuIcon?.querySelector('path')?.setAttribute('d',open?'M6 6l12 12M6 18L18 6':'M4 6h16M4 12h16M4 18h16');
   let isMenuOpen = false;
 
   mobileMenuBtn?.addEventListener('click', () => {
@@ -403,10 +406,10 @@ function isActive(itemHref: string): boolean {
       // Trigger reflow for animation
       mobileMenu?.offsetHeight;
       mobileMenu!.style.maxHeight = mobileMenu!.scrollHeight + 'px';
-      menuIcon?.classList.add('rotate-90');
+      setMenuIcon(true);
     } else {
       mobileMenu!.style.maxHeight = '0';
-      menuIcon?.classList.remove('rotate-90');
+      setMenuIcon(false);
       // Hide after animation
       setTimeout(() => {
         if (!isMenuOpen) {
@@ -418,6 +421,6 @@ function isActive(itemHref: string): boolean {
   document.addEventListener('keydown', event => {
     if(event.key !== 'Escape') return;
     if(!themeMenu?.classList.contains('hidden')) { themeMenu?.classList.add('hidden'); themeToggle?.setAttribute('aria-expanded','false'); themeToggle?.focus(); }
-    if(isMenuOpen) { isMenuOpen=false; mobileMenu!.style.maxHeight='0'; mobileMenu?.classList.add('hidden'); mobileMenuBtn?.setAttribute('aria-expanded','false'); menuIcon?.classList.remove('rotate-90'); mobileMenuBtn?.focus(); }
+    if(isMenuOpen) { isMenuOpen=false; mobileMenu!.style.maxHeight='0'; mobileMenu?.classList.add('hidden'); mobileMenuBtn?.setAttribute('aria-expanded','false'); setMenuIcon(false); mobileMenuBtn?.focus(); }
   });
 </script>

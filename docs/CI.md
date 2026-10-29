@@ -11,13 +11,14 @@ The job installs the locked dependencies, audits production dependencies, runs
 unit tests, checks types, builds the site once and verifies its source identity.
 Playwright tests that production build using Chromium only:
 
-- Desktop runs the complete 58-case regression suite, including all eight
+- Desktop runs the complete 59-case regression suite, including all eight
   languages, screening edge cases, privacy, keyboard access, narrow layouts,
   audio controls and the real-time audio loop check.
-- Mobile runs eight cases tagged `@smoke`: English and Arabic check-in
+- Mobile runs nine cases tagged `@smoke`: English and Arabic check-in
   and screening journeys, narrow RTL keyboard controls, 320px layouts across all
   eight languages, sound mixing/return/stop controls, and the multilingual
-  topic-reading path. The other desktop cases are not repeated on mobile.
+  topic-reading path, plus grouped-question navigation and support persistence.
+  The other desktop cases are not repeated on mobile.
 
 Tests remain serial within the job to avoid contention in the real-time audio
 checks. There is no browser matrix, intermediate build archive or report merger.
@@ -32,8 +33,8 @@ not collide, and the reusable workflow returns that name to deployment.
 
 Before a release or when changing browser-sensitive code, manually run
 **Validate Sunrain**, select the desired branch and choose
-`browser-suite: compatibility`. This runs seven support-flow smoke cases on each
-of desktop Firefox, desktop WebKit and mobile WebKit (21 cases) in one job. It
+`browser-suite: compatibility`. This runs eight support-flow smoke cases on each
+of desktop Firefox, desktop WebKit and mobile WebKit (24 cases) in one job. It
 installs only Firefox and WebKit and does not publish to Pages.
 
 For a local run:
@@ -63,5 +64,5 @@ for 14 days. Inspect this artifact on a failed run, then rerun the single job.
 
 The previous PR run [39288950541](https://github.com/oe/sunrain/actions/runs/39288950541)
 took 15m51s and repeated the suite across five configurations (248 cases).
-The simplified daily suite has 66 cases with no planned skips. Its actual
+The simplified daily suite has 68 cases with no planned skips. Its actual
 GitHub Actions runtime is recorded on the PR and varies with runner availability.

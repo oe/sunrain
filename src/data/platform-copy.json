@@ -1,8 +1,8 @@
 {
   "en": {
     "headline": [
-      "Understand yourself.",
-      "Care for yourself."
+      "Mental health,",
+      "at your pace."
     ],
     "description": "Sunrain is a mental health self-help platform with symptom questionnaires, everyday activities, and guidance for finding support.",
     "start": "Start a self-check",
@@ -37,7 +37,13 @@
     "homeBoundary": "Self-checks are for reference, not a professional diagnosis.",
     "audioDetails": "About the audio",
     "breathingReady": "At your pace",
-    "supportDetails": "Using this support guide"
+    "supportDetails": "Using this support guide",
+    "quickStart": "Try a small exercise",
+    "groundingAction": "Ground myself",
+    "oneStepAction": "Choose one small step",
+    "sleepAction": "Plan a gentler bedtime",
+    "worryAction": "Plan a step for one worry",
+    "soundsAction": "Listen to nature"
   },
   "zh-hans": {
     "headline": [
@@ -77,7 +83,13 @@
     "homeBoundary": "自测仅供参考，不替代专业诊断。",
     "audioDetails": "关于声音",
     "breathingReady": "按自己的节奏",
-    "supportDetails": "使用与安全说明"
+    "supportDetails": "使用与安全说明",
+    "quickStart": "先做一个小练习",
+    "groundingAction": "回到当下",
+    "oneStepAction": "选一件小事开始",
+    "sleepAction": "调整睡前安排",
+    "worryAction": "整理一个担忧",
+    "soundsAction": "听一段环境声"
   },
   "zh-hant": {
     "headline": [
@@ -117,7 +129,13 @@
     "homeBoundary": "自測僅供參考，不取代專業診斷。",
     "audioDetails": "關於聲音",
     "breathingReady": "按自己的步調",
-    "supportDetails": "使用與安全說明"
+    "supportDetails": "使用與安全說明",
+    "quickStart": "先做一個小練習",
+    "groundingAction": "回到當下",
+    "oneStepAction": "選一件小事開始",
+    "sleepAction": "調整睡前安排",
+    "worryAction": "整理一個擔憂",
+    "soundsAction": "聽一段環境聲"
   },
   "es": {
     "headline": [
@@ -157,7 +175,13 @@
     "homeBoundary": "La autoevaluación es orientativa y no sustituye un diagnóstico profesional.",
     "audioDetails": "Sobre el audio",
     "breathingReady": "A tu ritmo",
-    "supportDetails": "Cómo usar esta guía de apoyo"
+    "supportDetails": "Cómo usar esta guía de apoyo",
+    "quickStart": "Probar un ejercicio breve",
+    "groundingAction": "Volver al presente",
+    "oneStepAction": "Elegir un pequeño paso",
+    "sleepAction": "Preparar la hora de dormir",
+    "worryAction": "Ordenar una preocupación",
+    "soundsAction": "Escuchar sonidos naturales"
   },
   "ja": {
     "headline": [
@@ -197,7 +221,13 @@
     "homeBoundary": "セルフチェックは参考情報です。専門家の診断に代わるものではありません。",
     "audioDetails": "音声について",
     "breathingReady": "自分のペースで",
-    "supportDetails": "この相談ガイドの利用について"
+    "supportDetails": "この相談ガイドの利用について",
+    "quickStart": "小さな練習から始める",
+    "groundingAction": "今ここに意識を戻す",
+    "oneStepAction": "小さな一歩を選ぶ",
+    "sleepAction": "寝る前の過ごし方を整える",
+    "worryAction": "心配事を一つ整理する",
+    "soundsAction": "自然の音を聴く"
   },
   "ko": {
     "headline": [
@@ -237,7 +267,13 @@
     "homeBoundary": "자가 점검은 참고용이며 전문가의 진단을 대신하지 않습니다.",
     "audioDetails": "오디오 안내",
     "breathingReady": "나만의 속도로",
-    "supportDetails": "이 지원 안내 이용하기"
+    "supportDetails": "이 지원 안내 이용하기",
+    "quickStart": "가벼운 연습부터 해보기",
+    "groundingAction": "지금에 집중하기",
+    "oneStepAction": "작은 일 하나 정하기",
+    "sleepAction": "잠들기 전 준비하기",
+    "worryAction": "걱정 하나 정리하기",
+    "soundsAction": "자연의 소리 듣기"
   },
   "hi": {
     "headline": [
@@ -277,7 +313,13 @@
     "homeBoundary": "स्वयं जाँच केवल जानकारी के लिए है, पेशेवर निदान का विकल्प नहीं।",
     "audioDetails": "ऑडियो के बारे में",
     "breathingReady": "अपनी गति से",
-    "supportDetails": "इस सहायता गाइड का उपयोग"
+    "supportDetails": "इस सहायता गाइड का उपयोग",
+    "quickStart": "एक छोटा अभ्यास आज़माएँ",
+    "groundingAction": "ध्यान वर्तमान में लाएँ",
+    "oneStepAction": "एक छोटा कदम चुनें",
+    "sleepAction": "सोने की तैयारी करें",
+    "worryAction": "एक चिंता के लिए कदम चुनें",
+    "soundsAction": "प्रकृति की आवाज़ें सुनें"
   },
   "ar": {
     "headline": [
@@ -317,6 +359,12 @@
     "homeBoundary": "التقييم الذاتي للاسترشاد، ولا يحل محل التشخيص لدى مختص.",
     "audioDetails": "حول الصوت",
     "breathingReady": "على وتيرتك",
-    "supportDetails": "استخدام دليل الدعم هذا"
+    "supportDetails": "استخدام دليل الدعم هذا",
+    "quickStart": "جرّب تمرينًا بسيطًا",
+    "groundingAction": "عُد بانتباهك إلى الحاضر",
+    "oneStepAction": "اختر خطوة صغيرة",
+    "sleepAction": "رتّب روتين ما قبل النوم",
+    "worryAction": "نظّم فكرة تقلقك",
+    "soundsAction": "استمع إلى أصوات الطبيعة"
   }
 }

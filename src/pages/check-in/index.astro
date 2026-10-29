@@ -57,10 +57,10 @@ const impacts = ['manageable','disruptive','basicNeeds'] as const;
       <aside class="urgent" id="function-care" hidden><p>{c.flow.functionCare}</p><a class="button primary" href="#prepare-support" data-prepare-support>{c.flow.prepare}</a></aside>
       <p id="action-reason">{c.flow.actionReason}</p>
       <div id="result-options" class="support-grid">
-        <article class="support-card" data-action="grounding"><h3>{c.guides.grounding.title}</h3><p>{p.grounding}</p><a class="button primary" href={getLocalizedPath('/self-help/grounding/',lang)}>{c.flow.tryActivity}</a></article>
-        <article class="support-card" data-action="one-step"><h3>{c.guides.smallStep.title}</h3><p>{p.oneStep}</p><a class="button primary" href={getLocalizedPath('/self-help/one-step/',lang)}>{c.flow.tryActivity}</a></article>
-        <article class="support-card" data-action="sleep"><h3>{c.guides.sleepRoutine.title}</h3><p>{p.sleep}</p><a class="button primary" href={getLocalizedPath('/self-help/sleep/',lang)}>{c.flow.tryActivity}</a></article>
-        <article class="support-card" data-action="worry"><h3>{c.guides.worryPlan.title}</h3><p>{p.worry}</p><a class="button primary" href={getLocalizedPath('/self-help/worry/',lang)}>{c.flow.tryActivity}</a></article>
+        <article class="support-card" data-action="grounding"><h3>{c.guides.grounding.title}</h3><p>{p.grounding}</p><a class="button primary" href={getLocalizedPath('/self-help/grounding/',lang)}>{p.groundingAction}</a></article>
+        <article class="support-card" data-action="one-step"><h3>{c.guides.smallStep.title}</h3><p>{p.oneStep}</p><a class="button primary" href={getLocalizedPath('/self-help/one-step/',lang)}>{p.oneStepAction}</a></article>
+        <article class="support-card" data-action="sleep"><h3>{c.guides.sleepRoutine.title}</h3><p>{p.sleep}</p><a class="button primary" href={getLocalizedPath('/self-help/sleep/',lang)}>{p.sleepAction}</a></article>
+        <article class="support-card" data-action="worry"><h3>{c.guides.worryPlan.title}</h3><p>{p.worry}</p><a class="button primary" href={getLocalizedPath('/self-help/worry/',lang)}>{p.worryAction}</a></article>
         <article class="support-card" data-action="choose"><h3>{c.ui.selfHelp}</h3><p>{p.guidesIntro}</p><a class="button primary" href={getLocalizedPath('/self-help/',lang)}>{c.ui.selfHelp}</a></article>
         <article class="support-card"><h3>{c.seekHelp.title}</h3><p>{c.ui.care}</p><a class="button" href="#prepare-support" data-prepare-support>{c.flow.prepare}</a></article>
       </div>
