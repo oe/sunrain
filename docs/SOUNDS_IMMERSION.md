@@ -232,6 +232,9 @@ git diff --check
 isolated desktop and touch-emulated Chromium contexts. It never attaches to an
 existing browser. `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH` may select an installed
 Chromium binary. Do not substitute a production URL for the local preview.
+The full audio suite runs on desktop Chromium; mobile Chromium repeats the
+mixing, return and stop smoke case. Optional Firefox/WebKit smoke checks are
+documented in [CI.md](./CI.md).
 
 The suite covers real Web Audio output signal, mix/master ratios, rapid
 pause/resume, Back versus Stop, repeated entry/disposal, scene changes,
