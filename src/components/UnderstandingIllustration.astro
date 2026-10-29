@@ -1,0 +1,21 @@
+---
+import type { UnderstandingTopic } from '@/lib/understand';
+
+interface Props {
+  topic: UnderstandingTopic;
+  placement: 'card' | 'hero';
+}
+
+const { topic, placement } = Astro.props;
+const base = `/images/understand/${topic}`;
+// Match the two-column layout and its single-column mobile breakpoint.
+const sizes = placement === 'card'
+  ? '(max-width: 760px) calc(100vw - 48px), (max-width: 1120px) calc(50vw - 46px), 514px'
+  : '(max-width: 760px) calc(100vw - 48px), (max-width: 1120px) calc((100vw - 100px) / 2.05), 498px';
+---
+<picture class="understand-art">
+  <source type="image/avif" srcset={`${base}-540.avif 540w, ${base}-800.avif 800w, ${base}-1000.avif 1000w`} sizes={sizes} />
+  <img src={`${base}.webp`} srcset={`${base}-540.webp 540w, ${base}.webp 1000w`} sizes={sizes}
+    width="1000" height="667" alt="" loading={placement === 'card' ? 'lazy' : 'eager'}
+    fetchpriority={placement === 'hero' ? 'high' : 'auto'} decoding="async" />
+</picture>

@@ -40,7 +40,8 @@ they do not change the disclosed independent professional-review status.
 
 ## Reading and illustration contract
 
-The four native-generated WebP illustrations are wordless, decorative editorial
+The four native-generated illustrations, served as responsive AVIF with WebP
+fallbacks, are wordless, decorative editorial
 art, not medical diagrams or recovery forecasts. They have empty alt attributes;
 all essential information is ordinary, translated HTML. Three short symptom
 cards and an ordered set of small steps offer visual structure without invented

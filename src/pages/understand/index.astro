@@ -3,6 +3,7 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import { getLanguageFromPath, getLocalizedPath } from '@/lib/i18n';
 import { getUnderstandingCopy, UNDERSTAND_TOPICS, type UnderstandingTopic } from '@/lib/understand';
 import { Icon } from '@/components/Icon';
+import UnderstandingIllustration from '@/components/UnderstandingIllustration.astro';
 import '@/styles/understand.css';
 const lang=getLanguageFromPath(Astro.url.pathname);
 const { common:c, topics }=getUnderstandingCopy(lang);
@@ -13,7 +14,7 @@ const ids=Object.keys(UNDERSTAND_TOPICS) as UnderstandingTopic[];
     <header class="understand-heading"><p class="understand-eyebrow">{c.nav}</p><h1>{c.title}</h1><p class="understand-lead">{c.intro}</p></header>
     <section aria-label={c.browse} class="understand-topics">
       {ids.map(id=><a class="understand-topic" href={getLocalizedPath(`/understand/${id}/`,lang)} data-understand-card={id}>
-        <img src={`/images/understand/${id}.webp`} width="1000" height="667" alt="" loading="lazy" decoding="async" />
+        <UnderstandingIllustration topic={id} placement="card" />
         <div><h2>{topics[id].title}</h2><p>{topics[id].teaser}</p><span class="understand-read">{c.open}<Icon name="ArrowRight" size={19} className="directional" /></span></div>
       </a>)}
     </section>

@@ -177,5 +177,5 @@ for (const scene of manifest.scenes) {
       `${name}: ${(statSync(path).size / 1048576).toFixed(2)} MiB, ${video.duration}s, boundary/P99 ${(seam / p99).toFixed(2)} — PASS`,
     );
   }
-  assert.ok(statSync(new URL(`${scene.id}-poster.jpg`, root)).size > 0);
+  assert.ok(statSync(new URL(`${scene.id}-poster.webp`, root)).size > 0);
 }

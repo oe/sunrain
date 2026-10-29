@@ -51,7 +51,8 @@ for spec in manifest['scenes']:
         '-preset', 'slow', '-crf', '24', '-pix_fmt', 'yuv420p', '-movflags', '+faststart', out)
     run('-i', out, '-vf', 'scale=1280:720', '-an', '-c:v', 'libx264',
         '-preset', 'slow', '-crf', '25', '-movflags', '+faststart', root / f'{name}-loop-mobile.mp4')
-    run('-i', out, '-frames:v', '1', '-vf', 'scale=1600:900', '-q:v', '2', root / f'{name}-poster.jpg')
+    run('-i', out, '-frames:v', '1', '-vf', 'scale=1600:900', '-c:v', 'libwebp',
+        '-quality', '84', '-compression_level', '6', root / f'{name}-poster.webp')
     print(name, out.stat().st_size, flush=True)
 
 work.cleanup()
