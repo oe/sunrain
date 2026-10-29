@@ -32,6 +32,21 @@ Adolescent research exists for the English PHQ-9 (Richardson et al., [PubMed 210
 
 Every scored item must have one integer answer from 0–3 for PHQ-9/GAD-7, or 0–4 for K6. Blank, sparse, corrupt or partial answers never become zero or a score. Users can skip a whole questionnaire; skipped, unselected and unavailable tools have explicit unassessed states. Revisiting answers recalculates current results; no combined score is produced.
 
+The interface presents three scored items at a time, with the selected total and
+answered count visible. Groups preserve the exact source item/option order and
+values; moving between groups does not score, require an answer or clear earlier
+choices. Advancing past the final group validates the whole instrument and brings
+the first unanswered item into view. The optional PHQ daily-life impact question
+remains available in a disclosure from every group, including before skipping.
+The item-nine support notice sits outside the groups so going back cannot hide it.
+
+Results lead with existing next-step guidance and direct activity/care actions.
+Professional-care guidance already present in an individual report, safety or
+functional/energy context gives the care action visual priority. No new threshold
+or combined interpretation is introduced. Full scores, source explanations and
+explicit record controls follow these primary actions. Alternative activities remain
+available in the same document without discarding answers or care-note edits.
+
 Any nonzero PHQ-9 item 9 answer immediately shows support, before completion. That notice also appears at the result even if the user skips the questionnaire after answering that item. It is a support rule, not a determination of present danger; no low-risk or “now safe” output exists. Crisis help is always available without completing a form.
 
 The PHQ impact item and optional context choices are separate from scoring. Marked functional difficulty gets an additional care invitation independent of the total, including when the user skips the scored questionnaire. The volunteered impact answer remains in the complete response export. Unusually elevated energy/reduced need for sleep or difficulty meeting basic needs puts professional support before activity recommendations. It does not identify bipolar disorder. Existing care plans should continue.

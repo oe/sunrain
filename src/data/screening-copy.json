@@ -56,7 +56,11 @@
     "attribution": "PHQ-9 and GAD-7: Robert L. Spitzer, Janet B.W. Williams, Kurt Kroenke and colleagues, with an educational grant from Pfizer Inc. Source forms state that no permission is required to reproduce, translate, display or distribute. This does not apply to separately restricted translations.",
     "answers": "Your questionnaire responses",
     "downloadRecord": "Download my response record",
-    "notice": "For reference only. Sunrain has not had independent clinical review, cannot diagnose and does not monitor your replies."
+    "notice": "For reference only. Sunrain has not had independent clinical review, cannot diagnose and does not monitor your replies.",
+    "toolProgress": "Questionnaire {current} of {total}",
+    "answerProgress": "Questions {first}–{last} · {answered}/{count} answered",
+    "selectionCount": "{count} scored questions selected. You can skip a whole questionnaire.",
+    "impactLabel": "Daily-life impact (optional)"
   },
   "zh-hans": {
     "begin": "初步了解我的症状",
@@ -115,7 +119,11 @@
     "attribution": "PHQ-9 与 GAD-7 由 Robert L. Spitzer、Janet B.W. Williams、Kurt Kroenke 及同事在 Pfizer Inc. 教育资助下开发。来源表单说明复制、翻译、展示与分发无需另行许可；这一说明不适用于另有限制的译本。",
     "answers": "查看完整问卷回答",
     "downloadRecord": "下载我的回答记录",
-    "notice": "仅供参考。Sunrain 尚未经过独立临床审阅，不能诊断，也没有人员实时查看你的回答。"
+    "notice": "仅供参考。Sunrain 尚未经过独立临床审阅，不能诊断，也没有人员实时查看你的回答。",
+    "toolProgress": "第 {current}/{total} 份问卷",
+    "answerProgress": "第 {first}–{last} 题 · 已答 {answered}/{count} 题",
+    "selectionCount": "已选 {count} 个计分题，可逐组回答或跳过整份问卷。",
+    "impactLabel": "补充日常生活影响（可选）"
   },
   "zh-hant": {
     "begin": "初步了解我的症狀",
@@ -174,7 +182,11 @@
     "attribution": "PHQ-9 與 GAD-7 由 Robert L. Spitzer、Janet B.W. Williams、Kurt Kroenke 及同事在 Pfizer Inc. 教育資助下開發。來源表單說明複製、翻譯、展示與分發無需另行許可；這一說明不適用於另有限制的譯本。",
     "answers": "查看完整問卷回答",
     "downloadRecord": "下載我的回答記錄",
-    "notice": "僅供參考。Sunrain 尚未經過獨立臨床審閱，不能診斷，也沒有人員即時查看你的回答。"
+    "notice": "僅供參考。Sunrain 尚未經過獨立臨床審閱，不能診斷，也沒有人員即時查看你的回答。",
+    "toolProgress": "第 {current}/{total} 份問卷",
+    "answerProgress": "第 {first}–{last} 題 · 已答 {answered}/{count} 題",
+    "selectionCount": "已選 {count} 個計分題，可逐組回答或跳過整份問卷。",
+    "impactLabel": "補充日常生活影響（可選）"
   },
   "es": {
     "begin": "Entender mis síntomas",
@@ -233,7 +245,11 @@
     "attribution": "PHQ-9 y GAD-7: Robert L. Spitzer, Janet B.W. Williams, Kurt Kroenke y colaboradores, con una beca educativa de Pfizer Inc. Los formularios originales permiten reproducir, traducir, mostrar y distribuir sin permiso adicional. Esto no se aplica a traducciones con restricciones independientes.",
     "answers": "Tus respuestas completas",
     "downloadRecord": "Descargar mi registro de respuestas",
-    "notice": "Solo como referencia. Sunrain no ha recibido revisión clínica independiente, no diagnostica ni supervisa tus respuestas."
+    "notice": "Solo como referencia. Sunrain no ha recibido revisión clínica independiente, no diagnostica ni supervisa tus respuestas.",
+    "toolProgress": "Cuestionario {current} de {total}",
+    "answerProgress": "Preguntas {first}–{last} · {answered}/{count} respondidas",
+    "selectionCount": "Has elegido {count} preguntas puntuables. Puedes omitir un cuestionario completo.",
+    "impactLabel": "Efecto en la vida diaria (opcional)"
   },
   "ja": {
     "begin": "症状を初めに確認する",
@@ -292,7 +308,11 @@
     "attribution": "PHQ-9はRobert L. Spitzer、Janet B.W. Williams、Kurt KroenkeらがPfizer Inc.の教育助成を受けて開発しました。K6: © Ronald C. Kessler, PhD. 2007. All rights reserved. 日本語訳：Toshiaki Furukawa、Norito Kawakami、Yoshiharu Kim。Kessler RC et al. (2003), Screening for serious mental illness in the general population, Archives of General Psychiatry 60(2):184–189, doi:10.1001/archpsyc.60.2.184。作者サイトは訳文の自由な利用を認め、著作権表示と文献引用を求めています。",
     "answers": "質問票の回答をすべて見る",
     "downloadRecord": "回答記録をダウンロード",
-    "notice": "参考情報です。Sunrainは独立した臨床審査を受けておらず、診断や回答の監視を行いません。"
+    "notice": "参考情報です。Sunrainは独立した臨床審査を受けておらず、診断や回答の監視を行いません。",
+    "toolProgress": "質問票 {current}/{total}",
+    "answerProgress": "質問 {first}〜{last} · 回答済み {answered}/{count}",
+    "selectionCount": "選択した採点対象の質問は {count} 問です。質問票ごとにスキップできます。",
+    "impactLabel": "日常生活への影響（任意）"
   },
   "ko": {
     "begin": "내 증상 먼저 알아보기",
@@ -351,7 +371,11 @@
     "attribution": "PHQ-9과 GAD-7은 Robert L. Spitzer, Janet B.W. Williams, Kurt Kroenke와 동료들이 Pfizer Inc.의 교육 지원금으로 개발했습니다. 원본 양식에는 복제·번역·게시·배포에 별도 허가가 필요 없다고 명시되어 있습니다. 별도 제한이 있는 번역본에는 적용되지 않습니다.",
     "answers": "전체 질문지 답변 보기",
     "downloadRecord": "내 답변 기록 내려받기",
-    "notice": "참고용입니다. Sunrain은 독립적인 임상 검토를 받지 않았으며 진단이나 답변 실시간 확인을 하지 않습니다."
+    "notice": "참고용입니다. Sunrain은 독립적인 임상 검토를 받지 않았으며 진단이나 답변 실시간 확인을 하지 않습니다.",
+    "toolProgress": "설문 {current}/{total}",
+    "answerProgress": "문항 {first}–{last} · {answered}/{count}개 응답",
+    "selectionCount": "채점 문항 {count}개를 선택했습니다. 설문 전체를 건너뛸 수 있습니다.",
+    "impactLabel": "일상생활에 미치는 영향 (선택)"
   },
   "hi": {
     "begin": "अपने लक्षणों को समझें",
@@ -410,7 +434,11 @@
     "attribution": "PHQ-9 और GAD-7: Robert L. Spitzer, Janet B.W. Williams, Kurt Kroenke और सहयोगी, Pfizer Inc. के शैक्षणिक अनुदान से। मूल प्रपत्रों के अनुसार पुनरुत्पादन, अनुवाद, प्रदर्शन और वितरण के लिए अलग अनुमति आवश्यक नहीं। अलग प्रतिबंध वाले अनुवादों पर यह लागू नहीं होता।",
     "answers": "प्रश्नावली के पूरे उत्तर देखें",
     "downloadRecord": "अपने उत्तरों का रिकॉर्ड डाउनलोड करें",
-    "notice": "केवल संदर्भ के लिए। Sunrain की स्वतंत्र नैदानिक समीक्षा नहीं हुई है। यह निदान नहीं करता और आपके उत्तरों की निगरानी नहीं होती।"
+    "notice": "केवल संदर्भ के लिए। Sunrain की स्वतंत्र नैदानिक समीक्षा नहीं हुई है। यह निदान नहीं करता और आपके उत्तरों की निगरानी नहीं होती।",
+    "toolProgress": "प्रश्नावली {current}/{total}",
+    "answerProgress": "प्रश्न {first}–{last} · {answered}/{count} के उत्तर दिए",
+    "selectionCount": "अंकों वाले {count} प्रश्न चुने हैं। आप पूरी प्रश्नावली छोड़ सकते हैं।",
+    "impactLabel": "दैनिक जीवन पर प्रभाव (वैकल्पिक)"
   },
   "ar": {
     "begin": "أفهم أعراضي مبدئياً",
@@ -469,6 +497,10 @@
     "attribution": "طوّر PHQ-9 وGAD-7 كل من Robert L. Spitzer وJanet B.W. Williams وKurt Kroenke وزملائهم بمنحة تعليمية من Pfizer Inc. تنص نماذج المصدر على عدم الحاجة لإذن لإعادة الإنتاج والترجمة والعرض والتوزيع. لا يشمل ذلك الترجمات ذات القيود المنفصلة.",
     "answers": "عرض جميع إجاباتي",
     "downloadRecord": "تنزيل سجل إجاباتي",
-    "notice": "للاسترشاد فقط. لم يخضع Sunrain لمراجعة سريرية مستقلة، ولا يشخّص الحالات أو يراقب إجاباتك."
+    "notice": "للاسترشاد فقط. لم يخضع Sunrain لمراجعة سريرية مستقلة، ولا يشخّص الحالات أو يراقب إجاباتك.",
+    "toolProgress": "الاستبيان {current} من {total}",
+    "answerProgress": "الأسئلة {first}–{last} · أُجيب عن {answered} من {count}",
+    "selectionCount": "اخترت {count} سؤالًا يُحتسب في الدرجة. يمكنك تخطي استبيان كامل.",
+    "impactLabel": "التأثير على الحياة اليومية (اختياري)"
   }
 }

@@ -25,6 +25,7 @@ const {forms,ids,copy:s}=getScreeningContent(lang);
     <fieldset id="screening-tool-choices"><legend class="sr-only">{s.choose}</legend>
       {ids.map(id=>forms[id] ? <label class="choice"><input type="checkbox" name="screening-tool" value={id} checked />{forms[id].label} · {forms[id].recall}</label> : <p data-tool-unavailable={id}>{s.availability}</p>)}
     </fieldset>
+    <p class="muted screening-selection-count" data-screening-count></p>
     <p id="screening-selection-error" class="status" role="alert" tabindex="-1"></p>
     <div class="actions step-actions"><button class="button" type="button" data-screening-exit>{s.general}</button><button class="button primary" type="button" id="screening-start-tools">{c.ui.next}</button></div>
     <details><summary>{p.details}</summary><p>{p.checkInIntro}</p><p>{s.notice}</p><p>{s.coverage}</p><p>{c.ui.privacy}</p><p data-youth-support>{c.ui.younger}</p></details>
@@ -35,15 +36,16 @@ const {forms,ids,copy:s}=getScreeningContent(lang);
     <p>{form.instruction}</p>
     {form.scope&&<details><summary>{s.originals}</summary><p>{form.scope}</p></details>}
     <p class="muted">{s.answerError}</p>
+    <p class="screening-answer-progress" data-answer-progress role="status" aria-live="polite" aria-atomic="true"></p>
+    {id==='phq-9'&&<aside id="screening-live-safety" class="urgent" role="status" hidden><p>{s.safety}</p><a class="button primary" href={getLocalizedPath('/crisis/',lang)}>{c.ui.crisisDirectory}</a><a class="button" href={getLocalizedPath('/support/',lang)}>{c.ui.support}</a></aside>}
     <ol class="screening-questions" role="list">
       {form.questions.map((question,i)=><li>
         <fieldset data-screening-question={i}><legend><span class="screening-question-title"><bdi dir="ltr">{i+1}.</bdi><span data-question-text>{question}</span></span></legend>
           <div class="screening-options" data-option-count={form.options.length}>{form.options.map((label,index)=><label class="choice"><input type="radio" name={`screening-${id}-${i}`} value={form.optionValues[index]} autocomplete="off" />{label}</label>)}</div>
         </fieldset>
-        {id==='phq-9'&&i===8&&<aside id="screening-live-safety" class="urgent" role="status" hidden><p>{s.safety}</p><a class="button primary" href={getLocalizedPath('/crisis/',lang)}>{c.ui.crisisDirectory}</a><a class="button" href={getLocalizedPath('/support/',lang)}>{c.ui.support}</a></aside>}
       </li>)}
     </ol>
-    {form.impact&&<fieldset class="screening-impact"><legend>{form.impact}</legend><p class="muted">{s.impactOptional}</p>{form.impactOptions.map((label,value)=><label class="choice"><input type="radio" name="screening-impact" value={value} data-label={label} autocomplete="off" />{label}</label>)}</fieldset>}
+    {form.impact&&<details class="screening-impact-note"><summary>{s.impactLabel}</summary><fieldset class="screening-impact"><legend>{form.impact}</legend><p class="muted">{s.impactOptional}</p>{form.impactOptions.map((label,value)=><label class="choice"><input type="radio" name="screening-impact" value={value} data-label={label} autocomplete="off" />{label}</label>)}</fieldset></details>}
     <p data-screening-error class="status" role="alert" tabindex="-1"></p>
     <div class="actions step-actions"><button class="button" type="button" data-screening-back>{c.ui.back}</button><button class="button primary" type="button" data-screening-next>{c.ui.next}</button></div>
     <button class="text-button" type="button" data-screening-skip>{s.skipTool}</button>
@@ -63,22 +65,28 @@ const {forms,ids,copy:s}=getScreeningContent(lang);
     <aside id="screening-result-safety" class="urgent" hidden><p>{s.safety}</p><div class="actions"><a class="button primary" href={getLocalizedPath('/crisis/',lang)}>{c.ui.crisisDirectory}</a><a class="button" href="#prepare-support" data-prepare-support>{c.flow.prepare}</a></div></aside>
     <aside id="screening-functional-care" class="urgent" hidden><p>{s.care}</p><a class="button" href="#prepare-support" data-prepare-support>{c.flow.prepare}</a></aside>
     <p class="screening-result-scope">{s.resultScope}</p>
+    <section class="screening-next-step" aria-labelledby="screening-actions-title">
+      <h3 id="screening-actions-title">{s.actions}</h3>
+      <p data-next-step-guidance></p>
+      <div class="actions">
+        <a id="screening-care-action" class="button" href="#prepare-support" data-prepare-support>{c.flow.prepare}</a>
+        <a id="screening-activity-action" class="button primary" href={getLocalizedPath('/self-help/',lang)}>{c.ui.selfHelp}</a>
+      </div>
+    </section>
+    <div data-screening-record-panel>
     <div class="support-grid screening-report-grid">
       {ids.map(id=><article class="support-card" data-screening-report={id} data-guidance={forms[id]?.guidance}>
         <h3>{forms[id]?.label||(id==='phq-9'?s.depression:s.anxiety)}</h3>
         {forms[id]&&<p data-report-recall>{forms[id].recall}</p>}
         <p data-report-score></p><p data-report-band hidden></p>
-        <p data-report-next></p>
         <p><a data-understand-link href={getLocalizedPath(id==='phq-9'?'/understand/depression/':id==='gad-7'?'/understand/anxiety/':'/understand/',lang)} target="_blank" rel="noopener noreferrer" title={u.newTab}>{u.learnLink}<span aria-hidden="true"> ↗</span><span class="sr-only"> · {u.newTab}</span></a></p>
-        <details><summary>{p.resultsDetails}</summary><p data-report-meaning hidden>{forms[id]?.meaning}</p>{forms[id]?.scope&&<p class="muted" data-report-scope>{forms[id].scope}</p>}{forms[id]&&<p><a href={forms[id].source} target="_blank" rel="noreferrer">{s.source}</a></p>}</details>
+        <details><summary>{p.resultsDetails}</summary><p data-report-next></p><p data-report-meaning hidden>{forms[id]?.meaning}</p>{forms[id]?.scope&&<p class="muted" data-report-scope>{forms[id].scope}</p>}{forms[id]&&<p><a href={forms[id].source} target="_blank" rel="noreferrer">{s.source}</a></p>}</details>
       </article>)}
     </div>
-    <div data-screening-record-panel>
     <details id="screening-record-options"><summary>{p.recordActions}</summary><p class="muted">{c.common.save}</p><details><summary>{s.answers}</summary><pre class="result-summary" data-screening-record></pre></details><button class="button" type="button" id="screening-export">{s.downloadRecord}</button></details>
     <details><summary>{p.resultsDetails}</summary><p>{s.reference}</p><p>{s.coverage}</p></details>
     <button class="text-button" type="button" id="screening-revise">{s.edit}</button>
     </div>
-    <h2>{s.actions}</h2><p>{s.actionHelp}</p>
   </section>
 </template>
 <script>

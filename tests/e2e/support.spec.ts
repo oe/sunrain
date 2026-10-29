@@ -225,14 +225,18 @@ async function startScreening(page:Page,locale='en',age='adult'){
   await page.locator('#screening-age').selectOption(age);
   await page.locator('#screening-start-tools').click();
 }
-async function answerTool(page:Page,id:string,answers:number[]){
+async function fillTool(page:Page,id:string,answers:number[]){
   for(const [i,value]of answers.entries()){
     const input=page.locator(`input[name="screening-${id}-${i}"][value="${value}"]`);
+    if(!await input.isVisible())await page.locator(`[data-screen-stage="${id}"] [data-screening-next]`).click();
     // Exercise the complete labelled touch target. WebKit's native radio
     // quads can disagree with its hit-test coordinates with a forced 15px RTL
     // scrollbar; the full label remains the correct accessible user target.
     await input.locator('..').click();await expect(input).toBeChecked();
   }
+}
+async function answerTool(page:Page,id:string,answers:number[]){
+  await fillTool(page,id,answers);
   await page.locator(`[data-screen-stage="${id}"] [data-screening-next]`).click();
 }
 async function startJapaneseK6(page:Page,age='adult'){
@@ -276,6 +280,7 @@ test('Japanese K6 preserves source option order, 30-day recall and complete care
 test('Japanese K6 never scores missing or skipped responses and links reported concerns to optional support',async({page})=>{
   await startJapaneseK6(page);
   await page.locator('[data-screen-stage="k6"] [data-screening-next]').click();
+  await page.locator('[data-screen-stage="k6"] [data-screening-next]').click();
   await expect(page.locator('input[name="screening-k6-0"][value="4"]')).toBeFocused();
   await expect(page.locator('[data-screen-stage="k6"] [data-screening-error]')).toHaveText(screeningCopy.ja.answerError);
   await page.locator('input[name="screening-k6-0"][value="4"]').locator('..').click();
@@ -314,6 +319,7 @@ for(const locale of locales){
     }else await answerTool(page,'gad-7',Array(7).fill(1));
     await page.locator('#screening-finish').click();
     await expect(page.locator('#result-title')).toHaveText(screeningCopy[locale].results);
+    await expect(page.locator('#screening-care-action')).toBeInViewport({ratio:1});
     await expect(page.locator('[data-screening-report="phq-9"] [data-report-score]')).toHaveText('16 / 27');
     await expect(page.locator('[data-screening-report="phq-9"] [data-report-band]')).toContainText(screeningCopy[locale].bands[3]);
     await expect(page.locator(`[data-screening-report="${locale==='ja'?'k6':'gad-7'}"] [data-report-score]`)).toHaveText(locale==='ja'?'14 / 24':'7 / 21');
@@ -335,7 +341,7 @@ for(const locale of locales){
     }
     // The same private document carries scores, exact version and sources into
     // an editable care record. Only explicit save/download persists that record.
-    await page.locator('#result-options [data-prepare-support]').click();
+    await page.locator('#screening-care-action').click();
     const notes=page.locator('#prepare-support [data-note-field]');
     await expect(notes.nth(0)).toHaveValue(/16 \/ 27/);
     await expect(notes.nth(0)).toHaveValue(/phqscreeners-201412/);
@@ -380,8 +386,37 @@ for(const locale of locales){
     await expect(notes.nth(0)).toHaveValue('');
   });
 }
+test('question groups preserve answers, locate missing items and keep support visible when going back',{tag:'@smoke'},async({page})=>{
+  await startScreening(page);
+  const stage=page.locator('[data-screen-stage="phq-9"]');
+  const next=stage.locator('[data-screening-next]'),back=stage.locator('[data-screening-back]');
+  await expect(stage.locator('[data-screening-question]:visible')).toHaveCount(3);
+  await page.locator('input[name="screening-phq-9-0"][value="1"]').check();
+  await next.click();
+  await expect(stage.locator('[data-screening-question="3"]')).toBeVisible();
+  await expect(stage.locator('[data-answer-progress]')).toContainText('1/9 answered');
+  await back.click();
+  await expect(page.locator('input[name="screening-phq-9-0"][value="1"]')).toBeChecked();
+  await next.click();await next.click();
+  await page.locator('input[name="screening-phq-9-8"][value="1"]').check();
+  await expect(page.locator('#screening-live-safety')).toBeVisible();
+  await back.click();
+  await expect(stage.locator('[data-screening-question="8"]')).toBeHidden();
+  await expect(page.locator('#screening-live-safety')).toBeVisible();
+  await next.click();await next.click();
+  await expect(page.locator('input[name="screening-phq-9-1"][value="0"]')).toBeFocused();
+  await expect(stage.locator('[data-screening-error]')).toHaveText(screeningCopy.en.answerError);
+  await stage.locator('[data-screening-skip]').click();
+  await page.locator('[data-screen-stage="gad-7"] [data-screening-skip]').click();
+  await page.locator('#screening-finish').click();
+  await expect(page.locator('[data-screening-report="phq-9"] [data-report-score]')).toHaveText(screeningCopy.en.unanswered);
+  await expect(page.locator('#screening-result-safety')).toBeVisible();
+});
+
 test('partial and skipped forms never become normal; item-9 support survives skipping with a low total',async({page})=>{
   await startScreening(page);
+  await page.locator('[data-screen-stage="phq-9"] [data-screening-next]').click();
+  await page.locator('[data-screen-stage="phq-9"] [data-screening-next]').click();
   await page.locator('[data-screen-stage="phq-9"] [data-screening-next]').click();
   await expect(page.locator('[data-screen-stage="phq-9"] [data-screening-error]')).toHaveText(screeningCopy.en.answerError);
   await expect(page.locator('input[name="screening-phq-9-0"][value="0"]')).toBeFocused();
@@ -390,6 +425,8 @@ test('partial and skipped forms never become normal; item-9 support survives ski
   expect(focused.y).toBeGreaterThanOrEqual(header.y+header.height+8);
   const question=await page.locator('[data-screen-stage="phq-9"] [data-question-text]').first().boundingBox();
   expect(question.y).toBeGreaterThanOrEqual(header.y+header.height+8);
+  await page.locator('[data-screen-stage="phq-9"] [data-screening-next]').click();
+  await page.locator('[data-screen-stage="phq-9"] [data-screening-next]').click();
   await page.locator('input[name="screening-phq-9-8"][value="1"]').check();
   await expect(page.locator('#screening-live-safety')).toBeVisible();
   await page.locator('[data-screen-stage="phq-9"] [data-screening-skip]').click();
@@ -420,7 +457,8 @@ test('youth records have scores without adult bands and declining age keeps gene
 });
 test('function and elevated-energy context prioritise care independently of totals',async({page})=>{
   await startScreening(page);
-  for(let i=0;i<9;i++)await page.locator(`input[name="screening-phq-9-${i}"][value="0"]`).check();
+  await fillTool(page,'phq-9',Array(9).fill(0));
+  await openDisclosure(page,'[data-screen-stage="phq-9"] .screening-impact-note');
   await page.locator('input[name="screening-impact"][value="3"]').check();
   await page.locator('[data-screen-stage="phq-9"] [data-screening-next]').click();
   await answerTool(page,'gad-7',Array(7).fill(0));await page.locator('#screening-energy').check();await page.locator('#screening-finish').click();
@@ -431,6 +469,7 @@ test('function and elevated-energy context prioritise care independently of tota
 });
 test('skipping a scored form retains volunteered functional difficulty in support and complete export',async({page})=>{
   await startScreening(page);
+  await openDisclosure(page,'[data-screen-stage="phq-9"] .screening-impact-note');
   await page.locator('input[name="screening-impact"][value="3"]').check();
   await page.locator('[data-screen-stage="phq-9"] [data-screening-skip]').click();
   await answerTool(page,'gad-7',Array(7).fill(0));await page.locator('#screening-finish').click();
@@ -643,8 +682,9 @@ test('platform introduction keeps one primary self-check action in view in every
     await page.goto(path(locale,'/'));
     const hero=page.locator('.platform-hero');
     await expect(hero.locator('h1')).toHaveCount(1);
-    await expect(hero.locator('a')).toHaveCount(1);
+    await expect(hero.locator('.platform-button.primary')).toHaveCount(1);
     await expect(hero.locator('#home-check-in')).toHaveAttribute('href',path(locale,'/check-in/'));
+    await expect(hero.locator('.hero-quick-start')).toHaveAttribute('href',path(locale,'/self-help/grounding/'));
     await expect(hero.locator('.hero-description')).toContainText('Sunrain');
     const button=await hero.locator('#home-check-in').boundingBox();
     expect(button.height).toBeGreaterThanOrEqual(44);

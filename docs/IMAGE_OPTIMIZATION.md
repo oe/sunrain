@@ -9,8 +9,8 @@ they are not loaded by the header or footer.
 
 ## Delivery and quality
 
-- The four guide illustrations use 540/800/1000-pixel AVIF sources (quality 60)
-  and 540/1000-pixel WebP fallbacks (quality 82, method 6). They were exported
+- The four guide illustrations use 320/540/800/1000-pixel AVIF sources (quality 60)
+  and 320/540/1000-pixel WebP fallbacks (quality 82, method 6). They were exported
   from the original 1536×1024 generated PNGs, without regenerating the artwork.
   `UnderstandingIllustration.astro` shares their markup, with `sizes` matched to
   each layout. Cards remain lazy loaded; article hero art has high priority.
@@ -64,6 +64,16 @@ covered widths 320/390/760/768/1440, 1×/2× density, image decoding and horizon
 overflow. A separate run removed AVIF sources from served HTML to exercise
 WebP/PNG selection and decoding. Build verification checks every local image
 and `srcset` candidate across the 144 localized support pages.
+
+## Mobile collection follow-up
+
+The subsequent design follow-up uses 88-pixel square thumbnails in the mobile
+guide collection and adds the 320-pixel variants above from the original PNGs.
+The article illustration keeps its larger responsive sources and 3:2 crop.
+At 390px/2×, cold collection image payload falls again from 89,347 to 23,186
+bytes; desktop remains 46,555 bytes and the depression article remains 35,214
+bytes on mobile. Public image files now total 1,426,939 bytes including these
+additional variants. The initial-pass table above records the earlier layout.
 
 ## Updating artwork
 

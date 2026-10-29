@@ -15,8 +15,8 @@ const u=getUnderstandingCopy(lang).common;
   <p class="page-intro">{p.guidesIntro}</p>
   <p><a href={getLocalizedPath('/understand/',lang)}>{u.learnLink}</a></p>
   <div class="support-grid">
-    {[['grounding',c.guides.grounding,p.grounding],['one-step',c.guides.smallStep,p.oneStep],['sleep',c.guides.sleepRoutine,p.sleep],['worry',c.guides.worryPlan,p.worry]].map(([id,guide,purpose]) => <article class="support-card"><h2>{(guide as typeof c.guides.grounding).title}</h2><p>{purpose as string}</p><a class="button" href={getLocalizedPath(`/self-help/${id}/`,lang)}>{c.flow.tryActivity}</a></article>)}
-    <article class="support-card"><h2>{t('nav.relax',lang)}</h2><p>{t('relax.subtitle',lang)}</p><div class="actions"><a class="button" href={getLocalizedPath('/breathing/',lang)}>{t('home.hero.tryBreathing',lang)}</a><a class="button" href={getLocalizedPath('/relax/sounds/',lang)}>{t('nav.relax',lang)}</a></div></article>
+    {[['grounding',c.guides.grounding,p.grounding,p.groundingAction],['one-step',c.guides.smallStep,p.oneStep,p.oneStepAction],['sleep',c.guides.sleepRoutine,p.sleep,p.sleepAction],['worry',c.guides.worryPlan,p.worry,p.worryAction]].map(([id,guide,purpose,action]) => <article class="support-card"><h2>{(guide as typeof c.guides.grounding).title}</h2><p>{purpose as string}</p><a class="button" href={getLocalizedPath(`/self-help/${id}/`,lang)}>{action as string}</a></article>)}
+    <article class="support-card"><h2>{t('nav.relax',lang)}</h2><p>{t('relax.subtitle',lang)}</p><div class="actions"><a class="button" href={getLocalizedPath('/breathing/',lang)}>{t('home.hero.tryBreathing',lang)}</a><a class="button" href={getLocalizedPath('/relax/sounds/',lang)}>{p.soundsAction}</a></div></article>
   </div>
   <details><summary>{c.ui.who}</summary><p>{c.ui.external}</p><a href={supportSources.who.url} target="_blank" rel="noreferrer">WHO · Doing What Matters in Times of Stress</a></details>
   <details><summary>{p.guideTips}</summary><p>{c.common.before}</p><p>{c.common.stop}</p><p>{c.common.noChange}</p></details>
