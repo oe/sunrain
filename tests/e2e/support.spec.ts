@@ -320,6 +320,19 @@ for(const locale of locales){
     await expect(page.locator('[data-action="one-step"]')).toBeVisible();
     await expect(page.locator('[data-action="worry"]')).toBeVisible();
     await expect(page.locator('#screening-result-safety')).toBeHidden();
+    // Reading should not navigate away from, or transfer, the private answers.
+    const explanation=page.locator('[data-screening-report="phq-9"] [data-understand-link]');
+    await expect(explanation).toHaveAttribute('href',path(locale,'/understand/depression/'));
+    await expect(explanation).toHaveAttribute('target','_blank');
+    if(locale==='en') {
+      const popup=page.waitForEvent('popup');
+      await explanation.click();
+      const guide=await popup;
+      await expect(guide.locator('[data-understand-topic]')).toHaveAttribute('data-understand-topic','depression');
+      expect(new URL(guide.url()).search).toBe('');
+      await guide.close();
+      await expect(page.locator('[data-screening-report="phq-9"] [data-report-score]')).toHaveText('16 / 27');
+    }
     // The same private document carries scores, exact version and sources into
     // an editable care record. Only explicit save/download persists that record.
     await page.locator('#result-options [data-prepare-support]').click();

@@ -3,9 +3,11 @@ import {getLanguageFromPath,getLocalizedPath} from '@/lib/i18n';
 import {getSupportCopy} from '@/lib/support';
 import {getScreeningContent} from '@/lib/screening-content';
 import {getPlatformCopy} from '@/lib/platform';
+import {getUnderstandingCopy} from '@/lib/understand';
 const lang=getLanguageFromPath(Astro.url.pathname);
 const c=getSupportCopy(lang);
 const p=getPlatformCopy(lang);
+const u=getUnderstandingCopy(lang).common;
 const {forms,ids,copy:s}=getScreeningContent(lang);
 ---
 <section id="screening-flow" hidden data-copy={JSON.stringify(s)} data-tools={JSON.stringify(ids)}>
@@ -67,6 +69,7 @@ const {forms,ids,copy:s}=getScreeningContent(lang);
         {forms[id]&&<p data-report-recall>{forms[id].recall}</p>}
         <p data-report-score></p><p data-report-band hidden></p>
         <p data-report-next></p>
+        <p><a data-understand-link href={getLocalizedPath(id==='phq-9'?'/understand/depression/':id==='gad-7'?'/understand/anxiety/':'/understand/',lang)} target="_blank" rel="noopener noreferrer" title={u.newTab}>{u.learnLink}<span aria-hidden="true"> ↗</span><span class="sr-only"> · {u.newTab}</span></a></p>
         <details><summary>{p.resultsDetails}</summary><p data-report-meaning hidden>{forms[id]?.meaning}</p>{forms[id]?.scope&&<p class="muted" data-report-scope>{forms[id].scope}</p>}{forms[id]&&<p><a href={forms[id].source} target="_blank" rel="noreferrer">{s.source}</a></p>}</details>
       </article>)}
     </div>

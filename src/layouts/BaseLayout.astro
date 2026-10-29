@@ -30,6 +30,8 @@ const lang = getLanguageFromPath(pathname) as Language;
 const dir = isRTL(lang) ? 'rtl' : 'ltr';
 // No third-party analytics on pages where people reflect on their health.
 const privatePage = /\/(check-in|assessment|support|self-help|crisis|disclaimer)(\/|$)/.test(pathname);
+// Topic reading can reveal health interests too; keep it free of telemetry.
+const noTelemetry = privatePage || /\/understand(\/|$)/.test(pathname);
 const canonicalUrl = new URL(pathname.replace(/^\/en(?=\/|$)/,'') || '/', Astro.site).href;
 
 const siteTitle = title
@@ -149,7 +151,7 @@ const alternateLinks = SUPPORTED_LANGUAGES.map((locale) => {
     </main>
     <Footer lang={lang} />
     <!-- Cloudflare Web Analytics: anonymous page and performance measurements only. -->
-    {!privatePage && <script
+    {!noTelemetry && <script
       is:inline
       type="module"
       src="https://static.cloudflareinsights.com/beacon.min.js"

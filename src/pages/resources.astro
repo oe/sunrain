@@ -4,15 +4,18 @@ import { t, getLanguageFromPath, getLocalizedPath, type Language } from '@/lib/i
 import { getSupportCopy } from '@/lib/support';
 import { Icon } from '@/components/Icon';
 import { getResources } from '@/data/resources';
+import { getUnderstandingCopy } from '@/lib/understand';
 
 const lang = getLanguageFromPath(Astro.url.pathname) as Language;
 const categories = getResources(lang);
 const showLanguageNotice = lang !== 'en';
 const support=getSupportCopy(lang);
+const u=getUnderstandingCopy(lang).common;
 ---
 <BaseLayout title={t('resources.title',lang)} description={t('resources.subtitle',lang)}>
   <div class="relax-page">
     <header class="page-heading"><h1>{t('resources.title',lang)}</h1><p>{t('resources.subtitle',lang)}</p>{showLanguageNotice&&<p class="text-sm mt-4">{t('resources.languageNotice',lang)}</p>}</header>
+    <p class="resource-actions"><a class="platform-link" href={getLocalizedPath('/understand/',lang)}>{u.learnLink}<Icon name="ArrowRight" size={19} className="directional" /></a></p>
     <div class="resource-groups">
       {categories.map(category=><details class="resource-group">
         <summary><span class="resource-title"><Icon name={category.icon} size={24} /><h2>{t(`resources.categories.${category.id}`,lang)}</h2></span></summary>
