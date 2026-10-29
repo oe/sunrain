@@ -1,4 +1,5 @@
 ---
+import { brandAssets } from '@/lib/branding';
 import { t, getLocalizedPath, type Language } from '@/lib/i18n';
 import { Icon } from '@/components/Icon';
 
@@ -18,8 +19,8 @@ const currentYear = new Date().getFullYear();
       <!-- Brand -->
       <div class="flex items-center gap-3">
         <picture>
-          <source srcset="/logo.avif" type="image/avif" />
-          <img src="/logo.png" alt="Sunrain" class="w-8 h-8" />
+          <source srcset={brandAssets.logoAvif} type="image/avif" />
+          <img src={brandAssets.logoPng} alt="Sunrain" class="w-8 h-8" />
         </picture>
         <div>
           <p class="font-bold text-gray-900 dark:text-white">Sunrain</p>

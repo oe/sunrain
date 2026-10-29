@@ -3,6 +3,7 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import { getLanguageFromPath, getLocalizedPath } from '@/lib/i18n';
 import { getUnderstandingCopy, UNDERSTAND_TOPICS, understandingSources, UNDERSTANDING_CHECKED, type UnderstandingTopic } from '@/lib/understand';
 import { Icon } from '@/components/Icon';
+import UnderstandingIllustration from '@/components/UnderstandingIllustration.astro';
 import '@/styles/understand.css';
 export function getStaticPaths() { return Object.keys(UNDERSTAND_TOPICS).map(topic=>({params:{topic}})); }
 const id=Astro.params.topic as UnderstandingTopic;
@@ -18,7 +19,7 @@ const sections=[['signs',c.signs],['today',c.steps],['treatment',c.treatment],['
     <a class="understand-back" href={getLocalizedPath('/understand/',lang)}><Icon name="ArrowRight" size={18} className="understand-back-icon directional" />{c.back}</a>
     <header class="understand-hero">
       <div><p class="understand-eyebrow">{c.nav}</p><h1>{topic.title}</h1><p class="understand-lead">{topic.intro}</p><a class="platform-link" href="#today">{c.steps}<Icon name="ArrowRight" size={19} className="directional" /></a></div>
-      <img src={`/images/understand/${id}.webp`} width="1000" height="667" alt="" fetchpriority="high" decoding="async" />
+      <UnderstandingIllustration topic={id} placement="hero" />
     </header>
     <nav class="understand-sections" aria-label={c.browse}>{sections.map(([anchor,label])=><a href={`#${anchor}`}>{label}</a>)}</nav>
     <section id="signs" aria-labelledby="signs-heading" class="understand-section">

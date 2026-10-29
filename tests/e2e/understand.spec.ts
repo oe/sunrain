@@ -18,7 +18,9 @@ test('every language connects illustrated topic reading to practical support wit
     await expect(page.locator('script[src*="cloudflareinsights"]')).toHaveCount(0);
     const art=page.locator('.understand-hero img');
     await expect(art).toHaveAttribute('alt','');
-    await expect.poll(()=>art.evaluate((img:HTMLImageElement)=>img.naturalWidth)).toBe(1000);
+    await expect.poll(()=>art.evaluate((img:HTMLImageElement)=>img.complete && img.naturalWidth>0)).toBe(true);
+    await expect(art).toHaveAttribute('sizes',/max-width: 760px/);
+    expect(await art.evaluate((img:HTMLImageElement)=>new URL(img.currentSrc).pathname)).toMatch(/\/images\/understand\/[^/]+(?:-\d+\.avif|(?:-540)?\.webp)$/);
     expect(await page.locator('#references a').count()).toBeGreaterThanOrEqual(2);
     await page.locator('.understand-hero a[href="#today"]').click();
     const top=(await page.locator('#today').boundingBox()).y;

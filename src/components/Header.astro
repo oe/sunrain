@@ -1,4 +1,5 @@
 ---
+import { brandAssets } from '@/lib/branding';
 import {
   t,
   getLocalizedPath,
@@ -67,9 +68,9 @@ function isActive(itemHref: string): boolean {
         >
         </div>
         <picture class="block shrink-0">
-          <source srcset="/logo.avif" type="image/avif" />
+          <source srcset={brandAssets.logoAvif} type="image/avif" />
           <img
-            src="/logo.png"
+            src={brandAssets.logoPng}
             alt="Sunrain"
             class="relative block w-8 h-8 group-hover:scale-110 transition-transform duration-300"
           />

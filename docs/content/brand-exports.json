@@ -1,0 +1,101 @@
+{
+  "approved_source": "logo-aligned-preview.png (approved in the project conversation, 2026-10-29)",
+  "approved_source_sha256": "1832c995d36113a865ada6ca32d4a2e34bcbd6b743aab7c047fb8fb306a767e0",
+  "method": "deterministic color segmentation with local edge unmatting; original opaque interior RGB retained",
+  "source_body_bbox": [
+    247,
+    304,
+    1007,
+    955
+  ],
+  "icon_crop": [
+    227,
+    230,
+    1027,
+    1030
+  ],
+  "drop_bbox": [
+    649,
+    455,
+    751,
+    654
+  ],
+  "outputs": [
+    {
+      "path": "public/logo.png",
+      "size": [
+        160,
+        160
+      ],
+      "bytes": 27523,
+      "sha256": "f069a7f4f6f72abca2ccf5ba0b6d6195a751c7ac401f7b34e357a154199b0955",
+      "settings": {
+        "optimize": true
+      }
+    },
+    {
+      "path": "public/logo.avif",
+      "size": [
+        160,
+        160
+      ],
+      "bytes": 4860,
+      "sha256": "bad50c45df1d521d50db25a6c540da1a965b57471ab163fc365c9aa3d0188b92",
+      "settings": {
+        "quality": 70,
+        "speed": 6
+      }
+    },
+    {
+      "path": "public/logo-500.png",
+      "size": [
+        500,
+        500
+      ],
+      "bytes": 12104,
+      "sha256": "1b94ede22200b27355d8da99ac4317634d97ec735e17d6bf3e0594bde84138d0",
+      "settings": {
+        "optimize": true
+      }
+    },
+    {
+      "path": "public/logo-1024.png",
+      "size": [
+        1024,
+        1024
+      ],
+      "bytes": 72229,
+      "sha256": "ea4c3cdcc5fb3c6dc272257bc750f804069d51980e4184184b879610b7202f1f",
+      "settings": {
+        "optimize": true
+      }
+    },
+    {
+      "path": "public/favicon.png",
+      "size": [
+        128,
+        128
+      ],
+      "bytes": 8965,
+      "sha256": "d5626b1b4bcd683cf5c5701d07ba7510abfb050900a5580b606c56294e01d99c",
+      "settings": {
+        "optimize": true
+      }
+    },
+    {
+      "path": "public/og-image.jpg",
+      "size": [
+        1200,
+        1200
+      ],
+      "bytes": 118631,
+      "sha256": "bbc6d552a01f56c61f8f1f85e43697f1214bfce06b361d41edd2350acad8b281",
+      "settings": {
+        "quality": 86,
+        "optimize": true,
+        "progressive": true
+      }
+    }
+  ],
+  "transparent_master_sha256": "50da4d8ebdd981f395c1fc5723dfb674bd2b9ac2aa992d2b860e7c0b535eff4b"
+}

@@ -1,4 +1,5 @@
 ---
+import { brandAssets } from '@/lib/branding';
 import {
   getLanguageFromPath,
   isRTL,
@@ -21,7 +22,7 @@ export interface Props {
 const {
   title,
   description,
-  image = '/og-image.jpg',
+  image = brandAssets.shareImage,
   type = 'website'
 } = Astro.props;
 
@@ -60,7 +61,7 @@ const alternateLinks = SUPPORTED_LANGUAGES.map((locale) => {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={siteDescription} />
     <meta name="referrer" content="no-referrer" />
-    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="icon" type="image/png" href={brandAssets.favicon} />
     <meta name="generator" content={Astro.generator} />
     <title>{siteTitle}</title>
 

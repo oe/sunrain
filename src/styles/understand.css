@@ -13,6 +13,8 @@
 .understand-topic{display:flex;flex-direction:column;color:var(--platform-ink)!important;text-decoration:none!important;border-radius:24px;min-width:0}
 .understand-topic img{width:100%;height:auto;aspect-ratio:1000/667;object-fit:cover;border-radius:24px;background:#fffdf9;transition:opacity .2s}
 .understand-topic:hover img{opacity:.88}
+.understand-art{display:block;min-width:0}
+.understand-art img{display:block}
 .understand-topic>div{display:flex;flex-direction:column;flex:1;padding:24px 4px 0}
 .understand-topic h2{margin-bottom:10px;font-size:25px}
 .understand-topic p{color:var(--platform-muted);font-size:17px;margin-bottom:20px}

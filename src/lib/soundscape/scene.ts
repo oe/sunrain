@@ -2,10 +2,10 @@ import type { SceneWorld } from "./world";
 
 type SceneKind = "rain" | "fire" | "forest" | "water" | "quiet";
 const files = {
-  rain: "/scenes/rain-window.webp",
-  fire: "/scenes/fire-poster.jpg?v=20260928",
-  forest: "/scenes/stream-poster.jpg?v=20261002",
-  water: "/scenes/ocean-poster.jpg",
+  rain: "/scenes/rain-window.webp?v=20261029",
+  fire: "/scenes/fire-poster.webp",
+  forest: "/scenes/stream-poster.webp",
+  water: "/scenes/ocean-poster.webp",
 };
 const movies = {
   fire: "/scenes/fire-loop.mp4?v=20260928",

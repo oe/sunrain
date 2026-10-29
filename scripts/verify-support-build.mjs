@@ -51,6 +51,16 @@ for(const lang of locales) for(const route of routes) {
     const file=join(new URL('.',root).pathname,pathname,pathname.endsWith('/')?'index.html':'');
     assert.ok(existsSync(file),`${local}: broken local link ${href}`);
   }
+  for(const tag of html.matchAll(/<(?:img|source)\b[^>]*>/g)) {
+    for(const attr of tag[0].matchAll(/\b(src|srcset)="([^"]+)"/g)) {
+      const urls=attr[1]==='srcset'?attr[2].split(',').map(candidate=>candidate.trim().split(/\s+/)[0]):[attr[2]];
+      for(const url of urls) {
+        if(!url.startsWith('/')||url.startsWith('//'))continue;
+        const path=decodeURIComponent(url.split(/[?#]/)[0]);
+        assert.ok(existsSync(join(root.pathname,path)),`${local}: missing image ${url}`);
+      }
+    }
+  }
   checked++;
 }
-console.log(`Support build verified: ${checked} localized pages, local links, language, privacy and screening availability.`);
+console.log(`Support build verified: ${checked} localized pages, local links/images, language, privacy and screening availability.`);
