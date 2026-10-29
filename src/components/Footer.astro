@@ -27,6 +27,9 @@ const currentYear = new Date().getFullYear();
           <p class="text-sm text-gray-500 dark:text-gray-400">
             {t('footer.mission', lang)}
           </p>
+          <p class="mt-2 text-xs text-gray-500 dark:text-gray-400" data-footer-copyright>
+            {t('footer.copyright', lang, { year: currentYear })}
+          </p>
         </div>
       </div>
 
@@ -55,11 +58,5 @@ const currentYear = new Date().getFullYear();
       </div>
     </div>
 
-    <!-- Copyright -->
-    <div
-      class="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700 text-center text-sm text-gray-500 dark:text-gray-400"
-    >
-      <p>{t('footer.copyright', lang, { year: currentYear })}</p>
-    </div>
   </div>
 </footer>

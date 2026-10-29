@@ -2,7 +2,7 @@
   "en": {
     "headline": [
       "Mental health,",
-      "at your pace."
+      "at your pace"
     ],
     "description": "Sunrain is a mental health self-help platform with symptom questionnaires, everyday activities, and guidance for finding support.",
     "start": "Start a self-check",
@@ -32,7 +32,7 @@
     "oneStep": "Make an everyday task a little easier to begin.",
     "sleep": "Choose one gentle change for your bedtime routine.",
     "worry": "Give one worry a practical next step.",
-    "relaxIntro": "A little room to breathe, or a sound to settle into.",
+    "relaxIntro": "A little room to breathe, or a sound to settle into",
     "crisisAction": "Find crisis support near you",
     "homeBoundary": "Self-checks are for reference, not a professional diagnosis.",
     "audioDetails": "About the audio",
@@ -49,16 +49,16 @@
   "zh-hans": {
     "headline": [
       "了解自己，",
-      "也照顾自己。"
+      "也照顾自己"
     ],
-    "description": "Sunrain 是一个心理健康自助平台，提供心理自测、日常自助练习和求助指引。",
+    "description": "Sunrain 是一个心理健康自助平台，提供心理自测、日常自助练习和求助指引",
     "start": "开始心理自测",
     "boundary": "仅供参考，自助与初筛不能替代专业诊断或治疗。",
     "selfHelp": "日常自助",
-    "selfHelpDescription": "从一件现在做得到的小事开始。",
+    "selfHelpDescription": "从一件现在做得到的小事开始",
     "explore": "看看练习",
     "support": "寻找支持",
-    "supportDescription": "找到服务入口，为一次沟通做好准备。",
+    "supportDescription": "找到服务入口，为一次沟通做好准备",
     "supportAction": "了解求助方法",
     "checkInIntro": "花一点时间，了解最近的心理状态。你可以跳过整份问卷，也可以随时离开。",
     "screeningScope": "这些问卷帮助了解抑郁和焦虑相关症状，无法评估所有心理健康问题。",
@@ -68,18 +68,18 @@
     "record": "记下来（可选）",
     "recordActions": "保存或下载记录",
     "contact": "准备想说的话",
-    "supportIntro": "找到可以求助的地方，或先整理想说的话。",
-    "guidesIntro": "选一个小练习，按自己的节奏开始。",
+    "supportIntro": "找到可以求助的地方，或先整理想说的话",
+    "guidesIntro": "选一个小练习，按自己的节奏开始",
     "guideTips": "开始之前",
     "mix": "选择和混合声音",
-    "mixDescription": "需要时再调整每一种声音的音量。",
+    "mixDescription": "需要时再调整每一种声音的音量",
     "rhythm": "选择呼吸节奏",
     "breathingHint": "保持让自己舒服的节奏，任何时候都可以停止。",
-    "grounding": "留意身边看得见、听得到或感受得到的事物。",
-    "oneStep": "让一件日常小事更容易开始。",
-    "sleep": "为睡前的日常安排做一个温和的小调整。",
-    "worry": "给一个担忧找到现在能做的下一步。",
-    "relaxIntro": "留一点呼吸的空间，或听一段喜欢的声音。",
+    "grounding": "留意身边看得见、听得到或感受得到的事物",
+    "oneStep": "让一件日常小事更容易开始",
+    "sleep": "为睡前的日常安排做一个温和的小调整",
+    "worry": "给一个担忧找到现在能做的下一步",
+    "relaxIntro": "留一点呼吸的空间，或听一段喜欢的声音",
     "crisisAction": "寻找所在地区的危机支持",
     "homeBoundary": "自测仅供参考，不替代专业诊断。",
     "audioDetails": "关于声音",
@@ -96,16 +96,16 @@
   "zh-hant": {
     "headline": [
       "了解自己，",
-      "也照顧自己。"
+      "也照顧自己"
     ],
-    "description": "Sunrain 是一個心理健康自助平台，提供心理自測、日常自助練習和求助指引。",
+    "description": "Sunrain 是一個心理健康自助平台，提供心理自測、日常自助練習和求助指引",
     "start": "開始心理自測",
     "boundary": "僅供參考，自助與初步篩查不能取代專業診斷或治療。",
     "selfHelp": "日常自助",
-    "selfHelpDescription": "從一件現在做得到的小事開始。",
+    "selfHelpDescription": "從一件現在做得到的小事開始",
     "explore": "看看練習",
     "support": "尋找支持",
-    "supportDescription": "找到服務入口，為一次溝通做好準備。",
+    "supportDescription": "找到服務入口，為一次溝通做好準備",
     "supportAction": "了解求助方法",
     "checkInIntro": "花一點時間，了解最近的心理狀態。你可以跳過整份問卷，也可以隨時離開。",
     "screeningScope": "這些問卷協助了解抑鬱和焦慮相關症狀，無法評估所有心理健康問題。",
@@ -115,18 +115,18 @@
     "record": "記下來（選填）",
     "recordActions": "儲存或下載紀錄",
     "contact": "準備想說的話",
-    "supportIntro": "找到可以求助的地方，或先整理想說的話。",
-    "guidesIntro": "選一個小練習，按自己的步調開始。",
+    "supportIntro": "找到可以求助的地方，或先整理想說的話",
+    "guidesIntro": "選一個小練習，按自己的步調開始",
     "guideTips": "開始之前",
     "mix": "選擇與混合聲音",
-    "mixDescription": "需要時再調整每一種聲音的音量。",
+    "mixDescription": "需要時再調整每一種聲音的音量",
     "rhythm": "選擇呼吸節奏",
     "breathingHint": "保持讓自己舒服的節奏，任何時候都可以停止。",
-    "grounding": "留意身邊看得見、聽得到或感受得到的事物。",
-    "oneStep": "讓一件日常小事更容易開始。",
-    "sleep": "為睡前的日常安排做一個溫和的小調整。",
-    "worry": "為一個擔憂找到現在能做的下一步。",
-    "relaxIntro": "留一點呼吸的空間，或聽一段喜歡的聲音。",
+    "grounding": "留意身邊看得見、聽得到或感受得到的事物",
+    "oneStep": "讓一件日常小事更容易開始",
+    "sleep": "為睡前的日常安排做一個溫和的小調整",
+    "worry": "為一個擔憂找到現在能做的下一步",
+    "relaxIntro": "留一點呼吸的空間，或聽一段喜歡的聲音",
     "crisisAction": "尋找所在地區的危機支持",
     "homeBoundary": "自測僅供參考，不取代專業診斷。",
     "audioDetails": "關於聲音",
@@ -142,8 +142,8 @@
   },
   "es": {
     "headline": [
-      "Conócete.",
-      "Cuida de ti."
+      "Conócete",
+      "Cuida de ti"
     ],
     "description": "Sunrain es una plataforma de autoayuda para la salud mental con cuestionarios, actividades cotidianas y orientación para buscar apoyo.",
     "start": "Comenzar una autoevaluación",
@@ -173,7 +173,7 @@
     "oneStep": "Haz que una tarea cotidiana sea un poco más fácil de empezar.",
     "sleep": "Elige un pequeño cambio para tu rutina antes de dormir.",
     "worry": "Busca un próximo paso práctico para una preocupación.",
-    "relaxIntro": "Un espacio para respirar o un sonido con el que descansar.",
+    "relaxIntro": "Un espacio para respirar o un sonido con el que descansar",
     "crisisAction": "Buscar apoyo de crisis en tu zona",
     "homeBoundary": "La autoevaluación es orientativa y no sustituye un diagnóstico profesional.",
     "audioDetails": "Sobre el audio",
@@ -189,17 +189,17 @@
   },
   "ja": {
     "headline": [
-      "自分を知る。",
-      "自分をいたわる。"
+      "自分を知る",
+      "自分をいたわる"
     ],
     "description": "Sunrain は、心のセルフチェック、日々のセルフケア、相談先を探すための情報を届けるメンタルヘルスのセルフヘルプサイトです。",
     "start": "心のセルフチェックを始める",
     "boundary": "参考情報です。セルフヘルプやスクリーニングは、専門家による診断・治療に代わるものではありません。",
     "selfHelp": "日々のセルフケア",
-    "selfHelpDescription": "今できそうな、小さなことから。",
+    "selfHelpDescription": "今できそうな、小さなことから",
     "explore": "取り組みを見てみる",
     "support": "相談先を探す",
-    "supportDescription": "相談先を探し、話したいことを準備する。",
+    "supportDescription": "相談先を探し、話したいことを準備する",
     "supportAction": "相談の方法を知る",
     "checkInIntro": "最近の心の状態を、少し振り返ってみましょう。質問票を飛ばしたり、いつでも終了したりできます。",
     "screeningScope": "この質問票は、抑うつ症状と心のつらさを振り返るものです。すべての心の病気を評価するものではありません。",
@@ -210,17 +210,17 @@
     "recordActions": "記録を保存・ダウンロード",
     "contact": "話したいことを準備する",
     "supportIntro": "相談できる場所を探したり、話したいことを整理したりできます。",
-    "guidesIntro": "小さな取り組みを、自分のペースで。",
+    "guidesIntro": "小さな取り組みを、自分のペースで",
     "guideTips": "始める前に",
     "mix": "音を選んで組み合わせる",
     "mixDescription": "必要に応じて、それぞれの音量を調整できます。",
     "rhythm": "呼吸のリズムを選ぶ",
     "breathingHint": "心地よいペースで。いつでもやめられます。",
-    "grounding": "周りの見えるもの、聞こえる音、感じられるものに気づいてみる。",
-    "oneStep": "日常のことを始めやすくする、小さな一歩。",
-    "sleep": "寝る前の習慣を、ひとつだけ穏やかに整える。",
-    "worry": "ひとつの心配事に、今できる次の一歩を見つける。",
-    "relaxIntro": "ひと息つける時間や、好きな音と過ごすひとときを。",
+    "grounding": "周りの見えるもの、聞こえる音、感じられるものに気づいてみる",
+    "oneStep": "日常のことを始めやすくする、小さな一歩",
+    "sleep": "寝る前の習慣を、ひとつだけ穏やかに整える",
+    "worry": "ひとつの心配事に、今できる次の一歩を見つける",
+    "relaxIntro": "ひと息つける時間や、好きな音と過ごすひとときを",
     "crisisAction": "地域の危機相談窓口を探す",
     "homeBoundary": "セルフチェックは参考情報です。専門家の診断に代わるものではありません。",
     "audioDetails": "音声について",
@@ -237,7 +237,7 @@
   "ko": {
     "headline": [
       "나를 이해하고,",
-      "나를 돌보세요."
+      "나를 돌보세요"
     ],
     "description": "Sunrain은 마음 상태 자가 점검, 일상 속 자기 돌봄 활동, 도움을 찾는 방법을 제공하는 정신 건강 자가 도움 플랫폼입니다.",
     "start": "마음 상태 자가 점검 시작",
@@ -267,7 +267,7 @@
     "oneStep": "일상의 일을 조금 더 쉽게 시작해 보세요.",
     "sleep": "잠들기 전 습관에 작은 변화를 하나 골라 보세요.",
     "worry": "걱정 하나에 지금 할 수 있는 다음 단계를 찾아보세요.",
-    "relaxIntro": "숨 돌릴 여유나 좋아하는 소리와 함께하는 시간.",
+    "relaxIntro": "숨 돌릴 여유나 좋아하는 소리와 함께하는 시간",
     "crisisAction": "거주 지역의 위기 지원 찾기",
     "homeBoundary": "자가 점검은 참고용이며 전문가의 진단을 대신하지 않습니다.",
     "audioDetails": "오디오 안내",
@@ -283,8 +283,8 @@
   },
   "hi": {
     "headline": [
-      "खुद को समझें।",
-      "अपना खयाल रखें।"
+      "खुद को समझें",
+      "अपना खयाल रखें"
     ],
     "description": "Sunrain मानसिक स्वास्थ्य में स्वयं सहायता का मंच है। यहाँ अपनी स्थिति समझने के लिए प्रश्नावलियाँ, रोज़मर्रा के अभ्यास और मदद पाने का मार्गदर्शन मिलता है।",
     "start": "स्वयं जाँच शुरू करें",
@@ -314,7 +314,7 @@
     "oneStep": "रोज़मर्रा का कोई काम शुरू करना थोड़ा आसान बनाएँ।",
     "sleep": "सोने से पहले की दिनचर्या में एक छोटा बदलाव चुनें।",
     "worry": "एक चिंता के लिए अगला व्यावहारिक कदम खोजें।",
-    "relaxIntro": "साँस लेने की थोड़ी जगह या सुकून देने वाली कोई आवाज़।",
+    "relaxIntro": "साँस लेने की थोड़ी जगह या सुकून देने वाली कोई आवाज़",
     "crisisAction": "अपने क्षेत्र में संकट सहायता खोजें",
     "homeBoundary": "स्वयं जाँच केवल जानकारी के लिए है, पेशेवर निदान का विकल्प नहीं।",
     "audioDetails": "ऑडियो के बारे में",
@@ -331,7 +331,7 @@
   "ar": {
     "headline": [
       "افهم نفسك،",
-      "واعتنِ بها."
+      "واعتنِ بها"
     ],
     "description": "Sunrain منصة للمساعدة الذاتية في الصحة النفسية، تقدم استبيانات لفهم الأعراض وأنشطة يومية وإرشادات للعثور على الدعم.",
     "start": "ابدأ التقييم الذاتي",
@@ -361,7 +361,7 @@
     "oneStep": "اجعل البدء بمهمة يومية أسهل قليلاً.",
     "sleep": "اختر تغييراً بسيطاً ولطيفاً في روتين ما قبل النوم.",
     "worry": "حدّد خطوة عملية تالية لأحد مخاوفك.",
-    "relaxIntro": "مساحة لالتقاط أنفاسك أو صوت تستريح إليه.",
+    "relaxIntro": "مساحة لالتقاط أنفاسك أو صوت تستريح إليه",
     "crisisAction": "ابحث عن دعم الأزمات في منطقتك",
     "homeBoundary": "التقييم الذاتي للاسترشاد، ولا يحل محل التشخيص لدى مختص.",
     "audioDetails": "حول الصوت",

@@ -21,7 +21,6 @@
 .platform footer .container{max-width:1280px;padding-block:32px}
 .platform footer :is(p,a){color:var(--platform-muted)}
 .platform footer a:hover{color:var(--platform-blue)}
-.platform footer .border-t{border-color:var(--platform-line);padding-top:16px;margin-top:20px}
 .platform .about-page h1{font-size:clamp(2rem,4vw,3.25rem);letter-spacing:-.035em;color:var(--platform-ink)}
 .platform .about-page h2,.platform .about-page h3{color:var(--platform-ink)}
 .platform .about-page p{color:var(--platform-muted);line-height:1.9}

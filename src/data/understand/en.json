@@ -36,7 +36,7 @@
   "topics": {
     "depression": {
       "title": "Low mood & depression",
-      "teaser": "When sadness, numbness or loss of interest starts to take up more space.",
+      "teaser": "When sadness, numbness or loss of interest starts to take up more space",
       "intro": "Depression can affect feelings, thinking and the body. It is treatable, and it is not a failure of effort or character.",
       "signs": [
         "Feeling low, empty or irritable, or losing interest in things that usually matter.",
@@ -63,7 +63,7 @@
     },
     "anxiety": {
       "title": "Anxiety, worry & panic",
-      "teaser": "When worry feels hard to switch off, or fear arrives in a sudden wave.",
+      "teaser": "When worry feels hard to switch off, or fear arrives in a sudden wave",
       "intro": "Anxiety can affect both thoughts and the body. Persistent worry and panic attacks are different experiences; an assessment can help explain what is happening.",
       "signs": [
         "Worry that is difficult to control, feeling on edge or repeatedly expecting something bad.",
@@ -90,7 +90,7 @@
     },
     "sleep": {
       "title": "Trouble sleeping",
-      "teaser": "Difficulty falling asleep, waking often or feeling unrefreshed.",
+      "teaser": "Difficulty falling asleep, waking often or feeling unrefreshed",
       "intro": "Sleep difficulties can be brief or persistent. Understanding the pattern and its causes is more useful than putting pressure on yourself to sleep perfectly.",
       "signs": [
         "Finding it hard to fall asleep, stay asleep or return to sleep after waking early.",
@@ -117,7 +117,7 @@
     },
     "bipolar": {
       "title": "Mood, energy & bipolar disorder",
-      "teaser": "Understanding sustained changes in mood, activity and need for sleep.",
+      "teaser": "Understanding sustained changes in mood, activity and need for sleep",
       "intro": "Bipolar disorder includes different patterns of manic, hypomanic and depressive symptoms. A depressive episode is not required for every type. These changes go beyond ordinary mood shifts, and treatment can help.",
       "signs": [
         "During a high-energy episode: unusually elevated or irritable mood, increased activity and a reduced need for sleep.",
