@@ -36,7 +36,7 @@
   "topics": {
     "depression": {
       "title": "Ánimo bajo y depresión",
-      "teaser": "Cuando la tristeza, el vacío o la pérdida de interés ocupan más espacio.",
+      "teaser": "Cuando la tristeza, el vacío o la pérdida de interés ocupan más espacio",
       "intro": "La depresión puede afectar a las emociones, el pensamiento y el cuerpo. Tiene tratamiento y no es un fallo de esfuerzo o de carácter.",
       "signs": [
         "Sentirse triste, vacío o irritable, o perder interés por cosas importantes.",
@@ -63,7 +63,7 @@
     },
     "anxiety": {
       "title": "Ansiedad, preocupación y pánico",
-      "teaser": "Cuando cuesta desconectar de la preocupación o el miedo llega de golpe.",
+      "teaser": "Cuando cuesta desconectar de la preocupación o el miedo llega de golpe",
       "intro": "La ansiedad puede afectar al pensamiento y al cuerpo. La preocupación persistente y los ataques de pánico son experiencias distintas; una evaluación ayuda a entenderlas.",
       "signs": [
         "Preocupación difícil de controlar, tensión o esperar repetidamente que ocurra algo malo.",
@@ -117,7 +117,7 @@
     },
     "bipolar": {
       "title": "Ánimo, energía y trastorno bipolar",
-      "teaser": "Comprender cambios sostenidos del ánimo, la actividad y la necesidad de sueño.",
+      "teaser": "Comprender cambios sostenidos del ánimo, la actividad y la necesidad de sueño",
       "intro": "El trastorno bipolar presenta distintos patrones de síntomas maníacos, hipomaníacos y depresivos. No todos los tipos requieren un episodio depresivo. Estos cambios superan las variaciones cotidianas de ánimo, y el tratamiento puede ayudar.",
       "signs": [
         "Durante un episodio de energía alta: ánimo inusualmente elevado o irritable, más actividad y menor necesidad de sueño.",

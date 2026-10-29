@@ -138,11 +138,11 @@
       "fireplace": "温暖壁炉",
       "pinkNoise": "粉红噪音",
       "presetsTitle": "快捷场景",
-      "presetsHint": "先选择一个舒缓组合，再按喜好调整每层声音。",
+      "presetsHint": "先选择一个舒缓组合，再按喜好调整每层声音",
       "rainyNightFireplace": "雨夜壁炉",
       "forestMorning": "森林清晨",
       "deepMasking": "深度遮噪",
-      "mixHint": "可以同时播放多种声音，调出属于你的安静氛围。",
+      "mixHint": "可以同时播放多种声音，调出属于你的安静氛围",
       "stopAll": "全部停止",
       "offlineNote": "<strong>关于音频：</strong>高品质自然录音会在首次播放时从 Sunrain 加载。我们不会录制或上传你设备上的任何声音。",
       "volumeSafety": "请保持舒适音量，使用耳机时尤其如此。",
@@ -155,7 +155,7 @@
         "enter": "进入沉浸画面",
         "auto": "桌面端自动进入",
         "desktopHint": "播放后 20 秒无操作，自动进入画面。退出画面后声音继续播放。",
-        "mobileHint": "先播放声音，再随时手动开启画面。",
+        "mobileHint": "先播放声音，再随时手动开启画面",
         "eyebrow": "给自己一点放松的空间",
         "hint": "移动鼠标或按任意键可重新显示控制，Esc 始终可退出。",
         "lockedHint": "控制已锁定。移动鼠标或按任意键可显示解锁，Esc 始终可退出。",
@@ -165,9 +165,9 @@
         "unlock": "解锁控制",
         "fullscreen": "全屏",
         "exitFullscreen": "退出全屏",
-        "fullscreenError": "当前无法全屏，仍可使用沉浸画面。",
+        "fullscreenError": "当前无法全屏，仍可使用沉浸画面",
         "volume": "混音音量",
-        "loadError": "画面加载失败，声音仍在播放，请重试。",
+        "loadError": "画面加载失败，声音仍在播放，请重试",
         "loading": "正在开启画面…",
         "touchHint": "轻触画面可重新显示控制，退出画面后声音继续播放。",
         "lockedTouchHint": "控制已锁定。轻触画面可显示解锁。"
@@ -184,7 +184,7 @@
       "mindfulness": "正念"
     },
     "disclaimer": "这些链接指向外部网站。Sunrain不对其内容负责。",
-    "languageNotice": "这里收录的外部资料为英语。"
+    "languageNotice": "这里收录的外部资料为英语"
   },
   "crisis": {
     "title": "危机热线",
@@ -215,7 +215,7 @@
       },
       "accessibility": {
         "title": "无障碍访问",
-        "description": "免费、开源，支持多种语言。"
+        "description": "免费、开源，支持多种语言"
       },
       "evidence": {
         "title": "循证实践",
@@ -239,8 +239,8 @@
     }
   },
   "footer": {
-    "copyright": "© {year} Sunrain. 保留所有权利。",
-    "mission": "愿阳光穿透阴霾，温暖每颗心灵。",
+    "copyright": "© {year} Sunrain · 保留所有权利",
+    "mission": "愿阳光穿透阴霾，温暖每颗心灵",
     "links": "链接",
     "privacy": "隐私政策",
     "github": "GitHub"
@@ -267,7 +267,7 @@
   "errors": {
     "notFound": {
       "title": "页面未找到",
-      "message": "您访问的页面不存在。",
+      "message": "您访问的页面不存在",
       "backHome": "返回首页"
     }
   }

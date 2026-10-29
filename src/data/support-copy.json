@@ -184,9 +184,9 @@
         "load": "Load saved note",
         "clear": "Delete saved note",
         "download": "Download text",
-        "saved": "Saved on this device.",
+        "saved": "Saved on this device",
         "failed": "Could not save or load. You can download instead.",
-        "deleted": "Saved note deleted.",
+        "deleted": "Saved note deleted",
         "empty": "No saved note is available.",
         "note": "Optional private note",
         "feedback": "After trying this, how do you feel?",
@@ -282,7 +282,7 @@
         "crisisSeparate": "For non-urgent appointments, use the separate support page. Routine booking is not emergency assistance.",
         "end": "Finish here",
         "copyMessage": "Copy message",
-        "copied": "Message copied.",
+        "copied": "Message copied",
         "copyFailed": "Copy was unavailable. Select the message or download it.",
         "linkProblem": "Link unavailable or no suitable service?",
         "recordTruncated": "This activity record is too long to include in full. Only the beginning was added; your complete plan remains above and can be downloaded separately."
@@ -311,9 +311,9 @@
           "purpose": "在压力让你难以承受时，尝试一段简短的感官练习。这不是心理疾病治疗。",
           "steps": [
             "找一个舒服的姿势，可以保持睁眼。不适用或让你不舒服的感官步骤可以直接跳过。",
-            "留意五样看得到的东西、四种触感和三种声音。",
+            "留意五样看得到的东西、四种触感和三种声音",
             "留意两种气味和一种已经存在的味道，不要尝不明物品。某种感官不适用或让你不舒服时可以跳过。",
-            "停一下，决定是结束、回到一件简单的日常活动，还是选择更多支持。"
+            "停一下，决定是结束、回到一件简单的日常活动，还是选择更多支持"
           ],
           "takeaway": "可以记住一个让你重新留意周围的细节。不要求练习后一定平静。",
           "examples": [
@@ -326,12 +326,12 @@
           "title": "选一个现在做得到的小步骤",
           "purpose": "用于日常事情难以开始时的一点自我照顾支持，不是一套抑郁症治疗课程。",
           "steps": [
-            "选一件对你重要的日常需要或优先事项。",
+            "选一件对你重要的日常需要或优先事项",
             "把它减到目前能承受的程度：一件小事、休息，或请信任的人帮忙。不必给自己加更多任务。",
             "想一想具体做什么、何时做。可以先留下计划，也可以现在尝试。",
-            "回顾实际能做到什么，保留、减小或换一个步骤，不用责备自己。"
+            "回顾实际能做到什么，保留、减小或换一个步骤，不用责备自己"
           ],
-          "takeaway": "可以留下：我选了什么、可能何时做、还需要什么帮助。",
+          "takeaway": "可以留下：我选了什么、可能何时做、还需要什么帮助",
           "examples": [
             "先休息，不增加新任务",
             "请信任的人帮忙处理一件事",
@@ -342,12 +342,12 @@
           "title": "给睡眠留一点余地",
           "purpose": "一般睡眠自我照顾，不是失眠治疗。",
           "steps": [
-            "选一个较为规律、目前做得到的睡前放松和起床时间。",
-            "只改一件小事：睡前做安静的活动，或减少明亮屏幕的使用。",
+            "选一个较为规律、目前做得到的睡前放松和起床时间",
+            "只改一件小事：睡前做安静的活动，或减少明亮屏幕的使用",
             "留意咖啡因或酒精是否影响睡眠，不要依据此指引调整处方药。",
             "睡眠问题持续或影响生活时，安排专业咨询。若睡得明显更少却精力异常高涨，请尽快评估，不要仅当作普通失眠处理。"
           ],
-          "takeaway": "选一件想尝试的改变，不要求自己一定睡着。",
+          "takeaway": "选一件想尝试的改变，不要求自己一定睡着",
           "examples": [
             "睡前选择一项安静活动",
             "睡前减少明亮屏幕的使用",
@@ -358,12 +358,12 @@
           "title": "给一个担忧找到下一步",
           "purpose": "简短整理一个担忧，不是焦虑障碍治疗。",
           "steps": [
-            "选一个担忧，简单写下；不想写时也可以只在心里整理。",
-            "问问其中是否有目前可以实际影响的一部分，不必解决全部问题。",
-            "如果有，选一个承受得了的行动和时间，也可以是请人帮忙。",
+            "选一个担忧，简单写下；不想写时也可以只在心里整理",
+            "问问其中是否有目前可以实际影响的一部分，不必解决全部问题",
+            "如果有，选一个承受得了的行动和时间，也可以是请人帮忙",
             "如果目前没有可做的行动，承认不确定性，把注意力带回一件简单的眼前活动。若更难受就停止。"
           ],
-          "takeaway": "留下一件可能做的事，或提醒自己寻找支持。",
+          "takeaway": "留下一件可能做的事，或提醒自己寻找支持",
           "examples": [
             "写下关于这件事的一个问题",
             "询问目前还缺少的信息",
@@ -448,10 +448,10 @@
         "load": "载入已保存记录",
         "clear": "删除已保存记录",
         "download": "下载文本",
-        "saved": "已保存在此设备。",
-        "failed": "保存或载入失败，可以改用下载。",
-        "deleted": "已删除保存的记录。",
-        "empty": "没有可载入的记录。",
+        "saved": "已保存在此设备",
+        "failed": "保存或载入失败，可以改用下载",
+        "deleted": "已删除保存的记录",
+        "empty": "没有可载入的记录",
         "note": "可选的私密记录",
         "feedback": "尝试后，你现在感觉怎样？",
         "better": "稍微好一些",
@@ -512,7 +512,7 @@
         "heroTitle": "为此刻的感受，找到一个下一步",
         "scopeShort": "Sunrain 提供一般心理支持，不是诊疗机构，不能诊断疾病。请继续遵循已有照护计划。",
         "outcome": "两组可跳过的问题，帮你选择一个行动，并整理可编辑的求助摘要。",
-        "multiple": "可以多选，也可以不选，直接继续。",
+        "multiple": "可以多选，也可以不选，直接继续",
         "step": "第 {current} / {total} 步",
         "nowAction": "现在先缓一缓",
         "tryActivity": "尝试这个行动",
@@ -541,13 +541,13 @@
         "guideFinish": "结束并回顾",
         "guideStop": "先停在这里",
         "guideDone": "可以到这里结束、留下一份小计划，或选择更多支持。不必完成全部步骤。",
-        "feedbackBetter": "可以到这里结束，不需要再完成其他练习。",
+        "feedbackBetter": "可以到这里结束，不需要再完成其他练习",
         "crisisFallback": "如果目录打不开或没有列出你的所在地，且目前有立即危险，请直接使用当地紧急服务或前往最近的急诊。不要等待目录恢复、预约或本站回复。",
         "crisisSeparate": "非紧急的就医预约可使用独立的求助页面。普通预约不能替代紧急援助。",
         "end": "到这里结束",
         "copyMessage": "复制联系内容",
-        "copied": "已复制联系内容。",
-        "copyFailed": "无法自动复制，请选中文字复制，或下载文本。",
+        "copied": "已复制联系内容",
+        "copyFailed": "无法自动复制，请选中文字复制，或下载文本",
         "linkProblem": "链接打不开或没有找到合适服务？",
         "recordTruncated": "行动记录较长，目前只带入了开头部分。完整计划仍保留在上方，可以单独下载。"
       }
@@ -575,9 +575,9 @@
           "purpose": "在壓力讓你難以承受時，嘗試一段簡短的感官練習。這不是心理疾病治療。",
           "steps": [
             "找一個舒服的姿勢，可以保持睜眼。不適用或讓你不舒服的感官步驟可以直接跳過。",
-            "留意五樣看得到的東西、四種觸感和三種聲音。",
+            "留意五樣看得到的東西、四種觸感和三種聲音",
             "留意兩種氣味和一種已經存在的味道，不要嘗不明物品。某種感官不適用或讓你不舒服時可以跳過。",
-            "停一下，決定是結束、回到一件簡單的日常活動，還是選擇更多支持。"
+            "停一下，決定是結束、回到一件簡單的日常活動，還是選擇更多支持"
           ],
           "takeaway": "可以記住一個讓你重新留意周圍的細節。不要求練習後一定平靜。",
           "examples": [
@@ -590,12 +590,12 @@
           "title": "選一個現在做得到的小步驟",
           "purpose": "用於日常事情難以開始時的一點自我照顧支持，不是一套憂鬱症治療課程。",
           "steps": [
-            "選一件對你重要的日常需要或優先事項。",
+            "選一件對你重要的日常需要或優先事項",
             "把它減到目前能承受的程度：一件小事、休息，或請信任的人幫忙。不必給自己加更多任務。",
             "想一想具體做什麼、何時做。可以先留下計畫，也可以現在嘗試。",
-            "回顧實際能做到什麼，保留、減小或換一個步驟，不用責備自己。"
+            "回顧實際能做到什麼，保留、減小或換一個步驟，不用責備自己"
           ],
-          "takeaway": "可以留下：我選了什麼、可能何時做、還需要什麼幫助。",
+          "takeaway": "可以留下：我選了什麼、可能何時做、還需要什麼幫助",
           "examples": [
             "先休息，不增加新任務",
             "請信任的人協助處理一件事",
@@ -606,12 +606,12 @@
           "title": "給睡眠留一點餘地",
           "purpose": "一般睡眠自我照顧，不是失眠治療。",
           "steps": [
-            "選一個較為規律、目前做得到的睡前放鬆和起床時間。",
-            "只改一件小事：睡前做安靜的活動，或減少明亮螢幕的使用。",
+            "選一個較為規律、目前做得到的睡前放鬆和起床時間",
+            "只改一件小事：睡前做安靜的活動，或減少明亮螢幕的使用",
             "留意咖啡因或酒精是否影響睡眠，不要依據此指引調整處方藥。",
             "睡眠問題持續或影響生活時，安排專業諮詢。若睡得明顯更少卻精力異常高漲，請儘快評估，不要僅當作普通失眠處理。"
           ],
-          "takeaway": "選一件想嘗試的改變，不要求自己一定睡著。",
+          "takeaway": "選一件想嘗試的改變，不要求自己一定睡著",
           "examples": [
             "睡前選擇一項安靜活動",
             "睡前減少明亮螢幕的使用",
@@ -622,12 +622,12 @@
           "title": "給一個擔憂找到下一步",
           "purpose": "簡短整理一個擔憂，不是焦慮障礙治療。",
           "steps": [
-            "選一個擔憂，簡單寫下；不想寫時也可以只在心裡整理。",
-            "問問其中是否有目前可以實際影響的一部分，不必解決全部問題。",
-            "如果有，選一個承受得了的行動和時間，也可以是請人幫忙。",
+            "選一個擔憂，簡單寫下；不想寫時也可以只在心裡整理",
+            "問問其中是否有目前可以實際影響的一部分，不必解決全部問題",
+            "如果有，選一個承受得了的行動和時間，也可以是請人幫忙",
             "如果目前沒有可做的行動，承認不確定性，把注意力帶回一件簡單的眼前活動。若更難受就停止。"
           ],
-          "takeaway": "留下一件可能做的事，或提醒自己尋找支持。",
+          "takeaway": "留下一件可能做的事，或提醒自己尋找支持",
           "examples": [
             "寫下關於這件事的一個問題",
             "詢問目前還缺少的資訊",
@@ -712,10 +712,10 @@
         "load": "載入已儲存紀錄",
         "clear": "刪除已儲存紀錄",
         "download": "下載文字",
-        "saved": "已儲存在此裝置。",
-        "failed": "儲存或載入失敗，可以改用下載。",
-        "deleted": "已刪除儲存的紀錄。",
-        "empty": "沒有可載入的紀錄。",
+        "saved": "已儲存在此裝置",
+        "failed": "儲存或載入失敗，可以改用下載",
+        "deleted": "已刪除儲存的紀錄",
+        "empty": "沒有可載入的紀錄",
         "note": "可選的私密紀錄",
         "feedback": "嘗試後，你現在感覺怎樣？",
         "better": "稍微好一些",
@@ -776,7 +776,7 @@
         "heroTitle": "為此刻的感受，找到一個下一步",
         "scopeShort": "Sunrain 提供一般心理支持，不是診療機構，不能診斷疾病。請繼續遵循既有照護計畫。",
         "outcome": "兩組可跳過的問題，幫你選擇一個行動，並整理可編輯的求助摘要。",
-        "multiple": "可以複選，也可以不選，直接繼續。",
+        "multiple": "可以複選，也可以不選，直接繼續",
         "step": "第 {current} / {total} 步",
         "nowAction": "現在先緩一緩",
         "tryActivity": "嘗試這個行動",
@@ -805,13 +805,13 @@
         "guideFinish": "結束並回顧",
         "guideStop": "先停在這裡",
         "guideDone": "可以到這裡結束、留下一份小計畫，或選擇更多支持。不必完成全部步驟。",
-        "feedbackBetter": "可以到這裡結束，不需要再完成其他練習。",
+        "feedbackBetter": "可以到這裡結束，不需要再完成其他練習",
         "crisisFallback": "如果目錄無法開啟或沒有列出你的所在地，且目前有立即危險，請直接使用當地緊急服務或前往最近的急診。不要等待目錄恢復、預約或本站回覆。",
         "crisisSeparate": "非緊急的就醫預約可使用獨立的求助頁面。一般預約不能替代緊急援助。",
         "end": "到這裡結束",
         "copyMessage": "複製聯絡內容",
-        "copied": "已複製聯絡內容。",
-        "copyFailed": "無法自動複製，請選取文字複製，或下載文字檔。",
+        "copied": "已複製聯絡內容",
+        "copyFailed": "無法自動複製，請選取文字複製，或下載文字檔",
         "linkProblem": "連結無法開啟或找不到合適服務？",
         "recordTruncated": "行動記錄較長，目前只帶入了開頭部分。完整計畫仍保留在上方，可以單獨下載。"
       }
@@ -976,9 +976,9 @@
         "load": "Cargar nota guardada",
         "clear": "Eliminar nota guardada",
         "download": "Descargar texto",
-        "saved": "Guardado en este dispositivo.",
+        "saved": "Guardado en este dispositivo",
         "failed": "No se pudo guardar o cargar. Puedes descargar el texto.",
-        "deleted": "Nota guardada eliminada.",
+        "deleted": "Nota guardada eliminada",
         "empty": "No hay ninguna nota guardada.",
         "note": "Nota privada opcional",
         "feedback": "¿Cómo te sientes después?",
@@ -1074,7 +1074,7 @@
         "crisisSeparate": "Para citas no urgentes, utiliza la página de apoyo. Una cita ordinaria no sustituye a la ayuda de emergencia.",
         "end": "Terminar aquí",
         "copyMessage": "Copiar mensaje",
-        "copied": "Mensaje copiado.",
+        "copied": "Mensaje copiado",
         "copyFailed": "No se pudo copiar. Selecciona el texto o descárgalo.",
         "linkProblem": "¿El enlace no funciona o no encuentras un servicio adecuado?",
         "recordTruncated": "El registro es demasiado largo para incluirlo completo. Solo se añadió el principio; el plan completo sigue arriba y puedes descargarlo por separado."

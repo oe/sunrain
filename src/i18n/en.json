@@ -215,7 +215,7 @@
       },
       "accessibility": {
         "title": "Accessible",
-        "description": "Free, open-source, and available in multiple languages."
+        "description": "Free, open-source, and available in multiple languages"
       },
       "evidence": {
         "title": "Evidence-Based",
@@ -240,7 +240,7 @@
   },
   "footer": {
     "copyright": "© {year} Sunrain. All rights reserved.",
-    "mission": "Spreading hope and healing.",
+    "mission": "Spreading hope and healing",
     "links": "Links",
     "privacy": "Privacy",
     "github": "GitHub"

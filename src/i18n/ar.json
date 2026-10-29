@@ -216,7 +216,7 @@
       },
       "accessibility": {
         "title": "سهولة الوصول",
-        "description": "مجاني، مفتوح المصدر، ومتاح بعدة لغات."
+        "description": "مجاني، مفتوح المصدر، ومتاح بعدة لغات"
       },
       "evidence": {
         "title": "قائم على الأدلة",
@@ -241,7 +241,7 @@
   },
   "footer": {
     "copyright": "© {year} Sunrain. جميع الحقوق محفوظة.",
-    "mission": "نشر الأمل والشفاء.",
+    "mission": "نشر الأمل والشفاء",
     "links": "روابط",
     "privacy": "الخصوصية",
     "github": "GitHub"

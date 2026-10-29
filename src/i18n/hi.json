@@ -216,7 +216,7 @@
       },
       "accessibility": {
         "title": "सुलभ",
-        "description": "मुफ्त, ओपन-सोर्स, और कई भाषाओं में उपलब्ध।"
+        "description": "मुफ्त, ओपन-सोर्स, और कई भाषाओं में उपलब्ध"
       },
       "evidence": {
         "title": "साक्ष्य-आधारित",
@@ -241,7 +241,7 @@
   },
   "footer": {
     "copyright": "© {year} Sunrain. सर्वाधिकार सुरक्षित।",
-    "mission": "आशा और उपचार फैलाना।",
+    "mission": "आशा और उपचार फैलाना",
     "links": "लिंक",
     "privacy": "गोपनीयता",
     "github": "GitHub"
