@@ -32,9 +32,9 @@ not collide, and the reusable workflow returns that name to deployment.
 
 Before a release or when changing browser-sensitive code, manually run
 **Validate Sunrain**, select the desired branch and choose
-`browser-suite: compatibility`. This runs the seven smoke cases on desktop
-Firefox, desktop WebKit and mobile WebKit in one job. It installs only Firefox
-and WebKit and does not publish to Pages.
+`browser-suite: compatibility`. This runs six support-flow smoke cases on each
+of desktop Firefox, desktop WebKit and mobile WebKit (18 cases) in one job. It
+installs only Firefox and WebKit and does not publish to Pages.
 
 For a local run:
 
@@ -48,7 +48,10 @@ pnpm test:compat
 These are engine and device-emulation checks. Linux WebKit does not certify
 Safari or a physical iPhone. Full business-logic coverage belongs to the daily
 Chromium suite; the optional checks target differences in rendering, forms,
-navigation and audio.
+navigation and keyboard interaction. Audio signal and lifecycle regressions
+remain in Chromium. The optional checks do not certify audio playback in Firefox
+or WebKit: headless audio-output availability and the existing Web Audio probe's
+buffer-lifecycle assumptions vary between engines.
 
 ## Reports
 
