@@ -18,9 +18,10 @@ const Title=embedded ? 'h3' : 'h1';
   {embedded && <div class="actions"><button class="button" type="button" data-activity-close>{c.ui.back}</button></div>}
   <section class="support-card" id="guided-activity" data-step-label={c.flow.step}>
     <p class="muted" id="guide-progress" tabindex="-1" aria-live="polite" hidden></p>
+    {id==='one-step'&&<div class="activity-selection-summary" data-activity-selection="current" hidden><p class="activity-selection-label">{c.flow.planLabels[0]}</p><p data-selected-action></p></div>}
     <ol>{guide.steps.map((step,i)=><li data-guide-step tabindex="-1">
       <p>{step}</p>
-      {i===0 && <details class="activity-examples"><summary>{c.flow.examples}</summary><fieldset><legend class="sr-only">{c.flow.examples}</legend><p class="muted">{c.flow.exampleHint}</p>{guide.examples.map(example=><label class="choice"><input type="radio" name="activity-example" value={example} />{example}</label>)}</fieldset></details>}
+      {i===0 && <details class="activity-examples"><summary>{c.flow.examples}</summary><fieldset><legend class="sr-only">{c.flow.examples}</legend><p class="muted">{c.flow.exampleHint}</p>{guide.examples.map(example=><label class="choice"><input type="radio" name="activity-example" value={example} />{example}</label>)}</fieldset>{id==='one-step'&&<p class="muted" data-selection-notice role="status" hidden>{p.keepWrittenStep}</p>}</details>}
     </li>)}</ol>
     <div class="actions" id="guide-controls" hidden>
       <button class="button" id="guide-back" type="button">{c.ui.back}</button>
@@ -31,6 +32,7 @@ const Title=embedded ? 'h3' : 'h1';
     <p>{guide.takeaway}</p>
   </section>
   <section class="support-card" id="activity-reflection">
+    {id==='one-step'&&<div class="activity-selection-summary" data-activity-selection="completion" role="group" aria-label={c.flow.planLabels[0]} tabindex="-1" hidden><p class="activity-selection-label">{c.flow.planLabels[0]}</p><p data-selected-action></p></div>}
     <h2 tabindex="-1">{c.ui.feedback}</h2>
     <fieldset id="activity-feedback"><legend class="sr-only">{c.ui.feedback}</legend>{['better','same','worse'].map(key=><label class="choice"><input type="radio" name="feedback" value={key} />{c.ui[key]}</label>)}</fieldset>
     <p class="muted" id="feedback-intro">{c.flow.guideDone}</p>

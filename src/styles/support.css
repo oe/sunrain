@@ -110,6 +110,9 @@
 .platform .support-shell .screening-result-scope{font-size:15px;color:var(--platform-muted)}
 .platform .support-shell .screening-answer-progress{font-size:14px;font-weight:650;color:var(--platform-blue);margin-block:20px 8px}
 .platform .support-shell .screening-selection-count{font-size:14px;margin-top:16px}
+.platform .support-shell .activity-selection-summary{margin-block:12px 24px}
+.platform .support-shell .activity-selection-summary .activity-selection-label{font-size:14px;color:var(--platform-muted);margin-bottom:6px}
+.platform .support-shell [data-selected-action]{font-size:17px;font-weight:650;white-space:pre-wrap;overflow-wrap:anywhere}
 .platform .support-shell #screening-flow [data-screen-stage]>h2{scroll-margin-block-start:9rem}
 .platform .support-shell .screening-questions>li:last-child{margin-bottom:0}
 @media(max-width:760px){.platform .support-shell{padding-inline:24px}.platform .support-shell .screening-next-step{padding:20px}.platform .support-shell .screening-next-step .actions{display:flex;flex-wrap:wrap;gap:12px}.platform .support-shell .screening-next-step .button{flex:1 1 100%}}

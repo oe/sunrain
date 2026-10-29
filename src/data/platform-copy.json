@@ -43,7 +43,8 @@
     "oneStepAction": "Choose one small step",
     "sleepAction": "Plan a gentler bedtime",
     "worryAction": "Plan a step for one worry",
-    "soundsAction": "Listen to nature"
+    "soundsAction": "Listen to nature",
+    "keepWrittenStep": "Your edited step is kept. To use another example, change or clear the first field in the optional note."
   },
   "zh-hans": {
     "headline": [
@@ -89,7 +90,8 @@
     "oneStepAction": "选一件小事开始",
     "sleepAction": "调整睡前安排",
     "worryAction": "整理一个担忧",
-    "soundsAction": "听一段环境声"
+    "soundsAction": "听一段环境声",
+    "keepWrittenStep": "已保留你编辑的小步骤。若想改用其他例子，请修改或清空可选笔记的第一栏。"
   },
   "zh-hant": {
     "headline": [
@@ -135,7 +137,8 @@
     "oneStepAction": "選一件小事開始",
     "sleepAction": "調整睡前安排",
     "worryAction": "整理一個擔憂",
-    "soundsAction": "聽一段環境聲"
+    "soundsAction": "聽一段環境聲",
+    "keepWrittenStep": "已保留你編輯的小步驟。若想改用其他例子，請修改或清空可選筆記的第一欄。"
   },
   "es": {
     "headline": [
@@ -181,7 +184,8 @@
     "oneStepAction": "Elegir un pequeño paso",
     "sleepAction": "Preparar la hora de dormir",
     "worryAction": "Ordenar una preocupación",
-    "soundsAction": "Escuchar sonidos naturales"
+    "soundsAction": "Escuchar sonidos naturales",
+    "keepWrittenStep": "Se conserva el paso que has editado. Para usar otro ejemplo, cambia o borra el primer campo de la nota opcional."
   },
   "ja": {
     "headline": [
@@ -227,7 +231,8 @@
     "oneStepAction": "小さな一歩を選ぶ",
     "sleepAction": "寝る前の過ごし方を整える",
     "worryAction": "心配事を一つ整理する",
-    "soundsAction": "自然の音を聴く"
+    "soundsAction": "自然の音を聴く",
+    "keepWrittenStep": "編集した一歩を保持しています。別の例を使うには、任意のメモの最初の欄を変更するか空にしてください。"
   },
   "ko": {
     "headline": [
@@ -273,7 +278,8 @@
     "oneStepAction": "작은 일 하나 정하기",
     "sleepAction": "잠들기 전 준비하기",
     "worryAction": "걱정 하나 정리하기",
-    "soundsAction": "자연의 소리 듣기"
+    "soundsAction": "자연의 소리 듣기",
+    "keepWrittenStep": "직접 수정한 내용을 유지합니다. 다른 예시를 사용하려면 선택 메모의 첫 번째 항목을 수정하거나 지워 주세요."
   },
   "hi": {
     "headline": [
@@ -319,7 +325,8 @@
     "oneStepAction": "एक छोटा कदम चुनें",
     "sleepAction": "सोने की तैयारी करें",
     "worryAction": "एक चिंता के लिए कदम चुनें",
-    "soundsAction": "प्रकृति की आवाज़ें सुनें"
+    "soundsAction": "प्रकृति की आवाज़ें सुनें",
+    "keepWrittenStep": "आपका संपादित कदम सुरक्षित है। दूसरा उदाहरण चुनने के लिए वैकल्पिक नोट का पहला खंड बदलें या खाली करें।"
   },
   "ar": {
     "headline": [
@@ -365,6 +372,7 @@
     "oneStepAction": "اختر خطوة صغيرة",
     "sleepAction": "رتّب روتين ما قبل النوم",
     "worryAction": "نظّم فكرة تقلقك",
-    "soundsAction": "استمع إلى أصوات الطبيعة"
+    "soundsAction": "استمع إلى أصوات الطبيعة",
+    "keepWrittenStep": "تم الاحتفاظ بالخطوة التي عدّلتها. لاستخدام مثال آخر، عدّل الحقل الأول في الملاحظة الاختيارية أو امسحه."
   }
 }
