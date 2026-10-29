@@ -1,55 +1,64 @@
 # Continuous integration
 
-`Validate Sunrain` runs for pull requests and manual dispatches. Feature-branch
-pushes do not start a second copy of the PR checks. A new commit cancels the
-previous run for that PR. The deployment workflow calls the same validation on
-the resulting `main` commit; its Pages deployment lock remains non-cancelling.
+`Validate Sunrain` runs one job, **Build and regression tests**, for each pull
+request. Feature-branch pushes do not start a duplicate run. A new commit cancels
+the previous run for that PR. Production deployment calls the same Chromium
+validation on `main`; its Pages deployment lock remains non-cancelling.
 
-## Build once, test in parallel
+## Daily checks
 
-1. `build` installs dependencies, audits them, runs unit tests, checks types,
-   builds the site, and verifies the source contracts and clean build identity.
-2. It collects the complete Playwright test plan and archives it with `dist`.
-   A SHA-256 output identifies the archive. Tar preserves hidden files and modes.
-3. Five browser jobs restore that exact archive, verify its checksum and source
-   identity, and each run one existing Playwright project. Each job installs only
-   its required browser. Tests remain serial within a project to avoid contention
-   in the real-time audio checks.
-4. `validate` merges the five blob reports into HTML and JSON, and compares every
-   result with the complete test plan. Missing projects, duplicate cases, global
-   errors and unfinished results fail validation. Intentional skips are preserved.
-5. Only after all browser jobs and the report checks pass can the validated `dist`
-   be uploaded as a Pages artifact. Deployment uses that artifact without rebuilding.
+The job installs the locked dependencies, audits production dependencies, runs
+unit tests, checks types, builds the site once and verifies its source identity.
+Playwright tests that production build using Chromium only:
 
-The final check retains the name **Build and regression tests** for existing branch
-protection. It runs even if an upstream job fails, so a skipped matrix cannot make
-the required check pass.
+- Desktop runs the complete 55-case regression suite, including all eight
+  languages, screening edge cases, privacy, keyboard access, narrow layouts,
+  audio controls and the real-time audio loop check.
+- Mobile runs seven existing cases tagged `@smoke`: English and Arabic check-in
+  and screening journeys, narrow RTL keyboard controls, 320px layouts across all
+  eight languages, and sound mixing/return/stop controls. The other desktop cases
+  are not repeated on mobile.
 
-## Reports and reruns
+Tests remain serial within the job to avoid contention in the real-time audio
+checks. There is no browser matrix, intermediate build archive or report merger.
+The default local command, `pnpm test:e2e`, uses the same Chromium scope as CI.
 
-- `production-build-<run>-<build-attempt>` contains the immutable build archive and
-  full test plan; it is retained for three days.
-- `browser-results-<project>-<run>-<build-attempt>` contains a blob report, including
-  screenshot and trace attachments. A failed-project rerun replaces only that
-  project's report while retaining reports from the successful jobs.
-- `regression-evidence-<commit>-<run>-<attempt>` contains the merged HTML report,
-  JSON results and build metadata. Reports are retained for 14 days.
-- Pages artifacts include the run and attempt in their name, so rerunning the
-  workflow does not collide with an earlier upload. The reusable workflow returns
-  the actual artifact name to the deployment job.
+The build identity is checked again after testing. Pages receives this tested
+`dist` only after validation passes, without rebuilding. The required check keeps
+its existing name. Pages artifact names include the run and attempt so reruns do
+not collide, and the reusable workflow returns that name to deployment.
 
-Use **Re-run failed jobs** for an intermittent infrastructure failure. The build's
-outputs identify the existing archive and report group even when the retry has a
-new attempt number. If the three-day build archive has expired, rerun all jobs.
+## Optional compatibility checks
 
-When adding a Playwright project, also add its browser to the workflow matrix.
-The complete-plan comparison will fail if the matrix omits any planned cases.
+Before a release or when changing browser-sensitive code, manually run
+**Validate Sunrain**, select the desired branch and choose
+`browser-suite: compatibility`. This runs the seven smoke cases on desktop
+Firefox, desktop WebKit and mobile WebKit in one job. It installs only Firefox
+and WebKit and does not publish to Pages.
+
+For a local run:
+
+```sh
+pnpm install --frozen-lockfile
+pnpm exec playwright install --with-deps firefox webkit
+pnpm build
+pnpm test:compat
+```
+
+These are engine and device-emulation checks. Linux WebKit does not certify
+Safari or a physical iPhone. Full business-logic coverage belongs to the daily
+Chromium suite; the optional checks target differences in rendering, forms,
+navigation and audio.
+
+## Reports
+
+Every run uploads its HTML report, failure traces/screenshots, attachments and
+build metadata as `regression-evidence-<suite>-<commit>-<run>-<attempt>`, retained
+for 14 days. Inspect this artifact on a failed run, then rerun the single job.
 
 ## Timing baseline
 
-Before this change, production run [39349293533](https://github.com/oe/sunrain/actions/runs/39349293533)
-took 15m30s: browser tests 13m42s, browser installation 54s, typecheck/build 13s,
-dependency installation 2s and deployment 7s. All 248 browser cases ran with one
-worker. The longest individual project accounted for about 4m06s of test time.
-Parallel jobs preserve the same coverage while reducing the workflow's critical
-path. Actual runtime depends on runner availability and is measured on the PR.
+The previous PR run [39288950541](https://github.com/oe/sunrain/actions/runs/39288950541)
+took 15m51s and repeated the suite across five configurations (248 cases).
+The simplified daily suite has 62 cases with no planned skips. Its actual
+GitHub Actions runtime is recorded on the PR and varies with runner availability.

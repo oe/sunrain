@@ -105,7 +105,7 @@ test.afterEach(async ({ page }, testInfo) => {
   expect(runtimeErrors.get(page)).toEqual([]);
 });
 
-test('mix ratios, master volume, return, repeated entry and stop preserve intent', async ({ page }) => {
+test('mix ratios, master volume, return, repeated entry and stop preserve intent', { tag: '@smoke' }, async ({ page }) => {
   await play(page, 'pink-noise');
   await play(page, 'ocean-waves');
   await expectAudio(page, 2);

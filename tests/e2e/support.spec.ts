@@ -57,7 +57,7 @@ test.beforeEach(async({page})=>{
   }));
 });
 for(const locale of locales) {
-  test(`${locale}: check-in, self-help, help-seeking and disclaimer are connected`,async({page})=>{
+  test(`${locale}: check-in, self-help, help-seeking and disclaimer are connected`,{tag:['en','ar'].includes(locale)?'@smoke':[]},async({page})=>{
     const errors:string[]=[];page.on('pageerror',error=>errors.push(error.message));
     await page.goto(path(locale,'/'));
     await page.locator('#home-check-in').click();
@@ -301,7 +301,7 @@ test('Japanese youth K6 stays a raw record and low PHQ total still shows item-ni
   await expect(page.locator('#screening-result-safety')).toBeVisible();
 });
 for(const locale of locales){
-  test(`${locale}: source screening connects separate results to inline self-help and care`,async({page})=>{
+  test(`${locale}: source screening connects separate results to inline self-help and care`,{tag:['en','ar'].includes(locale)?'@smoke':[]},async({page})=>{
     const errors:string[]=[],requests:string[]=[];
     page.on('pageerror',e=>errors.push(e.message));page.on('request',r=>requests.push(r.url()));
     await startScreening(page,locale);
@@ -455,7 +455,7 @@ test('complete response export is explicit, includes sources and answers, and do
   await page.goto('/disclaimer/');await page.locator('#delete-all-notes').click();
   expect(await page.evaluate(()=>Object.keys(localStorage).filter(k=>k.startsWith('sunrain')))).toEqual([]);
 });
-test('screening radio options and results work by keyboard and remain within a narrow RTL layout',async({page})=>{
+test('screening radio options and results work by keyboard and remain within a narrow RTL layout',{tag:'@smoke'},async({page})=>{
   await page.setViewportSize({width:320,height:720});
   await startScreening(page,'ar');
   await page.addStyleTag({content:'::-webkit-scrollbar{width:15px}'});
@@ -564,7 +564,7 @@ test('keyboard alone can reach, complete and carry a check-in into help preparat
   await expect(page.locator('#prepare-support [data-note-field]').nth(2)).toHaveValue(copy.en.ui.disruptive);
 });
 
-test('320px layouts keep navigation intact and translated Back actions on one row',async({page})=>{
+test('320px layouts keep navigation intact and translated Back actions on one row',{tag:'@smoke'},async({page})=>{
   await page.setViewportSize({width:320,height:720});
   for(const [i,locale] of locales.entries()){
     await page.emulateMedia({colorScheme:i%2?'dark':'light',reducedMotion:'reduce'});

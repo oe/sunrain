@@ -77,6 +77,5 @@ yarn.lock
 # Test results
 test-results/
 playwright-report/
-blob-report/
 *_TEST_REPORT.md
 *_TEST_SUMMARY.md

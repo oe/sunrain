@@ -4,6 +4,12 @@ on:
   # PRs validate their merge result. main is validated by the deployment caller.
   pull_request:
   workflow_dispatch:
+    inputs:
+      browser-suite:
+        description: Chromium regression or optional cross-engine smoke checks
+        type: choice
+        options: [chromium, compatibility]
+        default: chromium
   workflow_call:
     outputs:
       pages-artifact-name:
@@ -24,15 +30,14 @@ concurrency:
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
-  build:
-    name: Build and static checks
+  validate:
+    name: Build and regression tests
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
+    env:
+      BROWSER_SUITE: ${{ inputs.browser-suite || 'chromium' }}
     outputs:
-      archive-sha: ${{ steps.archive.outputs.sha }}
-      # Use the successful build's attempt when rerunning only failed jobs.
-      artifact-name: ${{ steps.archive.outputs.artifact-name }}
-      report-scope: ${{ steps.archive.outputs.report-scope }}
+      pages-artifact-name: github-pages-${{ github.run_id }}-${{ github.run_attempt }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -65,180 +70,36 @@ jobs:
           pnpm verify:sunrain
           node scripts/verify-build-identity.mjs
 
-      - name: Archive the build and complete test plan
-        id: archive
-        run: |
-          mkdir -p "$RUNNER_TEMP/sunrain-build"
-          pnpm exec playwright test --list --reporter=json > "$RUNNER_TEMP/sunrain-build/test-plan.json"
-          tar -cf "$RUNNER_TEMP/sunrain-build.tar" -C "$GITHUB_WORKSPACE" dist -C "$RUNNER_TEMP/sunrain-build" test-plan.json
-          build_archive_sha=$(sha256sum "$RUNNER_TEMP/sunrain-build.tar" | cut -d ' ' -f 1)
-          printf 'sha=%s\n' "$build_archive_sha" >> "$GITHUB_OUTPUT"
-          printf 'artifact-name=production-build-%s-%s\n' "$GITHUB_RUN_ID" "$GITHUB_RUN_ATTEMPT" >> "$GITHUB_OUTPUT"
-          printf 'report-scope=%s-%s\n' "$GITHUB_RUN_ID" "$GITHUB_RUN_ATTEMPT" >> "$GITHUB_OUTPUT"
-
-      - name: Upload production build
-        uses: actions/upload-artifact@v4
-        with:
-          name: ${{ steps.archive.outputs.artifact-name }}
-          path: ${{ runner.temp }}/sunrain-build.tar
-          compression-level: 0
-          if-no-files-found: error
-          retention-days: 3
-
-  browsers:
-    name: Browser tests (${{ matrix.project }})
-    needs: build
-    runs-on: ubuntu-latest
-    timeout-minutes: 12
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - project: desktop-chromium
-            browser: chromium
-          - project: mobile-chromium
-            browser: chromium
-          - project: desktop-firefox
-            browser: firefox
-          - project: desktop-webkit
-            browser: webkit
-          - project: mobile-webkit
-            browser: webkit
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 10.12.1
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 24
-          cache: pnpm
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
       - name: Install test browser
-        run: pnpm exec playwright install --with-deps ${{ matrix.browser }}
-
-      - name: Download production build
-        uses: actions/download-artifact@v4
-        with:
-          name: ${{ needs.build.outputs.artifact-name }}
-          path: ${{ runner.temp }}
-
-      - name: Restore and verify the exact build
-        env:
-          EXPECTED_ARCHIVE_SHA: ${{ needs.build.outputs.archive-sha }}
         run: |
-          printf '%s  %s\n' "$EXPECTED_ARCHIVE_SHA" "$RUNNER_TEMP/sunrain-build.tar" | sha256sum --check --strict
-          mkdir -p "$RUNNER_TEMP/sunrain-build"
-          tar -xf "$RUNNER_TEMP/sunrain-build.tar" -C "$RUNNER_TEMP/sunrain-build"
-          test ! -e dist
-          mv "$RUNNER_TEMP/sunrain-build/dist" dist
-          node scripts/verify-build-identity.mjs
+          if [ "$BROWSER_SUITE" = compatibility ]; then
+            pnpm exec playwright install --with-deps firefox webkit
+          else
+            pnpm exec playwright install --with-deps chromium
+          fi
 
       - name: Browser regressions against the production build
-        env:
-          PLAYWRIGHT_BLOB_OUTPUT_NAME: ${{ matrix.project }}.zip
-        run: pnpm test:e2e --project=${{ matrix.project }} --reporter=list,blob
+        run: |
+          if [ "$BROWSER_SUITE" = compatibility ]; then
+            pnpm test:compat
+          else
+            pnpm test:e2e
+          fi
 
-      - name: Upload browser report and attachments
+      - name: Verify build identity after tests
+        run: node scripts/verify-build-identity.mjs
+
+      - name: Upload regression evidence
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: browser-results-${{ matrix.project }}-${{ needs.build.outputs.report-scope }}
-          overwrite: true
-          path: blob-report/
-          if-no-files-found: warn
-          retention-days: 14
-
-  validate:
-    # Preserve the existing required check name; skipped/failed jobs must fail it.
-    name: Build and regression tests
-    needs: [build, browsers]
-    if: always()
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    outputs:
-      pages-artifact-name: github-pages-${{ github.run_id }}-${{ github.run_attempt }}
-    steps:
-      - name: Require a successful build
-        env:
-          BUILD_RESULT: ${{ needs.build.result }}
-        run: test "$BUILD_RESULT" = success
-
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 10.12.1
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 24
-          cache: pnpm
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: Download production build
-        uses: actions/download-artifact@v4
-        with:
-          name: ${{ needs.build.outputs.artifact-name }}
-          path: ${{ runner.temp }}
-
-      - name: Restore and verify the exact build
-        env:
-          EXPECTED_ARCHIVE_SHA: ${{ needs.build.outputs.archive-sha }}
-        run: |
-          printf '%s  %s\n' "$EXPECTED_ARCHIVE_SHA" "$RUNNER_TEMP/sunrain-build.tar" | sha256sum --check --strict
-          mkdir -p "$RUNNER_TEMP/sunrain-build"
-          tar -xf "$RUNNER_TEMP/sunrain-build.tar" -C "$RUNNER_TEMP/sunrain-build"
-          test ! -e dist
-          mv "$RUNNER_TEMP/sunrain-build/dist" dist
-          node scripts/verify-build-identity.mjs
-
-      - name: Download browser reports
-        uses: actions/download-artifact@v4
-        with:
-          pattern: browser-results-*-${{ needs.build.outputs.report-scope }}
-          merge-multiple: true
-          path: ${{ runner.temp }}/sunrain-blobs
-
-      - name: Merge reports and verify complete coverage
-        env:
-          PLAYWRIGHT_HTML_OPEN: never
-          PLAYWRIGHT_JSON_OUTPUT_DIR: test-results
-          PLAYWRIGHT_JSON_OUTPUT_NAME: regression-results.json
-        run: |
-          pnpm exec playwright merge-reports --reporter=html,json "$RUNNER_TEMP/sunrain-blobs"
-          node scripts/verify-regression-report.mjs "$RUNNER_TEMP/sunrain-build/test-plan.json" test-results/regression-results.json
-
-      - name: Upload consolidated regression evidence
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: regression-evidence-${{ github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
+          name: regression-evidence-${{ env.BROWSER_SUITE }}-${{ github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
           path: |
             playwright-report/
             test-results/
             dist/build-metadata.json
           if-no-files-found: warn
           retention-days: 14
-
-      - name: Require every browser job to pass
-        if: always()
-        env:
-          BROWSER_RESULT: ${{ needs.browsers.result }}
-        run: test "$BROWSER_RESULT" = success
 
       - name: Upload validated Pages artifact
         if: ${{ success() && inputs.upload-pages-artifact }}
