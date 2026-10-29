@@ -28,7 +28,7 @@ const sections=[['signs',c.signs],['today',c.steps],['treatment',c.treatment],['
     </section>
     <section id="today" aria-labelledby="today-heading" class="understand-section">
       <h2 id="today-heading">{c.steps}</h2><p class="understand-muted">{c.stepsIntro}</p>
-      <ol class="understand-steps">{topic.steps.map((text,i)=><li><span class="understand-step-number" aria-hidden="true">{new Intl.NumberFormat(lang).format(i+1)}</span><p>{text}</p></li>)}</ol>
+      <ol class="understand-steps" role="list">{topic.steps.map((text,i)=><li><span class="understand-step-number" aria-hidden="true">{new Intl.NumberFormat(lang).format(i+1)}</span><p>{text}</p></li>)}</ol>
       <a class="platform-link" href={getLocalizedPath(id==='bipolar'?'/support/':meta.activity,lang)}>{id==='bipolar'?c.support:c.activity}<Icon name="ArrowRight" size={19} className="directional" /></a>
     </section>
     <section id="treatment" aria-labelledby="treatment-heading" class="understand-section">

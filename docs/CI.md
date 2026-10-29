@@ -16,8 +16,8 @@ Playwright tests that production build using Chromium only:
   audio controls and the real-time audio loop check.
 - Mobile runs eight cases tagged `@smoke`: English and Arabic check-in
   and screening journeys, narrow RTL keyboard controls, 320px layouts across all
-  eight languages, sound mixing/return/stop controls, and the multilingual topic-reading path. The other desktop cases
-  are not repeated on mobile.
+  eight languages, sound mixing/return/stop controls, and the multilingual
+  topic-reading path. The other desktop cases are not repeated on mobile.
 
 Tests remain serial within the job to avoid contention in the real-time audio
 checks. There is no browser matrix, intermediate build archive or report merger.
