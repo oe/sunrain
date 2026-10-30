@@ -8,18 +8,17 @@ import { getUnderstandingCopy } from '@/lib/understand';
 
 const lang = getLanguageFromPath(Astro.url.pathname) as Language;
 const categories = getResources(lang);
-const showLanguageNotice = lang !== 'en';
 const support=getSupportCopy(lang);
 const u=getUnderstandingCopy(lang).common;
 ---
 <BaseLayout title={t('resources.title',lang)} description={t('resources.subtitle',lang)}>
   <div class="relax-page">
-    <header class="page-heading"><h1>{t('resources.title',lang)}</h1><p>{t('resources.subtitle',lang)}</p>{showLanguageNotice&&<p class="text-sm mt-4">{t('resources.languageNotice',lang)}</p>}</header>
+    <header class="page-heading"><h1>{t('resources.title',lang)}</h1><p>{t('resources.subtitle',lang)}</p><p class="text-sm mt-4">{t('resources.languageNotice',lang)}</p></header>
     <p class="resource-actions"><a class="platform-link" href={getLocalizedPath('/understand/',lang)}>{u.learnLink}<Icon name="ArrowRight" size={19} className="directional" /></a></p>
     <div class="resource-groups">
       {categories.map(category=><details class="resource-group">
         <summary><span class="resource-title"><Icon name={category.icon} size={24} /><h2>{t(`resources.categories.${category.id}`,lang)}</h2></span></summary>
-        <ul>{category.links.map(link=><li><a class="resource-link" href={link.url} target="_blank" rel="noreferrer"><span><span class="font-semibold">{link.title}</span><span class="block text-sm mt-1">{link.source}</span></span><Icon name="ArrowRight" size={19} className="directional" /></a></li>)}</ul>
+        <ul>{category.links.map(link=><li><a class="resource-link" data-resource={link.id} href={link.url} target="_blank" rel="noreferrer"><span><span class="font-semibold">{link.title}</span><span class="block text-sm mt-1">{link.source}</span><span class="block text-sm mt-1" data-resource-language>{link.language}{link.audience && <> · <span data-resource-audience>{link.audience}</span></>}</span></span><Icon name="ArrowRight" size={19} className="directional" /></a></li>)}</ul>
       </details>)}
     </div>
     <p class="resource-notice">{t('resources.disclaimer',lang)}</p>

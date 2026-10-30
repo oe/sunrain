@@ -146,7 +146,7 @@ for(const locale of locales) {
     expect(await page.evaluate(()=>Object.keys(sessionStorage))).toEqual([]);
     await page.goto(path(locale,'/support/'));await openDisclosure(page,'#contact-preparation');
     await expect(page.locator('#support-region')).toHaveValue('');
-    await expect(page.locator('ol li')).toHaveCount(6);
+    await expect(page.locator('[data-booking-checklist] ol li')).toHaveCount(6);
     await expect(page.locator('[data-note-field]')).toHaveCount(5);
     await page.locator('#support-region').selectOption('GB-ENG');
     await expect(page.locator('[data-youth-service] a')).toHaveAttribute('href','https://www.nhs.uk/mental-health/children-and-young-adults/mental-health-support/how-to-get-support/where-to-get-support/');
@@ -539,7 +539,7 @@ test('screening radio options and results work by keyboard and remain within a n
 test('self-help and provider instructions remain available without JavaScript',async({browser})=>{
   const context=await browser.newContext({javaScriptEnabled:false});const page=await context.newPage();
   await page.goto('http://127.0.0.1:4362/zh-hans/self-help/grounding/');await expect(page.locator('#guided-activity ol li')).toHaveCount(4);
-  await page.goto('http://127.0.0.1:4362/zh-hans/support/');await expect(page.locator('ol li')).toHaveCount(6);await expect(page.locator('noscript a[href="https://findtreatment.gov/"]')).toBeVisible();
+  await page.goto('http://127.0.0.1:4362/zh-hans/support/');await expect(page.locator('[data-booking-checklist] ol li')).toHaveCount(6);await expect(page.locator('noscript a[href="https://findtreatment.gov/"]')).toBeVisible();
   await expect(page.locator('noscript a[href="https://www.nhs.uk/mental-health/children-and-young-adults/mental-health-support/how-to-get-support/where-to-get-support/"]')).toBeVisible();await context.close();
 });
 test('Arabic responsive layout and visible flow screenshots',async({page},testInfo)=>{

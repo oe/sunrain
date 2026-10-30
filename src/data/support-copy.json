@@ -216,7 +216,7 @@
         "GB-ENG": {
           "region": "England",
           "instructions": "For adults in England, NHS talking therapies offers self-referral or a GP referral. Check local eligibility; other difficulties may need a different service.",
-          "youthInstructions": "Under 18? Use the NHS children and young people’s guidance to find an age-appropriate route in England. Eligibility, referral and consent requirements depend on the local service.",
+          "youthInstructions": "Under 18? Explore NHS support for children and young people in England. Age, referral and consent requirements depend on the local service.",
           "youthLink": "NHS youth support (England, English)"
         },
         "US": {
@@ -260,7 +260,7 @@
         "bookingChecklist": "Before booking, costs and waiting",
         "coverage": "Listed locations have official entry points below. Coverage is limited; your reading language does not determine your location.",
         "websiteLanguage": "Website languages",
-        "checked": "Information checked",
+        "checked": "Entry page checked",
         "verification": "Official information checked; individual providers, appointments and service languages have not been tested. Confirm eligibility, referrals and fees directly.",
         "notCovered": "We do not yet have a checked entry point for your area. You can still prepare a message below.",
         "notePrivacy": "Unsaved notes stay on this page and clear on reload or leaving. Saving is optional; others using this browser may see saved notes. Downloads are separate copies you manage.",
@@ -480,7 +480,7 @@
         "GB-ENG": {
           "region": "英格兰",
           "instructions": "面向英格兰成年人的 NHS 谈话治疗可接受自我转介或全科医生转介。请核对当地条件；其他困扰可能需要不同服务。",
-          "youthInstructions": "未满 18 岁？可通过 NHS 儿童与青少年指引了解英格兰适合相应年龄的求助途径。具体资格、转介和同意要求以当地服务为准。",
+          "youthInstructions": "未满18岁可查看英格兰儿童与青少年求助指引；年龄、转介和同意要求以当地服务为准。",
           "youthLink": "NHS 青少年支持（英格兰，英语）"
         },
         "US": {
@@ -524,7 +524,7 @@
         "bookingChecklist": "预约前要问什么、费用与候诊",
         "coverage": "下列地区已有官方入口，覆盖范围仍有限。阅读语言不代表你的所在地。",
         "websiteLanguage": "外部网站语言",
-        "checked": "信息核对日期",
+        "checked": "入口核对日期",
         "verification": "已核对官方说明，未测试具体机构接诊、预约或服务语言。请向服务方确认适用条件、转介和费用。",
         "notCovered": "本站暂未收录你所在地区已核对的入口，仍可在下方准备联系内容。",
         "notePrivacy": "未保存的记录仅留在本页，刷新或离开即清除。保存完全自愿，共用此浏览器的人可能看到保存内容；下载文件由你自行保管。",
@@ -744,7 +744,7 @@
         "GB-ENG": {
           "region": "英格蘭",
           "instructions": "面向英格蘭成年人的 NHS 談話治療可接受自我轉介或家庭醫師轉介。請核對當地條件；其他困擾可能需要不同服務。",
-          "youthInstructions": "未滿 18 歲？可透過 NHS 兒童與青少年指引了解英格蘭適合相應年齡的求助途徑。具體資格、轉介和同意要求以當地服務為準。",
+          "youthInstructions": "未滿18歲可查看英格蘭兒童及青少年支援指引；年齡、轉介和同意要求依當地服務規定。",
           "youthLink": "NHS 青少年支援（英格蘭，英語）"
         },
         "US": {
@@ -788,7 +788,7 @@
         "bookingChecklist": "預約前要問什麼、費用與候診",
         "coverage": "下列地區已有官方入口，涵蓋範圍仍有限。閱讀語言不代表你的所在地。",
         "websiteLanguage": "外部網站語言",
-        "checked": "資訊核對日期",
+        "checked": "入口核對日期",
         "verification": "已核對官方說明，未測試個別機構接診、預約或服務語言。請向服務方確認適用條件、轉介與費用。",
         "notCovered": "本站暫未收錄你所在地已核對的入口，仍可在下方準備聯絡內容。",
         "notePrivacy": "未儲存的記錄僅留在本頁，重新整理或離開即清除。儲存完全自願，共用此瀏覽器的人可能看到儲存內容；下載檔案由你自行保管。",
@@ -1008,7 +1008,7 @@
         "GB-ENG": {
           "region": "Inglaterra",
           "instructions": "NHS talking therapies acepta solicitudes directas o derivaciones del médico de cabecera para adultos en Inglaterra. Confirma los requisitos locales; otras dificultades pueden necesitar otro servicio.",
-          "youthInstructions": "¿Tienes menos de 18 años? Consulta la guía del NHS para niños y jóvenes para encontrar apoyo adecuado a tu edad en Inglaterra. Los requisitos de acceso, derivación y consentimiento dependen del servicio local.",
+          "youthInstructions": "¿Tienes menos de 18 años? Consulta el apoyo infantil y juvenil del NHS en Inglaterra. Los requisitos de edad, derivación y consentimiento dependen del servicio local.",
           "youthLink": "Apoyo juvenil del NHS (Inglaterra, en inglés)"
         },
         "US": {
@@ -1052,7 +1052,7 @@
         "bookingChecklist": "Antes de reservar, costes y espera",
         "coverage": "Las zonas listadas tienen accesos oficiales. La cobertura es limitada; el idioma de lectura no determina tu ubicación.",
         "websiteLanguage": "Idiomas de la web",
-        "checked": "Información comprobada",
+        "checked": "Página de acceso revisada",
         "verification": "Se ha revisado la información oficial, no la atención, las citas ni los idiomas de cada servicio. Confirma requisitos, derivaciones y costes.",
         "notCovered": "Aún no tenemos un acceso comprobado para tu zona. Puedes preparar un mensaje abajo.",
         "notePrivacy": "Las notas sin guardar se borran al recargar o salir. Guardarlas es opcional; otras personas que usen este navegador podrían verlas. Tú gestionas las copias descargadas.",
@@ -1272,7 +1272,7 @@
         "GB-ENG": {
           "region": "イングランド",
           "instructions": "成人向け NHS talking therapies は本人からの申込み、または家庭医からの紹介で利用できます。イングランドの対象条件を確認してください。別の困りごとには別の支援が必要な場合があります。",
-          "youthInstructions": "18歳未満の方は、NHSの子ども・若者向け案内から、イングランドで年齢に合う相談先を探せます。利用資格、紹介、同意の要件は地域のサービスによって異なります。",
+          "youthInstructions": "18歳未満の方は、イングランドのNHS子ども・若者向け案内も参照できます。年齢・紹介・同意の条件は地域の窓口で確認してください。",
           "youthLink": "NHSの若者向けサポート（イングランド・英語）"
         },
         "US": {
@@ -1316,7 +1316,7 @@
         "bookingChecklist": "予約前の確認・費用・待ち時間",
         "coverage": "掲載地域には公式の案内先があります。対応地域は限られ、閲覧言語から所在地を判断しません。",
         "websiteLanguage": "外部サイトの言語",
-        "checked": "情報確認日",
+        "checked": "案内先の確認日",
         "verification": "公式案内を確認していますが、個別の受診、予約、対応言語は未検証です。対象条件、紹介状、費用は相談先に確認してください。",
         "notCovered": "お住まいの地域の確認済み案内先は未掲載です。下で連絡文を準備できます。",
         "notePrivacy": "未保存の記録は再読み込みや移動で消えます。保存は任意で、同じブラウザの利用者に見える可能性があります。ダウンロードしたファイルはご自身で管理してください。",
@@ -1536,7 +1536,7 @@
         "GB-ENG": {
           "region": "잉글랜드",
           "instructions": "잉글랜드 성인은 NHS talking therapies에 직접 신청하거나 주치의의 의뢰를 받을 수 있습니다. 지역별 대상 조건을 확인하세요. 다른 어려움은 다른 서비스가 필요할 수 있습니다.",
-          "youthInstructions": "18세 미만이라면 NHS 아동·청소년 안내에서 잉글랜드의 연령에 맞는 지원 경로를 찾아보세요. 이용 자격, 의뢰 및 동의 요건은 지역 서비스에 따라 다릅니다.",
+          "youthInstructions": "18세 미만이라면 잉글랜드의 NHS 아동·청소년 지원 안내를 참고하세요. 연령·의뢰·동의 조건은 지역 서비스에 확인하세요.",
           "youthLink": "NHS 청소년 지원(잉글랜드, 영어)"
         },
         "US": {
@@ -1580,7 +1580,7 @@
         "bookingChecklist": "예약 전 확인, 비용과 대기",
         "coverage": "목록의 지역에 공식 안내가 있습니다. 지원 지역은 제한적이며 읽는 언어로 위치를 추정하지 않습니다.",
         "websiteLanguage": "외부 사이트 언어",
-        "checked": "정보 확인일",
+        "checked": "안내 페이지 확인일",
         "verification": "공식 안내를 확인했지만 개별 기관의 진료, 예약, 서비스 언어는 검증하지 않았습니다. 대상 조건, 의뢰와 비용은 기관에 확인하세요.",
         "notCovered": "아직 해당 지역의 확인된 안내가 없습니다. 아래에서 연락할 내용을 준비할 수 있습니다.",
         "notePrivacy": "저장하지 않은 기록은 새로고침하거나 떠나면 지워집니다. 저장은 선택이며 같은 브라우저를 쓰는 사람이 볼 수 있습니다. 내려받은 파일은 직접 관리하세요.",
@@ -1800,7 +1800,7 @@
         "GB-ENG": {
           "region": "इंग्लैंड",
           "instructions": "इंग्लैंड के वयस्क NHS talking therapies के लिए सीधे आवेदन या GP रेफ़रल ले सकते हैं। स्थानीय पात्रता जाँचें; अन्य कठिनाइयों के लिए दूसरी सेवा चाहिए हो सकती है।",
-          "youthInstructions": "18 वर्ष से कम उम्र है? इंग्लैंड में अपनी उम्र के अनुरूप सहायता खोजने के लिए बच्चों और युवाओं के लिए NHS की जानकारी देखें। पात्रता, रेफ़रल और सहमति की शर्तें स्थानीय सेवा पर निर्भर करती हैं।",
+          "youthInstructions": "18 वर्ष से कम? इंग्लैंड में NHS की बाल और युवा सहायता देखें। उम्र, रेफ़रल और सहमति की शर्तें स्थानीय सेवा पर निर्भर हैं।",
           "youthLink": "NHS युवा सहायता (इंग्लैंड, अंग्रेज़ी में)"
         },
         "US": {
@@ -1844,7 +1844,7 @@
         "bookingChecklist": "अपॉइंटमेंट से पहले, खर्च और प्रतीक्षा",
         "coverage": "सूचीबद्ध स्थानों के आधिकारिक प्रवेश पेज उपलब्ध हैं। कवरेज सीमित है; पढ़ने की भाषा से स्थान तय नहीं होता।",
         "websiteLanguage": "वेबसाइट की भाषाएँ",
-        "checked": "जानकारी जाँचने की तारीख",
+        "checked": "प्रवेश पेज जाँचने की तारीख",
         "verification": "आधिकारिक जानकारी जाँची गई है; व्यक्तिगत सेवाओं, अपॉइंटमेंट या सेवा की भाषाओं का परीक्षण नहीं हुआ। पात्रता, रेफ़रल और खर्च सेवा से पूछें।",
         "notCovered": "आपके क्षेत्र का जाँचा हुआ प्रवेश पेज अभी सूची में नहीं है। नीचे संदेश तैयार कर सकते हैं।",
         "notePrivacy": "बिना सहेजे नोट पेज दोबारा खोलने या छोड़ने पर मिट जाते हैं। सहेजना वैकल्पिक है; इसी ब्राउज़र के दूसरे लोग सहेजे नोट देख सकते हैं। डाउनलोड की गई प्रतियाँ आप सँभालते हैं।",
@@ -2064,7 +2064,7 @@
         "GB-ENG": {
           "region": "إنجلترا",
           "instructions": "يمكن للبالغين في إنجلترا التقدم مباشرة إلى NHS talking therapies أو بإحالة من طبيب عام. تحقق من شروط المنطقة؛ قد تتطلب صعوبات أخرى خدمة مختلفة.",
-          "youthInstructions": "هل عمرك أقل من 18 عاماً؟ راجع إرشادات NHS للأطفال والشباب للعثور على دعم مناسب لعمرك في إنجلترا. تختلف شروط الأهلية والإحالة والموافقة حسب الخدمة المحلية.",
+          "youthInstructions": "أقل من 18 عاماً؟ راجع دعم NHS للأطفال والشباب في إنجلترا. تختلف شروط العمر والإحالة والموافقة حسب الخدمة المحلية.",
           "youthLink": "دعم الشباب من NHS (إنجلترا، بالإنجليزية)"
         },
         "US": {
@@ -2108,7 +2108,7 @@
         "bookingChecklist": "قبل الحجز والتكاليف والانتظار",
         "coverage": "تتوفر مداخل رسمية للمناطق المدرجة. التغطية محدودة، ولغة القراءة لا تحدد مكانك.",
         "websiteLanguage": "لغات الموقع",
-        "checked": "تاريخ التحقق من المعلومات",
+        "checked": "تاريخ التحقق من صفحة الدخول",
         "verification": "تمت مراجعة المعلومات الرسمية، ولم تُختبر المواعيد أو قبول الحالات أو لغات كل خدمة. تأكد من الأهلية والإحالات والتكاليف مباشرة.",
         "notCovered": "لا نملك بعد مدخلاً تم التحقق منه لمنطقتك. يمكنك إعداد رسالة أدناه.",
         "notePrivacy": "تُمسح الملاحظات غير المحفوظة عند تحديث الصفحة أو مغادرتها. الحفظ اختياري، وقد يراها مستخدمون آخرون للمتصفح. أنت تدير النسخ التي تنزّلها.",

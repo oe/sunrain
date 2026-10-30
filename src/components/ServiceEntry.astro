@@ -1,0 +1,35 @@
+---
+import catalog from '@/data/support-services.json';
+import pathways from '@/data/support-pathways.json';
+import ExternalLinkIcon from '@/components/ExternalLinkIcon.astro';
+import { getLanguageFromPath, getLocalizedPath } from '@/lib/i18n';
+import { getSupportCopy, supportSources } from '@/lib/support';
+
+interface Props {
+  service: (typeof catalog.entries)[number];
+  interactive?: boolean;
+}
+const { service, interactive = false } = Astro.props;
+const lang = getLanguageFromPath(Astro.url.pathname);
+const c = getSupportCopy(lang);
+const p = pathways.locales[lang];
+const region = service.region === 'GB-ENG' || service.region === 'JP' ? service.region : null;
+const guide = region ? p.regions[region] : null;
+---
+<article data-service-region={service.region} hidden={interactive}>
+  <h3>{c.services[service.region].region}</h3>
+  <p>{guide ? guide.fit : c.services[service.region].instructions}</p>
+  {service.region === 'GB-ENG' && <p data-youth-service>{c.services['GB-ENG'].youthInstructions} <a href={supportSources.youthHelp.url} target="_blank" rel="noreferrer">{c.services['GB-ENG'].youthLink}</a></p>}
+  <a class="button primary" href={service.url} target="_blank" rel="noreferrer">{service.name}<ExternalLinkIcon /></a>
+  {guide && region && <details class="service-guide" data-service-guide>
+    <summary>{p.details}</summary>
+    <ol class="service-guide-steps">{guide.steps.map(step => <li>{step}</li>)}</ol>
+    <dl>{(['cost', 'language', 'hours'] as const).map(key => <div><dt>{p[key]}</dt><dd>{guide[key]}</dd></div>)}</dl>
+    <p class="muted">{p.sources}</p>
+    <ul class="service-guide-sources">{pathways.sources[region].map(source => <li><a href={source.url} target="_blank" rel="noreferrer">{source.name}<ExternalLinkIcon /></a></li>)}</ul>
+    <p class="muted">{p.checked}: <time dir="ltr" datetime={pathways.checkedAt}>{pathways.checkedAt}</time></p>
+    <a href={getLocalizedPath('/crisis/', lang)}>{c.ui.crisisDirectory}</a>
+  </details>}
+  <p class="muted">{c.flow.websiteLanguage}: <bdi>{service.websiteLanguages}</bdi>{service.region === 'JP' && <><br/>{p.translationNote}</>}<br/>{c.flow.checked}: <time dir="ltr" datetime={service.checkedAt}>{service.checkedAt}</time></p>
+  <p class="muted">{c.flow.verification}</p>
+</article>

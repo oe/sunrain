@@ -1,69 +1,149 @@
 {
-  "schemaVersion": 2,
-  "updatedAt": "2026-10-19",
+  "schemaVersion": 3,
+  "updatedAt": "2026-10-30",
   "status": "official_entry_pages_checked_not_appointments",
   "runtimeCatalog": "../../src/data/support-services.json",
   "localizedInstructions": "../../src/data/support-copy.json#/locales/*/services",
   "countryMustBeSelectedSeparatelyFromLanguage": true,
-  "verificationScope": "Official information pages and directory entry screens read; searches, appointment availability and acceptance not tested.",
+  "verificationScope": "Official entry pages read; seven links returned HTTP 200. England/Japan guidance below separately checked against official sources. No provider searches, form submission, appointment, acceptance, audio playback or provider-level costs/languages/hours tested.",
   "entries": [
     {
       "region": "GB-ENG",
       "url": "https://www.nhs.uk/nhs-services/mental-health-services/find-nhs-talking-therapies-for-anxiety-and-depression/",
       "kind": "directory",
-      "sourceCheckedAt": "2026-10-19",
+      "sourceCheckedAt": "2026-10-30",
       "verification": "official_information_or_directory_entry_page_read",
-      "appointmentTested": false
+      "appointmentTested": false,
+      "websiteLanguages": "English",
+      "linkStatus": 200,
+      "unverified": "Provider-level eligibility, language/interpretation, fees/insurance, opening hours, appointments and acceptance."
     },
     {
       "region": "US",
       "url": "https://findtreatment.gov/",
       "kind": "directory",
-      "sourceCheckedAt": "2026-10-19",
+      "sourceCheckedAt": "2026-10-30",
       "verification": "official_information_or_directory_entry_page_read",
-      "appointmentTested": false
+      "appointmentTested": false,
+      "websiteLanguages": "English / Español",
+      "linkStatus": 200,
+      "unverified": "Provider-level eligibility, language/interpretation, fees/insurance, opening hours, appointments and acceptance."
     },
     {
       "region": "JP",
       "url": "https://www.iryou.teikyouseido.mhlw.go.jp/znk-web/juminkanja/S2300/initialize",
       "kind": "directory",
-      "sourceCheckedAt": "2026-10-19",
+      "sourceCheckedAt": "2026-10-30",
       "verification": "official_information_or_directory_entry_page_read",
-      "appointmentTested": false
+      "appointmentTested": false,
+      "websiteLanguages": "日本語 / English / 简体中文 / 繁體中文 / 한국어",
+      "linkStatus": 200,
+      "unverified": "Provider-level eligibility, language/interpretation, fees/insurance, opening hours, appointments and acceptance."
     },
     {
       "region": "KR",
-      "url": "https://www.mentalhealth.go.kr/portal/health/fac/PotalHealthFacListTab1.do",
+      "url": "https://www.mentalhealth.go.kr/portal/health/fac/PotalHealthFacListTab2.do",
       "kind": "directory",
-      "sourceCheckedAt": "2026-10-19",
+      "sourceCheckedAt": "2026-10-30",
       "verification": "official_information_or_directory_entry_page_read",
-      "appointmentTested": false
+      "appointmentTested": false,
+      "websiteLanguages": "한국어",
+      "linkStatus": 200,
+      "unverified": "Provider-level eligibility, language/interpretation, fees/insurance, opening hours, appointments and acceptance."
     },
     {
       "region": "ES",
       "url": "https://regcess.mscbs.es/regcessWeb/inicioBuscarCentrosAction.do",
       "kind": "directory",
-      "sourceCheckedAt": "2026-10-19",
+      "sourceCheckedAt": "2026-10-30",
       "verification": "official_information_or_directory_entry_page_read",
-      "appointmentTested": false
+      "appointmentTested": false,
+      "websiteLanguages": "Español / English",
+      "linkStatus": 200,
+      "unverified": "Provider-level eligibility, language/interpretation, fees/insurance, opening hours, appointments and acceptance."
     },
     {
       "region": "HK",
       "url": "https://www.ha.org.hk/visitor/ha_visitor_index.asp?Content_ID=10053&Lang=CHIB5&Dimension=100&Parent_ID=10042",
       "kind": "public_service_information",
-      "sourceCheckedAt": "2026-10-19",
+      "sourceCheckedAt": "2026-10-30",
       "verification": "official_information_or_directory_entry_page_read",
-      "appointmentTested": false
+      "appointmentTested": false,
+      "websiteLanguages": "繁體中文",
+      "linkStatus": 200,
+      "unverified": "Provider-level eligibility, language/interpretation, fees/insurance, opening hours, appointments and acceptance."
     },
     {
       "region": "CN-BJ",
       "url": "https://www.pkuh6.cn/Html/Mobile/Articles/4914.html",
       "kind": "single_provider_information",
-      "sourceCheckedAt": "2026-10-19",
+      "sourceCheckedAt": "2026-10-30",
       "verification": "official_information_or_directory_entry_page_read",
-      "appointmentTested": false
+      "appointmentTested": false,
+      "websiteLanguages": "简体中文",
+      "linkStatus": 200,
+      "unverified": "Provider-level eligibility, language/interpretation, fees/insurance, opening hours, appointments and acceptance."
     }
   ],
   "uncoveredRegionBehavior": "Show the selected-language help guide and contact template. Explain the coverage gap and suggest contacting local primary care or public health services; do not infer a country from language or fabricate a provider.",
-  "externalLinkBehavior": "Open only after user action. Do not transmit answers, scores, health concerns or notes. Show the destination region and actual website language when verified; otherwise state that language availability is unverified."
+  "externalLinkBehavior": "Open only after user action. Do not transmit answers, scores, health concerns or notes. Show the destination region and actual website language when verified; otherwise state that language availability is unverified.",
+  "pathwayGuides": {
+    "GB-ENG": {
+      "checkedAt": "2026-10-30",
+      "sources": [
+        {
+          "name": "NHS · Find talking therapies (English)",
+          "url": "https://www.nhs.uk/nhs-services/mental-health-services/find-nhs-talking-therapies-for-anxiety-and-depression/"
+        },
+        {
+          "name": "NHS · Accessing mental health services (English)",
+          "url": "https://www.nhs.uk/mental-health/social-care-and-your-rights/how-to-access-mental-health-services/"
+        }
+      ],
+      "facts": "England residence; usually 18+, some services 16–17; self-referral/GP route without prior diagnosis; local route may accept people not registered with GP; NHS mental health services are free. Youth route stays visible.",
+      "limits": "Not a crisis or all-condition route. No blanket GP-registration or interpreter-availability guarantee, local waiting-time or acceptance claim."
+    },
+    "JP": {
+      "checkedAt": "2026-10-30",
+      "sources": [
+        {
+          "name": "厚生労働省 · 医療情報ネット FAQ（日本語）",
+          "url": "https://www.iryou.teikyouseido.mhlw.go.jp/znk-web/juminkanja/S3870/initialize"
+        }
+      ],
+      "facts": "Nationwide medical directory; department, location, foreign-language and reception/night/holiday filters; website English/Chinese/Korean options use automatic translation.",
+      "limits": "No booking, actual provider language, cost, insurance eligibility, ages or available slots verified; no GPS required by Sunrain."
+    }
+  },
+  "resourcesReview": {
+    "checkedAt": "2026-10-30",
+    "source": "https://www.uclahealth.org/uclamindful/guided-meditations",
+    "verified": "Old NIMH anxiety link returned 404; current anxiety-disorders page read. Ten original resource URLs checked, remaining nine returned 200 including redirects. Canonical NHS/HelpGuide/CDC/UCLA destinations adopted; NHS article explicitly adult-oriented. UCLA page lists language-specific audio and case-sensitive section IDs.",
+    "audioSections": {
+      "en": "english",
+      "zh-hans": "Mandarin",
+      "zh-hant": "Mandarin",
+      "es": "spanish",
+      "ja": "japanese",
+      "ko": "korean",
+      "hi": "Hindi",
+      "ar": "Arabic"
+    },
+    "limits": "Audio not played/downloaded/rehosted or modified. Listing language options is not native-human or clinical review. Local link labels do not translate the external documents; Chinese scripts share Mandarin audio without a region assumption."
+  },
+  "accessLimits": [
+    {
+      "urls": [
+        "https://www.samhsa.gov/find-help/locators",
+        "https://www.samhsa.gov/resource/dbhis/findtreatmentgov-spanish"
+      ],
+      "result": "403; not retried or bypassed. FindTreatment.gov itself rendered in English and Spanish independently."
+    },
+    {
+      "url": "https://www.england.nhs.uk/mental-health/adults/nhs-talking-therapies/",
+      "result": "Robot verification; not bypassed. NHS.uk source pages used for limited route/fee guidance."
+    }
+  ],
+  "reviewMethod": "AI contextual source and eight-language consistency review plus software/rendered QA; not native-human, clinician or clinical-effectiveness review.",
+  "publication": "Release follows source review, required CI, normal pull-request merge and automatic deployment; the earlier local verification snapshot does not establish publication."
 }
