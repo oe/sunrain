@@ -11,16 +11,17 @@ The job installs the locked dependencies, audits production dependencies, runs
 unit tests, checks types, builds the site once and verifies its source identity.
 Playwright tests that production build using Chromium only:
 
-- Desktop runs the complete 71-case regression suite, including all eight
+- Desktop runs the complete 74-case regression suite, including all eight
   languages, screening edge cases, privacy, keyboard access, narrow layouts,
   audio controls and the real-time audio loop check.
-- Mobile runs thirteen cases tagged `@smoke`: English and Arabic check-in
+- Mobile runs fourteen cases tagged `@smoke`: English and Arabic check-in
   and screening journeys, narrow RTL keyboard controls, 320px layouts across all
   eight languages, sound mixing/return/stop controls, and the multilingual
   topic-reading path, plus grouped-question navigation and support persistence, and chosen-step
   continuity through edits, note controls and interrupted returns. Worry cases
   cover optional choices, repeated clicks, plan edits, explicit note controls,
   interrupted returns and onward support in English and Arabic.
+  England/Japan guidance adds localized keyboard, return/reset and external-handoff checks. Resource language/adult labels and no-JavaScript guidance are checked on desktop.
   The other desktop cases are not repeated on mobile.
 
 Tests remain serial within the job to avoid contention in the real-time audio
@@ -36,8 +37,8 @@ not collide, and the reusable workflow returns that name to deployment.
 
 Before a release or when changing browser-sensitive code, manually run
 **Validate Sunrain**, select the desired branch and choose
-`browser-suite: compatibility`. This runs twelve support-flow smoke cases on each
-of desktop Firefox, desktop WebKit and mobile WebKit (36 cases) in one job. It
+`browser-suite: compatibility`. This runs thirteen support-flow smoke cases on each
+of desktop Firefox, desktop WebKit and mobile WebKit (39 cases) in one job. It
 installs only Firefox and WebKit and does not publish to Pages.
 
 For a local run:
@@ -67,5 +68,5 @@ for 14 days. Inspect this artifact on a failed run, then rerun the single job.
 
 The previous PR run [39288950541](https://github.com/oe/sunrain/actions/runs/39288950541)
 took 15m51s and repeated the suite across five configurations (248 cases).
-The simplified daily suite has 84 cases with no planned skips. Its actual
+The simplified daily suite has 88 cases with no planned skips. Its actual
 GitHub Actions runtime is recorded on the PR and varies with runner availability.

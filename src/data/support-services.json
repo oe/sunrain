@@ -1,55 +1,61 @@
 {
-  "checkedAt": "2026-10-19",
-  "verificationScope": "Official information pages and directory entry screens read; searches, appointment availability and acceptance not tested.",
+  "verificationScope": "Entry pages read on each entry date; individual eligibility, service languages, costs, hours, appointments and acceptance are not verified. Separate England/Japan guidance cites its own sources.",
   "entries": [
     {
       "region": "GB-ENG",
       "name": "NHS · Talking therapies",
       "url": "https://www.nhs.uk/nhs-services/mental-health-services/find-nhs-talking-therapies-for-anxiety-and-depression/",
       "websiteLanguages": "English",
-      "kind": "directory"
+      "kind": "directory",
+      "checkedAt": "2026-10-30"
     },
     {
       "region": "US",
       "name": "SAMHSA · FindTreatment.gov",
       "url": "https://findtreatment.gov/",
-      "websiteLanguages": "English",
-      "kind": "directory"
+      "websiteLanguages": "English / Español",
+      "kind": "directory",
+      "checkedAt": "2026-10-30"
     },
     {
       "region": "JP",
       "name": "厚生労働省 · 医療情報ネット（ナビイ）",
       "url": "https://www.iryou.teikyouseido.mhlw.go.jp/znk-web/juminkanja/S2300/initialize",
       "websiteLanguages": "日本語 / English / 简体中文 / 繁體中文 / 한국어",
-      "kind": "directory"
+      "kind": "directory",
+      "checkedAt": "2026-10-30"
     },
     {
       "region": "KR",
       "name": "국립정신건강센터 · 국가정신건강정보포털",
-      "url": "https://www.mentalhealth.go.kr/portal/health/fac/PotalHealthFacListTab1.do",
+      "url": "https://www.mentalhealth.go.kr/portal/health/fac/PotalHealthFacListTab2.do",
       "websiteLanguages": "한국어",
-      "kind": "directory"
+      "kind": "directory",
+      "checkedAt": "2026-10-30"
     },
     {
       "region": "ES",
       "name": "Ministerio de Sanidad · REGCESS",
       "url": "https://regcess.mscbs.es/regcessWeb/inicioBuscarCentrosAction.do",
       "websiteLanguages": "Español / English",
-      "kind": "directory"
+      "kind": "directory",
+      "checkedAt": "2026-10-30"
     },
     {
       "region": "HK",
       "name": "醫院管理局 · 專科門診",
       "url": "https://www.ha.org.hk/visitor/ha_visitor_index.asp?Content_ID=10053&Lang=CHIB5&Dimension=100&Parent_ID=10042",
       "websiteLanguages": "繁體中文",
-      "kind": "public_service_information"
+      "kind": "public_service_information",
+      "checkedAt": "2026-10-30"
     },
     {
       "region": "CN-BJ",
       "name": "北京大学第六医院 · 预约挂号指引",
       "url": "https://www.pkuh6.cn/Html/Mobile/Articles/4914.html",
       "websiteLanguages": "简体中文",
-      "kind": "single_provider_information"
+      "kind": "single_provider_information",
+      "checkedAt": "2026-10-30"
     }
   ]
 }

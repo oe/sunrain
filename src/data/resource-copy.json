@@ -1,0 +1,138 @@
+{
+  "en": {
+    "english": "English resource",
+    "audio": "English audio options",
+    "adult": "Adult information",
+    "titles": {
+      "adaa": "ADAA: Understanding anxiety",
+      "nimhAnxiety": "NIMH: Anxiety disorders",
+      "helpguide": "HelpGuide: Anxiety and panic",
+      "nimhDepression": "NIMH: Depression",
+      "nhsDepression": "NHS: Depression in adults",
+      "apa": "APA: Understanding depression",
+      "sleepFoundation": "Everyday sleep habits",
+      "cdc": "CDC: About sleep",
+      "mindful": "Getting started with mindfulness",
+      "ucla": "UCLA: Guided meditations"
+    }
+  },
+  "zh-hans": {
+    "english": "英语资料",
+    "audio": "普通话音频选项",
+    "adult": "面向成年人",
+    "titles": {
+      "adaa": "ADAA：了解焦虑",
+      "nimhAnxiety": "NIMH：焦虑障碍",
+      "helpguide": "HelpGuide：焦虑与惊恐",
+      "nimhDepression": "NIMH：了解抑郁",
+      "nhsDepression": "NHS：成年人的抑郁",
+      "apa": "APA：认识抑郁症",
+      "sleepFoundation": "改善日常睡眠习惯",
+      "cdc": "CDC：睡眠基础知识",
+      "mindful": "初次尝试正念",
+      "ucla": "UCLA：跟随音频练习冥想"
+    }
+  },
+  "zh-hant": {
+    "english": "英語資料",
+    "audio": "華語音訊選項",
+    "adult": "成人資訊",
+    "titles": {
+      "adaa": "ADAA：認識焦慮",
+      "nimhAnxiety": "NIMH：焦慮症",
+      "helpguide": "HelpGuide：焦慮與恐慌",
+      "nimhDepression": "NIMH：認識憂鬱",
+      "nhsDepression": "NHS：成人的憂鬱症",
+      "apa": "APA：了解憂鬱症",
+      "sleepFoundation": "照顧日常睡眠習慣",
+      "cdc": "CDC：睡眠基本知識",
+      "mindful": "開始嘗試正念",
+      "ucla": "UCLA：跟著音訊練習靜心"
+    }
+  },
+  "es": {
+    "english": "Recurso en inglés",
+    "audio": "Opciones de audio en español",
+    "adult": "Información para adultos",
+    "titles": {
+      "adaa": "ADAA: Comprender la ansiedad",
+      "nimhAnxiety": "NIMH: Trastornos de ansiedad",
+      "helpguide": "HelpGuide: Ansiedad y pánico",
+      "nimhDepression": "NIMH: Depresión",
+      "nhsDepression": "NHS: Depresión en adultos",
+      "apa": "APA: Comprender la depresión",
+      "sleepFoundation": "Hábitos cotidianos de sueño",
+      "cdc": "CDC: Conocer el sueño",
+      "mindful": "Primeros pasos con la atención plena",
+      "ucla": "UCLA: Meditaciones guiadas"
+    }
+  },
+  "ja": {
+    "english": "英語の資料",
+    "audio": "日本語の音声を選べます",
+    "adult": "成人向けの情報",
+    "titles": {
+      "adaa": "ADAA：不安について知る",
+      "nimhAnxiety": "NIMH：不安症について",
+      "helpguide": "HelpGuide：不安とパニック",
+      "nimhDepression": "NIMH：うつ病について",
+      "nhsDepression": "NHS：成人のうつ病",
+      "apa": "APA：うつ病を理解する",
+      "sleepFoundation": "毎日の睡眠習慣",
+      "cdc": "CDC：睡眠の基礎知識",
+      "mindful": "マインドフルネスの始め方",
+      "ucla": "UCLA：音声ガイドで行う瞑想"
+    }
+  },
+  "ko": {
+    "english": "영어 자료",
+    "audio": "한국어 오디오 선택 가능",
+    "adult": "성인 대상 정보",
+    "titles": {
+      "adaa": "ADAA: 불안 이해하기",
+      "nimhAnxiety": "NIMH: 불안장애 알아보기",
+      "helpguide": "HelpGuide: 불안과 공황",
+      "nimhDepression": "NIMH: 우울증 알아보기",
+      "nhsDepression": "NHS: 성인의 우울증",
+      "apa": "APA: 우울증 이해하기",
+      "sleepFoundation": "일상 속 수면 습관",
+      "cdc": "CDC: 수면의 기본",
+      "mindful": "마음챙김 처음 시작하기",
+      "ucla": "UCLA: 안내를 따라 하는 명상"
+    }
+  },
+  "hi": {
+    "english": "अंग्रेज़ी में सामग्री",
+    "audio": "हिंदी ऑडियो के विकल्प",
+    "adult": "वयस्कों के लिए जानकारी",
+    "titles": {
+      "adaa": "ADAA: चिंता को समझें",
+      "nimhAnxiety": "NIMH: चिंता विकार",
+      "helpguide": "HelpGuide: चिंता और घबराहट",
+      "nimhDepression": "NIMH: अवसाद",
+      "nhsDepression": "NHS: वयस्कों में अवसाद",
+      "apa": "APA: अवसाद को समझें",
+      "sleepFoundation": "रोज़मर्रा की नींद की आदतें",
+      "cdc": "CDC: नींद की बुनियादी बातें",
+      "mindful": "सचेतन अभ्यास की शुरुआत",
+      "ucla": "UCLA: निर्देशित ध्यान अभ्यास"
+    }
+  },
+  "ar": {
+    "english": "مصدر بالإنجليزية",
+    "audio": "خيارات صوتية بالعربية",
+    "adult": "معلومات للبالغين",
+    "titles": {
+      "adaa": "ADAA: فهم القلق",
+      "nimhAnxiety": "NIMH: اضطرابات القلق",
+      "helpguide": "HelpGuide: القلق والهلع",
+      "nimhDepression": "NIMH: الاكتئاب",
+      "nhsDepression": "NHS: الاكتئاب لدى البالغين",
+      "apa": "APA: فهم الاكتئاب",
+      "sleepFoundation": "عادات النوم اليومية",
+      "cdc": "CDC: أساسيات النوم",
+      "mindful": "خطوات أولى في اليقظة الذهنية",
+      "ucla": "UCLA: تأملات بإرشاد صوتي"
+    }
+  }
+}

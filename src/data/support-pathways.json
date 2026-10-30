@@ -1,0 +1,287 @@
+{
+  "checkedAt": "2026-10-30",
+  "sources": {
+    "GB-ENG": [
+      {
+        "name": "NHS · Find talking therapies (English)",
+        "url": "https://www.nhs.uk/nhs-services/mental-health-services/find-nhs-talking-therapies-for-anxiety-and-depression/"
+      },
+      {
+        "name": "NHS · Accessing mental health services (English)",
+        "url": "https://www.nhs.uk/mental-health/social-care-and-your-rights/how-to-access-mental-health-services/"
+      }
+    ],
+    "JP": [
+      {
+        "name": "厚生労働省 · 医療情報ネット FAQ（日本語）",
+        "url": "https://www.iryou.teikyouseido.mhlw.go.jp/znk-web/juminkanja/S3870/initialize"
+      }
+    ]
+  },
+  "locales": {
+    "en": {
+      "details": "How to use this route",
+      "cost": "Costs",
+      "language": "Languages for care",
+      "hours": "Contact hours and waiting",
+      "sources": "Official guidance",
+      "checked": "Guidance checked",
+      "regions": {
+        "GB-ENG": {
+          "fit": "Routine anxiety/depression support for England residents, usually aged 18 or over; some local services accept ages 16–17.",
+          "steps": [
+            "Use the finder for your GP surgery’s area. If you are not registered with a GP, check the local talking-therapies website: some services accept self-referrals without GP registration.",
+            "You can refer yourself or ask your GP to refer you. You do not need a diagnosis first; the local service checks whether it can meet your needs. If you are unsure which service fits, ask a GP about assessment.",
+            "Ask how to apply and when to expect a reply. Confirm language support and what to do while waiting; opening the directory does not submit an application."
+          ],
+          "cost": "NHS mental health services are free. Confirm that the local NHS service is appropriate for you; a private service linked elsewhere may charge.",
+          "language": "The finder is in English. Ask the local service about care in your language or interpreting; this page has not verified availability.",
+          "hours": "Contact hours and waiting times depend on the local service. If your needs change while waiting, ask your GP or care team for advice; use urgent help for immediate danger."
+        },
+        "JP": {
+          "fit": "A Japan-wide directory of medical institutions, not an appointment service. Each clinic sets its own age, referral and booking requirements.",
+          "steps": [
+            "Choose your prefecture or municipality and a department such as psychiatry (精神科). You can choose an area without sharing GPS location.",
+            "Under じっくり探す, use 外国語 to look for a care language. Other Languages changes the website through automatic translation; it does not confirm the clinic’s care language.",
+            "Contact the clinic using its listed details. Ask about a first appointment, referral requirements, insurance, fees and language support before going."
+          ],
+          "cost": "Fees and insurance arrangements vary by institution and situation. The directory does not confirm what you would pay.",
+          "language": "The website offers Japanese and automatic translation into English, Chinese and Korean. Confirm the actual care language directly with the clinic.",
+          "hours": "The directory can filter by reception hours and night/holiday services. A listing does not confirm an available appointment; check directly before travelling."
+        }
+      },
+      "translationNote": "Non-Japanese versions use automatic translation."
+    },
+    "zh-hans": {
+      "details": "这条求助路径怎么走",
+      "cost": "费用",
+      "language": "接诊语言",
+      "hours": "联系时间与等候",
+      "sources": "官方说明",
+      "checked": "指引核对日期",
+      "regions": {
+        "GB-ENG": {
+          "fit": "英格兰居民的非紧急焦虑、抑郁服务：通常为18岁及以上；部分地区接受16—17岁。",
+          "steps": [
+            "按自己注册的全科诊所（GP）所在地查找。还没注册GP时，可查看当地谈话治疗服务网站；部分服务也接受未注册者自行申请。",
+            "可以自行申请（self-referral），也可以请GP转介。不必先取得诊断，服务方会确认是否适合你的需要。 不确定该找哪种服务时，可先向GP咨询评估。",
+            "询问申请方式、多久会收到回复，以及语言支持和等候期间怎么办。打开目录不会替你提交申请。"
+          ],
+          "cost": "NHS心理健康服务免费；请先确认当地NHS服务是否适合自己。其他页面列出的私人服务可能收费。",
+          "language": "目录为英语。可向当地服务询问所需语言或传译安排；本站未核实具体能否提供。",
+          "hours": "联系时间和轮候情况由当地服务决定。等候期间情况变化时，可向GP或原照护团队咨询；面临立即危险时使用紧急求助。"
+        },
+        "JP": {
+          "fit": "这是日本全国的医疗机构目录，不直接预约。年龄、转介和挂号条件由各机构决定。",
+          "steps": [
+            "先选都道府县或市区町村，再选精神科等科室。可以手动选地区，不必提供GPS位置。",
+            "在「じっくり探す」中选「外国語」，查找接诊语言。「Other Languages」只对网页进行自动翻译，不代表机构能用该语言接诊。",
+            "用目录中的联系方式联系机构，询问初诊、转介信、保险、费用和语言支持，再安排前往。"
+          ],
+          "cost": "费用和保险安排随机构与个人情况而异，目录不能确认你需要支付多少。",
+          "language": "网页提供日语及英语、中文、韩语自动翻译。实际接诊语言仍需直接向机构确认。",
+          "hours": "目录可按接诊时间及夜间、节假日服务筛选。列出机构不代表有可预约名额，出发前仍需确认。"
+        }
+      },
+      "translationNote": "非日语网页为自动翻译。"
+    },
+    "zh-hant": {
+      "details": "這條求助途徑怎麼走",
+      "cost": "費用",
+      "language": "看診語言",
+      "hours": "聯絡時間與等候",
+      "sources": "官方說明",
+      "checked": "指引核對日期",
+      "regions": {
+        "GB-ENG": {
+          "fit": "英格蘭居民的非緊急焦慮、憂鬱服務，通常為18歲以上；部分地區接受16—17歲。",
+          "steps": [
+            "依自己登記的家庭醫師診所（GP）所在地查找。尚未登記GP時，可查看當地談話治療服務網站；部分服務也接受未登記者自行申請。",
+            "可自行申請（self-referral），或請GP轉介。不必先取得診斷，服務單位會確認是否符合你的需要。 不確定該找哪種服務時，可先向GP諮詢評估。",
+            "詢問申請方式、多久會收到回覆，以及語言協助和等候期間的安排。開啟目錄不會替你送出申請。"
+          ],
+          "cost": "NHS心理健康服務免費；請先確認當地NHS服務是否適合自己。其他頁面列出的私人服務可能收費。",
+          "language": "目錄為英語。可向當地服務詢問所需語言或傳譯安排；本站未核實能否提供。",
+          "hours": "聯絡時間及等候情況依當地服務而定。等候期間情況改變時，可向GP或原照護團隊諮詢；有立即危險時使用緊急求助。"
+        },
+        "JP": {
+          "fit": "這是日本全國的醫療機構目錄，不直接預約。年齡、轉介及掛號條件依各機構規定。",
+          "steps": [
+            "先選都道府縣或市區町村，再選精神科等科別。可以手動選地區，不必提供GPS位置。",
+            "在「じっくり探す」中選「外国語」，查找看診語言。「Other Languages」只會自動翻譯網頁，不代表機構能以該語言看診。",
+            "使用目錄中的聯絡方式詢問初診、轉介信、保險、費用與語言協助，再安排前往。"
+          ],
+          "cost": "費用及保險安排依機構與個人情況而異，目錄無法確認你需要支付多少。",
+          "language": "網頁提供日語及英語、中文、韓語自動翻譯。實際看診語言仍須直接向機構確認。",
+          "hours": "目錄可依看診時間及夜間、假日服務篩選。列出機構不代表有可預約名額，出發前仍須確認。"
+        }
+      },
+      "translationNote": "非日語網頁為自動翻譯。"
+    },
+    "es": {
+      "details": "Cómo usar esta vía de ayuda",
+      "cost": "Coste",
+      "language": "Idioma de atención",
+      "hours": "Horarios y espera",
+      "sources": "Información oficial",
+      "checked": "Guía revisada",
+      "regions": {
+        "GB-ENG": {
+          "fit": "Apoyo no urgente para ansiedad y depresión en residentes en Inglaterra: normalmente desde los 18 años, o 16–17 en algunos servicios locales.",
+          "steps": [
+            "Busca por la zona de tu consulta de medicina de familia (GP). Si no estás registrado, consulta la web local de talking therapies: algunos servicios admiten solicitudes sin registro en un GP.",
+            "Puedes solicitarlo por tu cuenta (self-referral) o pedir una derivación al GP. No necesitas un diagnóstico previo; el servicio valorará si puede atender tus necesidades. Si no sabes qué servicio es adecuado, consulta al GP sobre una evaluación.",
+            "Pregunta cómo solicitarlo, cuándo recibirás respuesta y qué apoyo lingüístico o durante la espera hay. Abrir el directorio no envía una solicitud."
+          ],
+          "cost": "Los servicios de salud mental del NHS son gratuitos. Confirma que el servicio local sea adecuado para ti; otros servicios privados pueden cobrar.",
+          "language": "El buscador está en inglés. Pregunta al servicio por atención en tu idioma o interpretación; no hemos comprobado su disponibilidad.",
+          "hours": "Los horarios de contacto y la espera dependen de cada servicio. Si tu situación cambia, consulta al GP o a tu equipo; ante peligro inmediato, busca ayuda urgente."
+        },
+        "JP": {
+          "fit": "Directorio de centros médicos de todo Japón; no reserva citas. Cada centro fija sus requisitos de edad, derivación y reserva.",
+          "steps": [
+            "Elige la prefectura o el municipio y una especialidad, como psiquiatría (精神科). Puedes elegir la zona sin compartir la ubicación GPS.",
+            "En じっくり探す, usa 外国語 para buscar un idioma de atención. Other Languages traduce automáticamente la web; no confirma el idioma de la consulta.",
+            "Contacta con el centro mediante los datos del directorio. Antes de ir, pregunta por la primera consulta, derivación, seguro, coste e idioma."
+          ],
+          "cost": "El coste y la cobertura dependen del centro y de tu situación. El directorio no confirma cuánto pagarías.",
+          "language": "La web ofrece japonés y traducción automática al inglés, chino y coreano. Confirma el idioma de atención directamente con el centro.",
+          "hours": "Se puede filtrar por horario de recepción y servicios nocturnos o festivos. Figurar en la lista no confirma una cita disponible; consulta antes de desplazarte."
+        }
+      },
+      "translationNote": "Las versiones no japonesas usan traducción automática."
+    },
+    "ja": {
+      "details": "相談・受診までの進め方",
+      "cost": "費用",
+      "language": "診療時の対応言語",
+      "hours": "連絡できる時間と待ち時間",
+      "sources": "公式の案内",
+      "checked": "案内の確認日",
+      "regions": {
+        "GB-ENG": {
+          "fit": "イングランド在住の、通常18歳以上の方向けの不安・抑うつの支援です。一部地域は16～17歳も対象です。緊急対応の窓口ではありません。",
+          "steps": [
+            "登録している家庭医（GP）の地域から探します。GP未登録の場合は、地域のtalking therapiesのサイトで、登録なしの申込みが可能か確認してください。",
+            "本人からの申込み（self-referral）かGPの紹介で相談できます。診断を先に受ける必要はなく、窓口が支援の適合性を確認します。 どの支援が合うか迷う場合は、GPに診察や相談先を尋ねられます。",
+            "申込み方、返答の目安、通訳や待機中の支援を尋ねます。検索サイトを開くだけでは申込みは送信されません。"
+          ],
+          "cost": "NHSのメンタルヘルスサービスは無料です。地域のNHSサービスの対象になるか確認してください。別途案内される民間の支援は有料の場合があります。",
+          "language": "検索サイトは英語です。希望する言語での相談や通訳について地域の窓口に確認してください。提供状況は当サイトでは未確認です。",
+          "hours": "連絡時間や待ち時間は窓口によって異なります。待機中に状態が変わったらGPや治療チームに相談し、差し迫った危険があれば緊急の助けを求めてください。"
+        },
+        "JP": {
+          "fit": "全国の医療機関を探すためのサイトです。予約はできません。年齢、紹介状、予約の条件は各医療機関で異なります。",
+          "steps": [
+            "都道府県や市区町村、精神科などの診療科を選びます。GPSを使わず、地域を手動で選べます。",
+            "「じっくり探す」の「外国語」で診療時の対応言語を調べられます。「Other Languages」はサイトの自動翻訳で、診療の言語とは別です。",
+            "掲載された連絡先で、初診の受け付け、紹介状、保険、費用、対応言語を確認してから受診を検討してください。"
+          ],
+          "cost": "費用や保険の扱いは医療機関や状況によって異なります。検索結果だけでは支払額は確定しません。",
+          "language": "サイトは日本語のほか、英語・中国語・韓国語の自動翻訳に対応しています。実際の診療言語は医療機関に確認してください。",
+          "hours": "受付時間や休日・夜間対応で絞り込めます。掲載されていても予約枠があるとは限らないため、出かける前に確認してください。"
+        }
+      },
+      "translationNote": "日本語以外の表示は自動翻訳です。"
+    },
+    "ko": {
+      "details": "상담·진료로 이어지는 방법",
+      "cost": "비용",
+      "language": "진료 언어",
+      "hours": "연락 시간과 대기",
+      "sources": "공식 안내",
+      "checked": "안내 확인일",
+      "regions": {
+        "GB-ENG": {
+          "fit": "잉글랜드 거주자를 위한 불안·우울 지원입니다. 보통 18세 이상이며 일부 지역은 16~17세도 이용할 수 있습니다. 긴급 진료 창구는 아닙니다.",
+          "steps": [
+            "등록한 주치의 진료소(GP)의 지역으로 찾으세요. GP에 등록하지 않았다면 지역 talking therapies 웹사이트에서 등록 없이 신청할 수 있는지 확인하세요.",
+            "직접 신청(self-referral)하거나 GP에게 의뢰를 요청할 수 있습니다. 진단을 먼저 받을 필요는 없으며 서비스가 필요한 지원에 맞는지 확인합니다. 어떤 서비스가 맞을지 모르겠다면 GP에게 평가나 적절한 진료 경로를 물어보세요.",
+            "신청 방법, 답변 시점, 통역과 대기 중 지원을 물어보세요. 검색 사이트를 여는 것만으로 신청이 전송되지는 않습니다."
+          ],
+          "cost": "NHS 정신건강 서비스는 무료입니다. 지역 NHS 서비스의 대상에 해당하는지 확인하세요. 다른 곳에서 안내하는 민간 서비스는 비용이 들 수 있습니다.",
+          "language": "검색 사이트는 영어입니다. 원하는 언어의 진료나 통역은 지역 서비스에 문의하세요. 실제 제공 여부는 이 사이트에서 확인하지 않았습니다.",
+          "hours": "연락 시간과 대기는 지역 서비스에 따라 다릅니다. 기다리는 동안 상태가 달라지면 GP나 치료진과 상의하고, 즉각적인 위험이 있으면 긴급 도움을 요청하세요."
+        },
+        "JP": {
+          "fit": "일본 전국의 의료기관을 찾는 사이트로, 예약을 해 주지는 않습니다. 연령·의뢰서·예약 조건은 기관마다 다릅니다.",
+          "steps": [
+            "도도부현이나 시구정촌, 정신과(精神科) 같은 진료과를 고르세요. GPS 위치를 공유하지 않고 지역을 직접 고를 수 있습니다.",
+            "じっくり探す의 外国語에서 진료 언어를 찾아보세요. Other Languages는 웹사이트 자동 번역이며 실제 진료 언어를 확인해 주지는 않습니다.",
+            "기관에 표시된 연락처로 초진 접수, 의뢰서, 보험, 비용과 진료 언어를 확인한 뒤 방문을 준비하세요."
+          ],
+          "cost": "비용과 보험 적용은 기관 및 개인 상황에 따라 다릅니다. 검색 결과만으로 본인 부담액을 확인할 수는 없습니다.",
+          "language": "일본어와 영어·중국어·한국어 자동 번역을 제공합니다. 실제 진료 언어는 의료기관에 직접 확인하세요.",
+          "hours": "접수 시간이나 야간·휴일 진료로 검색할 수 있습니다. 목록에 있어도 예약 가능한 자리가 있다는 뜻은 아니므로 방문 전에 확인하세요."
+        }
+      },
+      "translationNote": "일본어 외의 화면은 자동 번역입니다."
+    },
+    "hi": {
+      "details": "इस रास्ते से मदद कैसे लें",
+      "cost": "खर्च",
+      "language": "देखभाल की भाषा",
+      "hours": "संपर्क का समय और इंतज़ार",
+      "sources": "आधिकारिक जानकारी",
+      "checked": "जानकारी जाँचने की तारीख",
+      "regions": {
+        "GB-ENG": {
+          "fit": "इंग्लैंड के निवासियों के लिए गैर-आपात चिंता और अवसाद सहायता: आम तौर पर 18 वर्ष या अधिक, कुछ स्थानीय सेवाओं में 16–17 वर्ष भी।",
+          "steps": [
+            "जिस पारिवारिक डॉक्टर की क्लिनिक (GP) में पंजीकरण है, उसके क्षेत्र से खोजें। पंजीकरण न हो तो स्थानीय talking therapies वेबसाइट पर देखें कि सीधे आवेदन हो सकता है या नहीं।",
+            "सीधे आवेदन (self-referral) या GP से रेफ़रल माँग सकते हैं। पहले से निदान होना ज़रूरी नहीं; सेवा देखेगी कि वह आपकी ज़रूरत के अनुकूल है या नहीं। सही सेवा को लेकर संदेह हो तो GP से आकलन के बारे में पूछें।",
+            "आवेदन, जवाब मिलने के समय, भाषा की मदद और इंतज़ार के दौरान सहायता के बारे में पूछें। निर्देशिका खोलने से आवेदन नहीं भेजा जाता।"
+          ],
+          "cost": "NHS की मानसिक स्वास्थ्य सेवाएँ नि:शुल्क हैं। स्थानीय NHS सेवा की पात्रता की पुष्टि करें; अलग निजी सेवाओं में शुल्क हो सकता है।",
+          "language": "खोज वेबसाइट अंग्रेज़ी में है। अपनी भाषा में देखभाल या दुभाषिए के बारे में स्थानीय सेवा से पूछें; उपलब्धता यहाँ सत्यापित नहीं है।",
+          "hours": "संपर्क का समय और इंतज़ार स्थानीय सेवा पर निर्भर हैं। स्थिति बदले तो GP या देखभाल टीम से पूछें; तत्काल खतरे में आपात मदद लें।"
+        },
+        "JP": {
+          "fit": "जापान भर के चिकित्सा संस्थानों की निर्देशिका है, अपॉइंटमेंट बुकिंग सेवा नहीं। उम्र, रेफ़रल और बुकिंग की शर्तें हर संस्थान की अलग हैं।",
+          "steps": [
+            "प्रान्त या नगरपालिका और मनोरोग (精神科) जैसा विभाग चुनें। GPS स्थान साझा किए बिना क्षेत्र चुन सकते हैं।",
+            "じっくり探す के भीतर 外国語 से देखभाल की भाषा खोजें। Other Languages वेबसाइट का स्वचालित अनुवाद है; इससे क्लिनिक की भाषा की पुष्टि नहीं होती।",
+            "सूची में दिए संपर्क से पहली मुलाकात, रेफ़रल, बीमा, खर्च और भाषा की सहायता पूछें, फिर जाने की तैयारी करें।"
+          ],
+          "cost": "खर्च और बीमा संस्थान व आपकी स्थिति पर निर्भर हैं। निर्देशिका यह तय नहीं करती कि आपको कितना देना होगा।",
+          "language": "वेबसाइट जापानी तथा अंग्रेज़ी, चीनी और कोरियाई में स्वचालित अनुवाद देती है। वास्तविक देखभाल की भाषा क्लिनिक से जाँचें।",
+          "hours": "रिसेप्शन के समय, रात या छुट्टी की सेवाओं से छाँट सकते हैं। सूची में होना खाली अपॉइंटमेंट की पुष्टि नहीं है; जाने से पहले पूछें।"
+        }
+      },
+      "translationNote": "जापानी के अलावा अन्य भाषाओं में स्वचालित अनुवाद है।"
+    },
+    "ar": {
+      "details": "كيف تستخدم هذا المسار",
+      "cost": "التكلفة",
+      "language": "لغة الرعاية",
+      "hours": "أوقات التواصل والانتظار",
+      "sources": "الإرشادات الرسمية",
+      "checked": "تاريخ التحقق من الإرشادات",
+      "regions": {
+        "GB-ENG": {
+          "fit": "دعم غير عاجل للقلق والاكتئاب للمقيمين في إنجلترا، عادة من عمر 18 عاماً؛ تقبل بعض الخدمات المحلية عمر 16–17.",
+          "steps": [
+            "ابحث بحسب منطقة عيادة طبيبك العام (GP). إن لم تكن مسجلاً، فتحقق من موقع talking therapies المحلي؛ قد تقبل بعض الخدمات طلباً مباشراً دون تسجيل لدى طبيب عام.",
+            "يمكن التقديم بنفسك (self-referral) أو طلب إحالة من الطبيب العام. لا يلزم تشخيص مسبق؛ تتأكد الخدمة من ملاءمتها لاحتياجاتك. إن لم تعرف الخدمة المناسبة، فاسأل الطبيب العام عن التقييم.",
+            "اسأل عن طريقة التقديم وموعد الرد والمساعدة اللغوية والدعم أثناء الانتظار. فتح الدليل لا يرسل طلباً بالنيابة عنك."
+          ],
+          "cost": "خدمات الصحة النفسية في NHS مجانية. تأكد من ملاءمة الخدمة المحلية لك؛ قد تتقاضى الخدمات الخاصة المذكورة في مواقع أخرى رسوماً.",
+          "language": "الباحث باللغة الإنجليزية. اسأل الخدمة المحلية عن الرعاية بلغتك أو الترجمة الشفوية؛ لم نتحقق من توفرها فعلياً.",
+          "hours": "تختلف أوقات التواصل والانتظار حسب الخدمة. إن تغيرت حالتك أثناء الانتظار، اسأل طبيبك العام أو فريق الرعاية؛ وعند خطر فوري اطلب مساعدة عاجلة."
+        },
+        "JP": {
+          "fit": "دليل للمؤسسات الطبية في أنحاء اليابان، وليس خدمة لحجز المواعيد. تختلف شروط العمر والإحالة والحجز حسب المؤسسة.",
+          "steps": [
+            "اختر المحافظة أو البلدية وتخصصاً مثل الطب النفسي (精神科). يمكن اختيار المنطقة دون مشاركة موقع GPS.",
+            "ضمن じっくり探す، استخدم 外国語 للبحث عن لغة الرعاية. يترجم Other Languages الموقع آلياً، ولا يؤكد لغة العيادة الفعلية.",
+            "استخدم بيانات العيادة للاستفسار عن الزيارة الأولى والإحالة والتأمين والتكلفة واللغة قبل الذهاب."
+          ],
+          "cost": "تختلف التكلفة والتغطية التأمينية حسب المؤسسة والحالة. لا يحدد الدليل المبلغ الذي ستدفعه.",
+          "language": "الموقع باليابانية مع ترجمة آلية إلى الإنجليزية والصينية والكورية. تأكد من لغة الرعاية مباشرة مع العيادة.",
+          "hours": "يمكن التصفية حسب أوقات الاستقبال وخدمات الليل والعطلات. ظهور المؤسسة لا يؤكد توفر موعد؛ تواصل معها قبل الانتقال إليها."
+        }
+      },
+      "translationNote": "النسخ غير اليابانية مترجمة آلياً."
+    }
+  }
+}

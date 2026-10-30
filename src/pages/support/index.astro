@@ -15,6 +15,6 @@ const p=getPlatformCopy(lang);
   <SupportServices />
   <details id="contact-preparation" class="contact-preparation"><summary>{p.contact}</summary><PrivateNotes kind="appointment" labels={c.seekHelp.summaryLabels} template={c.seekHelp.contactTemplate} /></details>
   <details><summary>{p.supportDetails}</summary><p>{p.boundary}</p><p class="muted" data-youth-support>{c.ui.younger}</p></details>
-  <details class="support-card"><summary>{c.flow.bookingChecklist}</summary><p>{c.seekHelp.provider}</p><ol>{c.seekHelp.steps.map(step=><li>{step}</li>)}</ol><p>{c.seekHelp.cost}</p><p>{c.seekHelp.waiting}</p><p>{c.seekHelp.existingCare}</p></details>
+  <details class="support-card" data-booking-checklist><summary>{c.flow.bookingChecklist}</summary><p>{c.seekHelp.provider}</p><ol>{c.seekHelp.steps.map(step=><li>{step}</li>)}</ol><p>{c.seekHelp.cost}</p><p>{c.seekHelp.waiting}</p><p>{c.seekHelp.existingCare}</p></details>
   <ContentSources sources={['conversation','help','youthHelp','teenHelp']} />
 </SupportLayout>

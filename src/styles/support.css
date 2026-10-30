@@ -103,6 +103,16 @@
 .platform .support-shell .service-picker{background:var(--platform-soft);border:0}
 .platform .support-shell .service-picker h2{font-size:22px}
 .platform .support-shell .service-picker .muted{font-size:15px}
+.platform .service-guide-steps{padding-inline-start:24px}
+.platform .service-guide-steps li{margin-block:14px}
+.platform .service-guide dl>div{margin-block:20px}
+.platform .service-guide dt{font-weight:650;margin-bottom:6px}
+.platform .service-guide dd{margin:0;overflow-wrap:anywhere}
+.platform .service-guide-sources{list-style:none;padding:0}
+.platform .service-guide-sources a{display:inline-flex;align-items:center;gap:8px;min-height:44px;overflow-wrap:anywhere}
+.platform .service-guide-sources svg{flex-shrink:0}
+.platform .service-picker:lang(ko){word-break:keep-all;overflow-wrap:anywhere}
+.platform .service-picker noscript article{margin-top:32px}
 .platform .support-shell .urgent{border-radius:14px;font-size:16px}
 @media(max-width:760px){.platform .support-shell{padding:36px 22px 48px}.platform .support-card{padding:22px}.platform .support-grid{grid-template-columns:1fr;gap:14px;margin-block:24px}.platform .support-grid>.support-card{padding-block:22px}.platform .support-shell #guided-activity{padding:22px}.platform .support-shell .step-actions{width:100%}.platform .support-shell .step-actions .button{padding-inline:12px}}
 .platform .support-shell .screening-next-step{background:var(--platform-soft);border-radius:20px;padding:24px;margin-block:24px}
