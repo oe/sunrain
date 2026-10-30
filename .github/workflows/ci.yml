@@ -6,16 +6,20 @@ on:
   workflow_dispatch:
     inputs:
       browser-suite:
-        description: Chromium regression or optional cross-engine smoke checks
+        description: Choose routine smoke, complete Chromium regression or optional cross-engine checks
         type: choice
-        options: [chromium, compatibility]
-        default: chromium
+        options: [smoke, full, compatibility]
+        default: smoke
   workflow_call:
     outputs:
       pages-artifact-name:
         description: The verified Pages artifact produced by this workflow
         value: ${{ jobs.validate.outputs.pages-artifact-name }}
     inputs:
+      browser-suite:
+        description: Browser suite to run against the build
+        type: string
+        default: smoke
       upload-pages-artifact:
         description: Upload the exact tested build for the deployment job
         type: boolean
@@ -35,7 +39,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     env:
-      BROWSER_SUITE: ${{ inputs.browser-suite || 'chromium' }}
+      BROWSER_SUITE: ${{ inputs.browser-suite || 'smoke' }}
     outputs:
       pages-artifact-name: github-pages-${{ github.run_id }}-${{ github.run_attempt }}
     steps:
@@ -80,11 +84,12 @@ jobs:
 
       - name: Browser regressions against the production build
         run: |
-          if [ "$BROWSER_SUITE" = compatibility ]; then
-            pnpm test:compat
-          else
-            pnpm test:e2e
-          fi
+          case "$BROWSER_SUITE" in
+            smoke) pnpm test:smoke ;;
+            full) pnpm test:e2e ;;
+            compatibility) pnpm test:compat ;;
+            *) echo "Unknown browser suite: $BROWSER_SUITE" >&2; exit 1 ;;
+          esac
 
       - name: Verify build identity after tests
         run: node scripts/verify-build-identity.mjs
