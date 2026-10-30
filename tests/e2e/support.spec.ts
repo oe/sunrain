@@ -56,6 +56,32 @@ test.beforeEach(async({page})=>{
     headers:{'access-control-allow-origin':'*'},
   }));
 });
+test('check-in waits for its page controller before showing choices', {tag:'@smoke'}, async({page},testInfo)=>{
+  let release!:()=>void;
+  const gate=new Promise<void>(resolve=>{release=resolve;});
+  let requested!:()=>void;
+  const requestedPageScript=new Promise<void>(resolve=>{requested=resolve;});
+  await page.route(/\/_astro\/index\.astro_astro_type_script_index_0_lang\.[^/]+\.js$/,async route=>{
+    requested();
+    await gate;
+    await route.continue();
+  });
+  try {
+    await page.goto('/check-in/',{waitUntil:'commit'});
+    await requestedPageScript;
+    await expect(page.locator('[data-screen-stage="choose"]')).toBeHidden();
+    await expect(page.locator('a[href="/crisis/"]:visible').first()).toBeVisible();
+    await page.screenshot({path:testInfo.outputPath('waiting-for-controller.png')});
+    release();
+    await beginScreening(page);
+    await beginGeneral(page);
+    await page.screenshot({path:testInfo.outputPath('general-first-step.png')});
+    await page.locator('[data-step="1"] [data-back]').click();
+    await expect(page.locator('[data-step="0"]')).toBeVisible();
+  } finally {
+    release();
+  }
+});
 for(const locale of locales) {
   test(`${locale}: check-in, self-help, help-seeking and disclaimer are connected`,{tag:['en','ar'].includes(locale)?'@smoke':[]},async({page})=>{
     const errors:string[]=[];page.on('pageerror',error=>errors.push(error.message));

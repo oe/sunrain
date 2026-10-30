@@ -76,6 +76,7 @@ const impacts = ['manageable','disruptive','basicNeeds'] as const;
 </SupportLayout>
 <script>
   import { initGuidedActivities } from '@/scripts/guided-activity';
+  import { initScreeningFlow } from '@/scripts/screening-flow';
   const app = document.querySelector<HTMLElement>('#check-in-app');
   const form = document.querySelector<HTMLFormElement>('#check-in-form');
   const labels = JSON.parse(app.dataset.labels);
@@ -198,4 +199,6 @@ const impacts = ['manageable','disruptive','basicNeeds'] as const;
   });
   // Back/forward cache must not unexpectedly reveal a previous person's selections.
   window.addEventListener('pageshow', event => { if(event.persisted) { form.reset(); summary=''; preparedScreeningFields.clear(); app.querySelector<HTMLElement>('#result-summary').textContent=''; showStep(0); } });
+  // The screening flow emits events consumed above; expose it only after its host is ready.
+  initScreeningFlow();
 </script>

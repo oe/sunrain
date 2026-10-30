@@ -1,8 +1,9 @@
 import {makeScreeningReport} from '@/lib/screening.mjs';
 
 // All responses stay in this document. No URL, storage, telemetry or server handoff.
-const app=document.querySelector<HTMLElement>('#screening-flow');
-if(app) {
+export function initScreeningFlow() {
+  const app=document.querySelector<HTMLElement>('#screening-flow');
+  if(!app)return;
   const copy=JSON.parse(app.dataset.copy);
   const host=document.getElementById('check-in-app');
   const general=document.getElementById('check-in-form');
