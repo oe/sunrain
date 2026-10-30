@@ -19,6 +19,7 @@ jobs:
     name: Validate production build
     uses: ./.github/workflows/ci.yml
     with:
+      browser-suite: smoke
       upload-pages-artifact: true
 
   deploy:

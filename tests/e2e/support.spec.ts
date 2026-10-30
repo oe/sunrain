@@ -183,7 +183,7 @@ test('unusually high energy directs to care and does not present a diagnosis',as
   await expect(page.locator('[data-action="sleep"]')).toBeHidden();
   await expect(page.locator('[data-note-field]').first()).toHaveValue('Unusually high energy or needing much less sleep');
 });
-test('notes are voluntary, reload blank, load explicitly, export locally and delete',async({page})=>{
+test('notes are voluntary, reload blank, load explicitly, export locally and delete',{tag:'@ci'},async({page})=>{
   const requests:{url:string;body:string}[]=[];page.on('request',r=>requests.push({url:r.url(),body:r.postData()||''}));
   await page.goto('/support/');await openDisclosure(page,'#contact-preparation');const fields=page.locator('[data-note-field]');
   await fields.nth(0).fill('<private concern>');await fields.nth(1).fill('three weeks');await fields.nth(2).fill('sleep');
@@ -425,7 +425,7 @@ test('question groups preserve answers, locate missing items and keep support vi
   await expect(page.locator('#screening-result-safety')).toBeVisible();
 });
 
-test('partial and skipped forms never become normal; item-9 support survives skipping with a low total',async({page})=>{
+test('partial and skipped forms never become normal; item-9 support survives skipping with a low total',{tag:'@ci'},async({page})=>{
   await startScreening(page);
   await page.locator('[data-screen-stage="phq-9"] [data-screening-next]').click();
   await page.locator('[data-screen-stage="phq-9"] [data-screening-next]').click();
@@ -453,7 +453,7 @@ test('partial and skipped forms never become normal; item-9 support survives ski
   await expect(page.locator('#screening-result-safety')).toBeVisible();
   await expect(page.locator('[data-screening-report="gad-7"] [data-report-score]')).toHaveText('0 / 21');
 });
-test('youth records have scores without adult bands and declining age keeps general support accessible',async({page})=>{
+test('youth records have scores without adult bands and declining age keeps general support accessible',{tag:'@ci'},async({page})=>{
   await startScreening(page,'zh-hans','youth');
   await answerTool(page,'phq-9',Array(9).fill(3));await answerTool(page,'gad-7',Array(7).fill(3));await page.locator('#screening-finish').click();
   await expect(page.locator('[data-screening-report="phq-9"] [data-report-score]')).toHaveText('27 / 27');
@@ -467,7 +467,7 @@ test('youth records have scores without adult bands and declining age keeps gene
     await expect(page.locator('#screening-age')).toHaveValue('');
   }
 });
-test('function and elevated-energy context prioritise care independently of totals',async({page})=>{
+test('function and elevated-energy context prioritise care independently of totals',{tag:'@ci'},async({page})=>{
   await startScreening(page);
   await fillTool(page,'phq-9',Array(9).fill(0));
   await openDisclosure(page,'[data-screen-stage="phq-9"] .screening-impact-note');
