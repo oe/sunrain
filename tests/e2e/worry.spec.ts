@@ -1,0 +1,120 @@
+import {test,expect} from 'playwright/test';
+import {readFile} from 'node:fs/promises';
+const locales=['en','zh-hans','zh-hant','es','ja','ko','hi','ar'];
+const copy=JSON.parse(await readFile(new URL('../../src/data/worry-copy.json',import.meta.url),'utf8'));
+const common=JSON.parse(await readFile(new URL('../../src/data/support-copy.json',import.meta.url),'utf8')).locales;
+const path=(lang:string,route='/self-help/worry/')=>`${lang==='en'?'':'/'+lang}${route}`;
+test.beforeEach(async({page})=>{
+  await page.route('https://static.cloudflareinsights.com/**',route=>route.fulfill({status:200,contentType:'application/javascript',body:''}));
+});
+
+for(const lang of locales)test(`${lang}: worry choices and an editable action reach reflection and support`,{tag:['en','ar'].includes(lang)?'@smoke':[]},async({page})=>{
+  const errors:string[]=[],requests:string[]=[];page.on('pageerror',e=>errors.push(e.message));page.on('request',r=>requests.push(r.url()));
+  const w=copy[lang];await page.goto(path(lang));
+  const note=page.locator('[data-activity-note]'),fields=note.locator('[data-note-field]');
+  await expect(page.locator('#guide-controls')).toBeVisible();await expect(note).toBeHidden();await expect(fields).toHaveCount(3);
+  await expect(page.locator('html')).toHaveAttribute('dir',lang==='ar'?'rtl':'ltr');
+  await page.locator('.activity-examples > summary').click();await page.locator('input[name="worry-focus"][value="waiting"]').check();
+  await page.locator('#guide-next').dblclick();
+  await expect(page.locator('#worry-part')).toBeVisible();
+  await expect(page.locator('[data-worry-summary="current"] [data-worry-value="focus"]')).toHaveText(w.focusExamples[0]);
+  await page.locator('#worry-part').selectOption('preparation');await page.locator('#guide-back').click();
+  await expect(page.locator('input[name="worry-focus"][value="waiting"]')).toBeChecked();await page.locator('#guide-next').click();
+  await expect(page.locator('#worry-part')).toHaveValue('preparation');await page.locator('#guide-next').click();
+  await page.locator('input[name="activity-example"]').first().check();await expect(fields.first()).toHaveValue(w.actionExamples[0]);
+  await expect(note).toBeVisible();await expect(note).not.toHaveAttribute('open','');
+  await page.locator('#guide-next').click();
+  await expect(page.locator('[data-worry-summary="current"] [data-worry-value="action"]')).toHaveText(w.actionExamples[0]);
+  await page.locator('#guide-finish').click();
+  const summary=page.locator('[data-worry-summary="completion"]');await expect(summary).toBeFocused();
+  await expect(summary.locator('[data-worry-value="focus"]')).toHaveText(w.focusExamples[0]);
+  await expect(summary.locator('[data-worry-value="part"]')).toHaveText(w.partOptions[1]);
+  await expect(summary.locator('[data-worry-value="action"]')).toHaveText(w.actionExamples[0]);
+  await page.locator('input[name="feedback"][value="same"]').check();await expect(page.locator('#feedback-same')).toContainText(common[lang].common.noChange);
+  // Allow the previous navigation guard to expire before testing this entry.
+  await page.waitForTimeout(550);await page.locator('[data-worry-edit]').dblclick();await expect(fields.first()).toBeFocused();
+  const edited=`fixture-action-${lang}`;await fields.nth(0).fill(edited);await fields.nth(1).fill('fixture-time');await fields.nth(2).fill('fixture-help');
+  await page.locator('input[name="activity-example"]').nth(1).click();
+  await expect(fields.first()).toHaveValue(edited);await expect(page.locator('[data-selection-notice]')).toBeVisible();
+  await expect(page.locator('input[name="activity-example"]:checked')).toHaveCount(0);
+  await page.locator('#guide-next').click();await page.locator('#guide-finish').click();
+  await expect(summary.locator('[data-worry-value="action"]')).toHaveText(edited);
+  await expect(summary.locator('[data-worry-value="timing"]')).toHaveText('fixture-time');
+  await expect(summary.locator('[data-worry-value="help"]')).toHaveText('fixture-help');
+  await page.locator('input[name="feedback"][value="worse"]').check();
+  await expect(page.locator('#feedback-urgent')).toBeVisible();await expect(page.locator('[data-worry-edit]')).toBeHidden();
+  await expect(page.locator('[data-worry-reset-panel]')).toBeHidden();await expect(page.locator('#other-activities')).toBeHidden();
+  await expect(page.locator('#feedback-urgent a')).toHaveAttribute('href',path(lang,'/crisis/'));
+  await page.locator('#activity-reflection [data-prepare-support]').click();
+  const carried=page.locator('#prepare-support [data-note-field]').nth(3);
+  await expect(carried).toHaveValue(new RegExp(edited));
+  expect(await carried.inputValue()).toContain(w.focusExamples[0]);expect(await carried.inputValue()).toContain(w.partOptions[1]);
+  await expect(page.locator('#prepare-support #support-region')).toHaveValue('');
+  await page.locator('#prepare-support #support-region').selectOption('other');await expect(page.locator('#service-fallback')).toBeVisible();
+  expect(await page.evaluate(()=>Object.keys(localStorage).filter(k=>k.startsWith('sunrain')))).toEqual([]);
+  expect(await page.evaluate(()=>sessionStorage.length)).toBe(0);
+  expect(new URL(page.url()).search+new URL(page.url()).hash).toBe('');
+  expect(requests.some(url=>url.includes(edited)||/[?&](worry|focus|answers?|symptoms?)=/.test(url))).toBe(false);
+  expect(errors).toEqual([]);expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+  // General reflection and scored-screening results must reach the same
+  // optional worry activity; this does not change instrument content/scoring.
+  await page.goto(path(lang,'/check-in/'));await page.locator('[data-screen-stage="choose"] [data-screening-exit]').click();
+  await page.locator('input[value="worry"]').check();await page.locator('[data-step="1"] [data-forward]').click();await page.locator('button[type="submit"]').click();
+  await expect(page.locator('[data-action="worry"]')).toBeVisible();await page.locator('[data-action="worry"] a').click();
+  await expect(page.locator('[data-worry-activity]')).toBeVisible();await page.locator('#guide-stop').click();await expect(page.locator('[data-worry-feedback-title]')).toBeFocused();
+});
+
+test('worry interruption, old saved notes, reset and repeated inline entry preserve privacy',{tag:'@smoke'},async({page})=>{
+  await page.goto('/self-help/worry/');await expect(page.locator('#guide-controls')).toBeVisible();
+  const key='sunrain_note_v1:worry:en',legacy={version:1,kind:'worry',language:'en',fields:['fixture-old-plan','fixture-later','fixture-support'],savedAt:'2026-10-01T00:00:00.000Z'};
+  await page.evaluate(({key,legacy})=>localStorage.setItem(key,JSON.stringify(legacy)),{key,legacy});await page.reload();
+  const note=page.locator('[data-activity-note]'),fields=note.locator('[data-note-field]');
+  await expect(fields.first()).toHaveValue('');await page.locator('#guide-stop').focus();await page.keyboard.press('Enter');
+  await expect(page.locator('[data-worry-feedback-title]')).toBeFocused();await expect(page.locator('[data-worry-summary="completion"]')).toBeHidden();
+  await note.locator('summary').first().click();await note.locator('[data-note-action="load"]').click();
+  await expect(fields.first()).toHaveValue(legacy.fields[0]);await expect(page.locator('[data-worry-summary="completion"] [data-worry-value="action"]')).toHaveText(legacy.fields[0]);
+  await expect(page.locator('[data-worry-summary="completion"] [data-worry-summary-row="focus"]')).toBeHidden();
+  await page.locator('#activity-reflection [data-prepare-support]').click();
+  const contact=page.locator('#prepare-support [data-note-field]').nth(3);
+  await expect(contact).toHaveValue(/fixture-old-plan/);await contact.fill('fixture-separate-contact-draft');
+  await page.locator('#prepare-support > summary').click();
+  await page.locator('[data-worry-reset-panel] > summary').click();await page.waitForTimeout(550);await page.locator('[data-worry-reset]').dblclick();
+  await expect(fields.first()).toHaveValue('');expect(JSON.parse(await page.evaluate(key=>localStorage.getItem(key),key))).toEqual(legacy);
+  await expect(contact).toHaveValue('fixture-separate-contact-draft');
+  await expect(page.locator('#guide-progress')).toBeFocused();await expect(page.locator('[data-guide-step]').first()).toBeVisible();
+  await expect(page.locator('#activity-reflection')).toBeHidden();await expect(page.locator('#prepare-support')).not.toHaveAttribute('open','');
+  await page.locator('.activity-examples > summary').click();await page.locator('input[name="worry-focus"][value="private"]').focus();await page.keyboard.press('Space');
+  await page.locator('#guide-next').focus();await page.keyboard.press('Enter');await page.locator('#worry-part').selectOption('outside');await page.locator('#guide-next').click();
+  await expect(page.locator('[data-worry-outside]')).toBeVisible();await expect(page.locator('[data-worry-outside] a')).toHaveAttribute('href','/self-help/grounding/');
+  await page.locator('#guide-next').click();await page.locator('#guide-finish').click();
+  await expect(page.locator('#activity-reflection [data-worry-no-action]')).toBeVisible();
+  await page.locator('[data-worry-edit]').click();await fields.first().fill('fixture-current-plan');await note.locator('[data-note-action="save"]').click();
+  const saved=JSON.parse(await page.evaluate(key=>localStorage.getItem(key),key));expect(saved.fields).toEqual(['fixture-current-plan','','']);expect(Object.keys(saved).sort()).toEqual(['fields','kind','language','savedAt','version']);
+  await page.evaluate(()=>window.dispatchEvent(new PageTransitionEvent('pageshow',{persisted:true})));
+  await expect(fields.first()).toHaveValue('');await expect(page.locator('input[type="radio"]:checked')).toHaveCount(0);await expect(page.locator('#worry-part')).toHaveValue('');
+  await expect(page.locator('#activity-reflection')).toBeHidden();
+  for(let i=0;i<3;i++)await page.locator('#guide-next').click();await page.locator('#guide-finish').dblclick();
+  await expect(page.locator('[data-worry-summary="completion"]')).toBeHidden();await expect(page.locator('[data-worry-feedback-title]')).toBeFocused();
+  await expect(page.locator('#activity-reflection [data-worry-no-action]')).toBeVisible();
+  await page.locator('[data-worry-reset-panel] > summary').click();await page.locator('[data-worry-reset]').click();
+  await page.goto('/support/');await page.goBack();await expect(fields.first()).toHaveValue('');await expect(page.locator('#activity-reflection')).toBeHidden();
+  await page.goForward();await expect(page).toHaveURL(/\/support\/$/);
+  await page.goto('/check-in/');await page.locator('[data-screen-stage="choose"] [data-screening-exit]').click();await page.locator('input[value="worry"]').check();await page.locator('[data-step="1"] [data-forward]').click();await page.locator('button[type="submit"]').click();await page.locator('[data-action="worry"] a').click();
+  await page.locator('.activity-examples > summary').click();await page.locator('input[name="worry-focus"]').first().check();await page.locator('#guide-next').click();await page.locator('#worry-part').selectOption('support');await page.locator('#guide-next').click();await page.locator('input[name="activity-example"]').first().check();await page.locator('#guide-stop').click();
+  for(let i=0;i<3;i++){await page.locator('[data-activity-close]').click();await page.locator('[data-action="worry"] a').click();await expect(page.locator('[data-worry-summary="completion"] [data-worry-value="focus"]')).toHaveText(copy.en.focusExamples[0]);}
+  await page.locator('[data-worry-edit]').click();await page.locator('#guide-back').click();await expect(page.locator('#worry-part')).toHaveValue('support');await page.locator('#guide-next').click();
+  await expect(page.locator('[data-guide-step]').nth(2)).toBeVisible();
+  await page.locator('#guide-controls [data-prepare-support]').click();await expect(page.locator('#prepare-support [data-note-field]').nth(3)).toHaveValue(new RegExp(copy.en.focusExamples[0]));
+  await page.goto('/');await page.goBack();await expect(page.locator('#inline-activity')).toBeHidden();
+  await page.goto('/self-help/worry/');await page.locator('#guide-stop').click();await page.locator('[data-activity-note] > summary').click();await page.locator('[data-activity-note] [data-note-action="load"]').click();await page.locator('[data-activity-note] [data-note-action="clear"]').click();
+  await expect(page.locator('[data-worry-summary="completion"]')).toBeHidden();expect(await page.evaluate(key=>localStorage.getItem(key),key)).toBeNull();
+});
+
+test('worry guide and onward help remain readable without JavaScript',async({browser})=>{
+  const context=await browser.newContext({javaScriptEnabled:false});const page=await context.newPage();await page.goto('http://127.0.0.1:4362/self-help/worry/');
+  await expect(page.locator('#guided-activity [data-guide-step]')).toHaveCount(4);
+  for(const step of await page.locator('#guided-activity [data-guide-step]').all())await expect(step).toBeVisible();
+  await expect(page.locator('#guide-controls')).toBeHidden();await expect(page.locator('[data-activity-note] [data-note-controls]')).toBeHidden();
+  await page.locator('#prepare-support > summary').click();await expect(page.locator('#prepare-support #support-region')).toBeVisible();
+  await expect(page.locator('a[href="/crisis/"]').first()).toBeVisible();await context.close();
+});

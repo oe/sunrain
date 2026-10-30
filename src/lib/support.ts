@@ -16,6 +16,7 @@ export const supportSources = {
   help: { name: 'NIMH · Help for Mental Illnesses', url: 'https://www.nimh.nih.gov/health/find-help' },
   grounding: { name: 'Royal United Hospitals Bath · Grounding exercises (PDF, English)', url: 'https://www.ruh.nhs.uk/patients/patient_information/PAE129_Mindfulness_and_grounding_exercises.pdf' },
   worries: { name: 'NHS · Tackling your worries (English)', url: 'https://www.nhs.uk/every-mind-matters/mental-wellbeing-tips/self-help-cbt-techniques/tackling-your-worries/' },
+  problemSolving: { name: 'NHS · Problem solving (English)', url: 'https://www.nhs.uk/every-mind-matters/mental-wellbeing-tips/self-help-cbt-techniques/problem-solving/' },
   bipolar: { name: 'NIMH · Bipolar Disorder', url: 'https://www.nimh.nih.gov/health/publications/bipolar-disorder' },
   who: { name: 'WHO · Doing What Matters in Times of Stress', url: 'https://www.who.int/publications/i/item/9789240003927' },
 };

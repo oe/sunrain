@@ -4,6 +4,7 @@ import ContentSources from '@/components/ContentSources.astro';
 import { getLanguageFromPath,getLocalizedPath } from '@/lib/i18n';
 import { getSupportCopy } from '@/lib/support';
 import { getPlatformCopy } from '@/lib/platform';
+import WorryActivity from './WorryActivity.astro';
 interface Props { id:string; embedded?:boolean; }
 const {id,embedded=false}=Astro.props;
 const lang=getLanguageFromPath(Astro.url.pathname);
@@ -12,7 +13,7 @@ const p=getPlatformCopy(lang);
 const guide=({'grounding':c.guides.grounding,'one-step':c.guides.smallStep,'sleep':c.guides.sleepRoutine,'worry':c.guides.worryPlan})[id];
 const Title=embedded ? 'h3' : 'h1';
 ---
-<div data-guided-activity>
+{id==='worry'?<WorryActivity embedded={embedded}/>:<div data-guided-activity>
   <Title data-activity-title tabindex="-1">{guide.title}</Title><p>{({'grounding':p.grounding,'one-step':p.oneStep,'sleep':p.sleep,'worry':p.worry})[id]}</p>
   <p>{c.common.stop}</p>
   {embedded && <div class="actions"><button class="button" type="button" data-activity-close>{c.ui.back}</button></div>}
@@ -49,7 +50,7 @@ const Title=embedded ? 'h3' : 'h1';
   <details data-activity-note class="activity-note"><summary>{p.record}</summary><PrivateNotes kind={embedded ? `check-in-${id}` : id} title={c.flow.planTitle} labels={c.flow.planLabels} /></details>
   <details><summary>{p.guideTips}</summary><p>{guide.purpose}</p></details>
   <ContentSources sources={id==='grounding'?['grounding','selfCare']:id==='worry'?['worries']:id==='sleep'?['selfCare','bipolar']:['selfCare']} />
-</div>
+</div>}
 <script>
   import { initGuidedActivities } from '@/scripts/guided-activity';
   initGuidedActivities();

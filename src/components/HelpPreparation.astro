@@ -34,7 +34,8 @@ const p=getPlatformCopy(getLanguageFromPath(Astro.url.pathname));
       if(!target.value || target.value===lastPrepared){
         const notes=[...activityContainer.querySelectorAll<HTMLTextAreaElement>('[data-activity-note] [data-note-field]')].filter(field=>field.value.trim()).map(field=>`${field.labels?.[0]?.firstChild?.textContent?.trim() || ''}: ${field.value}`);
         const feedback=activityContainer.querySelector<HTMLInputElement>('input[name="feedback"]:checked');
-        const record=[activity.textContent,feedback?.labels?.[0]?.textContent,...notes].filter(Boolean).join('\n');
+        const context=activityContainer.querySelector<HTMLElement>('[data-activity-context]')?.textContent;
+        const record=[activity.textContent,context,feedback?.labels?.[0]?.textContent,...notes].filter(Boolean).join('\n');
         target.value=record.slice(0,2000).replace(/[\uD800-\uDBFF]$/,'');
         if(record.length>2000)status.textContent=preparation.dataset.recordTruncated;
         lastPrepared=target.value;
