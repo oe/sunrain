@@ -11,7 +11,7 @@ The job installs the locked dependencies, audits production dependencies, runs
 unit tests, checks types, builds the site once and verifies its source identity.
 Playwright tests that production build using Chromium only:
 
-- Desktop runs the complete 70-case regression suite, including all eight
+- Desktop runs the complete 71-case regression suite, including all eight
   languages, screening edge cases, privacy, keyboard access, narrow layouts,
   audio controls and the real-time audio loop check.
 - Mobile runs thirteen cases tagged `@smoke`: English and Arabic check-in
@@ -67,5 +67,5 @@ for 14 days. Inspect this artifact on a failed run, then rerun the single job.
 
 The previous PR run [39288950541](https://github.com/oe/sunrain/actions/runs/39288950541)
 took 15m51s and repeated the suite across five configurations (248 cases).
-The simplified daily suite has 83 cases with no planned skips. Its actual
+The simplified daily suite has 84 cases with no planned skips. Its actual
 GitHub Actions runtime is recorded on the PR and varies with runner availability.

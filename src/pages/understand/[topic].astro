@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { getLanguageFromPath, getLocalizedPath } from '@/lib/i18n';
-import { getUnderstandingCopy, UNDERSTAND_TOPICS, understandingSources, UNDERSTANDING_CHECKED, type UnderstandingTopic } from '@/lib/understand';
+import { getUnderstandingCopy, UNDERSTAND_TOPICS, understandingSources, UNDERSTANDING_CHECKED, UNDERSTANDING_PRACTICE_CHECKED, type UnderstandingTopic } from '@/lib/understand';
 import { Icon } from '@/components/Icon';
 import UnderstandingIllustration from '@/components/UnderstandingIllustration.astro';
 import '@/styles/understand.css';
@@ -31,8 +31,10 @@ const sections=[['signs',c.signs],['today',c.steps],['treatment',c.treatment],['
     </section>
     <section id="today" aria-labelledby="today-heading" class="understand-section">
       <h2 id="today-heading">{c.steps}</h2><p class="understand-muted">{c.stepsIntro}</p>
+      <div class="understand-example" data-practice-example><h3>{c.example}</h3><p>{topic.practice.example}</p></div>
       <ol class="understand-steps" role="list">{topic.steps.map((text,i)=><li><span class="understand-step-number" aria-hidden="true">{new Intl.NumberFormat(lang).format(i+1)}</span><p>{text}</p></li>)}</ol>
-      <a class="platform-link" href={getLocalizedPath(id==='bipolar'?'/support/':meta.activity,lang)}>{id==='bipolar'?c.support:c.activity}<Icon name="ArrowRight" size={19} className="directional" /></a>
+      <a class="platform-link" data-topic-action href={getLocalizedPath(id==='bipolar'?'/support/':meta.activity,lang)}>{topic.practice.action}<Icon name="ArrowRight" size={19} className="directional" /></a>
+      <details class="understand-context" data-practice-if-hard><summary>{c.ifHard}</summary><p>{topic.practice.ifHard}</p><a class="platform-link" href="#care">{c.support}<Icon name="ArrowRight" size={18} className="directional" /></a></details>
     </section>
     <section id="treatment" aria-labelledby="treatment-heading" class="understand-section">
       <h2 id="treatment-heading">{c.treatment}</h2><p class="understand-muted">{c.treatmentNote}</p>
@@ -41,14 +43,16 @@ const sections=[['signs',c.signs],['today',c.steps],['treatment',c.treatment],['
     <section id="care" aria-labelledby="care-heading" class="understand-section">
       <h2 id="care-heading">{c.care}</h2><p>{topic.care}</p>
       <a class="platform-button primary" href={getLocalizedPath('/support/',lang)}>{c.support}<Icon name="ArrowRight" size={20} className="directional" /></a>
-      <details class="understand-context"><summary>{c.young}</summary><p>{c.youngText}</p></details>
+      <details class="understand-context" data-young-readers><summary>{c.young}</summary><p>{c.youngText}</p></details>
       <aside class="understand-urgent"><p>{c.urgent}</p><a href={getLocalizedPath('/crisis/',lang)}>{c.crisis}<Icon name="ArrowRight" size={18} className="directional" /></a></aside>
+      <details class="understand-context understand-conversation" data-practice-conversation><summary>{c.conversation}</summary><p>{c.conversationNote}</p><blockquote>{topic.practice.conversation}</blockquote></details>
     </section>
     <p class="understand-more"><a href={getLocalizedPath('/understand/',lang)}>{c.more}<Icon name="ArrowRight" size={19} className="directional" /></a></p>
     <section id="references" aria-labelledby="references-heading" class="understand-references">
       <h2 id="references-heading">{c.references}</h2><p>{c.referenceIntro}</p>
       <ol>{sources.map(key=><li><a href={understandingSources[key].url} target="_blank" rel="noreferrer" lang="en">{understandingSources[key].title}<Icon name="ArrowRight" size={16} /></a><span>{c.sourcesLanguage}</span></li>)}</ol>
-      <p>{c.checked} · <time datetime={UNDERSTANDING_CHECKED}>{new Intl.DateTimeFormat(lang,{dateStyle:'long',timeZone:'UTC'}).format(new Date(`${UNDERSTANDING_CHECKED}T00:00:00Z`))}</time></p><p>{c.review}</p>
+      <p>{c.checked} · <time datetime={UNDERSTANDING_CHECKED}>{new Intl.DateTimeFormat(lang,{dateStyle:'long',timeZone:'UTC'}).format(new Date(`${UNDERSTANDING_CHECKED}T00:00:00Z`))}</time></p>
+      <p data-practice-checked>{c.practiceChecked} · <time datetime={UNDERSTANDING_PRACTICE_CHECKED}>{new Intl.DateTimeFormat(lang,{dateStyle:'long',timeZone:'UTC'}).format(new Date(`${UNDERSTANDING_PRACTICE_CHECKED}T00:00:00Z`))}</time></p><p>{c.review}</p>
     </section>
   </article>
 </BaseLayout>

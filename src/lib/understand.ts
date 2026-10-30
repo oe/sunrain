@@ -27,13 +27,16 @@ export const understandingSources = {
   nhsInsomnia: { title: 'NHS · Insomnia', url: 'https://www.nhs.uk/conditions/insomnia/' },
   nimhBipolar: { title: 'NIMH · Bipolar Disorder', url: 'https://www.nimh.nih.gov/health/publications/bipolar-disorder' },
   niceBipolar: { title: 'NICE CG185 · Bipolar disorder: assessment and management', url: 'https://www.nice.org.uk/guidance/cg185/chapter/Recommendations' },
+  nimhSelfCare: { title: 'NIMH · Caring for Your Mental Health', url: 'https://www.nimh.nih.gov/health/topics/caring-for-your-mental-health' },
+  nimhConversation: { title: 'NIMH · Tips for Talking With a Health Care Provider About Your Mental Health', url: 'https://www.nimh.nih.gov/health/publications/tips-for-talking-with-your-health-care-provider' },
 } as const;
 
 export const UNDERSTAND_TOPICS = {
-  depression: { activity: '/self-help/one-step/', sources: ['nimhDepression', 'niceDepression', 'teenDepression'] },
-  anxiety: { activity: '/self-help/worry/', sources: ['niceAnxiety', 'nhsPanic', 'nhsChest', 'nhsWorries'] },
-  sleep: { activity: '/self-help/sleep/', sources: ['nhsInsomnia', 'nimhBipolar'] },
-  bipolar: { activity: '/self-help/', sources: ['nimhBipolar', 'niceBipolar'] },
+  depression: { activity: '/self-help/one-step/', sources: ['nimhDepression', 'niceDepression', 'teenDepression', 'nimhSelfCare', 'nimhConversation'] },
+  anxiety: { activity: '/self-help/worry/', sources: ['niceAnxiety', 'nhsPanic', 'nhsChest', 'nhsWorries', 'nimhConversation'] },
+  sleep: { activity: '/self-help/sleep/', sources: ['nhsInsomnia', 'nimhBipolar', 'nimhConversation'] },
+  bipolar: { activity: '/self-help/', sources: ['nimhBipolar', 'niceBipolar', 'nimhConversation'] },
 } as const;
 export type UnderstandingTopic = keyof typeof UNDERSTAND_TOPICS;
 export const UNDERSTANDING_CHECKED = '2026-10-29';
+export const UNDERSTANDING_PRACTICE_CHECKED = '2026-10-30';

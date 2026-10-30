@@ -1,0 +1,83 @@
+{
+  "reviewedAt": "2026-10-30",
+  "baseline": "133465c2f989c00cf5163e3df1d9b41756e3d6de",
+  "scope": "One everyday example per existing topic, three adapted practical steps, a visible existing action/help route, optional difficulty guidance and an adaptable conversation starter in all eight languages. No new topic, diagnosis, treatment programme, instrument or regional service.",
+  "method": "AI source comparison and contextual editorial review, followed by automated browser/keyboard/layout checks. These are not independent clinician, native-human or clinical-effectiveness reviews.",
+  "cases": {
+    "depression": "Replying to a message feels difficult. Offer a short sentence, an optional draft/send choice and a smaller alternative; no need to have a safe personal contact before seeking professional support.",
+    "anxiety": "Repeatedly checking for an important reply. Distinguish a practical action from uncertainty that cannot be resolved now; allow stopping and support. Existing visible physical-symptom warning stays unchanged.",
+    "sleep": "Thinking about tomorrow while trying harder to sleep. Choose one quiet routine element; no timed sleep restriction, prescribed sleep duration or medication instruction. Persistent difficulty and unusually high energy with much less sleep retain assessment routes.",
+    "bipolar": "Markedly less need for sleep with unusual energy/decisions. Prioritise professional assessment, existing care plans and safe support. Do not infer bipolar disorder or substitute activities/questionnaires for assessment. Preparing contact without a companion does not claim appointment eligibility or provider consent rules."
+  },
+  "sources": [
+    {
+      "url": "https://www.nimh.nih.gov/health/topics/caring-for-your-mental-health",
+      "checkedAt": "2026-10-30",
+      "status": "official_page_read",
+      "usedFor": "Small everyday priorities, practical/emotional connection, adapting self-care and seeking professional help; no promise that one activity improves mood."
+    },
+    {
+      "url": "https://www.nimh.nih.gov/health/publications/tips-for-talking-with-your-health-care-provider",
+      "checkedAt": "2026-10-30",
+      "status": "official_page_read",
+      "usedFor": "Prepare questions and describe onset, symptoms and daily impact. Conversation examples are Sunrain's own adaptable wording, not actual patient testimonials or an official translation.",
+      "limits": "US-specific service/legal/confidentiality statements and telephone numbers are not applied to readers worldwide."
+    },
+    {
+      "url": "https://www.nhs.uk/every-mind-matters/mental-wellbeing-tips/self-help-cbt-techniques/tackling-your-worries/",
+      "checkedAt": "2026-10-30",
+      "status": "official_page_read",
+      "usedFor": "Consider one worry, what can be influenced, a practical next step and attention to the present. No timed worry-treatment protocol or guaranteed relief is introduced."
+    },
+    {
+      "url": "https://www.nhs.uk/conditions/insomnia/",
+      "checkedAt": "2026-10-30",
+      "status": "official_page_read",
+      "usedFor": "A quiet routine choice, reasonably regular waking where possible, and professional assessment when persistent sleep problems affect daily life. No self-prescribed medication or full CBT-I programme."
+    },
+    {
+      "url": "https://www.nimh.nih.gov/health/publications/bipolar-disorder",
+      "checkedAt": "2026-10-30",
+      "status": "official_page_read",
+      "usedFor": "Reduced need for sleep and unusual energy/behaviour require context and professional assessment; treatment and medication changes remain clinician-led."
+    },
+    {
+      "url": "https://www.nimh.nih.gov/health/topics/depression",
+      "checkedAt": "2026-10-30",
+      "status": "official_page_read",
+      "usedFor": "Educational context about mood, interest and everyday functioning; no new diagnosis threshold or scoring."
+    }
+  ],
+  "legacySourceRecheckLimits": {
+    "blocked": [
+      {
+        "url": "https://www.nice.org.uk/guidance/ng222/chapter/Recommendations",
+        "result": "HTTP 403 Forbidden"
+      },
+      {
+        "url": "https://www.nice.org.uk/guidance/cg185/chapter/Recommendations",
+        "result": "HTTP 403 Forbidden"
+      }
+    ],
+    "response": "No retry or bypass. Existing clinical/treatment paragraphs and legacy references remain unchanged; no newly written recommendation relies on rereading these blocked pages. Not every legacy reference was rechecked in this batch.",
+    "dates": "Retain the prior 2026-10-29 source date and display a separately scoped 2026-10-30 date for practical/conversation examples; do not claim all legacy pages were rechecked."
+  },
+  "localeReview": {
+    "en": "Plain optional actions; no assumption that friends/family are safe or available. Preparing contact is distinct from receiving an appointment.",
+    "zh-hans": "Uses a brief spoken phrase, 最近有点难熬, and 联系/信息/评估. Short labels omit terminal full stops; explanation sentences retain punctuation.",
+    "zh-hant": "Uses 訊息/回覆/聯絡/協助 and the spoken 最近不太好過; not merely character conversion and not equated with a particular jurisdiction.",
+    "es": "Consistent tú instructions, first-person Quisiera requests and broadly understood respuesta/contacto/evaluación. Avoids assuming Spain, a GP registration system or the user's gender.",
+    "ja": "Uses permission-oriented phrasing and ordinary 相談・受診/身の回り wording; care requests are phrased as 相談したいです rather than literal diagnostic labels.",
+    "ko": "Polite guidance and natural 말문을 여는 예시/당장 필요한 다른 일 phrasing; professional requests use respectful first-person sentences. Korean word wrapping is kept at word boundaries with overflow fallback.",
+    "hi": "Respectful instructions and Devanagari punctuation. First-person care examples avoid चाहता/चाहती gender choices; no assumption that Hindi means India.",
+    "ar": "Modern Standard Arabic and Arabic punctuation with RTL. No country/religion/family assumptions or claim that a companion is universally unnecessary for service eligibility."
+  },
+  "safetyAndPrivacy": "Original signs, context, treatments, care warnings and youth scope remain unchanged. Optional conversation examples follow the existing youth and urgent content, preserving safety priority. No forms, personal data collection, storage, analytics events, accounts or external service integration. Region selection remains independent from reading language. No promised outcome, duration target or new treatment instruction.",
+  "independentReview": {
+    "clinical": "pending_not_claimed",
+    "humanNativeSpeaker": "pending_all_eight_locales",
+    "realUserOrClinicalOutcomes": "not_tested",
+    "implementation": "Independent AI diff, safety-boundary, localization and accessibility review; not a native-human, clinician or clinical-effectiveness review."
+  },
+  "publication": "Release follows source review, required CI, normal pull-request merge and automatic deployment; the initial local-only review record is not evidence of publication."
+}
