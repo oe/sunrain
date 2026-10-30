@@ -17,20 +17,19 @@ const currentYear = new Date().getFullYear();
   <div class="container mx-auto px-4 py-8">
     <div class="flex flex-col md:flex-row justify-between items-center gap-4">
       <!-- Brand -->
-      <div class="flex items-center gap-3">
+      <div class="footer-brand" data-footer-brand>
         <picture>
           <source srcset={brandAssets.logoAvif} type="image/avif" />
           <img src={brandAssets.logoPng} alt="Sunrain" class="w-8 h-8" />
         </picture>
-        <div>
-          <p class="font-bold text-gray-900 dark:text-white">Sunrain</p>
-          <p class="text-sm text-gray-500 dark:text-gray-400">
-            {t('footer.mission', lang)}
-          </p>
-          <p class="mt-2 text-xs text-gray-500 dark:text-gray-400" data-footer-copyright>
-            {t('footer.copyright', lang, { year: currentYear })}
-          </p>
-        </div>
+        <p class="footer-brand-line" data-footer-brand-line>
+          <span class="footer-brand-name">Sunrain</span>{' '}
+          <span class="footer-brand-separator" aria-hidden="true">/</span>{' '}
+          <span class="footer-brand-subtitle">{t('footer.mission', lang)}</span>
+        </p>
+        <p class="footer-brand-copyright" data-footer-copyright>
+          {t('footer.copyright', lang, { year: currentYear })}
+        </p>
       </div>
 
       <!-- Links -->

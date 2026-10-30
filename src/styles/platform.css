@@ -21,6 +21,14 @@
 .platform footer .container{max-width:1280px;padding-block:32px}
 .platform footer :is(p,a){color:var(--platform-muted)}
 .platform footer a:hover{color:var(--platform-blue)}
+.platform footer .footer-brand{display:grid;grid-template-columns:auto minmax(0,1fr);grid-template-areas:"logo line" "logo copyright";align-items:center;column-gap:12px;row-gap:4px;max-width:100%;flex-shrink:0}
+.platform footer .footer-brand picture{grid-area:logo;display:block}
+.platform footer .footer-brand-line{grid-area:line;min-width:0;display:flex;flex-wrap:wrap;align-items:baseline;column-gap:4px;row-gap:0;line-height:1.5}
+.platform footer .footer-brand-name{font-size:16px;font-weight:700;color:var(--platform-ink)}
+.platform footer .footer-brand-separator{font-size:12px;color:var(--platform-muted)}
+.platform footer .footer-brand-subtitle{font-size:13px;color:var(--platform-muted)}
+.platform footer .footer-brand-copyright{grid-area:copyright;min-width:0;font-size:12px;line-height:1.5}
+@media(max-width:359px){.platform footer .footer-brand{column-gap:4px;grid-template-areas:"logo line" "copyright copyright"}.platform footer .footer-brand img{width:20px;height:20px}.platform footer .footer-brand-line{column-gap:1px}.platform footer .footer-brand-name{font-size:14px}.platform footer .footer-brand-subtitle{font-size:12px}}
 .platform .about-page h1{font-size:clamp(2rem,4vw,3.25rem);letter-spacing:-.035em;color:var(--platform-ink)}
 .platform .about-page h2,.platform .about-page h3{color:var(--platform-ink)}
 .platform .about-page p{color:var(--platform-muted);line-height:1.9}
