@@ -115,6 +115,7 @@
 .platform .support-shell [data-selected-action]{font-size:17px;font-weight:650;white-space:pre-wrap;overflow-wrap:anywhere}
 .platform .support-shell .worry-steps{list-style:none;padding:0}
 .platform .support-shell .worry-steps h2,.platform .support-shell .worry-steps h4{font-size:22px;line-height:1.5;margin-block:12px}
+.platform .support-shell .worry-focus-label{font-size:15px;font-weight:600;color:var(--platform-muted);line-height:1.6}
 .platform .support-shell .worry-summary dl{margin:0}
 .platform .support-shell .worry-summary dl>div{margin-block:10px}
 .platform .support-shell .worry-summary dt{font-size:13px;color:var(--platform-muted);margin-bottom:3px}

@@ -20,12 +20,11 @@ const labels=[w.focusLabel,w.partLabel,...c.flow.planLabels];
     <WorrySummary kind="current" title={w.summaryTitle} labels={labels}/>
     <ol class="worry-steps">
       <li data-guide-step>
-        <Heading>{w.focusTitle}</Heading><p>{w.focusHelp}</p>
-        <details class="activity-examples"><summary>{w.examplesLabel}</summary>
-          <fieldset><legend class="sr-only">{w.focusTitle}</legend>
-            {[...w.focusExamples,w.privateFocus].map((example,i)=><label class="choice"><input type="radio" name="worry-focus" value={WORRY_FOCUS_IDS[i]} autocomplete="off"/>{example}</label>)}
-          </fieldset>
-        </details>
+        <Heading>{w.focusTitle}</Heading>
+        <fieldset data-worry-focus-options aria-describedby="worry-focus-help"><legend class="worry-focus-label">{w.examplesLabel}</legend>
+          {[...w.focusExamples,w.privateFocus].map((example,i)=><label class="choice"><input type="radio" name="worry-focus" value={WORRY_FOCUS_IDS[i]} autocomplete="off"/>{example}</label>)}
+        </fieldset>
+        <p class="muted" id="worry-focus-help">{w.focusHelp}</p>
       </li>
       <li data-guide-step>
         <Heading>{w.partTitle}</Heading><p>{w.partHelp}</p>

@@ -73,7 +73,6 @@ export function initWorryActivity(container:HTMLElement){
     part.value='';
     fields.forEach(field=>{field.value='';field.dispatchEvent(new Event('input',{bubbles:true}));});
     note.open=false;resetPanel.open=false;
-    find<HTMLDetailsElement>('.activity-examples').open=false;
     note.querySelector<HTMLElement>('[data-note-status]')!.textContent='';
     notice.hidden=true;status.textContent='';feedback();render(focus);
   }
