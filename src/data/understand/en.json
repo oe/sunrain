@@ -31,7 +31,12 @@
     "treatmentNote": "The options below describe professional care. Our short activities can support daily coping; they are not complete treatment programmes.",
     "selfHelpLink": "Explore everyday self-help",
     "sourcesLanguage": "English original",
-    "newTab": "Opens in a new tab"
+    "newTab": "Opens in a new tab",
+    "example": "A familiar moment",
+    "ifHard": "If this feels difficult or does not help",
+    "conversation": "Words to start a conversation",
+    "conversationNote": "This is an example, not a symptom checklist. Use only what is true for you. You can describe when things started and how daily life is affected; no private details need to be written here.",
+    "practiceChecked": "Practical examples checked"
   },
   "topics": {
     "depression": {
@@ -45,9 +50,9 @@
       ],
       "context": "Low mood can also relate to stress, grief, physical illness or medicines. A depression questionnaire cannot distinguish depression from a depressive episode in bipolar disorder.",
       "steps": [
-        "Choose one small, meaningful activity, such as eating something or messaging someone you trust.",
-        "Make the step smaller if needed. Notice what was possible without grading yourself.",
-        "Write down changes in sleep, interest and daily functioning to discuss with a professional."
+        "Choose someone you feel safe with. Think of one short sentence, such as saying that things have been difficult lately; you do not owe a full explanation.",
+        "You can keep it as a draft or send it and ask whether they have time to talk. Sending it is optional.",
+        "If a message feels too much, just decide whom you might contact, or ask for help with one everyday need."
       ],
       "treatments": [
         {
@@ -59,7 +64,13 @@
           "body": "A clinician may discuss antidepressants depending on symptoms, needs and preferences. Benefits, side effects and follow-up matter; this page does not recommend a medicine or changing a prescription."
         }
       ],
-      "care": "Ask for an assessment if symptoms persist, worsen or affect everyday life. You do not need to wait two weeks if you are struggling, unsafe or unable to manage basic needs."
+      "care": "Ask for an assessment if symptoms persist, worsen or affect everyday life. You do not need to wait two weeks if you are struggling, unsafe or unable to manage basic needs.",
+      "practice": {
+        "example": "There is a message you would like to answer, but even putting a sentence together feels like a lot today.",
+        "ifHard": "An unfinished step is not a failure. You can make it smaller or stop. If there is nobody safe to contact, you can choose another everyday need or prepare to ask for professional support directly.",
+        "conversation": "I have been feeling low, losing interest and finding everyday things harder. I would like to discuss an assessment and what support might be available.",
+        "action": "Choose a manageable action"
+      }
     },
     "anxiety": {
       "title": "Anxiety, worry & panic",
@@ -72,9 +83,9 @@
       ],
       "context": "Anxiety-like symptoms can have physical or medicine-related causes. New or severe chest pain, fainting or major breathing difficulty needs urgent medical attention, not an assumption that it is panic.",
       "steps": [
-        "Notice your surroundings and let breathing stay comfortable; there is no need to force deep breaths.",
-        "Separate one worry into what you can influence and what you cannot solve right now.",
-        "Choose a small practical action or tell someone how the worry is affecting your day."
+        "Notice the concern behind checking for a reply. You can keep it in mind without writing private details.",
+        "Ask whether there is one useful thing you can influence, such as clarifying a question or preparing information.",
+        "Choose that small action if it fits. If nothing can be done now, you can pause and notice your surroundings instead of having to solve the uncertainty."
       ],
       "treatments": [
         {
@@ -86,7 +97,13 @@
           "body": "A professional may discuss further psychological treatment or medication when symptoms are persistent or limiting. Treatment is chosen together, rather than by an online score alone."
         }
       ],
-      "care": "Seek support when worry, attacks or avoidance disrupt daily life or keep returning. Sudden unfamiliar physical symptoms may need a medical check first."
+      "care": "Seek support when worry, attacks or avoidance disrupt daily life or keep returning. Sudden unfamiliar physical symptoms may need a medical check first.",
+      "practice": {
+        "example": "You are waiting for an important reply and keep checking, but it still does not feel settled.",
+        "ifHard": "You do not need to keep checking or force yourself to feel calm. Stop if this adds pressure. Repeated worry, panic or avoidance that disrupts life is a reason to ask for support; unfamiliar physical symptoms may need medical attention.",
+        "conversation": "My worry is hard to switch off and it is affecting daily life. I would like to describe when it started, any physical sensations and how I can get an appropriate assessment.",
+        "action": "Work through one worry"
+      }
     },
     "sleep": {
       "title": "Trouble sleeping",
@@ -99,9 +116,9 @@
       ],
       "context": "Stress, pain, medicines and other sleep conditions can affect rest. Sleeping much less while feeling unusually energised or impulsive needs prompt assessment; it is not the same as ordinary tired insomnia.",
       "steps": [
-        "Choose a reasonably consistent getting-up time and a quiet wind-down activity you can manage.",
-        "Notice whether caffeine or alcohol affects your sleep. Avoid changing prescribed medicines yourself.",
-        "Keep a brief sleep note if helpful: sleep timing, daytime effects and questions for your appointment."
+        "Choose one quiet, low-effort activity before bed, such as reading a few lines. You do not need to change a whole evening routine at once.",
+        "If tomorrow's tasks keep coming up, decide on one small preparation for later. You do not have to keep planning in bed.",
+        "Where possible, keep a reasonably regular waking time. This is a small routine choice, not an instruction to stay awake or restrict your sleep."
       ],
       "treatments": [
         {
@@ -113,7 +130,13 @@
           "body": "Cognitive behavioural therapy for insomnia (CBT-I) works on thoughts and behaviours that maintain sleep problems. It may be offered with a therapist or through a suitable programme. Relaxation and soundscapes are comfort tools, not a full insomnia treatment."
         }
       ],
-      "care": "Ask for help when sleep problems persist, affect daily life or come with loud snoring or interrupted breathing. Seek prompt assessment for markedly reduced sleep with unusual energy."
+      "care": "Ask for help when sleep problems persist, affect daily life or come with loud snoring or interrupted breathing. Seek prompt assessment for markedly reduced sleep with unusual energy.",
+      "practice": {
+        "example": "Tomorrow's tasks are on your mind, and trying harder to fall asleep seems to leave you more awake.",
+        "ifHard": "A quiet activity may not bring sleep straight away. You can stop if it becomes frustrating. If sleep problems persist or affect daytime life, ask about assessment and suitable support. Much less sleep with unusually high energy needs prompt assessment.",
+        "conversation": "I have been struggling to fall asleep or stay asleep, and I feel tired during the day. I would like help understanding possible causes and suitable sleep support.",
+        "action": "Choose one sleep-routine step"
+      }
     },
     "bipolar": {
       "title": "Mood, energy & bipolar disorder",
@@ -126,9 +149,9 @@
       ],
       "context": "Symptoms overlap with other conditions. Diagnosis needs a professional history of episodes, sleep, medicines and their impact. A depression score or a simple mood chart cannot establish bipolar disorder.",
       "steps": [
-        "Keep daily rhythms as steady as possible and ask for help if sleep and energy change markedly.",
-        "Write down changes you or a trusted person have noticed, including timing and effects on everyday life.",
-        "If already receiving care, follow the agreed plan and contact your care team about changes; do not stop or change medication on your own."
+        "Contact your existing care team or a local health service promptly. Describe the change in sleep, energy and decisions rather than trying to name a diagnosis.",
+        "If you want, ask someone you trust to help make contact or describe changes they have noticed. If nobody is available, you can prepare the contact yourself.",
+        "Follow any agreed care or crisis plan and discuss changes with your clinician. Do not stop or change medicines on your own."
       ],
       "treatments": [
         {
@@ -140,7 +163,13 @@
           "body": "Psychotherapy, education, routines and an agreed plan for early warning signs can support recovery alongside treatment. Self-care alone is not a cure."
         }
       ],
-      "care": "Seek prompt assessment for unusually high energy, little need for sleep, risky behaviour or a marked change others notice. If someone is unsafe, severely confused or losing contact with reality, get urgent help."
+      "care": "Seek prompt assessment for unusually high energy, little need for sleep, risky behaviour or a marked change others notice. If someone is unsafe, severely confused or losing contact with reality, get urgent help.",
+      "practice": {
+        "example": "You are sleeping much less than usual without feeling tired, and your energy or decisions seem unusually different. This is a reason to arrange a prompt professional assessment.",
+        "ifHard": "If your usual team is unavailable, seek another appropriate local health service. Do not rely on an activity or questionnaire to settle what this means. If you are unsafe, severely confused or out of touch with reality, use urgent help.",
+        "conversation": "I am sleeping much less but do not feel tired, and my energy and decisions have changed. I would like a prompt assessment and can explain these changes and any current care.",
+        "action": "Prepare to contact a professional"
+      }
     }
   }
 }

@@ -31,7 +31,12 @@
     "treatmentNote": "Estas opciones describen atención profesional. Nuestras actividades breves apoyan el afrontamiento cotidiano; no son programas de tratamiento completos.",
     "selfHelpLink": "Explorar el autocuidado cotidiano",
     "sourcesLanguage": "Original en inglés",
-    "newTab": "Se abre en otra pestaña"
+    "newTab": "Se abre en otra pestaña",
+    "example": "Una situación cotidiana",
+    "ifHard": "Si cuesta hacerlo o no ayuda",
+    "conversation": "Cómo empezar a pedir ayuda",
+    "conversationNote": "Es un ejemplo, no una lista de síntomas. Usa solo lo que encaje contigo. Puedes explicar cuándo empezó y cómo afecta a tu vida; no hace falta escribir aquí detalles privados.",
+    "practiceChecked": "Revisión de ejemplos prácticos"
   },
   "topics": {
     "depression": {
@@ -45,9 +50,9 @@
       ],
       "context": "El ánimo bajo también puede relacionarse con estrés, duelo, enfermedades físicas o medicamentos. Un cuestionario no distingue la depresión de un episodio depresivo del trastorno bipolar.",
       "steps": [
-        "Elige una actividad pequeña y significativa: comer algo o escribir a alguien de confianza.",
-        "Reduce el paso si lo necesitas. Observa qué fue posible sin ponerte una nota.",
-        "Anota cambios en sueño, interés y funcionamiento cotidiano para comentarlos con un profesional."
+        "Piensa en una persona de confianza. Basta con una frase para contar que últimamente lo estás pasando mal; no tienes que explicarlo todo.",
+        "Puedes dejarla como borrador o enviarla y preguntar si esa persona tiene un rato para hablar. Tú decides si enviarla.",
+        "Si escribir un mensaje resulta demasiado, puedes limitarte a pensar con quién hablar o pedir ayuda con una necesidad cotidiana."
       ],
       "treatments": [
         {
@@ -59,7 +64,13 @@
           "body": "Un profesional puede hablar de antidepresivos según los síntomas, necesidades y preferencias, incluidos beneficios, efectos secundarios y seguimiento. Esta página no recomienda medicamentos ni cambios de receta."
         }
       ],
-      "care": "Pide una evaluación si los síntomas persisten, empeoran o afectan a tu vida. No necesitas esperar dos semanas si estás desbordado, no cubres necesidades básicas o no estás a salvo."
+      "care": "Pide una evaluación si los síntomas persisten, empeoran o afectan a tu vida. No necesitas esperar dos semanas si estás desbordado, no cubres necesidades básicas o no estás a salvo.",
+      "practice": {
+        "example": "Hay un mensaje que te gustaría responder, pero hoy hasta ordenar una frase supone un esfuerzo.",
+        "ifHard": "Dejar un paso sin terminar no es fracasar. Puedes reducirlo o parar. Si no hay nadie con quien te sientas a salvo, puedes atender otra necesidad cotidiana o preparar una consulta profesional directamente.",
+        "conversation": "Últimamente tengo el ánimo bajo, he perdido el interés y me cuestan las cosas de cada día. Quisiera saber cómo solicitar una evaluación y qué apoyo podría recibir.",
+        "action": "Elegir una acción a mi alcance"
+      }
     },
     "anxiety": {
       "title": "Ansiedad, preocupación y pánico",
@@ -72,9 +83,9 @@
       ],
       "context": "Estos síntomas también pueden tener causas físicas o farmacológicas. Dolor torácico nuevo o intenso, desmayo o dificultad importante para respirar requieren atención médica urgente; no deben atribuirse directamente al pánico.",
       "steps": [
-        "Observa tu entorno y deja que la respiración sea cómoda; no hace falta forzar respiraciones profundas.",
-        "Separa una preocupación en lo que puedes influir y lo que no puedes resolver ahora.",
-        "Elige una pequeña acción práctica o cuenta a alguien cómo está afectando a tu día."
+        "Identifica la preocupación que hay detrás de comprobar si ha llegado una respuesta. Puedes pensarla sin escribir detalles privados.",
+        "Mira si hay una pequeña parte sobre la que puedas actuar, como aclarar una pregunta o preparar un dato.",
+        "Elige ese paso si te sirve. Si ahora no puedes hacer nada, puedes parar y volver a lo que te rodea, sin tener que resolver la incertidumbre."
       ],
       "treatments": [
         {
@@ -86,7 +97,13 @@
           "body": "Si los síntomas persisten o limitan la vida, un profesional puede valorar más terapia o medicación. La elección se hace conjuntamente, no solo mediante una puntuación en internet."
         }
       ],
-      "care": "Busca apoyo si la preocupación, los ataques o la evitación reaparecen o interfieren en la vida diaria. Los síntomas físicos repentinos y desconocidos pueden necesitar primero una revisión médica."
+      "care": "Busca apoyo si la preocupación, los ataques o la evitación reaparecen o interfieren en la vida diaria. Los síntomas físicos repentinos y desconocidos pueden necesitar primero una revisión médica.",
+      "practice": {
+        "example": "Esperas una respuesta importante y miras una y otra vez, pero la inquietud sigue ahí.",
+        "ifHard": "No tienes que seguir comprobando ni obligarte a estar en calma. Para si aumenta la presión. Si la preocupación, el pánico o la evitación interfieren repetidamente en tu vida, puedes pedir apoyo; los síntomas físicos desconocidos pueden necesitar valoración médica.",
+        "conversation": "Me cuesta parar las preocupaciones y están afectando a mi vida. Quisiera explicar cuándo empezaron, qué sensaciones físicas tengo y cómo recibir una evaluación adecuada.",
+        "action": "Ordenar una preocupación"
+      }
     },
     "sleep": {
       "title": "Dificultades para dormir",
@@ -99,9 +116,9 @@
       ],
       "context": "El estrés, el dolor, los medicamentos y otros trastornos del sueño pueden influir. Dormir mucho menos con energía o impulsividad inusuales requiere evaluación pronta; no es lo mismo que el insomnio con cansancio.",
       "steps": [
-        "Elige una hora de levantarte bastante regular y una actividad tranquila antes de acostarte.",
-        "Observa si la cafeína o el alcohol afectan a tu sueño. No cambies medicación recetada por tu cuenta.",
-        "Si ayuda, anota horarios, efectos durante el día y preguntas para una consulta."
+        "Elige una actividad tranquila y sencilla antes de acostarte, como leer unas líneas. No hace falta cambiar toda la rutina de una vez.",
+        "Si vuelven las tareas de mañana, piensa en una pequeña preparación para después. No tienes que seguir organizándolo todo desde la cama.",
+        "Cuando sea posible, mantén una hora de levantarte relativamente regular. Es una elección cotidiana: no te pide seguir sin dormir ni recortar tus horas de sueño."
       ],
       "treatments": [
         {
@@ -113,7 +130,13 @@
           "body": "La terapia cognitivo-conductual para el insomnio trabaja con pensamientos y conductas que mantienen el problema, con un terapeuta o un programa adecuado. La relajación y los sonidos pueden aportar comodidad, pero no constituyen un tratamiento completo del insomnio."
         }
       ],
-      "care": "Pide ayuda si persiste, afecta al día o se acompaña de ronquidos fuertes o pausas respiratorias. Una reducción marcada del sueño con energía inusual merece evaluación pronta."
+      "care": "Pide ayuda si persiste, afecta al día o se acompaña de ronquidos fuertes o pausas respiratorias. Una reducción marcada del sueño con energía inusual merece evaluación pronta.",
+      "practice": {
+        "example": "Piensas en las tareas de mañana y, cuanto más intentas dormirte, más te desvelas.",
+        "ifHard": "Una actividad tranquila puede no dar sueño enseguida. Puedes parar si te frustra. Si el problema persiste o afecta a tu día, pide una evaluación y apoyo adecuado. Dormir mucho menos con una energía inusualmente alta requiere valoración pronta.",
+        "conversation": "Me está costando dormirme o mantener el sueño y siento cansancio durante el día. Quisiera entender las posibles causas y qué apoyo para el sueño sería adecuado para mí.",
+        "action": "Elegir un pequeño paso para la noche"
+      }
     },
     "bipolar": {
       "title": "Ánimo, energía y trastorno bipolar",
@@ -126,9 +149,9 @@
       ],
       "context": "Los síntomas se solapan con otras condiciones. El diagnóstico necesita una historia profesional de episodios, sueño, medicamentos e impacto. Una puntuación de depresión o un gráfico sencillo de ánimo no establece el trastorno bipolar.",
       "steps": [
-        "Mantén ritmos cotidianos lo más estables posible y pide ayuda si cambian claramente el sueño y la energía.",
-        "Anota cambios observados por ti o alguien de confianza, cuándo ocurrieron y sus efectos.",
-        "Si recibes atención, sigue el plan acordado y contacta con tu equipo ante cambios; no suspendas ni ajustes medicamentos por tu cuenta."
+        "Contacta pronto con tu equipo habitual o con un servicio de salud local. Describe los cambios en sueño, energía y decisiones sin tener que ponerles un diagnóstico.",
+        "Si quieres, pide a alguien de confianza ayuda para contactar o para contar los cambios que ha observado. Si nadie puede ayudar, puedes preparar el contacto por tu cuenta.",
+        "Sigue cualquier plan de atención o crisis acordado y habla de los cambios con tu profesional. No suspendas ni cambies medicación por tu cuenta."
       ],
       "treatments": [
         {
@@ -140,7 +163,13 @@
           "body": "La psicoterapia, la información, las rutinas y un plan compartido para señales tempranas apoyan la recuperación junto al tratamiento. El autocuidado por sí solo no es una cura."
         }
       ],
-      "care": "Pide evaluación pronta ante energía inusual, poca necesidad de sueño, conductas de riesgo o cambios marcados que otras personas notan. Si hay peligro, confusión grave o pérdida de contacto con la realidad, busca ayuda urgente."
+      "care": "Pide evaluación pronta ante energía inusual, poca necesidad de sueño, conductas de riesgo o cambios marcados que otras personas notan. Si hay peligro, confusión grave o pérdida de contacto con la realidad, busca ayuda urgente.",
+      "practice": {
+        "example": "Duermes mucho menos sin sentir cansancio y notas cambios inusuales en tu energía o tus decisiones. Conviene pedir una evaluación profesional pronto.",
+        "ifHard": "Si tu equipo habitual no está disponible, busca otro servicio de salud local adecuado. Una actividad o un cuestionario no pueden aclararlo por sí solos. Si no estás a salvo, hay confusión intensa o pérdida de contacto con la realidad, recurre a ayuda urgente.",
+        "conversation": "Duermo mucho menos pero no siento cansancio, y han cambiado mi energía y mi forma de tomar decisiones. Quisiera una evaluación pronta y explicar estos cambios y la atención que recibo actualmente.",
+        "action": "Preparar el contacto con un profesional"
+      }
     }
   }
 }

@@ -42,6 +42,11 @@ html[dir=rtl] .understand-back-icon{transform:none}
 .understand-context-visible h3{font-size:15px;padding-top:18px;margin-bottom:12px}
 .understand-page .understand-muted{color:var(--platform-muted);font-size:16px;margin-block:-8px 26px}
 .understand-steps{list-style:none;padding:0;display:grid;gap:24px;margin:32px 0}
+.understand-example{margin-top:28px;max-width:68ch}
+.understand-example h3{font-size:15px;color:var(--platform-muted);margin-bottom:8px}
+.understand-context .platform-link{display:inline-flex;align-items:center;gap:12px;min-height:44px;margin-bottom:12px;font-size:16px}
+.understand-conversation blockquote{border-inline-start:3px solid var(--platform-line);padding:12px 18px;margin-block:8px 20px;max-width:68ch;font-size:17px;line-height:1.9;overflow-wrap:anywhere}
+.understand-page:lang(ko){word-break:keep-all;overflow-wrap:anywhere}
 .understand-steps li{display:flex;gap:20px;align-items:flex-start;max-width:780px}
 .understand-step-number{display:grid;place-items:center;flex:0 0 36px;height:36px;background:var(--platform-soft);border-radius:50%;color:var(--platform-blue);font-weight:650;font-size:15px;margin-top:3px}
 .understand-section>.platform-link{display:inline-flex;align-items:center;gap:12px;min-height:44px;font-size:16px}

@@ -28,11 +28,13 @@ test('all eight locales contain complete topic explanations, care boundaries and
 test('non-English topic content is translated instead of silently reusing English health guidance',()=>{
   for(const locale of locales.filter(lang=>lang!=='en')) {
     const data=load(locale);
-    for(const key of ['review','youngText','urgent','treatmentNote','referenceIntro'])
+    for(const key of ['review','youngText','urgent','treatmentNote','referenceIntro','example','ifHard','conversation','conversationNote','practiceChecked'])
       assert.notEqual(data.common[key],canonical.common[key],`${locale}.${key}`);
     for(const topic of Object.keys(canonical.topics)) {
       for(const key of ['intro','context','care'])
         assert.notEqual(data.topics[topic][key],canonical.topics[topic][key],`${locale}.${topic}.${key}`);
+      for(const key of ['example','ifHard','conversation','action'])
+        assert.notEqual(data.topics[topic].practice[key],canonical.topics[topic].practice[key],`${locale}.${topic}.practice.${key}`);
     }
   }
 });
