@@ -1,0 +1,10 @@
+---
+interface Props { kind:'current'|'completion'; title:string; labels:string[]; heading?:'h2'|'h4'; }
+const {kind,title,labels,heading}=Astro.props;
+const Heading=heading||'h2';
+const fields=['focus','part','action','timing','help'];
+---
+<div class="activity-selection-summary worry-summary" data-worry-summary={kind} role="group" aria-label={title} tabindex="-1" hidden>
+  {heading&&<Heading>{title}</Heading>}
+  <dl>{fields.map((field,i)=><div data-worry-summary-row={field} hidden><dt>{labels[i]}</dt><dd data-worry-value={field}></dd></div>)}</dl>
+</div>

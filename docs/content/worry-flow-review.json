@@ -1,0 +1,64 @@
+{
+  "reviewedAt": "2026-10-30",
+  "scope": "General educational worry-organising activity, not diagnosis, treatment or a validated intervention. Existing instruments, scoring and safety routes are unchanged.",
+  "method": "AI editorial source comparison, contextual eight-language copy review and automated browser checks. Not independent clinical or human native-speaker review; no clinical-effectiveness or real-user outcome evidence.",
+  "sources": [
+    {
+      "url": "https://www.nhs.uk/every-mind-matters/mental-wellbeing-tips/self-help-cbt-techniques/tackling-your-worries/",
+      "checkedAt": "2026-10-30",
+      "status": "official_page_read",
+      "usedFor": "Separate concerns that allow practical action from those that cannot be resolved now; allow pausing and returning attention to the present. No guarantee of symptom relief."
+    },
+    {
+      "url": "https://www.nhs.uk/every-mind-matters/mental-wellbeing-tips/self-help-cbt-techniques/problem-solving/",
+      "checkedAt": "2026-10-30",
+      "status": "official_page_read",
+      "usedFor": "Choose a manageable practical step; consider timing and help; review or reduce the step. The short activity does not reproduce a treatment programme."
+    },
+    {
+      "url": "https://www.who.int/publications/i/item/9789240003927",
+      "checkedAt": "2026-10-30",
+      "status": "official_language_catalogue_read",
+      "usedFor": "Optional onward link to the official stress self-help guide catalogue, which lists all eight supported languages. Sunrain prompts are its own educational summary, not official translated guide text.",
+      "limits": "Direct PDF retrieval failed: English, Simplified Chinese, Traditional Chinese and Spanish returned 403; Japanese, Hindi and Arabic timed out; Korean returned a redirect failure. PDFs were not read, mirrored or represented as reviewed. The accessible catalogue is the linked destination."
+    }
+  ],
+  "privacy": {
+    "newFreeTextFields": 0,
+    "newPersistence": false,
+    "focusAndPart": "Optional public example choices remain in page memory; no private concern text is requested. Explicit preparation can copy these choices into the existing contact-record field.",
+    "plan": "Reuse the existing three optional action/timing/help fields and original worry/check-in-worry storage keys and version. Never load or save automatically. Explicit save/download excludes the two focus choices.",
+    "reset": "Clears only this activity’s choices, feedback and three unsaved plan fields. Separate contact drafts and explicitly saved device notes are retained; their existing delete controls remain available.",
+    "navigation": "Refresh, language switch, navigation away and persisted browser-history return clear unsaved state. No health content is placed in URLs or requests."
+  },
+  "localeReview": {
+    "en": "Plain optional language; waiting, tasks and caring examples avoid assumptions about employment, family structure, age or a national health system.",
+    "zh-hans": "Short fragment headings omit terminal full stops; questions retain full-width marks. Uses 学习、工作、待办 and 可信任的人 rather than assuming a parent or employer is safe.",
+    "zh-hant": "Uses 回覆、學業、資訊、計畫、儲存、裝置 and 選填; does not equate Traditional Chinese with Taiwan or Hong Kong.",
+    "es": "Uses paired question marks, consistent informal tú and broadly understandable studies/tasks/caring examples. Does not assume Spain or access to its health system.",
+    "ja": "Uses polite, non-demanding optional forms, short headings and school/work/errand examples. No gender, employment or household assumptions; no changes to Japanese instrument availability.",
+    "ko": "Uses consistent polite guidance, fragment labels without sentence periods and 학업·일·처리해야 할 일. Practical help can come from a trusted person or service, not necessarily family.",
+    "hi": "Uses Devanagari prose punctuation, concise labels and respectful optional phrasing. Avoids gendered first-person examples and does not assume Hindi means India.",
+    "ar": "Uses Modern Standard Arabic, Arabic question marks and RTL layout. Uses gender-neutral first-person uncertainty where feasible; no country, religion or family-support assumptions."
+  },
+  "independentReview": {
+    "clinical": "pending_not_claimed",
+    "humanNativeSpeaker": "pending_for_all_eight_locales",
+    "remainingLanguageLimits": "AI editorial checks cannot establish native idiom, dialect preference or culturally representative lived experience. No human native-speaker review has occurred."
+  },
+  "helpEntryRecheck": {
+    "checkedAt": "2026-10-30",
+    "catalogueChanged": false,
+    "limits": "Read entry-page information only; no booking, phone contact, acceptance, cost, response time or current appointment availability was tested. The runtime catalogue's previous check date is not silently refreshed.",
+    "regions": {
+      "GB-ENG": "Official NHS entry read: England route and age limits are service-specific; existing youth support retained.",
+      "US": "FindTreatment root did not expose useful text; SAMHSA search information indicates US/territory scope, but direct official explanatory pages returned 403. Full service/language recheck remains incomplete; no catalogue claim expanded.",
+      "JP": "Official Ministry of Health directory read. Interface languages include Japanese, English, Simplified/Traditional Chinese and Korean; individual provider language must be confirmed separately.",
+      "KR": "Official Korean mental-health institution directory read. Regional/type search in Korean; no new phone or service-availability claims added.",
+      "ES": "Official registered-health-centre directory read. Directory access does not establish an appointment or provider eligibility.",
+      "HK": "Hospital Authority specialist outpatient instructions read, including referral and document requirements. No fee, booking or service-language guarantee added.",
+      "CN-BJ": "Single hospital's official booking instructions read. Remains explicitly a Beijing provider, not national coverage."
+    },
+    "coverageGaps": "Hindi-speaking and Arabic-speaking regions are not covered merely by providing those interface languages. Keep explicit region selection and local primary-care/public-health fallback; do not invent contact details."
+  }
+}

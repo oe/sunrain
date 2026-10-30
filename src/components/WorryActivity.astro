@@ -1,0 +1,78 @@
+---
+import PrivateNotes from './PrivateNotes.astro';
+import WorrySummary from './WorrySummary.astro';
+import ContentSources from './ContentSources.astro';
+import { getLanguageFromPath,getLocalizedPath } from '@/lib/i18n';
+import { getSupportCopy,supportSources } from '@/lib/support';
+import { getWorryCopy,WORRY_FOCUS_IDS,WORRY_PART_IDS } from '@/lib/worry';
+interface Props { embedded?:boolean; }
+const {embedded=false}=Astro.props;
+const lang=getLanguageFromPath(Astro.url.pathname),c=getSupportCopy(lang),w=getWorryCopy(lang);
+const guide=c.guides.worryPlan,Title=embedded?'h3':'h1',Heading=embedded?'h4':'h2';
+const labels=[w.focusLabel,w.partLabel,...c.flow.planLabels];
+---
+<div data-guided-activity data-worry-activity data-context-changed={w.contextChanged}>
+  <Title data-activity-title tabindex="-1">{guide.title}</Title>
+  <p>{w.intro}</p>
+  {embedded&&<div class="actions"><button class="button" type="button" data-activity-close>{c.ui.back}</button></div>}
+  <section class="support-card" id="guided-activity" data-step-label={c.flow.step}>
+    <p id="guide-progress" class="muted" tabindex="-1" aria-live="polite" hidden></p>
+    <WorrySummary kind="current" title={w.summaryTitle} labels={labels}/>
+    <ol class="worry-steps">
+      <li data-guide-step>
+        <Heading>{w.focusTitle}</Heading><p>{w.focusHelp}</p>
+        <details class="activity-examples"><summary>{w.examplesLabel}</summary>
+          <fieldset><legend class="sr-only">{w.focusTitle}</legend>
+            {[...w.focusExamples,w.privateFocus].map((example,i)=><label class="choice"><input type="radio" name="worry-focus" value={WORRY_FOCUS_IDS[i]} autocomplete="off"/>{example}</label>)}
+          </fieldset>
+        </details>
+      </li>
+      <li data-guide-step>
+        <Heading>{w.partTitle}</Heading><p>{w.partHelp}</p>
+        <label class="sr-only" for="worry-part">{w.partTitle}</label>
+        <select id="worry-part" autocomplete="off"><option value="">{w.partPlaceholder}</option>{w.partOptions.map((option,i)=><option value={WORRY_PART_IDS[i]}>{option}</option>)}</select>
+      </li>
+      <li data-guide-step>
+        <Heading>{w.actionTitle}</Heading><p>{w.actionHelp}</p>
+        <aside class="worry-outside" data-worry-outside hidden><p>{w.outsideHelp}</p><a href={getLocalizedPath('/self-help/grounding/',lang)}>{w.groundingLink}</a></aside>
+        <fieldset><legend class="sr-only">{w.actionTitle}</legend>{w.actionExamples.map(example=><label class="choice"><input type="radio" name="activity-example" value={example} autocomplete="off"/>{example}</label>)}</fieldset>
+        <p class="muted" role="status" data-selection-notice hidden>{w.keepEditedAction}</p>
+      </li>
+      <li data-guide-step><Heading>{w.reviewTitle}</Heading><p>{w.reviewHelp}</p><p class="muted" data-worry-no-action>{w.emptyPlan}</p></li>
+    </ol>
+    <div data-worry-note-slot></div>
+    <div class="actions" id="guide-controls" hidden>
+      <button class="button" id="guide-back" type="button">{c.ui.back}</button>
+      <button class="button primary" id="guide-next" type="button">{c.flow.guideNext}</button>
+      <button class="button primary" id="guide-finish" type="button" hidden>{c.flow.guideFinish}</button>
+      <button class="text-button" id="guide-stop" type="button">{c.flow.guideStop}</button>
+      <a class="text-button" href="#prepare-support" data-prepare-support>{c.flow.prepare}</a>
+    </div>
+    <p class="muted" role="status" data-worry-status></p>
+  </section>
+  <section class="support-card" id="activity-reflection">
+    <WorrySummary kind="completion" title={w.summaryTitle} labels={labels} heading={embedded?'h4':'h2'}/>
+    <Heading tabindex="-1" data-worry-feedback-title>{w.feedbackTitle}</Heading>
+    <p class="muted" data-worry-no-action>{w.emptyPlan}</p>
+    <fieldset id="activity-feedback"><legend class="sr-only">{w.feedbackTitle}</legend>{['better','same','worse'].map(key=><label class="choice"><input type="radio" name="feedback" value={key} autocomplete="off"/>{c.ui[key]}</label>)}</fieldset>
+    <p id="feedback-intro">{w.feedbackHelp}</p>
+    <p id="feedback-better" hidden role="status">{c.flow.feedbackBetter}</p>
+    <div id="feedback-same" hidden role="status"><p>{c.common.noChange}</p><p>{w.sameHelp}</p></div>
+    <p id="feedback-worse" hidden role="status">{c.ui.stop}</p>
+    <div class="actions">
+      <a class="button" href={getLocalizedPath('/',lang)}>{c.flow.end}</a>
+      <button class="button" type="button" data-worry-edit>{w.editPlan}</button>
+      <a class="button" id="other-activities" href={getLocalizedPath('/self-help/',lang)}>{c.ui.selfHelp}</a>
+      <a class="button primary" href="#prepare-support" data-prepare-support>{c.flow.prepare}</a>
+    </div>
+    <aside class="urgent" id="feedback-urgent" hidden><p>{c.common.urgent}</p><a class="button" href={getLocalizedPath('/crisis/',lang)}>{c.ui.crisisDirectory}</a></aside>
+    <details data-worry-reset-panel><summary>{w.resetTitle}</summary><p>{w.resetHelp}</p><button class="button" type="button" data-worry-reset>{w.resetButton}</button></details>
+  </section>
+  <div data-worry-note-home>
+    <details data-activity-note class="activity-note"><summary>{w.planEditor}</summary><p>{w.planHelp}</p><p class="muted">{w.contextPrivacy}</p><PrivateNotes kind={embedded?'check-in-worry':'worry'} title={c.flow.planTitle} labels={c.flow.planLabels}/></details>
+  </div>
+  <span data-activity-context hidden></span>
+  <details><summary>{w.whyTitle}</summary><p>{w.whyText}</p><ol>{guide.steps.map(step=><li>{step}</li>)}</ol><p>{guide.purpose}</p><p>{c.common.stop}</p></details>
+  <details><summary>{w.whoLink}</summary><p>{w.whoHelp}</p><a href={supportSources.who.url} target="_blank" rel="noreferrer">{w.whoLink}</a></details>
+  <ContentSources sources={['worries','problemSolving','who']}/>
+</div>

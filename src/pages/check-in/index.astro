@@ -152,7 +152,7 @@ const impacts = ['manageable','disruptive','basicNeeds'] as const;
     const needsCare = selected('concern').some(v => v.value === 'energy') || selected('impact').some(v => v.value === 'basicNeeds');
     app.querySelector<HTMLElement>('#energy-care').hidden = !selected('concern').some(v => v.value === 'energy');
     // Offer self-care according to the user's concern; never assign a diagnosis or risk grade.
-    const actions={mood:'one-step',worry:'grounding',sleep:'sleep'};
+    const actions={mood:'one-step',worry:'worry',sleep:'sleep'};
     // One optional starting point keeps the result manageable. This is not a
     // clinical ranking: the user can choose all activities or care directly.
     const firstConcern=selected('concern').find(value=>actions[value.value]);

@@ -1,10 +1,12 @@
 import { initPrivateNotes } from './private-notes';
+import { initWorryActivity } from './worry-activity';
 
 const initialized=new WeakSet<HTMLElement>();
 export function initGuidedActivities(root:ParentNode=document){
   initPrivateNotes(root);
   for(const container of root.querySelectorAll<HTMLElement>('[data-guided-activity]')){
   if(initialized.has(container))continue;initialized.add(container);
+  if(container.hasAttribute('data-worry-activity')){initWorryActivity(container);continue;}
   const byId=(id:string)=>container.querySelector<HTMLElement>(`#${id}`);
   const activity=byId('guided-activity');
   const steps=[...activity.querySelectorAll<HTMLElement>('[data-guide-step]')];
